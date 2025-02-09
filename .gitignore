@@ -1,0 +1,15 @@
+
+.tmp/
+*.l
+*.labels
+*.list
+*.sld
+*.tap
+*.trd
+*.sna
+*.tzx
+.exp
+*.pack
+*.pack.ar
+*.pack.pass-1
+*.pack.pass-2
