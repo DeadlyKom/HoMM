@@ -1,0 +1,7 @@
+
+                ifndef _ASSETS_PACKING_CODE_INCLUDE_
+                define _ASSETS_PACKING_CODE_INCLUDE_
+
+                include "Original/Kernel/Pack_Kernel.inc"                       ; ASSETS_ID_KERNEL
+
+                endif ; ~_ASSETS_PACKING_CODE_INCLUDE_

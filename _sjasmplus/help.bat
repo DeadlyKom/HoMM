@@ -1,0 +1,2 @@
+sjasmplus.exe -h
+pause

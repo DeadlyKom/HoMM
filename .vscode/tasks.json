@@ -1,0 +1,41 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "./_sjasmplus/sjasmplus",
+            "args": [
+                "--lstlab",
+                "--sym=Tmp/HoMM.labels",
+                // "--lst=Tmp/HoMM.list",
+                // "--sld=Tmp/HoMM.sld",
+                "--fullpath",
+                "--color=on",
+                "--nologo",
+                "--msg=war",
+                // "--syntax=F",
+                "Builder/Include.inc"
+            ],
+            "problemMatcher": {
+                "owner": "c",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceRoot}"
+                ],
+                "pattern": {
+                    "regexp": "^(.*)\\((\\d+)\\):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 3,
+                    "message": 4
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

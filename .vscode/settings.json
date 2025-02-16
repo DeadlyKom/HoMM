@@ -1,0 +1,6 @@
+{
+    // language-specific settings to change native behaviour of VSCode
+    "[z80-macroasm]": {
+        "editor.formatOnType": false,
+    }
+}
