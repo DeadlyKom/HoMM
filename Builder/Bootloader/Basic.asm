@@ -27,8 +27,10 @@ StartBoot:      DI
                 LD (BC), A
                 OUT (C), A
 
-                LD SP, Adr.Booloader.StackTop
+                ; инициализация прерывания
+                include "Source/Interrupt/Initialize.asm"
 
+                LD SP, Adr.Booloader.StackTop
 
                 ; определение текущего адреса
                 LD HL, #E9E1	                                                ; POP HL : JP (HL)
@@ -45,15 +47,26 @@ StartBoot:      DI
 
                 ; перемещение точки входа
                 LD 	DE, Adr.EntryPoint
-                LD 	BC, Size.EntryPoint
+                LD 	BC, EntryPoint.Size
                 LDIR
 
                 ; определение доступной памяти
+                PUSH HL
                 CALL Adr.SharedPoint
+                POP HL
                 JP NC, Memory.InsufficientRAM                                   ; недостаточно памяти!
+    
+                ; перемещение инициализации TR-DOS
+                LD 	DE, Adr.ExtraBuffer
+                LD 	BC, TRDOS.Size
+                LDIR
 
-                ; инициализация прерывания
-                include "Source/Interrupt/Initialize.asm"
+                ; инициализация TR-DOS
+                PUSH HL
+                CALL TRDOS.Initialize
+                POP HL
+
+                ; include "Source/AssetsManager/Initialize.asm"                   ; инициализация ресурс менеджера
 
                 ; переход по точке входа
                 LD SP, Adr.StackTop
@@ -61,6 +74,7 @@ StartBoot:      DI
 Data:
 .Memory         include "Source/Memory/Determine.asm"
 .EntryPoint     include "Source/EntryPoint/Include.inc"                         ; точка входа
+.TR_DOS         include "Source/TR-DOS/Include.inc"                             ; драйвер TR-DOS
 EndBoot:        DB #0D                                                          ; конец строки
                 DB #00, #14                                                     ; номер строки 20
                 DB #2A, #00                                                     ; длина строки 42 байта

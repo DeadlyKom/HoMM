@@ -10,6 +10,6 @@ SCREEN_INV      EQU (~SCREEN) & 0xFF
 ROM             EQU 1 << ROM_BIT
 
 PAGE_MASK       EQU %11000111
-PAGE_MASK_INV   EQU (~PAGE_MASK) & 0xFF
+PAGE_MASK_INV   EQU (~PAGE_MASK) & 0xFF                                         ; %00111000
 
                 endif ; ~_CONFIG_ZX_SPECTRUM_PORT_7FFD_

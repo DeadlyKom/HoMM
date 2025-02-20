@@ -85,8 +85,7 @@ CheckPort:      ; -----------------------------------------
 ; -----------------------------------------
 SetPort_7FFD    LD A, (BC)
                 XOR E
-._5_bit         EQU $+1
-                AND PAGE_MASK_INV
+                AND PAGE_MASK_INV                                               ; %00111000
                 XOR E
                 LD (BC), A
                 OUT (C), A

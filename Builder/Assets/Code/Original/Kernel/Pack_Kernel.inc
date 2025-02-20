@@ -11,7 +11,22 @@
                 display "\'Kernel\':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size, " byte(s) / free ", /D, #4000 - ($ - #8000 + Size), "]\t[", /D, Page.Kernel, "]\t ------------------------"
 Begin:          EQU $
 
-                DB #00
+                ; interrupt
+                include "Source/Interrupt/Include.inc"
+
+                ; memory
+                include "Source/Memory/Switch.asm"
+                include "Source/Memory/MemSet.asm"
+                include "Source/Memory/MemcpyFastLDIR.asm"
+
+                ; utils
+                include "Source/Draw/Utils/PixelAddress.asm"
+                include "Source/Draw/Utils/PixelAttribute.asm"
+
+                ifdef SHOW_FPS | _DEBUG
+                include "Source/Utils/Debug/Console.asm"
+                include "Source/Utils/Debug/FPS_Counter.asm"
+                endif
 Size:           EQU $-Begin                                                     ; размер кода
                 
                 ifdef _REBUILD

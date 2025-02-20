@@ -8,8 +8,8 @@ Begin           EQU $
                 include "EntryPoint.asm"                                        ; первый
                 include "Loop.asm"                                              ; второй
                 include "Swap.asm"
-
-                display " - Entry point:\t\t\t\t\t\t\t= busy [ ", /D, $-Begin, " byte(s) ]"
+Size            EQU $-Begin
+                display " - Entry point:\t\t\t\t\t\t\t= busy [ ", /D, Size, " byte(s) ]"
 
                 ENT
                 endmodule

@@ -12,4 +12,6 @@
 EntryPoint:     EI
                 HALT
 
+                ; инициализация
+
                 endif ; ~_ENTRY_POINT_
