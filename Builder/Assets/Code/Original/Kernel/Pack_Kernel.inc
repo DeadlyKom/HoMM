@@ -5,23 +5,18 @@
                 ; - компиляция модуля
 
                 MMU 2, Page.Kernel
-                ORG Adr.Kernel
+                ORG Bootloader.KernelMinimal.End                                ; начальный адрес кернеля меняется в разных этапах компиляции
+                                                                                ; указан адрес следующий за минимальныйм кернелем
                 module Kernel
 
                 display "\'Kernel\':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size, " byte(s) / free ", /D, #4000 - ($ - #8000 + Size), "]\t[", /D, Page.Kernel, "]\t ------------------------"
 Begin:          EQU $
 
-                ; interrupt
-                include "Source/Interrupt/Include.inc"
-
-                ; memory
-                include "Source/Memory/Switch.asm"
-                include "Source/Memory/MemSet.asm"
-                include "Source/Memory/MemcpyFastLDIR.asm"
-
-                ; utils
-                include "Source/Draw/Utils/PixelAddress.asm"
-                include "Source/Draw/Utils/PixelAttribute.asm"
+                ; functions
+                include "Source/Functions/Include.inc"
+                
+                ; modules
+                include "Source/Modules/Include.inc"
 
                 ifdef SHOW_FPS | _DEBUG
                 include "Source/Utils/Debug/Console.asm"

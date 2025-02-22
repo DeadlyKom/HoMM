@@ -40,6 +40,11 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     Kernel.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Kernel\t\t\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_CORE, \
+                                    Core.Size, \
+                                    Core.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Core\t\t\t\t\t\t"
 Num             EQU $ / 3                                                       ; количество ресурсов а карте
 Size            EQU (((Num % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Num >> 8)) << 8  ; размер карты ресурсов (кратный 256)
 Sector          EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)       ; размер карты ресурсов (в секторах)

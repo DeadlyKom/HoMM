@@ -29,7 +29,7 @@ FastLDIR:       XOR A
 
                 RET
 
-                display " - Memcpy fast LDIR: \t\t\t\t\t", /A, FastLDIR, " = busy [ ", /D, $ - FastLDIR, " byte(s)  ]"
+                display " - Memcpy fast LDIR:\t\t\t\t\t", /A, FastLDIR, "\t= busy [ ", /D, $ - FastLDIR, " byte(s)  ]"
                 
                 endmodule
 

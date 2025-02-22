@@ -12,5 +12,6 @@
                 include "MemoryMap_Page_5.inc"
                 include "MemoryMap_Page_6.inc"
                 include "MemoryMap_Page_7.inc"
+                include "MemoryMap_Modules.inc"
 
                 endif ; ~_CONST_MEMORY_INCLUDE_

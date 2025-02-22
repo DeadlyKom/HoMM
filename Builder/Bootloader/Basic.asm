@@ -27,9 +27,6 @@ StartBoot:      DI
                 LD (BC), A
                 OUT (C), A
 
-                ; инициализация прерывания
-                include "Source/Interrupt/Initialize.asm"
-
                 LD SP, Adr.Booloader.StackTop
 
                 ; определение текущего адреса
@@ -45,36 +42,65 @@ StartBoot:      DI
                 LD 	BC, Memory.Determine.Size
                 LDIR
 
+                ; перемещение минимального кернела
+                LD 	DE, Adr.KernelMinimal
+                LD 	BC, KernelMinimal.Size
+                LDIR
+
                 ; перемещение точки входа
                 LD 	DE, Adr.EntryPoint
                 LD 	BC, EntryPoint.Size
                 LDIR
 
-                ; определение доступной памяти
-                PUSH HL
-                CALL Adr.SharedPoint
-                POP HL
-                JP NC, Memory.InsufficientRAM                                   ; недостаточно памяти!
-    
-                ; перемещение инициализации TR-DOS
+                ; перемещение драйвера TR-DOS
                 LD 	DE, Adr.ExtraBuffer
                 LD 	BC, TRDOS.Size
                 LDIR
 
-                ; инициализация TR-DOS
-                PUSH HL
-                CALL TRDOS.Initialize
-                POP HL
+                ; определение доступной памяти
+                CALL Adr.SharedPoint
+                JP NC, Memory.InsufficientRAM                                   ; недостаточно памяти!
 
-                ; include "Source/AssetsManager/Initialize.asm"                   ; инициализация ресурс менеджера
+                SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
+
+                ; копирование кода в стеш
+                LD HL, Adr.ExtraBuffer
+                LD DE, Adr.Stash_TRDOS
+                LD BC, Size.Stash_TRDOS
+                LDIR
+
+                ; инициализация TR-DOS
+                CALL TRDOS.Initialize
+
+                ; инициализация прерывания
+                include "Source/Interrupt/Initialize.asm"
+
+                ; инициализация ресурс менеджера
+                include "Source/AssetsManager/Initialize.asm"
+
+                ; отметить занятую область данными в доступной ОЗУ (принудительно)
+                ; MARK_RAM PAGE_0, MemBank_03, BankSize                           ; отметить страницу памяти 0 занятой
+                ; MARK_RAM PAGE_1, MemBank_03, BankSize                           ; отметить страницу памяти 1 занятой
+                MARK_RAM PAGE_2, MemBank_02, BankSize                           ; отметить страницу памяти 2 занятой
+                MARK_RAM PAGE_3, MemBank_03, BankSize                           ; отметить страницу памяти 3 занятой
+                ; MARK_RAM PAGE_4, MemBank_03, BankSize                           ; отметить страницу памяти 4 занятой
+                MARK_RAM PAGE_5, MemBank_01, BankSize                           ; отметить страницу памяти 5 занятой
+                ; MARK_RAM PAGE_6, MemBank_03, BankSize                           ; отметить страницу памяти 6 занятой
+                MARK_RAM PAGE_7, MemBank_03, BankSize                           ; отметить страницу памяти 7 занятой
+
+                ; подготовка и загрузка кернеля
+                SET_LOAD_ASSETS ASSETS_ID_KERNEL, Page.Kernel, Adr.Kernel
+                LOAD_ASSETS ASSETS_ID_KERNEL
 
                 ; переход по точке входа
                 LD SP, Adr.StackTop
                 JP Adr.EntryPoint
 Data:
 .Memory         include "Source/Memory/Determine.asm"
+.KernelMinimal  include "Builder/Assets/Code/Original/Kernel/Pack_KernelMinimal.inc"    ; минимальный блок кернела
 .EntryPoint     include "Source/EntryPoint/Include.inc"                         ; точка входа
-.TR_DOS         include "Source/TR-DOS/Include.inc"                             ; драйвер TR-DOS
+.TRDOS          include "Source/TR-DOS/Include.inc"                             ; драйвер TR-DOS
+
 EndBoot:        DB #0D                                                          ; конец строки
                 DB #00, #14                                                     ; номер строки 20
                 DB #2A, #00                                                     ; длина строки 42 байта

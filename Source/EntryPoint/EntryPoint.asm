@@ -13,5 +13,6 @@ EntryPoint:     EI
                 HALT
 
                 ; инициализация
+                CALL ExecuteModule.Core                                         ; инициализация ядра
 
                 endif ; ~_ENTRY_POINT_

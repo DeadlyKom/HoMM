@@ -70,7 +70,7 @@ CheckError:     DI
                 POP HL
 
                 ; DE - координаты в знакоместах (D - y, E - x)
-                LD D, (ERR_WIN_PIX_Y + 16) >> 3
+                LD D, (Window.PosY + 16) >> 3
 
 .Draw           ; отображение строки
                 PUSH HL

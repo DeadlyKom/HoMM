@@ -146,7 +146,7 @@ CalcAvailableMem; FAssets.Address.Page - номер страницы
 ; -----------------------------------------
 CopyAssetsData: PUSH IX
                 POP HL
-                LD DE, GameConfig.Assets
+                LD DE, GameState.Assets
                 LD BC, FAssets
                 LDIR
                 RET

@@ -1,9 +1,8 @@
 
-                ifndef _KERNEL_INCLUDE_TR_DOS_
-                define _KERNEL_INCLUDE_TR_DOS_
+                ifndef _KERNEL_TR_DOS_
+                define _KERNEL_TR_DOS_
 TRDOS:
-.Startup        EQU 0;Bootloader.KernelMinimal.TRDOS.Startup
-.Shutdown       EQU 0;Bootloader.KernelMinimal.TRDOS.Shutdown
-.Jump3D13       EQU 0;Bootloader.KernelMinimal.TRDOS.Jump3D13
+.Initialize     EQU Bootloader.TRDOS.Initialize
+.Jump3D13       EQU Bootloader.TRDOS.Jump3D13
 
-                endif ; ~_KERNEL_INCLUDE_TR_DOS_
+                endif ; ~_KERNEL_TR_DOS_

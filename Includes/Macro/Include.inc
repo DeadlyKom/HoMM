@@ -4,7 +4,7 @@
 
                 include "Debug.inc"
                 include "Flags.inc"
-                ; include "Assets.inc"
+                include "Assets.inc"
                 include "Memory.inc"
                 include "Memset.inc"
                 include "Screen_.inc"

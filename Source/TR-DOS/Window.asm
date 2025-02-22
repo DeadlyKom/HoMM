@@ -36,7 +36,7 @@ OpenWindow:     SET_REG_ATTR_IPB A, BLACK, CYAN, 0
                 ;   SizeY?         - высота в пикселях
                 ;   Value?         - двухбайтное значение
                 ; -----------------------------------------
-                CLS_RECT SCR_ADR_BASE, ERR_WIN_PIX_X, ERR_WIN_PIX_Y >> 3, ERR_WIN_PIX_SX, ERR_WIN_PIX_SY, #0000
+                CLS_RECT SCR_ADR_BASE, Window.PosX, Window.PosY >> 3, Window.SizeX, Window.SizeY, #0000
                 
                 ; -----------------------------------------
                 ; заполнение прямоугольника атрибутом
@@ -49,8 +49,8 @@ OpenWindow:     SET_REG_ATTR_IPB A, BLACK, CYAN, 0
                 ; Note:
                 ; -----------------------------------------
                 SET_REG_ATTR_IPB A, BLACK, WHITE, 0
-                SCREEN_ATTR_ADR_REG DE, SCR_ADR_BASE, ERR_WIN_PIX_X-1, (ERR_WIN_PIX_Y >> 3) -1
-                LD BC, ((ERR_WIN_PIX_SX + 2) << 8) | (ERR_WIN_PIX_SY >> 3) + 2
+                SCREEN_ATTR_ADR_REG DE, SCR_ADR_BASE, Window.PosX-1, (Window.PosY >> 3) -1
+                LD BC, ((Window.SizeX + 2) << 8) | (Window.SizeY >> 3) + 2
                 JP AttributeRect
 ; -----------------------------------------
 ; скрытие окна
@@ -95,7 +95,7 @@ CloseWindow:    PUSH AF
 ; -----------------------------------------
 Message_RAI:    LD HL, Buffer
                 ; DE - координаты в знакоместах (D - y, E - x)
-                LD D, ERR_WIN_PIX_Y >> 3
+                LD D, Window.PosY >> 3
                 
 .Draw           ; проверка окончания сообщения
                 LD A, (HL)

@@ -142,7 +142,7 @@ GetPage:        PUSH HL
                 POP HL
                 RET
 
-                display " - Memory switch: \t\t\t\t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " byte(s)  ]"
+                display " - Memory switch:\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
                 endmodule
 
                 endif ; ~_MEMORY_SWITCH_

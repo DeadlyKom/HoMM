@@ -15,5 +15,6 @@ REG_ASSETS_ID_DEBUG macro Label?
                     endm
 
                     REG_ASSETS_ID       ASSETS_ID_KERNEL                        ; кернел
+                    REG_ASSETS_ID       ASSETS_ID_CORE                          ; ядро
 
                 endif ; ~_CONST_ASSETS_REGISTER_

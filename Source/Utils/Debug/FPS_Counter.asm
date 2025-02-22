@@ -70,7 +70,7 @@ Render:         ; установка атрибут
                 LD A, #00
                 JP Console.DrawByte
 
-                display " - FPS_Counter: \t\t[DEBUG]\t\t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " byte(s)  ]"
+                display " - FPS_Counter: \t\t[DEBUG]\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
                 endmodule
 
                 endif ; ~_FPS_COUNTER_

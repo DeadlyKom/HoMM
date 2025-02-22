@@ -4,9 +4,15 @@
 
                 include "Render.inc"
                 include "Screen.inc"
+                include "TR-DOS.inc"
+                include "Memory.inc"
                 include "Convert.inc"
                 include "Interrupt.inc"
+                include "Functions.inc"
                 include "MemoryPages.inc"
+                include "Decompressor.inc"
+                include "AssetsManager.inc"
+                include "ExecuteModule.inc"
 
                 ifdef SHOW_FPS | _DEBUG
                 include "Console.inc"

@@ -21,6 +21,8 @@ Load:           ; расчёт адреса информации о ресурс
                 ADD IX, IX  ; x4
                 ADD IX, IX  ; x8
 
+                ASSETS_TRDOS                                                    ; перенос драйвера TR-DOS во временный буффер
+
                 LD HL, (IX + FAssets.Address.Adr)                               ; получения адреса в HL, если ресурс в памяти
                 RES ASSETS_MARKED_BIT, (IX + FAssets.Address.Page)              ; сброс флага невостребованный
 

@@ -173,7 +173,7 @@ SetScreenAdr:   LD (DrawChar.ScreenAdr), HL
 SetAttribute:   LD (DrawChar.Attribute), A
                 RET
 
-                display " - Console:\t\t\t\t\t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " byte(s)  ]"
+                display " - Console:\t\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
 
                 endmodule
 

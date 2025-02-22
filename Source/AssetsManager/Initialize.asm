@@ -16,11 +16,7 @@ Initialize:     ; загрузка данных с диска о ресурса�
                 LD DE, (TRDOS.CUR_SEC)                                          ; позиция головки дисковода из системной переменн
                 LD BC, (Assets.Sector << 8) | TRDOS.RD_SECTORS                  ; регистр B содержит кол-во секторов
                                                                                 ; регистр С — номер подпрограммы #05 (чтение секторов)
-                ; CALL TRDOS.Jump3D13                                             ; переход в TR-DOS
-
-                ; включить страницу расположения асет менеджера
-                LD A, Page.AssetManager
-                CALL SetPage
+                CALL TRDOS.EXE_CMD                                              ; переход в TR-DOS
 
                 ; очистка массива ассетов
                 LD HL, Adr.AssetsTable
@@ -97,7 +93,7 @@ Initialize:     ; загрузка данных с диска о ресурса�
                 DJNZ .Loop
                 POP AF                                                          ; освобожение 2х байт на вершине стека
 
-                display " - Assets manager initialize:\t\t\t\t", /A, Initialize, " = busy [ ", /D, $-Initialize, " byte(s)  ]"
+                display " - Assets manager initialize:\t\t\t\t\t\t= busy [ ", /D, $-Initialize, " byte(s) ]"
                 endmodule
 
                 endif ; ~ _ASSETS_MANAGER_INITIALIZE_

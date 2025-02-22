@@ -121,7 +121,7 @@ DrawToHiddenScreen LD A, (Adr.Port_7FFD)
                 LD (GameState.Screen), A
                 RET
  
-                display " - Pixel address: \t\t\t\t\t", /A, PixelAddressC, " = busy [ ", /D, $ - PixelAddressC, " byte(s)  ]"
+                display " - Pixel address:\t\t\t\t\t", /A, PixelAddressC, "\t= busy [ ", /D, $ - PixelAddressC, " byte(s)  ]"
                 endmodule
 
                 endif ; ~ _DRAW_UTILS_PIXEL_ADDRESS_

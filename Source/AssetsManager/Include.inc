@@ -13,7 +13,7 @@ Begin:          EQU $
                 include "Allocation.asm"
                 include "TryToFree.asm"
 Size            EQU $-Begin
-                display " - Assets manager: \t\t\t\t\t", /A, Begin, " = busy [ ", /D, Size, " byte(s)  ]"
+                display " - Assets manager: \t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, Size, " byte(s)  ]"
                 endmodule
 
                 endif ; ~ _ASSETS_MANAGER_INCLUDE_

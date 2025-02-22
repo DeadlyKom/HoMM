@@ -67,7 +67,7 @@ AttributePixel: LD A, D
                 LD D, A
                 RET
 
-                display " - Pixel attribute: \t\t\t\t\t", /A, PixelAttribute, " = busy [ ", /D, $ - PixelAttribute, " byte(s)  ]"
+                display " - Pixel attribute:\t\t\t\t\t", /A, PixelAttribute, "\t= busy [ ", /D, $ - PixelAttribute, " byte(s)  ]"
                 endmodule
 
                 endif ; ~ _DRAW_UTILS_PIXEL_ATTRIBUTE_
