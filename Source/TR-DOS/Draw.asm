@@ -37,14 +37,22 @@ DrawWindow:     LD HL, .Frame
 
                 ; -----------------------------------------
                 ; расчёт экраного адреса атрибутов
-                ; In:
-                ;   DE - координаты D - y (в знакоместах), E - x (в знакоместах)
-                ; Out:
-                ;   DE - адрес экрана атрибутов
-                ; Corrupt:
-                ;   AF
                 ; -----------------------------------------
-                CALL Convert.AttributeAdr
+
+                LD A, D
+                RRCA
+                RRCA
+                RRCA
+                LD D, A
+                XOR E
+                AND %11100000
+                XOR E
+                LD E, A
+                LD A, #40
+                OR D
+                AND %11000011
+                OR  %00011000
+                LD D, A
 
                 ; чтение размера прямоугольника
                 LD C, (HL)                                                      ; высота
@@ -191,6 +199,115 @@ NumToASCII:     LD BC, -10000
                 ADD A, '0'
                 LD (DE), A
                 INC DE
+                RET
+; -----------------------------------------
+; отображение символа
+; In:
+;   A  - ASCII номер символа
+; Out:
+; Corrupt:
+;   HL, DE, AF
+; Note:
+; -----------------------------------------
+DrawChar:       ; расчёт адреса символа
+                LD HL, #3D00 - 0x100
+                LD D, #00
+
+                ; DA = A * 8
+                ADD A, A    ; x2
+                ADD A, A    ; x4
+                RL D
+                ADD A, A    ; x8
+                RL D
+
+                ; сложение смещения и адреса
+                LD E, A
+                ADD HL, DE
+
+                ; адрес экрана
+.ScreenAdr      EQU $+1
+                LD DE, #0000
+
+.SkipAdjust		; вывод на экран
+                dup  7
+                LD A, (HL)
+                LD (DE), A
+                INC HL
+                INC D
+                edup
+                LD A, (HL)
+                LD (DE), A
+
+                ; -----------------------------------------
+                ; конверсия экраного адреса в адрес атрибутов
+                ; In:
+                ;   DE - адрес экрана
+                ; Out:
+                ;   DE - адрес экрана атрибутов
+                ; -----------------------------------------
+                LD A, D
+                RRA
+                RRA
+                AND #06
+                ADD A, #B0
+                RL D
+                RRA
+                LD D, A
+
+                EX DE, HL
+.Attribute      EQU $+1
+                LD (HL), #00
+
+                ; переход к следующему знакоместу
+                LD HL, .ScreenAdr
+                INC (HL)
+
+                RET
+; -----------------------------------------
+; установка курсора вывода
+; In:
+;   DE - координаты в знакоместах (D - y, E - x)
+; Out:
+; Corrupt:
+;   DE, AF
+; Note:
+; -----------------------------------------
+SetCursor:      CALL CharToScreen
+                LD (DrawChar.ScreenAdr), DE
+                RET
+; -----------------------------------------
+; установка атрибута вывода
+; In:
+;   A - атрибут вывода
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+SetAttribute:   LD (DrawChar.Attribute), A
+                RET
+; -----------------------------------------
+; расчёт экраного адреса
+; In:
+;   DE - координаты D - y (в знакоместах), E - x (в знакоместах)
+; Out:
+;   DE - адрес экрана пикселей
+; Corrupt:
+;   AF
+; Note:
+; -----------------------------------------
+CharToScreen:   LD A, D
+                RRCA
+                RRCA
+                RRCA
+                AND #E0
+                ADD A, E
+                LD E, A
+                LD A, #40
+                XOR D
+                AND %11100000
+                XOR D
+                AND %11111000
+                LD D, A
                 RET
 
                 endif ; ~ _TR_DOS_DRAW_

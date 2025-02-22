@@ -74,8 +74,7 @@ DOS_Return:     LD A, #01
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-DOS_RAI:        ;CALL OpenWindow.CLS                                             ; очистка окна
-                CALL Message_RAI                                                ; отображение RAI сообщения
+DOS_RAI:        CALL Message_RAI                                                ; отображение RAI сообщения
                 CALL DOS_Input                                                  ; ожидание нажатия клавиши RAI
                 JP CloseWindow                                                  ; завершить окно
 ; -----------------------------------------

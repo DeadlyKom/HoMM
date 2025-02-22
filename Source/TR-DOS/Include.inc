@@ -18,13 +18,15 @@ ENABLE_IM2      EQU 1 << ENABLE_IM2_BIT                                         
 DISABLE_IM2     EQU 0 << ENABLE_IM2_BIT                                         ; выключить прерывание по завершению работы с ПЗУ TR-DOS
 Begin:          EQU $
                 include "Draw.asm"
-                include "Error.asm"
+                include "CheckError.asm"
+                include "ErrorHandler.asm"
                 include "Window.asm"
                 include "Jump3D12.asm"
                 include "Initialize.asm"
 
                 ; флаи работы с TR-DOS
 Flags           DB DISABLE_IM2
+Buffer          DS 32, 0
 
 Size            EQU $-Begin
                 display " - TR-DOS:\t\t\t\t\t\t\t\t= busy [ ", /D, Size, " byte(s) ]"

@@ -8,7 +8,10 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-OpenWindow:     ; анимация открытия окна
+OpenWindow:     SET_REG_ATTR_IPB A, BLACK, CYAN, 0
+                CALL SetAttribute
+                
+                ; анимация открытия окна
                 LD BC, #0400
 
 .WindowLoop     PUSH BC
@@ -16,18 +19,14 @@ OpenWindow:     ; анимация открытия окна
                 ; отобразить текущий фрейм анимации окна
                 LD A, C
                 CALL DrawWindow
-
-                ; задержка
-                HALT
-                HALT
-                HALT
+                CALL Wait
 
                 POP BC
                 INC C                                                           ; следующий фрейм
                 DJNZ .WindowLoop
-                RET
-                ; JP_POP_PAGE                                                     ; восстановление номера страницы из стека
 
+                RET
+                
 .CLS            ; -----------------------------------------
                 ; очистка прямоугольной области экрана
                 ; In:
@@ -38,7 +37,7 @@ OpenWindow:     ; анимация открытия окна
                 ;   Value?         - двухбайтное значение
                 ; -----------------------------------------
                 CLS_RECT SCR_ADR_BASE, ERR_WIN_PIX_X, ERR_WIN_PIX_Y >> 3, ERR_WIN_PIX_SX, ERR_WIN_PIX_SY, #0000
-
+                
                 ; -----------------------------------------
                 ; заполнение прямоугольника атрибутом
                 ; In:
@@ -49,10 +48,9 @@ OpenWindow:     ; анимация открытия окна
                 ; Corrupt:
                 ; Note:
                 ; -----------------------------------------
-                SCREEN_ATTR_ADR_REG DE, SCR_ADR_BASE, ERR_WIN_PIX_X, ERR_WIN_PIX_Y >> 3
-                LD BC, (ERR_WIN_PIX_SX << 8) | (ERR_WIN_PIX_SY >> 3)
-                SET_REG_ATTR_IPB A, BLACK, CYAN, 0
-                CALL Console.SetAttribute
+                SET_REG_ATTR_IPB A, BLACK, WHITE, 0
+                SCREEN_ATTR_ADR_REG DE, SCR_ADR_BASE, ERR_WIN_PIX_X-1, (ERR_WIN_PIX_Y >> 3) -1
+                LD BC, ((ERR_WIN_PIX_SX + 2) << 8) | (ERR_WIN_PIX_SY >> 3) + 2
                 JP AttributeRect
 ; -----------------------------------------
 ; скрытие окна
@@ -61,53 +59,33 @@ OpenWindow:     ; анимация открытия окна
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-CloseWindow:    EI
-                PUSH AF
-
-                PUSH_PAGE                                                       ; сохранение номера страницы в стеке
-                CALL Convert.SetShadowScreen                                    ; установка работы с основным экраном по адресу #C000
-                SET_PAGE_VISIBLE_SCREEN                                         ; установка страницы видимого экрана
+CloseWindow:    PUSH AF
 
                 ; анимация открытия окна
                 LD BC, #0302
 
 .WindowLoop     PUSH BC
+
+                ; отобразить текущий фрейм анимации окна
                 LD A, C
                 PUSH AF
-                ; CALL RestoreScreen
-                
-                ; отобразить текущий фрейм анимации окна
+                CALL OpenWindow.CLS
                 POP AF
                 CALL DrawWindow
-
-                ; задержка
-                HALT
-                HALT
-                HALT
+                CALL Wait
 
                 POP BC
                 DEC C                                                           ; следующий фрейм
                 DJNZ .WindowLoop
 
-                ; CALL RestoreScreen
-
-                ; ; восстановление данных из временной области
-                ; SET_PAGE_4
-                ; LD HL, Adr.TemporaryBuffer
-                ; LD DE, Adr.SpriteInfoBuffer
-                ; LD BC, Size.TemporaryBuffer 
-                ; CALL Memcpy.FastLDIR
+                CALL OpenWindow.CLS
 
                 ; установка адреса временного буфера
-                LD HL, Adr.SharedBuffer
+                LD HL, Buffer
                 LD (Print.Buffer), HL
 
-                POP_PAGE                                                        ; восстановление номера страницы из стека
-
                 POP AF
-                DI
                 RET
-
 ; -----------------------------------------
 ; отображение сообщения RAI
 ; In:
@@ -115,21 +93,13 @@ CloseWindow:    EI
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Message_RAI:    ;PUSH_PAGE                                                       ; сохранение номера страницы в стеке
-                CALL Convert.SetShadowScreen                                    ; установка работы с основным экраном по адресу #C000
-                SET_PAGE_VISIBLE_SCREEN                                         ; установка страницы видимого экрана
-                
-                LD HL, Adr.SharedBuffer
-                LD A, (Console.Attribute)
-                LD (.DefaultAttr), A
-
+Message_RAI:    LD HL, Buffer
                 ; DE - координаты в знакоместах (D - y, E - x)
                 LD D, ERR_WIN_PIX_Y >> 3
                 
 .Draw           ; проверка окончания сообщения
                 LD A, (HL)
                 OR A
-                ; JP Z, Func.PopPage                                              ; восстановление номера страницы из стека
                 RET Z
 
                 ; проверка перехода на новую строку
@@ -142,14 +112,14 @@ Message_RAI:    ;PUSH_PAGE                                                      
 .DrawLine       ; отображение строки
                 PUSH DE
                 PUSH HL
-                CALL .GetLength
+                CALL GetLength
                 
                 ; выравнивание текста по горизонтали
                 LD A, 16
                 SRL C
                 SUB C
                 LD E, A
-                CALL Console.SetCursor
+                CALL SetCursor
 
                 POP BC
                 CALL .DrawString
@@ -175,16 +145,23 @@ Message_RAI:    ;PUSH_PAGE                                                      
                 POP AF
 
                 INC BC
-                CALL Console.DrawChar
-.DefaultAttr    EQU $+1
-                LD A, #00
-                CALL Console.SetAttribute
+                CALL DrawChar
+
+                SET_REG_ATTR_IPB A, BLACK, CYAN, 0
+                CALL SetAttribute
                 JR .DrawString
 
 .SetInputKey    SET_REG_ATTR_IPB A, BLACK, RED, 0
-                JP Console.SetAttribute
-
-.GetLength      LD C, #00
+                JP SetAttribute
+; -----------------------------------------
+; определение длины строки
+; In:
+; Out:
+; Corrupt:
+;   HL, C, AF
+; Note:
+; -----------------------------------------
+GetLength       LD C, #00
 .GetLengthLoop  LD A, (HL)
                 OR A
                 RET Z
@@ -195,5 +172,18 @@ Message_RAI:    ;PUSH_PAGE                                                      
                 INC C
                 INC HL
                 JR .GetLengthLoop
+; -----------------------------------------
+; задержка
+; In:
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+Wait:           LD BC, #3000
+.Loop           DEC BC
+                LD A, B
+                OR C
+                JR NZ, .Loop
+                RET
 
                 endif ; ~ _TR_DOS_WINDOW_

@@ -13,12 +13,14 @@ Jump3D13:       ; -----------------------------------------
                 ; -----------------------------------------
 
                 LD	(Shutdown.ContainerSP), SP
+                PUSH HL
+
+                ; установка адреса временного буфера
+                LD HL, Buffer
+                LD (Print.Buffer), HL
 
                 ; указать адрес перехода при ошибке
-                PUSH HL
-                LD HL, (BASIC.ERR_SP)
-                LD (Shutdown.ERR_SP), HL
-                LD HL, Shutdown.ErrorHandler
+                LD HL, CheckError
                 EX (SP), HL
                 LD (BASIC.ERR_SP), SP
 
@@ -65,19 +67,7 @@ Shutdown:       DI
                 LD IY, #0000
 .ContainerSP    EQU $+1
                 LD SP, #0000
-                RET
 
-.ErrorHandler   ; обработчик ошибки
-.ERR_SP         EQU $+1
-                LD HL, #0000
-                LD (BASIC.ERR_SP), HL
-
-                ; проверка на ошибку
-                LD A, (TRDOS.TRDOS_ERR)
-                OR A                                                            ; операция закончилась усмпешно
-                RET Z
-                
-                SCF                                                             ; операция закончилась с ошибкой
                 RET
 
                 endif ; ~ _TR_DOS_JUMP_3D13_
