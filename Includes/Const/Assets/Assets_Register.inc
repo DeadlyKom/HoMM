@@ -16,5 +16,6 @@ REG_ASSETS_ID_DEBUG macro Label?
 
                     REG_ASSETS_ID       ASSETS_ID_KERNEL                        ; кернел
                     REG_ASSETS_ID       ASSETS_ID_CORE                          ; ядро
+                    REG_ASSETS_ID       ASSETS_ID_WORLD                         ; мир
 
                 endif ; ~_CONST_ASSETS_REGISTER_

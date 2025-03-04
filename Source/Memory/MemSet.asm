@@ -16,27 +16,27 @@ Begin:          EQU $
 ;   адрес блока должен учитываться с размером заполняемой области
 ;   т.к. заполнение происходит используя стек и PUSH
 ; -----------------------------------------
-SafeFill_512:   RestoreDE
+SafeFill_512:   RESTORE_DE
                 LD (MS_ContainerSP), SP
                 LD SP, HL
                 JP MemSet_512
-SafeFill_256:   RestoreDE
+SafeFill_256:   RESTORE_DE
                 LD (MS_ContainerSP), SP
                 LD SP, HL
                 JP MemSet_256
-SafeFill_192:   RestoreDE
+SafeFill_192:   RESTORE_DE
                 LD (MS_ContainerSP), SP
                 LD SP, HL
                 JP MemSet_192
-SafeFill_128:   RestoreDE
+SafeFill_128:   RESTORE_DE
                 LD (MS_ContainerSP), SP
                 LD SP, HL
                 JP MemSet_128
-SafeFill_64:    RestoreDE
+SafeFill_64:    RESTORE_DE
                 LD (MS_ContainerSP), SP
                 LD SP, HL
                 JP MemSet_64
-SafeFill_32:    RestoreDE
+SafeFill_32:    RESTORE_DE
                 LD (MS_ContainerSP), SP
                 LD SP, HL
                 JP MemSet_32
@@ -60,7 +60,7 @@ SafeFill_1024:  LD IX, MemSet_128                                               
 ;   адрес блока должен учитываться с размером заполняемой области
 ;   т.к. заполнение происходит используя стек и PUSH
 ; -----------------------------------------
-SafeFill:       RestoreDE
+SafeFill:       RESTORE_DE
                 LD (.ContainerSP), SP
                 LD SP, HL
                 LD A, #23                                                       ; INC HL
@@ -79,7 +79,7 @@ SafeFill:       RestoreDE
                 LD (MS_ContainerSP + 0), HL
                 JP (IX)
 SafeFill_768:   ; 768
-                RestoreDE
+                RESTORE_DE
                 LD (MS_ContainerSP), SP
                 LD SP, HL
 MemSet_768:     dup 128                                                         ; 128 * 2 = 256 byte(s)

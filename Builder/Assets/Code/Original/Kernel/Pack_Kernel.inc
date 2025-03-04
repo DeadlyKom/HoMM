@@ -18,6 +18,9 @@ Begin:          EQU $
                 ; modules
                 include "Source/Modules/Include.inc"
 
+                ; input
+                include "Source/Input/Include.inc"
+
                 ifdef SHOW_FPS | _DEBUG
                 include "Source/Utils/Debug/Console.asm"
                 include "Source/Utils/Debug/FPS_Counter.asm"

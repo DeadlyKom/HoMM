@@ -4,6 +4,7 @@
 
                 include "Debug.inc"
                 include "Flags.inc"
+                include "Mouse.inc"
                 include "Assets.inc"
                 include "Memory.inc"
                 include "Memset.inc"

@@ -79,7 +79,7 @@ StartBoot:      DI
                 include "Source/AssetsManager/Initialize.asm"
 
                 ; отметить занятую область данными в доступной ОЗУ (принудительно)
-                ; MARK_RAM PAGE_0, MemBank_03, BankSize                           ; отметить страницу памяти 0 занятой
+                MARK_RAM PAGE_0, MemBank_03, BankSize                           ; отметить страницу памяти 0 занятой
                 ; MARK_RAM PAGE_1, MemBank_03, BankSize                           ; отметить страницу памяти 1 занятой
                 MARK_RAM PAGE_2, MemBank_02, BankSize                           ; отметить страницу памяти 2 занятой
                 MARK_RAM PAGE_3, MemBank_03, BankSize                           ; отметить страницу памяти 3 занятой

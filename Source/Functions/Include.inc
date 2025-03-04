@@ -8,7 +8,7 @@ Begin           EQU $
                 include "JumpPopPage.asm"
                 ; include "ExecuteAssetCode.asm"
 
-                display " - Functions:\t\t\t\t\t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " byte(s)  ]"
+                display " - Functions:\t\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
                 endmodule
 
                 endif ; ~_FUNCTIONS_INCLUDE_

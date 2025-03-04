@@ -2,7 +2,7 @@
                 ifndef _MODULE_CORE_INITIALIZE_CORE_
                 define _MODULE_CORE_INITIALIZE_CORE_
 ; -----------------------------------------
-; инициализация ядра
+; инициализация "ядра"
 ; In:
 ; Out:
 ; Corrupt:

@@ -133,7 +133,7 @@ CLS_LDIR        macro ScreenAddress?, Value?
 ; -----------------------------------------
 CLS_RECT        macro ScreenAddress?, X?, Y?, SizeX?, SizeY?, Value?
                 SCREEN_ADR_REG HL, (ScreenAddress?), ((X?) + (SizeX?)-1) << 3, ((((Y?)-1) << 3) + (SizeY?)) + 7
-                RestoreDE
+                RESTORE_DE
                 LD (.ContainerSP), SP
                 LD DE, Value?
 

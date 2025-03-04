@@ -10,5 +10,6 @@
                 include "Interrupt.inc"
 
                 include "Game/Include.inc"
+                include "Input/Include.inc"
 
                 endif ; ~_CONST_INCLUDE_

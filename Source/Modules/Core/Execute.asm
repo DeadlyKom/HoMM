@@ -2,7 +2,7 @@
                 ifndef _MODULE_CORE_EXECUTE_
                 define _MODULE_CORE_EXECUTE_
 ; -----------------------------------------
-; запуск инициализации ядра
+; запуск инициализации "ядра"
 ; In:
 ; Out:
 ; Corrupt:

@@ -12,7 +12,7 @@
 EntryPoint:     EI
                 HALT
 
-                ; инициализация
-                CALL ExecuteModule.Core                                         ; инициализация ядра
+                CALL ExecuteModule.Core                                         ; запуск "ядра"
+                CALL ExecuteModule.World                                        ; запуск "мира"
 
                 endif ; ~_ENTRY_POINT_

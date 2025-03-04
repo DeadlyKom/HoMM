@@ -23,5 +23,7 @@ ADD_ASSETS_DEBUG macro Bank?, Page?, ORG?, Include?
                 CREATE_ASSETS 2, Page.Kernel, Adr.Kernel, incbin "Builder/Assets/Code/Compressed/Kernel.pack.ar"
                 ; ASSETS_ID_CORE
                 ADD_ASSETS 1, Page.Core, Adr.Core, incbin "Builder/Assets/Code/Compressed/Core.pack.ar"
+                ; ASSETS_ID_WORLD
+                ADD_ASSETS 1, Page.World, Adr.World, incbin "Builder/Assets/Code/Compressed/world.pack.ar"
 
                 endif ; ~_BUILDING_ASSETS_DATA_0_
