@@ -8,6 +8,7 @@
                 include "Assets.inc"
                 include "Memory.inc"
                 include "Memset.inc"
+                include "TR-DOS.inc"
                 include "Screen_.inc"
                 include "Interrupt.inc"
 

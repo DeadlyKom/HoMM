@@ -9,6 +9,6 @@
 ; Note:
 ; -----------------------------------------
 Core:           BORDER WHITE                                                    ; установка бордюра
-                JR$
+                RET
 
                 endif ; ~_MODULE_CORE_INITIALIZE_CORE_

@@ -2,6 +2,7 @@
                 ifndef _CONST_INCLUDE_
                 define _CONST_INCLUDE_
 
+                include "TR-DOS.inc"
                 include "ZX-Color.inc"
                 
                 include "Memory/Include.inc"
