@@ -17,5 +17,7 @@ REG_ASSETS_ID_DEBUG macro Label?
                     REG_ASSETS_ID       ASSETS_ID_KERNEL                        ; кернел
                     REG_ASSETS_ID       ASSETS_ID_CORE                          ; ядро
                     REG_ASSETS_ID       ASSETS_ID_WORLD                         ; мир
+                    REG_ASSETS_ID       ASSETS_ID_TILE_BIOME_GRASS_SAND         ; графика тайлов биома "трава-песок"
+                    REG_ASSETS_ID       ASSETS_ID_MAP_DEBUG                     ; карта "отладочная"
 
                 endif ; ~_CONST_ASSETS_REGISTER_

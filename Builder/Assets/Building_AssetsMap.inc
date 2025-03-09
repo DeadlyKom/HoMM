@@ -50,6 +50,16 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     World.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - World\t\t\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_TILE_BIOME_GRASS_SAND, \
+                                    Biomes.Grass_Sand.Size, \
+                                    Biomes.Grass_Sand.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Graphic tile biome \'Grass-Sand\'\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_MAP_DEBUG, \
+                                    Map.Debug.Size, \
+                                    Map.Debug.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Map \'Debug\'\t\t\t\t\t"
 Num             EQU $ / 3                                                       ; количество ресурсов а карте
 Size            EQU (((Num % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Num >> 8)) << 8  ; размер карты ресурсов (кратный 256)
 Sector          EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)       ; размер карты ресурсов (в секторах)

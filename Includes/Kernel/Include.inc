@@ -2,6 +2,7 @@
                 ifndef _KERNEL_INCLUDE_
                 define _KERNEL_INCLUDE_
 
+                include "Draw.inc"
                 include "Input.inc"
                 include "Render.inc"
                 include "Screen.inc"

@@ -4,5 +4,6 @@
 
                 include "Game_State.inc"
                 include "Game_Hardware.inc"
+                include "Game_Screen_World.inc"
 
                 endif ; ~_CONST_GAME_INCLUDE_

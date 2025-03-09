@@ -21,6 +21,9 @@ Begin:          EQU $
                 ; input
                 include "Source/Input/Include.inc"
 
+                ; draw world
+                include "Source/Draw/World/Background/Include.inc"
+
                 ifdef SHOW_FPS | _DEBUG
                 include "Source/Utils/Debug/Console.asm"
                 include "Source/Utils/Debug/FPS_Counter.asm"

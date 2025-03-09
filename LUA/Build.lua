@@ -7,7 +7,7 @@
 		build = tonumber(fp:read("*all"))
 		assert(fp:close())
 		if type(build) == "nil" then
-		    build = 0
+		   return
 		end
 		build = build + 1;
 		sj.insert_define("BUILD", build)

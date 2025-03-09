@@ -5,7 +5,7 @@
                 struct FMapHeader                                               ; заголовок карты
 Size            FSize                                                           ; размер карты
 PlayersMAX      DB #00                                                          ; максимальное количество игроков на карте
-BiomeNum        DB #00                                                          ; количество биомов
+BiomeID         DB #00                                                          ; ассета ID тайлового биома
 BiomeOffset     DW #0000                                                        ; смещение до данных биома
 ObjectNum       DB #00                                                          ; количество объектов на карте
 ObjectOffset    DW #0000                                                        ; смещение до данных объектов

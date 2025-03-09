@@ -30,12 +30,14 @@
                 ; таблица смещений быстрого рассчёта положения тайла (256 байт)
 
                 module Page
+MapRaw          EQU PAGE_0
                 endmodule
 
                 module Size
                 endmodule
 
                 module Adr
+MapRaw          EQU #C000                                                       ; адрес карты сырых данных
 BiomeRenderBuf  EQU #C000                                                       ; адрес буфера рендер биома
 StaticRenderBuf EQU #C100                                                       ; адрес буфера рендер статических объектов
 DynamicRenderBuf EQU #C200                                                      ; адрес буфера рендер динамических объектов
