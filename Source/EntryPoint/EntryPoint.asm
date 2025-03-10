@@ -13,6 +13,7 @@ EntryPoint:     EI
                 HALT
 
                 CALL ExecuteModule.Core                                         ; запуск "ядра"
+                CALL ExecuteModule.LoadMap                                      ; загрузка карты
                 CALL ExecuteModule.World                                        ; запуск "мира"
 
                 endif ; ~_ENTRY_POINT_

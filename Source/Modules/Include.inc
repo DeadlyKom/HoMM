@@ -7,6 +7,7 @@
                 module Modules
 Begin           EQU $
                 include "Core/Execute.asm"
+                include "Map/Execute.asm"
                 include "World/Execute.asm"
 Size            EQU $-Begin
                 display " - Modules:\t\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, Size, " byte(s)  ]"

@@ -3,7 +3,7 @@
                 define _KERNEL_FUNCTIONS_
 Func
 .PopPage            EQU Kernel.Functions.PopPage                                ; востановление страницы
-; .ExeAssetCode       EQU Kernel.Functions.ExeAssetCode                           ; выполнить код ресурса (продвинутая компиляция кода)
+.ExeAssetCode       EQU Kernel.Functions.ExeAssetCode                           ; выполнить код ресурса (продвинутая компиляция кода)
 
 .JumpTable          EQU Kernel.Functions.JumpTable                              ; переход по таблице переходов
 .JumpTable.NoShift  EQU Kernel.Functions.JumpTable.NoShift                      ; переход по таблице переходов

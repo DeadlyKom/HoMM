@@ -75,10 +75,18 @@ SET_LOAD_ASSETS macro ID?, Page?, Address?
                 ;   B2-B0   [10..8]     - адрес
                 ;                         номер бита в байте (обратный)
 
+.Page           defl (Page?)
+.HighAddress    defl HIGH (Address?)
+                if .Page == PAGE_2 || .Page == PAGE_5
+.Page           = ASSETS_NOT_SWITCH
+                else
+.HighAddress    = 0xC0 | .HighAddress
+                endif
+
                 ; сохранение линейного адреса размещения ресурса
-                LD (IX + FAssets.Address.Page), Page?
+                LD (IX + FAssets.Address.Page), .Page
                 LD (IX + FAssets.Address.Adr.Low), LOW Address?
-                LD (IX + FAssets.Address.Adr.High), 0xC0 | HIGH Address?
+                LD (IX + FAssets.Address.Adr.High), .HighAddress
                 endm
 ; -----------------------------------------
 ; загрузка ресурса
