@@ -61,7 +61,12 @@ StartBoot:      DI
                 CALL Adr.SharedPoint
                 JP NC, Memory.InsufficientRAM                                   ; недостаточно памяти!
 
+                ; копирование битового массива доступного ОЗУ
                 SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
+                LD HL, Adr.ExtraBuffer
+                LD DE, Adr.AvailableMem
+                LD BC, Size.AvailableMem
+                LDIR
 
                 ; копирование кода в стеш
                 LD HL, Adr.ExtraBuffer

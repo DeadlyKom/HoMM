@@ -3,12 +3,28 @@
 ; -----------------------------------------
 ; расчёт адреса расположения ресурса
 ; In:
+;   ID? - идентификатор ресурса
 ; Out:
-;   IX - адрес структуры FAssets
+;   IX  - адрес структуры FAssets
 ; Corrupt:
 ; -----------------------------------------
 ASSETS_ADR      macro ID?
                 LD IX, Adr.AssetsTable | (ID? << 3)
+                endm
+; -----------------------------------------
+; расчёт адреса расположения ресурса
+; In:
+;   A  - идентификатор ресурса
+; Out:
+;   IX - адрес структуры FAssets
+; Corrupt:
+; -----------------------------------------
+ASSETS_ADR_A    macro
+                LD IXL, A
+                LD IXH, HIGH Adr.AssetsTable >> 3
+                ADD IX, IX  ; x2
+                ADD IX, IX  ; x4
+                ADD IX, IX  ; x8
                 endm
 ; -----------------------------------------
 ; перенос драйвера TR-DOS во временный буффер
@@ -87,6 +103,7 @@ SET_LOAD_ASSETS macro ID?, Page?, Address?
                 LD (IX + FAssets.Address.Page), .Page
                 LD (IX + FAssets.Address.Adr.Low), LOW Address?
                 LD (IX + FAssets.Address.Adr.High), .HighAddress
+                RES ASSETS_ALLOCATION_BIT, (IX + FAssets.Address.Page)          ; сброс флага (не требуется автоматическая аллокация)
                 endm
 ; -----------------------------------------
 ; загрузка ресурса
@@ -113,6 +130,41 @@ LOAD_ASSETS     macro ID?
                 CALL AssetsManager.Load                                         ; загрузка ресурса
                 CALL C, AssetsManager.TryToFree                                 ; попытка освободить память под ресурса, в случае ошибочной загрузки
                 DEBUG_BREAK_POINT_C                                             ; ошибка загрузки ресурса
+                endm
+; -----------------------------------------
+; загрузка ресурса
+; In:
+;   A - идентификатор ресурса
+;   IX  - адрес структуры FAssets
+; Out:
+; Corrupt:
+; -----------------------------------------
+LOAD_ASSETS_A   macro
+                ; -----------------------------------------
+                ; загрузка ресурса
+                ; In:
+                ;   A  - идентификатор ресурса
+                ; Out:
+                ;   HL - адрес загруженного ресурса
+                ;   IX - адрес структуры FAssets
+                ;   флаг переполнения установлен, если не удалось найти необходимого размера непрерывную область ОЗУ
+                ;   иначе установлена страница загруженного ресурса, рег. пара HL указывает адрес
+                ; Note:
+                ;   необходимо включить страницу с данными о доступной ОЗУ
+                ; -----------------------------------------
+                CALL AssetsManager.Load                                         ; загрузка ресурса
+                CALL C, AssetsManager.TryToFree                                 ; попытка освободить память под ресурса, в случае ошибочной загрузки
+                DEBUG_BREAK_POINT_C                                             ; ошибка загрузки ресурса
+                endm
+; -----------------------------------------
+; освобождение ресурса
+; In:
+;   A - идентификатор ресурса
+; Out:
+; Corrupt:
+; -----------------------------------------
+RELEASE_ASSET_A macro
+                CALL AssetsManager.ReleaseAsset
                 endm
 ; -----------------------------------------
 ; загрузка ресурса и запуск
@@ -142,6 +194,28 @@ EXE_ASSETS_NOT_PARAM macro ID?, Func?
                 PUSH HL
                 PUSH_PAGE                                                       ; сохранение номера страницы в стеке
                 LD HL, Func.PopPage
+                PUSH HL
+                LD A, Func?
+                PUSH AF
+                LD A, ID?
+.Continue       JP Func.ExeAssetCode
+                endm
+; -----------------------------------------
+; загрузка ресурса и запуск
+; In:
+;   SP+0 - первый параметр
+;   ID? - идентификатор ресурса
+;   IX  - адрес структуры FAssets
+; Out:
+; Corrupt:
+; -----------------------------------------
+EXE_ASSETS_ONE_PARAM macro ID?, Func?
+                LD HL, .Continue+3
+                EX (SP), HL
+                PUSH_PAGE                                                       ; сохранение номера страницы в стеке
+                PUSH HL
+                LD HL, Func.PopPage
+                EX (SP), HL
                 PUSH HL
                 LD A, Func?
                 PUSH AF

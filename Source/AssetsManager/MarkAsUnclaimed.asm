@@ -15,13 +15,7 @@
 ; -----------------------------------------
 MarkAsUnclaimed:PUSH AF
 
-                ; расчёт адреса информации о ресурсе
-                LD IXL, A
-                LD IXH, HIGH Adr.AssetsTable >> 3
-                ADD IX, IX  ; x2
-                ADD IX, IX  ; x4
-                ADD IX, IX  ; x8
-
+                ASSETS_ADR_A                                                    ; расчёт адреса информации о ресурсе
                 SET ASSETS_MARKED_BIT, (IX + FAssets.Address.Page)              ; установка флага невостребованный
 
                 POP AF

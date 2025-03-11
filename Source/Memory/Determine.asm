@@ -6,7 +6,7 @@
                 DISP Adr.SharedPoint
 Begin:          EQU $
 Const:          ; константные значения
-.MaxPages       EQU 8                                                           ; максимальное количество страниц памяти по 16кб
+.MaxPages       EQU MAX_PAGE                                                    ; максимальное количество страниц памяти по 16кб
 .MinPagesAllow  EQU 8                                                           ; минимальное допустимое количество страниц памяти по 16кб
 .CheckPageAdr   EQU #FFFF                                                       ; адрес для проверкаи записи/чтения номера страниц
 .INDEX_NONE     EQU #FF                                                         ; недоступный индекс
@@ -15,11 +15,19 @@ Const:          ; константные значения
 ; определение доступной памяти
 ; In:
 ; Out:
+;   A  - количество доступных страниц
 ;   флаг переполнения сброшен, если недостаточно памяти
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Determine:      ; проверка порта #7FFD
+Determine:      ; инициализация битового массива доступного ОЗУ (не доступно)
+                LD HL, Adr.ExtraBuffer
+                LD DE, Adr.ExtraBuffer+1
+                LD BC, Size.AvailableMem-1
+                LD (HL), C
+                LDIR
+                
+                ; проверка порта #7FFD
                 CALL CheckPort
                 CP Const.MinPagesAllow
                 SCF
@@ -60,6 +68,31 @@ CheckPort:      ; -----------------------------------------
                 LD A, (HL)
                 INC A
                 JR Z, .NextPage                                                 ; переход, если страница ранее была определена
+
+                ; отметить свободные ячейки соответствующее странице ОЗУ
+                PUSH HL
+                LD H, HIGH Adr.ExtraBuffer
+                ADD A, A    ; x2
+                ADD A, A    ; x4
+                ADD A, A    ; x8
+                LD L, A
+                XOR A
+                LD (HL), A
+                INC L
+                LD (HL), A
+                INC L
+                LD (HL), A
+                INC L
+                LD (HL), A
+                INC L
+                LD (HL), A
+                INC L
+                LD (HL), A
+                INC L
+                LD (HL), A
+                INC L
+                LD (HL), A
+                POP HL
 
                 ; фиксация новой страницы
                 EX AF, AF'
