@@ -1,9 +1,10 @@
 
-                ifndef _KERNEL_INCLUDE_MEMORY_
-                define _KERNEL_INCLUDE_MEMORY_
+                ifndef _KERNEL_MEMORY_
+                define _KERNEL_MEMORY_
 Memcpy:
 .FastLDIR       EQU Bootloader.KernelMinimal.Memcpy.FastLDIR                    ; копирование данных
-
+.FromPage       EQU Kernel.Memcpy.FromPage                                      ; копирование данных из страницы находясь в иной страничке
+.BetweenPages   EQU Kernel.Memcpy.BetweenPages                                  ; копирование большого блока между страничками, через буфер
 SafeFill:                                                                       ; заполнение блока памяти
 .Screen         EQU Bootloader.KernelMinimal.Memset.SafeFill_Screen
 .b4096          EQU Bootloader.KernelMinimal.Memset.SafeFill_4096
@@ -17,4 +18,4 @@ SafeFill:                                                                       
 .b64            EQU Bootloader.KernelMinimal.Memset.SafeFill_64
 .b32            EQU Bootloader.KernelMinimal.Memset.SafeFill_32
 
-                endif ; ~_KERNEL_INCLUDE_MEMORY_
+                endif ; ~_KERNEL_MEMORY_

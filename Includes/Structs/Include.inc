@@ -8,6 +8,8 @@
                 include "Assets.inc"
                 
                 include "Size.inc"
+                include "Map/Include.inc"
                 include "Game_State.inc"
+                include "Game_Session.inc"
 
                 endif ; ~_STRUCTS_INCLUDE_

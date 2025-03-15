@@ -18,6 +18,9 @@ Begin:          EQU $
                 ; modules
                 include "Source/Modules/Include.inc"
 
+                ; memory
+                include "Source/Memory/MemcpyPages.asm"
+
                 ; input
                 include "Source/Input/Include.inc"
 

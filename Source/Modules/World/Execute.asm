@@ -8,13 +8,9 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-World:          ; принудительная установка места загрузки ресурса
+World:          ; загрузка и запуск "мира"
                 SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
-                SET_LOAD_ASSETS ASSETS_ID_TILE_BIOME_GRASS_SAND, Page.TileSprites, Adr.TileSprites
-                LOAD_ASSETS ASSETS_ID_TILE_BIOME_GRASS_SAND                     ; загрузка ресурса графика тайлов биома "трава-песок"
-
-                SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
-                SET_LOAD_ASSETS ASSETS_ID_WORLD, Page.World, Adr.World
+                SET_LOAD_ASSETS ASSETS_ID_WORLD, Page.World, Adr.World          ; принудительная установка места загрузки ресурса
                 LOAD_EXE_ASSETS ASSETS_ID_WORLD                                 ; загрузка ресурса и запуск
 
                 endif ; ~_MODULE_WORLD_EXECUTE_

@@ -13,14 +13,16 @@
                 _pc("DB " .. height)                                            -- FMapHeader.Size.Y
                 endlua
 
-                DB #00                                                          ; FMapHeader.PlayersMAX
+                DB #00                                                          ; FMapHeader.Info.PlayersMAX
                 DB ASSETS_ID_TILE_BIOME_GRASS_SAND                              ; FMapHeader.BiomeID
-                DW Tile-$                                                       ; FMapHeader.BiomeOffset
+                DW Tile.Size                                                    ; FMapHeader.BiomeSize
+                DW Tile-$-1                                                     ; FMapHeader.BiomeOffset
                 DB #00                                                          ; FMapHeader.ObjectNum
                 DW #0000                                                        ; FMapHeader.ObjectOffset
                 DW #0000                                                        ; FMapHeader.Rules
 
 Tile            incbin "Builder/Assets/Metadata/Original/Map/Debug.array"
+Tile.Size       EQU $-Tile
 Size            EQU $
                 savebin "Builder/Assets/Metadata/Original/Map/Debug.map", 0, Size
                 shellexec "Tools\Compressor\salvador.exe -v Builder/Assets/Metadata/Original/Map/Debug.map Builder/Assets/Metadata/Compressed/Map/Debug.map.ar"
