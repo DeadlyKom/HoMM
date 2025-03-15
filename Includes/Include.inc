@@ -4,8 +4,8 @@
 
                 include "Const/Include.inc"
                 include "Macro/Include.inc"
-                include "Config/Include.inc"
                 include "Pages/Include.inc"
+                include "Config/Include.inc"
 
                 include "Kernel/Include.inc"
 

@@ -1,72 +1,72 @@
-                ifndef _MACRO_HARDWARE_
-                define _MACRO_HARDWARE_
+                ifndef _MACRO_SCROLL_
+                define _MACRO_SCROLL_
 ; -----------------------------------------
-; установка HL на Hardware флаги
+; установка HL на Input.Scroll флаги
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-HARDWARE_FLAGS  macro
-                LD HL, GameConfig.Hardware
+SCROLL_FLAGS  macro
+                LD HL, GameState.Input.Scroll
                 endm
 ; -----------------------------------------
-; прочитать значения Hardware флагов в аккумулятор
+; прочитать значения Input.Scroll флагов в аккумулятор
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-HARDWARE_FLAGS_A macro
-                LD A, (GameConfig.Hardware)
+SCROLL_FLAGS_A macro
+                LD A, (GameState.Input.Scroll)
                 endm
 ; -----------------------------------------
-; проверка Hardware флага
+; проверка Input.Scroll флага
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-CHECK_HARDWARE_FLAG macro FlagBit?
-                HARDWARE_FLAGS
+CHECK_SCROLL_FLAG macro FlagBit?
+                SCROLL_FLAGS
                 CHECK_FLAG (FlagBit?)
                 endm
 ; -----------------------------------------
-; проверка Hardware флагов
+; проверка Input.Scroll флагов
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-CHECK_HARDWARE_FLAGS macro Flags?
-                HARDWARE_FLAGS_A
+CHECK_SCROLL_FLAGS macro Flags?
+                SCROLL_FLAGS_A
                 CHECK_FLAGS (Flags?)
                 endm
 ; -----------------------------------------
-; проверка Hardware флага используя аккумулятор
+; проверка Input.Scroll флага используя аккумулятор
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-CHECK_HARDWARE_FLAG_A macro FlagBit?
-                HARDWARE_FLAGS_A
+CHECK_SCROLL_FLAG_A macro FlagBit?
+                SCROLL_FLAGS_A
                 CHECK_FLAG_A (FlagBit?)
                 endm
 ; -----------------------------------------
-; установка Hardware флага
+; установка Input.Scroll флага
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-SET_HARDWARE_FLAG macro FlagBit?
-                HARDWARE_FLAGS
+SET_SCROLL_FLAG macro FlagBit?
+                SCROLL_FLAGS
                 SET_FLAG (FlagBit?)
                 endm
 ; -----------------------------------------
-; сброс Hardware флага
+; сброс Input.Scroll флага
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-RES_HARDWARE_FLAG macro FlagBit?
-                HARDWARE_FLAGS
+RES_SCROLL_FLAG macro FlagBit?
+                SCROLL_FLAGS
                 RES_FLAG (FlagBit?)
                 endm
 
-                endif ; ~_MACRO_HARDWARE_
+                endif ; ~_MACRO_SCROLL_

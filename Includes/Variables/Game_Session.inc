@@ -4,5 +4,8 @@
 GameSession     EQU Adr.GameSession                                             ; адрес структуры состояния сессии
 .MapInfo        EQU GameSession + FGameSession.MapInfo                          ; онформация о карте структура FMapInfo
 .MapSize        EQU GameSession + FGameSession.MapInfo.Size                     ; размер карты
+.MapSize.Width  EQU GameSession + FGameSession.MapInfo.Size.Width               ; размер карты по горизонтали
+.MapSize.Height EQU GameSession + FGameSession.MapInfo.Size.Height              ; размер карты по вертикали
+.WorldInfo      EQU GameSession + FGameSession.WorldInfo                        ; информация о "мире"
 
                 endif ; ~_VARIABLES_GAME_SESSION_

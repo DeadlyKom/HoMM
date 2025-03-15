@@ -37,8 +37,11 @@
 
         fp = assert(io.open(file_array, "wb"))
 
-        for i = 1, #numbers do
-            assert(fp:write(string.char(numbers[i])))
+        for y = 0, height-1 do
+            for x = 0, width-1 do
+                local index = (x * width + y) + 1
+                assert(fp:write(string.char(numbers[index])))
+            end
         end
 
 		assert(fp:flush())

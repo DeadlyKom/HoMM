@@ -14,5 +14,6 @@
 
                 ; include "Config/Include.inc"
                 include "Game/Include.inc"
+                include "Pages/Include.inc"
 
                 endif ; ~_MACRO_INCLUDE_

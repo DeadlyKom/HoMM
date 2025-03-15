@@ -97,6 +97,10 @@ StartBoot:      DI
                 SET_LOAD_ASSETS ASSETS_ID_KERNEL, Page.Kernel, Adr.Kernel
                 LOAD_ASSETS ASSETS_ID_KERNEL
 
+                ; подготовка и загрузка кода страницы 0
+                SET_LOAD_ASSETS ASSETS_ID_PAGE_0, Page.Page0, Adr.Code.Page0
+                LOAD_ASSETS ASSETS_ID_PAGE_0
+
                 ; переход по точке входа
                 LD SP, Adr.StackTop
                 JP Adr.EntryPoint

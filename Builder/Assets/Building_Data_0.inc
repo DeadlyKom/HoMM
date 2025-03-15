@@ -23,6 +23,8 @@ ADD_ASSETS_DEBUG macro Bank?, Page?, ORG?, Include?
                 CREATE_ASSETS 2, Page.Kernel, Adr.Kernel, incbin "Builder/Assets/Code/Compressed/Kernel.pack.ar"
                 ; ASSETS_ID_CORE
                 ADD_ASSETS 1, Page.Core, Adr.Core, incbin "Builder/Assets/Code/Compressed/Core.pack.ar"
+                ; ASSETS_ID_PAGE_0
+                ADD_ASSETS 3, Page.Page0, Adr.Code.Page0, incbin "Builder/Assets/Code/Compressed/Page0.pack.ar"
                 ; ASSETS_ID_MAP
                 ADD_ASSETS 1, Page.Map, Adr.Map, incbin "Builder/Assets/Code/Compressed/Map.pack.ar"
                 ; ASSETS_ID_WORLD
@@ -30,6 +32,6 @@ ADD_ASSETS_DEBUG macro Bank?, Page?, ORG?, Include?
                 ; ASSETS_ID_TILE_BIOME_GRASS_SAND
                 ADD_ASSETS 3, Page.TileSprites, Adr.TileSprites, incbin "Builder/Assets/Graphics/Compressed/Biomes/Grass_Sand.pack.ar"
                 ; ASSETS_ID_MAP_DEBUG
-                ADD_ASSETS 3, Page.MapRaw, Adr.MapRaw, incbin "Builder/Assets/Metadata/Compressed/Map/Debug.map.ar"
+                ADD_ASSETS 3, PAGE_N, 0x0000, incbin "Builder/Assets/Metadata/Compressed/Map/Debug.map.ar"
 
                 endif ; ~_BUILDING_ASSETS_DATA_0_

@@ -10,5 +10,6 @@
 
                 include "KeyID.inc"
                 include "InputEnter.inc"
+                include "InputMovement.inc"
 
                 endif ; ~_CONST_INPUT_INCLUDE_

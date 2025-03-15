@@ -4,12 +4,17 @@
 
                 include "Value.inc"
                 include "Disk.inc"
+                include "Vector8.inc"
+                include "Vector16.inc"
                 include "Address.inc"
                 include "Assets.inc"
                 
                 include "Size.inc"
+                include "Keys.inc"
+                include "WorldInfo.inc"
                 include "Map/Include.inc"
                 include "Game_State.inc"
+                include "Game_Config.inc"
                 include "Game_Session.inc"
 
                 endif ; ~_STRUCTS_INCLUDE_

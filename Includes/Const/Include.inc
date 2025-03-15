@@ -8,6 +8,7 @@
                 include "Memory/Include.inc"
                 include "Assets/Include.inc"
 
+                include "Cursor.inc"
                 include "Interrupt.inc"
 
                 include "Game/Include.inc"

@@ -4,6 +4,7 @@
 
                 include "Draw.inc"
                 include "Input.inc"
+                include "World.inc"
                 include "Render.inc"
                 include "Screen.inc"
                 include "TR-DOS.inc"

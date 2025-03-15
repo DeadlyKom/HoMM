@@ -6,5 +6,6 @@
                 include "Interrupt.asm"
                 include "Input/Include.inc"
                 include "Render/Include.inc"
+                include "Tilemap/Include.inc"
 
                 endif ; ~_WORLD_INCLUDE_
