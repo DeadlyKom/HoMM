@@ -56,7 +56,7 @@ Tilemap:
                 LD SP, #0000
                 RET
 
-                display " - Memcpy tilemap:\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
+                display " - Memcpy tilemap:\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
 
                 endmodule
 

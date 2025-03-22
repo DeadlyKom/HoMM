@@ -11,6 +11,7 @@
                 
                 include "Size.inc"
                 include "Keys.inc"
+                include "Sprite.inc"
                 include "WorldInfo.inc"
                 include "Map/Include.inc"
                 include "Game_State.inc"

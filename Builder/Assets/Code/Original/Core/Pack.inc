@@ -11,6 +11,14 @@
                 display "\'Core\':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size, " byte(s) / free ", /D, Size.SharedPoint - Size, "]\t[", /D, Page.Core, "]\t ------------------------"
 Begin:          EQU $
                 include "Source/Modules/Core/Include.inc"
+
+                ; generator
+                include "Source/TableGeneration/TG_PRNG.asm"
+                include "Source/TableGeneration/TG_ScrAdr.asm"
+                include "Source/TableGeneration/TG_ByteMirror.asm"
+                include "Source/TableGeneration/TG_ShiftTable.asm"
+                include "Source/TableGeneration/TG_MultiplySpriteTable.asm"
+
 Size:           EQU $-Begin                                                     ; размер кода
                 
                 ifdef _REBUILD

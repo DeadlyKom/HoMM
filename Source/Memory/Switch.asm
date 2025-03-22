@@ -24,20 +24,25 @@ SetPageStack:   POP AF
 ; Note:
 ; -----------------------------------------
 SetPage:        PUSH HL
-                LD HL, Adr.Port_7FFD + 1
-                LD (HL), A
-                DEC L
+                LD BC, Adr.Port_7FFD + 1
+                LD (BC), A
+                DEC C
 
-                XOR (HL)
-                AND PAGE_MASK                                                   ; %11000111
-                XOR (HL)
-                LD (HL), A
+                ADD A, A    ; x2
+                LD L, A
+                LD H, HIGH Adr.MemoryMap
 
-                LD B, H
-                LD C, L
+                LD A, (BC)
+._5_bit         EQU $+1
+                AND PAGE_MASK_INV                                               ; %00111000
+                OR (HL)
+                LD (BC), A
                 OUT (C), A
+
+.Extended       ; дополнительный блок кода, дополняющий основную функцию переключения страниц памяти
                 POP HL
                 RET
+                DS 11, 0                                                        ; резервирование области для кода
 ; -----------------------------------------
 ; установка страницы видимого экрана
 ; In:

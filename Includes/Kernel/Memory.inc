@@ -3,7 +3,9 @@
                 define _KERNEL_MEMORY_
 Memcpy:
 .FastLDIR       EQU Bootloader.KernelMinimal.Memcpy.FastLDIR                    ; копирование данных
+.Sprite         EQU Kernel.Memcpy.Sprite                                        ; копирование спрайта во временный буфер
 .FromPage       EQU Kernel.Memcpy.FromPage                                      ; копирование данных из страницы находясь в иной страничке
+
 .BetweenPages   EQU Kernel.Memcpy.BetweenPages                                  ; копирование большого блока между страничками, через буфер
 SafeFill:                                                                       ; заполнение блока памяти
 .Screen         EQU Bootloader.KernelMinimal.Memset.SafeFill_Screen

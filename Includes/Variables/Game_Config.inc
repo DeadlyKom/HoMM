@@ -12,5 +12,9 @@ GameConfig      EQU Adr.GameConfig                                              
 .KeyESC         EQU GameConfig + FGameConfig.Keys.ESC                           ; клавиша по умолчанию "выход"
 .Hardware       EQU GameConfig + FGameConfig.Hardware                           ; флаги ограничения железа
 .SpeedScroll    EQU GameConfig + FGameConfig.SpeedScroll                        ; скорость скролла тайловой карты
+.TopEdge        EQU GameConfig + FGameConfig.TopEdge                            ; верхняя грань видимой части
+.LeftEdge       EQU GameConfig + FGameConfig.LeftEdge                           ; левая грань видимой части
+.VisibleWidth   EQU GameConfig + FGameConfig.VisibleWidth                       ; ширина видимой части
+.VisibleHeight  EQU GameConfig + FGameConfig.VisibleHeight                      ; высота видимой части
 
                 endif ; ~_VARIABLES_GAME_CONFIG_

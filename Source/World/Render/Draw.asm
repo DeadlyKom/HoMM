@@ -46,10 +46,22 @@ Draw:           ; -----------------------------------------
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 RESTORE_BC                                                      ; защитная от порчи данных с разрешённым прерыванием
 
-                CALL Draw.Background                                            ; отображение фона мира "локация"
+                ; CALL Draw.Background                                            ; отображение фона мира "локация"
+                LD HL, TestSprite
+                CALL Draw.Sprite
 
                 RES_ALL_MAIN_FLAGS                                              ; сброс всех флагов
                 SET_RENDER_FLAG FINISHED_BIT                                    ; установка флага завершения отрисовки
                 RET
+
+TestSprite      FSprite {{8, 8, 0, 0}, SPR_OR_XOR | PAGE_5, #C000 | $+3}
+                DB %11111111, %00000000
+                DB %11111111, %01111110
+                DB %11111111, %01111110
+                DB %11111111, %01111110
+                DB %11111111, %01111110
+                DB %11111111, %01111110
+                DB %11111111, %01111110
+                DB %11111111, %00000000
 
                 endif ; ~_WORLD_RENDER_DRAW_

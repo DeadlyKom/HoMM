@@ -20,11 +20,16 @@ Begin:          EQU $
 
                 ; memory
                 include "Source/Memory/MemcpyPages.asm"
+                include "Source/Memory/MemcpySprite.asm"
+
+                ; math
+                include "Source/Math/RNG/Rand8.asm"
 
                 ; input
                 include "Source/Input/Include.inc"
 
                 ; draw world
+                include "Source/Draw/Sprite/Include.inc"
                 include "Source/Draw/World/Background/Include.inc"
 
                 ifdef SHOW_FPS | _DEBUG
