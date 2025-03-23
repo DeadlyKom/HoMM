@@ -224,7 +224,11 @@ _1FFD:          LD HL, SetPage_1FFD
 ; -----------------------------------------
 _7FFD:          ; проверка наличия порта #EFF7, включением 0-ой страницу ОЗУ в область #0000..#3FFF
                 LD BC, PORT_EFF7
+                ifdef _DEBUG
+                LD A, SET_RAM_To_ROM | DISABLE_TURBO
+                else
                 LD A, SET_RAM_To_ROM
+                endif
                 OUT (C), A
 
                 ; проверка записи в установленную 0-ю страницу ОЗУ в области #0000..#3FFF
@@ -235,7 +239,11 @@ _7FFD:          ; проверка наличия порта #EFF7, включе
                 JR NZ, .SetPort                                                 ; переход, если порт отсутствует
                 
                 ; сброс порта, отключение 0-ой страницы ОЗУ в области #0000..#3FFF
+                ifdef _DEBUG
+                LD A, DISABLE_TURBO
+                else
                 XOR A
+                endif
                 OUT (C), A
 
                 ; установка вспомогательного флага наличия порта #EFF7
@@ -497,7 +505,7 @@ SetPort_7FFD    PUSH AF
 Determine.Size  EQU $-Begin
                 ENT
 
-                display "\t- Memory determine:\t\t\t\t", /A, Begin, " = busy [ ", /D, $-Begin, " byte(s)  ]"
+                display "\t- Memory determine:\t\t\t\t", /A, Begin, " = busy [ ", /D, Determine.Size, " byte(s)  ]"
                 endmodule
 
                 endif ; ~ _MEMORY_DETERMINE_

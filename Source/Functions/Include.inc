@@ -4,6 +4,7 @@
 
                 module Functions
 Begin           EQU $
+                include "Delay.asm"
                 include "JumpTable.asm"
                 include "JumpPopPage.asm"
                 include "ExecuteAssetCode.asm"

@@ -1,5 +1,5 @@
-                ifndef _MACRO_HARDWARE_
-                define _MACRO_HARDWARE_
+                ifndef _MACRO_CONFIG_HARDWARE_
+                define _MACRO_CONFIG_HARDWARE_
 ; -----------------------------------------
 ; установка HL на Hardware флаги
 ; In:
@@ -69,4 +69,4 @@ RES_HARDWARE_FLAG macro FlagBit?
                 RES_FLAG (FlagBit?)
                 endm
 
-                endif ; ~_MACRO_HARDWARE_
+                endif ; ~_MACRO_CONFIG_HARDWARE_

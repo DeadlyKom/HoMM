@@ -44,11 +44,30 @@ Draw:           ; -----------------------------------------
                 CALL Tilemap.Update                                             ; обновление положение камеры
 
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
-                RESTORE_BC                                                      ; защитная от порчи данных с разрешённым прерыванием
 
-                ; CALL Draw.Background                                            ; отображение фона мира "локация"
+                ; пока нет восстановление информации под спрайтов
+                ; чистим весь экрна
+                LD HL, #D800
+                ADJUST_HIDDEN_SCR_ADR H                                         ; корректировка адреса скрытого экрана
+                LD DE, #0000
+                CALL SafeFill.Screen
+
+                RESTORE_BC                                                      ; защитная от порчи данных с разрешённым прерыванием
+                CALL Draw.Background                                            ; отображение фона мира "локация"
                 LD HL, TestSprite
                 CALL Draw.Sprite
+
+                ifdef _DEBUG
+                ; отображение позиции мыши на экране
+                LD DE, #1700
+                CALL Console.SetCursor
+                LD A, (Mouse.PositionX)
+                CALL Console.DrawByte
+                LD A, ','
+                CALL Console.DrawChar
+                LD A, (Mouse.PositionY)
+                CALL Console.DrawByte
+                endif
 
                 RES_ALL_MAIN_FLAGS                                              ; сброс всех флагов
                 SET_RENDER_FLAG FINISHED_BIT                                    ; установка флага завершения отрисовки
@@ -57,10 +76,10 @@ Draw:           ; -----------------------------------------
 TestSprite      FSprite {{8, 8, 0, 0}, SPR_OR_XOR | PAGE_5, #C000 | $+3}
                 DB %11111111, %00000000
                 DB %11111111, %01111110
-                DB %11111111, %01111110
-                DB %11111111, %01111110
-                DB %11111111, %01111110
-                DB %11111111, %01111110
+                DB %11000011, %01000010
+                DB %11000011, %01000010
+                DB %11000011, %01000010
+                DB %11000011, %01000010
                 DB %11111111, %01111110
                 DB %11111111, %00000000
 

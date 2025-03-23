@@ -49,14 +49,14 @@
                 include "Includes/Include.inc"
 
                 display "-------------------------------------------------------------------------------------------------------------------------------"
-                display "Build version: ", /D, MAJOR,".", /D, MINOR, ".", /D, (BUILD / 256), " (", /D, BUILD, ")"
+                display "Build version: ", /D, MAJOR,".", /D, MINOR, ".", /D, ((BUILD / 3) / 256), " (", /D, (BUILD / 3), ")"
                 display "Building the TRD-image of the \'", TRD_FILENAME, "\' project ..."
                 display "-------------------------------------------------------------------------------------------------------------------------------"
 
                 include "Pack.inc"
                 include "Build.inc"
 
-                display "Build version: ", /D, MAJOR,".", /D, MINOR, ".", /D, (BUILD / 256), " (", /D, BUILD, ")"
+                display "Build version: ", /D, MAJOR,".", /D, MINOR, ".", /D, ((BUILD / 3) / 256), " (", /D, (BUILD / 3), ")"
                 display "-------------------------------------------------------------------------------------------------------------------------------"
 
                 endif ; ~_BUILDER_INCLUDE_

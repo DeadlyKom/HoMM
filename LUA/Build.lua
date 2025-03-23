@@ -1,4 +1,4 @@
-	lua pass3
+	lua allpass
 
 	function increase_build(fname)
 		local fp

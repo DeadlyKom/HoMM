@@ -2,7 +2,7 @@
                 ifndef _MACRO_INPUT_
                 define _MACRO_INPUT_
 ; -----------------------------------------
-; установка HL на Menu флаги
+; установка HL на Input флаги
 ; In:
 ; Out:
 ; Corrupt:
@@ -11,7 +11,7 @@ INPUT_FLAGS     macro
                 LD HL, GameState.Input
                 endm
 ; -----------------------------------------
-; прочитать значения Menu флагов в аккумулятор
+; прочитать значения Input флагов в аккумулятор
 ; In:
 ; Out:
 ; Corrupt:
@@ -20,7 +20,7 @@ INPUT_FLAGS_A   macro
                 LD A, (GameState.Input)
                 endm
 ; -----------------------------------------
-; проверка Menu флага
+; проверка Input флага
 ; In:
 ; Out:
 ; Corrupt:
@@ -30,7 +30,7 @@ CHECK_INPUT_FLAG macro FlagBit?
                 CHECK_FLAG (FlagBit?)
                 endm
 ; -----------------------------------------
-; проверка Menu флагов
+; проверка Input флагов
 ; In:
 ; Out:
 ; Corrupt:
@@ -40,7 +40,7 @@ CHECK_INPUT_FLAGS macro Flags?
                 CHECK_FLAGS (Flags?)
                 endm
 ; -----------------------------------------
-; проверка Menu флага используя аккумулятор
+; проверка Input флага используя аккумулятор
 ; In:
 ; Out:
 ; Corrupt:
@@ -50,7 +50,7 @@ CHECK_INPUT_FLAG_A macro FlagBit?
                 CHECK_FLAG_A (FlagBit?)
                 endm
 ; -----------------------------------------
-; установка Menu флага
+; установка Input флага
 ; In:
 ; Out:
 ; Corrupt:
@@ -60,7 +60,7 @@ SET_INPUT_FLAG  macro FlagBit?
                 SET_FLAG (FlagBit?)
                 endm
 ; -----------------------------------------
-; установка Menu флагов
+; установка Input флагов
 ; In:
 ; Out:
 ; Corrupt:
@@ -70,7 +70,7 @@ SET_INPUT_FLAGS macro Flags?
                 SET_FLAGS (Flags?)
                 endm
 ; -----------------------------------------
-; сброс Menu флага
+; сброс Input флага
 ; In:
 ; Out:
 ; Corrupt:
@@ -80,7 +80,7 @@ RES_INPUT_FLAG  macro FlagBit?
                 RES_FLAG (FlagBit?)
                 endm
 ; -----------------------------------------
-; сброс Menu флага
+; сброс Input флага
 ; In:
 ; Out:
 ; Corrupt:
@@ -90,7 +90,7 @@ RES_INPUT_FLAGS macro Flags?
                 RES_FLAGS (Flags?)
                 endm
 ; -----------------------------------------
-; сброс Menu флага
+; сброс Input флага
 ; In:
 ; Out:
 ; Corrupt:

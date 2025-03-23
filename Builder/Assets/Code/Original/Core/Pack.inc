@@ -18,7 +18,6 @@ Begin:          EQU $
                 include "Source/TableGeneration/TG_ByteMirror.asm"
                 include "Source/TableGeneration/TG_ShiftTable.asm"
                 include "Source/TableGeneration/TG_MultiplySpriteTable.asm"
-
 Size:           EQU $-Begin                                                     ; размер кода
                 
                 ifdef _REBUILD

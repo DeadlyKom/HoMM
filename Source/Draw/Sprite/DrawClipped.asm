@@ -1,6 +1,6 @@
 
-                ifndef _DRAW_SPRITE_CLIPPING_RELATIVE_TO_
-                define _DRAW_SPRITE_CLIPPING_RELATIVE_TO_
+                ifndef _DRAW_SPRITE_DRAW_CLIPPED_
+                define _DRAW_SPRITE_DRAW_CLIPPED_
 ; -----------------------------------------
 ; отсечение спрайта с последующим отображение
 ; In:
@@ -49,12 +49,17 @@ DrawClipped:    ; чтение размера спрайта
                 LD DE, #0000                                                    ; Position.X (позиция спрайта в мире)
                 ADD HL, DE
 
-                ; преобразование позиции спрайта в координаты видимой части тайловой карты
-                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)        ; позиция такйловой карты в знакоместах
-                RRA                                                             ; флаг С сброшен
-                LD D, A
-                LD E, #00
-                RR E
+                ; проверка достежения левой грани
+                EX DE, HL
+                LD A, (GameConfig.LeftEdge)
+                LD L, A
+                LD H, #00
+                ADD HL, HL  ; x2
+                ADD HL, HL  ; x4
+                ADD HL, HL  ; x8
+                ADD HL, HL  ; x16
+                EX DE, HL
+
                 SBC HL, DE
                 JP M, .LeftClip                                                 ; переход, если спрайт лежит левее относительно левой грани
 
@@ -67,14 +72,17 @@ DrawClipped:    ; чтение размера спрайта
 
                 ; преобразование позиции спрайта 12.4 к 8-битному (экранное значение)
                 ADD HL, HL  ; x2
+                LD E, H
                 ADD HL, HL  ; x4
                 ADD HL, HL  ; x16
                 ADD HL, HL  ; x32
-                ; H - позиция спрайта по горизонтали в пикселях
+                ; H - позиция спрайта по горизонтали в пикселях (левая грань спрайта)
 
-                LD A, (GameConfig.VisibleWidth)                                 ; ширина видимой области (SCR_WORLD_SIZE_X << 3) - 1
-                SUB H
-                RET C                                                           ; выход, если спрайт находится правее относительно правой грани
+                LD A, (GameConfig.VisibleWidth)                                 ; ширина видимой области SCR_WORLD_SIZE_X
+                LD L, A
+                LD A, E
+                SUB L
+                RET NC                                                           ; выход, если спрайт находится правее относительно правой грани
 
                 ; смещение видимой области
                 EX AF, AF'
@@ -83,6 +91,11 @@ DrawClipped:    ; чтение размера спрайта
                 EX AF, AF'
 
                 ; расчёт ширины невидимой части спрайта в пикселях
+                LD A, L                                                         ; ширина видимой области SCR_WORLD_SIZE_X
+                ADD A, A    ; x2
+                ADD A, A    ; x4
+                ADD A, A    ; x8
+                SUB H
                 NEG                                                             ; отрицательная доступная ширина видимой области
                 ADD A, C                                                        ; сумма отрицательной доступной ширины и ширины спрайта в пикселях
                 LD L, A
@@ -151,6 +164,7 @@ DrawClipped:    ; чтение размера спрайта
 
                 ; смещение видимой области
                 LD A, (GameConfig.LeftEdge)
+                ADD A, H
                 EX AF, AF'
 
                 ; A' - позиция спрайта по горизонтали в пикселях
@@ -200,12 +214,16 @@ DrawClipped:    ; чтение размера спрайта
                 LD DE, #0000                                                    ; Position.Y (позиция спрайта в мире)
                 ADD HL, DE
 
-                ; преобразование позиции спрайта в координаты видимой части тайловой карты
-                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)        ; позиция такйловой карты в знакоместах
-                RRA                                                             ; флаг С сброшен
-                LD D, A
-                LD E, #00
-                RR E
+                ; проверка достежени верхней грани
+                EX DE, HL
+                LD A, (GameConfig.TopEdge)
+                LD L, A
+                LD H, #00
+                ADD HL, HL  ; x2
+                ADD HL, HL  ; x4
+                ADD HL, HL  ; x8
+                ADD HL, HL  ; x16
+                EX DE, HL
                 SBC HL, DE
                 JP M, .TopClip                                                  ; переход, если спрайт лежит выше относительно верхней грани
 
@@ -223,9 +241,10 @@ DrawClipped:    ; чтение размера спрайта
                 ADD HL, HL  ; x32
                 ; H - позиция спрайта по вертикали в пикселях (верхняя грань спрайта)
 
-                LD A, (GameConfig.VisibleHeight)                                ; высота видимой области (SCR_WORLD_SIZE_Y << 3) - 1
+                LD A, (GameConfig.VisibleHeight)                                ; высота видимой области SCR_WORLD_SIZE_Y << 3
                 SUB H
                 RET C                                                           ; выход, если спрайт находится ниже относительно нижней грани
+                RET Z                                                           ; выход, если спрайт находится на нижней грани
 
                 ; смещение видимой области
                 EX AF, AF'
@@ -280,10 +299,11 @@ DrawClipped:    ; чтение размера спрайта
                 RET Z                                                           ; выход, если спрайт находится выше относительно верхней грани
 
                 ; расчёт высоты невидимой части спрайта в пикселях
-                SUB B
                 LD L, A
+                NEG
                 ADD A, B
-                LD B, A
+                LD B, L
+                LD L, A
 
                 ; смещение видимой области
                 LD A, (GameConfig.TopEdge)
@@ -303,12 +323,13 @@ DrawClipped:    ; чтение размера спрайта
                 ; C' - ширина невидимой части спрайта в знакоместах (-/+)
                 ; E  - позиции спрайта по горизонтали в пикселях
                 ; -----------------------------------------
-
+                LD A, B
                 EXX
+                LD B, A
 
                 ; защитная от порчи данных с разрешённым прерыванием
                 RESTORE_BC
-                LD (.ContainerSP), SP
+                LD (Exit.ContainerSP), SP
                 PUSH DE                                                         ; сохранение E - позиции спрайта по горизонтали в пикселях
 
                 ; -----------------------------------------
@@ -339,7 +360,7 @@ DrawClipped:    ; чтение размера спрайта
                 INC L                                                           ; FSprite выровнен по 8 байт
                 LD H, (HL)                                                      ; FSpriteData.Adr
                 LD L, A
-                PUSH HL
+                PUSH HL                                                         ; сохранение адреса спрайта
 
                 ; рассчёт адреса экранной области
                 LD H, HIGH Adr.ScrAdrTable
@@ -355,7 +376,7 @@ DrawClipped:    ; чтение размера спрайта
                 LD E, A
 
                 EXX
-                POP DE
+                POP DE                                                          ; восстановление адреса спрайта
 
                 ; округление до знакоместах
                 LD A, C                                                         ; ширины спрайта в пикселях
@@ -375,7 +396,7 @@ DrawClipped:    ; чтение размера спрайта
                 ADD A, A    ; %00rrrrr0
                 ADD A, A    ; %0rrrrr00
 .Flags          EQU $+1
-                LD H, #00
+                LD H, #00                                                       ; FSpriteData.Page
                 DEC C       ; началос с 1
                 OR C        ; %0rrrrrww
                 RLA         ; %rrrrrwwx
@@ -490,9 +511,9 @@ DrawClipped:    ; чтение размера спрайта
                 XOR C   ; %0Sddmww0
 
                 ; добавить смещение к таблице
-                ADD A, LOW (FuncTable - 2)
+                ADD A, LOW (Function.Table - 2)
                 LD L, A
-                ADC A, HIGH (FuncTable - 2)
+                ADC A, HIGH (Function.Table - 2)
                 SUB L
                 LD H, A
 
@@ -531,7 +552,7 @@ DrawClipped:    ; чтение размера спрайта
                 LD H, HIGH Adr.ByteMirrorTable
                 ADD A, A    ; x2
                 AND %00001110
-                ADD A, (HIGH Adr.ShiftTable) - 1                                ; таблица не хранит нулевое смещение
+                ADD A, (HIGH Adr.ShiftTable) - 2                                ; таблица не хранит нулевое смещение
                 LD D, A
                 EXX
 
@@ -547,7 +568,7 @@ DrawClipped:    ; чтение размера спрайта
 .SpriteAddress  EQU $+1
                 LD SP, #0000
                 JP (IX)                                                         ; отобращение спрайта
-
+Exit:           
 .ContainerSP    EQU $+1
                 LD SP, #0000
                 RET
@@ -563,23 +584,5 @@ DrawClipped:    ; чтение размера спрайта
                 ;
                 ; форма хранения спрайта:
                 ;   первый байт всегда отзеркален, что позволяет исключить два раза зеркалить и маску и спрайт
-FuncTable:      ; таблица функций со сдвигом (горизонталь, ширина спрайта в знакоместах)
-.LD             DW #0000, #0000, #0000, #0000       ; +
-.M_LD           DW #0000, #0000, #0000, #0000       ; -
-.OR_XOR         DW #0000, #0000, #0000, #0000       ; +
-.M_OR_XOR       DW #0000, #0000, #0000, #0000       ; +
-.LD_ATTR        DW #0000, #0000, #0000, #0000       ; +
-.M_LD_ATTR      DW #0000, #0000, #0000, #0000       ; -
-.OR_XOR_ATTR    DW #0000, #0000, #0000, #0000       ; +
-.M_OR_XOR_ATTR  DW #0000, #0000, #0000, #0000       ; -
-                ; таблица функций без сдвига (горизонталь, ширина спрайта в знакоместах)
-.LD_            DW #0000, #0000, #0000, #0000       ; +
-.M_LD_          DW #0000, #0000, #0000, #0000       ; -
-.OR_XOR_        DW #AA55, #0000, #0000, #0000       ; +
-.M_OR_XOR_      DW #0000, #0000, #0000, #0000       ; +
-.LD_ATTR_       DW #0000, #0000, #0000, #0000       ; +
-.M_LD_ATTR_     DW #0000, #0000, #0000, #0000       ; -
-.OR_XOR_ATTR_   DW #0000, #0000, #0000, #0000       ; +
-.M_OR_XOR_ATTR_ DW #0000, #0000, #0000, #0000       ; -
 
-                endif ; ~ _DRAW_SPRITE_CLIPPING_RELATIVE_TO_
+                endif ; ~ _DRAW_SPRITE_DRAW_CLIPPED_

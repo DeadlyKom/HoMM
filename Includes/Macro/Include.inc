@@ -11,6 +11,7 @@
                 include "TR-DOS.inc"
                 include "Screen_.inc"
                 include "Interrupt.inc"
+                include "Functions.inc"
 
                 ; include "Config/Include.inc"
                 include "Game/Include.inc"

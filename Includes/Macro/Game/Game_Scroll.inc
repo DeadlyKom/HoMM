@@ -6,7 +6,7 @@
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-SCROLL_FLAGS  macro
+SCROLL_FLAGS    macro
                 LD HL, GameState.Input.Scroll
                 endm
 ; -----------------------------------------
@@ -15,7 +15,7 @@ SCROLL_FLAGS  macro
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-SCROLL_FLAGS_A macro
+SCROLL_FLAGS_A  macro
                 LD A, (GameState.Input.Scroll)
                 endm
 ; -----------------------------------------

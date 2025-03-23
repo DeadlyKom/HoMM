@@ -6,6 +6,7 @@ GameState       EQU Adr.GameState                                               
 .Render         EQU GameState + FGameState.Render                               ; флаги отрисовки
 .Screen         EQU GameState + FGameState.Screen                               ; старший бит адрес экрана
 .Input          EQU GameState + FGameState.Input                                ; флаги ввода
+.Input.VK       EQU GameState + FGameState.Input.VK                             ; номер "виртуальной" клавишаи
 .Input.Value    EQU GameState + FGameState.Input.Value                          ; дополнительный флаг (см описание в структуре)
 .Input.HotKeys  EQU GameState + FGameState.Input.HotKeys                        ; флаг ввода горячих клавиш
 .Input.Scroll   EQU GameState + FGameState.Input.Scroll                         ; флаги ввода скролла карты

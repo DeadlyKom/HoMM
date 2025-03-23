@@ -4,7 +4,8 @@
 
                 module Sprite
 
-                include "ClippingRelativeTo.asm"
+                include "DrawClipped.asm"
+                include "Functions/Include.inc"
 
                 endmodule
 

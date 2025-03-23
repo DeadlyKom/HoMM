@@ -3,8 +3,9 @@
                 define _STRUCTS_KEYS_
 
                 struct FKeys
-.ESC            DB #00                                                          ; клавиша "выход"
+.Menu           DB #00                                                          ; клавиша "меню/пауза"
 .Acceleration   DB #00                                                          ; клавиша "ускорить"
+.ESC            DB #00                                                          ; клавиша "выход"
 .Select         DB #00                                                          ; клавиша "выбор"
 .Right          DB #00                                                          ; клавиша "вправо"
 .Left           DB #00                                                          ; клавиша "влево"
