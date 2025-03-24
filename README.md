@@ -25,6 +25,7 @@ P.S. Новые участники будут появляться по мере
 ![Heroe](https://github.com/user-attachments/assets/c07f2ede-1492-47e6-b930-1921fd68e23a)
 ![Heroe](https://github.com/user-attachments/assets/4e4ed956-34e5-479f-8ef8-0965090179e4)
 
+![Курсор](https://github.com/user-attachments/assets/fb96767d-c29d-425a-a928-5766cc96ae5c)
 ![Тайлы и предметы](https://github.com/user-attachments/assets/4afdaad8-3eed-48b5-ba80-cabce44ca145)
 
 ---
