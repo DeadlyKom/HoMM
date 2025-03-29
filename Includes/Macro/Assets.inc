@@ -301,6 +301,15 @@ EXE_ASSETS_NOT_PARAM macro ID?, Func?
                 LD A, ID?
 .Continue       JP Func.ExeAssetCode
                 endm
+JP_EXE_ASSETS_NOT_PARAM macro ID?, Func?
+                PUSH_PAGE                                                       ; сохранение номера страницы в стеке
+                LD HL, Func.PopPage
+                PUSH HL
+                LD A, Func?
+                PUSH AF
+                LD A, ID?
+.Continue       JP Func.ExeAssetCode
+                endm
 ; -----------------------------------------
 ; загрузка ресурса и запуск
 ; In:
@@ -314,6 +323,19 @@ EXE_ASSETS_ONE_PARAM macro ID?, Func?
                 LD HL, .Continue+3
                 EX (SP), HL
                 PUSH_PAGE                                                       ; сохранение номера страницы в стеке
+                PUSH HL
+                LD HL, Func.PopPage
+                EX (SP), HL
+                PUSH HL
+                LD A, Func?
+                PUSH AF
+                LD A, ID?
+.Continue       JP Func.ExeAssetCode
+                endm
+JP_EXE_ASSETS_ONE_PARAM macro ID?, Func?
+                CALL GetPage                                                    ; получение текущей страницы исходника
+                LD H, A
+                EX (SP), HL
                 PUSH HL
                 LD HL, Func.PopPage
                 EX (SP), HL

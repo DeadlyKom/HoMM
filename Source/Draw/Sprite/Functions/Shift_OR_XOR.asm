@@ -364,7 +364,7 @@ Shift_OX_Right:
                 LD (DE), A  ; запись байта в экран
                 JP NextRow
 
-Shift.Table:    
+Shift.Table:
                 DW Shift_OX_Left._x_x,      Shift_OX_Left._x_x                  ; -0.5 байт
 .OX_8           DW Shift_OX._xx,            Shift_OX._xx                        ;  1.0 байт
                 DW Shift_OX_Right._x_x,     Shift_OX_Right._x_x                 ; +0.5 байт

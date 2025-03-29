@@ -5,9 +5,11 @@
 SPR_ATTR_BIT    EQU 0x07                                                        ; флаг, спрайта с атрибутами
 SPR_DRAW_BIT    EQU 0x06                                                        ; тип вывода спрайта
 SPR_MIRROR_BIT  EQU 0x05                                                        ; флаг, зеркального отображения спрайта по горизонтали
-SPR_ATTR        EQU 1 << SPR_ATTR_BIT
-SPR_LD          EQU 0 << SPR_DRAW_BIT
-SPR_OR_XOR      EQU 1 << SPR_DRAW_BIT
-SPR_MIRROR      EQU 1 << SPR_MIRROR_BIT
+
+OR_XOR_SAVE     EQU 0x00 << SPR_MIRROR_BIT
+OR_XOR          EQU 0x02 << SPR_MIRROR_BIT
+M_OR_XOR        EQU 0x03 << SPR_MIRROR_BIT
+LD_ATTR         EQU 0x04 << SPR_MIRROR_BIT
+OR_XOR_ATTR     EQU 0x06 << SPR_MIRROR_BIT
 
                 endif ; ~_CONST_SPRITE_

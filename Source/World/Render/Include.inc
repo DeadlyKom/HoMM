@@ -5,6 +5,7 @@
                 module Render
 
                 include "Draw.asm"
+                include "Cursor.asm"
 
                 endmodule
 

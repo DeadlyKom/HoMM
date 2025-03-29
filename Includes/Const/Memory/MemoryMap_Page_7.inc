@@ -21,13 +21,14 @@ TileSprites     EQU PAGE_7
                 module Size
 ArrayAdrTileSpr EQU #0100                                                       ; размер массива адресов спрайтов тайлов (128 тайлов * 2 байта)
 TileSpritesAttr EQU #1200                                                       ; размер спрайтов тайлов (128 тайлов * 36 байт)
+TempBuffer      EQU #0100                                                       ; размер буфер для распаковки
                 endmodule
 
                 module Adr
 TileSprites     EQU #DB00
 ArrayAdrTileSpr EQU TileSprites                                                 ; адрес массива адресов спрайтов тайлов
 TileSpritesAttr EQU ArrayAdrTileSpr + Size.ArrayAdrTileSpr                      ; адрес спрайты тайлов
-
+TempBuffer      EQU #EE00                                                       ; буфер для распаковки
                 endmodule
 
                 endif ; ~_CONST_MEMORY_MAP_PAGE_7_

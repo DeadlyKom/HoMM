@@ -5,6 +5,7 @@
                 module Sprite
 
                 include "DrawClipped.asm"
+                include "RestoreBackground.asm"
                 include "Functions/Include.inc"
 
                 endmodule

@@ -9,7 +9,11 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-DrawClipped:    ; чтение размера спрайта
+DrawClipped:    ;
+                LD A, (RestoreRegister)
+                LD (Exit.RestoreReg), A
+
+                ; чтение размера спрайта
                 LD C, (HL)                                                      ; FSpriteInfo.Width
                 INC L                                                           ; FSprite выровнен по 8 байт
                 LD B, (HL)                                                      ; FSpriteInfo.Height
@@ -339,7 +343,7 @@ DrawClipped:    ; чтение размера спрайта
                 ;   +----+----+----+----+----+----+----+----+
                 ;
                 ;   D1,D0   [7,6]       - тип вывода спрайта
-                ;                           00 - LD
+                ;                           00 - OR & XOR с сохранением фона
                 ;                           01 - OR & XOR
                 ;                           10 - LD с атрибутами
                 ;                           11 - OR & XOR с атрибутами
@@ -347,9 +351,9 @@ DrawClipped:    ; чтение размера спрайта
                 ;   P4-P0   [4..0]      - страница хранения спрайта (32 страницы)
                 ; -----------------------------------------
                 LD A, (HL)                                                      ; FSpriteData.Page
+                INC L                                                           ; FSprite выровнен по 8 байт
                 PUSH AF
                 LD (.Flags), A
-                INC L                                                           ; FSprite выровнен по 8 байт
                 AND %00011111
                 PUSH BC
                 CALL SetPage                                                    ; установка страницы спрайта
@@ -374,6 +378,22 @@ DrawClipped:    ; чтение размера спрайта
                 LD L, E
                 OR (HL)
                 LD E, A
+                ; корректировка адреса вывода
+                LD A, (GameState.Screen)
+                XOR D
+                AND %10000000
+                XOR D
+                LD D, A
+                ; чтение выводимого пикселя
+                INC H
+                LD A, (HL)
+                LD (.Pixel), A
+                
+                LD HL, Adr.ExtraBuffer
+                LD (HL), E
+                INC L
+                LD (HL), D
+                INC L
 
                 EXX
                 POP DE                                                          ; восстановление адреса спрайта
@@ -381,6 +401,7 @@ DrawClipped:    ; чтение размера спрайта
                 ; округление до знакоместах
                 LD A, C                                                         ; ширины спрайта в пикселях
                 LD C, #00
+                OR A
                 RRA                                                             ; флаг С сброшен
                 ADC A, C
                 RRA
@@ -388,6 +409,11 @@ DrawClipped:    ; чтение размера спрайта
                 RRA
                 ADC A, C
                 LD C, A
+
+                EXX
+                LD (HL), A                                                      ; сохранение ширины спрайта в знакоместах
+                INC L
+                EXX
                 EX AF, AF'                                                      ; сохранение ширины спрайта в знакоместах
 
                 ; расчёт смещения от начала адреса спрайта
@@ -396,21 +422,27 @@ DrawClipped:    ; чтение размера спрайта
                 ADD A, A    ; %00rrrrr0
                 ADD A, A    ; %0rrrrr00
 .Flags          EQU $+1
-                LD H, #00                                                       ; FSpriteData.Page
+                LD H, #00   ; %ddmppppp                                         ; FSpriteData.Page
                 DEC C       ; началос с 1
                 OR C        ; %0rrrrrww
+                LD C, H     ; %ddmppppp                                         ; значение LD/OR & XOR
                 RLA         ; %rrrrrwwx
-                RL H        ; %rrrrrwwx : a
+                RL H        ; %rrrrrwwx : a                                     ; a - флаг атрибута
                 RRA         ; %arrrrrww
-                LD C, H     ; %dxxxxxxx                                         ; значение LD/OR & XOR
+                LD H, A     ; %arrrrrww
 
-                LD H, A
+                ; определение необходимости обрезать спрайт сверху
                 LD A, L
                 OR A
-                LD L, H
+                LD L, H     ; %arrrrrww
                 LD H, HIGH Adr.MultiplySprite
                 JR Z, .ToCopy
                 
+                ; определение спрайта с маской
+                LD A, C     ; %ddmppppp
+                AND %11100000
+                CP LD_ATTR
+
                 ; -----------------------------------------
                 ;      7    6    5    4    3    2    1    0
                 ;   +----+----+----+----+----+----+----+----+
@@ -424,7 +456,6 @@ DrawClipped:    ; чтение размера спрайта
                 ;   размер таблицы 256 байт
                 ; -----------------------------------------
                 LD A, (HL)
-                BIT 7, C                                                        ; слаг Z сброшен - LD, иначе OR & XOR
                 JR Z, $+3
                 ADD A, A                                                        ; ширина спрайта с маской (x2)
 
@@ -436,13 +467,25 @@ DrawClipped:    ; чтение размера спрайта
                 LD D, A
 
 .ToCopy         ; расчёт количество копируемых байт во временный буфер
-                LD A, B     ; %000rrrrr                                         ; новая высота спрайта видимой части спрайта в пикселях
+                LD A, B     ; %000rrrrr                                         ; новая высота видимой части спрайта в пикселях
+
+                EXX
+                LD (HL), A                                                      ; сохранение новой высота видимой части спрайта в пикселях
+                DEC L
+                EXX
+
                 DEC A       ; началос с 1
                 ADD A, A    ; %00rrrrr0
                 ADD A, A    ; %0rrrrr00
                 XOR L
                 AND %01111100
                 XOR L       ; %arrrrrww                                         ; rrrrr - новая высота видимой части спрайта
+                LD L, A
+
+                ; определение спрайта с маской
+                LD A, C     ; %ddmppppp
+                AND %11100000
+                CP LD_ATTR
 
                 ; -----------------------------------------
                 ;      7    6    5    4    3    2    1    0
@@ -456,9 +499,7 @@ DrawClipped:    ; чтение размера спрайта
                 ;
                 ;   размер таблицы 256 байт
                 ; -----------------------------------------
-                LD L, A
                 LD A, (HL)
-                BIT 7, C                                                        ; слаг Z сброшен - LD, иначе OR & XOR
                 JR Z, $+3
                 ADD A, A                                                        ; ширина спрайта с маской (x2)
 
@@ -476,7 +517,7 @@ DrawClipped:    ; чтение размера спрайта
                 ; -----------------------------------------
                 CALL Memcpy.Sprite
                 LD (.SpriteAddress), HL
-                SET_PAGE_HIDDEN_SCREEN                                          ; установка страницы скрытого экран
+                SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
 
                 EX AF, AF'                                                      ; восстановлени ширины спрайта в знакоместах
                 ADD A, A    ; %00000ww0
@@ -488,7 +529,7 @@ DrawClipped:    ; чтение размера спрайта
                 ;   +----+----+----+----+----+----+----+----+
                 ;
                 ;   D1,D0   [7,6]       - тип вывода спрайта
-                ;                           00 - LD
+                ;                           00 - OR & XOR с сохранением фона
                 ;                           01 - OR & XOR
                 ;                           10 - LD с атрибутами
                 ;                           11 - OR & XOR с атрибутами
@@ -498,17 +539,19 @@ DrawClipped:    ; чтение размера спрайта
                 POP DE  ; %ddmppppp
                 EXX
                 LD A, C                                                         ; ширина невидимой части спрайта в знакоместах (-/+)
+                OR A
                 EX AF, AF'                                                      ; сохранение ширины невидимой части спрайта в знакоместах (-/+)
-                INC H
-                LD A, (HL)                                                      ; вкл бит отображаемого пикселя
                 EXX
-                RLA     ; %xxxxxxxx : ? (если нет смещения 7 бит включён)
+.Pixel          EQU $+1                                                         ; если нет смещения 7 бит включён
+                LD A, #00
+                RLA     ; %xxxxxxxx : ?
                 LD A, D ; %ddmppppp
                 RRA     ; %Sddmpppp : p
                 RRA     ; %xSddmppp : p
                 XOR C
                 AND %01111000
                 XOR C   ; %0Sddmww0
+                LD C, D ; %ddmppppp
 
                 ; добавить смещение к таблице
                 ADD A, LOW (Function.Table - 2)
@@ -525,6 +568,19 @@ DrawClipped:    ; чтение размера спрайта
 
                 ; приведение к 16-битному значению
                 EX AF, AF'                                                      ; восстановление ширины невидимой части спрайта в знакоместах (-/+)
+                LD E, A
+
+                ; корректировка ширины спрайта 
+                EXX
+                OR A
+                JR Z, .SetWidth
+                JP M, .SetWidth
+                NEG
+.SetWidth       ADD A, (HL)
+                LD (HL), A                                                      ; сохранение ширины видимой части спрайта в знакоместах
+                EXX
+
+                LD A, E
                 ADD A, A    ; x2
                 ADD A, A    ; x4
                 LD E, A
@@ -547,13 +603,26 @@ DrawClipped:    ; чтение размера спрайта
                 LD A, (HL)
                 LD IYH, A
 
+                ; определение смешения
                 POP DE
                 LD A, E                                                         ; восстановление E - позиции спрайта по горизонтали в пикселях
-                LD H, HIGH Adr.ByteMirrorTable
+                AND %00000111
+                EXX
+                JR Z, $+3
+                INC (HL)
+                EXX
+                
                 ADD A, A    ; x2
-                AND %00001110
                 ADD A, (HIGH Adr.ShiftTable) - 2                                ; таблица не хранит нулевое смещение
                 LD D, A
+
+                ; определение адреса таблицы зеркальных байт/буфера
+                LD A, C     ; %ddmppppp
+                AND %11000000
+                LD H, HIGH Adr.ByteMirrorTable
+                JR NZ, $+6                                                      ; переход, если тип вывода спрайта безсохранения фона
+                LD HL, Adr.ExtraBuffer + 4
+                EX DE, HL                                                       ; HL - указывает на таблицу сдвига, DE - указывает на буфер
                 EXX
 
                 ; подготовка вывода
@@ -571,6 +640,9 @@ DrawClipped:    ; чтение размера спрайта
 Exit:           
 .ContainerSP    EQU $+1
                 LD SP, #0000
+.RestoreReg     EQU $+1
+                LD A, #00
+                LD (RestoreRegister), A
                 RET
 
                 ; HL  - адрес экрана (начало строки)

@@ -11,6 +11,7 @@
                 include "Setup.inc"
                 include "Cursor.inc"
                 include "Sprite.inc"
+                include "Gameplay.inc"
                 include "Interrupt.inc"
 
                 include "Game/Include.inc"

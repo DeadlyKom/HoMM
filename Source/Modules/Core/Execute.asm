@@ -11,6 +11,6 @@
 Core:           ; принудительная установка места загрузки ресурса
                 SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
                 SET_LOAD_ASSETS ASSETS_ID_CORE, Page.Core, Adr.Core
-                EXE_ASSETS_ONE_PARAM ASSETS_ID_CORE, Core.Kernel.Init           ; загрузка ресурса и запуск
+                JP_EXE_ASSETS_NOT_PARAM ASSETS_ID_CORE, Core.Kernel.Init        ; загрузка ресурса и запуск
 
                 endif ; ~_MODULE_CORE_EXECUTE_
