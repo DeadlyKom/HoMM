@@ -48,7 +48,9 @@ Cursor.Draw:    ; проверка бездействия курсора
                 ; установка прямого проход смены анимации
                 LD (HL), 8
                 DEC HL
-                JR .SetSubcounter
+                DEC HL
+                LD (HL), DURATION.IDLE_CURSOR
+                JR .Draw
 
 .SetAnimIdx     ; сохранение индекса анимации
                 DEC HL
