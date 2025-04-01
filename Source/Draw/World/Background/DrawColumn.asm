@@ -98,19 +98,11 @@ TO_ATTR_ADR     macro
                 LD D, H
                 LD E, L
 
-                LD A, H
-                RRA
-                RRA
-                AND #06
-                OR #B0
-                RL H
-                RRA
-                LD H, A
-
-                ; ; ToDo таблица
-                ; LD L, H
-                ; LD H, #00
-                ; LD H, (HL)
+                ; преобразование адрес экрана в атрибутный
+                LD L, D
+                LD H, HIGH Adr.ScrAttrAdrTable
+                LD H, (HL)
+                LD L, E
 
                 endm
 NEXT_ROW        macro

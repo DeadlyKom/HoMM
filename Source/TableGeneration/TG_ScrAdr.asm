@@ -37,7 +37,24 @@ TG_ScrAdr:      ; -----------------------------------------
                 XOR L
                 OR E
                 LD (HL), A
-                
+
+                ; преобразование адресов экрана в атрибутные
+                PUSH HL
+                ; корректировка для теневого экрана
+                LD L, A
+                RRA
+                RRA
+                RRA
+                AND #03
+                OR #D8
+                LD H, HIGH Adr.ScrAttrAdrTable
+                LD (HL), A
+                ; корректировка для основного экрана
+                RES 7, L
+                RES 7, A
+                LD (HL), A
+                POP HL
+
                 DEC H
                 INC L
                 DJNZ .RowLoop

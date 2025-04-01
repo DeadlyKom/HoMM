@@ -13,7 +13,7 @@ Begin:          EQU $
                 include "Source/Modules/Core/Include.inc"
 
                 ; generator
-                include "Source/TableGeneration/TG_PRNG.asm"
+                ; include "Source/TableGeneration/TG_PRNG.asm"                    ; пока отключена
                 include "Source/TableGeneration/TG_ScrAdr.asm"
                 include "Source/TableGeneration/TG_ByteMirror.asm"
                 include "Source/TableGeneration/TG_ShiftTable.asm"

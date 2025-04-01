@@ -21,7 +21,7 @@
                 ;   +-------+------------------------------------------+-------+
                 ;   | #6200 |                          ScrAdrTable.Pix | #0100 | ; таблица смещений адресов экрана, по горизонтали (пиксели в знакоместе)
                 ;   +-------+------------------------------------------+-------+
-                ;   | #6300 |                                     PRNG | #0100 | ; таблица генерации карты мира (https://www.random.org/)
+                ;   | #6300 |                          ScrAttrAdrTable | #0100 | ; таблица преобразование адресов экрана в атрибутные
                 ;   +-------+------------------------------------------+-------+
                 ;   | #6400 |                               ShiftTable | #0E00 | ; таблица сдвигов (7 сдвигов * 256 комбинаций * 2 байта результат)
                 ;   +-------+------------------------------------------+-------+
@@ -41,7 +41,7 @@
                 module Size
 Stack           EQU #00C4                                                       ; размер стека
 ScrAdrTable     EQU #0400                                                       ; размер таблицы адресов экрана
-PRNG            EQU #0100                                                       ; размер таблицы генерации карты мира (https://www.random.org/)
+ScrAttrAdrTable EQU #0100                                                       ; размер таблица преобразование адресов экрана в атрибутные
 ShiftTable      EQU #0E00                                                       ; размер таблицы сдвигов (7 сдвигов * 256 комбинаций * 2 байта результат)
 ByteMirrorTable EQU #0100                                                       ; размер таблицы зеркальных байт
 MultiplySprite  EQU #0100                                                       ; размер таблицы умножения для работы со спрайтами
@@ -58,8 +58,8 @@ StackTop        EQU #5E3C + Size.Stack                                          
 ScrAdrTable     EQU Adr.StackTop                                                ; адрес таблицы адресов экрана
 GameConfig      EQU Adr.ScrAdrTable + 0x00C0                                    ; адрес переменных конфигурации игры
 GameState       EQU Adr.ScrAdrTable + 0x01C0                                    ; адрес переменных состояние игры
-PRNG            EQU Adr.ScrAdrTable + Size.ScrAdrTable                          ; адрес таблицы генерации карты мира (https://www.random.org/)
-ShiftTable      EQU Adr.PRNG + Size.PRNG                                        ; адрес таблицы сдвигов
+ScrAttrAdrTable EQU Adr.ScrAdrTable + Size.ScrAdrTable                          ; адрес таблицы преобразования адресов экрана в атрибутные
+ShiftTable      EQU Adr.ScrAttrAdrTable + Size.ScrAttrAdrTable                  ; адрес таблицы сдвигов
 ByteMirrorTable EQU Adr.ShiftTable + Size.ShiftTable                            ; адрес таблицы зеркальных байт
 MultiplySprite  EQU Adr.ByteMirrorTable + Size.ByteMirrorTable                  ; адрес таблицы умножения для расчёта размера спрайта (без учёта маски)
 MemoryMap       EQU Adr.MultiplySprite + Size.MultiplySprite                    ; адрес массива хранения значений портов для переключения памяти

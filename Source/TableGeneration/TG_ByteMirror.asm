@@ -24,7 +24,7 @@ TG_ByteMirror:  ; инициализация генерации
 
                 RET
 
-                display "\t- Byte mirror generator:\t\t\t", /A, TG_PRNG, "\t= busy [ ", /D, $-TG_PRNG, " byte(s)  ]"
+                display "\t- Byte mirror generator:\t\t\t", /A, TG_ByteMirror, "\t= busy [ ", /D, $-TG_ByteMirror, " byte(s)  ]"
                 endmodule
 
                 endif ; ~ _TABLE_GENERATION_BYTE_MIRROR_

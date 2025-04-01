@@ -54,7 +54,7 @@ Core:           EI
                 ; инициализация
                 ; -----------------------------------------
                 CALL Input                                                      ; инициализация управления
-                CALL Core.Tables.TG_PRNG                                        ; генерация таблицы PRNG
+                ; CALL Core.Tables.TG_PRNG                                        ; пока отключена - генерация таблицы PRNG
                 CALL Core.Tables.TG_ScrAdr                                      ; генерация адресов экрана
                 CALL Core.Tables.TG_ShiftTable                                  ; генерация таблицы сдвигов
                 CALL Core.Tables.TG_ByteMirror                                  ; генерация таблицы зеркальных байт
