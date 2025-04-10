@@ -17,6 +17,8 @@ Input:          ; инициализация кемпстон мышки
 .MouseNotDetect
                 endif
 
+                CALL Cursor.InitAcceleration
+
                 ; инициализация кемпстон джойстика
                 CALL Kempston.Initialize
 

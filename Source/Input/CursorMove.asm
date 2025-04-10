@@ -9,7 +9,7 @@ MoveLeft:           LD HL, Mouse.PositionX
                     JR C, SetMouseLocationX                                     ; проверка на переполнение (курсор достиг левого края экрана)
                     XOR A                                                       ; фиксируем значение
 SetMouseLocationX:  LD (HL), A                                                  ; изменить значение положение мыши по оси X
-                    LD A, #FF
+                    XOR A
                     LD (Mouse.PositionFlag), A                                  ; установка флага изменения позиции мыши
                     RET
 
@@ -25,7 +25,7 @@ MoveUp:             LD HL, Mouse.PositionY
                     JR C, SetMouseLocationY                                     ; проверка на переполнение (курсор достиг верхнего края экрана)
                     XOR A                                                       ; фиксируем значение
 SetMouseLocationY:  LD (HL), A
-                    LD A, #FF
+                    XOR A
                     LD (Mouse.PositionFlag), A
                     RET
 
@@ -38,27 +38,27 @@ MoveDown:           LD HL, Mouse.PositionY
 .SetMaxLocationY    LD A, #BF                               ; фиксируем значение
                     JR SetMouseLocationY
 
-InitAcceleration:   LD A, (GameConfig.CursorSpeedMin)
+InitAcceleration:   LD A, (GameConfig.SpeedCursorMin)
 .Set                LD (Speed), A
                     NEG
                     LD (NegSpeed), A
                     RET
-AccelerateCursor:   LD HL, GameConfig.CursorSpeedMax
+AccelerateCursor:   LD HL, GameConfig.SpeedCursorMax
                     LD A, (Speed)
                     INC A
                     CP (HL)
                     RET NC
 
                     JR InitAcceleration.Set
-DecelerateCursor:   LD HL, GameConfig.CursorSpeedMin
+DecelerateCursor:   LD HL, GameConfig.SpeedCursorMin
                     LD A, (Speed)
                     DEC A
                     CP (HL)
                     RET C
 
                     JR InitAcceleration.Set
-Speed:              DB #04
-NegSpeed            DB #FC
+Speed:              DB #04                                                      ; 4
+NegSpeed            DB #FC                                                      ; -4
 
                     endmodule
 

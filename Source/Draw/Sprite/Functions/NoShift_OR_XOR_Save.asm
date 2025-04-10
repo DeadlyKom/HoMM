@@ -76,7 +76,7 @@ NoShift:
                 LD (DE), A
 ; NextRow:        ; новая строка
                 DEC C
-                JP Z, Kernel.Sprite.Exit
+                JP Z, Kernel.Sprite.DrawOR_XOR_Save.Exit
                 INC D
                 DJNZ .NextRow
 

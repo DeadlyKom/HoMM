@@ -32,6 +32,9 @@ Begin:          EQU $
                 include "Source/Draw/Sprite/Include.inc"
                 include "Source/Draw/World/Background/Include.inc"
 
+                ; chunk array
+                include "Source/ChunkArray/Include.inc"
+
                 ifdef SHOW_FPS | _DEBUG
                 include "Source/Utils/Debug/Console.asm"
                 include "Source/Utils/Debug/FPS_Counter.asm"

@@ -33,7 +33,7 @@ Handler:        ; ********** HANDLER IM 2 *********
                 ; ~ SAVE REGISTERS
 
 .SaveMemPage    ; ******** SAVE MEMORY PAGE *******
-                ; PUSH_PAGE                                                       ; сохранение номера страницы в стеке
+                PUSH_PAGE                                                       ; сохранение номера страницы в стеке
                 ; ~ SAVE MEMORY PAGE
 
 .TickCounter    ; ********** TICK COUNTER *********
@@ -58,7 +58,7 @@ Handler:        ; ********** HANDLER IM 2 *********
                 ; ~ PLAY MUSIC
 
 .RestoreMemPage ; ****** RESTORE MEMORY PAGE ******
-                ; POP_PAGE                                                        ; восстановление номера страницы из стека
+                POP_PAGE                                                        ; восстановление номера страницы из стека
                 ; ~ RESTORE MEMORY PAGE
 
 .RestoreReg     ; ******** RESTORE REGISTERS ******

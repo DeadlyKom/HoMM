@@ -17,5 +17,6 @@
                 include "Game_State.inc"
                 include "Game_Config.inc"
                 include "Game_Session.inc"
+                include "Object/Include.inc"
 
                 endif ; ~_STRUCTS_INCLUDE_

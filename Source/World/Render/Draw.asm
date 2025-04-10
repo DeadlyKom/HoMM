@@ -40,6 +40,7 @@ Draw:           ; -----------------------------------------
                 ; -----------------------------------------
 
                 SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
+                CALL Convert.DrawToHiddenScreen                                 ; установка работы функций со скрытым экраном
                 LD HL, (GameSession.WorldInfo + FWorldInfo.Tilemap)
                 CALL Tilemap.Update                                             ; обновление положение камеры
 
@@ -47,9 +48,12 @@ Draw:           ; -----------------------------------------
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 CALL Draw.Background                                            ; отображение фона мира "локация"
 
-                ; HALT
-                ; HALT
-                ; HALT
+                LD HL, #0600
+                LD (Kernel.Sprite.DrawClipped.PositionX), HL
+                LD (Kernel.Sprite.DrawClipped.PositionY), HL
+
+                LD HL, Teleport.Sprites
+                CALL Draw.Sprite
 
                 ifdef _DEBUG
                 ; отображение позиции мыши на экране
@@ -66,5 +70,7 @@ Draw:           ; -----------------------------------------
                 RES_ALL_MAIN_FLAGS                                              ; сброс всех флагов
                 SET_RENDER_FLAG FINISHED_BIT                                    ; установка флага завершения отрисовки
                 RET
+
+                include "Builder/Assets/Graphics/Original/Environment/Teleport/Include.inc"
 
                 endif ; ~_WORLD_RENDER_DRAW_

@@ -14,7 +14,9 @@
                 include "Gameplay.inc"
                 include "Interrupt.inc"
 
+                include "Map/Include.inc"
                 include "Game/Include.inc"
                 include "Input/Include.inc"
+                include "Object/Include.inc"
 
                 endif ; ~_CONST_INCLUDE_

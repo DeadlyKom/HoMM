@@ -80,7 +80,42 @@ Cursor.Draw:    ; проверка бездействия курсора
                 SUB L
                 LD H, A
 
+                LD DE, (Kernel.Sprite.DrawClipped.PositionX)                    ; !
+                PUSH DE
+                LD DE, (Kernel.Sprite.DrawClipped.PositionY)                    ; !
+                PUSH DE
+
+                EX DE, HL
+                LD A, (Mouse.PositionX)
+                LD L, A
+                LD H, #00
+                ADD HL, HL ; x2
+                ADD HL, HL ; x4
+                ADD HL, HL ; x8
+                ADD HL, HL ; x16
+                LD (Kernel.Sprite.DrawClipped.PositionX), HL
+
+                LD A, (Mouse.PositionY)
+                LD L, A
+                LD H, #00
+                ADD HL, HL ; x2
+                ADD HL, HL ; x4
+                ADD HL, HL ; x8
+                ADD HL, HL ; x16
+                LD (Kernel.Sprite.DrawClipped.PositionY), HL
+                EX DE, HL
+
+                LD A, (Kernel.Sprite.DrawClipped.Flags)                         ; !
+                PUSH AF
+                ; SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 CALL Draw.Sprite
+                POP AF
+                LD (Kernel.Sprite.DrawClipped.Flags), A  
+
+                POP DE
+                LD (Kernel.Sprite.DrawClipped.PositionY), DE
+                POP DE
+                LD (Kernel.Sprite.DrawClipped.PositionX), DE
                 
 .Screen         EQU $+1
                 LD A, #00
@@ -91,6 +126,7 @@ Cursor.Draw:    ; проверка бездействия курсора
 .SpriteIdx      DB #00
 .Direction      DB #08
 
+                align 8
                 include "Builder/Assets/Graphics/Original/Cursor/Include.inc"
 
                 endif ; ~_WORLD_RENDER_DRAW_CURSOR_

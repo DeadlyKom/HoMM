@@ -7,13 +7,15 @@
                 ;   +-------+------------------------------------------+-------+
 
                 ;   +-------+------------------------------------------+-------+
-                ;   | #BC00 |                              ExtraBuffer | #0100 |
+                ;   | #BB00 |                              ExtraBuffer | #0100 |
                 ;   +-------+------------------------------------------+-------+
-                ;   | #BD00 |                               SortBuffer | #0100 |
+                ;   | #BC00 |                               SortBuffer | #0100 |
                 ;   +-------+------------------------------------------+-------+
-                ;   | #BE00 |                             SharedBuffer | #0100 |
+                ;   | #BD00 |                             SharedBuffer | #0100 |
                 ;   +-------+------------------------------------------+-------+
-                ;   | #BF00 |                             RenderBuffer | #0100 |
+                ;   | #BE00 |                             RenderBuffer | #0100 |
+                ;   +-------+------------------------------------------+-------+
+                ;   | #BF00 |                            TilemapBuffer | #0100 |
                 ;   +-------+------------------------------------------+-------+
 
                 module Page
@@ -31,10 +33,11 @@ KernelMinimal   EQU Bootloader.KernelMinimal.Size                               
 Interrupt       EQU #8181                                                       ; адрес вектора прерывания
 KernelMinimal   EQU Adr.Interrupt                                               ; адрес блока кернела (минимальный)
 Kernel          EQU KernelMinimal + Size.KernelMinimal                          ; адрес блока кернела (основной)
-ExtraBuffer     EQU #BC00                                                       ; адрес дополнительного буфера
-SortBuffer      EQU #BD00                                                       ; адрес буфера сортировки
-SharedBuffer    EQU #BE00                                                       ; адрес буфера общего назначения
-RenderBuffer    EQU #BF00                                                       ; адрес буфера отображения
+ExtraBuffer     EQU #BB00                                                       ; адрес дополнительного буфера
+SortBuffer      EQU #BC00                                                       ; адрес буфера сортировки
+SharedBuffer    EQU #BD00                                                       ; адрес буфера общего назначения
+RenderBuffer    EQU #BE00                                                       ; адрес буфера отображения
+TilemapBuffer   EQU #BF00                                                       ; адрес буфера тайловов отображения
                 endmodule
 
                 endif ; ~_CONST_MEMORY_MAP_PAGE_2_

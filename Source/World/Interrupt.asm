@@ -8,7 +8,8 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Interrupt:      CALL Draw.Restore                                               ; восстановление фона под курсором
+Interrupt:      SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
+                CALL Draw.Restore                                               ; восстановление фона под курсором
 
                 ; проверка завершённости процесса отрисовки
                 CHECK_RENDER_FLAG FINISHED_BIT

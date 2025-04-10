@@ -26,5 +26,15 @@ DEBUG_BREAK_POINT_PO: macro
                 JP PO, $                                                        ; произошла ошибка
                 endif
                 endm
+DEBUG_BREAK_POINT_M: macro
+                ifdef _DEBUG
+                JP M, $                                                        ; произошла ошибка
+                endif
+                endm
+DEBUG_BREAK_POINT_P: macro
+                ifdef _DEBUG
+                JP P, $                                                         ; произошла ошибка
+                endif
+                endm
 
                 endif ; ~_MACRO_DEBUG_

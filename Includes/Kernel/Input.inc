@@ -34,5 +34,13 @@ Mouse:
 .DeltaOffsetY   EQU Kernel.Mouse.LastValue.DeltaOffsetY                         ; дельта смещения мышки по вертикали
 .PositionFlag   EQU Kernel.Mouse.PositionFlag                                   ; если курсор не поменяет позицию, хранит #FF
                 endif
+Cursor
+.MoveUp         EQU Kernel.Input.Cursor.MoveUp
+.MoveDown       EQU Kernel.Input.Cursor.MoveDown
+.MoveLeft       EQU Kernel.Input.Cursor.MoveLeft
+.MoveRight      EQU Kernel.Input.Cursor.MoveRight
+.InitAcceleration EQU Kernel.Input.Cursor.InitAcceleration                      ; инициализация скорости курсора
+.AccelerateCursor EQU Kernel.Input.Cursor.AccelerateCursor                      ; увеличить скорости курсора
+.DecelerateCursor EQU Kernel.Input.Cursor.DecelerateCursor                      ; уменьшить скорости курсора
 
                 endif ; ~_KERNEL_INPUT_

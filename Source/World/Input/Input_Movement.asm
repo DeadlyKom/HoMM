@@ -8,7 +8,25 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Movement.Left   LD HL, GameState.Input.Value
+Movement.Left   ; проверка достижения левого края карты
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
+                OR A
+                JP Z, Cursor.MoveLeft                                           ; переход, т.к. достигли левого края карты, доступно только перемещение курсора
+
+                ; проверка нажатия клавиши ускорения
+                LD HL, GameState.Input.Value
+                BIT ACCELERATE_CURSOR_BIT, (HL)
+                RES MOVEMENT_RIGHT_BIT, (HL)
+                JR NZ, .Force                                                   ; переход, нажата клавиша ускорения
+                CALL Cursor.MoveLeft
+
+                ; проверка достижения левого края
+                LD A, (Mouse.PositionX)
+                CP SCREEN_EDGE
+                RET NC                                                          ; выход, если достигли левого края карты
+
+.Force          ; принудительное смещение карты влево
+                LD HL, GameState.Input.Value
                 SET MOVEMENT_LEFT_BIT, (HL)
                 RET
 ; -----------------------------------------
@@ -18,7 +36,25 @@ Movement.Left   LD HL, GameState.Input.Value
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Movement.Right  LD HL, GameState.Input.Value
+Movement.Right  ; проверка достижения правого края карты
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
+                CP (64 - SCR_WORLD_SIZE_X) * 2 + 2 - 1
+                JP Z, Cursor.MoveRight                                          ; переход, т.к. достигли правого края карты, доступно только перемещение курсора
+
+                ; проверка нажатия клавиши ускорения
+                LD HL, GameState.Input.Value
+                BIT ACCELERATE_CURSOR_BIT, (HL)
+                RES MOVEMENT_LEFT_BIT, (HL)
+                JR NZ, .Force                                                   ; переход, нажата клавиша ускорения
+                CALL Cursor.MoveRight
+
+                ; проверка достижения правого края
+                LD A, (Mouse.PositionX)
+                CP SCREEN_CURSOR_X - SCREEN_EDGE
+                RET C                                                           ; выход, если достигли правого края карты
+
+.Force          ; принудительное смещение карты вправо
+                LD HL, GameState.Input.Value
                 SET MOVEMENT_RIGHT_BIT, (HL)
                 RET
 ; -----------------------------------------
@@ -28,7 +64,25 @@ Movement.Right  LD HL, GameState.Input.Value
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Movement.Up     LD HL, GameState.Input.Value
+Movement.Up     ; проверка достижения вверхнего края карты
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
+                OR A
+                JP Z, Cursor.MoveUp                                             ; переход, т.к. достигли вверхнего края карты, доступно только перемещение курсора
+
+                ; проверка нажатия клавиши ускорения
+                LD HL, GameState.Input.Value
+                BIT ACCELERATE_CURSOR_BIT, (HL)
+                RES MOVEMENT_DOWN_BIT, (HL)
+                JR NZ, .Force                                                   ; переход, нажата клавиша ускорения
+                CALL Cursor.MoveUp
+
+                ; проверка достижения верхнего края
+                LD A, (Mouse.PositionY)
+                CP SCREEN_EDGE
+                RET NC                                                          ; выход, если достигли верхнего края карты
+
+.Force          ; принудительное смещение карты вверх
+                LD HL, GameState.Input.Value
                 SET MOVEMENT_UP_BIT, (HL)
                 RET
 ; -----------------------------------------
@@ -38,7 +92,25 @@ Movement.Up     LD HL, GameState.Input.Value
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Movement.Down   LD HL, GameState.Input.Value
+Movement.Down   ; проверка достижения нижнего края карты
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
+                CP (64 - SCR_WORLD_SIZE_Y) * 2 + 1 - 1
+                JP Z, Cursor.MoveDown                                           ; переход, т.к. достигли нижнего края карты, доступно только перемещение курсора
+                
+                ; проверка нажатия клавиши ускорения
+                LD HL, GameState.Input.Value
+                BIT ACCELERATE_CURSOR_BIT, (HL)
+                RES MOVEMENT_UP_BIT, (HL)
+                JR NZ, .Force                                                   ; переход, нажата клавиша ускорения
+                CALL Cursor.MoveDown
+
+                ; проверка достижения нижнего края
+                LD A, (Mouse.PositionY)
+                CP SCREEN_CURSOR_Y - SCREEN_EDGE
+                RET C                                                           ; выход, если достигли нижнего края карты
+
+.Force          ; принудительное смещение карты вниз
+                LD HL, GameState.Input.Value
                 SET MOVEMENT_DOWN_BIT, (HL)
                 RET
 

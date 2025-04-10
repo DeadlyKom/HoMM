@@ -13,46 +13,33 @@ Scan:           ; проверка HardWare ограничения мыши
                 JR Z, .KeyCheck                                                 ; переход, если мышь недоступна
                 CALL Mouse.UpdateCursor                                         ; обновить положение курсора
 
-                ;
-                LD A, (Mouse.PositionX)
-                LD L, A
-                LD H, #00
-                ADD HL, HL ; x2
-                ADD HL, HL ; x4
-                ADD HL, HL ; x8
-                ADD HL, HL ; x16
-                LD (Kernel.Sprite.DrawClipped.PositionX), HL
-
-                LD A, (Mouse.PositionY)
-                LD L, A
-                LD H, #00
-                ADD HL, HL ; x2
-                ADD HL, HL ; x4
-                ADD HL, HL ; x8
-                ADD HL, HL ; x16
-                LD (Kernel.Sprite.DrawClipped.PositionY), HL
-
                 LD BC, Mouse.Position
 
                 LD A, (BC)                                                      ; позиция корсора по горизонтали
                 CP SCREEN_EDGE
-                CALL C, Movement.Left
+                CALL C, Movement.Left.Force
 
                 LD A, (BC)
                 CP SCREEN_CURSOR_X - SCREEN_EDGE
-                CALL NC, Movement.Right
+                CALL NC, Movement.Right.Force
 
                 INC BC
 
                 LD A, (BC)                                                      ; позиция корсора по вертикали
                 CP SCREEN_EDGE
-                CALL C, Movement.Up
+                CALL C, Movement.Up.Force
 
                 LD A, (BC)
                 CP SCREEN_CURSOR_Y - SCREEN_EDGE
-                CALL NC, Movement.Down
+                CALL NC, Movement.Down.Force
 
 .KeyCheck       ; проверка клавиш
+                LD A, (GameConfig.KeyAccel)
+                CALL Input.CheckKeyState
+                LD HL, GameState.Input.Value
+                RES ACCELERATE_CURSOR_BIT, (HL)
+                JR NZ, $+4
+                SET ACCELERATE_CURSOR_BIT, (HL)                                 ; установка флага, ускореное перемещение
 
                 ; опрос перемещения влево
                 LD A, (GameConfig.KeyLeft)
