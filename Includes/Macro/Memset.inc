@@ -41,6 +41,7 @@ MEMSET_BYTE:    macro Destination?, Value?, Size?
                 else
                 display "# set size: ", Size?
                 error "memset: is no suitable case!"
+                DS 3, 0     ; CALL xxxx
                 endif
                 endm
 JP_MEMSET_BYTE: macro Destination?, Value?, Size?
@@ -72,6 +73,7 @@ JP_MEMSET_BYTE: macro Destination?, Value?, Size?
                 else
                 display "# set size: ", Size?
                 error "memset: is no suitable case!"
+                DS 3, 0     ; CALL xxxx
                 endif
                 endm
 MEMSET_WORD:    macro Destination?, Value?, Size?
@@ -103,6 +105,7 @@ MEMSET_WORD:    macro Destination?, Value?, Size?
                 else
                 display "# set size: ", Size?
                 error "memset: is no suitable case!"
+                DS 3, 0     ; CALL xxxx
                 endif
                 endm
 JP_MEMSET_WORD: macro Destination?, Value?, Size?
@@ -134,6 +137,7 @@ JP_MEMSET_WORD: macro Destination?, Value?, Size?
                 else
                 display "# set size: ", Size?
                 error "memset: is no suitable case!"
+                DS 3, 0     ; CALL xxxx
                 endif
                 endm
 

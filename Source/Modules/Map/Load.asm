@@ -34,16 +34,16 @@ Load:           ; -----------------------------------------
                 ; загрузка ассета ID тайлового биома
                 LD E, (HL)
                 INC HL
+                PUSH HL
                 SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
                 SET_LOAD_ASSETS_REG E, Page.TileSprites, Adr.TileSprites        ; принудительная установка места загрузки ресурса
-                PUSH HL
                 LOAD_ASSETS_REG E                                               ; загрузка ресурса графика тайлов биома
-                POP HL
 
                 ; восстановление страницы расположения загруженого ассетаа карты
                 LD A, (MapPage)
                 CALL SetPage
 
+                POP HL
                 ; чтение длины блока данных биома (тайлы)
                 LD C, (HL)                                                      ; FMapHeader.BiomeSize.Low
                 INC HL
@@ -77,6 +77,24 @@ Load:           ; -----------------------------------------
                 ; -----------------------------------------
                 CALL ChunkArray.Initialize                                      ; первичная инициализация массива чанков
                                                                                 ; должна быть включена страница расположения карты
+                ; восстановление страницы расположения загруженого ассетаа карты
+                LD A, (MapPage)
+                CALL SetPage
+
+                POP HL
+                INC HL                                                          ; FMapHeader.DefaultSettings
+
+                ; загрузка ассета ID дефолтных настроек объектов
+                LD E, (HL)
+                PUSH HL
+                SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
+                SET_LOAD_ASSETS_REG E, Page.ObjectDefaultSettings, Adr.ObjectDefaultSettings ; принудительная установка места загрузки ресурса
+                LOAD_ASSETS_REG E                                               ; загрузка ресурса графика тайлов биома
+
+                ; восстановление страницы расположения загруженого ассетаа карты
+                LD A, (MapPage)
+                CALL SetPage
+
                 POP HL
                 INC HL                                                          ; FMapHeader.ObjectNum
                 CALL Load_Objects                                               ; инициализация объектов карты после загрузки

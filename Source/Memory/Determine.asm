@@ -503,9 +503,9 @@ SetPort_7FFD    PUSH AF
 
                 include "Source/Memory/Message_InsufficientRAM.asm"
 Determine.Size  EQU $-Begin
-                ENT
 
-                display "\t- Memory determine:\t\t\t\t", /A, Begin, " = busy [ ", /D, Determine.Size, " byte(s)  ]"
+                display "\t- Memory determine:\t\t\t\t\t\t= busy [ ", /D, Determine.Size, " byte(s) ]"
+                ENT
                 endmodule
 
                 endif ; ~ _MEMORY_DETERMINE_

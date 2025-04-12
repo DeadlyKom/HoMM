@@ -3,7 +3,7 @@
                 define _METADATA_MAP_DEBUG_OBJECTS_
 
                 FMapObject {
-                    MAP_OBJECT_TYPE_BIT,                                        ; тип объекта
+                    ODS_ID_TEST | MAP_OBJECT_STATIC,                            ; тип объекта
                     { 10 << 1, 10 << 1 }                                        ; позиция объекта на карте
                 }
 

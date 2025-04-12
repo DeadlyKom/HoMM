@@ -1,7 +1,8 @@
 
                 ifndef _CONST_SPRITE_
                 define _CONST_SPRITE_
-
+SPRITE_BUF_MAX  EQU 128                                                         ; максимальное количество спрайтов в буфере SpriteInfoBuffer
+SPRITE_SIZE     EQU 8                                                           ; размер структуры объекта FSprite
 SPR_ATTR_BIT    EQU 0x07                                                        ; флаг, спрайта с атрибутами
 SPR_DRAW_BIT    EQU 0x06                                                        ; тип вывода спрайта
 SPR_MIRROR_BIT  EQU 0x05                                                        ; флаг, зеркального отображения спрайта по горизонтали

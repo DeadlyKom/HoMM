@@ -8,7 +8,7 @@
                 
                 ; FMapHeader
                 lua allpass
-                local width, height = ConvertMapTilded("Tools/Tiled/DebugMap.tmx", "Builder/Assets/Metadata/Original/Map/Debug.array")
+                local width, height = ConvertMapTilded("Tools/Tiled/DebugMap.tmx", "Builder/Assets/Metadata/Original/Map/Debug.biome")
                 _pc("DB " .. width)                                             -- FMapHeader.Size.X
                 _pc("DB " .. height)                                            -- FMapHeader.Size.Y
                 endlua
@@ -17,11 +17,11 @@
                 DB ASSETS_ID_TILE_BIOME_GRASS_SAND                              ; FMapHeader.BiomeID
                 DW Tile.Size                                                    ; FMapHeader.BiomeSize
                 DW Tile-$-1                                                     ; FMapHeader.BiomeOffset
+                DB ASSETS_ID_DEFAULT_SETTINGS                                   ; FMapHeader.DefaultSettings
                 DB Objects.Num                                                  ; FMapHeader.ObjectNum
                 DW Objects-$-1                                                  ; FMapHeader.ObjectOffset
                 DW #0000                                                        ; FMapHeader.Rules
-
-Tile            incbin "Builder/Assets/Metadata/Original/Map/Debug.array"
+Tile            incbin "Builder/Assets/Metadata/Original/Map/Debug.biome"
 Tile.Size       EQU $-Tile
 Objects         include "Builder/Assets/Metadata/Original/Map/Debug.object"
 Objects.Size    EQU $-Objects

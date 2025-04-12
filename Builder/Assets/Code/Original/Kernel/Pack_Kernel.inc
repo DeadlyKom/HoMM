@@ -9,7 +9,7 @@
                                                                                 ; указан адрес следующий за минимальныйм кернелем
                 module Kernel
 
-                display "\'Kernel\':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size, " byte(s) / free ", /D, #4000 - ($ - #8000 + Size), "]\t[", /D, Page.Kernel, "]\t ------------------------"
+                display "\'Kernel\':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size + BufferSize/*размер кода и буферов*/, " byte(s) / free ", /D, #4000 - ($ - #8000 + Size + BufferSize), "]\t[", /D, Page.Kernel, "]\t ------------------------"
 Begin:          EQU $
 
                 ; functions
@@ -40,7 +40,15 @@ Begin:          EQU $
                 include "Source/Utils/Debug/FPS_Counter.asm"
                 endif
 Size:           EQU $-Begin                                                     ; размер кода
-                
+
+                display " - Sprite info buffer:\t\t\t\t", /A, Adr.SpriteInfoBuffer, "\t= busy [ ", /D, Size.SpriteInfoBuffer, " byte(s)  ]"
+                display " - Extra buffer:\t\t\t\t\t", /A, Adr.ExtraBuffer, "\t= busy [ ", /D, Size.ExtraBuffer, " byte(s)  ]"
+                display " - Sort buffer:\t\t\t\t\t", /A, Adr.SortBuffer, "\t= busy [ ", /D, Size.SortBuffer, " byte(s)  ]"
+                display " - Shared buffer:\t\t\t\t\t", /A, Adr.SharedBuffer, "\t= busy [ ", /D, Size.SharedBuffer, " byte(s)  ]"
+                display " - Render buffer:\t\t\t\t\t", /A, Adr.RenderBuffer, "\t= busy [ ", /D, Size.RenderBuffer, " byte(s)  ]"
+                display " - Tilemap buffer:\t\t\t\t\t", /A, Adr.TilemapBuffer, "\t= busy [ ", /D, Size.TilemapBuffer, " byte(s)  ]"
+BufferSize:     EQU Size.SpriteInfoBuffer + Size.ExtraBuffer + Size.SortBuffer +  Size.SharedBuffer + Size.RenderBuffer + Size.TilemapBuffer
+
                 ifdef _REBUILD
                 savebin "Builder/Assets/Code/Original/Kernel/Kernel.pack", Begin, Size
                 shellexec "Tools\Compressor\salvador.exe -v Builder/Assets/Code/Original/Kernel/Kernel.pack Builder/Assets/Code/Compressed/Kernel.pack.ar"

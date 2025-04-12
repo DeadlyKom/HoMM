@@ -60,6 +60,10 @@ Core:           EI
                 CALL Core.Tables.TG_ByteMirror                                  ; генерация таблицы зеркальных байт
                 CALL Core.Tables.TG_MulSprTable                                 ; генерация таблицы умножения для спрайтов
                 CALL Convert.SetShadowScreen
+                
+                ; инициализация работы с объектами
+                SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
+                CALL Object.Initialize
 
                 DELAY 1
                 ; -----------------------------------------

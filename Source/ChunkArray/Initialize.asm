@@ -15,7 +15,7 @@ Initialize:     LD DE, #0000
                 CALL SafeFill.b256
 
                 ; очистка массива чанков для статических объектов
-                LD HL, Adr.DynamicChunkArray + Size.DynamicChunkArray
+                LD HL, (Adr.DynamicChunkArray + Size.DynamicChunkArray) & 0xFFFF
                 CALL SafeFill.b256
                 
                 ; ToDo сделать инициализацию на основе размера карты
@@ -30,7 +30,7 @@ Initialize:     LD DE, #0000
                 ADC A, C
                 endr
                 DEC A
-                LD (GetChunkIdx.Mask), A
+                LD (GetChunkIndex.Mask), A
 
                 ; округление
                 LD A, 64                                                        ; размер карты по вертикали
@@ -50,7 +50,7 @@ Initialize:     LD DE, #0000
                 RRA
                 JR C, .SetOperation
                 LD L, #87                                                       ; x16 (ADD A, A)
-.SetOperation   LD (GetChunkIdx.Operation), HL
+.SetOperation   LD (GetChunkIndex.Operation), HL
 
                 RET
 

@@ -8,7 +8,7 @@
                 ORG Adr.World
                 module World
 
-                display "\'World\':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size, " byte(s) / free ", /D, Size.SharedPoint - Size, "]\t[", /D, Page.World, "]\t ------------------------"
+                display "\'World\':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.SharedPoint, " byte(s) / free ", /D, Size.SharedPoint - Size, "]\t[", /D, Page.World, "]\t ------------------------"
 Begin:          EQU $
                 include "Source/Modules/World/Include.inc"
 Size:           EQU $-Begin                                                     ; размер кода

@@ -8,7 +8,7 @@
                 ORG Adr.Map
                 module Map
 
-                display "\'Map\':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size, " byte(s) / free ", /D, Size.SharedPoint - Size, "]\t[", /D, Page.Map, "]\t ------------------------"
+                display "\'Map\':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.SharedPoint, " byte(s) / free ", /D, Size.SharedPoint - Size, "]\t[", /D, Page.Map, "]\t ------------------------"
 Begin:          EQU $
                 include "Source/Modules/Map/Include.inc"
 Size:           EQU $-Begin                                                     ; размер кода
