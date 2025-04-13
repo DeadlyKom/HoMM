@@ -8,6 +8,7 @@
                 include "World.inc"
                 include "Render.inc"
                 include "Screen.inc"
+                include "Sprite.inc"
                 include "TR-DOS.inc"
                 include "Memory.inc"
                 include "Convert.inc"

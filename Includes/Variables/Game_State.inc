@@ -11,5 +11,6 @@ GameState       EQU Adr.GameState                                               
 .Input.HotKeys  EQU GameState + FGameState.Input.HotKeys                        ; флаг ввода горячих клавиш
 .Input.Scroll   EQU GameState + FGameState.Input.Scroll                         ; флаги ввода скролла карты
 .Assets         EQU GameState + FGameState.Assets                               ; копия данных об ассете
+.SpriteInfoNum  EQU GameState + FGameState.SpriteInfoNum                        ; количество спрайтов в массиве SpriteInfoBuffer
 
                 endif ; ~_VARIABLES_GAME_STATE_

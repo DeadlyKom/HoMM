@@ -37,7 +37,7 @@ Load:           ; -----------------------------------------
                 PUSH HL
                 SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
                 SET_LOAD_ASSETS_REG E, Page.TileSprites, Adr.TileSprites        ; принудительная установка места загрузки ресурса
-                LOAD_ASSETS_REG E                                               ; загрузка ресурса графика тайлов биома
+                LOAD_ASSETS_REG E                                               ; загрузка ресурса
 
                 ; восстановление страницы расположения загруженого ассетаа карты
                 LD A, (MapPage)
@@ -89,7 +89,20 @@ Load:           ; -----------------------------------------
                 PUSH HL
                 SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
                 SET_LOAD_ASSETS_REG E, Page.ObjectDefaultSettings, Adr.ObjectDefaultSettings ; принудительная установка места загрузки ресурса
-                LOAD_ASSETS_REG E                                               ; загрузка ресурса графика тайлов биома
+                LOAD_ASSETS_REG E                                               ; загрузка ресурса
+
+                ; восстановление страницы расположения загруженого ассетаа карты
+                LD A, (MapPage)
+                CALL SetPage
+
+                POP HL
+                INC HL                                                          ; FMapHeader.GraphicPack
+
+                ; загрузка ассета ID текущего графического пакета
+                LD E, (HL)
+                PUSH HL
+                SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
+                LOAD_ASSETS_REG E                                               ; загрузка ресурса
 
                 ; восстановление страницы расположения загруженого ассетаа карты
                 LD A, (MapPage)

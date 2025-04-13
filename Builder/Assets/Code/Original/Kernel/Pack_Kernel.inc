@@ -32,6 +32,9 @@ Begin:          EQU $
                 include "Source/Draw/Sprite/Include.inc"
                 include "Source/Draw/World/Background/Include.inc"
 
+                ; работа с информацией о спрайтов в буфере Adr.SpriteInfoBuffer
+                include "Source/Sprite/Include.inc"
+
                 ; chunk array
                 include "Source/ChunkArray/Include.inc"
 

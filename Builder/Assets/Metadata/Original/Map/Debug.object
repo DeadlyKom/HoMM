@@ -4,7 +4,8 @@
 
                 FMapObject {
                     ODS_ID_TEST | MAP_OBJECT_STATIC,                            ; тип объекта
-                    { 10 << 1, 10 << 1 }                                        ; позиция объекта на карте
+                    { 10 << 1, 10 << 1 },                                       ; позиция объекта на карте
+                    SPRITE_ID_TELEPORT                                          ; ID спрайта в Graphic pack #01
                 }
 
                 endif ; ~ _METADATA_MAP_DEBUG_OBJECTS_

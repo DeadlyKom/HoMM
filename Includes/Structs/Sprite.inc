@@ -34,8 +34,8 @@ SOy             DB #00                                                          
 
                 struct FSprite
 Info            FSpriteInfo                                                     ; информация о спрайте
-Data            FSpriteData                                                     ; данные расположения спрайта
 Dummy           DB #00                                                          ; резерв
+Data            FSpriteData                                                     ; данные расположения спрайта
 
                 ends
 

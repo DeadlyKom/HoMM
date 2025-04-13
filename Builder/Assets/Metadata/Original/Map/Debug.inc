@@ -18,6 +18,7 @@
                 DW Tile.Size                                                    ; FMapHeader.BiomeSize
                 DW Tile-$-1                                                     ; FMapHeader.BiomeOffset
                 DB ASSETS_ID_DEFAULT_SETTINGS                                   ; FMapHeader.DefaultSettings
+                DB ASSETS_ID_GRAPH_PACK_01                                      ; FMapHeader.GraphicPack
                 DB Objects.Num                                                  ; FMapHeader.ObjectNum
                 DW Objects-$-1                                                  ; FMapHeader.ObjectOffset
                 DW #0000                                                        ; FMapHeader.Rules

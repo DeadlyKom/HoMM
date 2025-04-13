@@ -4,7 +4,7 @@
 
                 module Teleport
 Sprites:        ; анимации спрайтов
-                FSprite {{24, 32, 0,  0}, OR_XOR_ATTR | PAGE_5, #C000 | Sprite._0}
+                FSprite {{24, 32, 0,  0}, 0, OR_XOR_ATTR | PAGE_5, #C000 | Sprite._0}
 Sprite:
 ._0             incbin "Teleport_0.spr"
 

@@ -50,7 +50,13 @@ Load_Objects:   ; чтение данных об объектах
                 LD HL, Adr.ExtraBuffer
 
 .ObjectLoop     PUSH BC
-                LD A, (HL)                                                      ; FMapObject.Type
+                CALL .ObjectInit
+                POP BC
+
+                DJNZ .ObjectLoop
+                RET
+
+.ObjectInit     LD A, (HL)                                                      ; FMapObject.Type
                 INC HL
                 SRL A
 
@@ -182,9 +188,46 @@ Load_Objects:   ; чтение данных об объектах
                 LD HL, .JumpTable
                 CALL Func.JumpTable
                 POP HL
-                POP BC
 
-                DJNZ .ObjectLoop
+                ; -----------------------------------------
+                ; инициализация спрайта
+                ; -----------------------------------------
+                LD A, (HL)                                                      ; FMapObject.SpriteIndex
+                INC HL
+                PUSH HL
+
+                ; определение адреса расположения необходимой структуры FSprite
+                LD HL, (GameState.Assets + FAssets.Address.Adr)                 ; адрес загрузки ассета графического ассета
+                ADD A, L
+                LD E, A
+                ADC A, H
+                SUB E
+                LD D, A
+
+                ; включение страницы ресурса
+                LD A, (GameState.Assets + FAssets.Address.Page)
+                CALL SetPage
+
+                ; -----------------------------------------
+                ; добавление спрайта
+                ; In:
+                ;   DE - адрес структуры FSprite
+                ; Out:
+                ;   A  - индекс спрайта в буфере спрайтов (Adr.SpriteInfoBuffer)
+                ;   HL - адрес структуры FSprite (текущего спрайта)
+                ;   флаг переполнения Carry сброшен, если спрайт не был добавлен
+                ; Corrupt:
+                ;   HL, DE, B, AF
+                ; Note:
+                ;   * структура FSprite расположена в буфере SpriteInfoBuffer нелинейно, переход между полями изменяя старший адрес
+                ;   * автоматически корректирует адрес и страницу после загрузки ассета
+                ; -----------------------------------------
+                CALL Sprite.Add                                                 ; добавление спрайта в общий список
+                LD L, A
+                SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
+                LD (IY + FObject.Sprite), L                                     ; установка индекс спрайта в буфере спрайтов Adr.SpriteInfoBuffer
+
+                POP HL
                 RET
 
 .JumpTable      DW #0000                                                        ; OBJECT_CLASS_CHARACTER
