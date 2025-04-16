@@ -48,14 +48,18 @@ Draw:           ; -----------------------------------------
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 CALL Draw.Background                                            ; отображение фона мира "локация"
 
-                LD HL, #0600
-                LD (Kernel.Sprite.DrawClipped.PositionX), HL
-                LD (Kernel.Sprite.DrawClipped.PositionY), HL
+                ; LD HL, #0600
+                ; LD (Kernel.Sprite.DrawClipped.PositionX), HL
+                ; LD (Kernel.Sprite.DrawClipped.PositionY), HL
 
-                LD HL, Teleport.Sprites
-                CALL Draw.Sprite
+                ; LD HL, Teleport.Sprites
+                ; CALL Draw.Sprite
+
+                CALL World.Tilemap.VisibleObjects                               ; определение видимых объектов
 
                 ifdef _DEBUG
+                SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
+                ; -----------------------------------------
                 ; отображение позиции мыши на экране
                 LD DE, #1700
                 CALL Console.SetCursor
@@ -65,6 +69,19 @@ Draw:           ; -----------------------------------------
                 CALL Console.DrawChar
                 LD A, (Mouse.PositionY)
                 CALL Console.DrawByte
+                ; -----------------------------------------
+
+                ; -----------------------------------------
+                ; отображение позиции карты
+                LD DE, #1706
+                CALL Console.SetCursor
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
+                CALL Console.DrawByte
+                LD A, ','
+                CALL Console.DrawChar
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
+                CALL Console.DrawByte
+                ; -----------------------------------------
                 endif
 
                 RES_ALL_MAIN_FLAGS                                              ; сброс всех флагов

@@ -4,8 +4,6 @@
 ; -----------------------------------------
 ; размещение нового объекта
 ; In:
-;   флаг переполнения отвечает с каким массивом объектов производится работа
-;   если сброшен, то работа с Adr.StaticArray иначе с Adr.DynamicArray
 ; Out:
 ;   A' - текущий ID объекта
 ;   IY - адрес свободного элемента
@@ -15,40 +13,35 @@
 ; Note:
 ; -----------------------------------------
 PlacemantNewObj ; инициализация
-                LD HL, GameSession.WorldInfo + FWorldInfo.StaticObjectNum
-                
-                ; корректировка адреса счётчика
-                LD A, HIGH Adr.StaticArray
-                JR NC, $+5
-                LD A, HIGH Adr.DynamicArray
-                INC HL
-                EX AF, AF'                                                      ; сохранение старшего адреса массива объектов
+                LD HL, GameSession.WorldInfo + FWorldInfo.ObjectNum
 
                 ; проверка переполнения массива
                 LD A, (HL)
-                CP OBJECT_MAX
+                INC A                                                           ; OBJECT_MAX
                 CCF
-                RET C                                                           ; выход, если нет места для размещения объекта
+                RET Z                                                           ; выход, если нет места для размещения объекта
+                DEC A
                 
                 INC (HL)                                                        ; увеличение счётчика объектов
-                EX AF, AF'                                                      ; восстановление старшего адреса массива объектов
-                LD H, A
-
+                LD L, A                                                         ; сохранение номера элемента
+                EX AF, AF'                                                      ; сохранение номера элемента
+                
                 ; расчёт адреса последнего элемента в массиве
                 ; адрес расположения объекта = адрес первого элемента + N объекта * OBJECT_SIZE
-                LD L, #00
-                SRL A       ; %00aaaaaa : a
-                RR L        ; %a0000000 : 0
-                RRA         ; %000aaaaa : a
-                RR L        ; %aa000000 : 0
-                RRA         ; %0000aaaa : a
-                RR L        ; %aaa00000 : 0
-                RRA         ; %00000aaa : a
-                RR L        ; %aaaa0000 : 0
-                ADD A, H
-                LD IYH, A
-                LD A, L
+                LD H, HIGH Adr.ObjectsArray >> 4    ; %00001100
+                LD A, L     ; %aaaaaaaa
+                ADD A, A    ; %aaaaaaa0 : a
+                RL H        ; %0001100a
+                ADD A, A    ; %aaaaaa00 : a
+                RL H        ; %001100aa
+                ADD A, A    ; %aaaaa000 : a
+                RL H        ; %01100aaa
+                ADD A, A    ; %aaaa0000 : a
+                RL H        ; %1100aaaa
+
                 LD IYL, A
+                LD A, H
+                LD IYH, A
 
                 RET
 

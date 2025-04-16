@@ -6,5 +6,6 @@ ChunkArray:
 .Insert         EQU Kernel.ChunkArray.Insert                                    ; вставка значения в массив чанков
 .Remove         EQU Kernel.ChunkArray.Remove                                    ; удаление значения из массива чанков
 .Move           EQU Kernel.ChunkArray.Move                                      ; перемещение значения в другой чанк
+.Area           EQU Kernel.ChunkArray.Area                                      ; получение значений в области
 .GetChunkIndex  EQU Kernel.ChunkArray.GetChunkIndex                             ; получение номера чанка
                 endif ; ~_KERNEL_CHUNK_ARRAY_

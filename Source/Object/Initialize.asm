@@ -10,12 +10,10 @@
 ; -----------------------------------------
 Initialize:     ; сброс количества элементов в массиве
                 XOR A
-                LD (GameSession.WorldInfo + FWorldInfo.StaticObjectNum), A
-                LD (GameSession.WorldInfo + FWorldInfo.DynamicObjectNum), A
+                LD (GameSession.WorldInfo + FWorldInfo.ObjectNum), A
 
                 ; очистка массива
-                MEMSET_BYTE Adr.StaticArray, OBJECT_EMPTY_ELEMENT, Size.StaticArray
-                JP_MEMSET_BYTE Adr.DynamicArray, OBJECT_EMPTY_ELEMENT, Size.DynamicArray
+                JP_MEMSET_BYTE Adr.ObjectsArray, OBJECT_EMPTY_ELEMENT, Size.ObjectsArray
 
                 display " - Initialize objects:\t\t\t\t", /A, Initialize, "\t= busy [ ", /D, $-Initialize, " byte(s)  ]"
 

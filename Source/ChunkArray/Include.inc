@@ -17,11 +17,12 @@ CHUNK_SIZE      EQU 1 << CHUNK_SHIFT
 CHUNK_SIZE_MASK EQU (CHUNK_SIZE - 1) & 0xFF
 
                 ; структура хранения данных, состоит из 2х половинок
-                ; 1ая половине буфере от   0 до 127 хранящий уникальный номер объекта (ID Object)
-                ; 2ая половина буфере от 128 до 255 хранящий счётчики объектов в данном чанке,
-                ;     a порядковый номер в буфере минус 128 соответствент номеру чанка (ID Chunk)
+                ; буфер ChunkArrayCounters хранит счётчики объектов в данном чанке,
+                ;     a порядковый номер в буфере соответствент номеру чанка (ID Chunk)
+                ; буфер ChunkArrayValues хранит уникальный номер объекта (ID Object)
 Begin           EQU $
                 include "Core.asm"
+                include "Area.asm"
                 include "Move.asm"
                 include "Remove.asm"
                 include "Insert.asm"

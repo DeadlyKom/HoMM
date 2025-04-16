@@ -11,11 +11,11 @@
 Initialize:     LD DE, #0000
 
                 ; очистка массива чанков для статических объектов
-                LD HL, Adr.StaticChunkArray + Size.StaticChunkArray
+                LD HL, Adr.ChunkArrayCounters + Size.ChunkArrayCounters
                 CALL SafeFill.b256
 
                 ; очистка массива чанков для статических объектов
-                LD HL, (Adr.DynamicChunkArray + Size.DynamicChunkArray) & 0xFFFF
+                LD HL, (Adr.ChunkArrayValues + Size.ChunkArrayValues) & 0xFFFF
                 CALL SafeFill.b256
                 
                 ; ToDo сделать инициализацию на основе размера карты

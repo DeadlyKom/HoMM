@@ -5,6 +5,7 @@
                 module Tilemap
 
                 include "UpdateMovement.asm"
+                include "VisibleObjects.asm"
 
                 endmodule
 

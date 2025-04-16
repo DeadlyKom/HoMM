@@ -13,14 +13,7 @@
 ; Note:
 ; -----------------------------------------
 RemoveAtSwap:   ; инициализация
-                LD HL, GameSession.WorldInfo + FWorldInfo.StaticObjectNum
-                
-                ; корректировка адреса счётчика
-                LD C, HIGH Adr.StaticArray
-                JR NC, $+5
-                LD C, HIGH Adr.DynamicArray
-                INC HL
-
+                LD HL, GameSession.WorldInfo + FWorldInfo.ObjectNum
                 LD A, (HL)                                                      ; чтение количества элементов в массиве объектов
                 DEC (HL)
                 RET Z                                                           ; выход, если массив пуст
@@ -34,30 +27,26 @@ RemoveAtSwap:   ; инициализация
                 LD E, L
 
                 ; проверка на последний удаляемый элемент в массиве
-                EX AF, AF'
-                LD A, H
-                SUB C
-                LD H, A
-                EX AF, AF'
                 ADD HL, HL  ; x2
                 ADD HL, HL  ; x4
                 ADD HL, HL  ; x8
                 ADD HL, HL  ; x16
+                RES 7, H
                 CP H
                 RET Z                                                           ; выход, если индекс удаляемого элемента последний
 
                 ; расчёт адреса последнего элемента в массиве
                 ; адрес расположения объекта = адрес первого элемента + N объекта * OBJECT_SIZE
-                SRL A       ; %00aaaaaa : a
-                RR L        ; %a0000000 : 0                                     ; регистр L сброшен
-                RRA         ; %000aaaaa : a
-                RR L        ; %aa000000 : 0
-                RRA         ; %0000aaaa : a
-                RR L        ; %aaa00000 : 0
-                RRA         ; %00000aaa : a
-                RR L        ; %aaaa0000 : 0
-                ADD A, C
-                LD H, A
+                LD H, HIGH Adr.ObjectsArray >> 4    ; %00001100
+                ADD A, A    ; %aaaaaaa0 : 0
+                RL H        ; %0001100a
+                ADD A, A    ; %aaaaaa00 : a
+                RL H        ; %001100aa
+                ADD A, A    ; %aaaaa000 : a
+                RL H        ; %01100aaa
+                ADD A, A    ; %aaaa0000 : a
+                RL H        ; %1100aaaa
+                LD L, A
 
                 ifdef _OPTIMIZE
                 rept OBJECT_SIZE
