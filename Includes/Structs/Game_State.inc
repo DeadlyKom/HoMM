@@ -2,7 +2,7 @@
                 ifndef _STRUCTS_GAME_STATE_
                 define _STRUCTS_GAME_STATE_
 
-                struct FGameState                                               ; переменные состояния игры                                     [17 байт]
+                struct FGameState                                               ; переменные состояния игры                                     [21 байт]
 ; -----------------------------------------
 ;      7    6    5    4    3    2    1    0
 ;   +----+----+----+----+----+----+----+----+
@@ -84,6 +84,10 @@ Input.HotKeys   DB #00                                                          
 Input.Scroll    DB #00                                                          ; флаги ввода скролла карты                                     [1 байт]
 Assets          FAssets                                                         ; копия данных об ассете (с последним)                          [8 байт]
 SpriteInfoNum   DB #00                                                          ; количество спрайтов в массиве SpriteInfoBuffer                [1 байт]
+LeftEdge        DB #00                                                          ; левая грань видимой части     (в пикселах)                    [1 байт]
+VisibleWidth    DB #00                                                          ; ширина видимой части          (в знакоместах)                 [1 байт]
+TopEdge         DB #00                                                          ; верхняя грань видимой части   (в пикселах)                    [1 байт]
+VisibleHeight   DB #00                                                          ; высота видимой части          (в пикселах)                    [1 байт]
                 ends
 
                 endif ; ~_STRUCTS_GAME_STATE_

@@ -199,7 +199,7 @@ NoShiftRight:
 
                 LD (DE), A  ; запись байта в экран
 
-                POP AF
+                POP AF      ; пропуск
 
                 ; новая строка
                 INC D
@@ -227,8 +227,8 @@ NoShiftRight:
 
                 LD (DE), A  ; запись байта в экран
 
-                POP AF
-                POP AF
+                POP AF      ; пропуск
+                POP AF      ; пропуск
 
                 ; новая строка
                 INC D
@@ -337,16 +337,16 @@ NoShift.Table:
                 DW NoShiftLeft._OXA_XX_X,   NoShiftAttrLeft._OXA_XX_X           ; -2.0
                 DW NoShiftLeft._OXA_X_XX,   NoShiftAttrLeft._OXA_X_XX           ; -1.0
 .OXA_24         DW NoShift._OXA_XXX,        NoShiftAttr._OXA_XXX                ;  3.0
-                DW NoShiftRight._OXA_X_XX,  NoShiftAttrRight._OXA_X_XX          ; +1.0
-                DW NoShiftRight._OXA_XX_X,  NoShiftAttrRight._OXA_XX_X          ; +2.0
+                DW NoShiftRight._OXA_XX_X,  NoShiftAttrRight._OXA_XX_X          ; +1.0
+                DW NoShiftRight._OXA_X_XX,  NoShiftAttrRight._OXA_X_XX          ; +2.0
 
                 DW NoShiftLeft._OXA_XXX_X,  NoShiftAttrLeft._OXA_XXX_X          ; -3.0
                 DW NoShiftLeft._OXA_XX_XX,  NoShiftAttrLeft._OXA_XX_XX          ; -2.0
                 DW NoShiftLeft._OXA_X_XXX,  NoShiftAttrLeft._OXA_X_XXX          ; -1.0
 .OXA_32         DW NoShift._OXA_XXXX,       NoShiftAttr._OXA_XXXX               ;  4.0
-                DW NoShiftRight._OXA_X_XXX, NoShiftAttrRight._OXA_X_XXX         ; +1.0
+                DW NoShiftRight._OXA_XXX_X, NoShiftAttrRight._OXA_XXX_X         ; +1.0
                 DW NoShiftRight._OXA_XX_XX, NoShiftAttrRight._OXA_XX_XX         ; +2.0
-                DW NoShiftRight._OXA_XXX_X, NoShiftAttrRight._OXA_XXX_X         ; +3.0
+                DW NoShiftRight._OXA_X_XXX, NoShiftAttrRight._OXA_X_XXX         ; +3.0
 
                 display " - Draw function 'No Shift OR & XOR Attribute':\t", /A, Begin_NoShift, "\t= busy [ ", /D, $-Begin_NoShift, " byte(s)  ]"
                 endmodule

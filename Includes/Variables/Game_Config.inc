@@ -16,9 +16,5 @@ GameConfig      EQU Adr.GameConfig                                              
 .SpeedCursorMin EQU GameConfig + FGameConfig.SpeedCursorMin                     ; минимальная скорость курсора
 .SpeedCursorMax EQU GameConfig + FGameConfig.SpeedCursorMax                     ; максимальная скорость курсора
 .SpeedScroll    EQU GameConfig + FGameConfig.SpeedScroll                        ; скорость скролла тайловой карты
-.LeftEdge       EQU GameConfig + FGameConfig.LeftEdge                           ; левая грань видимой части     (в пикселах)
-.VisibleWidth   EQU GameConfig + FGameConfig.VisibleWidth                       ; ширина видимой части          (в знакоместах)
-.TopEdge        EQU GameConfig + FGameConfig.TopEdge                            ; верхняя грань видимой части   (в пикселах)
-.VisibleHeight  EQU GameConfig + FGameConfig.VisibleHeight                      ; высота видимой части          (в пикселах)
 
                 endif ; ~_VARIABLES_GAME_CONFIG_

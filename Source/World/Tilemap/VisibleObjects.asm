@@ -5,6 +5,7 @@
 ; определение видимых объектов
 ; In:
 ; Out:
+;   A - количество объектов в массиве
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
@@ -22,6 +23,10 @@ VisibleObjects: SET_PAGE_WORLD                                                  
                 INC L
                 LD D, (HL)                                                      ; Y
 
+                ; приведение положение окна к тайлам (есть проблемы с этим)
+                SRL D
+                SRL E
+
                 ; корректировка ширины захвата чанков, если не выровнено
                 LD A, E
                 AND Kernel.ChunkArray.CHUNK_SIZE_MASK
@@ -33,6 +38,12 @@ VisibleObjects: SET_PAGE_WORLD                                                  
                 AND Kernel.ChunkArray.CHUNK_SIZE_MASK
                 JR Z, $+3
                 INC B
+
+                ifdef _DEBUG
+                LD (.VisibleSize), BC
+.VisibleSize    EQU $+1
+                LD BC, #0000
+                endif
                 
                 ; -----------------------------------------
                 ; получение значений в области
@@ -51,6 +62,17 @@ VisibleObjects: SET_PAGE_WORLD                                                  
                 ; -----------------------------------------
                 LD HL, Adr.ChunkArrayCounters
                 CALL ChunkArray.Area
+                
+                EXX
+                LD A, E
+                SRL A
+
+                ifdef _DEBUG
+                LD (.VisibleObjects), A
+.VisibleObjects EQU $+1
+                LD A, #00
+                endif
+
                 RET
 ;   A - количествой добавляемых элементов
 ;   H - старший адрес текущего массива чанков
@@ -64,7 +86,13 @@ AddObjects:     ;
                 POP HL
                 INC H                                                           ; переход на массив значений
                 LD L, A
+                
+                EX AF, AF'
+                LD B, A
+
+.Loop           ;
                 LD A, (HL)
+                INC L
 
                 ; %0aaaaaaa
                 LD C, HIGH Adr.ObjectsArray >> 4    ; %00001100
@@ -83,6 +111,8 @@ AddObjects:     ;
                 LD A, C
                 LD (DE), A
                 INC E
+
+                DJNZ .Loop
 
                 EXX
                 RET

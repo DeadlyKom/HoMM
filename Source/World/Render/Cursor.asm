@@ -103,6 +103,21 @@ Cursor.Draw:    ; проверка бездействия курсора
                 ADD HL, HL ; x8
                 ADD HL, HL ; x16
                 LD (Kernel.Sprite.DrawClipped.PositionY), HL
+
+                ; сохранение отсечение спрайтов
+                LD HL, (GameState.LeftEdge)
+                PUSH HL
+                LD HL, (GameState.TopEdge)
+                PUSH HL
+
+                ; установка отсечение курсора
+                LD HL, (SCREEN_CURSOR_X >> 3) << 8  | 0                         ; LeftEdge      - левая грань видимой части     (в пикселах)
+                                                                                ; VisibleWidth  - ширина видимой части          (в знакоместах)
+                LD (GameState.LeftEdge), HL
+                LD HL, SCREEN_CURSOR_Y << 8         | 0                         ; TopEdge       - верхняя грань видимой части   (в пикселах)
+                                                                                ; VisibleHeight - высота видимой части          (в пикселах)
+                LD (GameState.TopEdge), HL
+                
                 EX DE, HL
 
                 LD A, (Kernel.Sprite.DrawClipped.Flags)                         ; !
@@ -110,7 +125,13 @@ Cursor.Draw:    ; проверка бездействия курсора
                 ; SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 CALL Draw.Sprite
                 POP AF
-                LD (Kernel.Sprite.DrawClipped.Flags), A  
+                LD (Kernel.Sprite.DrawClipped.Flags), A
+
+                ; восстановление отсечение спрайтов
+                POP HL
+                LD (GameState.TopEdge), HL
+                POP HL
+                LD (GameState.LeftEdge), HL
 
                 POP DE
                 LD (Kernel.Sprite.DrawClipped.PositionY), DE

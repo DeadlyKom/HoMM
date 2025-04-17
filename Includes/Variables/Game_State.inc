@@ -12,5 +12,8 @@ GameState       EQU Adr.GameState                                               
 .Input.Scroll   EQU GameState + FGameState.Input.Scroll                         ; флаги ввода скролла карты
 .Assets         EQU GameState + FGameState.Assets                               ; копия данных об ассете
 .SpriteInfoNum  EQU GameState + FGameState.SpriteInfoNum                        ; количество спрайтов в массиве SpriteInfoBuffer
-
+.LeftEdge       EQU GameState + FGameState.LeftEdge                             ; левая грань видимой части     (в пикселах)
+.VisibleWidth   EQU GameState + FGameState.VisibleWidth                         ; ширина видимой части          (в знакоместах)
+.TopEdge        EQU GameState + FGameState.TopEdge                              ; верхняя грань видимой части   (в пикселах)
+.VisibleHeight  EQU GameState + FGameState.VisibleHeight                        ; высота видимой части          (в пикселах)
                 endif ; ~_VARIABLES_GAME_STATE_

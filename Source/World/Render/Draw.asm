@@ -48,14 +48,8 @@ Draw:           ; -----------------------------------------
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 CALL Draw.Background                                            ; отображение фона мира "локация"
 
-                ; LD HL, #0600
-                ; LD (Kernel.Sprite.DrawClipped.PositionX), HL
-                ; LD (Kernel.Sprite.DrawClipped.PositionY), HL
-
-                ; LD HL, Teleport.Sprites
-                ; CALL Draw.Sprite
-
                 CALL World.Tilemap.VisibleObjects                               ; определение видимых объектов
+                CALL NZ, Object.Draw                                            ; отображение объектов в массиве SortBuffer
 
                 ifdef _DEBUG
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
@@ -82,12 +76,31 @@ Draw:           ; -----------------------------------------
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
                 CALL Console.DrawByte
                 ; -----------------------------------------
+                
+                ; -----------------------------------------
+                ; отображение размера видимой области в чанках
+                LD DE, #170C
+                CALL Console.SetCursor
+                LD A, (World.Tilemap.VisibleObjects.VisibleSize + 0)
+                CALL Console.DrawByte
+                LD A, ','
+                CALL Console.DrawChar
+                LD A, (World.Tilemap.VisibleObjects.VisibleSize + 1)
+                CALL Console.DrawByte
+                ; -----------------------------------------
+
+                ; -----------------------------------------
+                ; отображение количество видимых объектов
+                LD DE, #1712
+                CALL Console.SetCursor
+                LD A, (World.Tilemap.VisibleObjects.VisibleObjects)
+                CALL Console.DrawByte
+                ; -----------------------------------------
+
                 endif
 
                 RES_ALL_MAIN_FLAGS                                              ; сброс всех флагов
                 SET_RENDER_FLAG FINISHED_BIT                                    ; установка флага завершения отрисовки
                 RET
-
-                include "Builder/Assets/Graphics/Original/Environment/Teleport/Include.inc"
 
                 endif ; ~_WORLD_RENDER_DRAW_

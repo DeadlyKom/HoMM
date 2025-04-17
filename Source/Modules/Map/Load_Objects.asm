@@ -82,41 +82,26 @@ Load_Objects:   ; чтение данных об объектах
                 ; -----------------------------------------
                 ; установка положения объекта
                 ; -----------------------------------------
-                LD E, (HL)                                                      ; FMapObject.Position.X
+                LD D, (HL)                                                      ; FMapObject.Position.X
                 INC HL
+                SRL D
+                LD E, #00
+                RR E
+                LD (IY + FObject.Position.X), DE
 
-                LD A, E
-                SRL A
                 EX AF, AF'
                 LD C, A                                                         ; номер текущего ID объекта
 
-                EX HL, DE
-                LD H, #00
-                ADD HL, HL  ; x2
-                ADD HL, HL  ; x4
-                ADD HL, HL  ; x8
-                ADD HL, HL  ; x16
-                LD (IY + FObject.Position.X), HL
-                EX HL, DE
-
-                LD E, (HL)                                                      ; FMapObject.Position.Y
+                LD D, (HL)                                                      ; FMapObject.Position.Y
                 INC HL
+                SRL D
+                LD E, #00
+                RR E
+                LD (IY + FObject.Position.Y), DE
 
-                LD A, E
-                SRL A
-                
-                EX HL, DE
-                LD H, #00
-                ADD HL, HL  ; x2
-                ADD HL, HL  ; x4
-                ADD HL, HL  ; x8
-                ADD HL, HL  ; x16
-                LD (IY + FObject.Position.Y), HL
-                EX HL, DE
-
-                LD D, A
                 EX AF, AF'
                 LD E, A
+
                 ; -----------------------------------------
                 ; получение номера чанка
                 ; In:

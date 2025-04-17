@@ -51,7 +51,7 @@ DrawClipped:    ; чтение размера спрайта
 
                 ; проверка достежения левой грани
                 EX DE, HL
-                LD A, (GameConfig.LeftEdge)
+                LD A, (GameState.LeftEdge)
                 LD L, A
                 LD H, #00
                 ADD HL, HL  ; x2
@@ -78,7 +78,7 @@ DrawClipped:    ; чтение размера спрайта
                 ADD HL, HL  ; x32
                 ; H - позиция спрайта по горизонтали в пикселях (левая грань спрайта)
 
-                LD A, (GameConfig.VisibleWidth)                                 ; ширина видимой области SCR_WORLD_SIZE_X
+                LD A, (GameState.VisibleWidth)                                  ; ширина видимой области SCR_WORLD_SIZE_X
                 LD L, A
                 LD A, E
                 SUB L
@@ -86,7 +86,7 @@ DrawClipped:    ; чтение размера спрайта
 
                 ; смещение видимой области
                 EX AF, AF'
-                LD A, (GameConfig.LeftEdge)
+                LD A, (GameState.LeftEdge)
                 ADD A, H
                 LD D, A
                 EX AF, AF'
@@ -160,7 +160,7 @@ DrawClipped:    ; чтение размера спрайта
                 EX AF, AF'                                                      ; округление до знакоместа будет позже
 
                 ; смещение видимой области
-                LD A, (GameConfig.LeftEdge)
+                LD A, (GameState.LeftEdge)
                 EX AF, AF'
 
                 ; A' - позиция спрайта по горизонтали в пикселях
@@ -231,7 +231,7 @@ DrawClipped:    ; чтение размера спрайта
 
                 ; проверка достежени верхней грани
                 EX DE, HL
-                LD A, (GameConfig.TopEdge)
+                LD A, (GameState.TopEdge)
                 LD L, A
                 LD H, #00
                 ADD HL, HL  ; x2
@@ -256,7 +256,7 @@ DrawClipped:    ; чтение размера спрайта
                 ADD HL, HL  ; x32
                 ; H - позиция спрайта по вертикали в пикселях (верхняя грань спрайта)
 
-                LD A, (GameConfig.VisibleHeight)                                ; высота видимой области SCR_WORLD_SIZE_Y << 3
+                LD A, (GameState.VisibleHeight)                                 ; высота видимой области SCR_WORLD_SIZE_Y << 3
                 SUB H
                 RET C                                                           ; выход, если спрайт находится ниже относительно нижней грани
                 RET Z                                                           ; выход, если спрайт находится на нижней грани
@@ -264,7 +264,7 @@ DrawClipped:    ; чтение размера спрайта
                 ; смещение видимой области
                 EX AF, AF'
                 LD D, A
-                LD A, (GameConfig.TopEdge)
+                LD A, (GameState.TopEdge)
                 ADD A, H
                 EX AF, AF'
                 
@@ -295,9 +295,10 @@ DrawClipped:    ; чтение размера спрайта
                 LD A, B     ; xxxwwwww
                 ADD A, A    ; xxwwwww0
                 ADD A, A    ; xwwwww00
-                ADD A, A    ; wwwww000
+                ADD A, A    ; wwwww000 : w
+                RL D        ; 0000000w wwwww000
                 ADD A, A    ; wwww0000 : w
-                RL D        ; 0000000w wwww0000
+                RL D        ; 000000ww wwww0000
                 LD E, A
 
                 ADC HL, DE                                                      ; флаг С сброшен
@@ -322,7 +323,7 @@ DrawClipped:    ; чтение размера спрайта
                 LD L, A
 
                 ; смещение видимой области
-                LD A, (GameConfig.TopEdge)
+                LD A, (GameState.TopEdge)
                 EX AF, AF'
                 LD D, A
 
