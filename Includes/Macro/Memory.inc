@@ -4,49 +4,55 @@
 ; -----------------------------------------
 ; включение страниц
 ; -----------------------------------------
+SET_PAGE_A      macro
+                CALL SetPage
+                endm
+JP_PAGE_A       macro
+                JP SetPage
+                endm
 SET_PAGE_0      macro
                 XOR A
-                CALL SetPage
+                SET_PAGE_A
                 endm
 JP_PAGE_0       macro
                 XOR A
-                JP SetPage
+                JP_PAGE_A
                 endm
 SET_PAGE_1      macro
                 LD A, #01
-                CALL SetPage
+                SET_PAGE_A
                 endm
 SET_PAGE_2      macro
                 LD A, #02
-                CALL SetPage
+                SET_PAGE_A
                 endm
 SET_PAGE_3      macro
                 LD A, #03
-                CALL SetPage
+                SET_PAGE_A
                 endm
 SET_PAGE_4      macro
                 LD A, #04
-                CALL SetPage
+                SET_PAGE_A
                 endm
 SET_PAGE_5      macro
                 LD A, #05
-                CALL SetPage
+                SET_PAGE_A
                 endm
 JP_PAGE_5       macro
                 LD A, #05
-                JP SetPage
+                JP_PAGE_A
                 endm
 SET_PAGE_6      macro
                 LD A, #06
-                CALL SetPage
+                SET_PAGE_A
                 endm
 SET_PAGE_7      macro
                 LD A, #07
-                CALL SetPage
+                SET_PAGE_A
                 endm
 JP_PAGE_7       macro
                 LD A, #07
-                JP SetPage
+                JP_PAGE_A
                 endm
 ; -----------------------------------------
 ; включение страницы первого экрана
@@ -116,7 +122,7 @@ SetPort:        macro Page?, Screen?
                 SET Screen?, (HL)
                 endif
                 LD A, Page?
-                CALL SetPage
+                SET_PAGE_A
                 endm
 ; -----------------------------------------
 ; сохранение номера страницы в стеке
@@ -147,7 +153,7 @@ PUSH_PAGE       macro
 ; -----------------------------------------
 POP_PAGE        macro
                 POP AF
-                CALL SetPage
+                SET_PAGE_A
                 endm
 JP_POP_PAGE     macro
                 JP Func.PopPage

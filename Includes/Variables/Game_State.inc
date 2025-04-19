@@ -16,4 +16,5 @@ GameState       EQU Adr.GameState                                               
 .VisibleWidth   EQU GameState + FGameState.VisibleWidth                         ; ширина видимой части          (в знакоместах)
 .TopEdge        EQU GameState + FGameState.TopEdge                              ; верхняя грань видимой части   (в пикселах)
 .VisibleHeight  EQU GameState + FGameState.VisibleHeight                        ; высота видимой части          (в пикселах)
+.TickCounter    EQU GameState + FGameState.TickCounter                          ; счётчик тиков
                 endif ; ~_VARIABLES_GAME_STATE_

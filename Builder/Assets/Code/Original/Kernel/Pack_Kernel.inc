@@ -24,6 +24,7 @@ Begin:          EQU $
 
                 ; math
                 include "Source/Math/RNG/Rand8.asm"
+                include "Source/Math/Div/Div8x8.asm"
 
                 ; input
                 include "Source/Input/Include.inc"

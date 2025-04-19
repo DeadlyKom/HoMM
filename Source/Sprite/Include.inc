@@ -6,7 +6,8 @@
 
                 include "Initialize.asm"
                 include "AddSprite.asm"
-
+EMPTY_INDEX     EQU #FF
+BUFFER_ADDRESS  EQU Adr.TilemapBuffer
                 endmodule
                 
                 endif ; ~_SPRITE_INCLUDE_

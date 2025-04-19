@@ -11,6 +11,6 @@
 ; Note:
 ; -----------------------------------------
 PopPage:        POP AF                                                          ; восстановление номера страницы из стека
-                JP SetPage
+                JP_PAGE_A
 
                 endif ; ~_FUNCTIONS_POP_PAGE_

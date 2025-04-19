@@ -26,6 +26,33 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 CALL Render.Cursor.Draw                                         ; отображение курсора
 
 .Tick           ; *************** Tick ***************
+                LD HL, GameSession.PeriodTick + FTick.Tile
+                LD DE, GameState.TickCounter + FTick.Tile
+
+                ; -----------------------------------------
+                LD A, (HL)
+                OR A
+                JR NZ, $+7
+                LD (HL), DURATION.TILE_TICK
+                EX DE, HL
+                INC (HL)
+                EX DE, HL
+                DEC (HL)
+                ; -----------------------------------------
+
+                INC L
+                INC E
+
+                ; -----------------------------------------
+                LD A, (HL)
+                OR A
+                JR NZ, $+7
+                LD (HL), DURATION.OBJECT_TICK
+                EX DE, HL
+                INC (HL)
+                EX DE, HL
+                DEC (HL)
+                ; -----------------------------------------
 
                 ifdef SHOW_FPS | _DEBUG
 .Debug_FPS      ; ************** Draw FPS **************

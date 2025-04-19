@@ -7,5 +7,6 @@ GameSession     EQU Adr.GameSession                                             
 .MapSize.Width  EQU GameSession + FGameSession.MapInfo.Size.Width               ; размер карты по горизонтали
 .MapSize.Height EQU GameSession + FGameSession.MapInfo.Size.Height              ; размер карты по вертикали
 .WorldInfo      EQU GameSession + FGameSession.WorldInfo                        ; информация о "мире"
+.PeriodTick     EQU GameSession + FGameSession.PeriodTick                       ; период тиков
 
                 endif ; ~_VARIABLES_GAME_SESSION_

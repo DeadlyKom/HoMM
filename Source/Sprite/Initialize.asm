@@ -10,7 +10,9 @@
 ; -----------------------------------------
 Initialize:     XOR A
                 LD (GameState.SpriteInfoNum), A
-                RET
+
+                ; использования буфера, как карту инициализированных значений
+                JP_MEMSET_BYTE BUFFER_ADDRESS, EMPTY_INDEX, 256
 
                 display " - Sprite initialize:\t\t\t\t\t", /A, Initialize, "\t= busy [ ", /D, $-Initialize, " byte(s)  ]"
 

@@ -62,9 +62,31 @@ Draw:           ;
                 LD A, (IY + FObject.Sprite)
                 ADD A, A    ; x2
                 LD L, A
+                EX AF, AF'
                 LD H, HIGH Adr.SpriteInfoBuffer >> 2
                 ADD HL, HL  ; x4
                 ADD HL, HL  ; x8
+
+                LD E, (HL)          ; FSpritesRef.Num
+                LD A, (GameState.TickCounter + FTick.Objects)
+                LD D, A
+                ; -----------------------------------------
+                ; деление D на E
+                ; In:
+                ;   D - делимое
+                ;   E - делитель
+                ; Out:
+                ;   D - результат деления   (D / E)
+                ;   A - остаток             (D % E)
+                ; Corrupt:
+                ;   D, AF
+                ; Note:
+                ;   https://www.smspower.org/Development/DivMod
+                ; -----------------------------------------
+                CALL Math.Div8x8                                                ; mod
+                LD E, A
+                EX AF, AF'
+                LD A, E
                 CALL Draw.Sprite
 
                 POP BC

@@ -4,10 +4,9 @@
 ; -----------------------------------------
 ; добавление спрайта
 ; In:
-;   DE - адрес структуры FSprite
+;   HL - адрес структуры FSprite
 ; Out:
 ;   A  - индекс спрайта в буфере спрайтов (Adr.SpriteInfoBuffer)
-;   HL - адрес структуры FSprite (текущего спрайта)
 ;   флаг переполнения Carry сброшен, если спрайт не был добавлен
 ; Corrupt:
 ;   HL, DE, B, AF
@@ -17,7 +16,7 @@
 Add:            ; проверка переполнения буфера
                 LD A, (GameState.SpriteInfoNum)
                 CP SPRITE_BUF_MAX
-                RET NC
+                RET NC                                                          ; выход, если массив переполнен
 
                 INC A
                 LD (GameState.SpriteInfoNum), A
@@ -29,6 +28,87 @@ Add:            ; проверка переполнения буфера
                 ADD HL, HL  ; x4
                 ADD HL, HL  ; x8
                 EX DE, HL
+    
+                ; проверка на структуру FSpritesRef, 7 бит первого байта включен
+                BIT SPRITE_REF_BIT, (HL)
+                JR Z, Copy                                                      ; переход, если это структура FSprite (хранит все конечные значения)
+                
+                ; HL указывает на структуру FSpritesRef, 
+                ; необходимо скорректировать только линейный адрес спрайтов
+
+                LD B, (HL)
+                RES SPRITE_REF_BIT, B
+
+                ; корректировка и копирование ссылочного спрайта
+                ; HL - адрес структуры FSprite
+                ; DE - адрес буфера SpriteInfoBuffer
+                ; B  - количество структур FSprite в массиве
+
+                ; FSpritesRef.Num
+                LD A, (HL)
+                RES SPRITE_REF_BIT, A
+                LD (DE), A
+                INC HL
+                INC E
+
+                ; FSpritesRef.Data.Page
+                LD A, (GameState.Assets + FAssets.Address.Page)
+                OR (HL)
+                LD (DE), A
+                INC HL
+                INC E
+
+                ; FSpritesRef.Data.Adr
+                PUSH DE
+                LD E, (HL)
+                INC HL
+                LD D, (HL)
+                LD HL, (GameState.Assets + FAssets.Address.Adr)
+                ADD HL, DE
+                POP DE
+                EX DE, HL
+                LD (HL), E
+                INC L
+                LD (HL), D
+                EX DE, HL
+                
+                ; HL - указывает на адрес структур FSprite
+                ; B  - количество структур FSprite в массиве
+
+.Loop           ; пропуск полуй структуры, не требующие изменения
+                INC HL  ; FSprite.Info.Width
+                INC HL  ; FSprite.Info.Height
+                INC HL  ; FSprite.Info.SOx
+                INC HL  ; FSprite.Info.SOy
+                INC HL  ; FSprite.ExtraFlags
+
+                ; FSprite.Data.Page
+                LD A, (GameState.Assets + FAssets.Address.Page)
+                OR (HL)
+                LD (HL), A
+                INC HL
+
+                ; FSprite.Data.Adr
+                LD E, (HL)
+                INC HL
+                LD D, (HL)
+                PUSH HL
+                LD HL, (GameState.Assets + FAssets.Address.Adr)
+                ADD HL, DE
+                POP DE
+                EX DE, HL
+                LD (HL), D
+                DEC HL
+                LD (HL), E
+                INC HL
+                INC HL
+                DJNZ .Loop
+
+                LD A, (GameState.SpriteInfoNum)
+                DEC A
+                SET SPRITE_REF_BIT, A
+                SCF                                                             ; установка флага, успешность добавления
+                RET
 ; -----------------------------------------
 ; копирование линейной структуры FSptrite в буфер SpriteInfoBuffer
 ; In:
@@ -46,7 +126,7 @@ Copy:           LDI     ; FSprite.Info.Width
                 LDI     ; FSprite.Info.Height
                 LDI     ; FSprite.Info.SOx
                 LDI     ; FSprite.Info.SOy
-                LDI     ; FSprite.Dummy
+                LDI     ; FSprite.ExtraFlags
 
                 ; FSprite.Data.Page
                 LD A, (GameState.Assets + FAssets.Address.Page)

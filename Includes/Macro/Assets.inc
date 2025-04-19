@@ -66,7 +66,7 @@ ASSETS_TRDOS    macro
 ; -----------------------------------------
 SET_PAGE_ASSETS macro
                 LD A, Page.AssetManager
-                CALL SetPage
+                SET_PAGE_A
                 endm
 ; -----------------------------------------
 ; установка загрузки ресурса

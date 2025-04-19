@@ -85,6 +85,7 @@ Load_Objects:   ; чтение данных об объектах
                 LD D, (HL)                                                      ; FMapObject.Position.X
                 INC HL
                 SRL D
+                LD A, D
                 LD E, #00
                 RR E
                 LD (IY + FObject.Position.X), DE
@@ -177,17 +178,32 @@ Load_Objects:   ; чтение данных об объектах
                 INC HL
                 PUSH HL
 
+                ; проверка наличия данного индекса спрайта в мапе инициализированных спрайтов
+                LD L, A
+                LD H, HIGH Kernel.Sprite.BUFFER_ADDRESS
+                LD A, (HL)
+                
+                CP Kernel.Sprite.EMPTY_INDEX
+                JR Z, .AddNewIndex                                              ; переход, если индекс спрайта отсутствует в мапе инициализированных спрайтов
+
+                ; чтение индекса спрайта из мапы инициализированных спрайтов
+                LD L, (HL)
+                JR .SetSprIndex
+
+.AddNewIndex    PUSH HL                                                         ; сохраним адрес карты значения
+
                 ; определение адреса расположения необходимой структуры FSprite
-                LD HL, (GameState.Assets + FAssets.Address.Adr)                 ; адрес загрузки ассета графического ассета
-                ADD A, L
-                LD E, A
-                ADC A, H
-                SUB E
-                LD D, A
+                LD H, #00
+                ADD HL, HL  ; x2
+                ADD HL, HL  ; x4
+                ADD HL, HL  ; x8
+                LD DE, (GameState.Assets + FAssets.Address.Adr)                 ; адрес загрузки ассета графического ассета
+                ADD HL, DE
+                EX DE, HL
 
                 ; включение страницы ресурса
                 LD A, (GameState.Assets + FAssets.Address.Page)
-                CALL SetPage
+                SET_PAGE_A
 
                 ; -----------------------------------------
                 ; добавление спрайта
@@ -195,7 +211,6 @@ Load_Objects:   ; чтение данных об объектах
                 ;   DE - адрес структуры FSprite
                 ; Out:
                 ;   A  - индекс спрайта в буфере спрайтов (Adr.SpriteInfoBuffer)
-                ;   HL - адрес структуры FSprite (текущего спрайта)
                 ;   флаг переполнения Carry сброшен, если спрайт не был добавлен
                 ; Corrupt:
                 ;   HL, DE, B, AF
@@ -204,8 +219,14 @@ Load_Objects:   ; чтение данных об объектах
                 ;   * автоматически корректирует адрес и страницу после загрузки ассета
                 ; -----------------------------------------
                 CALL Sprite.Add                                                 ; добавление спрайта в общий список
+                
+                ; сохранение значения в мапе инициализированных спрайтов
+                POP HL
+                LD (HL), A
+
                 LD L, A
-                SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
+
+.SetSprIndex    SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
                 LD (IY + FObject.Sprite), L                                     ; установка индекс спрайта в буфере спрайтов Adr.SpriteInfoBuffer
 
                 POP HL

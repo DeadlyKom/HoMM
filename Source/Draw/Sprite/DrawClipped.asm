@@ -4,12 +4,44 @@
 ; -----------------------------------------
 ; отсечение спрайта с последующим отображение
 ; In:
-;   HL - адрес спрайта FSprite
+;   HL - адрес спрайта FSprite/FSpritesRef
+;   флаг переполнения указывает на структуру FSpritesRef в регистровой паре HL,
+;   a в аккумуляторе хранится индекс спрайта
 ; Out:
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-DrawClipped:    ; чтение размера спрайта
+DrawClipped:    JR NC, .FSprite                                                 ; переход, если HL указывает на FSprite
+
+                INC L                                                           ; пропуск FSpritesRef.Num
+
+                ; чтение страницы расположения данных о структурах
+                EX AF, AF'
+                LD A, (HL)                                                      ; FSpritesRef.Data.Page
+                INC L
+                SET_PAGE_A                                                      ; установка страницы спрайта
+                EX AF, AF'
+
+                ; чтение адреса расположения массива структур
+                LD E, (HL)
+                INC L
+                LD D, (HL)
+            
+                ; корректировка адреса расположения необходимой структуры FSprite
+                LD L, A
+                LD H, #00
+                ADD HL, HL  ; x2
+                ADD HL, HL  ; x4
+                ADD HL, HL  ; x8
+                ADD HL, DE
+
+                SPRITE_DE SPRITE_TEMP_IDX
+                rept FSprite
+                LDI
+                endr
+                SPRITE_HL SPRITE_TEMP_IDX
+
+.FSprite        ; чтение размера спрайта
                 LD C, (HL)                                                      ; FSpriteInfo.Width
                 INC L                                                           ; FSprite выровнен по 8 байт
                 LD B, (HL)                                                      ; FSpriteInfo.Height
@@ -368,7 +400,7 @@ DrawClipped:    ; чтение размера спрайта
                 LD (.Flags), A
                 AND %00011111
                 PUSH BC
-                CALL SetPage                                                    ; установка страницы спрайта
+                SET_PAGE_A                                                      ; установка страницы спрайта
                 POP BC
 
                 ; чтение адреса спрайта

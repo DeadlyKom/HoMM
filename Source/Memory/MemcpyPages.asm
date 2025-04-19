@@ -19,11 +19,11 @@
 FromPage:       PUSH AF
                 EX AF, AF'
                 PUSH BC
-                CALL SetPage
+                SET_PAGE_A
                 POP BC
                 CALL Memcpy.FastLDIR
                 POP AF
-                JP SetPage
+                JP_PAGE_A
 ; -----------------------------------------
 ; копирование данных между страницами
 ; In:
@@ -56,7 +56,7 @@ BetweenPages:   ; инициализация
                 ; установка страницы исходника
 .SourcePage     EQU $+1
                 LD A, #00
-                CALL SetPage
+                SET_PAGE_A
 
                 POP BC
                 POP HL                                                          ; восстановление адреса исходника
@@ -80,7 +80,7 @@ BetweenPages:   ; инициализация
 
 .DestinationPage EQU $+1
                 LD A, #00
-                CALL SetPage
+                SET_PAGE_A
 
                 POP BC                                                          ; восстановление размера копируемого блока
                 POP DE

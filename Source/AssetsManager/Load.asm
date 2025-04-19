@@ -145,6 +145,6 @@ Load:           ASSETS_ADR_A                                                    
                 POP HL
                 ; установка страницы ресурса
                 LD A, (IX + FAssets.Address.Page)                               ; страница назначения
-                JP SetPage                                                      ; установка страницы в 3 банк памяти (#C000-#FFFF)
+                JP_PAGE_A                                                      ; установка страницы в 3 банк памяти (#C000-#FFFF)
 
                 endif ; ~ _ASSETS_MANAGER_LOAD_

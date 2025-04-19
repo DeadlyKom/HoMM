@@ -9,6 +9,7 @@
                 include "Address.inc"
                 include "Assets.inc"
                 
+                include "Tick.inc"
                 include "Size.inc"
                 include "Keys.inc"
                 include "Sprite.inc"
