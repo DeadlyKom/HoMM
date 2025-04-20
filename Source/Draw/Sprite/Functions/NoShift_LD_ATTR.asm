@@ -1,8 +1,8 @@
 
-                ifndef _DRAW_SPRITE_FUNCTION_NO_SHIFT_OR_XOR_ATTR_
-                define _DRAW_SPRITE_FUNCTION_NO_SHIFT_OR_XOR_ATTR_
+                ifndef _DRAW_SPRITE_FUNCTION_NO_SHIFT_LD_ATTR_
+                define _DRAW_SPRITE_FUNCTION_NO_SHIFT_LD_ATTR_
 
-                module OR_XOR_ATTR
+                module LD_ATTR
 Begin_NoShift:  EQU $
 ; -----------------------------------------
 ;
@@ -24,56 +24,36 @@ Begin_NoShift:  EQU $
 ; -----------------------------------------
 
 NoShiftLeft:
-._OXA_XXX_X     POP AF      ; пропуск
-._OXA_XX_X      POP AF      ; пропуск
-._OXA_X_X       POP AF      ; пропуск
-                JP NoShift._OXA_X
-._OXA_XX_XX     POP AF      ; пропуск
-._OXA_X_XX      POP AF      ; пропуск
-                JP NoShift._OXA_XX
-._OXA_X_XXX     POP AF      ; пропуск
-                JP NoShift._OXA_XXX
+._LDA_XXX_X     INC SP      ; пропуск
+._LDA_XX_X      INC SP      ; пропуск
+._LDA_X_X       INC SP      ; пропуск
+                JP NoShift._LDA_X
+._LDA_XX_XX     INC SP      ; пропуск
+._LDA_X_XX      INC SP      ; пропуск
+                JP NoShift._LDA_XX
+._LDA_X_XXX     INC SP      ; пропуск
+                JP NoShift._LDA_XXX
 NoShift:
-._OXA_XXXX      LD A, (DE)  ; чтение байта из экрана
-
-                EXX
-                POP BC
-                OR C        ; маска
-                XOR B       ; спрайт
-                EXX
+._LDA_XXXX      DEC SP
+                POP AF
 
                 LD (DE), A  ; запись байта в экран
                 INC E       ; следующее знакоместо
 
-._OXA_XXX       LD A, (DE)  ; чтение байта из экрана
-
-                EXX
-                POP BC
-                OR C        ; маска
-                XOR B       ; спрайт
-                EXX
+._LDA_XXX       DEC SP
+                POP AF
 
                 LD (DE), A  ; запись байта в экран
                 INC E       ; следующее знакоместо
 
-._OXA_XX        LD A, (DE)  ; чтение байта из экрана
-
-                EXX
-                POP BC
-                OR C        ; маска
-                XOR B       ; спрайт
-                EXX
+._LDA_XX        DEC SP
+                POP AF
 
                 LD (DE), A  ; запись байта в экран
                 INC E       ; следующее знакоместо
 
-._OXA_X         LD A, (DE)  ; чтение байта из экрана
-
-                EXX
-                POP BC
-                OR C        ; маска
-                XOR B       ; спрайт
-                EXX
+._LDA_X         DEC SP
+                POP AF
 
                 LD (DE), A  ; запись байта в экран
 
@@ -94,17 +74,17 @@ NoShift:
 ;   SP  - адрес спрайта
 ; -----------------------------------------
 NoShiftAttrLeft:
-._OXA_XXX_X     POP AF      ; пропуск
-._OXA_XX_X      POP AF      ; пропуск
-._OXA_X_X       POP AF      ; пропуск
-                JP NoShiftAttr._OXA_X
-._OXA_XX_XX     POP AF      ; пропуск
-._OXA_X_XX      POP AF      ; пропуск
-                JP NoShiftAttr._OXA_XX
-._OXA_X_XXX     POP AF      ; пропуск
-                JP NoShiftAttr._OXA_XXX
+._LDA_XXX_X     POP AF      ; пропуск
+._LDA_XX_X      POP AF      ; пропуск
+._LDA_X_X       POP AF      ; пропуск
+                JP NoShiftAttr._LDA_X
+._LDA_XX_XX     POP AF      ; пропуск
+._LDA_X_XX      POP AF      ; пропуск
+                JP NoShiftAttr._LDA_XX
+._LDA_X_XXX     POP AF      ; пропуск
+                JP NoShiftAttr._LDA_XXX
 NoShiftAttr:    ;
-._OXA_XXXX      EXX
+._LDA_XXXX      EXX
                 POP BC
                 LD A, (DE)  ; чтение байта из экрана атрибутов
                 OR C        ; маска
@@ -113,7 +93,7 @@ NoShiftAttr:    ;
                 INC E       ; следующее знакоместо
                 EXX
                 
-._OXA_XXX       EXX
+._LDA_XXX       EXX
                 POP BC
                 LD A, (DE)  ; чтение байта из экрана атрибутов
                 OR C        ; маска
@@ -122,7 +102,7 @@ NoShiftAttr:    ;
                 INC E       ; следующее знакоместо
                 EXX
 
-._OXA_XX        EXX
+._LDA_XX        EXX
                 POP BC
                 LD A, (DE)  ; чтение байта из экрана атрибутов
                 OR C        ; маска
@@ -131,7 +111,7 @@ NoShiftAttr:    ;
                 INC E       ; следующее знакоместо
                 EXX
 
-._OXA_X         EXX
+._LDA_X         EXX
                 POP BC
                 LD A, (DE)  ; чтение байта из экрана атрибутов
                 OR C        ; маска
@@ -166,87 +146,57 @@ NextRowAttr:    DEC C
 NextRow         LD E, L                                                         ; восстановление младший байт адреса экрана
                 JP (IX)
 NoShiftRight:
-._OXA_XXX_X     LD A, (DE)  ; чтение байта из экрана
-
-                EXX
-                POP BC
-                OR C        ; маска
-                XOR B       ; спрайт
-                EXX
+._LDA_XXX_X     DEC SP
+                POP AF
 
                 LD (DE), A  ; запись байта в экран
                 INC E       ; следующее знакоместо
 
-._OXA_XX_X      LD A, (DE)  ; чтение байта из экрана
-
-                EXX
-                POP BC
-                OR C        ; маска
-                XOR B       ; спрайт
-                EXX
+._LDA_XX_X      DEC SP
+                POP AF
 
                 LD (DE), A  ; запись байта в экран
                 INC E       ; следующее знакоместо
 
-._OXA_X_X       LD A, (DE)  ; чтение байта из экрана
-
-                EXX
-                POP BC
-                OR C        ; маска
-                XOR B       ; спрайт
-                EXX
+._LDA_X_X       DEC SP
+                POP AF
 
                 LD (DE), A  ; запись байта в экран
 
-                POP AF      ; пропуск
+                INC SP      ; пропуск
 
                 ; новая строка
                 INC D
                 DJNZ NextRow
                 JP (IY)                                                         ; завершено отображение знакоместа
 
-._OXA_XX_XX     LD A, (DE)  ; чтение байта из экрана
-
-                EXX
-                POP BC
-                OR C        ; маска
-                XOR B       ; спрайт
-                EXX
+._LDA_XX_XX     DEC SP
+                POP AF
 
                 LD (DE), A  ; запись байта в экран
                 INC E       ; следующее знакоместо
 
-._OXA_X_XX      LD A, (DE)  ; чтение байта из экрана
-
-                EXX
-                POP BC
-                OR C        ; маска
-                XOR B       ; спрайт
-                EXX
+._LDA_X_XX      DEC SP
+                POP AF
 
                 LD (DE), A  ; запись байта в экран
 
-                POP AF      ; пропуск
-                POP AF      ; пропуск
+                INC SP      ; пропуск
+                INC SP      ; пропуск
 
                 ; новая строка
                 INC D
                 DJNZ NextRow
                 JP (IY)                                                         ; завершено отображение знакоместа
 
-._OXA_X_XXX     LD A, (DE)  ; чтение байта из экрана
-
-                EXX
-                POP BC
-                OR C        ; маска
-                XOR B       ; спрайт
-                EXX
+._LDA_X_XXX     DEC SP
+                POP AF
 
                 LD (DE), A  ; запись байта в экран
 
-                POP AF      ; пропуск
-                POP AF      ; пропуск
-                POP AF      ; пропуск
+                INC SP      ; пропуск
+                INC SP      ; пропуск
+                INC SP      ; пропуск
 
                 ; новая строка
                 INC D
@@ -264,7 +214,7 @@ NoShiftRight:
 ;   SP  - адрес спрайта
 ; -----------------------------------------
 NoShiftAttrRight:
-._OXA_XXX_X     EXX
+._LDA_XXX_X     EXX
                 POP BC
                 LD A, (DE)  ; чтение байта из экрана атрибутов
                 OR C        ; маска
@@ -273,7 +223,7 @@ NoShiftAttrRight:
                 INC E       ; следующее знакоместо
                 EXX
 
-._OXA_XX_X      EXX
+._LDA_XX_X      EXX
                 POP BC
                 LD A, (DE)  ; чтение байта из экрана атрибутов
                 OR C        ; маска
@@ -282,7 +232,7 @@ NoShiftAttrRight:
                 INC E       ; следующее знакоместо
                 EXX
 
-._OXA_X_X       EXX
+._LDA_X_X       EXX
                 POP BC
                 LD A, (DE)  ; чтение байта из экрана атрибутов
                 OR C        ; маска
@@ -293,7 +243,7 @@ NoShiftAttrRight:
                 POP AF      ; пропуск
                 JP NextRowAttr
 
-._OXA_XX_XX     EXX
+._LDA_XX_XX     EXX
                 POP BC
                 LD A, (DE)  ; чтение байта из экрана атрибутов
                 OR C        ; маска
@@ -302,7 +252,7 @@ NoShiftAttrRight:
                 INC E       ; следующее знакоместо
                 EXX
 
-._OXA_X_XX      EXX
+._LDA_X_XX      EXX
                 POP BC
                 LD A, (DE)  ; чтение байта из экрана атрибутов
                 OR C        ; маска
@@ -314,7 +264,7 @@ NoShiftAttrRight:
                 POP AF      ; пропуск
                 JP NextRowAttr
 
-._OXA_X_XXX     EXX
+._LDA_X_XXX     EXX
                 POP BC
                 LD A, (DE)  ; чтение байта из экрана атрибутов
                 OR C        ; маска
@@ -327,27 +277,27 @@ NoShiftAttrRight:
                 POP AF      ; пропуск
                 JP NextRowAttr
 NoShift.Table:
-.OXA_8          DW NoShift._OXA_X,          NoShiftAttr._OXA_X                  ;  1.0
+.LDA_8          DW NoShift._LDA_X,          NoShiftAttr._LDA_X                  ;  1.0
 
-                DW NoShiftLeft._OXA_X_X,    NoShiftAttrLeft._OXA_X_X            ; -1.0
-.OXA_16         DW NoShift._OXA_XX,         NoShiftAttr._OXA_XX                 ;  2.0
-                DW NoShiftRight._OXA_X_X,   NoShiftAttrRight._OXA_X_X           ; +1.0
+                DW NoShiftLeft._LDA_X_X,    NoShiftAttrLeft._LDA_X_X            ; -1.0
+.LDA_16         DW NoShift._LDA_XX,         NoShiftAttr._LDA_XX                 ;  2.0
+                DW NoShiftRight._LDA_X_X,   NoShiftAttrRight._LDA_X_X           ; +1.0
 
-                DW NoShiftLeft._OXA_XX_X,   NoShiftAttrLeft._OXA_XX_X           ; -2.0
-                DW NoShiftLeft._OXA_X_XX,   NoShiftAttrLeft._OXA_X_XX           ; -1.0
-.OXA_24         DW NoShift._OXA_XXX,        NoShiftAttr._OXA_XXX                ;  3.0
-                DW NoShiftRight._OXA_XX_X,  NoShiftAttrRight._OXA_XX_X          ; +1.0
-                DW NoShiftRight._OXA_X_XX,  NoShiftAttrRight._OXA_X_XX          ; +2.0
+                DW NoShiftLeft._LDA_XX_X,   NoShiftAttrLeft._LDA_XX_X           ; -2.0
+                DW NoShiftLeft._LDA_X_XX,   NoShiftAttrLeft._LDA_X_XX           ; -1.0
+.LDA_24         DW NoShift._LDA_XXX,        NoShiftAttr._LDA_XXX                ;  3.0
+                DW NoShiftRight._LDA_XX_X,  NoShiftAttrRight._LDA_XX_X          ; +1.0
+                DW NoShiftRight._LDA_X_XX,  NoShiftAttrRight._LDA_X_XX          ; +2.0
 
-                DW NoShiftLeft._OXA_XXX_X,  NoShiftAttrLeft._OXA_XXX_X          ; -3.0
-                DW NoShiftLeft._OXA_XX_XX,  NoShiftAttrLeft._OXA_XX_XX          ; -2.0
-                DW NoShiftLeft._OXA_X_XXX,  NoShiftAttrLeft._OXA_X_XXX          ; -1.0
-.OXA_32         DW NoShift._OXA_XXXX,       NoShiftAttr._OXA_XXXX               ;  4.0
-                DW NoShiftRight._OXA_XXX_X, NoShiftAttrRight._OXA_XXX_X         ; +1.0
-                DW NoShiftRight._OXA_XX_XX, NoShiftAttrRight._OXA_XX_XX         ; +2.0
-                DW NoShiftRight._OXA_X_XXX, NoShiftAttrRight._OXA_X_XXX         ; +3.0
+                DW NoShiftLeft._LDA_XXX_X,  NoShiftAttrLeft._LDA_XXX_X          ; -3.0
+                DW NoShiftLeft._LDA_XX_XX,  NoShiftAttrLeft._LDA_XX_XX          ; -2.0
+                DW NoShiftLeft._LDA_X_XXX,  NoShiftAttrLeft._LDA_X_XXX          ; -1.0
+.LDA_32         DW NoShift._LDA_XXXX,       NoShiftAttr._LDA_XXXX               ;  4.0
+                DW NoShiftRight._LDA_XXX_X, NoShiftAttrRight._LDA_XXX_X         ; +1.0
+                DW NoShiftRight._LDA_XX_XX, NoShiftAttrRight._LDA_XX_XX         ; +2.0
+                DW NoShiftRight._LDA_X_XXX, NoShiftAttrRight._LDA_X_XXX         ; +3.0
 
-                display " - Draw function 'No Shift OR & XOR Attribute':\t", /A, Begin_NoShift, "\t= busy [ ", /D, $-Begin_NoShift, " byte(s)  ]"
+                display " - Draw function 'No Shift LD Attribute':\t", /A, Begin_NoShift, "\t= busy [ ", /D, $-Begin_NoShift, " byte(s)  ]"
                 endmodule
 
-                endif ; ~ _DRAW_SPRITE_FUNCTION_NO_SHIFT_OR_XOR_ATTR_
+                endif ; ~ _DRAW_SPRITE_FUNCTION_NO_SHIFT_LD_ATTR_

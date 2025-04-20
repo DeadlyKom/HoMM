@@ -14,7 +14,10 @@ SPRITE          macro Width?, Height?, SOx?, SOy?, Flags?, ExtraFlags?, Offset?
                 FSprite {{Width?, Height?, SOx?, SOy?}, ExtraFlags?, Flags?, Offset?}
                 endm
 SPRITE_LINKER   macro SpriteNum?, Offset?
-                FSpritesRef {SPRITE_REF | ((SpriteNum?) & 0x7F), 0, Offset?}
+                FSpritesRef {SPRITE_REF | ((SpriteNum?) & 0x3F), 0, Offset?}
+                endm
+SPRITE_LINKER_COMPOSITE macro SpriteNum?, Offset?
+                FSpritesRef {SPRITE_REF | SPRITE_CS | ((SpriteNum?) & 0x3F), 0, Offset?}
                 endm
                 
                 endif ; ~_MACRO_SPRITE_

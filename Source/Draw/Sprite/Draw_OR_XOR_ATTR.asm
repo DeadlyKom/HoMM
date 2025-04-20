@@ -16,6 +16,7 @@
 ; Note:
 ; -----------------------------------------
 DrawOR_XOR_ATTR EXX
+                DEC C       ; началос с 1
                 LD A, C                                                         ; ширины спрайта в знакоместах
                 EX AF, AF'
                 LD B, A                                                         ; ширина невидимой части спрайта в пикселях (-/+)
@@ -27,7 +28,6 @@ DrawOR_XOR_ATTR EXX
                 DEC A       ; началос с 1
                 ADD A, A    ; %00rrrrr0
                 ADD A, A    ; %0rrrrr00
-                DEC C       ; началос с 1
                 OR C        ; %0rrrrrww
                 LD C, H     ; %ddmppppp                                         ; значение LD/OR & XOR
                 RLA         ; %rrrrrwwx
@@ -142,10 +142,10 @@ DrawOR_XOR_ATTR EXX
                 XOR C   ; %0Sddmww0
                 LD C, D ; %ddmppppp
 
-                 ; добавить смещение к таблице
-                ADD A, LOW (Function.Table - 2)
+                ; добавить смещение к таблице
+                ADD A, LOW Function.Table
                 LD L, A
-                ADC A, HIGH (Function.Table - 2)
+                ADC A, HIGH Function.Table
                 SUB L
                 LD H, A
 
@@ -183,7 +183,6 @@ DrawOR_XOR_ATTR EXX
 
                 ; определение смешения
                 LD A, B                                                         ; хранит при левом клипе -отрицательное смещение, в остальных позиции спрайта по горизонтали в пикселях
-
 
                 ; -----------------------------------------
                 ; тип вывода спрайта OR & XOR с атрибутами

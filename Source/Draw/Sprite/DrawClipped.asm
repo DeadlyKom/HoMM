@@ -9,6 +9,7 @@
 ;   a в аккумуляторе хранится индекс спрайта
 ; Out:
 ; Corrupt:
+;   HL, DE, BC, AF, HL', DE', BC', AF', IX, IY, SP
 ; Note:
 ; -----------------------------------------
 DrawClipped:    JR NC, .FSprite                                                 ; переход, если HL указывает на FSprite
@@ -35,6 +36,7 @@ DrawClipped:    JR NC, .FSprite                                                 
                 ADD HL, HL  ; x8
                 ADD HL, DE
 
+                ; копирование структуры
                 SPRITE_DE SPRITE_TEMP_IDX
                 rept FSprite
                 LDI
@@ -168,9 +170,10 @@ DrawClipped:    JR NC, .FSprite                                                 
                 LD A, C     ; xxxwwwww
                 ADD A, A    ; xxwwwww0
                 ADD A, A    ; xwwwww00
-                ADD A, A    ; wwwww000
+                ADD A, A    ; wwwww000 : w
+                RL D        ; 0000000w wwwww000
                 ADD A, A    ; wwww0000 : w
-                RL D        ; 0000000w wwww0000
+                RL D        ; 000000ww wwww0000
                 LD E, A
 
                 ADC HL, DE                                                      ; флаг С сброшен
@@ -379,7 +382,7 @@ DrawClipped:    JR NC, .FSprite                                                 
                 EXX
                 LD B, A
 
-                INC L                                                           ; пропуск FSprite.Dummy
+                INC L                                                           ; пропуск FSprite.ExtraFlags
 
                 ; -----------------------------------------
                 ;      7    6    5    4    3    2    1    0

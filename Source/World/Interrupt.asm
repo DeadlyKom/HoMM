@@ -33,7 +33,7 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 LD A, (HL)
                 OR A
                 JR NZ, $+7
-                LD (HL), DURATION.TILE_TICK
+                LD (HL), DURATION.TILE_TICK+1
                 EX DE, HL
                 INC (HL)
                 EX DE, HL
@@ -47,7 +47,7 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 LD A, (HL)
                 OR A
                 JR NZ, $+7
-                LD (HL), DURATION.OBJECT_TICK
+                LD (HL), DURATION.OBJECT_TICK+1
                 EX DE, HL
                 INC (HL)
                 EX DE, HL

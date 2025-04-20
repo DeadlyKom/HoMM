@@ -33,7 +33,7 @@ Div8x8:         XOR A
                 INC D
                 RET
 
-                display " - Divide 8x8:\t\t\t\t\t", /A, Div8x8, " = busy [ ", /D, $ - Div8x8, " byte(s)  ]"
+                display " - Divide 8x8:\t\t\t\t\t", /A, Div8x8, "\t= busy [ ", /D, $ - Div8x8, " byte(s)  ]"
 
                 endmodule
 

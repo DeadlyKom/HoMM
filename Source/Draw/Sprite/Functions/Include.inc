@@ -7,6 +7,7 @@
                 include "Shift_OR_XOR.asm"
                 include "Shift_OR_XOR_Save.asm"
                 include "NoShift_OR_XOR.asm"
+                include "NoShift_LD_ATTR.asm"
                 include "NoShift_OR_XOR_Save.asm"
                 include "NoShift_OR_XOR_ATTR.asm"
 
@@ -35,7 +36,7 @@ Table:
 .M_OR_XOR_SAVE_ DW #0000,                               #0000,                              #0000,                              #0000                               ; -
 .OR_XOR_        DW OR_XOR.NoShift.Table.OX_8,           OR_XOR.NoShift.Table.OX_16,         OR_XOR.NoShift.Table.OX_24,         OR_XOR.NoShift.Table.OX_32          ; +
 .M_OR_XOR_      DW #0000, #0000, #0000, #0000           ; +
-.LD_ATTR_       DW #0000, #0000, #0000, #0000           ; +
+.LD_ATTR_       DW LD_ATTR.NoShift.Table.LDA_8,         LD_ATTR.NoShift.Table.LDA_16,       LD_ATTR.NoShift.Table.LDA_24,       LD_ATTR.NoShift.Table.LDA_32        ; +
 .M_LD_ATTR_     DW #0000,                               #0000,                              #0000,                              #0000                               ; -
 .OR_XOR_ATTR_   DW OR_XOR_ATTR.NoShift.Table.OXA_8,     OR_XOR_ATTR.NoShift.Table.OXA_16,   OR_XOR_ATTR.NoShift.Table.OXA_24,   OR_XOR_ATTR.NoShift.Table.OXA_32    ; +
 .M_OR_XOR_ATTR_ DW #0000,                               #0000,                              #0000,                              #0000                               ; -

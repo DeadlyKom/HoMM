@@ -38,6 +38,7 @@ Add:            ; проверка переполнения буфера
 
                 LD B, (HL)
                 RES SPRITE_REF_BIT, B
+                RES SPRITE_CS_BIT, B
 
                 ; корректировка и копирование ссылочного спрайта
                 ; HL - адрес структуры FSprite
@@ -46,7 +47,8 @@ Add:            ; проверка переполнения буфера
 
                 ; FSpritesRef.Num
                 LD A, (HL)
-                RES SPRITE_REF_BIT, A
+                RES SPRITE_REF_BIT, A                                           ; заранее очистка флага, дабы не обнулять его при рендере
+                                                                                ; данный флаг переносится в 7 бит индекса спрайта в буфере SpriteInfoBuffer
                 LD (DE), A
                 INC HL
                 INC E
@@ -75,7 +77,65 @@ Add:            ; проверка переполнения буфера
                 ; HL - указывает на адрес структур FSprite
                 ; B  - количество структур FSprite в массиве
 
-.Loop           ; пропуск полуй структуры, не требующие изменения
+.Nesting        ; проверка на необходимость корректировки адресов
+                LD A, B
+                OR A
+                JR Z, .Exit                                                     ; переход, если не требуется корректировка адресов в информации о спрайтах
+
+.Loop           ;  проверка на структуру FSpritesRef, 7 бит первого байта включен
+                BIT SPRITE_REF_BIT, (HL)
+                JR Z, .Simple                                                   ; переход, если это структура FSprite (хранит все конечные значения)
+
+                PUSH BC
+
+                LD B, (HL)
+                RES SPRITE_REF_BIT, B
+                RES SPRITE_CS_BIT, B
+
+                ; корректировка и копирование ссылочного спрайта
+                ; HL - адрес структуры FSprite
+                ; B  - количество структур FSprite в массиве
+
+                ; FSpritesRef.Num
+                INC HL
+
+                ; FSpritesRef.Data.Page
+                LD A, (GameState.Assets + FAssets.Address.Page)
+                OR (HL)
+                LD (HL), A
+                INC HL
+
+                ; FSpritesRef.Data.Adr
+                LD E, (HL)
+                INC HL
+                LD D, (HL)
+                PUSH HL
+                LD HL, (GameState.Assets + FAssets.Address.Adr)
+                ADD HL, DE
+                EX DE, HL
+                POP HL
+                LD (HL), D
+                DEC HL
+                LD (HL), E
+                INC HL
+                INC HL
+                INC HL
+                INC HL
+                INC HL
+                INC HL
+                
+                ; HL - указывает на адрес структур FSprite
+                ; B  - количество структур FSprite в массиве
+
+                PUSH HL
+                EX DE, HL
+                CALL .Nesting
+                POP HL
+
+                POP BC
+                JR .NextSprite
+
+.Simple         ; пропуск полуй структуры, не требующие изменения
                 INC HL  ; FSprite.Info.Width
                 INC HL  ; FSprite.Info.Height
                 INC HL  ; FSprite.Info.SOx
@@ -102,9 +162,10 @@ Add:            ; проверка переполнения буфера
                 LD (HL), E
                 INC HL
                 INC HL
-                DJNZ .Loop
 
-                LD A, (GameState.SpriteInfoNum)
+.NextSprite     DJNZ .Loop
+
+.Exit           LD A, (GameState.SpriteInfoNum)
                 DEC A
                 SET SPRITE_REF_BIT, A
                 SCF                                                             ; установка флага, успешность добавления
