@@ -2,7 +2,7 @@
                 ifndef _STRUCTS_GAME_STATE_
                 define _STRUCTS_GAME_STATE_
 
-                struct FGameState                                               ; переменные состояния игры                                     [23 байт]
+                struct FGameState                                               ; переменные состояния игры                                     [24 байт]
 ; -----------------------------------------
 ;      7    6    5    4    3    2    1    0
 ;   +----+----+----+----+----+----+----+----+
@@ -88,7 +88,7 @@ LeftEdge        DB #00                                                          
 VisibleWidth    DB #00                                                          ; ширина видимой части          (в знакоместах)                 [1 байт]
 TopEdge         DB #00                                                          ; верхняя грань видимой части   (в пикселах)                    [1 байт]
 VisibleHeight   DB #00                                                          ; высота видимой части          (в пикселах)                    [1 байт]
-TickCounter     FTick                                                           ; счётчик тиков                                                 [2 байта]
+TickCounter     FTick                                                           ; счётчик тиков                                                 [3 байта]
                 ends
 
                 endif ; ~_STRUCTS_GAME_STATE_

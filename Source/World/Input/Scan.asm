@@ -65,7 +65,7 @@ Scan:           ; проверка HardWare ограничения мыши
                 AND MOVEMENT_MASK
                 RET Z                                                           ; выход если нет онажатия клавиш
 
-                SET_MAIN_FLAG ML_UPDATE_BIT                                     ; установка флага обновления
+                SET_SCROLL_FLAG SCROLL_MAP_BIT                                  ; установка флага разрешения обновления скрола карты
                 RET
 
                 endif ; ~_WORLD_INPUT_SCAN_

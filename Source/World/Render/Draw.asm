@@ -23,6 +23,7 @@ Draw:           ; -----------------------------------------
                 ; -----------------------------------------
                 CHECK_MAIN_FLAG ML_ENTER_BIT
                 JR Z, .Update
+
                 ; первичная инициализация локации
                 LD HL, Adr.BiomeBuf
                 LD (GameSession.WorldInfo + FWorldInfo.Tilemap), HL
@@ -33,10 +34,20 @@ Draw:           ; -----------------------------------------
                 CHECK_MAIN_FLAG ML_UPDATE_BIT
                 JR Z, .Tick
 
-                CALL World.Tilemap.UpdateMovement                               ; обновление движения
-
 .Tick           ; -----------------------------------------
                 ; тик
+                ; -----------------------------------------
+
+                ; -----------------------------------------
+                ; обновление позиции карты
+                CHECK_SCROLL_FLAG SCROLL_MAP_BIT
+                JR Z, $+14
+                LD HL, GameSession.PeriodTick + FTick.Scroll
+                LD A, (HL)
+                OR A
+                JR NZ, $+7
+                LD (HL), DURATION.TILEMAP_SCROLL+1
+                CALL World.Tilemap.UpdateMovement                               ; обновление движения
                 ; -----------------------------------------
 
                 SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"

@@ -5,7 +5,7 @@
                 struct FGameSession                                             ; переменные состояния сессии                                   [байт]
 MapInfo         FMapInfo                                                        ; информация о карте                                            [3 байт]
 WorldInfo       FWorldInfo                                                      ; информация о "мире"                                           [байт]
-PeriodTick      FTick                                                           ; период тиков                                                  [2 байта]
+PeriodTick      FTick                                                           ; период тиков                                                  [3 байта]
 
                 ends
 

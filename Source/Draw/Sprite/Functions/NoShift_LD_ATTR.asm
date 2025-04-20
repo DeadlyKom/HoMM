@@ -297,7 +297,7 @@ NoShift.Table:
                 DW NoShiftRight._LDA_XX_XX, NoShiftAttrRight._LDA_XX_XX         ; +2.0
                 DW NoShiftRight._LDA_X_XXX, NoShiftAttrRight._LDA_X_XXX         ; +3.0
 
-                display " - Draw function 'No Shift LD Attribute':\t", /A, Begin_NoShift, "\t= busy [ ", /D, $-Begin_NoShift, " byte(s)  ]"
+                display " - Draw function 'No Shift LD Attribute':\t\t", /A, Begin_NoShift, "\t= busy [ ", /D, $-Begin_NoShift, " byte(s)  ]"
                 endmodule
 
                 endif ; ~ _DRAW_SPRITE_FUNCTION_NO_SHIFT_LD_ATTR_

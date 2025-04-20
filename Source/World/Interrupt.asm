@@ -18,6 +18,29 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
 .SwapScreens    ; ************ Swap Screens ************
                 CALL Render.Swap
 
+                ; -----------------------------------------
+                LD HL, GameSession.PeriodTick + FTick.Tile
+                LD DE, GameState.TickCounter + FTick.Tile
+
+                LD A, (HL)
+                OR A
+                JR NZ, $+7
+                LD (HL), DURATION.TILE_TICK+1
+                EX DE, HL
+                INC (HL)
+                EX DE, HL
+
+                INC L
+                INC E
+
+                LD A, (HL)
+                OR A
+                JR NZ, $+6
+                LD (HL), DURATION.OBJECT_TICK+1
+                EX DE, HL
+                INC (HL)
+                ; -----------------------------------------
+
 .RenderProcess  ; процесс отрисовки не завершён
                 
 .Input          ; ************ Scan Input ************
@@ -26,32 +49,32 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 CALL Render.Cursor.Draw                                         ; отображение курсора
 
 .Tick           ; *************** Tick ***************
-                LD HL, GameSession.PeriodTick + FTick.Tile
-                LD DE, GameState.TickCounter + FTick.Tile
+                
+                ; -----------------------------------------
+                LD HL, GameSession.PeriodTick + FTick.Scroll
+                LD BC, #0001
 
-                ; -----------------------------------------
+                ; уменьшение счётчика задержки скрола карты
                 LD A, (HL)
-                OR A
-                JR NZ, $+7
-                LD (HL), DURATION.TILE_TICK+1
-                EX DE, HL
-                INC (HL)
-                EX DE, HL
-                DEC (HL)
-                ; -----------------------------------------
+                SUB C
+                ADC A, B
+                LD (HL), A
 
                 INC L
-                INC E
 
-                ; -----------------------------------------
+                ; уменьшение счётчика задержки тайлов
                 LD A, (HL)
-                OR A
-                JR NZ, $+7
-                LD (HL), DURATION.OBJECT_TICK+1
-                EX DE, HL
-                INC (HL)
-                EX DE, HL
-                DEC (HL)
+                SUB C
+                ADC A, B
+                LD (HL), A
+
+                INC L
+
+                ; уменьшение счётчика задержки тайлов
+                LD A, (HL)
+                SUB C
+                ADC A, B
+                LD (HL), A
                 ; -----------------------------------------
 
                 ifdef SHOW_FPS | _DEBUG
