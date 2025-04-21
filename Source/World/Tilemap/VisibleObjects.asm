@@ -12,6 +12,8 @@
 VisibleObjects: SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
 
                 ;
+                XOR A
+                LD (.Num), A
                 LD IX, AddObjects
                 LD DE, Adr.SortBuffer
                 EXX
@@ -33,10 +35,24 @@ VisibleObjects: SET_PAGE_WORLD                                                  
                 JR Z, $+3
                 INC C
 
+                ; корректировка центрирования захвата видимого окна
+                LD A, E
+                SUB Kernel.ChunkArray.CHUNK_SIZE
+                JR C, $+4
+                LD E, A
+                INC C
+
                 ; корректировка высоты захвата чанков, если не выровнено
                 LD A, D
                 AND Kernel.ChunkArray.CHUNK_SIZE_MASK
                 JR Z, $+3
+                INC B
+
+                ; корректировка центрирования захвата видимого окна
+                LD A, D
+                SUB Kernel.ChunkArray.CHUNK_SIZE
+                JR C, $+4
+                LD D, A
                 INC B
 
                 ifdef _DEBUG
@@ -64,14 +80,10 @@ VisibleObjects: SET_PAGE_WORLD                                                  
                 CALL ChunkArray.Area
                 
                 EXX
-                LD A, E
-                SRL A
 
-                ifdef _DEBUG
-                LD (.VisibleObjects), A
-.VisibleObjects EQU $+1
+.Num            EQU $+1
                 LD A, #00
-                endif
+                OR A
 
                 RET
 ;   A - количествой добавляемых элементов
@@ -83,12 +95,16 @@ AddObjects:     ;
                 PUSH HL
                 EXX
 
-                POP HL
-                INC H                                                           ; переход на массив значений
-                LD L, A
-                
                 EX AF, AF'
                 LD B, A
+                LD HL, VisibleObjects.Num
+                ADD A, (HL)
+                LD (HL), A
+                EX AF, AF'
+
+                POP HL
+                INC H                                                           ; переход на массив значений
+                LD L, A 
 
 .Loop           ;
                 LD A, (HL)

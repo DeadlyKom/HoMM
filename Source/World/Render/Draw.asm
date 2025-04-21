@@ -104,7 +104,7 @@ Draw:           ; -----------------------------------------
                 ; отображение количество видимых объектов
                 LD DE, #1712
                 CALL Console.SetCursor
-                LD A, (World.Tilemap.VisibleObjects.VisibleObjects)
+                LD A, (World.Tilemap.VisibleObjects.Num)
                 CALL Console.DrawByte
                 ; -----------------------------------------
 
