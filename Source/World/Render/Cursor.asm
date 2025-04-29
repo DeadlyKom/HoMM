@@ -33,20 +33,20 @@ Cursor.Draw:    ; проверка бездействия курсора
                 ADD A, (HL)
 
                 ; проверка достижения 3 кадра анимации
-                CP 3*8
+                CP 3*1
                 JR NZ, .IsFirst                                                 ; переход, если кадр не равен 3 фрейму анимации
 
                 ; установка обратного прохода смены анимации
-                LD (HL), -8
+                LD (HL), -1
                 DEC HL
                 JR .SetSubcounter
 
 .IsFirst        ; проверка достижения -1 кадра анимации
-                CP -8
+                CP -1
                 JR NZ, .SetAnimIdx                                              ; переход, если кадр не равен 0 фрейму анимации
 
                 ; установка прямого проход смены анимации
-                LD (HL), 8
+                LD (HL), 1
                 DEC HL
                 DEC HL
                 LD (HL), DURATION.IDLE_CURSOR
@@ -72,13 +72,6 @@ Cursor.Draw:    ; проверка бездействия курсора
                 JR NZ, $+4
                 LD A, #40
                 LD (HL), A
-
-                LD A, (.SpriteIdx)                                              ; значение * на 8
-                ADD A, LOW Cursor.Sprites
-                LD L, A
-                ADC A, HIGH Cursor.Sprites
-                SUB L
-                LD H, A
 
                 LD DE, (Kernel.Sprite.DrawClipped.PositionX)                    ; !
                 PUSH DE
@@ -123,6 +116,16 @@ Cursor.Draw:    ; проверка бездействия курсора
                 LD A, (Kernel.Sprite.DrawClipped.Flags)                         ; !
                 PUSH AF
                 ; SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
+
+                LD A, (Cursor.Indexes)
+                ADD A, A    ; x2
+                LD L, A
+                EX AF, AF'
+                LD H, HIGH Adr.SpriteInfoBuffer >> 2
+                ADD HL, HL  ; x4
+                ADD HL, HL  ; x8
+                EX AF, AF'
+                LD A, (.SpriteIdx)
                 CALL Draw.Sprite
                 POP AF
                 LD (Kernel.Sprite.DrawClipped.Flags), A
@@ -145,9 +148,6 @@ Cursor.Draw:    ; проверка бездействия курсора
 
 .TickCounter    DB 250
 .SpriteIdx      DB #00
-.Direction      DB #08
-
-                align 8
-                include "Builder/Assets/Graphics/Original/Cursor/Include.inc"
+.Direction      DB #01
 
                 endif ; ~_WORLD_RENDER_DRAW_CURSOR_

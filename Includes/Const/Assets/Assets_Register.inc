@@ -21,6 +21,8 @@ REG_ASSETS_ID_DEBUG macro Label?
                     REG_ASSETS_ID       ASSETS_ID_WORLD                         ; мир
                     REG_ASSETS_ID       ASSETS_ID_DEFAULT_SETTINGS              ; дефолтные настройки объектов
                     REG_ASSETS_ID       ASSETS_ID_TILE_BIOME_GRASS_SAND         ; графика тайлов биома "трава-песок"
+                    REG_ASSETS_ID       ASSETS_ID_CURSOR_PACK                   ; графика курсора
+                    REG_ASSETS_ID       ASSETS_ID_HERO_PACK                     ; графика героев
                     REG_ASSETS_ID       ASSETS_ID_GRAPH_PACK_01                 ; графика пакет спрайтов #01
                     REG_ASSETS_ID       ASSETS_ID_MAP_DEBUG                     ; карта "отладочная"
 

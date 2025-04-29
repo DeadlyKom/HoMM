@@ -22,7 +22,7 @@ Load:           CALL Sprite.Initialize
                                                                                 ;   HL - адрес загрузки/распаковки
                 ; сохранение номера страницы расположения загруженого ассетаа карты
                 CALL GetPage                                                    ; получение текущей страницы исходника
-                LD (MapPage), A
+                LD (Kernel.Modules.Map.Load.Page), A
 
                 ; -----------------------------------------
                 ; парсинг FMapHeader
@@ -42,7 +42,7 @@ Load:           CALL Sprite.Initialize
                 LOAD_ASSETS_REG E                                               ; загрузка ресурса
 
                 ; восстановление страницы расположения загруженого ассетаа карты
-                LD A, (MapPage)
+                LD A, (Kernel.Modules.Map.Load.Page)
                 SET_PAGE_A
 
                 POP HL
@@ -80,7 +80,7 @@ Load:           CALL Sprite.Initialize
                 CALL ChunkArray.Initialize                                      ; первичная инициализация массива чанков
                                                                                 ; должна быть включена страница расположения карты
                 ; восстановление страницы расположения загруженого ассетаа карты
-                LD A, (MapPage)
+                LD A, (Kernel.Modules.Map.Load.Page)
                 SET_PAGE_A
 
                 POP HL
@@ -94,7 +94,7 @@ Load:           CALL Sprite.Initialize
                 LOAD_ASSETS_REG E                                               ; загрузка ресурса
 
                 ; восстановление страницы расположения загруженого ассетаа карты
-                LD A, (MapPage)
+                LD A, (Kernel.Modules.Map.Load.Page)
                 SET_PAGE_A
 
                 POP HL
@@ -107,7 +107,7 @@ Load:           CALL Sprite.Initialize
                 LOAD_ASSETS_REG E                                               ; загрузка ресурса
 
                 ; восстановление страницы расположения загруженого ассетаа карты
-                LD A, (MapPage)
+                LD A, (Kernel.Modules.Map.Load.Page)
                 SET_PAGE_A
 
                 POP HL

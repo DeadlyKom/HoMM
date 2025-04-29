@@ -4,13 +4,19 @@
 
                 ; - компиляция модуля
 
-                MMU 2, Page.World
-                ORG Adr.World
+                MMU 3, PAGE_N
+                ORG #0000
                 module World
 
-                display "\'World\':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.SharedPoint, " byte(s) / free ", /D, Size.SharedPoint - Size, "]\t[", /D, Page.World, "]\t ------------------------"
+                display "Module 'World':\t\t\t\t\t-------------------- [ ", /D, Size, " byte(s) ]\t\t\t[", /D, Page.World, "]\t ------------------------"
 Begin:          EQU $
+                ; корректирование адресов (всехгда первая)
+                include "Source/Functions/AdjustmentAddress.asm"
+
+                RELOCATE_START
                 include "Source/Modules/World/Include.inc"
+                RELOCATE_END
+RelocateTable   RELOCATE_TABLE
 Size:           EQU $-Begin                                                     ; размер кода
                 
                 ifdef _REBUILD

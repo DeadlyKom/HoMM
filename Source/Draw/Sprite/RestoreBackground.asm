@@ -15,7 +15,7 @@
 ;   - данные
 ; -----------------------------------------
 Restore:        ;
-                LD HL, Adr.ExtraBuffer
+                LD HL, Adr.TempBuffer
 
                 LD E, (HL)
                 INC L

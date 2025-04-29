@@ -1,17 +1,22 @@
 
-                ifndef _GRAPHICS_CURSOR_INCLUDE_
-                define _GRAPHICS_CURSOR_INCLUDE_
+                ifndef _GRAPHICS_CURSOR_PACK_INCLUDE_
+                define _GRAPHICS_CURSOR_PACK_INCLUDE_
 
+                module Graphics
                 module Cursor
-Sprites:        ; анимации спрайтов
-                FSprite {{24, 23, -2, -1}, 0, OR_XOR_SAVE | PAGE_5, Sprite._0}
-                FSprite {{24, 23, -2, -1}, 0, OR_XOR_SAVE | PAGE_5, Sprite._1}
-                FSprite {{24, 24, -2, -2}, 0, OR_XOR_SAVE | PAGE_5, Sprite._2}
-Sprite:
-._0             incbin "Hand_0.spr"
-._1             incbin "Hand_1.spr"
-._2             incbin "Hand_2.spr"
 
+                ORG #0000
+                
+                include "Cursor.inc"
+Size            EQU $
+                savebin "Builder/Assets/Graphics/Original/Cursor.pack", 0, Size
+                shellexec "Tools\Compressor\salvador.exe -v Builder/Assets/Graphics/Original/Cursor.pack Builder/Assets/Graphics/Compressed/Cursor.pack.ar"
+
+                ORG 0x0000
+Begin.ar        incbin "Builder/Assets/Graphics/Compressed/Cursor.pack.ar"
+Size.ar         EQU $
+Size.Sector.ar  EQU ((Size.ar % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size.ar >> 8)
+                endmodule
                 endmodule
 
-                endif ; ~ _GRAPHICS_CURSOR_INCLUDE_
+                endif ; ~ _GRAPHICS_CURSOR_PACK_INCLUDE_

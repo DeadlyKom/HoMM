@@ -26,9 +26,8 @@ Kernel:
                 ; -----------------------------------------
                 LD HL, .JumpTable
                 JP Func.JumpTable
-.JumpTable:     ; загрузка карты
-                DW Load
-                ; сохранение карты
-                DW Save
+
+.JumpTable:     DW Load                                                         ; загрузка карты
+                DW Save                                                         ; сохранение карты
 
                 endif ; ~_MODULE_MAP_KERNAL_

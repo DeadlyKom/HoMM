@@ -133,4 +133,6 @@ AddObjects:     ;
                 EXX
                 RET
 
+                display " - Visible objects on tilemap:\t\t\t", /A, VisibleObjects, "\t= busy [ ", /D, $-VisibleObjects, " byte(s)  ]"
+
                 endif ; ~_WORLD_TILEMAP_VISIBLE_OBJECTS_

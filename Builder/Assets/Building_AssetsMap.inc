@@ -70,6 +70,16 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     Biomes.Grass_Sand.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Graphic tile biome \'Grass-Sand\'\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_CURSOR_PACK, \
+                                    Graphics.Cursor.Size, \
+                                    Graphics.Cursor.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Graphic Cursor\t\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_HERO_PACK, \
+                                    Graphics.Hero.Size, \
+                                    Graphics.Hero.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Graphic Hero\t\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_GRAPH_PACK_01, \
                                     Graph.Pack_01.Size, \
                                     Graph.Pack_01.Size.Sector.ar, \

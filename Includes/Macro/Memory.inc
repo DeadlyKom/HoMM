@@ -7,6 +7,9 @@
 SET_PAGE_A      macro
                 CALL SetPage
                 endm
+JP_SET_PAGE_A   macro
+                JP SetPage
+                endm
 JP_PAGE_A       macro
                 JP SetPage
                 endm
@@ -110,6 +113,27 @@ SWAP_SCREEN     macro
 ; -----------------------------------------
 SHOW_SHADOW_SCREEN macro
                 CALL Screen.ShowShadow
+                endm
+
+; -----------------------------------------
+; копирование блока
+; In:
+; Out:
+; Corrupt:
+;   HL, DE, BC, AF
+; Note:
+; -----------------------------------------
+MEMCPY          macro Source?, Destination?, Size?
+                LD HL, Source?
+                LD DE, Destination?
+                LD BC, Size?
+                CALL Memcpy.FastLDIR
+                endm
+JP_MEMCPY       macro Source?, Destination?, Size?
+                LD HL, Source?
+                LD DE, Destination?
+                LD BC, Size?
+                JP Memcpy.FastLDIR
                 endm
 ; -----------------------------------------
 ; установка страницы (0-31) и номер видимого экрана (0,1)

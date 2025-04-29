@@ -1,8 +1,8 @@
 
-                ifndef _WORLD_LOCATION_INTERRUPT_
-                define _WORLD_LOCATION_INTERRUPT_
+                ifndef _WORLD_MAIN_INTERRUPT_
+                define _WORLD_MAIN_INTERRUPT_
 ; -----------------------------------------
-; обработчик прерывания мира "локация"
+; обработчик прерывания "мира"
 ; In:
 ; Out:
 ; Corrupt:
@@ -83,5 +83,7 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 endif
 
                 RET
+
+                display " - Main interrupt:\t\t\t\t\t", /A, Interrupt, "\t= busy [ ", /D, $-Interrupt, " byte(s)  ]"
     
-                endif ; ~ _WORLD_LOCATION_INTERRUPT_
+                endif ; ~ _WORLD_MAIN_INTERRUPT_

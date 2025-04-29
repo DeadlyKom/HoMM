@@ -1,8 +1,8 @@
 
-                ifndef _WORLD_LOCATION_LOOP_
-                define _WORLD_LOCATION_LOOP_
+                ifndef _WORLD_MAIN_LOOP_
+                define _WORLD_MAIN_LOOP_
 ; -----------------------------------------
-; цикл мира "локация"
+; главный цикл "мира"
 ; In:
 ; Out:
 ; Corrupt:
@@ -26,4 +26,6 @@ Loop:
                 
                 JR$
 
-                endif ; ~_WORLD_LOCATION_LOOP_
+                display " - Main loop:\t\t\t\t\t\t", /A, Loop, "\t= busy [ ", /D, $-Loop, " byte(s)  ]"
+
+                endif ; ~_WORLD_MAIN_LOOP_

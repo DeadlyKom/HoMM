@@ -10,4 +10,8 @@ Math
 .SetSeed32      EQU Kernel.Math.SetSeed32
 .SetSeed80      EQU Kernel.Math.SetSeed80
 
+.ROL.x32        EQU Kernel.Math.Rotate.Left
+.ROR.x32        EQU Kernel.Math.Rotate.Right
+.Hash           EQU Kernel.Math.Hash.Function
+
                 endif ; ~_KERNEL_MATH_

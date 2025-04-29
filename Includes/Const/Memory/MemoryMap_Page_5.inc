@@ -39,6 +39,7 @@
                 ;   +-------+------------------------------------------+-------+
 
                 module Size
+CodeToScr       EQU MemBank_01_SCR                                              ; размер временного буфера хранения кода (в экранной области)
 Stack           EQU #00C4                                                       ; размер стека
 ScrAdrTable     EQU #0400                                                       ; размер таблицы адресов экрана
 ScrAttrAdrTable EQU #0100                                                       ; размер таблица преобразование адресов экрана в атрибутные
@@ -54,6 +55,7 @@ SharedPoint     EQU #0B00                                                       
                 endmodule
 
                 module Adr
+CodeToScr       EQU MemBank_01                                                  ; адрес временного буфера хранения кода (в экранной области)
 StackTop        EQU #5E3C + Size.Stack                                          ; расположение стека
 ScrAdrTable     EQU Adr.StackTop                                                ; адрес таблицы адресов экрана
 GameConfig      EQU Adr.ScrAdrTable + 0x00C0                                    ; адрес переменных конфигурации игры

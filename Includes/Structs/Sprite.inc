@@ -79,4 +79,10 @@ Data            FSpriteData                                                     
 Dummy           DS 4, 0                                                         ; резерва
                 ends
 
+                struct FGraphicHeader                                           ; структура описывающая заголовок графики
+Lable           TEXT 13, {"", 0}
+Num             DB #00
+Offset          DW #0000
+                ends
+
                 endif ; ~_STRUCTS_SPRITE_

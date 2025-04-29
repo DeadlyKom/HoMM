@@ -16,13 +16,18 @@ Draw:           ; -----------------------------------------
                 ; переход между меню
                 ; -----------------------------------------
                 CHECK_MAIN_FLAG ML_TRANSITION_BIT
-                JR Z, .Enter
+                JR Z, .Enter  
 
 .Enter          ; -----------------------------------------
                 ; первичная инициализация
                 ; -----------------------------------------
                 CHECK_MAIN_FLAG ML_ENTER_BIT
                 JR Z, .Update
+
+                ; сброс возможности восстановления фона курсора
+                SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
+                LD HL, Adr.TempBuffer + 2
+                LD (HL), #00
 
                 ; первичная инициализация локации
                 LD HL, Adr.BiomeBuf
@@ -47,7 +52,7 @@ Draw:           ; -----------------------------------------
                 OR A
                 JR NZ, $+7
                 LD (HL), DURATION.TILEMAP_SCROLL+1
-                CALL World.Tilemap.UpdateMovement                               ; обновление движения
+                CALL World.Base.Tilemap.UpdateMovement                          ; обновление движения
                 ; -----------------------------------------
 
                 SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
@@ -59,7 +64,7 @@ Draw:           ; -----------------------------------------
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 CALL Draw.Background                                            ; отображение фона мира "локация"
 
-                CALL World.Tilemap.VisibleObjects                               ; определение видимых объектов
+                CALL World.Base.Tilemap.VisibleObjects                          ; определение видимых объектов
                 CALL NZ, Object.Draw                                            ; отображение объектов в массиве SortBuffer
 
                 ifdef _DEBUG
@@ -92,11 +97,11 @@ Draw:           ; -----------------------------------------
                 ; отображение размера видимой области в чанках
                 LD DE, #170C
                 CALL Console.SetCursor
-                LD A, (World.Tilemap.VisibleObjects.VisibleSize + 0)
+                LD A, (World.Base.Tilemap.VisibleObjects.VisibleSize + 0)
                 CALL Console.DrawByte
                 LD A, ','
                 CALL Console.DrawChar
-                LD A, (World.Tilemap.VisibleObjects.VisibleSize + 1)
+                LD A, (World.Base.Tilemap.VisibleObjects.VisibleSize + 1)
                 CALL Console.DrawByte
                 ; -----------------------------------------
 
@@ -104,7 +109,7 @@ Draw:           ; -----------------------------------------
                 ; отображение количество видимых объектов
                 LD DE, #1712
                 CALL Console.SetCursor
-                LD A, (World.Tilemap.VisibleObjects.Num)
+                LD A, (World.Base.Tilemap.VisibleObjects.Num)
                 CALL Console.DrawByte
                 ; -----------------------------------------
 
@@ -113,5 +118,7 @@ Draw:           ; -----------------------------------------
                 RES_ALL_MAIN_FLAGS                                              ; сброс всех флагов
                 SET_RENDER_FLAG FINISHED_BIT                                    ; установка флага завершения отрисовки
                 RET
+
+                display " - Main draw:\t\t\t\t\t\t", /A, Draw, "\t= busy [ ", /D, $-Draw, " byte(s)  ]"
 
                 endif ; ~_WORLD_RENDER_DRAW_

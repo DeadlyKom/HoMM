@@ -19,5 +19,8 @@ SPRITE_LINKER   macro SpriteNum?, Offset?
 SPRITE_LINKER_COMPOSITE macro SpriteNum?, Offset?
                 FSpritesRef {SPRITE_REF | SPRITE_CS | ((SpriteNum?) & 0x3F), 0, Offset?}
                 endm
+GRAPH_HEADER    macro Lable?, Offset?, Num?
+                FGraphicHeader { {Lable?} , Num?, Offset?}
+                endm
                 
                 endif ; ~_MACRO_SPRITE_
