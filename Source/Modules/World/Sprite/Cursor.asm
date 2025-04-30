@@ -26,9 +26,19 @@ Load:           ; загрузка графики курсора
 
                 ; инициализация
                 LD IX, .Parser
-                LD HL, World.Base.Render.Cursor.Indexes                         ; адрес списока индексов для отображения персонажа
+                LD HL, Cursor.Indexes                                           ; адрес списока индексов для отображения персонажа
                 LD DE, .HashSequence
                 CALL Sprite.FillSpriteIndices
+
+                ; "Idle"
+                LD A, (Cursor.Indexes + 0)
+                LD (World.Base.Render.Idle.SpriteID), A
+
+                ; "Click"
+                LD A, (Cursor.Indexes + 1)
+                LD (World.Base.Render.Click.SpriteID), A
+
+                CALL World.Base.Render.Cursor.Draw.Initialize                   ; инициализация состояние курсора
 
                 ; восстановление страницы расположения загруженого ассетаа карты
                 LD A, (Kernel.Modules.World.Page)
@@ -78,6 +88,8 @@ Load:           ; загрузка графики курсора
                 Hash16("Idle")
                 Hash16("Click")
                 endlua
+Cursor.Indexes  DB #00                                                          ; "Idle"
+                DB #00                                                          ; "Click"
 
                 display " - Sprite initialize cursor:\t\t\t\t", /A, Load, "\t= busy [ ", /D, $-Load, " byte(s)  ]"
 

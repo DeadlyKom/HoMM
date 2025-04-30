@@ -1,6 +1,23 @@
 
                 ifndef _WORLD_RENDER_DRAW_CURSOR_
                 define _WORLD_RENDER_DRAW_CURSOR_
+
+ANIMATION_FORWARD EQU 1
+ANIMATION_BACK    EQU -1
+
+; состояние крусора
+CURSOR_STATE_IDLE   EQU #00                                                     ; бездействие
+CURSOR_STATE_CLICK  EQU #01                                                     ; нажатие
+
+                struct FCursorState
+State           DB #00
+Direction       DB #00
+SpriteIndex     DB #00
+SpriteID        DB #00
+Counter         DB #00
+IndexMax        DB #00
+                ends
+
 ; -----------------------------------------
 ; отображение "мира"
 ; In:
@@ -8,57 +25,77 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Cursor.Draw:    ; проверка бездействия курсора
-                LD HL, .TickCounter
+Cursor.Draw:    LD IX, CurrentState
+
+                ; проверка состояния курсора
+                LD A, (IX + FCursorState.State)
+                OR A        ; CURSOR_STATE_NONE
+                JR NZ, .StateTick
+
+                ; состояние курсора отсутствует
+
+                ; проверка нажатия клавиши "выбор"
+                LD A, (GameState.Input.Value)
+                BIT SELECT_KEY_BIT, A
+                LD A, CURSOR_STATE_CLICK
+                JR NZ, .SetState_A                                              ; переход, была нажата клавиша "выбор"
+
+                ; проверка бездействия курсора
                 LD A, (Mouse.PositionFlag)                                      ; если курсор не поменяет позицию, хранит #FF
                 OR A
-                JR NZ, .Counter                                                 ; переход, если курсор не перемещается
+                JR Z, .SetState_Idle                                            ; переход, если курсор переместился
 
-                ; сброс анимации и выставление время ожидания бездействия
-                LD (HL), DURATION.IDLE_CURSOR
-                INC HL
-                LD (HL), A                                                      ; SpriteIdx (сброс анимации)
-                JR .Draw
-
-.Counter        ; отсчёт счётчика бездействия курсора
-                DEC (HL)
+.StateTick      ; уменьшение счётчика
+                DEC (IX + FCursorState.Counter)
                 JR NZ, .Draw                                                    ; переход, если счётчик бездействия курсора не обнулён
 
-                ; счётчик обнулился, необходимо сменить анимацию
-                INC HL                                                          ; SpriteIdx
-                LD A, (HL)
+                ; счётчик времени достик нуля,
+                ; необходимо перейти к следующему кадру
+                LD A, (IX + FCursorState.SpriteIndex)
+                ADD A, (IX + FCursorState.Direction)
+                JP M, .SetState_Idle                                            ; переход, если достигли последнего кадра анимации flip-flop
 
-                ; flip-flop анимаций в 4 кадра
-                INC HL
-                ADD A, (HL)
+                ; проверка достижения максимального кадра
+                CP (IX + FCursorState.IndexMax)
+                JR NZ, .SetAnimIndex                                            ; переход, если не достигли максимальный кадр анимации
 
-                ; проверка достижения 3 кадра анимации
-                CP 3*1
-                JR NZ, .IsFirst                                                 ; переход, если кадр не равен 3 фрейму анимации
-
-                ; установка обратного прохода смены анимации
-                LD (HL), -1
-                DEC HL
+                ; достигли максимальный кадр анимации,
+                ; необходимо сменить направление анимации
+                LD (IX + FCursorState.Direction), ANIMATION_BACK
                 JR .SetSubcounter
 
-.IsFirst        ; проверка достижения -1 кадра анимации
-                CP -1
-                JR NZ, .SetAnimIdx                                              ; переход, если кадр не равен 0 фрейму анимации
+.Initialize     LD IX, CurrentState
+                LD A, CURSOR_STATE_IDLE
 
-                ; установка прямого проход смены анимации
-                LD (HL), 1
-                DEC HL
-                DEC HL
-                LD (HL), DURATION.IDLE_CURSOR
+.SetState       ; копирование дефолтных настроек устанавливаемого состояния
+                LD (IX + FCursorState.State), A
+                LD (IX + FCursorState.Direction), ANIMATION_FORWARD
+
+                ADD A, A    ; x2
+                ADD A, A    ; x4
+                ADD A, LOW StateTable
+                LD L, A
+                ADC A, HIGH StateTable
+                SUB L
+                LD H, A
+
+                LD DE, CurrentState + FCursorState.SpriteIndex
+                LDI
+                LDI
+                LDI
+                LDI
+
+                RET
+
+.SetState_Idle  LD A, CURSOR_STATE_IDLE
+.SetState_A     CALL .SetState
                 JR .Draw
 
-.SetAnimIdx     ; сохранение индекса анимации
-                DEC HL
-                LD (HL), A
+.SetAnimIndex   ; сохранение индекса анимации
+                LD (IX + FCursorState.SpriteIndex), A
 
 .SetSubcounter  ; установка промежуточного счётчика
-                DEC HL
-                LD (HL), #10
+                LD (IX + FCursorState.Counter), DURATION.DELAY_CURSOR
 
 .Draw           ; вывод курсора
                 LD HL, GameState.Screen
@@ -120,7 +157,7 @@ Cursor.Draw:    ; проверка бездействия курсора
                 PUSH AF
 
                 ; расчёт адреса структуры FSprite в буфере спрайтов
-                LD A, (Cursor.Indexes)
+                LD A, (IX + FCursorState.SpriteID)
                 ADD A, A    ; x2
                 LD L, A
                 EX AF, AF'
@@ -142,7 +179,7 @@ Cursor.Draw:    ; проверка бездействия курсора
             
                 ; корректировка адреса расположения необходимой структуры FSprite
                 EX AF, AF'
-                LD A, (.SpriteIdx)
+                LD A, (IX + FCursorState.SpriteIndex)
                 LD L, A
                 LD H, #00
                 ADD HL, HL  ; x2
@@ -180,9 +217,19 @@ Cursor.Draw:    ; проверка бездействия курсора
                 LD A, #00
                 LD (GameState.Screen), A
                 RET
-
-.TickCounter    DB 250
-.SpriteIdx      DB #00
-.Direction      DB #01
+                display $
+CurrentState    EQU $
+                FCursorState
+StateTable:
+Idle            ; CURSOR_STATE_IDLE
+                DB #00
+.SpriteID       DB #00
+                DB DURATION.IDLE_CURSOR
+                DB #03
+Click           ; CURSOR_STATE_CLICK
+                DB #00
+.SpriteID       DB #00
+                DB DURATION.CLICK_CURSOR
+                DB #02
 
                 endif ; ~_WORLD_RENDER_DRAW_CURSOR_

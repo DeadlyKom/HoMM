@@ -69,7 +69,8 @@ UpdateMovement: ; -----------------------------------------
                 ADD HL, DE
                 LD (GameSession.WorldInfo + FWorldInfo.Tilemap), HL
 
-                XOR A
+                LD A, (GameState.Input.Value)
+                AND ~MOVEMENT_MASK
                 LD (GameState.Input.Value), A
 
                 RET

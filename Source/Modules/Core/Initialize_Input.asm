@@ -93,8 +93,8 @@ Keyboard_WASD:  LD HL, .PresetKeys
                 JR ApplyPresetKeys
 .PresetKeys     DB VK_ENTER                                                     ; клавиша по умолчанию "меню/пауза"
                 DB VK_CAPS_SHIFT                                                ; клавиша по умолчанию "ускорить"
-                DB VK_EDIT                                                      ; клавиша по умолчанию "oтмена"
-                DB VK_SPACE                                                     ; клавиша по умолчанию "выбор"
+                DB VK_RBUTTON                                                   ; клавиша по умолчанию "oтмена"
+                DB VK_LBUTTON                                                   ; клавиша по умолчанию "выбор"
                 DB VK_D                                                         ; клавиша по умолчанию "вправо"
                 DB VK_A                                                         ; клавиша по умолчанию "влево"
                 DB VK_S                                                         ; клавиша по умолчанию "вниз"

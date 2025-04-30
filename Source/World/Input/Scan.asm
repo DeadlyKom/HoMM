@@ -33,7 +33,21 @@ Scan:           ; проверка HardWare ограничения мыши
                 CP SCREEN_CURSOR_Y - SCREEN_EDGE
                 CALL NC, Movement.Down.Force
 
-.KeyCheck       ; проверка клавиш
+.KeyCheck       ; проверка клавиши "выбор"
+                LD A, (GameConfig.KeySelect)
+                CALL Input.CheckKeyState
+                LD HL, GameState.Input.Value
+                RES SELECT_KEY_BIT, (HL)
+                JR NZ, $+4
+                SET SELECT_KEY_BIT, (HL)                                        ; установка флага, нажатия клавиши "выбор"
+
+                ; проверка клавиши "выход"
+                ; LD A, (GameConfig.KeyESC)
+
+                ; проверка клавиши "меню/пауза"
+                ; LD A, (GameConfig.KeyMenu)
+
+                ; проверка клавиш перемещения
                 LD A, (GameConfig.KeyAccel)
                 CALL Input.CheckKeyState
                 LD HL, GameState.Input.Value
