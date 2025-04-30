@@ -1,8 +1,9 @@
 
                 ifndef _CONST_SPRITE_
                 define _CONST_SPRITE_
-SPRITE_BUF_MAX  EQU 127                                                         ; максимальное количество спрайтов в буфере SpriteInfoBuffer
+SPRITE_BUF_MAX  EQU 126                                                         ; максимальное количество спрайтов в буфере SpriteInfoBuffer
 SPRITE_TEMP_IDX EQU 127                                                         ; временный индекс спрайта
+SPRITE_CUR_IDX  EQU 126                                                         ; временный индекс спрайта спрайта
 SPRITE_SIZE     EQU 8                                                           ; размер структуры объекта FSprite
 
 ; флаги структуры FSpritesRef

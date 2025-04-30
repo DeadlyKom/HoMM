@@ -73,11 +73,13 @@ Cursor.Draw:    ; проверка бездействия курсора
                 LD A, #40
                 LD (HL), A
 
-                LD DE, (Kernel.Sprite.DrawClipped.PositionX)                    ; !
+                ; сохранение позиции ранее рисуемого спрайта функции отсечения
+                LD DE, (Kernel.Sprite.DrawClipped.PositionX)
                 PUSH DE
-                LD DE, (Kernel.Sprite.DrawClipped.PositionY)                    ; !
+                LD DE, (Kernel.Sprite.DrawClipped.PositionY)
                 PUSH DE
 
+                ; установка положения спрайта курсора
                 EX DE, HL
                 LD A, (Mouse.PositionX)
                 LD L, A
@@ -113,10 +115,11 @@ Cursor.Draw:    ; проверка бездействия курсора
                 
                 EX DE, HL
 
-                LD A, (Kernel.Sprite.DrawClipped.Flags)                         ; !
+                ; сохранение флагов функции отсечения
+                LD A, (Kernel.Sprite.DrawClipped.Flags)
                 PUSH AF
-                ; SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
 
+                ; расчёт адреса структуры FSprite в буфере спрайтов
                 LD A, (Cursor.Indexes)
                 ADD A, A    ; x2
                 LD L, A
@@ -124,9 +127,40 @@ Cursor.Draw:    ; проверка бездействия курсора
                 LD H, HIGH Adr.SpriteInfoBuffer >> 2
                 ADD HL, HL  ; x4
                 ADD HL, HL  ; x8
+
+                INC L                                                           ; пропуск FSpritesRef.Num
+
+                ; чтение страницы расположения данных о структурах
+                LD A, (HL)                                                      ; FSpritesRef.Data.Page
+                INC L
+                SET_PAGE_A                                                      ; установка страницы спрайта
+
+                ; чтение адреса расположения массива структур
+                LD E, (HL)
+                INC L
+                LD D, (HL)
+            
+                ; корректировка адреса расположения необходимой структуры FSprite
                 EX AF, AF'
                 LD A, (.SpriteIdx)
-                CALL Draw.Sprite
+                LD L, A
+                LD H, #00
+                ADD HL, HL  ; x2
+                ADD HL, HL  ; x4
+                ADD HL, HL  ; x8
+                ADD HL, DE
+
+                ; копирование структуры
+                SPRITE_DE SPRITE_CUR_IDX
+                rept FSprite
+                LDI
+                endr
+                SPRITE_HL SPRITE_CUR_IDX
+
+                CALL Draw.Sprite.HL                                             ; отображение спрайта из временного буфера
+                                                                                ; HL - указывает на структуру FSprite
+
+                ; всосстановление флагов функции отсечения
                 POP AF
                 LD (Kernel.Sprite.DrawClipped.Flags), A
 
@@ -136,6 +170,7 @@ Cursor.Draw:    ; проверка бездействия курсора
                 POP HL
                 LD (GameState.LeftEdge), HL
 
+                ; восстановление позиции ранее рисуемого спрайта функции отсечения
                 POP DE
                 LD (Kernel.Sprite.DrawClipped.PositionY), DE
                 POP DE
