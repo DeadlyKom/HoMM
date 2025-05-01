@@ -217,7 +217,6 @@ Cursor.Draw:    LD IX, CurrentState
                 LD A, #00
                 LD (GameState.Screen), A
                 RET
-                display $
 CurrentState    EQU $
                 FCursorState
 StateTable:

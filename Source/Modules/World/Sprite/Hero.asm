@@ -12,7 +12,7 @@
 ; -----------------------------------------
 Load:           ; загрузка графики курсора
                 SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
-                LOAD_ASSETS ASSETS_ID_CURSOR_PACK                               ; загрузка ресурса спрайтов "курсора"
+                LOAD_ASSETS ASSETS_ID_HERO_PACK                                 ; загрузка ресурса спрайтов "героя"
 
                 ; расчёт размера копируемых данных структур FSprite
                 LD HL, (GameState.Assets + FAssets.Address.Adr)
@@ -26,7 +26,7 @@ Load:           ; загрузка графики курсора
 
                 ; инициализация
                 LD IX, .Parser
-                LD HL, World.Base.Render.Cursor.Indexes                         ; адрес списока индексов для отображения персонажа
+                LD HL, World.Base.Render.Object.Hero.Indexes                    ; адрес списока индексов для отображения персонажа
                 LD DE, .HashSequence
                 CALL Sprite.FillSpriteIndices
 
@@ -76,7 +76,14 @@ Load:           ; загрузка графики курсора
 .HashSequence   ; требуемая последовательность хешей
                 lua allpass
                 Hash16("Idle")
-                Hash16("Click")
+                Hash16("Up")
+                Hash16("UpRight")
+                Hash16("Right")
+                Hash16("DownRight")
+                Hash16("Down")
+                Hash16("DownLeft")
+                Hash16("Left")
+                Hash16("UpLeft")
                 endlua
 
                 display " - Sprite initialize hero:\t\t\t\t", /A, Load, "\t= busy [ ", /D, $-Load, " byte(s)  ]"

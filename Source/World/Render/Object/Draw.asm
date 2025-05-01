@@ -10,7 +10,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Draw:           ;
+Draw:           ; инициализация
                 LD B, A
                 DEC E
 
@@ -22,7 +22,7 @@ Draw:           ;
                                                                                 ; VisibleHeight - высота видимой части          (в пикселах)
                 LD (GameState.TopEdge), HL
 
-.Loop           ;
+.Loop           ; чтение адреса объекта
                 LD A, (DE)
                 LD IYH, A
                 DEC E
@@ -35,7 +35,7 @@ Draw:           ;
 
                 SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
 
-                ;
+                ; расчёт положения объекта относительно верхнего-левого видимойго края (по горизонтали)
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
                 LD B, A
                 LD C, #00
@@ -47,7 +47,7 @@ Draw:           ;
                 ADD HL, BC
                 LD (Kernel.Sprite.DrawClipped.PositionX), HL
 
-                ;
+                ; расчёт положения объекта относительно верхнего-левого видимойго края (по вертикали)
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
                 LD B, A
                 LD C, #00
@@ -59,69 +59,30 @@ Draw:           ;
                 ADD HL, BC
                 LD (Kernel.Sprite.DrawClipped.PositionY), HL
 
-                LD A, (IY + FObject.Sprite)
-                ADD A, A    ; x2
-                LD L, A
-                EX AF, AF'
-                LD H, HIGH Adr.SpriteInfoBuffer >> 2
-                ADD HL, HL  ; x4
-                ADD HL, HL  ; x8
+                ; определение способа отображения объекта
+                LD A, (IY + FObjectDefaultSettings.Class)
+                AND OBJECT_CLASS_MASK
 
-                LD E, (HL)                                                      ; FSpritesRef.Num
-                                                                                ; флаг SPRITE_REF_BIT должен быть очищен
-                                                                                ; флаг SPRITE_CS_BIT должен присутствовать
-                LD A, (GameState.TickCounter + FTick.Objects)
-                
-                ; проверка наличия флага SPRITE_CS_BIT
-                BIT SPRITE_CS_BIT, E
-                JR Z, .SimpleSprite                                             ; переход, если спрайт не является композитным спрайтом
+                ; ловушка
+                ifdef _DEBUG
+                CP OBJECT_CLASS_MAX
+                DEBUG_BREAK_POINT_NC                                            ; ошибка, нет такого объекта
+                endif
 
-.CompositeSprite; отображение композитного спрайта
-                RES SPRITE_CS_BIT, E                                            ; сброс флага
-
-                ; -----------------------------------------
-                ; отображение композитного спрайта
-                ; In:
-                ;   HL - адрес на структуру FSpritesRef
-                ;       ; -----------------------------------------
-                ;       ;      7    6    5    4    3    2    1    0
-                ;       ;   +----+----+----+----+----+----+----+----+
-                ;       ;   | 0  | 0  | N5 | N4 | N3 | N2 | N1 | N0 |
-                ;       ;   +----+----+----+----+----+----+----+----+
-                ;       ;
-                ;       ;   N5-N0   [5..0]      - количество спрайтов
-                ;       ; -----------------------------------------
-                ;   E  - хранит значение FSpritesRef.Num (все флаги обнулены)
-                ;   A  - счётчик анимации
-                ; -----------------------------------------
-                CALL Draw.Composite
-                JR .NextDraw
-
-.SimpleSprite   ; отображение простого спрайта
-                LD D, A
-                ; -----------------------------------------
-                ; деление D на E
-                ; In:
-                ;   D - делимое
-                ;   E - делитель
-                ; Out:
-                ;   D - результат деления   (D / E)
-                ;   A - остаток             (D % E)
-                ; Corrupt:
-                ;   D, AF
-                ; Note:
-                ;   https://www.smspower.org/Development/DivMod
-                ; -----------------------------------------
-                CALL Math.Div8x8                                                ; mod
-                LD E, A
-                EX AF, AF'
-                LD A, E
-                CALL Draw.Sprite
+                LD HL, .JumpTable
+                CALL Func.JumpTable
 
 .NextDraw       POP BC
                 POP DE
 
                 DJNZ .Loop
                 RET
+
+.JumpTable      DW Hero.Draw                                                    ; OBJECT_CLASS_CHARACTER
+                DW Simple.Draw                                                  ; OBJECT_CLASS_CONSTRUCTION
+                DW #0000                                                        ; OBJECT_CLASS_PROPS
+                DW #0000                                                        ; OBJECT_CLASS_INTERACTION
+                DW #0000                                                        ; OBJECT_CLASS_PARTICLE
+                DW #0000                                                        ; OBJECT_CLASS_DECAL
 
                 endif ; ~_WORLD_RENDER_OBJECT_DRAW_

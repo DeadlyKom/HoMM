@@ -24,7 +24,7 @@
                 DW #0000                                                        ; FMapHeader.Rules
 Tile            incbin "Builder/Assets/Metadata/Original/Map/Debug.biome"
 Tile.Size       EQU $-Tile
-Objects         include "Builder/Assets/Metadata/Original/Map/Debug.object"
+Objects         include "Builder/Assets/Metadata/Original/Map/Debug.object.inc"
 Objects.Size    EQU $-Objects
 Objects.Num     EQU Objects.Size / FMapObject
 Size            EQU $

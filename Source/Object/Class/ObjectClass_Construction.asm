@@ -19,8 +19,6 @@ Construction:   ; -----------------------------------------
                 LD (IY + FObject.Flags), A
 
                 ; -----------------------------------------
-                LD A, (IX + FObjectDefaultSettings.SpriteInfo)
-                LD (IY + FObjectConstruction.SpriteInfo), A
 
                 RET
                 

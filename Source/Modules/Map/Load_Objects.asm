@@ -56,119 +56,17 @@ Load_Objects:   ; чтение данных об объектах
                 DJNZ .ObjectLoop
                 RET
 
-.ObjectInit     LD A, (HL)                                                      ; FMapObject.Type
+.ObjectInit     LD B, (HL)                                                      ; FMapObject.Type
+                SRL B                                                           ; ??
                 INC HL
-                SRL A
-
-                PUSH AF                                                         ; сохранение типа объекта по умолчанию
-                PUSH HL
-                ; -----------------------------------------
-                ; размещение нового объекта
-                ; In:
-                ;   флаг переполнения отвечает с каким массивом объектов производится работа
-                ;   если сброшен, то работа с Adr.StaticArray иначе с Adr.DynamicArray
-                ; Out:
-                ;   A' - текущий ID объекта
-                ;   IY - адрес свободного элемента
-                ;   флаг переполнения Carry установлен, если нет свободного места в массиве
-                ; Corrupt:
-                ;   HL, AF, AF'
-                ; Note:
-                ; -----------------------------------------
-                CALL Object.PlacemantNew
-                DEBUG_BREAK_POINT_C                                             ; ошибка, нет места для размещения объекта
-                POP HL
-
-                ; -----------------------------------------
-                ; установка положения объекта
-                ; -----------------------------------------
-                LD D, (HL)                                                      ; FMapObject.Position.X
+                LD E, (HL)                                                      ; FMapObject.Position.X
                 INC HL
-                SRL D
-                LD A, D
-                LD E, #00
-                RR E
-                LD (IY + FObject.Position.X), DE
-
-                EX AF, AF'
-                LD C, A                                                         ; номер текущего ID объекта
-
                 LD D, (HL)                                                      ; FMapObject.Position.Y
                 INC HL
-                SRL D
-                LD E, #00
-                RR E
-                LD (IY + FObject.Position.Y), DE
 
-                EX AF, AF'
-                LD E, A
-
-                ; -----------------------------------------
-                ; получение номера чанка
-                ; In:
-                ;   DE - координаты в тайлах (D - y, E - x)
-                ; Out:
-                ;   A  - порядковый номер чанка
-                ; Corrupt:
-                ;   D, AF
-                ; Note:
-                ; -----------------------------------------
-                CALL ChunkArray.GetChunkIndex
-                LD (IY + FObject.Chunk), A                                      ; информация о чанке
-                LD D, A
-
-                POP AF                                                          ; восстановление типа объекта по умолчанию
-                LD (IY + FObject.Settings), A                                   ; настройки объекта по умолчанию
+                ; спавн объекта
                 PUSH HL
-
-                LD A, D
-                LD D, C
-                LD E, C
-                
-                ; -----------------------------------------
-                ; вставка значения в массив чанков
-                ; In:
-                ;   A  - порядковый номер чанка
-                ;   HL - адрес счётчиков массива чанков (выровненый 256 байт)
-                ;   D  - добавляемое значение
-                ;   E  - количество элементов в массиве
-                ; Out:
-                ; Corrupt:
-                ;   L, BC, AF
-                ; Note:
-                ; -----------------------------------------
-                LD HL, Adr.ChunkArrayCounters
-                CALL ChunkArray.Insert
-
-                ; -----------------------------------------
-                ; установка значений по умолчанию
-                ; -----------------------------------------
-
-                ; адрес структуры FObjectDefaultSettings настроек по умолчанию
-                LD A, (IY + FObject.Settings)
-                ADD A, A    ; x2
-                LD L, A
-                LD H, #00
-                ADD HL, HL  ; x4
-                ADD HL, HL  ; x8
-                LD A, H
-                ADD A, HIGH Adr.ObjectDefaultSettings
-                LD IXH, A
-                LD A, L
-                LD IXL, A
-
-                LD A, (IX + FObjectDefaultSettings.Class)
-                AND OBJECT_CLASS_MASK
-                LD (IY + FObject.Class), A                                      ; сохранение класса объекта
-
-                ; ловушка
-                ifdef _DEBUG
-                CP OBJECT_CLASS_MAX
-                DEBUG_BREAK_POINT_NC                                            ; ошибка, нет такого объекта
-                endif
-
-                LD HL, .JumpTable
-                CALL Func.JumpTable
+                CALL Object.Spawn
                 POP HL
 
                 ; -----------------------------------------
@@ -231,13 +129,5 @@ Load_Objects:   ; чтение данных об объектах
 
                 POP HL
                 RET
-
-.JumpTable      DW #0000                                                        ; OBJECT_CLASS_CHARACTER
-                DW Object.Class.Construction                                    ; OBJECT_CLASS_CONSTRUCTION
-                DW #0000                                                        ; OBJECT_CLASS_PROPS
-                DW #0000                                                        ; OBJECT_CLASS_INTERACTION
-                DW #0000                                                        ; OBJECT_CLASS_PARTICLE
-                DW #0000                                                        ; OBJECT_CLASS_DECAL
-                DW #0000                                                        ; OBJECT_CLASS_DECAL
 
                 endif ; ~_MODULE_MAP_LOAD_OBJECTS_

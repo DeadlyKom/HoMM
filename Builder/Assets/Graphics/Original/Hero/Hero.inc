@@ -1,6 +1,20 @@
 
                 ifndef _GRAPHICS_HERO_PACK_
                 define _GRAPHICS_HERO_PACK_
+
+                DB Graph.Num                                                    ; количество заголовков графики
+Graph:          EQU $
+                GRAPH_HEADER "Up",          Sprites.Up,         8
+                GRAPH_HEADER "UpRight",     Sprites.UpRight,    8
+                GRAPH_HEADER "Right",       Sprites.Right,      8
+                GRAPH_HEADER "DownRight",   Sprites.DownRight,  8
+                GRAPH_HEADER "Down",        Sprites.Down,       8
+                GRAPH_HEADER "DownLeft",    Sprites.DownLeft,   8
+                GRAPH_HEADER "Left",        Sprites.Left,       8
+                GRAPH_HEADER "UpLeft",      Sprites.UpLeft,     8
+                GRAPH_HEADER "Idle",        Sprites.Idle,       8
+Graph.Num:      EQU ($-Graph) / FGraphicHeader
+
 Sprites:        ; анимации спрайтов
 
 .Up             SPRITE 16, 29,  8,  2, OR_XOR, 0, Sprite.Up_0
@@ -83,8 +97,6 @@ Sprites:        ; анимации спрайтов
                 SPRITE 21, 28,  6,  3, M_OR_XOR, 0, Sprite.DownRight_Idle
                 SPRITE 21, 28,  6,  3, M_OR_XOR, 0, Sprite.Right_Idle
                 SPRITE 20, 28,  6,  2, M_OR_XOR, 0, Sprite.UpRight_Idle
-
-.Num            EQU ($-Sprites) / FSprite
 Sprite:
 .Up_0           incbin "Up_0.spr"
 .Up_1           incbin "Up_1.spr"

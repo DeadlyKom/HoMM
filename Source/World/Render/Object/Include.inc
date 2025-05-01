@@ -5,6 +5,8 @@
                 module Object
 
                 include "Draw.asm"
+                include "Hero/Include.inc"
+                include "Simple/Include.inc"
 
                 endmodule
 

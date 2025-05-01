@@ -88,7 +88,8 @@ Load:           ; загрузка графики курсора
                 Hash16("Idle")
                 Hash16("Click")
                 endlua
-Cursor.Indexes  DB #00                                                          ; "Idle"
+Cursor.Indexes  ; индексы спрайтов в буфере спрайтов (Adr.SpriteInfoBuffer)
+                DB #00                                                          ; "Idle"
                 DB #00                                                          ; "Click"
 
                 display " - Sprite initialize cursor:\t\t\t\t", /A, Load, "\t= busy [ ", /D, $-Load, " byte(s)  ]"

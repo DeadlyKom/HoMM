@@ -5,6 +5,7 @@
                 module Object
 
                 include "Initialize.asm"
+                include "Spawn.asm"
                 include "PlacementNew.asm"
                 include "RemoveAtSwap.asm"
                 include "Class/Include.inc"
