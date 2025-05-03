@@ -9,7 +9,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-VisibleObjects: SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
+VisibleObjects: SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
 
                 ;
                 XOR A

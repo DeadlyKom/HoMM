@@ -29,7 +29,7 @@ KernelMinimal   EQU PAGE_2                                                      
 Int.Table       EQU #0101                                                       ; размер таблицы прерываний
 Int.Stack       EQU #0080                                                       ; размер стека прерывания
 KernelMinimal   EQU Bootloader.KernelMinimal.Size                               ; размер блока кернела (минимальный)
-SpriteInfoBuffer EQU SPRITE_SIZE * SPRITE_BUF_MAX                               ; размер буфера информации о спрайтах
+SpriteInfoBuffer EQU SPRITE_SIZE * 128 /*SPRITE_BUF_MAX*/                       ; размер буфера информации о спрайтах
 ExtraBuffer     EQU #0100                                                       ; размер дополнительного буфера
 SortBuffer      EQU #0100                                                       ; размер буфера отсортированных объектов
 SharedBuffer    EQU #0100                                                       ; размер буфера общего назначения

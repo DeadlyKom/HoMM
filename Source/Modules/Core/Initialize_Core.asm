@@ -62,7 +62,7 @@ Core:           EI
                 CALL Convert.SetShadowScreen
                 
                 ; инициализация работы с объектами
-                SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
+                SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
                 CALL Object.Initialize
 
                 DELAY 1

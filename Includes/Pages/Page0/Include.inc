@@ -3,6 +3,5 @@
                 define _PAGE_0_INCLUDE_
 
                 include "Object.inc"
-                include "Tilemap.inc"
 
                 endif ; ~_PAGE_0_INCLUDE_

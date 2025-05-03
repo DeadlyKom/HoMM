@@ -33,7 +33,7 @@ Draw:           ; инициализация
                 PUSH DE
                 PUSH BC
 
-                SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
+                SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
 
                 ; расчёт положения объекта относительно верхнего-левого видимойго края (по горизонтали)
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)

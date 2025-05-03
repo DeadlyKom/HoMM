@@ -4,6 +4,7 @@
 
                 module Class
 
+                include "ObjectClass_Character.asm"
                 include "ObjectClass_Construction.asm"
 
                 endmodule

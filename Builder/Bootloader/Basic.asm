@@ -95,7 +95,7 @@ StartBoot:      DI
 
                 ; отметить занятую область данными в доступной ОЗУ (принудительно)
                 MARK_RAM PAGE_0, MemBank_03, BankSize                           ; отметить страницу памяти 0 занятой
-                ; MARK_RAM PAGE_1, MemBank_03, BankSize                           ; отметить страницу памяти 1 занятой
+                MARK_RAM PAGE_1, MemBank_03, BankSize                           ; отметить страницу памяти 1 занятой
                 MARK_RAM PAGE_2, MemBank_02, BankSize                           ; отметить страницу памяти 2 занятой
                 MARK_RAM PAGE_3, MemBank_03, BankSize                           ; отметить страницу памяти 3 занятой
                 ; MARK_RAM PAGE_4, MemBank_03, BankSize                           ; отметить страницу памяти 4 занятой
@@ -104,12 +104,19 @@ StartBoot:      DI
                 MARK_RAM PAGE_7, MemBank_03, BankSize                           ; отметить страницу памяти 7 занятой
 
                 ; подготовка и загрузка кернеля
+                SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
                 SET_LOAD_ASSETS ASSETS_ID_KERNEL, Page.Kernel, Adr.Kernel
                 LOAD_ASSETS ASSETS_ID_KERNEL
 
                 ; подготовка и загрузка кода страницы 0
+                SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
                 SET_LOAD_ASSETS ASSETS_ID_PAGE_0, Page.Page0, Adr.Code.Page0
                 LOAD_ASSETS ASSETS_ID_PAGE_0
+
+                ; подготовка и загрузка кода страницы 1
+                SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
+                SET_LOAD_ASSETS ASSETS_ID_PAGE_1, Page.Page1, Adr.Code.Page1
+                LOAD_ASSETS ASSETS_ID_PAGE_1
 
                 ; переход по точке входа
                 LD SP, Adr.StackTop

@@ -17,7 +17,7 @@ Indexes         ; индексы спрайтов в буфере спрайто
                 DB #00                                                          ; "Left"
                 DB #00                                                          ; "UpLeft"
 
-                display " - Draw hero object:\t\t\t\t", /A, Begin, " = busy [ ", /D, $-Begin, " byte(s)  ]"
+                display " - Draw hero object:\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $-Begin, " byte(s)  ]"
                 endmodule
 
                 endif ; ~_WORLD_RENDER_OBJECT_HERO_INCLUDE_

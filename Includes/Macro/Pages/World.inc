@@ -8,7 +8,7 @@
 ;   BC, AF
 ; -----------------------------------------
 SET_PAGE_WORLD  macro
-                SET_PAGE_0
+                SET_PAGE_1
                 endm
 
                 endif ; ~_MACRO_PAGE_WORLD_
