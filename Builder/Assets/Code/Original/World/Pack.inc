@@ -10,7 +10,10 @@
 
                 display "Module 'World':\t\t\t\t\t-------------------- [ ", /D, Size, " byte(s) ]\t\t\t[-]\t ------------------------"
 Begin:          EQU $
-                ; корректирование адресов (всехгда первая)
+
+                ; -----------------------------------------
+                ifdef _BUILD_MODULE_WORLD
+                ; корректирование адресов (всегда первая)
                 include "Source/Functions/AdjustmentAddress.asm"
 
                 RELOCATE_START
@@ -19,10 +22,15 @@ Begin:          EQU $
 RelocateTable   RELOCATE_TABLE
 Size:           EQU $-Begin                                                     ; размер кода
                 
-                ifdef _REBUILD
                 savebin "Builder/Assets/Code/Original/World/World.pack", Begin, Size
                 shellexec "Tools\Compressor\salvador.exe -v Builder/Assets/Code/Original/World/World.pack Builder/Assets/Code/Compressed/World.pack.ar"
+                ; -----------------------------------------
+                else
+
+                incbin "Builder/Assets/Code/Original/World/World.pack"
+Size:           EQU $-Begin  
                 endif
+                ; -----------------------------------------
 
                 ORG 0x0000
 Begin.ar        incbin "Builder/Assets/Code/Compressed/World.pack.ar"

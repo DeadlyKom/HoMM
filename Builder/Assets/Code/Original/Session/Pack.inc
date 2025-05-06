@@ -10,19 +10,27 @@
 
                 display "Module 'Session':\t\t\t\t\t-------------------- [ ", /D, Size, " byte(s) ]\t\t\t[-]\t ------------------------"
 Begin:          EQU $
-                ; корректирование адресов (всехгда первая)
+
+                ; -----------------------------------------
+                ifdef _BUILD_MODULE_SESSION
+                ; корректирование адресов (всегда первая)
                 include "Source/Functions/AdjustmentAddress.asm"
 
                 RELOCATE_START
                 include "Source/Modules/Session/Include.inc"
                 RELOCATE_END
 RelocateTable   RELOCATE_TABLE
-Size:           EQU $-Begin                                                     ; размер кода
+Size:           EQU $-Begin                                                     ; размер кода     
                 
-                ifdef _REBUILD
                 savebin "Builder/Assets/Code/Original/Session/Session.pack", Begin, Size
                 shellexec "Tools\Compressor\salvador.exe -v Builder/Assets/Code/Original/Session/Session.pack Builder/Assets/Code/Compressed/Session.pack.ar"
+                ; -----------------------------------------
+                else
+
+                incbin "Builder/Assets/Code/Original/Session/Session.pack"
+Size:           EQU $-Begin  
                 endif
+                ; -----------------------------------------
 
                 ORG 0x0000
 Begin.ar        incbin "Builder/Assets/Code/Compressed/Session.pack.ar"
