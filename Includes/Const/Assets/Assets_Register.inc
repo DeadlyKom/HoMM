@@ -19,6 +19,7 @@ REG_ASSETS_ID_DEBUG macro Label?
                     REG_ASSETS_ID       ASSETS_ID_PAGE_0                        ; код 0 страницы
                     REG_ASSETS_ID       ASSETS_ID_PAGE_1                        ; код 1 страницы
                     REG_ASSETS_ID       ASSETS_ID_MAP                           ; работа с картой
+                    REG_ASSETS_ID       ASSETS_ID_SESSION                       ; сессия
                     REG_ASSETS_ID       ASSETS_ID_WORLD                         ; мир
                     REG_ASSETS_ID       ASSETS_ID_DEFAULT_SETTINGS              ; дефолтные настройки объектов
                     REG_ASSETS_ID       ASSETS_ID_TILE_BIOME_GRASS_SAND         ; графика тайлов биома "трава-песок"

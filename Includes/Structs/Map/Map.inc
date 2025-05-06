@@ -4,7 +4,7 @@
 
                 struct FMapInfo
 Size            FSize                                                           ; размер карты
-PlayersMAX      DB #00                                                          ; максимальное количество игроков на карте
+Participants    DB #00                                                          ; доступное количество участников на карте
                 ends
 
                 struct FMapHeader                                               ; заголовок карты

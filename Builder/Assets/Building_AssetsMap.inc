@@ -60,6 +60,11 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     Map.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Map\t\t\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_SESSION, \
+                                    Session.Size, \
+                                    Session.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Session\t\t\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_WORLD, \
                                     World.Size, \
                                     World.Size.Sector.ar, \

@@ -78,7 +78,7 @@ Draw:           ; инициализация
                 DJNZ .Loop
                 RET
 
-.JumpTable      DW Hero.Draw                                                    ; OBJECT_CLASS_CHARACTER
+.JumpTable      DW Hero.Draw                                                    ; OBJECT_CLASS_HERO
                 DW Simple.Draw                                                  ; OBJECT_CLASS_CONSTRUCTION
                 DW #0000                                                        ; OBJECT_CLASS_PROPS
                 DW #0000                                                        ; OBJECT_CLASS_INTERACTION

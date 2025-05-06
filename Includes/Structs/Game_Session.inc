@@ -6,6 +6,7 @@
 MapInfo         FMapInfo                                                        ; информация о карте                                            [3 байт]
 WorldInfo       FWorldInfo                                                      ; информация о "мире"                                           [байт]
 PeriodTick      FTick                                                           ; период тиков                                                  [3 байта]
+SaveSlot        DB #00                                                          ; номер слота
 
                 ends
 

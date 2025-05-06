@@ -1,8 +1,8 @@
 
-                ifndef _OBJECT_CLASS_CHARACTER_
-                define _OBJECT_CLASS_CHARACTER_
+                ifndef _OBJECT_CLASS_HERO_
+                define _OBJECT_CLASS_HERO_
 ; -----------------------------------------
-; инициализация объекта - персонаж
+; инициализация объекта - герой
 ; In:
 ;   IX - адрес структуры FObjectDefaultSettings
 ;   IY - адрес структуры FObject
@@ -10,11 +10,11 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Character:      ; -----------------------------------------
+Hero:           ; -----------------------------------------
                 XOR A
                 LD (IY + FObject.Flags), A
                 ; -----------------------------------------
 
                 RET
                 
-                endif ; ~_OBJECT_CLASS_CHARACTER_
+                endif ; ~_OBJECT_CLASS_HERO_

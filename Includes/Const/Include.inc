@@ -12,11 +12,13 @@
                 include "Cursor.inc"
                 include "Sprite.inc"
                 include "Gameplay.inc"
+                include "SaveSlot.inc"
                 include "Interrupt.inc"
 
                 include "Map/Include.inc"
                 include "Game/Include.inc"
                 include "Input/Include.inc"
                 include "Object/Include.inc"
+                include "Player/Include.inc"
 
                 endif ; ~_CONST_INCLUDE_

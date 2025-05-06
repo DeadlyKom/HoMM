@@ -1,7 +1,6 @@
 
                 ifndef _MODULE_WORLD_INCLUDE_
                 define _MODULE_WORLD_INCLUDE_
-
 JumpTable:      ; таблица переходов
                 DW Launch                                                       ; функция запуска (0)
                 DW #0000                                                        ; резерв

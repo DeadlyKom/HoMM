@@ -2,7 +2,7 @@
                 ifndef _CONST_OBJECT_CLASS_
                 define _CONST_OBJECT_CLASS_
 ; классы структур объектов
-OBJECT_CLASS_CHARACTER      EQU 0x00                                            ; персонаж
+OBJECT_CLASS_HERO           EQU 0x00                                            ; герой
 OBJECT_CLASS_CONSTRUCTION   EQU 0x01                                            ; постройка
 OBJECT_CLASS_PROPS          EQU 0x02                                            ; декорации
 OBJECT_CLASS_INTERACTION    EQU 0x03                                            ; интерактивный

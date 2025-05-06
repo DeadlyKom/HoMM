@@ -5,6 +5,12 @@
                 ;   +-------+------------------------------------------+-------+
                 ;   | #C000 |                             ObjectsArray | #1000 |
                 ;   +-------+------------------------------------------+-------+
+                ;   | #D000 |                         ParticipantArray | #0100 |
+                ;   +-------+------------------------------------------+-------+
+                ;   | #D100 |                                HeroArray | #0800 |
+                ;   +-------+------------------------------------------+-------+
+                ;   | #D900 |                                 свободно | #1700 |
+                ;   +-------+------------------------------------------+-------+
                 ;   | #F000 |                                     Code | #0A00 | ; блок кода
                 ;   +-------+------------------------------------------+-------+
                 ;   | #FA00 |                    ObjectDefaultSettings | #0400 | ; настройки объектов по умолчанию
@@ -23,8 +29,10 @@ ObjectDefaultSettings   EQU PAGE_0
                 endmodule
 
                 module Size
-ObjectsArray             EQU OBJECT_SIZE * OBJECT_MAX                           ; размер массива объектов
+ObjectsArray            EQU OBJECT_SIZE * OBJECT_MAX                            ; размер массива объектов
+ParticipantArray        EQU PARTICIPANT_SIZE * MAX_PARTICIPANT                  ; размер массива участников
 
+HeroArray               EQU HERO_SIZE * MAX_PARTICIPANT_HEROES * MAX_PARTICIPANT; размер массива героев
 Code.Page0              EQU #0A00                                               ; размер блока кода
 ObjectDefaultSettings   EQU OBJECT_DEFAULT_SIZE * OBJECT_DEFAULT_SETTINGS_MAX   ; размер таблицы настроек объектов по умолчанию
 ChunkArrayCounters      EQU #0100                                               ; размер буфера чанков счётчиков
@@ -34,7 +42,8 @@ ChunkArrayValues        EQU #0100                                               
                 module Adr
 
 ObjectsArray            EQU #C000                                               ; адрес массива объектов
-
+ParticipantArray        EQU #D000                                               ; адрес массива участников
+HeroArray               EQU Adr.ParticipantArray + Size.ParticipantArray        ; адрес массива героев
 Code.Page0              EQU #F000                                               ; адрес блока кода
                                                                                 ; (помещён в центр, при распоковке затрутся ObjectDefaultSettings)
 ObjectDefaultSettings   EQU Adr.Code.Page0 + Size.Code.Page0                    ; адрес таблицы настроек объектов по умолчанию
