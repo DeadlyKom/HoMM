@@ -104,6 +104,8 @@ Num             EQU $ / 3                                                       
 Size            EQU (((Num % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Num >> 8)) << 8  ; размер карты ресурсов (кратный 256)
 Sector          EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)       ; размер карты ресурсов (в секторах)
 
+                if PASS = 2
                 savetrd TRD_FILENAME, "Resource.#", 0, Num * 3
+                endif
 
                 endif ; ~_BUILDING_ASSETS_MAP_

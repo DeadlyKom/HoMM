@@ -9,19 +9,17 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Make_Info:      ; копирование информации о слоте сохранения в буффер
+Make_Info:      ; создание контрольной суммы
                 LD HL, GameSession.SaveSlot
-                LD DE, Adr.TilemapBuffer
-                LD BC, FSaveSlot-1
-                CALL Memcpy.FastLDIR
-
-                ; создание контрольной суммы
-                LD HL, Adr.TilemapBuffer
                 LD DE, FSaveSlot-1
                 CALL Session.Utils.CRC_8
-
                 LD (GameSession.SaveSlot + FSaveSlot.CRC), A
-                RET
+                
+                ; копирование информации о слоте сохранения в буффер
+                LD HL, GameSession.SaveSlot
+                LD DE, Adr.TilemapBuffer
+                LD BC, FSaveSlot
+                JP Memcpy.FastLDIR
 
                 display " - Make 'Save Slot' info:\t\t\t\t", /A, Make_Info, "\t= busy [ ", /D, $-Make_Info, " byte(s)  ]"
 

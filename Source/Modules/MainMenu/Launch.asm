@@ -17,7 +17,7 @@ Launch:         ; сохранение страницы
 
                 ; ToDo: выбор слота должен осуществляться в игровом меню
                 LD A, SAVE_SLOT_0
-                LD (GameSession.SaveSlot + FSaveSlot.MapID), A
+                LD (GameSession.SaveSlotID), A
 
                 ; ToDo: произвести выборку карты в игровом меню, снастройками сессии
                 LD HL, .DefaultSlot

@@ -19,6 +19,8 @@ ADD_ASSETS_DEBUG macro Bank?, Page?, ORG?, Include?
                 endif
                 endm
 
+                if PASS = 2
+
                 ; ASSETS_ID_KERNEL
                 CREATE_ASSETS 2, Page.Kernel, Adr.Kernel, incbin "Builder/Assets/Code/Compressed/Kernel.pack.ar"
                 ; ASSETS_ID_CORE
@@ -45,5 +47,7 @@ ADD_ASSETS_DEBUG macro Bank?, Page?, ORG?, Include?
                 ADD_ASSETS 3, PAGE_N, 0x0000, incbin "Builder/Assets/Graphics/Compressed/GraphPack/01.pack.ar"
                 ; ASSETS_ID_MAP_DEBUG
                 ADD_ASSETS 3, PAGE_N, 0x0000, incbin "Builder/Assets/Metadata/Compressed/Map/Debug.map.ar"
+
+                endif
 
                 endif ; ~_BUILDING_ASSETS_DATA_0_

@@ -11,7 +11,9 @@ Begin:          EQU $
 Size:           EQU $ - Begin
 Sector          EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)
                 
+                if PASS = 2
                 savetrd TRD_FILENAME, "boot.B", Begin, Size, 20
+                endif
                 endmodule
 
                 endif ; ~ _BUILDER_BOOTLOADER_PACK_

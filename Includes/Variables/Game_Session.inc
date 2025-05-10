@@ -2,6 +2,7 @@
                 ifndef _VARIABLES_GAME_SESSION_
                 define _VARIABLES_GAME_SESSION_
 GameSession     EQU Adr.GameSession                                             ; адрес структуры состояния сессии
+.SaveSlotID     EQU GameSession + FGameSession.SaveSlotID                       ; номер активного слота сохранения
 .SaveSlot       EQU GameSession + FGameSession.SaveSlot                         ; струтура описывающая сохраняемые данные
 .MapInfo        EQU GameSession + FGameSession.SaveSlot.MapInfo                 ; онформация о карте структура FMapInfo
 .MapSize        EQU GameSession + FGameSession.SaveSlot.MapInfo.Size            ; размер карты

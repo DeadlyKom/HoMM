@@ -9,7 +9,7 @@
 ; Note:
 ; -----------------------------------------
 Save_Info:      ; проверка наличия слота
-                LD A, (GameSession.SaveSlot + FSaveSlot.MapID)
+                LD A, (GameSession.SaveSlotID)
                 CP SAVE_SLOT_MAX
                 RET NC                                                          ; выход, если данный слот недоступен
 

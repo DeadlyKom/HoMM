@@ -205,7 +205,6 @@ LOAD_ASSETS     macro ID?
 ; загрузка ресурса
 ; In:
 ;   A - идентификатор ресурса
-;   IX  - адрес структуры FAssets
 ; Out:
 ;   HL - адрес загрузки/распаковки
 ; Corrupt:
@@ -337,7 +336,7 @@ JP_EXE_ASSET_FUNCTION macro AssetID?
                 EX (SP), HL
                 PUSH HL
                 LD A, AssetID?
-.Continue       JP Func.ExeAssetCode
+                JP Func.ExeAssetCode
                 endm
 ; -----------------------------------------
 ; отметить область ОЗУ как занятая
@@ -360,6 +359,26 @@ MARK_RAM        macro Page?, Address?, Size?
                 LD B, ((~((((Page?) << 14) | ((Address?) & 0x3FFF)) >> 8)) & 0x07)+1
                 LD E, (((Size?) % TRDOS.SECTOR_SIZE > 0) & 0x01) + ((Size?) >> 8)
                 CALL AssetsManager.Mark.Force                                   ; отметить область ОЗУ как занятая
+                endm
+; -----------------------------------------
+; сохранение идентификатора последнего загруженного ассета
+; In:
+; Out:
+; Corrupt:
+; -----------------------------------------
+ASSETS_PUSH     macro
+                LD A, (GameState.AssetID)
+                PUSH AF
+                endm
+; -----------------------------------------
+; восстановление ранее загруженного ассета
+; In:
+; Out:
+; Corrupt:
+; -----------------------------------------
+ASSETS_POP      macro
+                POP AF
+                LOAD_ASSETS_A
                 endm
 
                 endif ; ~_MACRO_ASSETS_

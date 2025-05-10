@@ -29,4 +29,13 @@ ExeAssetCode:   EX AF, AF'
                 DEBUG_BREAK_POINT_C                                             ; ошибка загрузки ресурса
                 JP (HL)                                                         ; запуск загруженного блока
                 
+; восстановлени (перезагрузка) ранее загруженого ассета из стека
+RestoreAsset:   SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
+                ASSETS_POP
+
+                ; всегда вызывается инициализация
+                XOR A
+                PUSH AF
+                JP (HL)
+
                 endif ; ~_FUNCTIONS_EXECUTE_ASSET_CODE_

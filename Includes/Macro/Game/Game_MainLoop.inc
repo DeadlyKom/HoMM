@@ -80,7 +80,7 @@ RES_MAIN_FLAG   macro FlagBit?
                 RES_FLAG (FlagBit?)
                 endm
 ; -----------------------------------------
-; сброс MAIN флага
+; выборочный сброс MAIN флагов
 ; In:
 ; Out:
 ; Corrupt:

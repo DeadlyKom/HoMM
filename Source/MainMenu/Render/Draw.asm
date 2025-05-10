@@ -18,10 +18,10 @@ Draw:           ; -----------------------------------------
                 CHECK_MAIN_FLAG ML_TRANSITION_BIT
                 JR Z, .Enter
 
-                ; ToDo: временноя инициализация, безз взаимодействия с пользователем
+                ; ToDo: временноя инициализация, без взаимодействия с пользователем
                 ; ...
                 ; создание слота сохранения и инициализация
-                LAUNCH_ASSET_FUNCTION Session.Make, ExecuteModule.Session
+                LAUNCH_ASSET_FUNCTION_RESTORE Session.Make, ExecuteModule.Session
 
                 ; установка флага завершение цикла
                 SET_MAIN_FLAG ML_EXIT_BIT
@@ -43,7 +43,7 @@ Draw:           ; -----------------------------------------
                 ; тик
                 ; -----------------------------------------
 
-                RES_ALL_MAIN_FLAGS                                              ; сброс всех флагов
+                RES_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE             ; выборочный сброс Render флагов
                 SET_RENDER_FLAG FINISHED_BIT                                    ; установка флага завершения отрисовки
                 RET
 

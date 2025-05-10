@@ -10,7 +10,8 @@ GameState       EQU Adr.GameState                                               
 .Input.Value    EQU GameState + FGameState.Input.Value                          ; дополнительный флаг (см описание в структуре)
 .Input.HotKeys  EQU GameState + FGameState.Input.HotKeys                        ; флаг ввода горячих клавиш
 .Input.Scroll   EQU GameState + FGameState.Input.Scroll                         ; флаги ввода скролла карты
-.Assets         EQU GameState + FGameState.Assets                               ; копия данных об ассете
+.AssetID        EQU GameState + FGameState.AssetID                              ; идентификатор последнего загруженного ассета
+.Assets         EQU GameState + FGameState.Assets                               ; копия данных последнего загруженного ассета
 .SpriteInfoNum  EQU GameState + FGameState.SpriteInfoNum                        ; количество спрайтов в массиве SpriteInfoBuffer
 .LeftEdge       EQU GameState + FGameState.LeftEdge                             ; левая грань видимой части     (в пикселах)
 .VisibleWidth   EQU GameState + FGameState.VisibleWidth                         ; ширина видимой части          (в знакоместах)

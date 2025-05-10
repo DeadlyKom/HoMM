@@ -25,7 +25,7 @@ Loop:
                 SET_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE
                 
                 ; загрузка сессии из слота сохраниея
-                LAUNCH_ASSET_FUNCTION Session.Load, ExecuteModule.Session
+                LAUNCH_ASSET_FUNCTION_RESTORE Session.Load, ExecuteModule.Session
                 JP ExecuteModule.World                                          ; запуск "мира"
 
                 display " - Main loop:\t\t\t\t\t\t", /A, Loop, "\t= busy [ ", /D, $-Loop, " byte(s)  ]"

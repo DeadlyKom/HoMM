@@ -58,5 +58,15 @@ RES_RENDER_FLAG macro FlagBit?
                 RENDER_FLAGS
                 RES_FLAG (FlagBit?)
                 endm
+; -----------------------------------------
+; выборочный сброс Render флагов
+; In:
+; Out:
+; Corrupt:
+; -----------------------------------------
+RES_RENDER_FLAGS macro FlagBit?
+                RENDER_FLAGS
+                RES_FLAGS (FlagBit?)
+                endm
 
                 endif ; ~_MACRO_GAME_RENDER_
