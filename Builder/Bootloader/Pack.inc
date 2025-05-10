@@ -5,7 +5,7 @@
                 MMU 1, PAGE_5
                 module Bootloader
 
-                display "\'Bootloader\':\t\t\t\t\t\t-------------------------------------------------------------------------"
+                display "'Bootloader':\t\t\t\t\t\t-------------------------------------------------------------------------"
 Begin:          EQU $
                 include "Basic.asm"
 Size:           EQU $ - Begin

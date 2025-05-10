@@ -6,10 +6,10 @@
                 ; загружаются в общую память для запуска
                 module Modules
 Begin           EQU $
-                include "Map/Execute.asm"
                 include "Core/Execute.asm"
                 include "World/Execute.asm"
                 include "Session/Execute.asm"
+                include "MainMenu/Execute.asm"
 Size            EQU $-Begin
                 display " - Modules:\t\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, Size, " byte(s)  ]"
                 endmodule

@@ -12,7 +12,6 @@
 Begin:          EQU $
 
                 ; -----------------------------------------
-                ifdef _BUILD_MODULE_SESSION
                 ; корректирование адресов (всегда первая)
                 include "Source/Functions/AdjustmentAddress.asm"
 
@@ -24,12 +23,6 @@ Size:           EQU $-Begin                                                     
                 
                 savebin "Builder/Assets/Code/Original/Session/Session.pack", Begin, Size
                 shellexec "Tools\Compressor\salvador.exe -v Builder/Assets/Code/Original/Session/Session.pack Builder/Assets/Code/Compressed/Session.pack.ar"
-                ; -----------------------------------------
-                else
-
-                incbin "Builder/Assets/Code/Original/Session/Session.pack"
-Size:           EQU $-Begin  
-                endif
                 ; -----------------------------------------
 
                 ORG 0x0000

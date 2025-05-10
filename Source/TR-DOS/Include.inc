@@ -21,6 +21,11 @@ Flags           DB DISABLE_IM2                                                  
                 include "Initialize.asm"
 Buffer          DS 32, 0
 Size            EQU $-Begin
+
+                if Size > 1024
+                error "превышен доступный размер"
+                endif
+
                 display " - TR-DOS:\t\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, Size, " byte(s)  ]"
                 ENT
                 endmodule

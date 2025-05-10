@@ -8,7 +8,7 @@
                 ORG Adr.Code.Page0
                 module Page0
 
-                display "\'Page 0\':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.Code.Page0, " byte(s) / free ", /D, Size.Code.Page0 - Size, "]\t[", /D, Page.Page0, "]\t ------------------------"
+                display "'Page 0':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.Code.Page0, " byte(s) / free ", /D, Size.Code.Page0 - Size, "]\t[", /D, Page.Page0, "]\t ------------------------"
 Begin:          EQU $
 
                 include "Source/Object/Include.inc"

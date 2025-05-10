@@ -97,7 +97,7 @@ TG_ScrAdr:      ; -----------------------------------------
 
                 RET
 
-                display "\t- Screen address table generator:\t\t", /A, TG_ScrAdr, "\t= busy [ ", /D, $-TG_ScrAdr, " byte(s)  ]"
+                display " - Screen address table generator:\t\t\t", /A, TG_ScrAdr, "\t= busy [ ", /D, $-TG_ScrAdr, " byte(s)  ]"
                 endmodule
 
                 endif ; ~ _TABLE_GENERATION_SCREEN_ADDRESS_

@@ -1,6 +1,6 @@
 
-                ifndef _MODULE_MAP_LOAD_OBJECTS_
-                define _MODULE_MAP_LOAD_OBJECTS_
+                ifndef _MODULE_SESSION_INITIALIZE_OBJECTS_
+                define _MODULE_SESSION_INITIALIZE_OBJECTS_
 ; -----------------------------------------
 ; инициализация объектов карты после загрузки
 ; In:
@@ -9,7 +9,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Load_Objects:   ; чтение данных об объектах
+Init_Objects:   ; чтение данных об объектах
                 LD A, (HL)                                                      ; FMapHeader.ObjectNum
                 INC HL
                 LD E, (HL)                                                      ; FMapHeader.ObjectOffset.Low
@@ -130,4 +130,4 @@ Load_Objects:   ; чтение данных об объектах
                 POP HL
                 RET
 
-                endif ; ~_MODULE_MAP_LOAD_OBJECTS_
+                endif ; ~_MODULE_SESSION_INITIALIZE_OBJECTS_

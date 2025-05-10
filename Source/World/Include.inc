@@ -5,7 +5,7 @@
                 module Base
                 DISP Adr.World
 
-                display "'World\':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.SharedPoint, " byte(s) / free ", /D, Size.SharedPoint - Size, "]\t[", /D, Page.World, "]\t ------------------------"
+                display "Shared code 'World':\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.SharedPoint, " byte(s) / free ", /D, Size.SharedPoint - Size, "]\t[", /D, Page.World, "]\t ------------------------"
 
                 include "Loop.asm"
                 include "Interrupt.asm"

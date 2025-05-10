@@ -12,7 +12,6 @@
 Begin:          EQU $
 
                 ; -----------------------------------------
-                ifdef _BUILD_MODULE_WORLD
                 ; корректирование адресов (всегда первая)
                 include "Source/Functions/AdjustmentAddress.asm"
 
@@ -24,12 +23,6 @@ Size:           EQU $-Begin                                                     
                 
                 savebin "Builder/Assets/Code/Original/World/World.pack", Begin, Size
                 shellexec "Tools\Compressor\salvador.exe -v Builder/Assets/Code/Original/World/World.pack Builder/Assets/Code/Compressed/World.pack.ar"
-                ; -----------------------------------------
-                else
-
-                incbin "Builder/Assets/Code/Original/World/World.pack"
-Size:           EQU $-Begin  
-                endif
                 ; -----------------------------------------
 
                 ORG 0x0000

@@ -285,12 +285,11 @@ LOAD_EXE_ASSETS macro ID?
 ; -----------------------------------------
 ; загрузка ресурса и запуск
 ; In:
-;   ID? - идентификатор ресурса
-;   IX  - адрес структуры FAssets
+;   AssetID? - идентификатор ресурса
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-EXE_ASSETS_NOT_PARAM macro ID?, Func?
+EXE_ASSETS_NOT_PARAM macro AssetID?, Func?
                 LD HL, .Continue+3
                 PUSH HL
                 PUSH_PAGE                                                       ; сохранение номера страницы в стеке
@@ -298,28 +297,27 @@ EXE_ASSETS_NOT_PARAM macro ID?, Func?
                 PUSH HL
                 LD A, Func?
                 PUSH AF
-                LD A, ID?
+                LD A, AssetID?
 .Continue       JP Func.ExeAssetCode
                 endm
-JP_EXE_ASSETS_NOT_PARAM macro ID?, Func?
+JP_EXE_ASSETS_NOT_PARAM macro AssetID?, Func?
                 PUSH_PAGE                                                       ; сохранение номера страницы в стеке
                 LD HL, Func.PopPage
                 PUSH HL
                 LD A, Func?
                 PUSH AF
-                LD A, ID?
+                LD A, AssetID?
 .Continue       JP Func.ExeAssetCode
                 endm
 ; -----------------------------------------
-; загрузка ресурса и запуск
+; запуск функции ассет
 ; In:
-;   SP+0 - первый параметр
-;   ID? - идентификатор ресурса
-;   IX  - адрес структуры FAssets
+;   SP+0     - 16-битный аргумент
+;   AssetID? - идентификатор ресурса
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-EXE_ASSETS_ONE_PARAM macro ID?, Func?
+EXE_ASSET_FUNCTION macro AssetID?
                 LD HL, .Continue+3
                 EX (SP), HL
                 PUSH_PAGE                                                       ; сохранение номера страницы в стеке
@@ -327,12 +325,10 @@ EXE_ASSETS_ONE_PARAM macro ID?, Func?
                 LD HL, Func.PopPage
                 EX (SP), HL
                 PUSH HL
-                LD A, Func?
-                PUSH AF
-                LD A, ID?
+                LD A, AssetID?
 .Continue       JP Func.ExeAssetCode
                 endm
-JP_EXE_ASSETS_ONE_PARAM macro ID?, Func?
+JP_EXE_ASSET_FUNCTION macro AssetID?
                 CALL GetPage                                                    ; получение текущей страницы исходника
                 LD H, A
                 EX (SP), HL
@@ -340,9 +336,7 @@ JP_EXE_ASSETS_ONE_PARAM macro ID?, Func?
                 LD HL, Func.PopPage
                 EX (SP), HL
                 PUSH HL
-                LD A, Func?
-                PUSH AF
-                LD A, ID?
+                LD A, AssetID?
 .Continue       JP Func.ExeAssetCode
                 endm
 ; -----------------------------------------

@@ -1,6 +1,6 @@
 
-                ifndef _SESSION_LAUNCH_
-                define _SESSION_LAUNCH_
+                ifndef _MODULE_SESSION_LAUNCH_
+                define _MODULE_SESSION_LAUNCH_
 ; -----------------------------------------
 ; запуск "сессии"
 ; In:
@@ -13,8 +13,11 @@ Launch:         ; сохранение страницы
                 LD A, (GameState.Assets + FAssets.Address.Page)
                 LD (Kernel.Modules.Session.Page), A
 
-                RET
+                ; т.к. функций вызова > 1, необходимо вызывать после инициализации
+                ; фактически требуемую функцию
+                LD HL, (GameState.Assets + FAssets.Address.Adr)
+                JP (HL)
 
-                display " - Launch \'Session\':\t\t\t\t\t\t     \t= busy [ ", /D, $-Launch, " byte(s) ]"
+                display " - Launch:\t\t\t\t\t\t\t     \t= busy [ ", /D, $-Launch, " byte(s) ]"
 
-                endif ; ~_SESSION_LAUNCH_
+                endif ; ~_MODULE_SESSION_LAUNCH_

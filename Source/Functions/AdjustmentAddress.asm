@@ -57,12 +57,20 @@ AdjustmentAdr:  PUSH HL
                 LD (HL), D
                 INC L
 
-                LD (HL), #C3
+                ; модификация кода
+                ;   POP AF
+                ;   JP Func.JumpTable
+                LD (HL), #F1                                                    ; POP AF
+                INC L
+                LD (HL), #C3                                                    ; JP nnnn
                 INC L
                 LD (HL), LOW Func.JumpTable
                 INC L
                 LD (HL), HIGH Func.JumpTable
+                
+                ; первичная инициализация
                 XOR A
+                PUSH AF
                 JR AdjustmentAdr
 
 .JumpTable      EQU $

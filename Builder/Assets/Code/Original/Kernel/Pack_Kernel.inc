@@ -9,7 +9,7 @@
                                                                                 ; указан адрес следующий за минимальныйм кернелем
                 module Kernel
 
-                display "\'Kernel\':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size + BufferSize/*размер кода и буферов*/, " byte(s) / free ", /D, #4000 - ($ - #8000 + Size + BufferSize), "]\t[", /D, Page.Kernel, "]\t ------------------------"
+                display "'Kernel':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size + BufferSize/*размер кода и буферов*/, " byte(s) / free ", /D, #4000 - ($ - #8000 + Size + BufferSize), "]\t[", /D, Page.Kernel, "]\t ------------------------"
 Begin:          EQU $
 
                 ; functions

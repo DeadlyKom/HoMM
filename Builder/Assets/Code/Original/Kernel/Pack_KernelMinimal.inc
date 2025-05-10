@@ -6,7 +6,7 @@
                 module KernelMinimal
                 DISP Adr.Interrupt
 
-                display "\'Kernel minimal\':\t\t\t\t\t-------------------- [ ", /D, Size, " byte(s) ]\t\t\t[", /D, Page.KernelMinimal, "]\t ------------------------"
+                display "'Kernel minimal':\t\t\t\t\t-------------------- [ ", /D, Size, " byte(s) ]\t\t\t[", /D, Page.KernelMinimal, "]\t ------------------------"
 Begin:          EQU $
 
                 ; interrupt

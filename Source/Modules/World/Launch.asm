@@ -35,6 +35,6 @@ Launch:         ; сохранение страницы
                 SET_MOUSE_POSITION 128, 96                                      ; установить позицию мыши
                 RET
 
-                display " - Launch \'World\':\t\t\t\t\t\t     \t= busy [ ", /D, $-Launch, " byte(s) ]"
+                display " - Launch 'World':\t\t\t\t\t\t     \t= busy [ ", /D, $-Launch, " byte(s) ]"
 
                 endif ; ~_WORLD_LAUNCH_

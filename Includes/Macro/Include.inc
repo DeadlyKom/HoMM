@@ -10,11 +10,11 @@
                 include "Memset.inc"
                 include "TR-DOS.inc"
                 include "Sprite.inc"
+                include "Kernel.inc"
                 include "Screen_.inc"
                 include "Interrupt.inc"
                 include "Functions.inc"
 
-                ; include "Config/Include.inc"
                 include "Game/Include.inc"
                 include "Pages/Include.inc"
 

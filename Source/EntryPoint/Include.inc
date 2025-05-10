@@ -9,6 +9,11 @@ Begin           EQU $
                 include "Loop.asm"                                              ; второй
                 include "Swap.asm"
 Size            EQU $-Begin
+
+                if Size > Size.EntryPoint
+                error "превышен доступный размер"
+                endif
+
                 display " - Entry point:\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, Size, " byte(s)  ]"
                 ENT
                 endmodule

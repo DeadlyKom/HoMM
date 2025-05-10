@@ -28,8 +28,6 @@
                 ; основные препроцессоры сборки
                 define _DEBUG                                                   ; включить отладочный код
                 define _REBUILD                                                 ; полная пересборка
-                ; define _BUILD_MODULE_WORLD                                      ; разрешение собирать модуль "мир"
-                ; define _BUILD_MODULE_SESSION                                    ; разрешение собирать модуль "сессия"
                 define _OPTIMIZE                                                ; включить оптимизацию (ускорение)
 
                 ; препроцессоры вкл/откл
@@ -52,7 +50,7 @@
 
                 display "-------------------------------------------------------------------------------------------------------------------------------"
                 display "Build version: ", /D, MAJOR,".", /D, MINOR, ".", /D, ((BUILD / 3) / 256), " (", /D, (BUILD / 3), ")"
-                display "Building the TRD-image of the \'", TRD_FILENAME, "\' project ..."
+                display "Building the TRD-image of the '", TRD_FILENAME, "' project ..."
                 display "-------------------------------------------------------------------------------------------------------------------------------"
 
                 include "Pack.inc"

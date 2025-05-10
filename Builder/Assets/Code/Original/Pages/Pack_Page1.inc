@@ -8,7 +8,7 @@
                 ORG Adr.Code.Page1
                 module Page1
 
-                display "\'Page 1\':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.Code.Page1, " byte(s) / free ", /D, Size.Code.Page1 - Size, "]\t[", /D, Page.Page1, "]\t ------------------------"
+                display "'Page 1':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.Code.Page1, " byte(s) / free ", /D, Size.Code.Page1 - Size, "]\t[", /D, Page.Page1, "]\t ------------------------"
 Begin:          EQU $
 
                 include "Source/Memory/MemcpyTilemap.asm"

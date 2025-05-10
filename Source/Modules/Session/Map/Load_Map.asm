@@ -1,6 +1,6 @@
 
-                ifndef _MODULE_MAP_LOAD_
-                define _MODULE_MAP_LOAD_
+                ifndef _MODULE_SESSION_LOAD_MAP_
+                define _MODULE_SESSION_LOAD_MAP_
 ; -----------------------------------------
 ; загрузка карты
 ; In:
@@ -9,7 +9,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Load:           CALL Sprite.Initialize
+Load_Map:       CALL Sprite.Initialize
 
                 ; -----------------------------------------
                 ; загрузка ресурса карты
@@ -20,9 +20,6 @@ Load:           CALL Sprite.Initialize
                 PUSH AF
                 LOAD_ASSETS_A                                                   ; загрузка ресурса
                                                                                 ;   HL - адрес загрузки/распаковки
-                ; сохранение номера страницы расположения загруженого ассетаа карты
-                CALL GetPage                                                    ; получение текущей страницы исходника
-                LD (Kernel.Modules.Map.Load.Page), A
 
                 ; -----------------------------------------
                 ; парсинг FMapHeader
@@ -41,8 +38,8 @@ Load:           CALL Sprite.Initialize
                 SET_LOAD_ASSETS_REG E, Page.TileSprites, Adr.TileSprites        ; принудительная установка места загрузки ресурса
                 LOAD_ASSETS_REG E                                               ; загрузка ресурса
 
-                ; восстановление страницы расположения загруженого ассетаа карты
-                LD A, (Kernel.Modules.Map.Load.Page)
+                ; восстановление страницы расположения ассета
+                LD A, (Kernel.Modules.Session.Page)
                 SET_PAGE_A
 
                 POP HL
@@ -80,8 +77,8 @@ Load:           CALL Sprite.Initialize
                 SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
                 CALL ChunkArray.Initialize                                      ; первичная инициализация массива чанков
                                                                                 ; должна быть включена страница расположения карты
-                ; восстановление страницы расположения загруженого ассетаа карты
-                LD A, (Kernel.Modules.Map.Load.Page)
+                ; восстановление страницы расположения ассета
+                LD A, (Kernel.Modules.Session.Page)
                 SET_PAGE_A
 
                 POP HL
@@ -94,8 +91,8 @@ Load:           CALL Sprite.Initialize
                 SET_LOAD_ASSETS_REG E, Page.ObjectDefaultSettings, Adr.ObjectDefaultSettings ; принудительная установка места загрузки ресурса
                 LOAD_ASSETS_REG E                                               ; загрузка ресурса
 
-                ; восстановление страницы расположения загруженого ассетаа карты
-                LD A, (Kernel.Modules.Map.Load.Page)
+                ; восстановление страницы расположения ассета
+                LD A, (Kernel.Modules.Session.Page)
                 SET_PAGE_A
 
                 POP HL
@@ -108,12 +105,12 @@ Load:           CALL Sprite.Initialize
                 LOAD_ASSETS_REG E                                               ; загрузка ресурса
 
                 ; восстановление страницы расположения загруженого ассетаа карты
-                LD A, (Kernel.Modules.Map.Load.Page)
+                LD A, (Kernel.Modules.Session.Page)
                 SET_PAGE_A
 
                 POP HL
                 INC HL                                                          ; FMapHeader.ObjectNum
-                CALL Load_Objects                                               ; инициализация объектов карты после загрузки
+                CALL Init_Objects                                               ; инициализация объектов карты после загрузки
 
                 ; -----------------------------------------
                 ; освобождение ресурса карты
@@ -122,4 +119,4 @@ Load:           CALL Sprite.Initialize
                 POP AF
                 JP_RELEASE_ASSET_A
 
-                endif ; ~_MODULE_MAP_LOAD_
+                endif ; ~_MODULE_SESSION_LOAD_MAP_

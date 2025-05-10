@@ -1,10 +1,8 @@
 
                 ifndef _MODULE_WORLD_INCLUDE_
                 define _MODULE_WORLD_INCLUDE_
-JumpTable:      ; таблица переходов
-                DW Launch                                                       ; функция запуска (0)
-                DW #0000                                                        ; резерв
 
+                include "Kernel_Bind.inc"
                 include "Launch.asm"
 
                 ; блок кода, копируемый при развёртывания модуля
