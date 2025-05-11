@@ -29,7 +29,11 @@ Save_Info:      ; проверка наличия слота
 
                 ; восстановление страницы расположения ассета
                 LD A, (Kernel.Modules.Session.Page)
-                JP_SET_PAGE_A
+                SET_PAGE_A
+
+                SCF                                                             ; установка флага переполнения
+                                                                                ; сохранение данных слота сохранения, завершены успешно
+                RET
 
                 display " - Save 'Save Slot' info:\t\t\t\t", /A, Save_Info, "\t= busy [ ", /D, $-Save_Info, " byte(s)  ]"
 

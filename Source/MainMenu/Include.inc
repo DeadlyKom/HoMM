@@ -9,6 +9,7 @@
 
                 include "Loop.asm"
                 include "Interrupt.asm"
+                include "Core/Include.inc"
                 include "Render/Include.inc"
 Size            EQU $-Adr.MainMenu
 

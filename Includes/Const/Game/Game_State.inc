@@ -16,5 +16,6 @@ ML_UPDATE           EQU 1 << ML_UPDATE_BIT
 ; флаги работы с рендером
 FINISHED_BIT        EQU 0x00                                                    ; флаг, рендер завершён
 SWAP_DISABLE_BIT    EQU 0x01                                                    ; флаг, отключение смены экранов
+FPS_DISABLE_BIT     EQU 0x02                                                    ; флаг, отключения отображения FPS
 
                 endif ; ~_CONST_GAME_STATE_

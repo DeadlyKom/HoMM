@@ -10,9 +10,9 @@
 ; -----------------------------------------
 Swap:           ; отображение счётчика FPS
                 ifdef SHOW_FPS | _DEBUG
-                SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 CALL FPS_Counter.Frame
-                CALL FPS_Counter.Render
+                CHECK_RENDER_FLAG FPS_DISABLE_BIT
+                CALL Z, FPS_Counter.Render
                 endif
 
                 ; проверка запрета смены экранов

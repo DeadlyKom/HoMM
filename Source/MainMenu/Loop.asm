@@ -26,6 +26,8 @@ Loop:
                 
                 ; загрузка сессии из слота сохраниея
                 LAUNCH_ASSET_FUNCTION_RESTORE Session.Load, ExecuteModule.Session
+
+                CALL Core.ReleaseAsset                                          ; заранее освобождение текущего ресурса
                 JP ExecuteModule.World                                          ; запуск "мира"
 
                 display " - Main loop:\t\t\t\t\t\t", /A, Loop, "\t= busy [ ", /D, $-Loop, " byte(s)  ]"

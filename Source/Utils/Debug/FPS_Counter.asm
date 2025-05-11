@@ -57,7 +57,9 @@ Frame:
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Render:         ; установка атрибут
+Render:         SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
+
+                ; установка атрибут
                 LD A, COLOR_FPS
                 CALL Console.SetAttribute
                 

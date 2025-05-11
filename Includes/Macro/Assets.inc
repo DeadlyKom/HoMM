@@ -367,7 +367,7 @@ MARK_RAM        macro Page?, Address?, Size?
 ; Corrupt:
 ; -----------------------------------------
 ASSETS_PUSH     macro
-                LD A, (GameState.AssetID)
+                LD A, (GameState.AssetID)                                       ; идентификатора последнего загруженного ассета
                 PUSH AF
                 endm
 ; -----------------------------------------

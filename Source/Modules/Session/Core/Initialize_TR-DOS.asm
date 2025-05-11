@@ -1,6 +1,6 @@
 
-                ifndef _MODULE_SESSION_SAVE_SLOT_INITIALIZE_TR_DOS_
-                define _MODULE_SESSION_SAVE_SLOT_INITIALIZE_TR_DOS_
+                ifndef _MODULE_SESSION_CORE_INITIALIZE_TR_DOS_
+                define _MODULE_SESSION_CORE_INITIALIZE_TR_DOS_
 ; -----------------------------------------
 ; инициализация TR-DOS
 ; In:
@@ -18,4 +18,4 @@ Init_TR_DOS:    ; инициализация
 
                 display " - Initialize TR-DOS:\t\t\t\t\t", /A, Init_TR_DOS, "\t= busy [ ", /D, $-Init_TR_DOS, " byte(s)  ]"
 
-                endif ; ~_MODULE_SESSION_SAVE_SLOT_INITIALIZE_TR_DOS_
+                endif ; ~_MODULE_SESSION_CORE_INITIALIZE_TR_DOS_
