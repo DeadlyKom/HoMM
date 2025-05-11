@@ -17,6 +17,10 @@ Interrupt:      ; проверка завершённости процесса �
 
 .RenderProcess  ; процесс отрисовки не завершён
 
+.Input          ; ************ Scan Input ************
+                CHECK_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                         ; проверка разрешения сканирования ввода
+                CALL Z, Input.Scan
+
                 ifdef SHOW_FPS | _DEBUG
 .Debug_FPS      ; ************** Draw FPS **************
                 CALL FPS_Counter.Tick

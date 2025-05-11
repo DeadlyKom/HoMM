@@ -42,11 +42,11 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 ; -----------------------------------------
 
 .RenderProcess  ; процесс отрисовки не завершён
+                CALL Render.Cursor.Draw                                         ; отображение курсора
                 
 .Input          ; ************ Scan Input ************
                 CHECK_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                         ; проверка разрешения сканирования ввода
                 CALL Z, Input.Scan
-                CALL Render.Cursor.Draw                                         ; отображение курсора
 
 .Tick           ; *************** Tick ***************
                 

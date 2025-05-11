@@ -25,8 +25,12 @@ Loop:
                 SET_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE
                 
                 ; загрузка сессии из слота сохраниея
+                RES_USER_HANDLER                                                ; отключение обработчика прерываний
                 LAUNCH_ASSET_FUNCTION_RESTORE Session.Load, ExecuteModule.Session
-
+                RES_USER_HANDLER                                                ; отключение обработчика прерываний,
+                                                                                ; т.к. после возвращения исполнения функции
+                                                                                ; проинициализируется модуль главного меню
+                                                                                ; и адрес обработчикм прерывания будет восстановлен
                 CALL Core.ReleaseAsset                                          ; заранее освобождение текущего ресурса
                 JP ExecuteModule.World                                          ; запуск "мира"
 

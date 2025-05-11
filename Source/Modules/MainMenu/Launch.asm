@@ -15,16 +15,6 @@ Launch:         ; сохранение страницы
 
                 MEMCPY Adr.Deploy.MainMenu, Adr.MainMenu, Size.Deploy.MainMenu  ; копирование блока
 
-                ; ToDo: выбор слота должен осуществляться в игровом меню
-                LD A, SAVE_SLOT_0
-                LD (GameSession.SaveSlotID), A
-
-                ; ToDo: произвести выборку карты в игровом меню, снастройками сессии
-                LD HL, .DefaultSlot
-                LD DE, GameSession.SaveSlot
-                LD BC, FSaveSlot
-                CALL Memcpy.FastLDIR
-
                 ; инициализация мира 
                 SET_MAIN_LOOP MainMenu.Base.Loop                                ; установка главного цикла
                 SET_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE             ; установка флагов
@@ -35,11 +25,6 @@ Launch:         ; сохранение страницы
                 RES_RENDER_FLAG FPS_DISABLE_BIT                                 ; разрешить отображение FPS
                 SET_MOUSE_POSITION 128, 96                                      ; установить позицию мыши
                 RET
-
-.DefaultSlot    FSaveSlot {
-                    {"Default Slot\0"},                                         ; имя слота сохранения
-                    ASSETS_ID_MAP_DEBUG                                         ; идентификатор карты
-                }
 
                 display " - Launch:\t\t\t\t\t\t\t     \t= busy [ ", /D, $-Launch, " byte(s) ]"
 

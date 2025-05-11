@@ -21,5 +21,13 @@ RES_USER_HANDLER macro
                 LD BC, Interrupt_RET
                 LD (UserInterrupt), BC
                 endm
+PUSH_USER_HANDLER macro
+                LD BC, (UserInterrupt)
+                PUSH BC
+                endm
+POP_USER_HANDLER macro
+                POP BC
+                LD (UserInterrupt), BC
+                endm
 
                 endif ; ~_MACRO_INTERRUPT_

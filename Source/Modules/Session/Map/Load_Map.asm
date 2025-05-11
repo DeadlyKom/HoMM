@@ -4,23 +4,23 @@
 ; -----------------------------------------
 ; загрузка карты
 ; In:
-;   SP+0 - первый параметр
+;   A - идентификатор загружаемого ресурса карты
 ; Out:
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Load_Map:       CALL Sprite.Initialize
+Load_Map:       EX AF, AF'
+                PUSH_PAGE                                                       ; сохранение номера страницы в стеке
+                CALL Sprite.Initialize
 
                 ; -----------------------------------------
                 ; загрузка ресурса карты
                 ; -----------------------------------------
-                POP HL                                                          ; ID загружаемой карты
                 SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
-                LD A, L
+                EX AF, AF'
                 PUSH AF
                 LOAD_ASSETS_A                                                   ; загрузка ресурса
                                                                                 ;   HL - адрес загрузки/распаковки
-
                 ; -----------------------------------------
                 ; парсинг FMapHeader
                 ; -----------------------------------------
@@ -98,7 +98,7 @@ Load_Map:       CALL Sprite.Initialize
                 POP HL
                 INC HL                                                          ; FMapHeader.GraphicPack
 
-                ; загрузка ассета ID текущего графического пакета
+                ; загрузка ассета ID необходимого графического пакета для текущей карты
                 LD E, (HL)
                 PUSH HL
                 SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
@@ -117,6 +117,9 @@ Load_Map:       CALL Sprite.Initialize
                 ; -----------------------------------------
                 SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
                 POP AF
-                JP_RELEASE_ASSET_A
+                RELEASE_ASSET_A
+                JP_POP_PAGE                                                     ; восстановление номера страницы из стека
+
+                display " - Load map:\t\t\t\t\t\t", /A, Load_Map, "\t= busy [ ", /D, $-Load_Map, " byte(s)  ]"
 
                 endif ; ~_MODULE_SESSION_LOAD_MAP_

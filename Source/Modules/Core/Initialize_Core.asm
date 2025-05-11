@@ -51,6 +51,17 @@ Core:           EI
                 CALL Memcpy.FastLDIR
 
                 ; -----------------------------------------
+                ; установка дефолтной сейв слота
+                ; -----------------------------------------
+                LD A, SAVE_SLOT_0
+                LD (GameSession.SaveSlotID), A
+
+                LD HL, .DefaultSlot
+                LD DE, GameSession.SaveSlot
+                LD BC, FSaveSlot
+                CALL Memcpy.FastLDIR
+
+                ; -----------------------------------------
                 ; инициализация
                 ; -----------------------------------------
                 CALL Input                                                      ; инициализация управления
@@ -87,6 +98,11 @@ Core:           EI
                     CURSOR_MIN_SPEED,                                           ; минимальная скорость курсора
                     CURSOR_MAX_SPEED,                                           ; максимальная скорость курсора
                     1                                                           ; скорость скролла тайловой карты
+                }
+
+.DefaultSlot    FSaveSlot {
+                    {"Default Slot\0"},                                         ; имя слота сохранения
+                    ASSETS_ID_MAP_DEBUG                                         ; идентификатор карты
                 }
 
                 endif ; ~_MODULE_CORE_INITIALIZE_CORE_

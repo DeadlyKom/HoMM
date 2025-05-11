@@ -21,13 +21,11 @@ Load_Session:   ; копирование блока
                 ; ToDo: в будущем предоставить пользователю сообщение об ошибке
                 DEBUG_BREAK_POINT_NC                                            ; ошибка, слот сохранения не прошёл валидацию
 
-                JR$
+                ; загрузка карты
+                LD A, (GameSession.SaveSlot + FSaveSlot.MapID)
+                CALL SharedCode.Load_Map
 
-                ; ; загрузка карты
-                ; LD A, (GameSession.SaveSlot + FSaveSlot.MapID)
-                ; CALL Load_Map
-
-                ; JP SharedCode.Core.ReleaseAsset                                 ; освобождение текущего ресурса
+                JP SharedCode.Core.ReleaseAsset                                 ; освобождение текущего ресурса
 
                 display " - Load 'Session':\t\t\t\t\t\t     \t= busy [ ", /D, $-Load_Session, " byte(s) ]"
 
