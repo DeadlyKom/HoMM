@@ -20,7 +20,7 @@ Initialize:     ; установке значений по умолчанию (�
                 INC D
                 JR Z, .Error
 
-                CALL GetMouseXY
+.Reset          CALL GetMouseXY
                 XOR A
                 LD HL, LastValue
                 LD (HL), E

@@ -2,7 +2,7 @@
                 ifndef _STRUCT_MAP_
                 define _STRUCT_MAP_
 
-                struct FMapInfo
+                struct FMapInfo                                                 ; базовая информация о карте
 Size            FSize                                                           ; размер карты
 Participants    DB #00                                                          ; доступное количество участников на карте
                 ends

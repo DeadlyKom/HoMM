@@ -9,6 +9,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Draw:           RET
+Draw:           ;
+                RET
 
                 endif ; ~_WORLD_RENDER_OBJECT_HERO_DRAW_

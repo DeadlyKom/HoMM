@@ -5,9 +5,9 @@
                 ;   +-------+------------------------------------------+-------+
                 ;   | #C000 |                             ObjectsArray | #1000 |
                 ;   +-------+------------------------------------------+-------+
-                ;   | #D000 |                         ParticipantArray | #0100 |
+                ;   | #D000 |                                HeroArray | #0800 |
                 ;   +-------+------------------------------------------+-------+
-                ;   | #D100 |                                HeroArray | #0800 |
+                ;   | #D800 |                         ParticipantArray | #0100 |
                 ;   +-------+------------------------------------------+-------+
                 ;   | #D900 |                                 свободно | #1700 |
                 ;   +-------+------------------------------------------+-------+
@@ -42,8 +42,8 @@ ChunkArrayValues        EQU #0100                                               
                 module Adr
 
 ObjectsArray            EQU #C000                                               ; адрес массива объектов
-ParticipantArray        EQU #D000                                               ; адрес массива участников
-HeroArray               EQU Adr.ParticipantArray + Size.ParticipantArray        ; адрес массива героев
+HeroArray               EQU #D000                                               ; адрес массива героев
+ParticipantArray        EQU Adr.HeroArray + Size.HeroArray                      ; адрес массива участников
 Code.Page0              EQU #F000                                               ; адрес блока кода
                                                                                 ; (помещён в центр, при распоковке затрутся ObjectDefaultSettings)
 ObjectDefaultSettings   EQU Adr.Code.Page0 + Size.Code.Page0                    ; адрес таблицы настроек объектов по умолчанию

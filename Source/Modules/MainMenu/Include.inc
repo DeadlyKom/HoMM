@@ -2,8 +2,9 @@
                 ifndef _MODULE_MAIN_MENU_INCLUDE_
                 define _MODULE_MAIN_MENU_INCLUDE_
 
-                include "Kernel_Bind.inc"
+                include "Kernel/Bind.inc"
                 include "Launch.asm"
+                include "Kernel/Include.inc"
                 
                 ; блок кода, копируемый при развёртывания модуля
 Adr.Deploy.MainMenu     include "Source/MainMenu/Include.inc"

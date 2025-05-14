@@ -2,7 +2,7 @@
                 ifndef _MODULE_SESSION_MAKE_
                 define _MODULE_SESSION_MAKE_
 ; -----------------------------------------
-; запуск "сессии"
+; создание "сессии"
 ; In:
 ; Out:
 ; Corrupt:

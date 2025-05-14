@@ -31,6 +31,30 @@ LAUNCH_ASSET_FUNCTION_RESTORE macro FuncID?, Module?
                 JP Module?
 .Continue       EQU $
                 endm
+
+; -----------------------------------------
+; запуск функции ассет
+; In:
+;   SP+0     - 16-битный аргумент
+;   FuncID? - идентификатор запускаемой функции
+;   Module? - модуль 
+; Out:
+; Corrupt:
+; -----------------------------------------
+LAUNCH_ASSET_FUNCTION_RESTORE_ARG macro FuncID?, Module?
+                LD HL, .Continue
+                EX (SP), HL
+                PUSH HL
+                ASSETS_PUSH
+                EX (SP), HL
+                PUSH HL
+                LD HL, Func.RestoreAsset
+                EX (SP), HL
+                PUSH HL
+                LD A, FuncID?
+                JP Module?
+.Continue       EQU $
+                endm
 ; -----------------------------------------
 ; генерация меток и привязка к ним функци
 ; In:

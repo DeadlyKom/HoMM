@@ -2,7 +2,7 @@
                 ifndef _MODULE_SESSION_LOAD_
                 define _MODULE_SESSION_LOAD_
 ; -----------------------------------------
-; запуск "сессии"
+; загрузка "сессии"
 ; In:
 ; Out:
 ; Corrupt:

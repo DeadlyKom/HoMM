@@ -3,5 +3,6 @@
                 define _PAGE_0_INCLUDE_
 
                 include "Object.inc"
+                include "Participant.inc"
 
                 endif ; ~_PAGE_0_INCLUDE_

@@ -25,6 +25,7 @@ Keyboard:
                 ifdef ENABLE_MOUSE
 Mouse:
 .Initialize     EQU Kernel.Mouse.Initialize
+.Init.Reset     EQU Kernel.Mouse.Initialize.Reset  
 .UpdateCursor   EQU Kernel.Mouse.UpdateCursor
 .CheckKeyState  EQU Kernel.Mouse.CheckKeyState
 .Position       EQU Kernel.Mouse.Position

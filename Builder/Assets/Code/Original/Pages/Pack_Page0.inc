@@ -12,6 +12,7 @@
 Begin:          EQU $
 
                 include "Source/Object/Include.inc"
+                include "Source/Participant/Include.inc"
 Size:           EQU $-Begin                                                     ; размер кода
 
                 ifdef _REBUILD
