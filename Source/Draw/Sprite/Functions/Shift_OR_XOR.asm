@@ -184,7 +184,7 @@ Shift_OX_oOOO_x ; правая половина байта
                 LD (DE), A  ; запись байта в экран
 NextRow:        ; новая строка
                 DEC C
-                JP Z, Kernel.Sprite.Exit
+                JP Z, Kernel.Sprite.DrawOR_XOR.Exit
                 INC D
                 DJNZ .NextRow
 

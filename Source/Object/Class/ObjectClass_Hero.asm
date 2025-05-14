@@ -6,7 +6,7 @@
 ; In:
 ;   A' - идентификатор объекта
 ;   IX - адрес структуры FObjectDefaultSettings
-;   IY - адрес структуры FObject
+;   IY - адрес структуры FObject (FObjectHero)
 ; Out:
 ; Corrupt:
 ; Note:
