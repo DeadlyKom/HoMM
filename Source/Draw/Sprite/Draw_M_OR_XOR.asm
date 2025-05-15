@@ -1,6 +1,6 @@
 
-                ifndef _DRAW_SPRITE_DRAW_OR_XOR_
-                define _DRAW_SPRITE_DRAW_OR_XOR_
+                ifndef _DRAW_SPRITE_DRAW_M_OR_XOR_
+                define _DRAW_SPRITE_DRAW_M_OR_XOR_
 ; -----------------------------------------
 ; отображение спрайта OR & XOR без атрибутов
 ; In:
@@ -15,7 +15,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-DrawOR_XOR      EXX
+DrawM_OR_XOR    EXX
                 DEC C       ; началос с 1
                 LD A, C                                                         ; ширины спрайта в знакоместах
                 EX AF, AF'
@@ -192,14 +192,14 @@ DrawOR_XOR      EXX
                 ; -----------------------------------------
                 LD H, HIGH Adr.ByteMirrorTable                                  ; адреса таблицы зеркальных байт/буфера
                 ADD A, A    ; x2
-                ADD A, (HIGH Adr.ShiftTable) - 2                                ; таблица не хранит нулевое смещение
+                ADD A, (HIGH Adr.ShiftTable) - 2 + 1                            ; таблица не хранит нулевое смещение
                 LD D, A
             
                 EXX
 
                 ; защитная от порчи данных с разрешённым прерыванием
                 RESTORE_BC
-                LD (DrawOR_XOR.Exit.ContainerSP), SP
+                LD (DrawM_OR_XOR.Exit.ContainerSP), SP
 
                 ; подготовка вывода
                 LD L, E
@@ -213,9 +213,9 @@ DrawOR_XOR      EXX
 .SpriteAddress  EQU $+1
                 LD SP, #0000
                 JP (IX)                                                         ; отобращение спрайта
-DrawOR_XOR.Exit
+DrawM_OR_XOR.Exit
 .ContainerSP    EQU $+1
                 LD SP, #0000
                 RET
 
-                endif ; ~ _DRAW_SPRITE_DRAW_OR_XOR_
+                endif ; ~ _DRAW_SPRITE_DRAW_M_OR_XOR_

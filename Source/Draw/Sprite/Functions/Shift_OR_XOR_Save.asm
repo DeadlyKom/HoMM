@@ -179,7 +179,6 @@ NextRow:        ; новая строка
 .NextBoundary   LD H, D                                                         ; сохранение старший байт адреса экрана
 .NextRow        LD E, L                                                         ; восстановление младший байт фдреса экрана
                 JP (IY)
-
 Shift_OX_Right:
 ; ._xXX_Xx_       ; +1.5 байт
 ;                 POP AF

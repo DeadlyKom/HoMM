@@ -9,8 +9,21 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Draw:           ;
-                LD HL, Indexes
+Draw:           LD HL, .Delay
+                DEC (HL)
+                JR NZ, .L1
+
+                LD (HL), #02
+
+
+                LD HL, .Counter
+                LD A, (HL)
+                INC A
+                AND #07
+                LD (HL), A
+
+                ;
+.L1             LD HL, Indexes
 
                 ; расчёт адреса структуры FSpritesRef
                 LD A, (HL)
@@ -24,10 +37,12 @@ Draw:           ;
                 LD E, (HL)                                                      ; FSpritesRef.Num
                                                                                 ; флаг SPRITE_REF_BIT должен быть очищен
                                                                                 ; флаг SPRITE_CS_BIT должен присутствовать
-
                 EX AF, AF'
-                LD A, #00
+                LD A, (.Counter)
                 CALL Draw.Sprite
                 RET
+
+.Counter        DB #00
+.Delay          DB #02
 
                 endif ; ~_WORLD_RENDER_OBJECT_HERO_DRAW_

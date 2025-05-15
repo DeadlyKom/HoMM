@@ -1,8 +1,8 @@
 
-                ifndef _DRAW_SPRITE_FUNCTION_NO_SHIFT_OR_XOR_
-                define _DRAW_SPRITE_FUNCTION_NO_SHIFT_OR_XOR_
+                ifndef _DRAW_SPRITE_FUNCTION_NO_SHIFT_M_OR_XOR_
+                define _DRAW_SPRITE_FUNCTION_NO_SHIFT_M_OR_XOR_
 
-                module OR_XOR
+                module M_OR_XOR
 Begin_NoShift:  EQU $
 ; -----------------------------------------
 ;
@@ -37,52 +37,52 @@ NoShift:
 
                 EXX
                 POP BC
-                LD L, C     ; маска всегда хранится отзеркаленная
-                OR (HL)     ; возвращаем прежнее значение
-                XOR B       ; спрайт всегда хранится нормальный
+                OR C        ; маска всегда хранится отзеркаленная
+                LD L, B     ; спрайт всегда хранится нормальный
+                XOR (HL)    ; зеркалим спрайт
                 EXX
 
                 LD (DE), A  ; запись байта в экран
-                INC E       ; следующее знакоместо
+                DEC E       ; предыдущее знакоместо
 
 ._OX_XXX        LD A, (DE)  ; чтение байта из экрана
 
                 EXX
                 POP BC
-                LD L, C     ; маска всегда хранится отзеркаленная
-                OR (HL)     ; возвращаем прежнее значение
-                XOR B       ; спрайт всегда хранится нормальный
+                OR C        ; маска всегда хранится отзеркаленная
+                LD L, B     ; спрайт всегда хранится нормальный
+                XOR (HL)    ; зеркалим спрайт
                 EXX
 
                 LD (DE), A  ; запись байта в экран
-                INC E       ; следующее знакоместо
+                DEC E       ; предыдущее знакоместо
 
 ._OX_XX         LD A, (DE)  ; чтение байта из экрана
 
                 EXX
                 POP BC
-                LD L, C     ; маска всегда хранится отзеркаленная
-                OR (HL)     ; возвращаем прежнее значение
-                XOR B       ; спрайт всегда хранится нормальный
+                OR C        ; маска всегда хранится отзеркаленная
+                LD L, B     ; спрайт всегда хранится нормальный
+                XOR (HL)    ; зеркалим спрайт
                 EXX
 
                 LD (DE), A  ; запись байта в экран
-                INC E       ; следующее знакоместо
+                DEC E       ; предыдущее знакоместо
 
 ._OX_X          LD A, (DE)  ; чтение байта из экрана
 
                 EXX
                 POP BC
-                LD L, C     ; маска всегда хранится отзеркаленная
-                OR (HL)     ; возвращаем прежнее значение
-                XOR B       ; спрайт всегда хранится нормальный
+                OR C        ; маска всегда хранится отзеркаленная
+                LD L, B     ; спрайт всегда хранится нормальный
+                XOR (HL)    ; зеркалим спрайт
                 EXX
 
                 LD (DE), A  ; запись байта в экран
 
 ; NextRow:        ; новая строка
                 DEC C
-                JP Z, Kernel.Sprite.DrawOR_XOR.Exit
+                JP Z, Kernel.Sprite.DrawM_OR_XOR.Exit
                 INC D
                 DJNZ .NextRow
 
@@ -119,7 +119,7 @@ NoShift.Table:
                 DW NoShift._OX_XX,      NoShiftLR._OX_XX_XX                     ; +2.0
                 DW NoShift._OX_X,       NoShiftLR._OX_XXX_X                     ; +3.0
 
-                display " - Draw function 'No Shift OR & XOR':\t\t\t", /A, Begin_NoShift, "\t= busy [ ", /D, $ - Begin_NoShift, " byte(s)  ]"
+                display " - Draw function 'No Shift Mirror OR & XOR':\t\t", /A, Begin_NoShift, "\t= busy [ ", /D, $ - Begin_NoShift, " byte(s)  ]"
                 endmodule
 
-                endif ; ~ _DRAW_SPRITE_FUNCTION_NO_SHIFT_OR_XOR_
+                endif ; ~ _DRAW_SPRITE_FUNCTION_NO_SHIFT_M_OR_XOR_

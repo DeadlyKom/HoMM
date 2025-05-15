@@ -90,13 +90,13 @@ Sprites:        ; анимации спрайтов
                 SPRITE 19, 28,  7,  2, M_OR_XOR, 0, Sprite.UpRight_7
 
 .Idle           SPRITE 16, 29,  8,  2, OR_XOR, 0, Sprite.Up_Idle
-                SPRITE 20, 28,  6,  2, OR_XOR, 0, Sprite.UpRight_Idle
+                SPRITE 21, 28,  6,  2, OR_XOR, 0, Sprite.UpRight_Idle
                 SPRITE 25, 26,  4,  4, OR_XOR, 0, Sprite.Right_Idle
                 SPRITE 21, 28,  6,  3, OR_XOR, 0, Sprite.DownRight_Idle
                 SPRITE 16, 30,  8,  1, OR_XOR, 0, Sprite.Down_Idle
-                SPRITE 21, 28,  6,  3, M_OR_XOR, 0, Sprite.DownRight_Idle
-                SPRITE 21, 28,  6,  3, M_OR_XOR, 0, Sprite.Right_Idle
-                SPRITE 20, 28,  6,  2, M_OR_XOR, 0, Sprite.UpRight_Idle
+                SPRITE 21, 28,  6+21,  3, M_OR_XOR, 0, Sprite.DownRight_Idle
+                SPRITE 25, 26,  4+25,  4, M_OR_XOR, 0, Sprite.Right_Idle
+                SPRITE 21, 28,  6+21,  2, M_OR_XOR, 0, Sprite.UpRight_Idle
 Sprite:
 .Up_0           incbin "Up_0.spr"
 .Up_1           incbin "Up_1.spr"
