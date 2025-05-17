@@ -12,9 +12,7 @@
 Draw:           LD HL, .Delay
                 DEC (HL)
                 JR NZ, .L1
-
-                LD (HL), #02
-
+                LD (HL), #01
 
                 LD HL, .Counter
                 LD A, (HL)
@@ -22,8 +20,42 @@ Draw:           LD HL, .Delay
                 AND #07
                 LD (HL), A
 
+                LD A, (.Step)
+                LD C, A
+                ADD A, A
+                SBC A, A
+                LD B, A
+
+                LD HL, (IY + FObject.Position.X)
+                ADD HL, BC
+                LD (IY + FObject.Position.X), HL
+
+                LD HL, .StepCount
+                DEC (HL)
+                JR NZ, .L1
+
+                LD (HL), #20
+
+                LD A, (.Step)
+                NEG
+                LD (.Step), A
+
                 ;
+                LD HL, .Index
+                INC (HL)
+                LD A, (HL)
+                CP 9
+                JR NZ, .L1
+                LD (HL), 0
+
 .L1             LD HL, Indexes
+
+                LD A, (.Index)
+                ADD A, L
+                LD L, A
+                ADC A, H
+                SUB L
+                LD H, A
 
                 ; расчёт адреса структуры FSpritesRef
                 LD A, (HL)
@@ -42,7 +74,13 @@ Draw:           LD HL, .Delay
                 CALL Draw.Sprite
                 RET
 
-.Counter        DB #00
+.Counter        DB #06
 .Delay          DB #02
+
+.Step           DB #10
+.StepCount      DB #70
+
+.Index          DB #00
+.IndexStep      DB #01
 
                 endif ; ~_WORLD_RENDER_OBJECT_HERO_DRAW_

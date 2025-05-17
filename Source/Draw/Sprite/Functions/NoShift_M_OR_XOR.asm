@@ -101,23 +101,23 @@ NoShift:
 NoShift.Table:
 .OX_8           DW NoShift._OX_X,       NoShift._OX_X                           ;  1.0
 
-                DW NoShiftLR._OX_X_X,   NoShiftLR._OX_X_X                       ; -1.0
-.OX_16          DW NoShift._OX_XX,      NoShift._OX_XX                          ;  2.0
                 DW NoShift._OX_X,       NoShiftLR._OX_X_X                       ; +1.0
+.OX_16          DW NoShift._OX_XX,      NoShift._OX_XX                          ;  2.0
+                DW NoShiftLR._OX_X_X,   NoShiftLR._OX_X_X                       ; -1.0
 
-                DW NoShiftLR._OX_XX_X,  NoShiftLR._OX_XX_X                      ; -2.0
-                DW NoShiftLR._OX_X_XX,  NoShiftLR._OX_X_XX                      ; -1.0
-.OX_24          DW NoShift._OX_XXX,     NoShift._OX_XXX
-                DW NoShift._OX_XX,      NoShiftLR._OX_X_XX                      ; +1.0
                 DW NoShift._OX_X,       NoShiftLR._OX_XX_X                      ; +2.0
+                DW NoShift._OX_XX,      NoShiftLR._OX_X_XX                      ; +1.0
+.OX_24          DW NoShift._OX_XXX,     NoShift._OX_XXX
+                DW NoShiftLR._OX_X_XX,  NoShiftLR._OX_X_XX                      ; -1.0
+                DW NoShiftLR._OX_XX_X,  NoShiftLR._OX_XX_X                      ; -2.0
 
-                DW NoShiftLR._OX_XXX_X, NoShiftLR._OX_XXX_X                     ; -3.0
-                DW NoShiftLR._OX_XX_XX, NoShiftLR._OX_XX_XX                     ; -2.0
-                DW NoShiftLR._OX_X_XXX, NoShiftLR._OX_X_XXX                     ; -1.0
-.OX_32          DW NoShift._OX_XXXX,    NoShift._OX_XXXX
-                DW NoShift._OX_XXX,     NoShiftLR._OX_X_XXX                     ; +1.0
-                DW NoShift._OX_XX,      NoShiftLR._OX_XX_XX                     ; +2.0
                 DW NoShift._OX_X,       NoShiftLR._OX_XXX_X                     ; +3.0
+                DW NoShift._OX_XX,      NoShiftLR._OX_XX_XX                     ; +2.0
+                DW NoShift._OX_XXX,     NoShiftLR._OX_X_XXX                     ; +1.0
+.OX_32          DW NoShift._OX_XXXX,    NoShift._OX_XXXX
+                DW NoShiftLR._OX_X_XXX, NoShiftLR._OX_X_XXX                     ; -1.0
+                DW NoShiftLR._OX_XX_XX, NoShiftLR._OX_XX_XX                     ; -2.0
+                DW NoShiftLR._OX_XXX_X, NoShiftLR._OX_XXX_X                     ; -3.0
 
                 display " - Draw function 'No Shift Mirror OR & XOR':\t\t", /A, Begin_NoShift, "\t= busy [ ", /D, $ - Begin_NoShift, " byte(s)  ]"
                 endmodule

@@ -226,5 +226,6 @@ DrawOR_XOR_ATTR.Exit
 .ContainerSP    EQU $+1
                 LD SP, #0000
                 RET
+                display " - Draw function 'OR XOR ATTR':\t\t\t", /A, DrawOR_XOR_ATTR, "\t= busy [ ", /D, $-DrawOR_XOR_ATTR, " byte(s)  ]"
 
                 endif ; ~ _DRAW_SPRITE_DRAW_OR_XOR_ATTR_

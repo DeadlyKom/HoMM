@@ -96,5 +96,6 @@ DrawComposite:  ; сохранение счётчика, от которого �
                 DJNZ .DrawLoop
 
                 RET
+                display " - Draw function 'Composite':\t\t\t\t", /A, DrawComposite, "\t= busy [ ", /D, $-DrawComposite, " byte(s)  ]"
 
                 endif ; ~ _DRAW_SPRITE_DRAW_COMPOSITE_

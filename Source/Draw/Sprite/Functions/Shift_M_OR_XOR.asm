@@ -88,6 +88,7 @@ Shift_OX_xXXXx  ;  4.0 байт
                 LD L, B     ; спрайт всегда хранится нормальный
                 LD B, (HL)  ; меняем на отзеркаленый
                 EX DE, HL
+
                 LD L, C
                 OR (HL)     ; применение смещение маски
                 LD L, B
@@ -96,7 +97,7 @@ Shift_OX_xXXXx  ;  4.0 байт
 
                 LD (DE), A  ; запись байта в экран
                 DEC E       ; предыдущее знакоместо
-Shift_OX_o_XXXx ;
+Shift_OX_o_XXXx ; 3.0 байт
                 LD A, (DE)  ; чтение байта из экрана
 
                 EXX
@@ -106,12 +107,14 @@ Shift_OX_o_XXXx ;
                 LD L, B
                 XOR (HL)    ; применение смещение спрайта
                 INC H       ; первый байт таблицы смещения (хвост)
-                EX DE, HL
 
-.R              POP BC
+                EX DE, HL
+.R              ; 2.5 байт
+                POP BC
                 LD L, B     ; спрайт всегда хранится нормальный
                 LD B, (HL)  ; меняем на отзеркаленый
                 EX DE, HL
+
                 LD L, C
                 OR (HL)     ; применение смещение маски
                 LD L, B
@@ -120,7 +123,7 @@ Shift_OX_o_XXXx ;
 
                 LD (DE), A  ; запись байта в экран
                 DEC E       ; предыдущее знакоместо
-Shift_OX_oO_XXx ;
+Shift_OX_oO_XXx ; 2.0 байт
                 LD A, (DE)  ; чтение байта из экрана
 
                 EXX
@@ -130,12 +133,14 @@ Shift_OX_oO_XXx ;
                 LD L, B
                 XOR (HL)    ; применение смещение спрайта
                 INC H       ; первый байт таблицы смещения (хвост)
-                EX DE, HL
 
-.R              POP BC
+                EX DE, HL
+.R              ; 1.5 байт
+                POP BC
                 LD L, B     ; спрайт всегда хранится нормальный
                 LD B, (HL)  ; меняем на отзеркаленый
                 EX DE, HL
+
                 LD L, C
                 OR (HL)     ; применение смещение маски
                 LD L, B
@@ -144,7 +149,7 @@ Shift_OX_oO_XXx ;
 
                 LD (DE), A  ; запись байта в экран
                 DEC E       ; предыдущее знакоместо
-Shift_OX_oOO_Xx ;
+Shift_OX_oOO_Xx ; 1.0 байт
                 LD A, (DE)  ; чтение байта из экрана
 
                 EXX
@@ -154,12 +159,14 @@ Shift_OX_oOO_Xx ;
                 LD L, B
                 XOR (HL)    ; применение смещение спрайта
                 INC H       ; первый байт таблицы смещения (хвост)
+                
                 EX DE, HL
-
-.R              POP BC
+.R              ; 0.5 байт
+                POP BC
                 LD L, B     ; спрайт всегда хранится нормальный
                 LD B, (HL)  ; меняем на отзеркаленый
                 EX DE, HL
+
                 LD L, C
                 OR (HL)     ; применение смещение маски
                 LD L, B
@@ -200,7 +207,6 @@ NextRow:        ; новая строка
 .NextBoundary   LD H, D                                                         ; сохранение старший байт адреса экрана
 .NextRow        LD E, L                                                         ; восстановление младший байт адреса экрана
                 JP (IY)
-
 Shift_OX_Right:
 ._xXX_Xx_       ; +1.5 байт
                 POP AF
@@ -214,11 +220,11 @@ Shift_OX_Right:
                 LD L, B     ; спрайт всегда хранится нормальный
                 LD B, (HL)  ; меняем на отзеркаленый
                 EX DE, HL
+
                 LD L, C
                 OR (HL)     ; применение смещение маски
                 LD L, B
                 XOR (HL)    ; спрайт отзеркален
-                EX DE, HL
                 EXX
 
                 LD (DE), A  ; запись байта в экран
@@ -238,16 +244,17 @@ Shift_OX_Right:
                 LD L, B     ; спрайт всегда хранится нормальный
                 LD B, (HL)  ; меняем на отзеркаленый
                 EX DE, HL
+
                 LD L, C
                 OR (HL)     ; применение смещение маски
                 LD L, B
                 XOR (HL)    ; спрайт отзеркален
-                EX DE, HL
                 EXX
 
                 LD (DE), A  ; запись байта в экран
                 DEC E       ; предыдущее знакоместо
                 JP ._xX_x_
+
 ._xXXX_x        ; +0.5 байт
                 LD A, (DE)  ; чтение байта из экрана
 
@@ -256,11 +263,11 @@ Shift_OX_Right:
                 LD L, B     ; спрайт всегда хранится нормальный
                 LD B, (HL)  ; меняем на отзеркаленый
                 EX DE, HL
+
                 LD L, C
                 OR (HL)     ; применение смещение маски
                 LD L, B
                 XOR (HL)    ; спрайт отзеркален
-                EX DE, HL
                 EXX
 
                 LD (DE), A  ; запись байта в экран
@@ -275,12 +282,13 @@ Shift_OX_Right:
                 LD L, B
                 XOR (HL)    ; применение смещение спрайта
                 INC H       ; первый байт таблицы смещения (хвост)
+                
                 EX DE, HL
-
                 POP BC
                 LD L, B     ; спрайт всегда хранится нормальный
                 LD B, (HL)  ; меняем на отзеркаленый
                 EX DE, HL
+
                 LD L, C
                 OR (HL)     ; применение смещение маски
                 LD L, B
@@ -299,12 +307,13 @@ Shift_OX_Right:
                 LD L, B
                 XOR (HL)    ; применение смещение спрайта
                 INC H       ; первый байт таблицы смещения (хвост)
-                EX DE, HL
 
+                EX DE, HL
                 POP BC
                 LD L, B     ; спрайт всегда хранится нормальный
                 LD B, (HL)  ; меняем на отзеркаленый
                 EX DE, HL
+
                 LD L, C
                 OR (HL)     ; применение смещение маски
                 LD L, B
@@ -323,16 +332,18 @@ Shift_OX_Right:
                 LD L, B
                 XOR (HL)    ; применение смещение спрайта
                 INC H       ; первый байт таблицы смещения (хвост)
+                
                 EX DE, HL
-
                 POP BC
                 LD L, B     ; спрайт всегда хранится нормальный
                 LD B, (HL)  ; меняем на отзеркаленый
                 EX DE, HL
+
                 LD L, C
                 OR (HL)     ; применение смещение маски
                 LD L, B
                 XOR (HL)    ; спрайт отзеркален
+                EX DE, HL
                 EXX
 
                 LD (DE), A  ; запись байта в экран
@@ -354,6 +365,7 @@ Shift_OX_Right:
                 LD L, B     ; спрайт всегда хранится нормальный
                 LD B, (HL)  ; меняем на отзеркаленый
                 EX DE, HL
+
                 LD L, C
                 OR (HL)     ; применение смещение маски
                 LD L, B
@@ -364,33 +376,33 @@ Shift_OX_Right:
                 LD (DE), A  ; запись байта в экран
                 JP NextRow
 Shift.Table:
-                DW Shift_OX_Left._x_x,      Shift_OX_Left._x_x                  ; -0.5 байт
-.OX_8           DW Shift_OX._xx,            Shift_OX._xx                        ;  1.0 байт
                 DW Shift_OX_Right._x_x,     Shift_OX_Right._x_x                 ; +0.5 байт
+.OX_8           DW Shift_OX._xx,            Shift_OX._xx                        ;  1.0 байт
+                DW Shift_OX_Left._x_x,      Shift_OX_Left._x_x                  ; -0.5 байт
 
-                DW Shift_OX_Left._xX_x,     Shift_OX_Left._xX_x                 ; -1.5 байт
-                DW Shift_OX_Left._x_Xx,     Shift_OX_Left._x_Xx                 ; -0.5 байт
-.OX_16          DW Shift_OX._xXx,           Shift_OX._xXx                       ;  2.0 байт
-                DW Shift_OX_Right._xX_x,    Shift_OX_Right._xX_x                ; +0.5 байт
                 DW Shift_OX_Right._x_Xx,    Shift_OX_Right._x_Xx_               ; +1.5 байт
+                DW Shift_OX_Right._xX_x,    Shift_OX_Right._xX_x                ; +0.5 байт
+.OX_16          DW Shift_OX._xXx,           Shift_OX._xXx                       ;  2.0 байт
+                DW Shift_OX_Left._x_Xx,     Shift_OX_Left._x_Xx                 ; -0.5 байт
+                DW Shift_OX_Left._xX_x,     Shift_OX_Left._xX_x                 ; -1.5 байт
 
-                DW Shift_OX_Left._xXX_x,    Shift_OX_Left._xXX_x                ; -2.5 байт
-                DW Shift_OX_Left._xX_Xx,    Shift_OX_Left._xX_Xx                ; -1.5 байт
-                DW Shift_OX_Left._x_XXx,    Shift_OX_Left._x_XXx                ; -0.5 байт
-.OX_24          DW Shift_OX._xXXx,          Shift_OX._xXXx                      ;  3.0 байт
-                DW Shift_OX_Right._xXX_x,   Shift_OX_Right._xXX_x               ; +0.5 байт
-                DW Shift_OX_Right._xX_Xx,   Shift_OX_Right._xX_Xx_              ; +1.5 байт
                 DW Shift_OX_Right._x_XXx,   Shift_OX_Right._x_XXx_              ; +2.5 байт
+                DW Shift_OX_Right._xX_Xx,   Shift_OX_Right._xX_Xx_              ; +1.5 байт
+                DW Shift_OX_Right._xXX_x,   Shift_OX_Right._xXX_x               ; +0.5 байт
+.OX_24          DW Shift_OX._xXXx,          Shift_OX._xXXx                      ;  3.0 байт
+                DW Shift_OX_Left._x_XXx,    Shift_OX_Left._x_XXx                ; -0.5 байт
+                DW Shift_OX_Left._xX_Xx,    Shift_OX_Left._xX_Xx                ; -1.5 байт
+                DW Shift_OX_Left._xXX_x,    Shift_OX_Left._xXX_x                ; -2.5 байт
 
-                DW Shift_OX_Left._xXXX_x,   Shift_OX_Left._xXXX_x               ; -3.5 байт
-                DW Shift_OX_Left._xXX_Xx,   Shift_OX_Left._xXX_Xx               ; -2.5 байт
-                DW Shift_OX_Left._xX_XXx,   Shift_OX_Left._xX_XXx               ; -1.5 байт
-                DW Shift_OX_Left._x_XXXx,   Shift_OX_Left._x_XXXx               ; -0.5 байт
-.OX_32          DW Shift_OX_xXXXx,          Shift_OX_xXXXx                      ;  4.0 байт
-                DW Shift_OX_Right._xXXX_x,  Shift_OX_Right._xXXX_x              ; +0.5 байт
-                DW Shift_OX_Right._xXX_Xx,  Shift_OX_Right._xXX_Xx_             ; +1.5 байт
-                DW Shift_OX_Right._xX_XXx,  Shift_OX_Right._xX_XXx_             ; +2.5 байт
                 DW Shift_OX_Right._x_XXXx,  Shift_OX_Right._x_XXXx_             ; +3.5 байт
+                DW Shift_OX_Right._xX_XXx,  Shift_OX_Right._xX_XXx_             ; +2.5 байт
+                DW Shift_OX_Right._xXX_Xx,  Shift_OX_Right._xXX_Xx_             ; +1.5 байт
+                DW Shift_OX_Right._xXXX_x,  Shift_OX_Right._xXXX_x              ; +0.5 байт
+.OX_32          DW Shift_OX_xXXXx,          Shift_OX_xXXXx                      ;  4.0 байт
+                DW Shift_OX_Left._x_XXXx,   Shift_OX_Left._x_XXXx               ; -0.5 байт
+                DW Shift_OX_Left._xX_XXx,   Shift_OX_Left._xX_XXx               ; -1.5 байт
+                DW Shift_OX_Left._xXX_Xx,   Shift_OX_Left._xXX_Xx               ; -2.5 байт
+                DW Shift_OX_Left._xXXX_x,   Shift_OX_Left._xXXX_x               ; -3.5 байт
 
                 display " - Draw function 'Shift Mirror OR & XOR': \t\t", /A, Begin_Shift, "\t= busy [ ", /D, $ - Begin_Shift, " byte(s)  ]"
                 endmodule

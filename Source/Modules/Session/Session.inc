@@ -4,7 +4,7 @@
 
                 module SharedCode
                 DISP Adr.Session
-                display "Shared code 'Session':\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.SharedPoint, " byte(s) / free ", /D, Size.SharedPoint - Size, "]\t[", /D, Page.Session, "]\t ------------------------"
+                display "Shared code 'Session':\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.SharedPoint, " byte(s) / free ", /D, Size.SharedPoint - Size, "]\t[", /D, Page.Session, "]\t ------------------------"
 
                 include "Map/Include.inc"
                 include "Core/Include.inc"

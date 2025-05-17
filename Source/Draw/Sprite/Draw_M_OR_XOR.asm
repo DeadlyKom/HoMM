@@ -15,7 +15,21 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-DrawM_OR_XOR    EXX
+DrawM_OR_XOR    ; корректировка адреса экрана,
+                ; т.к. спрайт рисуется в обратном порядке, то к текущему адресу
+                ; необходимо прибавить разницу ширины спрайта и невидимой чатси
+                LD A, C
+                OR A
+                JP M, $+5
+                NEG
+                EXX
+                ADD A, C
+                EXX
+                ADD A, E
+                LD E, A
+
+                ; инициализация
+                EXX
                 DEC C       ; началос с 1
                 LD A, C                                                         ; ширины спрайта в знакоместах
                 EX AF, AF'
@@ -149,7 +163,7 @@ DrawM_OR_XOR    EXX
                 SUB L
                 LD H, A
 
-                ; чтение адреса таблицы переходов ё
+                ; чтение адреса таблицы переходов
                 LD A, (HL)
                 INC HL
                 LD H, (HL)
@@ -217,5 +231,6 @@ DrawM_OR_XOR.Exit
 .ContainerSP    EQU $+1
                 LD SP, #0000
                 RET
+                display " - Draw function 'Mirror OR XOR':\t\t\t", /A, DrawM_OR_XOR, "\t= busy [ ", /D, $-DrawM_OR_XOR, " byte(s)  ]"
 
                 endif ; ~ _DRAW_SPRITE_DRAW_M_OR_XOR_

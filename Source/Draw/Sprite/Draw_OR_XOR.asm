@@ -93,7 +93,7 @@ DrawOR_XOR      EXX
                 LD A, (HL)
                 ADD A, A                                                        ; ширина спрайта с маской (x2)
 
-               ; -----------------------------------------
+                ; -----------------------------------------
                 ; копирование спрайта в общий буфер
                 ; In:
                 ;   DE - адрес спрайта
@@ -149,7 +149,7 @@ DrawOR_XOR      EXX
                 SUB L
                 LD H, A
 
-                ; чтение адреса таблицы переходов ё
+                ; чтение адреса таблицы переходов
                 LD A, (HL)
                 INC HL
                 LD H, (HL)
@@ -217,5 +217,6 @@ DrawOR_XOR.Exit
 .ContainerSP    EQU $+1
                 LD SP, #0000
                 RET
+                display " - Draw function 'OR XOR':\t\t\t\t", /A, DrawOR_XOR, "\t= busy [ ", /D, $-DrawOR_XOR, " byte(s)  ]"
 
                 endif ; ~ _DRAW_SPRITE_DRAW_OR_XOR_

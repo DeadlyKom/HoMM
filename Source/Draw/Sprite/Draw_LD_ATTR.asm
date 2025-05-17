@@ -63,5 +63,6 @@ DrawLD_ATTR     EXX
                 LD D, A
 
                 JP DrawOR_XOR_ATTR.ToCopy
+                display " - Draw function 'LD ATTR':\t\t\t\t", /A, DrawLD_ATTR, "\t= busy [ ", /D, $-DrawLD_ATTR, " byte(s)  ]"
 
                 endif ; ~ _DRAW_SPRITE_DRAW_LOAD_ATTR_

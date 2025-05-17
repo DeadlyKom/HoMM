@@ -61,5 +61,6 @@ Restore:        ;
                 JR NZ, .Loop
 
                 RET
+                display " - Draw function 'Restore background':\t\t", /A, Restore, "\t= busy [ ", /D, $-Restore, " byte(s)  ]"
 
                 endif ; ~ _DRAW_SPRITE_RESTORE_BACKGROUND_
