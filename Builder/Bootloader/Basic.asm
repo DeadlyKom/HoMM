@@ -126,7 +126,6 @@ Data:
 .KernelMinimal  include "Builder/Assets/Code/Original/Kernel/Pack_KernelMinimal.inc"    ; минимальный блок кернела
 .EntryPoint     include "Source/EntryPoint/Include.inc"                         ; точка входа
 .TRDOS          include "Source/TR-DOS/Include.inc"                             ; драйвер TR-DOS
-
 EndBoot:        DB #0D                                                          ; конец строки
                 DB #00, #14                                                     ; номер строки 20
                 DB #2A, #00                                                     ; длина строки 42 байта

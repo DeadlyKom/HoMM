@@ -8,6 +8,8 @@
                 include "Vector16.inc"
                 include "Address.inc"
                 include "Assets.inc"
+
+                include "AStar.inc"
                 
                 include "Tick.inc"
                 include "Size.inc"
