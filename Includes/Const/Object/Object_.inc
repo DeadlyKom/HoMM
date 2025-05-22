@@ -7,4 +7,10 @@ OBJECT_MAX                  EQU 256                                             
 OBJECT_DEFAULT_SETTINGS_MAX EQU 128                                             ; максимальное количество настроек объектов по умолчанию
 OBJECT_EMPTY_ELEMENT        EQU #FF                                             ; свободный элемент массива
 
+; значения для поля FObject.Flags
+OBJECT_TICK_BIT             EQU 0x04                                            ; объект тикает
+
+
+OBJECT_TICK                 EQU 1 << OBJECT_TICK_BIT
+
                 endif ; ~_CONST_OBJECT_INCLUDE_

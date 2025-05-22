@@ -52,7 +52,7 @@ Loop:
 .TmpParticipant FParticipantSettings {
                     { HUMANOID | PLAYER_GROUP_0 },                              ; фракция участника
                     CASTLE_ID_NONE,                                             ; идентификатор стартового замка
-                    { 22, 12 },                                                   ; стартовая позиция игрока
+                    { 16, 16 },                                                 ; стартовая позиция игрока
 
                     ; настройки стартового героя участника
                     ; FHeroSettings

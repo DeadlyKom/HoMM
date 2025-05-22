@@ -19,7 +19,7 @@ Swap:           ; отображение счётчика FPS
                 CHECK_RENDER_FLAG SWAP_DISABLE_BIT
                 CALL Z, Screen.Swap
 
-                RES_RENDER_FLAG FINISHED_BIT                                    ; обнуление флага FINISHED_BITёёёё
+                RES_RENDER_FLAG FINISHED_BIT                                    ; обнуление флага FINISHED_BIT
                 RET
  
                 endif ; ~_ENTRY_POINT_SWAP_SCREEN_

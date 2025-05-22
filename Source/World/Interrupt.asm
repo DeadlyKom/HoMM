@@ -18,7 +18,9 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
 .SwapScreens    ; ************ Swap Screens ************
                 CALL Render.Swap
 
-                ; -----------------------------------------
+                ; --------------------------------------------------------------
+                ; инициализация счётчиков, и смена кадров, 
+                ; если счётчикни обнулены
                 LD HL, GameSession.PeriodTick + FTick.Tile
                 LD DE, GameState.TickCounter + FTick.Tile
 
@@ -35,11 +37,22 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
 
                 LD A, (HL)
                 OR A
+                JR NZ, $+7
+                LD (HL), DURATION.HERO_TICK+1
+                EX DE, HL
+                INC (HL)
+                EX DE, HL
+
+                INC L
+                INC E
+
+                LD A, (HL)
+                OR A
                 JR NZ, $+6
                 LD (HL), DURATION.OBJECT_TICK+1
                 EX DE, HL
                 INC (HL)
-                ; -----------------------------------------
+                ; --------------------------------------------------------------
 
 .RenderProcess  ; процесс отрисовки не завершён
                 CALL Render.Cursor.Draw                                         ; отображение курсора
@@ -49,8 +62,9 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 CALL Z, Input.Scan
 
 .Tick           ; *************** Tick ***************
-                
+
                 ; -----------------------------------------
+                ; уменьшение счётчиков периодов, без переполнения
                 LD HL, GameSession.PeriodTick + FTick.Scroll
                 LD BC, #0001
 
@@ -70,12 +84,23 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
 
                 INC L
 
-                ; уменьшение счётчика задержки тайлов
+                ; уменьшение счётчика задержки героя
+                LD A, (HL)
+                SUB C
+                ADC A, B
+                LD (HL), A
+
+                INC L
+
+                ; уменьшение счётчика задержки объектов
                 LD A, (HL)
                 SUB C
                 ADC A, B
                 LD (HL), A
                 ; -----------------------------------------
+
+                SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
+                CALL Tick.Global                                                ; обработчик глобального тика
 
                 ifdef SHOW_FPS | _DEBUG
 .Debug_FPS      ; ************** Draw FPS **************

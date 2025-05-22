@@ -4,83 +4,80 @@
 ; -----------------------------------------
 ; отображение объекта "герой"
 ; In:
-;   IY - адрес структуры объекта
+;   IY - адрес структуры объекта (FObjectHero)
 ; Out:
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Draw:           LD HL, .Delay
-                DEC (HL)
-                JR NZ, .L1
-                LD (HL), #01
+Draw:           ; --------------------------------------------------------------
+                LD HL, Indexes
 
-                LD HL, .Counter
-                LD A, (HL)
-                INC A
-                AND #07
-                LD (HL), A
+                ; -----------------------------------------
+                ;   FObjectHero.Super.Sprite
+                ;      7    6    5    4    3    2    1    0
+                ;   +----+----+----+----+----+----+----+----+
+                ;   | S1 | S0 | D2 | D1 | D0 | A2 | A1 | A0 |
+                ;   +----+----+----+----+----+----+----+----+
+                ;
+                ;   S1,S0   [7,6]   - состояние анимации
+                ;                       00 - 'бездействие'
+                ;                       01 - 'перемещение'
+                ;                       10 - 'поворот', A2-A0 хранит требуемое направление
+                ;                       11 - резерв
+                ;   В2-В0   [5..3]  - направление спрайта
+                ;                       000 - вверх
+                ;                       001 - вверх-вправо
+                ;                       010 - вправо
+                ;                       011 - вниз-вправо
+                ;                       100 - вниз
+                ;                       101 - вниз-влево
+                ;                       110 - влево
+                ;                       111 - вверх-влево
+                ;   A2-A0   [2..0]  - индекс анимации спрайта
+                ; -----------------------------------------
+                LD C, (IY + FObjectHero.Super.Sprite)
 
-                LD A, (.Step)
-                LD C, A
-                ADD A, A
-                SBC A, A
+                ; направление спрайта
+                LD A, C
+                RRA
+                RRA
+                RRA
+                AND DIR_MASK
                 LD B, A
 
-                LD HL, (IY + FObject.Position.X)
-                ADD HL, BC
-                LD (IY + FObject.Position.X), HL
+                ; проверка состояния анимации
+                BIT ANIM_STATE_BIT, C                                           ;   0 - бездействие/поворот
+                                                                                ;   1 - перемещение
+                JR Z, .Draw                                                     ; перейти, если состояние анимации бездействие
 
-                LD HL, .StepCount
-                DEC (HL)
-                JR NZ, .L1
-
-                LD (HL), #20
-
-                LD A, (.Step)
-                NEG
-                LD (.Step), A
-
-                ;
-                LD HL, .Index
-                INC (HL)
-                LD A, (HL)
-                CP 9
-                JR NZ, .L1
-                LD (HL), 0
-
-.L1             LD HL, Indexes
-
-                LD A, (.Index)
+.Move           ; применить направление спрайта анимации
+                LD A, B
+                INC A                                                           ; пропуск idle индекса спрайта
                 ADD A, L
                 LD L, A
                 ADC A, H
                 SUB L
                 LD H, A
 
+                ; номер анимации
+                LD A, C
+                AND %00000111
+                LD B, A
+
+.Draw           ; --------------------------------------------------------------
+                ; отображение спрайта
+
                 ; расчёт адреса структуры FSpritesRef
                 LD A, (HL)
-                ADD A, A    ; x2
+                ADD A, A    ; x2                                                ; старщий флаг игнорируем, т.к. ставим его самостоятельно
                 LD L, A
-                EX AF, AF'
                 LD H, HIGH Adr.SpriteInfoBuffer >> 2
                 ADD HL, HL  ; x4
                 ADD HL, HL  ; x8
 
-                LD E, (HL)                                                      ; FSpritesRef.Num
-                                                                                ; флаг SPRITE_REF_BIT должен быть очищен
-                                                                                ; флаг SPRITE_CS_BIT должен присутствовать
-                EX AF, AF'
-                LD A, (.Counter)
-                CALL Draw.Sprite
-                RET
+                LD A, B                                                         ; номер анимации
+                SCF                                                             ; указываем на структуру FSpritesRef
 
-.Counter        DB #06
-.Delay          DB #02
-
-.Step           DB #10
-.StepCount      DB #70
-
-.Index          DB #00
-.IndexStep      DB #01
+                JP Draw.Sprite
 
                 endif ; ~_WORLD_RENDER_OBJECT_HERO_DRAW_

@@ -5,6 +5,7 @@
                 struct FTick
 Scroll          DB #00                                                          ; скролл карты
 Tile            DB #00                                                          ; тайлы
+Hero            DB #00                                                          ; герой
 Objects         DB #00                                                          ; объекты
                 ends
 

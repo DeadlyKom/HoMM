@@ -3,6 +3,7 @@
                 define _CONST_OBJECT_INCLUDE_
 
                 include "Type.inc"
+                include "Hero.inc"
                 include "Class.inc"
                 include "Object_.inc"
                 include "ObjectDefaultSettings.inc"

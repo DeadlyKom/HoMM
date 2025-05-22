@@ -2,6 +2,10 @@
                 ifndef _STRUCTS_A_STAR_
                 define _STRUCTS_A_STAR_
 
+                struct FPath                                                    ; структура данных результата поиска пути А*                    [2 байта]
+TileCoord       FVector8                                                        ; координаты тайла
+                ends
+
                 struct FAStar                                                   ; структура данных для поиска пути А*                           [8 байта]
 Cost_F          DW #0000                                                        ; Cost_F = Cost_G + Cost_H
 Cost_G          DW #0000                                                        ; стоимость затрачиваемое на перемещение из стартовой ячейки в текущую

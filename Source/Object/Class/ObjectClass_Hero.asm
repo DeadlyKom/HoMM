@@ -12,9 +12,12 @@
 ; Note:
 ; -----------------------------------------
 Hero:           ; -----------------------------------------
-                XOR A
-                LD (IY + FObject.Flags), A
+                LD (IY + FObject.Flags), OBJECT_TICK
+                LD (IY + FObject.Sprite), ANIM_STATE_IDLE | (DIR_LEFT << SPRITE_DIR_BIT)
                 ; -----------------------------------------
+
+                LD (IY + FObjectHero.HeroID), HERO_ID_NONE
+                LD (IY + FObjectHero.PathID), PATH_ID_NONE
 
                 RET
                 
