@@ -14,10 +14,10 @@ Hero:           ; проверка смены анимации героя
                 CP DURATION.HERO_TICK
                 RET NZ                                                          ; выход, если счётчик не обнулён
 
-                ;
+                ; проверка перемещения героя
                 LD C, (IX + FObjectHero.Super.Sprite)
                 BIT ANIM_STATE_BIT, C
-                JR NZ, Move.Prepare
+                JR NZ, Move.Prepare                                             ; переход, если герой движется
 
                 ; проверка наличия пути
                 LD A, (IX + FObjectHero.PathID)
@@ -78,6 +78,7 @@ Hero:           ; проверка смены анимации героя
                 LD H, A
                 LD B, (HL)                                                      ; направление
                 ; --------------------------------------------------------------
+                ; проверка необходимости поворота в направление движения
                 LD C, (IX + FObjectHero.Super.Sprite)
 
                 ; направление спрайта
@@ -89,31 +90,35 @@ Hero:           ; проверка смены анимации героя
 
                 ; сравнение напрвлений
                 SUB B
-                JR Z, Move                                                      ; направление совподает
-                CCF                                                             ; меняем знак
+                JR Z, Move                                                      ; перехд, если направление совподает, поворот не требуется
                 
-                LD B, #00               ; значение по умолчанию (против часовой)    NOP
-                JR C, .Clockwise
-                LD B, #3F               ; значение по умолчанию (по часовой)        CCF
+                ; требуется поворот в направлдение движения
+                CCF                                                             ; меняем знак
 
+                LD B, #00   ; NOP
+                JR C, .Clockwise                                                ; переход, если поворот против часовой стрелке
+
+                ; вращение по часовой стрелке
+                LD B, #3F   ; CCF
                 NEG
-.Clockwise      SUB #04
-                JR NZ, .NotEqual
-                SCF
 
+.Clockwise      ; проверка на кратчайший путь поворота
+                SUB #04
+                JR NZ, .NotEqual                                                ; переход, если путь поворота не одинаковый
+
+                ; путь поворота по часовой и против равнозначный
+                SCF                                                             ; выбираем поворот против часовой стрелке
 .NotEqual       LD A, B
                 LD (.Direction), A
 .Direction      NOP                     ; NOP/CCF
 
-.Rotation       SBC A, A                ; < 4 = -1, > 4 = 0
+.Rotation       ; шаг поворота (-1 или 1), в зависимости от флага переполнения
+                SBC A, A
                 CCF
                 ADC A, #00
 Turn            ; --------------------------------------------------------------
                 ; расчёт направления вращения
                 ; положительная по часовой стрелка, иначе против часовой стрелке
-                ;SBC A, A
-                ;CCF
-                ;ADC A, #00
 
                 ADD A, A    ; x2
                 ADD A, A    ; x4
@@ -128,21 +133,21 @@ Turn            ; --------------------------------------------------------------
 
                 LD (IX + FObjectHero.Super.Sprite), A
 
-.SetCell        LD HL, 16 << 4
+SetCell         ; установить доступное расстояние между тайлами 16х16 пикселей 
+                LD HL, 16 << 4
                 LD (IX + FObjectHero.Delta.X), HL
                 LD (IX + FObjectHero.Delta.Y), HL
 
                 RET
-
-Move.Prepare    ; направление спрайта
+Move.Prepare    ; --------------------------------------------------------------
+                ; направление спрайта
                 LD A, C
                 RRA
                 RRA
                 RRA
                 AND DIR_MASK
                 LD B,  A
-Move            ; --------------------------------------------------------------
-                ; перемещение
+Move            ; перемещение
 
                 ; расчёт адреса хранения направления
                 LD A, B
@@ -153,21 +158,28 @@ Move            ; --------------------------------------------------------------
                 SUB E
                 LD D, A
                 
+                ; --------------------------------------------------------------
                 ; горизонтальное смещение
+
+                ; приведение шага к 16-битному числу
                 LD A, (DE)
                 LD C, A
                 ADD A, A    ; x2
                 SBC A, A
                 LD B, A
 
+                ; проверка доступности шага
                 LD HL, (IX + FObjectHero.Delta.X)
                 LD A, C
                 OR A
-                JR Z, .L1_2
-                JP P, .L1_1
+                JR Z, .ResetDeltaX                                              ; переход, если шаг равен 0
+                JP P, .IsPositiveX                                              ; переход, если шаг положительный
 
                 ADC HL, BC
-                JP P, .L1
+                JP P, .SetDeltaX                                                ; переход, если шаг возможен
+
+                ; перемещение на ширину шага невозможно,
+                ; расчёт нового шага, с учётом размещения в центре тайла
 
                 ; NEG BC
                 LD BC, (IX + FObjectHero.Delta.X)
@@ -177,36 +189,43 @@ Move            ; --------------------------------------------------------------
                 SBC A, A
                 SUB B
                 LD B, A
-                JR .L1_2
+                JR .ResetDeltaX
 
-.L1_1           SBC HL, BC
-                JP P, .L1
+.IsPositiveX    SBC HL, BC
+                JP P, .SetDeltaX                                                ; переход, если шаг возможен
 
                 LD BC, (IX + FObjectHero.Delta.X)
-.L1_2           LD HL, #0000
 
-.L1             LD (IX + FObjectHero.Delta.X), HL
+.ResetDeltaX    LD HL, #0000
+.SetDeltaX      LD (IX + FObjectHero.Delta.X), HL
                 LD HL, (IX + FObjectHero.Super.Position.X)
                 ADD HL, BC
                 LD (IX + FObjectHero.Super.Position.X), HL
+                ; --------------------------------------------------------------
 
                 INC DE
 
+                ; --------------------------------------------------------------
                 ; вертикальное смещение
+                ; приведение шага к 16-битному числу
                 LD A, (DE)
                 LD C, A
                 ADD A, A    ; x2
                 SBC A, A
                 LD B, A
 
+                ; проверка доступности шага
                 LD HL, (IX + FObjectHero.Delta.Y)
                 LD A, C
                 OR A
-                JR Z, .L2_2
-                JP P, .L2_1
+                JR Z, .ResetDeltaY                                              ; переход, если шаг равен 0
+                JP P, .IsPositiveY                                              ; переход, если шаг положительный
 
                 ADC HL, BC
-                JP P, .L2
+                JP P, .SetDeltaY                                                ; переход, если шаг возможен
+
+                ; перемещение на ширину шага невозможно,
+                ; расчёт нового шага, с учётом размещения в центре тайла
 
                 ; NEG BC
                 LD BC, (IX + FObjectHero.Delta.Y)
@@ -216,20 +235,21 @@ Move            ; --------------------------------------------------------------
                 SBC A, A
                 SUB B
                 LD B, A
-                JR .L2_2
+                JR .ResetDeltaY
 
-.L2_1           SBC HL, BC
-                JP P, .L2
+.IsPositiveY    SBC HL, BC
+                JP P, .SetDeltaY                                                ; переход, если шаг возможен
 
                 LD BC, (IX + FObjectHero.Delta.Y)
-.L2_2           LD HL, #0000
 
-.L2             LD (IX + FObjectHero.Delta.Y), HL
+.ResetDeltaY    LD HL, #0000
+.SetDeltaY      LD (IX + FObjectHero.Delta.Y), HL
                 LD HL, (IX + FObjectHero.Super.Position.Y)
                 ADD HL, BC
                 LD (IX + FObjectHero.Super.Position.Y), HL
-
                 ; --------------------------------------------------------------
+                ; установить состояние перемещения героя,
+                ; изменить кадр спрайта
                 LD C, (IX + FObjectHero.Super.Sprite)
                 LD A, C
                 INC A
@@ -241,6 +261,7 @@ Move            ; --------------------------------------------------------------
                 LD (IX + FObjectHero.Super.Sprite), A
 
                 ; --------------------------------------------------------------
+                ; проверка что герой дошёл до центра тайла
                 LD A, (IX + FObjectHero.Delta.X.Low)
                 OR (IX + FObjectHero.Delta.X.High)
                 OR (IX + FObjectHero.Delta.Y.Low)
@@ -251,7 +272,7 @@ Move            ; --------------------------------------------------------------
                 DEC (IX + FObjectHero.PathID)
                 RES ANIM_STATE_BIT, (IX + FObjectHero.Super.Sprite)
 
-                JP Turn.SetCell
+                JP SetCell
 SetPath         ; установка длины пути
                 LD (IX + FObjectHero.PathID), Path.Num-1
                 RET
@@ -269,7 +290,6 @@ Path            ; начало 8, 8
                 FPath {  9,  6 }                                                ; 2
                 FPath {  8,  7 }                                                ; 1
 .Num            EQU ($-Path) / FPath
-
 Direction       ; направление                                                   ; ---- yy xx
                 DB DIR_UP                                                       ; 0000 00 00    (не действительная)
                 DB DIR_LEFT                                                     ; 0000 00 01
@@ -287,10 +307,9 @@ Direction       ; направление                                        
                 DB DIR_DOWN_LEFT                                                ; 0000 11 01
                 DB DIR_UP                                                       ; 0000 11 10    (не действительная)
                 DB DIR_DOWN_RIGHT                                               ; 0000 11 11
-
 Velocity        ; скорость перемещения
                 lua allpass
-                local speed = 1.0 / 12.0
+                local speed = 1.0 / 10.0
                 local dir = {   {  0, -1 },
                                 {  1, -1 },
                                 {  1,  0 },
@@ -314,15 +333,5 @@ Velocity        ; скорость перемещения
                     --print (x, y, math.deg(angle), string.format("#%02X", cos), cos, string.format("#%02X", sin), sin)
                 end
                 endlua
-
-; S               EQU 32
-;                 DB  0, -S
-;                 DB  S, -S
-;                 DB  S,  0
-;                 DB  S,  S
-;                 DB  0,  S
-;                 DB -S,  S
-;                 DB -S,  0
-;                 DB -S, -S
 
                 endif ; ~_TICK_OBJECT_HERO_
