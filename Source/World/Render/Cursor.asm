@@ -35,10 +35,10 @@ Cursor.Draw:    LD IX, CurrentState
                 ; состояние курсора отсутствует
 
                 ; проверка нажатия клавиши "выбор"
-                LD A, (GameState.Input.Value)
-                BIT SELECT_KEY_BIT, A
+                LD A, (GameState.Input.Event + FInputEvent.KeyID)
+                CP KEY_ID_SELECT
                 LD A, CURSOR_STATE_CLICK
-                JR NZ, .SetState_A                                              ; переход, была нажата клавиша "выбор"
+                JR Z, .SetState_A                                               ; переход, была нажата клавиша "выбор"
 
                 ; проверка бездействия курсора
                 LD A, (Mouse.PositionFlag)                                      ; если курсор не поменяет позицию, хранит #FF

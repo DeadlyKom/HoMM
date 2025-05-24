@@ -85,6 +85,11 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     Graphics.Cursor.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Graphic Cursor\t\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_UI_ARROW_PATH_PACK, \
+                                    UI.Graphics.ArrowPath.Size, \
+                                    UI.Graphics.ArrowPath.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - UI Graphic 'Arrow Path'\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_HERO_PACK, \
                                     Graphics.Hero.Size, \
                                     Graphics.Hero.Size.Sector.ar, \

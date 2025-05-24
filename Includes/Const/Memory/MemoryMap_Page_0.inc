@@ -9,7 +9,9 @@
                 ;   +-------+------------------------------------------+-------+
                 ;   | #D800 |                         ParticipantArray | #0100 |
                 ;   +-------+------------------------------------------+-------+
-                ;   | #D900 |                                 свободно | #1700 |
+                ;   | #D900 |                                 HeroPath | #00C0 |
+                ;   +-------+------------------------------------------+-------+
+                ;   | #D9C0 |                                 свободно | #1640 |
                 ;   +-------+------------------------------------------+-------+
                 ;   | #F000 |                                     Code | #0A00 | ; блок кода
                 ;   +-------+------------------------------------------+-------+
@@ -31,7 +33,8 @@ ObjectDefaultSettings   EQU PAGE_0
                 module Size
 ObjectsArray            EQU OBJECT_SIZE * OBJECT_MAX                            ; размер массива объектов
 ParticipantArray        EQU PARTICIPANT_SIZE * MAX_PARTICIPANT                  ; размер массива участников
-
+HeroPath                EQU #00C0                                               ; размер массива найденого пути в виде последовательности координат тайлов (FPath),
+                                                                                ; где нулевой элемент является последним
 HeroArray               EQU HERO_SIZE * MAX_PARTICIPANT_HEROES * MAX_PARTICIPANT; размер массива героев
 Code.Page0              EQU #0A00                                               ; размер блока кода
 ObjectDefaultSettings   EQU OBJECT_DEFAULT_SIZE * OBJECT_DEFAULT_SETTINGS_MAX   ; размер таблицы настроек объектов по умолчанию
@@ -44,6 +47,8 @@ ChunkArrayValues        EQU #0100                                               
 ObjectsArray            EQU #C000                                               ; адрес массива объектов
 HeroArray               EQU #D000                                               ; адрес массива героев
 ParticipantArray        EQU Adr.HeroArray + Size.HeroArray                      ; адрес массива участников
+HeroPath                EQU Adr.ParticipantArray + Size.ParticipantArray        ; адрес массива найденого пути в виде последовательности координат тайлов (FPath),
+                                                                                ; где нулевой элемент является последним
 Code.Page0              EQU #F000                                               ; адрес блока кода
                                                                                 ; (помещён в центр, при распоковке затрутся ObjectDefaultSettings)
 ObjectDefaultSettings   EQU Adr.Code.Page0 + Size.Code.Page0                    ; адрес таблицы настроек объектов по умолчанию

@@ -7,6 +7,7 @@ Object:
 .PlacemantNew   EQU Page0.Object.PlacemantNewObj                                ; размещение нового объекта
 .RemoveAtSwap   EQU Page0.Object.RemoveAtSwap                                   ; удаление объекта, перемещая последний элемент в массиве
 Object.Class:
+.UI             EQU Page0.Object.Class.UI
 .Hero           EQU Page0.Object.Class.Hero
 .Construction   EQU Page0.Object.Class.Construction
                 endif ; ~_PAGE_0_OBJECT_

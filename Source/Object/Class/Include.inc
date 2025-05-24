@@ -4,6 +4,7 @@
 
                 module Class
 
+                include "ObjectClass_UI.asm"
                 include "ObjectClass_Hero.asm"
                 include "ObjectClass_Construction.asm"
 

@@ -25,7 +25,11 @@ Input:          ; инициализация кемпстон мышки
                 ; сброс нажатой клавиши
                 LD HL, GameState.Input.VK
                 LD (HL), VK_NONE
-                
+
+                ; сброс события ввода
+                LD HL, GameState.Input.Event
+                LD (HL), KEY_ID_NONE
+
 .Apply          ; настройка обработчика ввода
                 CONFIG_OPTIONS_FLAGS_A
                 AND INPUT_MASK

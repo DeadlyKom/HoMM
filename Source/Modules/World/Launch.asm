@@ -20,6 +20,7 @@ Launch:         ; сохранение страницы
                 MEMCPY Adr.Deploy.Sprite, Adr.CodeToScr, Size.Deploy.Sprite     ; копирование блока
                 CALL World.Sprite.Hero.Load                                     ; загрузка и инициализация спрайтов героя
                 CALL World.Sprite.Cursor.Load                                   ; загрузка и инициализация спрайтов курсора
+                CALL World.Sprite.UI.Load                                       ; загрузка и инициализация спрайтов UI
 
                 ; подготовка основного экрана
                 CLS SCR_ADR_BASE, 0xFF                                          ; очистка основного экрана

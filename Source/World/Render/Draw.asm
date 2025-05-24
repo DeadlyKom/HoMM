@@ -117,7 +117,7 @@ Draw:           ; -----------------------------------------
 
                 RES_ALL_MAIN_FLAGS                                              ; сброс всех флагов
                 SET_RENDER_FLAG FINISHED_BIT                                    ; установка флага завершения отрисовки
-                RET
+                JP World.Base.Input.Event.Handler                               ; обработчик событий ввода
 
                 display " - Main draw:\t\t\t\t\t\t", /A, Draw, "\t= busy [ ", /D, $-Draw, " byte(s)  ]"
 

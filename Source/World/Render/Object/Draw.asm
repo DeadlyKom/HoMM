@@ -84,5 +84,6 @@ Draw:           ; инициализация
                 DW #0000                                                        ; OBJECT_CLASS_INTERACTION
                 DW #0000                                                        ; OBJECT_CLASS_PARTICLE
                 DW #0000                                                        ; OBJECT_CLASS_DECAL
+                DW UI.Draw                                                      ; OBJECT_CLASS_UI
 
                 endif ; ~_WORLD_RENDER_OBJECT_DRAW_

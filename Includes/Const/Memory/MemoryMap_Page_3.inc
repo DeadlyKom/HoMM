@@ -26,7 +26,7 @@ AssetManager    EQU PAGE_3
 AssetsTable     EQU FAssets * ASSETS_MAX                                        ; размер таблицы ресурсов
 AvailableMem    EQU MAX_PAGE * (BankSize >> 11)                                 ; размер битового массива доступного ОЗУ
 Stash_TRDOS     EQU Bootloader.TRDOS.Size                                       ; размер драйвера TR-DOS (не более 1024кб)
-Path            EQU #00C0                                                       ; размер массива найденого пути в виде последовательности координат тайлов (FPath),
+FoundPath       EQU #00C0                                                       ; размер массива найденого пути в виде последовательности координат тайлов (FPath),
                                                                                 ; где нулевой элемент является последним
 AStar           EQU #1800                                                       ; размер буфера А* (FAStar * ASTAR_CELL_MAX)
 SearchField     EQU #0800                                                       ; размер поля поиска А*
@@ -36,7 +36,7 @@ SearchField     EQU #0800                                                       
 AssetsTable     EQU #C000                                                       ; адрес таблицы ресурсов
 AvailableMem    EQU AssetsTable + Size.AssetsTable                              ; адрес битового массива доступного ОЗУ
 Stash_TRDOS     EQU AvailableMem + Size.AvailableMem                            ; адрес расположения драйвера TR-DOS
-Path            EQU #C540                                                       ; адрес массива найденого пути в виде последовательности координат тайлов (FPath),
+FoundPath       EQU #C540                                                       ; адрес массива найденого пути в виде последовательности координат тайлов (FPath),
                                                                                 ; где нулевой элемент является последним
 AStar           EQU #C600                                                       ; адрес буфера А*
 SearchField     EQU #DE00                                                       ; адрес поля поиска А*

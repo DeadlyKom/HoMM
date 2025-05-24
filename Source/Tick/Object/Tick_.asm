@@ -53,5 +53,6 @@ Tick:           ; количество обрабатываемых объект
                 DW #0000                                                        ; OBJECT_CLASS_INTERACTION
                 DW #0000                                                        ; OBJECT_CLASS_PARTICLE
                 DW #0000                                                        ; OBJECT_CLASS_DECAL
+                DW #0000                                                        ; OBJECT_CLASS_UI
 
                 endif ; ~_TICK_OBJECT_

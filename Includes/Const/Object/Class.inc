@@ -8,7 +8,8 @@ OBJECT_CLASS_PROPS          EQU 0x02                                            
 OBJECT_CLASS_INTERACTION    EQU 0x03                                            ; интерактивный
 OBJECT_CLASS_PARTICLE       EQU 0x04                                            ; частица
 OBJECT_CLASS_DECAL          EQU 0x05                                            ; деколь
-OBJECT_CLASS_MAX            EQU 0x06                                            ; максимальное доступное значение для классов объектов
+OBJECT_CLASS_UI             EQU 0x06                                            ; UI элемент
+OBJECT_CLASS_MAX            EQU 0x07                                            ; максимальное доступное значение для классов объектов
 
 OBJECT_CLASS_MASK           EQU %00001111
 

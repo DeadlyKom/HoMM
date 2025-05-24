@@ -36,10 +36,7 @@ Scan:           ; проверка HardWare ограничения мыши
 .KeyCheck       ; проверка клавиши "выбор"
                 LD A, (GameConfig.KeySelect)
                 CALL Input.CheckKeyState
-                LD HL, GameState.Input.Value
-                RES SELECT_KEY_BIT, (HL)
-                JR NZ, $+4
-                SET SELECT_KEY_BIT, (HL)                                        ; установка флага, нажатия клавиши "выбор"
+                CALL Z, IputEvent.Select                                        ; переход, если клавиша нажата
 
                 ; проверка клавиши "выход"
                 ; LD A, (GameConfig.KeyESC)

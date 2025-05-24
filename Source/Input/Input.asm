@@ -82,8 +82,9 @@ JumpKeys:       LD HL, .KeyLastState
                 RET
 
 .KeyLastState   DS NUMBER_KEYS_ID, 0
-.ArrayVKNum     DB VK_EDIT,         KEY_ID_ESC                                  ; клавиша "выход"
+.ArrayVKNum     DB VK_ENTER,        KEY_ID_MENU                                 ; клавиша "меню"
                 DB VK_CAPS_SHIFT,   KEY_ID_ACCELERATION                         ; клавиша "ускорить"
+                DB VK_EDIT,         KEY_ID_ESC                                  ; клавиша "выход"
                 DB VK_SPACE,        KEY_ID_SELECT                               ; клавиша "выбор"
                 DB VK_D,            KEY_ID_RIGHT                                ; клавиша "вправо"
                 DB VK_A,            KEY_ID_LEFT                                 ; клавиша "влево"

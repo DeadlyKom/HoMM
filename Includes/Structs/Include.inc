@@ -17,6 +17,7 @@
                 include "Sprite.inc"
                 include "Item_ID.inc"
                 include "WorldInfo.inc"
+                include "InputEvent.inc"
                 
                 include "Map/Include.inc"
                 include "SaveSlot.inc"

@@ -117,6 +117,7 @@ Spawn:          ; -----------------------------------------
                 DW #0000                                                        ; OBJECT_CLASS_INTERACTION
                 DW #0000                                                        ; OBJECT_CLASS_PARTICLE
                 DW #0000                                                        ; OBJECT_CLASS_DECAL
+                DW Object.Class.UI                                              ; OBJECT_CLASS_UI
 
                 display " - Spawn object:\t\t\t\t\t", /A, Spawn, "\t= busy [ ", /D, $-Spawn, " byte(s)  ]"
 
