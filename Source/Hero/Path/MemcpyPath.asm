@@ -1,6 +1,6 @@
 
-                ifndef _HERO_UTILS_MEMORY_COPY_PATH_
-                define _HERO_UTILS_MEMORY_COPY_PATH_
+                ifndef _HERO_PATH_MEMORY_COPY_PATH_
+                define _HERO_PATH_MEMORY_COPY_PATH_
 ; -----------------------------------------
 ; копирование пути в буфер Adr.HeroPath
 ; In:
@@ -11,7 +11,7 @@
 ; -----------------------------------------
 MemcpyHeroPath  ;
                 LD HL, Adr.SharedBuffer
-                LD DE, Adr.HeroPath
+                LD DE, Adr.HeroPath + 2                                         ; +2 добавлен для цикла в функции ReificationPath
                 LD C, (HL)
                 INC L
                 LD B, (HL)
@@ -23,4 +23,4 @@ MemcpyHeroPath  ;
                 RR C
                 RET
 
-                endif ; ~_HERO_UTILS_MEMORY_COPY_PATH_
+                endif ; ~_HERO_PATH_MEMORY_COPY_HERO_PATH_

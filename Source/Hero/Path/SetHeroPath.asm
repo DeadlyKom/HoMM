@@ -1,6 +1,6 @@
 
-                ifndef _HERO_UTILS_SET_HERO_PATH_
-                define _HERO_UTILS_SET_HERO_PATH_
+                ifndef _HERO_PATH_SET_HERO_PATH_
+                define _HERO_PATH_SET_HERO_PATH_
 ; -----------------------------------------
 ; установить длины пути героя
 ; In:
@@ -45,6 +45,7 @@ SetHeroPath:    ;---------------------------------------------------------------
                 ; установка длины пути
                 DEC C
                 LD (IY + FObjectHero.PathID), C
+
                 RET
 
-                endif ; ~_HERO_UTILS_SET_HERO_PATH_
+                endif ; ~_HERO_PATH_SET_HERO_PATH_

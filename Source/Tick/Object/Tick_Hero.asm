@@ -25,56 +25,19 @@ Hero:           ; проверка смены анимации героя
                 RET Z                                                           ; выход, если нет пути
 
                 ; расчёт адреса позиции движения
-                LD A, (IX + FObjectHero.PathID)
+                ; +2 добавлен для цикла в функции ReificationPath
                 ADD A, A    ; x2
-                ADD A, LOW Adr.HeroPath
+                ADD A, LOW (Adr.HeroPath + 2)
                 LD L, A
-                ADC A, HIGH Adr.HeroPath
+                ADC A, HIGH (Adr.HeroPath + 2)
                 SUB L
                 LD H, A
 
                 ; --------------------------------------------------------------
                 ; определение направления
-                LD A, (IX + FObjectHero.Super.Position.X.High)
-                SUB (HL)
-                ; преобразование:
-                ; если равен 0, то #00
-                ; если больше 0 то #01
-                ; если меньше 0 то #FF
-                JR Z, $+6
-                SBC A, A
-                CCF
-                ADC A, #00
-                ; xxxxxxxx
-                LD C, A
-
-                INC HL
-
-                LD A, (IX + FObjectHero.Super.Position.Y.High)
-                SUB (HL)
-                ; преобразование:
-                ; если равен 0, то #00
-                ; если больше 0 то #01
-                ; если меньше 0 то #FF
-                JR Z, $+6
-                SBC A, A
-                CCF
-                ADC A, #00
-                ; yyyyyyyy
-
-                ADD A, A    ; yyyyyyy0
-                ADD A, A    ; yyyyyy00
-                XOR C
-                AND %11111100
-                XOR C       ; yyyyyyxx
-                AND %00001111
-
-                ; расчёт адреса хранения направления
-                ADD A, LOW Direction
-                LD L, A
-                ADC A, HIGH Direction
-                SUB L
-                LD H, A
+                LD E, (IX + FObjectHero.Super.Position.X.High)
+                LD D, (IX + FObjectHero.Super.Position.Y.High)
+                CALL DirectonPath
                 LD B, (HL)                                                      ; направление
                 ; --------------------------------------------------------------
                 ; проверка необходимости поворота в направление движения
@@ -266,7 +229,7 @@ Move            ; перемещение
                 OR (IX + FObjectHero.Delta.Y.Low)
                 OR (IX + FObjectHero.Delta.Y.High)
 
-                RET NZ
+                RET NZ                                                          ; выход, если недостигли центра тайла
 
                 DEC (IX + FObjectHero.PathID)
                 RES ANIM_STATE_BIT, (IX + FObjectHero.Super.Sprite)

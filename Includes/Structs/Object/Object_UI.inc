@@ -7,7 +7,7 @@ Super           FObject                                                         
 ; -----------------------------------------
 ; Note:
 ;   для ассета ASSETS_ID_UI_ARROW_PATH_PACK,
-;   поле FObjectHero.Super.Sprite имеет слудующие значения:
+;   поле FObjectUI.Super.Sprite имеет слудующие значения:
 ;
 ;      7    6    5    4    3    2    1    0
 ;   +----+----+----+----+----+----+----+----+

@@ -25,7 +25,12 @@ Pathfinding:    ; ToDo
                 SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
                 CALL MemcpyHeroPath                                             ; копирование пути в буфер Adr.HeroPath
                 LD A, (GameState.Event + FEvent.HeroID)
-                CALL SetHeroPath
+                CALL SetHeroPath                                                ; установить длины пути героя
+                
+                LD D, (IY + FObjectHero.Super.Position.Y.High)
+                LD E, (IY + FObjectHero.Super.Position.X.High)
+                LD B, (IY + FObjectHero.PathID)
+                CALL ReificationPath                                            ; овеществление путь героя
 
                 RET
 

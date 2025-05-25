@@ -8,7 +8,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-MemcpyFoundPath ;
+MemcpyFoundPath:; инициализация
                 LD HL, Adr.SharedBuffer
                 LD DE, .DebugPath ; Adr.FoundPath
                 LD BC, .DebugPath.Num * FPath
@@ -21,19 +21,23 @@ MemcpyFoundPath ;
                 EX DE, HL
                 JP Memcpy.FastLDIR
 
-.DebugPath       ; начало 8, 8
-                FPath {  8,  8 }                                                ; 0
-                FPath {  7,  9 }                                                ; 11
-                FPath {  8, 10 }                                                ; 10
-                FPath {  9, 10 }                                                ; 9
-                FPath { 10,  9 }                                                ; 8
-                FPath { 11,  9 }                                                ; 7
-                FPath { 12,  8 }                                                ; 6
-                FPath { 12,  7 }                                                ; 5
-                FPath { 11,  6 }                                                ; 4
-                FPath { 10,  6 }                                                ; 3
-                FPath {  9,  6 }                                                ; 2
-                FPath {  8,  7 }                                                ; 1
+.DebugPath       ; начало 8, 11
+                FPath {  8, 11 }                                                ; 0
+                FPath {  7, 11 }                                                ;
+                FPath {  6, 10 }                                                ;
+                FPath {  5,  9 }                                                ;
+                FPath {  5,  8 }                                                ;
+                FPath {  6,  7 }                                                ;
+                FPath {  7,  7 }                                                ;
+                FPath {  8,  8 }                                                ;
+                FPath {  9,  8 }                                                ;
+                FPath { 10,  7 }                                                ;
+                FPath { 11,  7 }                                                ;
+                FPath { 12,  8 }                                                ;
+                FPath { 12,  9 }                                                ;
+                FPath { 11, 10 }                                                ;
+                FPath { 10, 10 }                                                ;
+                FPath {  9, 11 }                                                ;
 .DebugPath.Num  EQU ($-.DebugPath) / FPath
 
                 endif ; ~_PATHFINDING_UTILS_MEMORY_COPY_PATH_
