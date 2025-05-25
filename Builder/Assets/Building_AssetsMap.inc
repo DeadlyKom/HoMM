@@ -55,6 +55,11 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     Page1.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Page 1\t\t\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_PAGE_3, \
+                                    Page3.Size, \
+                                    Page3.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Page 3\t\t\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_MAIN_MENU, \
                                     MainMenu.Size, \
                                     MainMenu.Size.Sector.ar, \

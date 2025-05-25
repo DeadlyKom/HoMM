@@ -11,6 +11,7 @@
                 display "'Page 0':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.Code.Page0, " byte(s) / free ", /D, Size.Code.Page0 - Size, "]\t[", /D, Page.Page0, "]\t ------------------------"
 Begin:          EQU $
 
+                include "Source/Hero/Include.inc"
                 include "Source/Tick/Include.inc"
                 include "Source/Object/Include.inc"
                 include "Source/Participant/Include.inc"
@@ -19,7 +20,6 @@ Size:           EQU $-Begin                                                     
                 ifdef _REBUILD
                 savebin "Builder/Assets/Code/Original/Pages/Page0.pack", Begin, Size
                 shellexec "Tools\Compressor\salvador.exe -v Builder/Assets/Code/Original/Pages/Page0.pack Builder/Assets/Code/Compressed/Page0.pack.ar"
-                ; shellexec "Tools\Compressor\zx0.exe -f Builder/Assets/Code/Original/Pages/Page0.pack Builder/Assets/Code/Compressed/Page0.pack.ar"
                 endif
 
                 ORG 0x0000

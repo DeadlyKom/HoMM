@@ -8,8 +8,6 @@ Input.Begin     EQU $
                 include "Input_Event.asm"
                 include "Input_Movement.asm"
 
-                include "Event/Include.inc"
-
                 display " - Main input:\t\t\t\t\t", /A, Input.Begin, "\t= busy [ ", /D, $-Input.Begin, " byte(s)  ]"
 
                 endmodule

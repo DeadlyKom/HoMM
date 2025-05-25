@@ -118,6 +118,11 @@ StartBoot:      DI
                 SET_LOAD_ASSETS ASSETS_ID_PAGE_1, Page.Page1, Adr.Code.Page1
                 LOAD_ASSETS ASSETS_ID_PAGE_1
 
+                ; подготовка и загрузка кода страницы 3
+                SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
+                SET_LOAD_ASSETS ASSETS_ID_PAGE_3, Page.Page3, Adr.Code.Page3
+                LOAD_ASSETS ASSETS_ID_PAGE_3
+
                 ; переход по точке входа
                 LD SP, Adr.StackTop
                 JP Adr.EntryPoint

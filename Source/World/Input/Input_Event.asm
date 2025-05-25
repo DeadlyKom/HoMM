@@ -9,18 +9,37 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-IputEvent.Select; проверка отсутствия событий ввода
-                LD HL, GameState.Input.Event
+IputEvent.Select; установка флага, нажатия клавиши "выбор"
+                LD HL, GameState.Input.Value
+                SET SELECT_KEY_BIT, (HL)
+                
+                ; проверка отсутствия событий ввода
+                LD HL, GameState.Event
                 LD A, (HL)
-                CP KEY_ID_NONE
+                CP EVENT_NONE
                 RET NZ
 
                 ; формирование события нажатия выбор
-                LD (HL), KEY_ID_SELECT
+                LD (HL), EVENT_PATHFINDING                                      ; FEvent.Type
                 INC L
-                LD (HL), #00
+                LD (HL), #00                                                    ; FEvent.HeroID
                 INC L
-                LD (HL), #00
+                LD (HL), #00                                                    ; FEvent.Position.X
+                INC L
+                LD (HL), #00                                                    ; FEvent.Position.Y
+
+                RET
+; -----------------------------------------
+; событие ввода - 'ускорение'
+; In:
+;   флаг нуля, сброшен если ввод не активен
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+IputEvent.Accelerate; установка флага, ускореное перемещение
+                LD HL, GameState.Input.Value
+                SET ACCELERATE_CURSOR_BIT, (HL)
 
                 RET
 

@@ -14,10 +14,10 @@
                 include "Tick.inc"
                 include "Size.inc"
                 include "Keys.inc"
+                include "Event.inc"
                 include "Sprite.inc"
                 include "Item_ID.inc"
                 include "WorldInfo.inc"
-                include "InputEvent.inc"
                 
                 include "Map/Include.inc"
                 include "SaveSlot.inc"

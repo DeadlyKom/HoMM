@@ -19,6 +19,7 @@ Hero:           ; -----------------------------------------
                 LD (IY + FObjectHero.HeroID), HERO_ID_NONE
                 LD (IY + FObjectHero.PathID), PATH_ID_NONE
 
+                OR A                                                            ; сброс флага переполнения, успешная инициализация
                 RET
                 
                 endif ; ~_OBJECT_CLASS_HERO_

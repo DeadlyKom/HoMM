@@ -9,6 +9,7 @@
                 include "Assets/Include.inc"
 
                 include "AStar.inc"
+                include "Event.inc"
                 include "Setup.inc"
                 include "Cursor.inc"
                 include "Sprite.inc"

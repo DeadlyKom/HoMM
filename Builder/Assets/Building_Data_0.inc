@@ -29,6 +29,8 @@ ADD_ASSETS_DEBUG macro Bank?, Page?, ORG?, Include?
                 ADD_ASSETS 3, Page.Page0, Adr.Code.Page0, incbin "Builder/Assets/Code/Compressed/Page0.pack.ar"
                 ; ASSETS_ID_PAGE_1
                 ADD_ASSETS 3, Page.Page1, Adr.Code.Page1, incbin "Builder/Assets/Code/Compressed/Page1.pack.ar"
+                ; ASSETS_ID_PAGE_3
+                ADD_ASSETS 3, Page.Page3, Adr.Code.Page3, incbin "Builder/Assets/Code/Compressed/Page3.pack.ar"
                 ; ASSETS_ID_MAIN_MENU
                 ADD_ASSETS 1, PAGE_N, 0x0000, incbin "Builder/Assets/Code/Compressed/MainMenu.pack.ar"
                 ; ASSETS_ID_SESSION

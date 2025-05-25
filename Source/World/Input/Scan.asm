@@ -33,7 +33,13 @@ Scan:           ; проверка HardWare ограничения мыши
                 CP SCREEN_CURSOR_Y - SCREEN_EDGE
                 CALL NC, Movement.Down.Force
 
-.KeyCheck       ; проверка клавиши "выбор"
+.KeyCheck       ; --------------------------------------------------------------
+                ; очистка системных клавиш
+                LD A, (GameState.Input.Value)
+                AND ~KEY_MASK
+                LD (GameState.Input.Value), A
+                ; --------------------------------------------------------------
+                ; проверка клавиши "выбор"
                 LD A, (GameConfig.KeySelect)
                 CALL Input.CheckKeyState
                 CALL Z, IputEvent.Select                                        ; переход, если клавиша нажата
@@ -47,11 +53,8 @@ Scan:           ; проверка HardWare ограничения мыши
                 ; проверка клавиш перемещения
                 LD A, (GameConfig.KeyAccel)
                 CALL Input.CheckKeyState
-                LD HL, GameState.Input.Value
-                RES ACCELERATE_CURSOR_BIT, (HL)
-                JR NZ, $+4
-                SET ACCELERATE_CURSOR_BIT, (HL)                                 ; установка флага, ускореное перемещение
-
+                CALL Z, IputEvent.Accelerate
+                ; --------------------------------------------------------------
                 ; опрос перемещения влево
                 LD A, (GameConfig.KeyLeft)
                 CALL Input.CheckKeyState
@@ -71,7 +74,8 @@ Scan:           ; проверка HardWare ограничения мыши
                 LD A, (GameConfig.KeyDown)
                 CALL Input.CheckKeyState
                 CALL Z, Movement.Down
-
+                ; --------------------------------------------------------------
+                ; проверка нажатий клавиш перемещения
                 LD A, (GameState.Input.Value)
                 AND MOVEMENT_MASK
                 RET Z                                                           ; выход если нет онажатия клавиш

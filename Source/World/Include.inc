@@ -10,6 +10,7 @@
                 include "Loop.asm"
                 include "Interrupt.asm"
                 include "Input/Include.inc"
+                include "Event/Include.inc"
                 include "Render/Include.inc"
                 include "Tilemap/Include.inc"
 Size            EQU $-Adr.World

@@ -22,15 +22,14 @@ Hero:           ; проверка смены анимации героя
                 ; проверка наличия пути
                 LD A, (IX + FObjectHero.PathID)
                 CP PATH_ID_NONE
-                ; RET Z                                                           ; выход, если нет пути
-                CALL Z, SetPath
+                RET Z                                                           ; выход, если нет пути
 
                 ; расчёт адреса позиции движения
                 LD A, (IX + FObjectHero.PathID)
                 ADD A, A    ; x2
-                ADD A, LOW Path
+                ADD A, LOW Adr.HeroPath
                 LD L, A
-                ADC A, HIGH Path
+                ADC A, HIGH Adr.HeroPath
                 SUB L
                 LD H, A
 
@@ -273,23 +272,6 @@ Move            ; перемещение
                 RES ANIM_STATE_BIT, (IX + FObjectHero.Super.Sprite)
 
                 JP SetCell
-SetPath         ; установка длины пути
-                LD (IX + FObjectHero.PathID), Path.Num-1
-                RET
-Path            ; начало 8, 8
-                FPath {  8,  8 }                                                ; 0
-                FPath {  7,  9 }                                                ; 11
-                FPath {  8, 10 }                                                ; 10
-                FPath {  9, 10 }                                                ; 9
-                FPath { 10,  9 }                                                ; 8
-                FPath { 11,  9 }                                                ; 7
-                FPath { 12,  8 }                                                ; 6
-                FPath { 12,  7 }                                                ; 5
-                FPath { 11,  6 }                                                ; 4
-                FPath { 10,  6 }                                                ; 3
-                FPath {  9,  6 }                                                ; 2
-                FPath {  8,  7 }                                                ; 1
-.Num            EQU ($-Path) / FPath
 Direction       ; направление                                                   ; ---- yy xx
                 DB DIR_UP                                                       ; 0000 00 00    (не действительная)
                 DB DIR_LEFT                                                     ; 0000 00 01
