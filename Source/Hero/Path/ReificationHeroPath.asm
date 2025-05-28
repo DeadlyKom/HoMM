@@ -36,7 +36,7 @@ ReificationPath:; расчёт адреса хранения позиции
                 ; Corrupt:
                 ;   HL, DE, C, AF
                 ; -----------------------------------------
-                CALL DirectonPath
+                CALL Hero.DirectonPath
                 LD A, (HL)
                 EX AF, AF'                                                      ; сохранение направления
 
@@ -63,7 +63,7 @@ ReificationPath:; расчёт адреса хранения позиции
                 ; Corrupt:
                 ;   HL, DE, C, AF
                 ; -----------------------------------------
-                CALL DirectonPath
+                CALL Hero.DirectonPath
                 
                 EX AF, AF'                                                      ; восстановление направления
                 LD E, A

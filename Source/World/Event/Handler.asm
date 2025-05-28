@@ -12,14 +12,24 @@ Handler         ; обработка события
                 LD HL, GameState.Event
                 LD A, (HL)
 
+                ; ловушка
+                ifdef _DEBUG
+                CP EVENT_MAX
+                DEBUG_BREAK_POINT_NC                                            ; ошибка, нет такого события
+                endif
+
                 ; проверка наличия события
                 CP EVENT_NONE
                 RET Z                                                           ; выход, если событие отсутствует
 
-                LD (HL), EVENT_NONE                                             ; сброс события ввода
                 DEC A                                                           ; пропуск нулевого
                 LD HL, .JumpTable
-                JP Func.JumpTable
+                CALL Func.JumpTable
+
+                ; сброс события
+                LD HL, GameState.Event
+                LD (HL), EVENT_NONE
+                RET
 
 .JumpTable      DW Pathfinding                                                  ; EVENT_PATHFINDING
 

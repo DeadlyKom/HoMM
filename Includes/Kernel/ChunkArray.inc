@@ -8,4 +8,5 @@ ChunkArray:
 .Move           EQU Kernel.ChunkArray.Move                                      ; перемещение значения в другой чанк
 .Area           EQU Kernel.ChunkArray.Area                                      ; получение значений в области
 .GetChunkIndex  EQU Kernel.ChunkArray.GetChunkIndex                             ; получение номера чанка
+.GetAddress     EQU Kernel.ChunkArray.GetAddress                                ; получение адреса указаннго чанка
                 endif ; ~_KERNEL_CHUNK_ARRAY_

@@ -6,9 +6,13 @@
 
                 include "Initialize.asm"
                 include "Spawn.asm"
+                include "SmartRemove.asm"
                 include "PlacementNew.asm"
                 include "RemoveAtSwap.asm"
+                include "FindLastByPredicate.asm"
+
                 include "Class/Include.inc"
+                include "Utils/Include.inc"
 
                 endmodule
 

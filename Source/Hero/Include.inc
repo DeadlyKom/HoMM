@@ -5,6 +5,7 @@
                 module Hero
 
                 include "Path/Include.inc"
+                include "Utils/Include.inc"
 
                 endmodule
 

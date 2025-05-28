@@ -17,7 +17,7 @@ IputEvent.Select; установка флага, нажатия клавиши "
                 LD HL, GameState.Event
                 LD A, (HL)
                 CP EVENT_NONE
-                RET NZ
+                RET NZ                                                          ; выход, если имеется какое то событие
 
                 ; формирование события нажатия выбор
                 LD (HL), EVENT_PATHFINDING                                      ; FEvent.Type

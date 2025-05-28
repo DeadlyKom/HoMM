@@ -37,7 +37,7 @@ Hero:           ; проверка смены анимации героя
                 ; определение направления
                 LD E, (IX + FObjectHero.Super.Position.X.High)
                 LD D, (IX + FObjectHero.Super.Position.Y.High)
-                CALL DirectonPath
+                CALL Hero.DirectonPath
                 LD B, (HL)                                                      ; направление
                 ; --------------------------------------------------------------
                 ; проверка необходимости поворота в направление движения
@@ -78,7 +78,7 @@ Hero:           ; проверка смены анимации героя
                 SBC A, A
                 CCF
                 ADC A, #00
-Turn            ; --------------------------------------------------------------
+Turn:           ; --------------------------------------------------------------
                 ; расчёт направления вращения
                 ; положительная по часовой стрелка, иначе против часовой стрелке
 
@@ -95,7 +95,7 @@ Turn            ; --------------------------------------------------------------
 
                 LD (IX + FObjectHero.Super.Sprite), A
 
-SetCell         ; установить доступное расстояние между тайлами 16х16 пикселей 
+SetCell:        ; установить доступное расстояние между тайлами 16х16 пикселей 
                 LD HL, 16 << 4
                 LD (IX + FObjectHero.Delta.X), HL
                 LD (IX + FObjectHero.Delta.Y), HL
@@ -108,8 +108,20 @@ Move.Prepare    ; --------------------------------------------------------------
                 RRA
                 RRA
                 AND DIR_MASK
-                LD B,  A
-Move            ; перемещение
+                LD B, A
+Move            ; --------------------------------------------------------------
+                ; проверка перехода на новый тайл
+                
+                ; ; расчёт манхэттенского расстояния
+                ; LD HL, (IX + FObjectHero.Delta.X)
+                ; LD DE, (IX + FObjectHero.Delta.Y)
+                ; ADD HL, DE
+                ; LD DE, 8 << 4                                                   ; допустимое расстояние
+                ; SBC HL, DE
+                ; CALL NC, RemoveUIArrow                                          ; перехд, если расстояние меньше допустимого
+
+                ; --------------------------------------------------------------
+                ; перемещение
 
                 ; расчёт адреса хранения направления
                 LD A, B
@@ -160,9 +172,14 @@ Move            ; перемещение
 
 .ResetDeltaX    LD HL, #0000
 .SetDeltaX      LD (IX + FObjectHero.Delta.X), HL
+
                 LD HL, (IX + FObjectHero.Super.Position.X)
+                LD A, L
                 ADD HL, BC
                 LD (IX + FObjectHero.Super.Position.X), HL
+                XOR L
+                ADD A, A    ; << 1
+                CALL C, RemoveUIArrow
                 ; --------------------------------------------------------------
 
                 INC DE
@@ -207,8 +224,12 @@ Move            ; перемещение
 .ResetDeltaY    LD HL, #0000
 .SetDeltaY      LD (IX + FObjectHero.Delta.Y), HL
                 LD HL, (IX + FObjectHero.Super.Position.Y)
+                LD A, L
                 ADD HL, BC
                 LD (IX + FObjectHero.Super.Position.Y), HL
+                XOR L
+                ADD A, A    ; << 1
+                CALL C, RemoveUIArrow
                 ; --------------------------------------------------------------
                 ; установить состояние перемещения героя,
                 ; изменить кадр спрайта
@@ -221,7 +242,6 @@ Move            ; перемещение
                 AND %00111111
                 OR ANIM_STATE_MOVE
                 LD (IX + FObjectHero.Super.Sprite), A
-
                 ; --------------------------------------------------------------
                 ; проверка что герой дошёл до центра тайла
                 LD A, (IX + FObjectHero.Delta.X.Low)
@@ -235,24 +255,52 @@ Move            ; перемещение
                 RES ANIM_STATE_BIT, (IX + FObjectHero.Super.Sprite)
 
                 JP SetCell
-Direction       ; направление                                                   ; ---- yy xx
-                DB DIR_UP                                                       ; 0000 00 00    (не действительная)
-                DB DIR_LEFT                                                     ; 0000 00 01
-                DB DIR_UP                                                       ; 0000 00 10    (не действительная)
-                DB DIR_RIGHT                                                    ; 0000 00 11
-                DB DIR_UP                                                       ; 0000 01 00
-                DB DIR_UP_LEFT                                                  ; 0000 01 01
-                DB DIR_UP                                                       ; 0000 01 10    (не действительная)
-                DB DIR_UP_RIGHT                                                 ; 0000 01 11
-                DB DIR_UP                                                       ; 0000 10 00    (не действительная)
-                DB DIR_UP                                                       ; 0000 10 01    (не действительная)
-                DB DIR_UP                                                       ; 0000 10 10    (не действительная)
-                DB DIR_UP                                                       ; 0000 10 11    (не действительная)
-                DB DIR_DOWN                                                     ; 0000 11 00
-                DB DIR_DOWN_LEFT                                                ; 0000 11 01
-                DB DIR_UP                                                       ; 0000 11 10    (не действительная)
-                DB DIR_DOWN_RIGHT                                               ; 0000 11 11
-Velocity        ; скорость перемещения
+RemoveUIArrow:  PUSH DE
+                PUSH IX
+
+                LD A, (IX + FObjectHero.PathID)
+                ; +2 добавлен для цикла
+                ADD A, A    ; x2
+                ADD A, LOW (Adr.HeroPath + 2)
+                LD L, A
+                ADC A, HIGH (Adr.HeroPath + 2)
+                SUB L
+                LD H, A
+
+                ; чтение смещения
+                LD E, (HL)                                                      ; x
+                INC HL
+                LD D, (HL)                                                      ; y
+
+                LD IX, .Predicate
+                CALL Object.FindLastByPredicate
+                CALL NC, Object.SmartRemove
+
+                POP IX
+                POP DE
+
+                RET
+
+;   функция предиката, осуществляет проверку соответствия требуемым условиям
+;   сброшенный флаг переполнения сигнализирует, об успешности поиска, поиск завершается
+;   IY - адрес проверяемого объекта
+.Predicate      LD A, (IY + FObject.Class)
+                CP OBJECT_CLASS_UI
+                SCF
+                RET NZ                                                          ; выход, если не является UI объектом
+                
+                LD A, (IY + FObject.Position.X.High)
+                CP E
+                SCF
+                RET NZ
+
+                LD A, (IY + FObject.Position.Y.High)
+                CP D
+                SCF
+                RET NZ
+                OR A
+                RET
+Velocity:       ; скорость перемещения
                 lua allpass
                 local speed = 1.0 / 10.0
                 local dir = {   {  0, -1 },

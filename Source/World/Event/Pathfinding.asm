@@ -19,18 +19,24 @@ Pathfinding:    ; ToDo
                 ; * полученый путь необходимо скопировать в Adr.HeroPath
                 ; * на основе полученого пути Adr.HeroPath сформировать UI объекты
 
+                SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
+                LD A, (GameState.Event + FEvent.HeroID)
+                CALL Hero.GetPath
+                CP PATH_ID_NONE
+                RET NZ                                                          ; ToDo временно выход, в дальнейшем, весь путь нужно очищать
+
                 SET_PAGE_PATHFINDING                                            ; включить страницу работы с поиском пути
                 CALL MemcpyFoundPath                                            ; копирование пути в буфер Adr.SharedBuffer
 
                 SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
-                CALL MemcpyHeroPath                                             ; копирование пути в буфер Adr.HeroPath
+                CALL Hero.MemcpyPath                                            ; копирование пути в буфер Adr.HeroPath
                 LD A, (GameState.Event + FEvent.HeroID)
-                CALL SetHeroPath                                                ; установить длины пути героя
+                CALL Hero.SetPath                                               ; установить длины пути героя
                 
                 LD D, (IY + FObjectHero.Super.Position.Y.High)
                 LD E, (IY + FObjectHero.Super.Position.X.High)
                 LD B, (IY + FObjectHero.PathID)
-                CALL ReificationPath                                            ; овеществление путь героя
+                CALL Hero.ReificationPath                                       ; овеществление путь героя
 
                 RET
 
