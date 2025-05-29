@@ -4,6 +4,7 @@
 GameState       EQU Adr.GameState                                               ; адрес структуры состояния игры
 .MainLoop       EQU GameState + FGameState.MainLoop                             ; флаги главного цикла
 .Render         EQU GameState + FGameState.Render                               ; флаги отрисовки
+.Interrupt      EQU GameState + FGameState.Interrupt                            ; флаги прерывания
 .Screen         EQU GameState + FGameState.Screen                               ; старший бит адрес экрана
 .Input          EQU GameState + FGameState.Input                                ; флаги ввода
 .Input.VK       EQU GameState + FGameState.Input.VK                             ; номер "виртуальной" клавишаи

@@ -39,6 +39,8 @@ Hero:           ; проверка смены анимации героя
                 LD D, (IX + FObjectHero.Super.Position.Y.High)
                 CALL Hero.DirectonPath
                 LD B, (HL)                                                      ; направление
+
+                CALL SetCell
                 ; --------------------------------------------------------------
                 ; проверка необходимости поворота в направление движения
                 LD C, (IX + FObjectHero.Super.Sprite)
@@ -94,12 +96,6 @@ Turn:           ; --------------------------------------------------------------
                 OR ANIM_STATE_TURN
 
                 LD (IX + FObjectHero.Super.Sprite), A
-
-SetCell:        ; установить доступное расстояние между тайлами 16х16 пикселей 
-                LD HL, 16 << 4
-                LD (IX + FObjectHero.Delta.X), HL
-                LD (IX + FObjectHero.Delta.Y), HL
-
                 RET
 Move.Prepare    ; --------------------------------------------------------------
                 ; направление спрайта
@@ -110,17 +106,6 @@ Move.Prepare    ; --------------------------------------------------------------
                 AND DIR_MASK
                 LD B, A
 Move            ; --------------------------------------------------------------
-                ; проверка перехода на новый тайл
-                
-                ; ; расчёт манхэттенского расстояния
-                ; LD HL, (IX + FObjectHero.Delta.X)
-                ; LD DE, (IX + FObjectHero.Delta.Y)
-                ; ADD HL, DE
-                ; LD DE, 8 << 4                                                   ; допустимое расстояние
-                ; SBC HL, DE
-                ; CALL NC, RemoveUIArrow                                          ; перехд, если расстояние меньше допустимого
-
-                ; --------------------------------------------------------------
                 ; перемещение
 
                 ; расчёт адреса хранения направления
@@ -253,8 +238,12 @@ Move            ; --------------------------------------------------------------
 
                 DEC (IX + FObjectHero.PathID)
                 RES ANIM_STATE_BIT, (IX + FObjectHero.Super.Sprite)
+SetCell:        ; установить доступное расстояние между тайлами 16х16 пикселей 
+                LD HL, 16 << 4
+                LD (IX + FObjectHero.Delta.X), HL
+                LD (IX + FObjectHero.Delta.Y), HL
 
-                JP SetCell
+                RET
 RemoveUIArrow:  PUSH DE
                 PUSH IX
 

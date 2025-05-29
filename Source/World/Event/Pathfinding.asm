@@ -25,6 +25,8 @@ Pathfinding:    ; ToDo
                 CP PATH_ID_NONE
                 RET NZ                                                          ; ToDo временно выход, в дальнейшем, весь путь нужно очищать
 
+                SET_INTERRUPT_FLAG INT_DISABLE_GLOBAL_TICK_BIT                  ; запрет глобального тика
+
                 SET_PAGE_PATHFINDING                                            ; включить страницу работы с поиском пути
                 CALL MemcpyFoundPath                                            ; копирование пути в буфер Adr.SharedBuffer
 
@@ -38,6 +40,7 @@ Pathfinding:    ; ToDo
                 LD B, (IY + FObjectHero.PathID)
                 CALL Hero.ReificationPath                                       ; овеществление путь героя
 
+                RES_INTERRUPT_FLAG INT_DISABLE_GLOBAL_TICK_BIT                  ; разрешение глобального тика
                 RET
 
                 endif ; ~_WORLD_EVENT_PATHFINDING_

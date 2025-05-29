@@ -18,4 +18,7 @@ FINISHED_BIT        EQU 0x00                                                    
 SWAP_DISABLE_BIT    EQU 0x01                                                    ; флаг, отключение смены экранов
 FPS_DISABLE_BIT     EQU 0x02                                                    ; флаг, отключения отображения FPS
 
+; флаги работы с прерыванием
+INT_DISABLE_GLOBAL_TICK_BIT EQU 0x00                                            ; флаг, отключения глобального тика
+
                 endif ; ~_CONST_GAME_STATE_
