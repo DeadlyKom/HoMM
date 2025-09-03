@@ -1,6 +1,6 @@
 
-                ifndef _HERO_UTILS_ADDRESS_HERO_
-                define _HERO_UTILS_ADDRESS_HERO_
+                ifndef _HERO_UTILS_HERO_ADDRESS_
+                define _HERO_UTILS_HERO_ADDRESS_
 ; -----------------------------------------
 ; получить адрес героя
 ; In:
@@ -10,7 +10,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Adr.IX:         ; расчёт адреса распологаемого героя
+Hero.Address.IX:; расчёт адреса распологаемого героя
                 ; IX = HERO_SIZE * индекс героя (64)
                 ADD A, A    ; x2
                 ADD A, A    ; x4
@@ -25,4 +25,4 @@ Adr.IX:         ; расчёт адреса распологаемого гер�
 
                 RET
 
-                endif ; ~_HERO_UTILS_ADDRESS_HERO_
+                endif ; ~_HERO_UTILS_HERO_ADDRESS_

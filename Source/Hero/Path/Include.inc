@@ -5,7 +5,7 @@
                 module Path
 
                 include "MemcpyPath.asm"
-                include "HeroPath.asm"
+
                 include "ReificationHeroPath.asm"
                 include "Direction.asm"
 

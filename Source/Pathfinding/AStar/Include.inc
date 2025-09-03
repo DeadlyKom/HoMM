@@ -4,6 +4,8 @@
 
                 module AStar
 
+                include "Request.asm"
+
                 endmodule
 
                 endif ; ~ _PATHFINDING_ASTAR_INCLUDE_

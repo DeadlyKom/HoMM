@@ -51,7 +51,7 @@ UpdateMovement: ; -----------------------------------------
                 LD (World.Shift_X), A
 
                 LD H, #00
-                LD D, HIGH Adr.BiomeBuf
+                LD D, HIGH Adr.MapBiome
                 ADD HL, HL  ; x2
                 ADD HL, HL  ; x4
                 ADD HL, HL  ; x8

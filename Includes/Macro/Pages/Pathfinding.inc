@@ -8,7 +8,7 @@
 ;   BC, AF
 ; -----------------------------------------
 SET_PAGE_PATHFINDING macro
-                SET_PAGE_3
+                SET_PAGE_1
                 endm
 
                 endif ; ~_MACRO_PAGE_PATHFINDING_

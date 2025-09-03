@@ -1,8 +1,9 @@
 
                 ifndef _CONST_PARTICIPANT_
                 define _CONST_PARTICIPANT_
-PARTICIPANT_SIZE    EQU 32                                                      ; размер структуры объекта FParticipant
-MAX_PARTICIPANT     EQU 0x08
+PARTICIPANT_SIZE        EQU 32                                                  ; размер структуры объекта FParticipant
+MAX_PARTICIPANT         EQU 0x04                                                ; ограничено до 4х играющий, в том числе и ИИ
+                                                                                ; позволяет освободить 4 бита в буфере метаданных карты (Adr.MapMetadata)
 
 PLAYER_AFFILIATION_BIT  EQU 0x07                                                ; флаг, принадлежности
                                                                                 ;   0 - человек

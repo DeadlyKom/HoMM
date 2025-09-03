@@ -4,6 +4,7 @@
 
                 module Pathfinding
 
+                include "Heap/Include.inc"
                 include "Utils/Include.inc"
                 include "AStar/Include.inc"
 

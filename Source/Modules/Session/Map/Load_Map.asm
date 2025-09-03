@@ -65,8 +65,8 @@ Load_Map:       EX AF, AF'
                 ; Corrupt:
                 ; Note:
                 ; -----------------------------------------
-                LD A, Page.BiomeBuf
-                LD DE, Adr.BiomeBuf
+                LD A, Page.MapBiome
+                LD DE, Adr.MapBiome
                 EX AF, AF'
                 CALL GetPage                                                    ; получение текущей страницы
                 CALL Memcpy.BetweenPages

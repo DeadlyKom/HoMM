@@ -57,7 +57,7 @@ Loop:
                     ; настройки стартового героя участника
                     ; FHeroSettings
                     {
-                        Hero.Class.Druid,                                        ; класс героя
+                        Hero.Class.Druid,                                       ; класс героя
                         ; навыки героя
                         ; FHeroSkills
                         {

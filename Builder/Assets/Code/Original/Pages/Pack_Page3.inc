@@ -11,7 +11,7 @@
                 display "'Page 3':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.Code.Page3, " byte(s) / free ", /D, Size.Code.Page3 - Size, "]\t[", /D, Page.Page3, "]\t ------------------------"
 Begin:          EQU $
 
-                include "Source/Pathfinding/Include.inc"
+                DW #0000
 Size:           EQU $-Begin                                                     ; размер кода
 
                 ifdef _REBUILD

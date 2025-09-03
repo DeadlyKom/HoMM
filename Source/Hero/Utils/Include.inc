@@ -4,7 +4,8 @@
 
                 module Utils
 
-                include "AddressHero.asm"
+                include "HeroAddress.asm"
+                include "HeroAddresses.asm"
 
                 endmodule
 

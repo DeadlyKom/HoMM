@@ -9,9 +9,9 @@ Object:
 .SmartRemove            EQU Page0.Object.SmartRemove                            ; умное удаление объекта
 .FindLastByPredicate    EQU Page0.Object.FindLastByPredicate                    ; поиск объекта с конца массива, используя предикат
 Object.Class:
-.UI             EQU Page0.Object.Class.UI
-.Hero           EQU Page0.Object.Class.Hero
-.Construction   EQU Page0.Object.Class.Construction
+.UI                     EQU Page0.Object.Class.UI
+.Hero                   EQU Page0.Object.Class.Hero
+.Construction           EQU Page0.Object.Class.Construction
 Object.Utils:
-.GetAdrIY       EQU Page0.Object.Utils.Adr.IY                                   ; получить адрес объекта
+.GetAdr.IY              EQU Page0.Object.Utils.Adr.IY                           ; получить адрес объекта
                 endif ; ~_PAGE_0_OBJECT_
