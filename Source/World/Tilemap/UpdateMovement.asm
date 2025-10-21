@@ -48,7 +48,7 @@ UpdateMovement: ; -----------------------------------------
                 ; #B7 -> %10110111 (OR A)
                 LD A, #37 << 1
                 RRA
-                LD (World.Shift_X), A
+                ; LD (World.Shift_X), A                                         ; старое
 
                 LD H, #00
                 LD D, HIGH Adr.MapBiome
@@ -65,7 +65,7 @@ UpdateMovement: ; -----------------------------------------
 
                 SBC A, A
                 AND #01
-                LD (World.Shift_Y), A
+                ; LD (World.Shift_Y), A                                         ; старое
                 ADD HL, DE
                 LD (GameSession.WorldInfo + FWorldInfo.Tilemap), HL
 

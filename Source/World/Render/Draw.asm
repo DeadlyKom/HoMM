@@ -62,10 +62,11 @@ Draw:           ; -----------------------------------------
 
                 RESTORE_BC                                                      ; защитная от порчи данных с разрешённым прерыванием
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
-                CALL Draw.Background                                            ; отображение фона мира "локация"
+                ; CALL Draw.Background                                            ; отображение фона мира "локация" - СТАРОЕ
+                CALL Draw.Hex.World
 
-                CALL World.Base.Tilemap.VisibleObjects                          ; определение видимых объектов
-                CALL NZ, Object.Draw                                            ; отображение объектов в массиве SortBuffer
+                ; CALL World.Base.Tilemap.VisibleObjects                          ; определение видимых объектов - ОТКЛ
+                ; CALL NZ, Object.Draw                                            ; отображение объектов в массиве SortBuffer - ОТКЛ
 
                 ifdef _DEBUG
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
