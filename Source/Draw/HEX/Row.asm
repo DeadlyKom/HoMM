@@ -26,7 +26,7 @@ Row:            ;
 
                 ; проверка необходимости обновления гексагона (целиком или частично)
                 ADD A, A    ; << 1
-                ; JR NC, .NextHexagon                                             ; переход, если нет необходимости обновлять гексагон (частично или полностью)
+                JR NC, .NextHexagon                                             ; переход, если нет необходимости обновлять гексагон (частично или полностью)
                 RES 7, (HL)                                                     ; сброс флага обновления гексагона
 
                 ; проверка видимости гексагона (целиком)
@@ -93,12 +93,6 @@ Row:            ;
                 ; -----------------------------------------
                 ; корректировка начального адреса спрайта (0-5 номер столбца * 2)
                 EXX
-                ; LD A, (BC)
-                ; LD IXL, A
-                ; INC C
-                ; LD A, (BC)
-                ; LD IXH, A
-                ; INC C
                 LD A, (BC)
                 INC C
 
@@ -120,43 +114,43 @@ Row:            ;
 
                 ; -----------------------------------------
                 ; чтение адреса спрайта
-                LD E, (HL)
-                INC HL
-                LD D, (HL)
-
-.DrawHexagon    ; отображение гексагона
-
-                POP HL                                                          ; восстановить адрес экрана
-                LD (Column.ContainerSP), SP
-
-                EXX
-.NextColumn     LD A, (BC)
-                LD IXL, A
-                INC C
-                LD A, (BC)
-                LD IXH, A
-                INC C
-                EXX
-                
-                EX DE, HL
                 LD C, (HL)
                 INC HL
                 LD B, (HL)
-                INC HL
+
+.DrawHexagon    ; отображение гексагона
+                POP DE                                                          ; восстановить адрес экрана
+
+                EX AF, AF'
+                ADD A, LOW CallSequence.Copy
+                LD L, A
+                LD H, HIGH CallSequence.Copy
                 LD SP, HL
+                RET
 
-                ; DE  - адрес экрана
-                LD L, D
-                LD H, HIGH Adr.ScrAttrAdrTable
-                LD H, (HL)
-                LD L, E
-                EX DE, HL
+.NextHexagon    ;   HL - адрес рендер буфера    (Adr.RenderBuffer)
+                ;   DE - адрес строки экрана
+                ;   BC - адрес таблицы смещений
+                
+                LD A, (BC)
+                NEG
+                ADD A, #06
+                PUSH AF
+                ADD A, E
+                LD E, A
+                DEC E
+                POP AF
+                ADD A, C
+                LD C, A
 
-                ;   SP  - адрес спрайта
-                ;   HL  - адрес экрана
-                ;   DE  - адрес атрибутов
-                ;   BC  - два батйта спрайта (значение маски и спрайта)
-                JP (IX)
+.Sequent        INC L
+
+                INC E
+                LD A, E
+                CP 22 + 1
+                JP C, Row
+
+.NextRow        RET
 
                 display " - Draw hexagon row:\t\t\t\t\t", /A, Row, "\t= busy [ ", /D, $-Row, " byte(s)  ]"
 

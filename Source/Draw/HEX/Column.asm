@@ -79,7 +79,10 @@ PIXEL_MASK_      macro
 ; -----------------------------------------
 ATTR_MASK       macro
                 LD A, C
-                ADD A, A    ; x2
+                ADD A, A                                                        ; << 1 
+                                                                                ; 7ой бит после сдвига отвечающий за мерцание знакоместа,
+                                                                                ; должен быть сброшенным.
+                                                                                ; т.к. ink всегда чёрный, то сдвиг влево корректно инициализирует цвет
                 JR NC, $+3
                 LD (DE), A  ; запись байта в экран атрибутов
                 LD A, B
@@ -244,25 +247,91 @@ FOG             macro
 ; -----------------------------------------
 ; отображение гексагонального столбца
 ; In:
-;   SP  - адрес спрайта
-;   HL  - адрес экрана
-;   DE  - адрес атрибутов
-;   BC  - два батйта спрайта (значение маски и спрайта)
+;   SP  - адрес следующей функции
+;   DE  - адрес экрана
+;   BC  - адрес спрайта
 ; Out:
 ; Corrupt:
 ; Note:
 ;   отображение производится снизу вверх
 ; -----------------------------------------
 Column:         
-.x6             RES 1, H
+.x6             RES 1, D
+
+                LD (Column.ContainerSP), SP
+
+                LD L, C
+                LD H, B
+                LD C, (HL)
+                INC HL
+                LD B, (HL)
+                INC HL
+                LD SP, HL
+
+                ; DE  - адрес экрана
+                LD L, D
+                LD H, HIGH Adr.ScrAttrAdrTable
+                LD H, (HL)
+                LD L, E
+                EX DE, HL
+
+                ;   SP  - адрес спрайта
+                ;   HL  - адрес экрана
+                ;   DE  - адрес атрибутов
+                ;   BC  - два батйта спрайта (значение маски и спрайта)
                 JR .x6_
-.x2             RES 1, H
-                RES 2, H
+
+.x2             RES 1, D
+                RES 2, D
+
+                LD (Column.ContainerSP), SP
+
+                LD L, C
+                LD H, B
+                LD C, (HL)
+                INC HL
+                LD B, (HL)
+                INC HL
+                LD SP, HL
+
+                ; DE  - адрес экрана
+                LD L, D
+                LD H, HIGH Adr.ScrAttrAdrTable
+                LD H, (HL)
+                LD L, E
+                EX DE, HL
+
+                ;   SP  - адрес спрайта
+                ;   HL  - адрес экрана
+                ;   DE  - адрес атрибутов
+                ;   BC  - два батйта спрайта (значение маски и спрайта)
                 JR .x2_
                 ; -----------------------------------------
                 ; нижний хвост
                 ; -----------------------------------------
-.x8             _2_PIXELS_LINES                                                 ; отображение двух пиксельных строк знакоместа
+.x8             LD (Column.ContainerSP), SP
+
+                LD L, C
+                LD H, B
+                LD C, (HL)
+                INC HL
+                LD B, (HL)
+                INC HL
+                LD SP, HL
+
+                ; DE  - адрес экрана
+                LD L, D
+                LD H, HIGH Adr.ScrAttrAdrTable
+                LD H, (HL)
+                LD L, E
+                EX DE, HL
+
+                ;   SP  - адрес спрайта
+                ;   HL  - адрес экрана
+                ;   DE  - адрес атрибутов
+                ;   BC  - два батйта спрайта (значение маски и спрайта)
+
+                _2_PIXELS_LINES                                                 ; отображение двух пиксельных строк знакоместа
 .x6_            _2_PIXELS_LINES                                                 ; отображение двух пиксельных строк знакоместа
                 _2_PIXELS_LINES                                                 ; отображение двух пиксельных строк знакоместа
 .x2_            _2_PIXELS_LINES_                                                ; отображение двух пиксельных строк знакоместа (завершающий)
@@ -366,11 +435,7 @@ Column:
 
                 PUSH HL
                 EXX
-                POP DE
-                INC L
-                LD A, L
-                CP 22 + 1
-                JP C, Row.NextColumn
+                POP DE  
                 RET
 
                 display " - Draw hexagon column:\t\t\t\t", /A, Column, "\t= busy [ ", /D, $-Column, " byte(s)  ]"
