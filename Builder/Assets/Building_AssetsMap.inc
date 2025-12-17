@@ -110,12 +110,17 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     Map.Debug.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Map 'Debug'\t\t\t\t\t"
-Num             EQU $ / 3                                                       ; количество ресурсов а карте
+Num             EQU $ / 3                                                       ; количество ресурсов в карте
 Size            EQU (((Num % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Num >> 8)) << 8  ; размер карты ресурсов (кратный 256)
 Sector          EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)       ; размер карты ресурсов (в секторах)
 
                 if PASS = 2
                 savetrd TRD_FILENAME, "Resource.#", 0, Num * 3
                 endif
+
+                if Num * FAssets > Size.AssetsTable
+                error "превышен доступный размер таблицы"
+                endif
+                
 
                 endif ; ~_BUILDING_ASSETS_MAP_

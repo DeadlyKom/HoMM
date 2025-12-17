@@ -1,72 +1,72 @@
-                ifndef _MACRO_CONFIG_HARDWARE_
-                define _MACRO_CONFIG_HARDWARE_
+                ifndef _MACRO_CONFIG_HARD_INPUT_
+                define _MACRO_CONFIG_HARD_INPUT_
 ; -----------------------------------------
-; установка HL на Hardware флаги
+; установка HL на HardConfig.Input флаги
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-HARDWARE_FLAGS  macro
-                LD HL, GameConfig.Hardware
+HARD_INPUT_FLAGS  macro
+                LD HL, HardConfig.Input
                 endm
 ; -----------------------------------------
-; прочитать значения Hardware флагов в аккумулятор
+; прочитать значения HardConfig.Input флагов в аккумулятор
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-HARDWARE_FLAGS_A macro
-                LD A, (GameConfig.Hardware)
+HARD_INPUT_FLAGS_A macro
+                LD A, (HardConfig.Input)
                 endm
 ; -----------------------------------------
-; проверка Hardware флага
+; проверка HardConfig.Input флага
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-CHECK_HARDWARE_FLAG macro FlagBit?
-                HARDWARE_FLAGS
+CHECK_HARD_INPUT_FLAG macro FlagBit?
+                HARD_INPUT_FLAGS
                 CHECK_FLAG (FlagBit?)
                 endm
 ; -----------------------------------------
-; проверка Hardware флагов
+; проверка HardConfig.Input флагов
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-CHECK_HARDWARE_FLAGS macro Flags?
-                HARDWARE_FLAGS_A
+CHECK_HARD_INPUT_FLAGS macro Flags?
+                HARD_INPUT_FLAGS_A
                 CHECK_FLAGS (Flags?)
                 endm
 ; -----------------------------------------
-; проверка Hardware флага используя аккумулятор
+; проверка HardConfig.Input флага используя аккумулятор
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-CHECK_HARDWARE_FLAG_A macro FlagBit?
-                HARDWARE_FLAGS_A
+CHECK_HARD_INPUT_FLAG_A macro FlagBit?
+                HARD_INPUT_FLAGS_A
                 CHECK_FLAG_A (FlagBit?)
                 endm
 ; -----------------------------------------
-; установка Hardware флага
+; установка HardConfig.Input флага
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-SET_HARDWARE_FLAG macro FlagBit?
-                HARDWARE_FLAGS
+SET_HARD_INPUT_FLAG macro FlagBit?
+                HARD_INPUT_FLAGS
                 SET_FLAG (FlagBit?)
                 endm
 ; -----------------------------------------
-; сброс Hardware флага
+; сброс HardConfig.Input флага
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-RES_HARDWARE_FLAG macro FlagBit?
-                HARDWARE_FLAGS
+RES_HARD_INPUT_FLAG macro FlagBit?
+                HARD_INPUT_FLAGS
                 RES_FLAG (FlagBit?)
                 endm
 
-                endif ; ~_MACRO_CONFIG_HARDWARE_
+                endif ; ~_MACRO_CONFIG_HARD_INPUT_

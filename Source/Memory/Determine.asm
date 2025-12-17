@@ -7,8 +7,8 @@
 Begin:          EQU $
 Const:          ; константные значения
 .ValuePagesBuf  EQU Adr.MemoryMap                                               ; адрес расположения буфера значений для переключения страниц (выровнен 256 байтам)
-.MaxPages       EQU 64                                                          ; максимальное количество страниц памяти по 16кб
-.MinPagesAllow  EQU 8                                                          ; минимальное допустимое количество страниц памяти по 16кб
+.MaxPages       EQU MAX_PAGES                                                   ; максимальное количество страниц памяти по 16кб
+.MinPagesAllow  EQU MIN_PAGES_ALLOWED                                           ; минимальное допустимое количество страниц памяти по 16кб
 .CheckPageAdr   EQU #FFFF                                                       ; адрес для проверкаи записи/чтения номера страниц
 .INDEX_NONE     EQU #FF                                                         ; недоступный индекс
 
@@ -22,8 +22,8 @@ Const:          ; константные значения
 ; Note:
 ; -----------------------------------------
 Determine:      ; инициализация битового массива доступного ОЗУ (не доступно)
-                LD HL, Adr.ExtraBuffer
-                LD DE, Adr.ExtraBuffer+1
+                LD HL, Adr.TilemapBuffer
+                LD DE, Adr.TilemapBuffer+1
                 LD BC, Size.AvailableMem-1
                 LD (HL), C
                 LDIR
@@ -127,7 +127,7 @@ CheckPort:      ; инициализация функций переключен
 
                 ; отметить свободные ячейки соответствующее странице ОЗУ
                 PUSH HL
-                LD H, HIGH Adr.ExtraBuffer
+                LD H, HIGH Adr.TilemapBuffer
                 ADD A, A    ; x2
                 ADD A, A    ; x4
                 ADD A, A    ; x8

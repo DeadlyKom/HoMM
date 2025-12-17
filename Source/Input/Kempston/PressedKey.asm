@@ -12,11 +12,11 @@
 ; Note:
 ; -----------------------------------------
 GetPressedKey:  ; проверка наличия кемстон джойстика
-                CHECK_HARDWARE_FLAG_A HARDWARE_KEMPSTON_BIT
+                CHECK_HARD_INPUT_FLAG_A HARD_INPUT_KEMPSTON_BIT
                 JR Z, .Skip                                                     ; переход, т.к. кемпстон не поддерживается
 
                 ; тип кемпстон джойстика 5 или 8 кнопочный
-                CHECK_FLAG_A HARDWARE_KEMPSTON_BUTTON_BIT
+                CHECK_FLAG_A HARD_INPUT_KEMPSTON_BUTTON_BIT
                 LD D, #05
                 JR Z, $+4
                 LD D, #08
@@ -33,7 +33,7 @@ GetPressedKey:  ; проверка наличия кемстон джойсти�
 .Skip           OR A
                 RET
 WaitPressedKey: ; проверка наличия кемстон джойстика
-                CHECK_HARDWARE_FLAG_A HARDWARE_KEMPSTON_BIT
+                CHECK_HARD_INPUT_FLAG_A HARD_INPUT_KEMPSTON_BIT
                 RET Z
                 
                 HALT
@@ -43,7 +43,7 @@ WaitPressedKey: ; проверка наличия кемстон джойсти�
                 
 ; ожидание отпускание ранее нажатой клавиши
 WaitReleasedKey ; проверка наличия кемстон джойстика
-                CHECK_HARDWARE_FLAG_A HARDWARE_KEMPSTON_BIT
+                CHECK_HARD_INPUT_FLAG_A HARD_INPUT_KEMPSTON_BIT
                 RET Z
                 
                 HALT
@@ -54,12 +54,12 @@ WaitReleasedKey ; проверка наличия кемстон джойсти�
 ; проверка нажатия любой клавиши
 ; если флаг нуля установлен, нажата
 AnyKeyPressed:  ; проверка наличия кемстон джойстика
-                CHECK_HARDWARE_FLAG_A HARDWARE_KEMPSTON_BIT
+                CHECK_HARD_INPUT_FLAG_A HARD_INPUT_KEMPSTON_BIT
                 SCF
                 RET Z                                                           ; выход, т.к. кемпстон не поддерживается
 
                 ; тип кемпстон джойстика 5 или 8 кнопочный
-                CHECK_FLAG_A HARDWARE_KEMPSTON_BUTTON_BIT
+                CHECK_FLAG_A HARD_INPUT_KEMPSTON_BUTTON_BIT
                 LD D, %00011111
                 JR Z, $+4
                 LD D, %11111111

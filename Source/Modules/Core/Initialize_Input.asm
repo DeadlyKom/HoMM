@@ -12,8 +12,8 @@ Input:          ; инициализация кемпстон мышки
                 ifdef ENABLE_MOUSE
                 CALL Mouse.Initialize
                 JR C, .MouseNotDetect                                           ; переход, если кемстон мыш недоступна
-                HARDWARE_FLAGS
-                SET HARDWARE_KEMPSTON_MOUSE_BIT, (HL)                           ; установка флага, доступности кемстон мыши
+                HARD_INPUT_FLAGS
+                SET HARD_INPUT_KEMPSTON_MOUSE_BIT, (HL)                         ; установка флага, доступности кемстон мыши
 .MouseNotDetect
                 endif
 
@@ -35,7 +35,7 @@ Input:          ; инициализация кемпстон мышки
                 RET Z
 
                 ; проверка на установку кемстон джойстика
-                CHECK_HARDWARE_FLAG HARDWARE_KEMPSTON_BIT
+                CHECK_HARD_INPUT_FLAG HARD_INPUT_KEMPSTON_BIT
                 JR Z, .SetKeyboard                                              ; переход, т.к. кемпстон ранее не был обнаружен
                                                                                 ; установка клавиатуры
                 ; провкра на инициализацию 5 кнопочного
@@ -43,7 +43,7 @@ Input:          ; инициализация кемпстон мышки
                 JR Z, Kempston_5
 
                 ; провкра наличия 8 кнопочного
-                CHECK_FLAG HARDWARE_KEMPSTON_BUTTON_BIT
+                CHECK_FLAG HARD_INPUT_KEMPSTON_BUTTON_BIT
                 JR Z, .SetKempston5                                             ; переход, т.к. кемпстон ранее был обнаружен только 5 кнопочный
                                                                                 ; установка 5 кнопочного кемпстона
                 ; провкра на инициализацию 8 кнопочного

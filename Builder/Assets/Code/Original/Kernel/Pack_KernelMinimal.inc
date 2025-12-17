@@ -25,6 +25,8 @@ Begin:          EQU $
                 include "Source/Decompressor/Forward.asm"
                 include "Source/Decompressor/Backward.asm"
 
+                ; ToDo: перенести код в страницу "ассет менеджера",
+                ;       функция Load, при загрузке переключает страницы, что вызывает UB
                 ; assets manager
                 include "Source/AssetsManager/Include.inc"
 End:            EQU $
