@@ -100,11 +100,11 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     Graphics.Hero.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Graphic Hero\t\t\t\t\t"
-                REG_BUILD_ASSETS_ID ASSETS_ID_GRAPH_PACK_01, \
-                                    Graph.Pack_01.Size, \
-                                    Graph.Pack_01.Size.Sector.ar, \
+                REG_BUILD_ASSETS_ID ASSETS_ID_HEX_GRASSLANDS, \
+                                    Hexagon.NaturalLandscapes.Grasslands.Size, \
+                                    Hexagon.NaturalLandscapes.Grasslands.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
-                                    "  - Graphic pack #01\t\t\t\t"
+                                    "  - Hexagon NaturalLandscapes: 'Grasslands'\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_MAP_DEBUG, \
                                     Map.Debug.Size, \
                                     Map.Debug.Size.Sector.ar, \

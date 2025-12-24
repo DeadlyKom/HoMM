@@ -49,6 +49,7 @@
                 // "--syntax=F",
                 "Builder/Pass/Include_1.inc"
             ],
+            // "dependsOn": ["pass 0 - sjasmplus"],
             "problemMatcher": {
                 "owner": "c",
                 "fileLocation": [
@@ -81,6 +82,7 @@
                 // "--syntax=F",
                 "Builder/Pass/Include_2.inc"
             ],
+            // "dependsOn": ["pass 1 - sjasmplus"],
             "problemMatcher": {
                 "owner": "c",
                 "fileLocation": [

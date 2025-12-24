@@ -7,16 +7,19 @@ Size            FSize                                                           
 Participants    DB #00                                                          ; доступное количество участников на карте
                 ends
 
+                struct FMapDataBlockInfo                                        ; информация о блоке данных карты
+Size            DW #0000                                                        ; размер блока
+Offset          DW #0000                                                        ; смещение до блока данных
+                ends
+
                 struct FMapHeader                                               ; заголовок карты
 Info            FMapInfo                                                        ; базовая информация о карте
-BiomeID         DB #00                                                          ; ассет ID тайлового биома
-BiomeSize       DW #0000                                                        ; длина блока данных биома
-BiomeOffset     DW #0000                                                        ; смещение до данных биома
-DefaultSettings DB #00                                                          ; ассет ID дефолтных настроек объектов
-GraphicPack     DB #00                                                          ; ассет ID необходимого графического пакета для текущей карты
-ObjectNum       DB #00                                                          ; количество объектов на карте
-ObjectOffset    DW #0000                                                        ; смещение до данных объектов
-Rules           DW #0000                                                        ; ToDo: правила игры на карте
+HexTile         FMapDataBlockInfo                                               ; блока данных гексагоных тайлов
+GraphicPack     FMapDataBlockInfo                                               ; блок данных необходимого графического пакета для текущей карты
+Objects         FMapDataBlockInfo                                               ; блок данных об объектах
+Rules           FMapDataBlockInfo                                               ; блок данных об правилах (ToDo)
+; DefaultSettings DB #00                                                          ; ассет ID дефолтных настроек объектов (пока непонятно как с ними работать в новой концепции)
+
                 ends
 
                 endif ; ~_STRUCT_MAP_
