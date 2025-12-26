@@ -9,7 +9,8 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Init_Objects:   ; чтение данных об объектах
+Initialize.Objects:
+                ; чтение данных об объектах
                 LD A, (HL)                                                      ; FMapHeader.ObjectNum
                 INC HL
                 LD E, (HL)                                                      ; FMapHeader.ObjectOffset.Low
@@ -130,6 +131,6 @@ Init_Objects:   ; чтение данных об объектах
                 POP HL
                 RET
 
-                display " - Initialize objects:\t\t\t\t", /A, Init_Objects, "\t= busy [ ", /D, $-Init_Objects, " byte(s)  ]"
+                display " - Initialize objects:\t\t\t\t", /A, Initialize.Objects, "\t= busy [ ", /D, $-Initialize.Objects, " byte(s)  ]"
 
                 endif ; ~_MODULE_SESSION_INITIALIZE_OBJECTS_

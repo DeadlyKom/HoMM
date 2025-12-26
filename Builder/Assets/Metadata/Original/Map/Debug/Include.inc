@@ -14,10 +14,10 @@
                 endlua
                 DB #00                                                          ; FMapHeader.Info.Participants (доступное количество участников на карте)
 
-                FMapDataBlockInfo { Hextile.Size, Hextile-$-1 }                 ; блока данных гексагоных тайлов
-                FMapDataBlockInfo { HextileTable.Size, HextileTable-$-1}        ; блок данных таблицы сопоставления гексагональных тайлов и графического пакетов
-                FMapDataBlockInfo { GraphPackage.Size, GraphPackage-$-1}        ; блок данных необходимого графического пакета для текущей карты
-                FMapDataBlockInfo { Objects.Size, Objects-$-1}                  ; блок данных об объектах
+                FMapDataBlockInfo { Hextile.Size, Hextile-$-2 }                 ; блока данных гексагоных тайлов
+                FMapDataBlockInfo { HextileTable.Size, HextileTable-$-2}        ; блок данных таблицы сопоставления гексагональных тайлов и графического пакетов
+                FMapDataBlockInfo { GraphPackage.Size, GraphPackage-$-2}        ; блок данных необходимого графического пакета для текущей карты
+                FMapDataBlockInfo { Objects.Size, Objects-$-2}                  ; блок данных об объектах
                 FMapDataBlockInfo {}                                            ; блок данных об правилах (ToDo)
                 ; DB ASSETS_ID_DEFAULT_SETTINGS                                   ; FMapHeader.DefaultSettings
 

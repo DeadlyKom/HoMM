@@ -8,7 +8,6 @@
                 include "Memory/Include.inc"
                 include "Assets/Include.inc"
 
-                include "AStar.inc"
                 include "Event.inc"
                 include "Setup.inc"
                 include "Cursor.inc"

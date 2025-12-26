@@ -15,7 +15,8 @@ Offset          DW #0000                                                        
                 struct FMapHeader                                               ; заголовок карты
 Info            FMapInfo                                                        ; базовая информация о карте
 HexTile         FMapDataBlockInfo                                               ; блока данных гексагоных тайлов
-GraphicPack     FMapDataBlockInfo                                               ; блок данных необходимого графического пакета для текущей карты
+HextileTable    FMapDataBlockInfo                                               ; блок данных таблицы сопоставления гексагонального тайла и графического пакета
+GraphicPack     FMapDataBlockInfo                                               ; блок данных необходимых графических пакетов для текущей карты
 Objects         FMapDataBlockInfo                                               ; блок данных об объектах
 Rules           FMapDataBlockInfo                                               ; блок данных об правилах (ToDo)
 ; DefaultSettings DB #00                                                          ; ассет ID дефолтных настроек объектов (пока непонятно как с ними работать в новой концепции)

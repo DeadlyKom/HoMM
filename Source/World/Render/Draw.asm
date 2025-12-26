@@ -30,7 +30,7 @@ Draw:           ; -----------------------------------------
                 LD (HL), #00
 
                 ; первичная инициализация локации
-                LD HL, Adr.MapBiome
+                LD HL, Adr.Hextile
                 LD (GameSession.WorldInfo + FWorldInfo.Tilemap), HL
 
 .Update         ; -----------------------------------------

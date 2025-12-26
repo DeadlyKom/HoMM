@@ -29,8 +29,7 @@ Load_Info:      ; проверка наличия слота
                 CALL TRDOS.Jump3D13                                             ; переход в TR-DOS
 
                 ; восстановление страницы расположения ассета
-                LD A, (Kernel.Modules.Session.Page)
-                SET_PAGE_A
+                SET_MODULE_PAGE_Session                                         ; включить страницу модуля "Session"
 
                 SCF                                                             ; установка флага переполнения
                                                                                 ; загрузка данных слота сохранения, завершены успешно

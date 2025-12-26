@@ -2,6 +2,7 @@
                 ifndef _KERNEL_INCLUDE_
                 define _KERNEL_INCLUDE_
 
+                include "HEX.inc"
                 include "Math.inc"
                 include "Draw.inc"
                 include "Input.inc"

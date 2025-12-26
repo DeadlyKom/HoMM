@@ -12,7 +12,6 @@
 Begin:          EQU $
 
                 include "Source/Memory/MemcpyTilemap.asm"
-                include "Source/Pathfinding/Include.inc"
 Size:           EQU $-Begin                                                     ; размер кода
 
                 ifdef _REBUILD

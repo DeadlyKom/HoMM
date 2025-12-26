@@ -1,17 +1,18 @@
 
                 ifndef _METADATA_MAP_DEBUG_HEXAGON_GRAPHICS_PACKAGE_TABLE_
                 define _METADATA_MAP_DEBUG_HEXAGON_GRAPHICS_PACKAGE_TABLE_
-
-HEXTILE_ID_COUNTER  defl 0                                                      ; счётчик гексагональных тайлов
 MAKE_HEXTILE_BIND macro IndexInListGraphicsPackage?, Offset?
-                DB IndexInListGraphicsPackage?
-                DB Offset?
-HEXTILE_ID_COUNTER = HEXTILE_ID_COUNTER+1
+                DB MAP_HEXTILE_USABLE | (IndexInListGraphicsPackage? & 0x7F)
+                DB (Offset?) << 5
+                endm
+HEXTILE_NOT_USABLE macro
+                DB MAP_HEXTILE_NOT_USABLE
+                DB #00
                 endm
 
                 ; таблица сопоставления гексагональных тайлов и графического пакетов, где
                 ;  1. индекс массива - ID гексагонального тайла
-                ;  2. первый байт - ID графического пакета
+                ;  2. первый байт - индекс в массиве FMapHeader.GraphicPack
                 ;  3. второй байт - смещение внутри текущего графического пакета (0-7)
                 ;
                 ;   | <---------- первый байт ---------- > |   | <---------- второй байт ---------- >  |
@@ -19,13 +20,15 @@ HEXTILE_ID_COUNTER = HEXTILE_ID_COUNTER+1
                 ;  +----+----+----+----+----+----+----+----+   +----+----+----+----+----+----+----+----+
                 ;  | 15 | 14 | 13 | 12 | 11 | 10 |  9 |  8 |   |  7 |  6 |  5 |  4 |  3 |  2 |  1 |  0 |
                 ;  +----+----+----+----+----+----+----+----+   +----+----+----+----+----+----+----+----+
-                ;  | UD | I6 | I5 | I4 | I3 | I2 | I1 | I0 |   | .. | .. | .. | .. | .. | O2 | O1 | O0 |
+                ;  | UB | I6 | I5 | I4 | I3 | I2 | I1 | I0 |   | O2 | O1 | O0 | .. | .. | .. | .. | .. |
                 ;  +----+----+----+----+----+----+----+----+   +----+----+----+----+----+----+----+----+
                 ;
-                ;   UD      [15]        - флаг, использования гесагонального тайла (0 - не используется)
-                ;   O2-O0   [13..11]    - смещение внутри текущего графического пакета (0-7)
+                ;   UB      [15]        - флаг, использования гесагонального тайла (1 - не используется)
+                ;   I6-I0   [14..8]     - ндекс в массиве FMapHeader.GraphicPack
+                ;   O2-O0   [7..5]      - смещение внутри текущего графического пакета (0-7)
 
-                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #00              ; 0 гексагональный тайл
-                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #01              ; 1 гексагональный тайл
+                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #00              ; 0 
+                HEXTILE_NOT_USABLE                                              ; 1 - не используется
+                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #01              ; 2
 
                 endif ; ~ _METADATA_MAP_DEBUG_HEXAGON_GRAPHICS_PACKAGE_TABLE_

@@ -51,7 +51,7 @@ UpdateMovement: ; -----------------------------------------
                 ; LD (World.Shift_X), A                                         ; старое
 
                 LD H, #00
-                LD D, HIGH Adr.MapBiome
+                LD D, HIGH Adr.Hextile
                 ADD HL, HL  ; x2
                 ADD HL, HL  ; x4
                 ADD HL, HL  ; x8
