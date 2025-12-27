@@ -2,9 +2,9 @@
                 ifndef _GRAPHICS_HEXAGON_GRASSLANDS_PACK_
                 define _GRAPHICS_HEXAGON_GRASSLANDS_PACK_
 
-                ; таблица смещений, до первого спрайта
+                ; блоковая таблица смещений, до первого спрайта
                 ; после загрузки ассета в память его смещения преобразуются в абсолютные адреса
-                DW Sprites._0
+BlockTable      DW Sprites._0                                                   ; 0-ой гексагон
                 DW #0000
                 DW #0000
                 DW #0000
@@ -13,8 +13,9 @@
                 DW #0000
                 DW #0000
                 DB #01                                                          ; количество гексагональных тайлов в блоке
-Sprites:
-._0             incbin "sprite_1_offsets.bin"
+Sprites:        ; таблицы смещений гексагонов
+                ; номер анимации (максимум 8) * 12 байт + горизонтальное смещение (0-5 номер столбца) * 2
+._0             incbin "sprite_1_offsets.bin"                                   ; таблица смещений столбцов гексагона (6 столбцов по 2 байта)
                 incbin "sprite_1.bin"
 
                 endif ; ~ _GRAPHICS_HEXAGON_GRASSLANDS_PACK_

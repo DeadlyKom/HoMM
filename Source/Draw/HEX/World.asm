@@ -29,11 +29,12 @@ World:          LD HL, CallSequence
                 ; рассчёт адреса экранной области
                 LD H, HIGH Adr.ScrAdrTable
 .Shift_Y        EQU $+1
-                LD L, (4 << 3) + 7                                              ; позиции по вертикали в пикселях
+                LD L, (8 << 3) + 7                                              ; позиции по вертикали в пикселях
                 LD E, (HL)
                 INC E                                                           ; начало с 1 знакоместа
                 INC H
                 LD D, (HL)
+                RES 7, D
 
                 LD HL, Adr.RenderBuffer
                 ; JP Row

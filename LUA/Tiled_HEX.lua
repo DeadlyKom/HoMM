@@ -9,6 +9,11 @@
         local in_data = false
         local tiles = {}
 
+        local transform = {
+            [23] = 1,
+            [24] = 0,
+        }
+
         for line in io.lines(input_filename) do
 
             -- ищем размеры слоя
@@ -36,8 +41,13 @@
         for y = 0, height-1 do
             for x = 0, width-1 do
                 local index = (y * width + x) + 1
-                assert(fp:write(string.char(tiles[index])))
-                -- print (index, tiles[index])
+                local tile = tiles[index]
+                local out_tile = transform[tile]
+
+                assert(out_tile ~= nil, "Tile не описан в transform: "..tile)
+
+                fp:write(string.char(out_tile))
+                -- print (index, out_tile)
             end
         end
 

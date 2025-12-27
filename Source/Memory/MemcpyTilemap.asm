@@ -39,7 +39,7 @@ Tilemap:
                 POP BC      ; +12
 
                 ; сохранение 12 байт
-                LD SP, Adr.RenderBuffer + .VISIBLE_X + .Offset
+                LD SP, Adr.TilemapBuffer + .VISIBLE_X + .Offset
                 PUSH BC
                 PUSH DE
                 PUSH HL

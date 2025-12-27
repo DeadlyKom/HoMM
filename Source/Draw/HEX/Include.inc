@@ -25,6 +25,7 @@ HorizontalTable ;
 CallSequence    ;
                 DW Column.x2, Column.x6, Column.x8, Column.x8, Column.x6, Column.x2, Row.Sequent
 .Copy           DS 7 * 2, 0
+TemplateSP      DS 2 * 2, 0
 
                 if (HorizontalTable >> 8) - (($) >> 8)
                 error "whole table must be within single 256 byte block"
