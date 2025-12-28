@@ -8,12 +8,7 @@
 ; Note:
 ;   отображение производится снизу вверх
 ; -----------------------------------------
-World:          LD HL, CallSequence
-                LD DE, CallSequence.Copy
-                dup 14
-                LDI
-                edup
-
+World:          LD (Row.ContainerSP), SP
                 ; -----------------------------------------
                 ; расчёт адреса таблицы в зависимости от смещения карты по горизонтали
 .Shift_X        EQU $+1
@@ -37,6 +32,7 @@ World:          LD HL, CallSequence
                 RES 7, D
 
                 LD HL, Adr.RenderBuffer
+                LD SP, CallSequence + 14
                 ; JP Row
                 
 ; .Sprite         ;

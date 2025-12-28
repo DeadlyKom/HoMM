@@ -28,7 +28,9 @@ HEXTILE_NOT_USABLE macro
                 ;   O2-O0   [7..5]      - смещение внутри текущего графического пакета (0-7)
 
                 MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #00              ; 0 
-                HEXTILE_NOT_USABLE                                              ; 1 - не используется
-                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #01              ; 2
+                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #03              ; 1 
+                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #02              ; 2
+                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #01              ; 3
+                HEXTILE_NOT_USABLE                                              ; 4 - не используется
 
                 endif ; ~ _METADATA_MAP_DEBUG_HEXAGON_GRAPHICS_PACKAGE_TABLE_

@@ -12,6 +12,8 @@
         local transform = {
             [23] = 1,
             [24] = 0,
+            [25] = 2,
+            [26] = 3,
         }
 
         for line in io.lines(input_filename) do

@@ -72,7 +72,25 @@
 ;                             оставшиеся 3 всегда высоки, если имеются
 ;
 ; -----------------------------------------
-Row:            ; 
+Row:            ;
+                EXX
+                LD HL, Row.Sequent
+                PUSH HL
+                LD HL, Column.x2
+                PUSH HL
+                LD HL, Column.x6
+                PUSH HL
+                LD HL, Column.x8
+                PUSH HL
+                LD HL, Column.x8
+                PUSH HL
+                LD HL, Column.x6
+                PUSH HL
+                LD HL, Column.x2
+                PUSH HL
+                EXX
+                
+                ;
                 ; LD A, (HL)
                 LD A, %11000000
                 ; -----------------------------------------
@@ -168,12 +186,21 @@ Row:            ;
                 ; адрес спрайта = начальный адрес + номер анимация * 12 байт + горизонтальное смещение (0-5 номер столбца) * 2
                 EXX
                 LD A, (BC)                                                      ; чтение смещение по горизонтали * 2 (HorizontalTable)
-                INC C
+                EX AF, AF'
+                
+                LD A, 6
+                ADD A, C
+                LD C, A
 
                 PUSH DE                                                         ; сохранение, адреса строки экрана
                 EXX
 
+                EX AF, AF'
+                LD C, A
+                EX AF, AF'
+
                 ; применение смещение (горизонтальное 0-5 столбца) внутри таблицы смещений гексагона
+                LD A, C
                 ADD A, L
                 LD L, A
                 ADC A, H
@@ -187,47 +214,13 @@ Row:            ;
                 INC HL
                 LD (Column.OffsetTable), HL
 
-                ; ; -----------------------------------------
-                ; ; корректировка адреса учитывается номер анимации и смещение в гексагоне
-                ; ; -----------------------------------------
-                ; ; 6 столбцов гексагона по 2 байта на адрес расположения,
-                ; ; 12 байт на каждую анимацию. ранее было умножение на 4
-                ; ; -----------------------------------------
-                ; ; корректировка начального адреса спрайта 
-                ; ; адрес спрайта = начальный адрес + номер анимация * 12 байт + горизонтальное смещение (0-5 номер столбца) * 2
-                ; EXX
-                ; LD A, (BC)                                                      ; чтение смещение по горизонтали * 2 (HorizontalTable)
-                ; INC C
-
-                ; PUSH DE                                                         ; сохранение, адреса строки экрана
-                ; EXX
-                ; LD B, A                                                         ; аккумулятор хранит смещение из таблицы HorizontalTable
-                ; ; -----------------------------------------
-                ; EX AF, AF'  ; xxxAAA00 (номер анимации)
-                ; AND %00011100
-                ; LD C, A
-                ; ADD A, A    ; x2
-                ; ADD A, C    ; x3
-                ; ADD A, B    ; добавление смещения начального адреса спрайта
-                ; ADD A, E
-                ; LD L, A
-                ; ADC A, D
-                ; SUB L
-                ; LD H, A
-
-                ; ; -----------------------------------------
-                ; ; чтение адреса спрайта
-                ; LD C, (HL)
-                ; INC HL
-                ; LD B, (HL)
-
 .DrawHexagon    ; отображение гексагона
                 POP DE                                                          ; восстановить адрес экрана
 
                 EX AF, AF'                                                      ; аккумулятор хранит смещение из таблицы HorizontalTable для таблицы CallSequence
-                ADD A, LOW CallSequence.Copy
+                ADD A, LOW CallSequence
                 LD L, A
-                LD H, HIGH CallSequence.Copy
+                LD H, HIGH CallSequence
                 LD SP, HL
                 RET
 
@@ -245,15 +238,25 @@ Row:            ;
                 POP AF
                 ADD A, C
                 LD C, A
+                JR$
 
-.Sequent        INC L
-
-                INC E
+.Sequent        ;   DE  - адрес экрана
+                ;   BC  - адрес спрайта
+                ;   HL' - адрес рендер буфера    (Adr.RenderBuffer)
+                ;   DE' - адрес строки экрана
+                ;   BC' - адрес таблицы смещений (HorizontalTable)
+                
+                EXX
+                ; INC E                                                           ; следующая колонка
                 LD A, E
+                AND %00011111
                 CP 22 + 1
                 JP C, Row
 
-.NextRow        RET
+.NextRow        
+.ContainerSP    EQU $+1
+                LD SP, #0000
+                RET
 
                 display " - Draw hexagon row:\t\t\t\t\t", /A, Row, "\t= busy [ ", /D, $-Row, " byte(s)  ]"
 
