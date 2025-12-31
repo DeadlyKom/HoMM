@@ -5,27 +5,12 @@
                 module Hex
                 
                 include "World.asm"                                             ; (0)
-                include "Row.asm"                                               ; (1)
-                include "Column.asm"                                            ; (2)
+                include "Column.asm"
+TemplateSP      DS 2 * 4, 0
+CallSequence    DS 15 * 2, 0
+VertCounter     DB #00                                                          ; счётчик строк по вертикали в знакоместах (0-7)
 
-HorizontalTable ;
-                dup 4
-                DB 0 * 2
-                DB 1 * 2
-                DB 2 * 2
-                DB 3 * 2
-                DB 4 * 2
-                DB 5 * 2
-                edup
-                DB 0 * 2
-                DB 1 * 2
-                DB 2 * 2
-.End            EQU $
-
-TemplateSP      DS 2 * 3, 0
-CallSequence    DS 7 * 2, 0
-
-                if (HorizontalTable >> 8) - (($) >> 8)
+                if (CallSequence >> 8) - (($) >> 8)
                 error "whole table must be within single 256 byte block"
                 endif
 

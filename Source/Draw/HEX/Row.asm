@@ -5,7 +5,10 @@
 ; In:
 ;   HL - адрес рендер буфера    (Adr.RenderBuffer)
 ;   DE - адрес строки экрана
-;   BC - адрес таблицы смещений (HorizontalTable)
+;   С  - смещение по горизонтали (от начала 0-5)
+;   A  - смещение по горизонтали (от -5 до 5)
+;        если >= 0 то отступ от начала
+;        если < 0 то пропускаются последние
 ; Out:
 ; Corrupt:
 ; Note:
@@ -72,26 +75,29 @@
 ;                             оставшиеся 3 всегда высоки, если имеются
 ;
 ; -----------------------------------------
-Row:            ;
-                EXX
-                LD HL, Row.Sequent
-                PUSH HL
-                LD HL, Column.x2
-                PUSH HL
-                LD HL, Column.x6
-                PUSH HL
+Row:            PUSH IX
+                ;
+                ; A - смещение по горизонтали
+                ; если >= 0 то отступ от начала, С отражает начальный столбец (0-5), А = 0, B = B
+                ; если < 0 то пропускаются последние, С = 0, A = -B, B = 6-B
+                LD A, C
+.L2             EXX
                 LD HL, Column.x8
-                PUSH HL
-                LD HL, Column.x8
-                PUSH HL
-                LD HL, Column.x6
-                PUSH HL
-                LD HL, Column.x2
-                PUSH HL
-                EXX
+                LD BC, Column.x6
+                LD DE, Column.x2
+                LD (.Jump), A
+.Jump           EQU $+1
+                JR $
+                PUSH DE ; x2
+                PUSH BC ; x6
+                PUSH HL ; x8
+                PUSH HL ; x8
+                PUSH BC ; x6
+                PUSH DE ; x2
+.LLL0           EXX
                 
                 ;
-                ; LD A, (HL)
+                ; LD A, (IY + 0)
                 LD A, %11000000
                 ; -----------------------------------------
                 ;      7    6    5    4    3    2    1    0
@@ -107,7 +113,7 @@ Row:            ;
                 ; проверка необходимости обновления гексагона (целиком или частично)
                 ADD A, A    ; << 1
                 JR NC, .NextHexagon                                             ; переход, если нет необходимости обновлять гексагон (частично или полностью)
-                RES 7, (HL)                                                     ; сброс флага обновления гексагона
+                RES 7, (IY + 0)                                                 ; сброс флага обновления гексагона
 
                 ; проверка видимости гексагона (целиком)
                 ADD A, A    ; << 1
@@ -120,9 +126,9 @@ Row:            ;
 
 .VisibleHexagon EX AF, AF'                                                      ; сохранение, для корректировки адреса локальной анимации
                 ; гексагон виден, определение спрайта
-                INC H                                                           ; переход к буферу тайловой карты (Adr.TilemapBuffer)
-                LD A, (HL)                                                      ; чтение индекса тайла
-                DEC H                                                           ; переход обратно к буферу рендера (Adr.RenderBuffer)
+                INC IYH                                                           ; переход к буферу тайловой карты (Adr.TilemapBuffer)
+                LD A, (IY + 0)                                                      ; чтение индекса тайла
+                DEC IYH                                                           ; переход обратно к буферу рендера (Adr.RenderBuffer)
 
                 ; -----------------------------------------
 .CalcSpriteInfo ; расчёт адреса расположения спрайта
@@ -185,27 +191,25 @@ Row:            ;
                 ; корректировка начального адреса спрайта 
                 ; адрес спрайта = начальный адрес + номер анимация * 12 байт + горизонтальное смещение (0-5 номер столбца) * 2
                 EXX
-                LD A, (BC)                                                      ; чтение смещение по горизонтали * 2 (HorizontalTable)
-                EX AF, AF'
-                
-                LD A, 6
-                ADD A, C
-                LD C, A
-
+                LD A, C
+                LD C, #00
+                ADD A, A    ; x2
                 PUSH DE                                                         ; сохранение, адреса строки экрана
                 EXX
 
-                EX AF, AF'
-                LD C, A
-                EX AF, AF'
+                ; LD C, A
+                ; OR A
+                ; JP P, $+4
+                ; XOR A
 
                 ; применение смещение (горизонтальное 0-5 столбца) внутри таблицы смещений гексагона
-                LD A, C
                 ADD A, L
                 LD L, A
                 ADC A, H
                 SUB L
                 LD H, A
+
+                ; LD A, C
 
                 ; чтение адреса спрайта
                 LD C, (HL)
@@ -217,11 +221,15 @@ Row:            ;
 .DrawHexagon    ; отображение гексагона
                 POP DE                                                          ; восстановить адрес экрана
 
-                EX AF, AF'                                                      ; аккумулятор хранит смещение из таблицы HorizontalTable для таблицы CallSequence
-                ADD A, LOW CallSequence
-                LD L, A
-                LD H, HIGH CallSequence
-                LD SP, HL
+                ; OR A
+                ; JP P, $+5
+                ; NEG
+                ; аккумулятор хранит смещение по горизонтали * 2 для таблицы CallSequence
+; .LowSP          EQU $+1
+;                 ADD A, LOW CallSequence
+;                 LD L, A
+;                 LD H, HIGH CallSequence
+;                 LD SP, HL
                 RET
 
 .NextHexagon    ;   HL - адрес рендер буфера    (Adr.RenderBuffer)
@@ -244,19 +252,20 @@ Row:            ;
                 ;   BC  - адрес спрайта
                 ;   HL' - адрес рендер буфера    (Adr.RenderBuffer)
                 ;   DE' - адрес строки экрана
-                ;   BC' - адрес таблицы смещений (HorizontalTable)
-                
+                ;   C'  - смещение по горизонтали
                 EXX
-                ; INC E                                                           ; следующая колонка
-                LD A, E
-                AND %00011111
-                CP 22 + 1
-                JP C, Row
+                LD A, B
+                SUB C
+                LD B, A
+                LD C, #00
+                JP P, Row
 
-.NextRow        
-.ContainerSP    EQU $+1
-                LD SP, #0000
-                RET
+                ; B - отрицательное <6
+                ADD A, #06
+                LD B, A
+                LD A, #06
+                SUB B
+                JP .L2
 
                 display " - Draw hexagon row:\t\t\t\t\t", /A, Row, "\t= busy [ ", /D, $-Row, " byte(s)  ]"
 

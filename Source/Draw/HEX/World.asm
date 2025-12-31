@@ -8,82 +8,109 @@
 ; Note:
 ;   отображение производится снизу вверх
 ; -----------------------------------------
-World:          LD (Row.ContainerSP), SP
-                ; -----------------------------------------
-                ; расчёт адреса таблицы в зависимости от смещения карты по горизонтали
-.Shift_X        EQU $+1
-                LD C, #00
+World:          ;
+                
+                ;
+                LD IX, Row.Sequent
+                LD IY, Adr.RenderBuffer
+                LD (Exit.ContainerSP), SP
+                LD SP, CallSequence + 30
+                LD HL, Exit.RET
+                PUSH HL
+
+                XOR A
+                LD (VertCounter), A
+
+                LD BC, NewRow
+                ; PUSH BC (лишний т.к. первый рисуется вне цикла)
+                ; PUSH BC
+                ; PUSH BC
+                PUSH BC
+                PUSH BC
+                PUSH BC
+                PUSH BC
+                LD A, (NewRow.Shift_Y)                                          ; смещение по вертикали в знакоместах (0-7)
+                AND #03
+                SUB #03
+                JR NZ, $+3
+                PUSH BC
+NewRow          ; LD HL, -14
+                ; ADD HL, SP
+                ; LD A, L
+                ; LD (Row.LowSP), A
+
+                ;
+                EXX
+                LD HL, VertCounter                                              ; счётчик строк по вертикали в знакоместах (0-7)
+                LD C, (HL)
+                INC (HL)
+
                 LD A, C
                 ADD A, A    ; x2
-                ADD A, C    ; x3
-                ADD A, LOW HorizontalTable
-                LD C, A
-                LD B, HIGH HorizontalTable
+                ADD A, A    ; x4
+                ADD A, #03
+.Shift_Y        EQU $ + 1
+                SUB #00                                                         ; смещение по вертикали в знакоместах (0-7)
+                INC A                                                           ; смещение отображение на знакоместо ниже
+                ADD A, A    ; x2
+                ADD A, A    ; x4
+                ADD A, A    ; x8
+                OR 7
+                LD L, A
 
-                ; -----------------------------------------
                 ; рассчёт адреса экранной области
                 LD H, HIGH Adr.ScrAdrTable
-.Shift_Y        EQU $+1
-                LD L, (8 << 3) + 7                                              ; позиции по вертикали в пикселях
                 LD E, (HL)
                 INC E                                                           ; начало с 1 знакоместа
                 INC H
                 LD D, (HL)
                 RES 7, D
 
-                LD HL, Adr.RenderBuffer
-                LD SP, CallSequence + 14
-                ; JP Row
-                
-; .Sprite         ;
-;                 DB %00000011
-;                 DB %00001101
-;                 DB %10010000, %11111110 ; атрибуты
+                ; расчёт адреса таблицы в зависимости от смещения карты по горизонтали
+                LD B, 22 - 6                                                    ; ширина строки
+                LD A, C
+                RRA
+                CCF
+                SBC A, A
+                AND #03
 
-;                 DB %00110111
-;                 DB %11111111
-;                 DB %11101110
-;                 DB %10111011
-;                 DB %11111111
-;                 DB %11111111
-;                 DB %11010110
-;                 DB %11111111
-;                 DB %10010000, %11111110 ; атрибуты
+.Shift_X        EQU $ + 1                                                       ; смещение по горизонтали в знакоместах (0-5)
+                ADD A, #00
+                LD C, A
 
-;                 DB %01111111
-;                 DB %01111110
-;                 DB %10111111
-;                 DB %11111011
-;                 DB %11010111
-;                 DB %11101111
-;                 DB %10111111
-;                 DB %11011110
-;                 DB %10111100, %11111111 ; атрибуты
+                ; LD A, C
+                OR A
+                JR Z, .L0
 
-;                 DB %11111101
-;                 DB %11011110
-;                 DB %00111111
-;                 DB %01110011
-;                 DB %00111001
-;                 DB %00011100
-;                 DB %10001110
-;                 DB %10001011
-;                 DB %10111100, %00010001 ; атрибуты
+                PUSH IX
 
-;                 DB %11111111, %01111100
-;                 DB %11111111, %00111001
-;                 DB %11111111, %00111110
-;                 DB %11111111, %10111101
-;                 DB %11111111, %10011110
-;                 DB %01111111, %01001101
-;                 DB %00111111, %00101110
-;                 DB %00111111, %00100100
-;                 DB %10111100, %00000111 ; атрибуты
+                LD A, #06
+                SUB C
+                EXX
+                LD HL, Column.x8
+                LD BC, Column.x6
+                LD DE, Column.x2
 
-;                 DB %00011111, %00010001
-;                 DB %00001110, %00001010
-;                 DB %00000100, %00000100
-;                 DB %10111100, %00000000 ; атрибуты
+                PUSH DE ; x2
+                DEC A
+                JR Z, Row.LLL0
+                PUSH BC ; x6
+                DEC A
+                JR Z, Row.LLL0
+                PUSH HL ; x8
+                DEC A
+                JR Z, Row.LLL0
+                PUSH HL ; x8
+                DEC A
+                JR Z, Row.LLL0
+                PUSH BC ; x6
+                JR Row.LLL0
+
+.L0             include "Row.asm"
+Exit:           ;
+.ContainerSP    EQU $+1
+.RET            LD SP, #0000
+                RET
 
                 display " - Draw hexagon world:\t\t\t\t", /A, World, "\t= busy [ ", /D, $-World, " byte(s)  ]"
 
