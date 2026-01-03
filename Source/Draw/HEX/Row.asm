@@ -3,12 +3,13 @@
 ; -----------------------------------------
 ; отображение гексагонального строки
 ; In:
-;   HL - адрес рендер буфера    (Adr.RenderBuffer)
+;   IY - адрес рендер буфера    (Adr.RenderBuffer)
 ;   DE - адрес строки экрана
 ;   С  - смещение по горизонтали (от начала 0-5)
 ;   A  - смещение по горизонтали (от -5 до 5)
 ;        если >= 0 то отступ от начала
 ;        если < 0 то пропускаются последние
+;   A' - количество пропускаемых знакомест
 ; Out:
 ; Corrupt:
 ; Note:
@@ -75,6 +76,36 @@
 ;                             оставшиеся 3 всегда высоки, если имеются
 ;
 ; -----------------------------------------
+                EX AF, AF'
+                LD H, A
+                EX AF, AF'
+
+                OR A
+                JR Z, Row
+
+                PUSH IX
+
+                LD A, #06
+                SUB C
+                EXX
+                LD HL, Column.x8
+                LD BC, Column.x6
+                LD DE, Column.x2
+
+                PUSH DE ; x2
+                DEC A
+                JR Z, Row.LLL0
+                PUSH BC ; x6
+                DEC A
+                JR Z, Row.LLL0
+                PUSH HL ; x8
+                DEC A
+                JR Z, Row.LLL0
+                PUSH HL ; x8
+                DEC A
+                JR Z, Row.LLL0
+                PUSH BC ; x6
+                JR Row.LLL0
 Row:            PUSH IX
                 ;
                 ; A - смещение по горизонтали
@@ -95,7 +126,7 @@ Row:            PUSH IX
                 PUSH BC ; x6
                 PUSH DE ; x2
 .LLL0           EXX
-                
+
                 ;
                 ; LD A, (IY + 0)
                 LD A, %11000000
@@ -127,7 +158,11 @@ Row:            PUSH IX
 .VisibleHexagon EX AF, AF'                                                      ; сохранение, для корректировки адреса локальной анимации
                 ; гексагон виден, определение спрайта
                 INC IYH                                                           ; переход к буферу тайловой карты (Adr.TilemapBuffer)
-                LD A, (IY + 0)                                                      ; чтение индекса тайла
+                ; LD A, (IY + 0)                                                      ; чтение индекса тайла
+                LD A, R
+                RRCA
+                AND #03
+
                 DEC IYH                                                           ; переход обратно к буферу рендера (Adr.RenderBuffer)
 
                 ; -----------------------------------------
@@ -230,6 +265,27 @@ Row:            PUSH IX
 ;                 LD L, A
 ;                 LD H, HIGH CallSequence
 ;                 LD SP, HL
+
+                EXX
+                ; ; округление до знакоместа
+                ; LD H, #00
+                ; LD A, L
+                ; CP 184
+                ; LD A, H
+                ; JR C, $+10                                                      ; переход, если начало отображение колонки в видимой области
+                ; LD A, L
+                ; SRL A
+                ; ADC A, H
+                ; RRA
+                ; ADC A, H
+                ; RRA
+                ; ADC A, H
+
+                LD A, H
+                OR A
+                EX AF, AF'
+                EXX
+
                 RET
 
 .NextHexagon    ;   HL - адрес рендер буфера    (Adr.RenderBuffer)

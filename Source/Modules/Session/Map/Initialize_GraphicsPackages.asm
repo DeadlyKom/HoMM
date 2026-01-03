@@ -104,6 +104,6 @@ Initialize.GraphicsPackages:
                 DJNZ .Loop
                 RET
 
-                display " - Initialize graphics packages:\t\t\t\t", /A, Initialize.GraphicsPackages, "\t= busy [ ", /D, $-Initialize.GraphicsPackages, " byte(s)  ]"
+                display " - Initialize graphics packages:\t\t\t", /A, Initialize.GraphicsPackages, "\t= busy [ ", /D, $-Initialize.GraphicsPackages, " byte(s)  ]"
 
                 endif ; ~_MODULE_SESSION_INITIALIZE_GRAPHICS_PACKAGES_

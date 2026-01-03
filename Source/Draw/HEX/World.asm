@@ -9,22 +9,21 @@
 ;   отображение производится снизу вверх
 ; -----------------------------------------
 World:          ;
-                
-                ;
                 LD IX, Row.Sequent
                 LD IY, Adr.RenderBuffer
                 LD (Exit.ContainerSP), SP
                 LD SP, CallSequence + 30
-                LD HL, Exit.RET
+                LD HL, Exit
                 PUSH HL
 
-                XOR A
+                ; XOR A
+                LD A, #00
                 LD (VertCounter), A
 
                 LD BC, NewRow
                 ; PUSH BC (лишний т.к. первый рисуется вне цикла)
-                ; PUSH BC
-                ; PUSH BC
+                PUSH BC
+                PUSH BC
                 PUSH BC
                 PUSH BC
                 PUSH BC
@@ -34,29 +33,47 @@ World:          ;
                 SUB #03
                 JR NZ, $+3
                 PUSH BC
-NewRow          ; LD HL, -14
-                ; ADD HL, SP
-                ; LD A, L
-                ; LD (Row.LowSP), A
-
-                ;
+NewRow          ;
                 EXX
                 LD HL, VertCounter                                              ; счётчик строк по вертикали в знакоместах (0-7)
                 LD C, (HL)
                 INC (HL)
 
+                LD A, (.Shift_Y)
+                CP #04
+                CCF
+
                 LD A, C
+                ADC A, #00
                 ADD A, A    ; x2
                 ADD A, A    ; x4
                 ADD A, #03
 .Shift_Y        EQU $ + 1
-                SUB #00                                                         ; смещение по вертикали в знакоместах (0-7)
+                SUB #04                                                         ; смещение по вертикали в знакоместах (0-7)
                 INC A                                                           ; смещение отображение на знакоместо ниже
                 ADD A, A    ; x2
                 ADD A, A    ; x4
                 ADD A, A    ; x8
                 OR 7
                 LD L, A
+
+                ; округление до знакоместа
+                LD H, #00
+                LD A, L
+                CP 184
+                LD A, H
+                JR C, .LLLLLL                                                   ; переход, если начало отображение колонки в видимой области
+                LD A, L
+                LD L, 184
+                SUB L
+                DEC L
+                SRL A
+                ADC A, H
+                RRA
+                ADC A, H
+                RRA
+                ADC A, H
+.LLLLLL         EX AF, AF'
 
                 ; рассчёт адреса экранной области
                 LD H, HIGH Adr.ScrAdrTable
@@ -78,38 +95,10 @@ NewRow          ; LD HL, -14
                 ADD A, #00
                 LD C, A
 
-                ; LD A, C
-                OR A
-                JR Z, .L0
-
-                PUSH IX
-
-                LD A, #06
-                SUB C
-                EXX
-                LD HL, Column.x8
-                LD BC, Column.x6
-                LD DE, Column.x2
-
-                PUSH DE ; x2
-                DEC A
-                JR Z, Row.LLL0
-                PUSH BC ; x6
-                DEC A
-                JR Z, Row.LLL0
-                PUSH HL ; x8
-                DEC A
-                JR Z, Row.LLL0
-                PUSH HL ; x8
-                DEC A
-                JR Z, Row.LLL0
-                PUSH BC ; x6
-                JR Row.LLL0
-
-.L0             include "Row.asm"
+                include "Row.asm"
 Exit:           ;
 .ContainerSP    EQU $+1
-.RET            LD SP, #0000
+                LD SP, #0000
                 RET
 
                 display " - Draw hexagon world:\t\t\t\t", /A, World, "\t= busy [ ", /D, $-World, " byte(s)  ]"
