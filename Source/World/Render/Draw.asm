@@ -57,6 +57,8 @@ Draw:           ; -----------------------------------------
 
                 SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
                 CALL Convert.DrawToHiddenScreen                                 ; установка работы функций со скрытым экраном
+
+                ; ToDo добавить проверку флага обновления тайлов
                 LD HL, (GameSession.WorldInfo + FWorldInfo.Tilemap)
                 CALL Tilemap.Update                                             ; обновление положение камеры
 

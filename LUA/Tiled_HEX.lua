@@ -10,10 +10,13 @@
         local tiles = {}
 
         local transform = {
-            [23] = 1,
-            [24] = 0,
-            [25] = 2,
-            [26] = 3,
+            [23] = 0,
+            [46] = 4,
+            [48] = 5,
+            [111] = 6,
+            [133] = 3,
+            [137] = 2,
+            [160] = 1,
         }
 
         for line in io.lines(input_filename) do

@@ -9,7 +9,7 @@
 ;   отображение производится снизу вверх
 ; -----------------------------------------
 World:          ;
-                LD IX, Row.Sequent
+                LD IX, Adr.RenderBuffer + 64
                 LD IY, Adr.RenderBuffer
                 LD (Exit.ContainerSP), SP
                 LD SP, CallSequence + 30
@@ -20,7 +20,7 @@ World:          ;
                 LD A, #00
                 LD (VertCounter), A
 
-                LD BC, NewRow
+                LD BC, .NewRow
                 ; PUSH BC (лишний т.к. первый рисуется вне цикла)
                 PUSH BC
                 PUSH BC
@@ -28,12 +28,12 @@ World:          ;
                 PUSH BC
                 PUSH BC
                 PUSH BC
-                LD A, (NewRow.Shift_Y)                                          ; смещение по вертикали в знакоместах (0-7)
+                LD A, (.Shift_Y)                                                ; смещение по вертикали в знакоместах (0-7)
                 AND #03
                 SUB #03
                 JR NZ, $+3
                 PUSH BC
-NewRow          ;
+.NewRow         ;
                 EXX
                 LD HL, VertCounter                                              ; счётчик строк по вертикали в знакоместах (0-7)
                 LD C, (HL)
@@ -49,7 +49,7 @@ NewRow          ;
                 ADD A, A    ; x4
                 ADD A, #03
 .Shift_Y        EQU $ + 1
-                SUB #04                                                         ; смещение по вертикали в знакоместах (0-7)
+                SUB #00                                                         ; смещение по вертикали в знакоместах (0-7)
                 INC A                                                           ; смещение отображение на знакоместо ниже
                 ADD A, A    ; x2
                 ADD A, A    ; x4
@@ -91,8 +91,12 @@ NewRow          ;
                 SBC A, A
                 AND #03
 
-.Shift_X        EQU $ + 1                                                       ; смещение по горизонтали в знакоместах (0-5)
-                ADD A, #00
+.Shift_X        EQU $+1                                                         ; смещение по горизонтали в знакоместах (0-5)
+                ADD A, #03
+                CP #06
+                JR C, $+4
+                SUB #06
+
                 LD C, A
 
                 include "Row.asm"
@@ -101,6 +105,6 @@ Exit:           ;
                 LD SP, #0000
                 RET
 
-                display " - Draw hexagon world:\t\t\t\t", /A, World, "\t= busy [ ", /D, $-World, " byte(s)  ]"
+                display " - Draw hexagon world:\t\t\t\t", /A, World, "\t= busy [ ", /D, $-World-Row.Size, " byte(s)  ]"
 
                 endif ; ~ _DRAW_HEXAGON_WORLD_

@@ -76,18 +76,20 @@
 ;                             оставшиеся 3 всегда высоки, если имеются
 ;
 ; -----------------------------------------
-                EX AF, AF'
+Row.Left        EX AF, AF'
                 LD H, A
                 EX AF, AF'
 
                 OR A
                 JR Z, Row
 
-                PUSH IX
-
                 LD A, #06
                 SUB C
+
                 EXX
+                LD HL, Row.Sequent
+                PUSH HL
+
                 LD HL, Column.x8
                 LD BC, Column.x6
                 LD DE, Column.x2
@@ -106,8 +108,11 @@
                 JR Z, Row.LLL0
                 PUSH BC ; x6
                 JR Row.LLL0
-Row:            PUSH IX
-                ;
+Row:            EXX
+                LD HL, Row.Sequent
+                PUSH HL
+                EXX
+                
                 ; A - смещение по горизонтали
                 ; если >= 0 то отступ от начала, С отражает начальный столбец (0-5), А = 0, B = B
                 ; если < 0 то пропускаются последние, С = 0, A = -B, B = 6-B
@@ -157,13 +162,13 @@ Row:            PUSH IX
 
 .VisibleHexagon EX AF, AF'                                                      ; сохранение, для корректировки адреса локальной анимации
                 ; гексагон виден, определение спрайта
-                INC IYH                                                           ; переход к буферу тайловой карты (Adr.TilemapBuffer)
-                ; LD A, (IY + 0)                                                      ; чтение индекса тайла
-                LD A, R
-                RRCA
-                AND #03
 
-                DEC IYH                                                           ; переход обратно к буферу рендера (Adr.RenderBuffer)
+                ; ToDo если сместить хранение тайлов на 128 байт, а значения рендер буфера оставить на месте,
+                ;      то можно обойтись одним смещением, без INC/DEC IYH 
+                INC IYH                                                         ; переход к буферу тайловой карты (Adr.TilemapBuffer)
+                LD A, (IY + 0)                                                  ; чтение индекса тайла
+                DEC IYH                                                         ; переход обратно к буферу рендера (Adr.RenderBuffer)
+                INC IYL                                                         ; переход к следующему гексогону
 
                 ; -----------------------------------------
 .CalcSpriteInfo ; расчёт адреса расположения спрайта
@@ -322,7 +327,8 @@ Row:            PUSH IX
                 LD A, #06
                 SUB B
                 JP .L2
+Row.Size        EQU $-Row.Left
 
-                display " - Draw hexagon row:\t\t\t\t\t", /A, Row, "\t= busy [ ", /D, $-Row, " byte(s)  ]"
+                display " - Draw hexagon row:\t\t\t\t\t", /A, Row.Left, "\t= busy [ ", /D, Row.Size, " byte(s)  ]"
 
                 endif ; ~ _DRAW_HEXAGON_ROW_

@@ -13,8 +13,8 @@ Begin:          EQU $
 ; Note:
 ; -----------------------------------------
 Tilemap:
-.VISIBLE_X      EQU SCR_WORLD_SIZE_X                                            ; количество копируемых тайлов по горизонтали
-.VISIBLE_Y      EQU SCR_WORLD_SIZE_Y + 1                                        ; количество копируемых тайлов по вертикали
+.VISIBLE_X      EQU 8                                                           ; количество копируемых тайлов по горизонтали
+.VISIBLE_Y      EQU 8                                                           ; количество копируемых тайлов по вертикали
                                                                                 ; +1 т.к. тайл мб виден на половину
                                                                                 ; видимая часть тайлов по горизонтали 11-11.5
                 ; инициализация
@@ -31,21 +31,21 @@ Tilemap:
                 ; код соответствет копированию строго 12 байт
                 POP BC      ; +2
                 POP AF      ; +4 
-                EX AF, AF'
-                POP AF      ; +6
+                ; EX AF, AF'
+                ; POP AF      ; +6
                 EXX
                 POP HL      ; +8
                 POP DE      ; +10
-                POP BC      ; +12
+                ; POP BC      ; +12
 
                 ; сохранение 12 байт
                 LD SP, Adr.TilemapBuffer + .VISIBLE_X + .Offset
-                PUSH BC
+                ; PUSH BC
                 PUSH DE
                 PUSH HL
                 EXX
-                PUSH AF
-                EX AF, AF'
+                ; PUSH AF
+                ; EX AF, AF'
                 PUSH AF
                 PUSH BC
                 ADD HL, DE

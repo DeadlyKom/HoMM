@@ -102,17 +102,17 @@ Load.GraphicsPackages:
 NestedAdjust:   LD B, #06                                                       ; ширина гексагона (в знакоместах)
                 ; B  - количество преобразований
 .AdjustLoop     LD E, (HL)
-                INC L
+                INC HL
                 LD D, (HL)
                 EX DE, HL
                 ADD HL, DE
                 DEC HL                                                          ; программный декремент
                 EX DE, HL
                 LD (HL), D
-                DEC L
+                DEC HL
                 LD (HL), E
-                INC L
-                INC L
+                INC HL
+                INC HL
                 DJNZ .AdjustLoop
                 RET
 

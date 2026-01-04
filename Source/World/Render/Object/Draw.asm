@@ -15,10 +15,10 @@ Draw:           ; инициализация
                 DEC E
 
                 ; установка отсечение спрайтов
-                LD HL, (SCR_WORLD_SIZE_X * 2 - 1) << 8 | (SCR_WORLD_POS_X << 3) ; LeftEdge      - левая грань видимой части     (в пикселах)
+                LD HL, (SCR_WORLD_SIZE_X - 1) << 8 | (SCR_WORLD_POS_X << 3)     ; LeftEdge      - левая грань видимой части     (в пикселах)
                                                                                 ; VisibleWidth  - ширина видимой части          (в знакоместах)
                 LD (GameState.LeftEdge), HL
-                LD HL, ((SCR_WORLD_SIZE_Y << 3) << 9)  | (SCR_WORLD_POS_Y << 3) ; TopEdge       - верхняя грань видимой части   (в пикселах)
+                LD HL, ((SCR_WORLD_SIZE_Y << 2) << 9)  | (SCR_WORLD_POS_Y << 3) ; TopEdge       - верхняя грань видимой части   (в пикселах)
                                                                                 ; VisibleHeight - высота видимой части          (в пикселах)
                 LD (GameState.TopEdge), HL
 
