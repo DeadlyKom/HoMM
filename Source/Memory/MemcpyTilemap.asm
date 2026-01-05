@@ -7,17 +7,19 @@ Begin:          EQU $
 ; -----------------------------------------
 ; копирование блока тайлов в рендер буфер
 ; In:
-;   HL  - начальный адрес видимой части тайловой карты
 ; Out:
 ; Corrupt:
 ; Note:
+;   код расположен рядом с картой (страница 1)
 ; -----------------------------------------
 Tilemap:
-.VISIBLE_X      EQU 8                                                           ; количество копируемых тайлов по горизонтали
+.VISIBLE_X      EQU 6                                                           ; количество копируемых тайлов по горизонтали
 .VISIBLE_Y      EQU 8                                                           ; количество копируемых тайлов по вертикали
-                                                                                ; +1 т.к. тайл мб виден на половину
-                                                                                ; видимая часть тайлов по горизонтали 11-11.5
+                
+                RES_VIEW_FLAG UPDATE_TILEMAP_RENDER_BUF_BIT                     ; сброс флага обновления Tilemap и Render буфера
+
                 ; инициализация
+                LD HL, (GameSession.WorldInfo + FWorldInfo.Tilemap)             ; начальный адрес видимой части тайловой карты
                 LD (.ContainerSP), SP
                 LD A, (GameSession.MapSize.Width)
                 LD E, A
@@ -27,25 +29,17 @@ Tilemap:
 .Offset         defl 0
                 dup .VISIBLE_Y
                 LD SP, HL
-                ; т.к. VISIBLE_X фиксированно и равно 12 байт, 
-                ; код соответствет копированию строго 12 байт
+                ; т.к. VISIBLE_X фиксированно и равно 6 байт, 
+                ; код соответствет копированию строго 6 байт
                 POP BC      ; +2
                 POP AF      ; +4 
-                ; EX AF, AF'
-                ; POP AF      ; +6
-                EXX
-                POP HL      ; +8
-                POP DE      ; +10
-                ; POP BC      ; +12
+                EX AF, AF'
+                POP AF      ; +6
 
-                ; сохранение 12 байт
+                ; сохранение 6 байт
                 LD SP, Adr.TilemapBuffer + .VISIBLE_X + .Offset
-                ; PUSH BC
-                PUSH DE
-                PUSH HL
-                EXX
-                ; PUSH AF
-                ; EX AF, AF'
+                PUSH AF
+                EX AF, AF'
                 PUSH AF
                 PUSH BC
                 ADD HL, DE
@@ -54,10 +48,10 @@ Tilemap:
                 edup
 .ContainerSP    EQU $+1
                 LD SP, #0000
+
                 RET
 
                 display " - Memcpy tilemap:\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
-
                 endmodule
 
                 endif ; ~_MEMORY_COPY_TILEMAP_

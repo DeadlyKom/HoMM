@@ -1,72 +1,72 @@
-                ifndef _MACRO_SCROLL_
-                define _MACRO_SCROLL_
+                ifndef _MACRO_VIEW_
+                define _MACRO_VIEW_
 ; -----------------------------------------
-; установка HL на Input.Scroll флаги
+; установка HL на View флаги
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-SCROLL_FLAGS    macro
-                LD HL, GameState.Input.Scroll
+VIEW_FLAGS      macro
+                LD HL, GameState.View
                 endm
 ; -----------------------------------------
-; прочитать значения Input.Scroll флагов в аккумулятор
+; прочитать значения View флагов в аккумулятор
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-SCROLL_FLAGS_A  macro
-                LD A, (GameState.Input.Scroll)
+VIEW_FLAGS_A    macro
+                LD A, (GameState.View)
                 endm
 ; -----------------------------------------
-; проверка Input.Scroll флага
+; проверка View флага
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-CHECK_SCROLL_FLAG macro FlagBit?
-                SCROLL_FLAGS
+CHECK_VIEW_FLAG macro FlagBit?
+                VIEW_FLAGS
                 CHECK_FLAG (FlagBit?)
                 endm
 ; -----------------------------------------
-; проверка Input.Scroll флагов
+; проверка View флагов
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-CHECK_SCROLL_FLAGS macro Flags?
-                SCROLL_FLAGS_A
+CHECK_VIEW_FLAGS macro Flags?
+                VIEW_FLAGS_A
                 CHECK_FLAGS (Flags?)
                 endm
 ; -----------------------------------------
-; проверка Input.Scroll флага используя аккумулятор
+; проверка View флага используя аккумулятор
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-CHECK_SCROLL_FLAG_A macro FlagBit?
-                SCROLL_FLAGS_A
+CHECK_VIEW_FLAG_A macro FlagBit?
+                VIEW_FLAGS_A
                 CHECK_FLAG_A (FlagBit?)
                 endm
 ; -----------------------------------------
-; установка Input.Scroll флага
+; установка View флага
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-SET_SCROLL_FLAG macro FlagBit?
-                SCROLL_FLAGS
+SET_VIEW_FLAG   macro FlagBit?
+                VIEW_FLAGS
                 SET_FLAG (FlagBit?)
                 endm
 ; -----------------------------------------
-; сброс Input.Scroll флага
+; сброс View флага
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-RES_SCROLL_FLAG macro FlagBit?
-                SCROLL_FLAGS
+RES_VIEW_FLAG   macro FlagBit?
+                VIEW_FLAGS
                 RES_FLAG (FlagBit?)
                 endm
 
-                endif ; ~_MACRO_SCROLL_
+                endif ; ~_MACRO_VIEW_

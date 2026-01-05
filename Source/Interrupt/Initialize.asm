@@ -28,6 +28,7 @@ Initialize:     ; **** INITIALIZE HANDLER IM 2 ****
                 LDIR
 
                 ; задание вектора прерывания
+                DI
                 LD A, HIGH Adr.Interrupt-1
                 LD I, A
                 IM 2

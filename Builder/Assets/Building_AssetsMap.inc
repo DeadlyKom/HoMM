@@ -75,16 +75,11 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     World.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - World\t\t\t\t\t\t"
-                REG_BUILD_ASSETS_ID ASSETS_ID_DEFAULT_SETTINGS, \
-                                    Default.Size, \
-                                    Default.Size.Sector.ar, \
-                                    ASSETS_ARCHIVE, \
-                                    "  - Object default settings\t\t\t\t"
-                REG_BUILD_ASSETS_ID ASSETS_ID_TILE_BIOME_GRASS_SAND, \
-                                    Biomes.Grass_Sand.Size, \
-                                    Biomes.Grass_Sand.Size.Sector.ar, \
-                                    ASSETS_ARCHIVE, \
-                                    "  - Graphic tile biome 'Grass-Sand'\t\t\t"
+                ; REG_BUILD_ASSETS_ID ASSETS_ID_DEFAULT_SETTINGS, \
+                ;                     Default.Size, \
+                ;                     Default.Size.Sector.ar, \
+                ;                     ASSETS_ARCHIVE, \
+                ;                     "  - Object default settings\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_CURSOR_PACK, \
                                     Graphics.Cursor.Size, \
                                     Graphics.Cursor.Size.Sector.ar, \

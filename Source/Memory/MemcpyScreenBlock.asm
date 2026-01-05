@@ -93,7 +93,7 @@ DOWN_HL         macro
 ; Note:
 ;   отображение производится снизу вверх
 ; -----------------------------------------
-TO_ATTR_ADR     macro
+HL_TO_ATTR_HL   macro
                 LD E, L
                 LD D, H
                 LD L, H
@@ -140,9 +140,9 @@ Screen:         ; инициализация
                 PUSH_LINE_6_
 
                 ; копирование атрибутов
-.PopAtr         TO_ATTR_ADR
+.PopAtr         HL_TO_ATTR_HL
                 POP_ATTR_6
-.PushAtr        TO_ATTR_ADR
+.PushAtr        HL_TO_ATTR_HL
                 PUSH_ATTR_6
     
                 ; переход на знакоместо ниже
@@ -152,14 +152,13 @@ Screen:         ; инициализация
                 EXX
 
                 DEC IXL
-                JR NZ, .Loop_06
+                JP NZ, .Loop_06
 
 .ContainerSP    EQU $+1
                 LD SP, #0000
                 RET
 
-                display " - Memcpy screen block:\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
-
+                display " - Memcpy screen block:\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
                 endmodule
 
                 endif ; ~_MEMORY_COPY_SCREEN_BLOCK_

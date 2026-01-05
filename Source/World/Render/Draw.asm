@@ -45,22 +45,22 @@ Draw:           ; -----------------------------------------
 
                 ; -----------------------------------------
                 ; обновление позиции карты
-                CHECK_SCROLL_FLAG SCROLL_MAP_BIT
+                CHECK_INPUT_TIMER_FLAG SCROLL_MAP_BIT
                 JR Z, $+14
                 LD HL, GameSession.PeriodTick + FTick.Scroll
                 LD A, (HL)
                 OR A
                 JR NZ, $+7
-                LD (HL), DURATION.TILEMAP_SCROLL+1
+                LD (HL), DURATION.MAP_SCROLL+1
                 CALL World.Base.Tilemap.UpdateMovement                          ; обновление движения
                 ; -----------------------------------------
 
                 SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
                 CALL Convert.DrawToHiddenScreen                                 ; установка работы функций со скрытым экраном
 
-                ; ToDo добавить проверку флага обновления тайлов
-                LD HL, (GameSession.WorldInfo + FWorldInfo.Tilemap)
-                CALL Tilemap.Update                                             ; обновление положение камеры
+                ; проверка флага обновления Tilemap и Render буфера
+                CHECK_VIEW_FLAG UPDATE_TILEMAP_RENDER_BUF_BIT
+                CALL Tilemap.Update                                         ; обновление положение камеры
 
                 RESTORE_BC                                                      ; защитная от порчи данных с разрешённым прерыванием
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана

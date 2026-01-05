@@ -8,18 +8,27 @@
 ; Note:
 ;   отображение производится снизу вверх
 ; -----------------------------------------
-World:          ;
+World:          ; инициализация
                 LD IX, Adr.RenderBuffer + 64
-                LD IY, Adr.RenderBuffer
+                LD IYH, HIGH Adr.RenderBuffer
                 LD (Exit.ContainerSP), SP
                 LD SP, CallSequence + 30
                 LD HL, Exit
                 PUSH HL
 
-                ; XOR A
-                LD A, #00
-                LD (VertCounter), A
+                ; обнуление счётчика строк
+                XOR A
+                LD (RowCounter), A
 
+                ; формирование цикла по вертикали:
+                ;   0 - 7 строк
+                ;   1 - 7 строк
+                ;   2 - 7 строк
+                ;   3 - 8 строк
+                ;   4 - 7 строк
+                ;   5 - 7 строк
+                ;   6 - 7 строк
+                ;   7 - 8 строк
                 LD BC, .NewRow
                 ; PUSH BC (лишний т.к. первый рисуется вне цикла)
                 PUSH BC
@@ -33,22 +42,34 @@ World:          ;
                 SUB #03
                 JR NZ, $+3
                 PUSH BC
-.NewRow         ;
-                EXX
-                LD HL, VertCounter                                              ; счётчик строк по вертикали в знакоместах (0-7)
-                LD C, (HL)
-                INC (HL)
 
+.NewRow         ; отображение строки
+                EXX
+                LD HL, RowCounter                                               ; счётчик строк по вертикали в знакоместах (0-7)
+                LD C, (HL)                                                      ; чтение значения счётчика
+                INC (HL)                                                        ; увеличение счётчика строк
+
+                ; корректировка адреса для каждой новой строки
+                LD A, C
+                ADD A, A    ; x2
+                LD B, A
+                ADD A, A    ; x4
+                ADD A, B    ; x6
+                LD IYL, A
+
+                ; формирование дополнительного смещения по вертикали,
+                ; если счётчик строк >= 4
                 LD A, (.Shift_Y)
                 CP #04
                 CCF
 
+                ; расчёт строки вывода гексагона
                 LD A, C
-                ADC A, #00
+                ADC A, #00                                                      ; корректировка высоты, если счётчик строк >= 4
                 ADD A, A    ; x2
                 ADD A, A    ; x4
                 ADD A, #03
-.Shift_Y        EQU $ + 1
+.Shift_Y        EQU $+1
                 SUB #00                                                         ; смещение по вертикали в знакоместах (0-7)
                 INC A                                                           ; смещение отображение на знакоместо ниже
                 ADD A, A    ; x2
@@ -57,23 +78,27 @@ World:          ;
                 OR 7
                 LD L, A
 
-                ; округление до знакоместа
+                ; определение отображение колонки ниже видимой области
                 LD H, #00
                 LD A, L
-                CP 184
+                CP (SCR_WORLD_SIZE_Y + SCR_WORLD_POS_Y) << 3
                 LD A, H
-                JR C, .LLLLLL                                                   ; переход, если начало отображение колонки в видимой области
+                JR C, .InView                                                   ; переход, если начало отображение колонки в видимой области
+                
+                ; расчёт количество пропускаемых знакомест
                 LD A, L
-                LD L, 184
+                LD L, (SCR_WORLD_SIZE_Y + SCR_WORLD_POS_Y) << 3
                 SUB L
-                DEC L
+                DEC L                                                           ; установка строки равной самой нижней видемой строки
+                
+                ; округление до знакоместа
                 SRL A
                 ADC A, H
                 RRA
                 ADC A, H
                 RRA
                 ADC A, H
-.LLLLLL         EX AF, AF'
+.InView         EX AF, AF'
 
                 ; рассчёт адреса экранной области
                 LD H, HIGH Adr.ScrAdrTable
@@ -81,10 +106,10 @@ World:          ;
                 INC E                                                           ; начало с 1 знакоместа
                 INC H
                 LD D, (HL)
-                RES 7, D
+                RES 7, D                                                        ; сброс бита, переход на основной экран
 
                 ; расчёт адреса таблицы в зависимости от смещения карты по горизонтали
-                LD B, 22 - 6                                                    ; ширина строки
+                LD B, SCR_WORLD_SIZE_X - HEXTILE_SIZE_X                         ; ширина строки
                 LD A, C
                 RRA
                 CCF
@@ -92,12 +117,17 @@ World:          ;
                 AND #03
 
 .Shift_X        EQU $+1                                                         ; смещение по горизонтали в знакоместах (0-5)
-                ADD A, #03
+                ADD A, #00
+                
+                ; корректировка смещение по горизонтали в знакоместах (0-5)
                 CP #06
                 JR C, $+4
                 SUB #06
-
                 LD C, A
+
+                EX AF, AF'
+                LD H, A
+                EX AF, AF'
 
                 include "Row.asm"
 Exit:           ;

@@ -8,11 +8,7 @@
                 include "Column.asm"
 TemplateSP      DS 2 * 4, 0
 CallSequence    DS 15 * 2, 0
-VertCounter     DB #00                                                          ; счётчик строк по вертикали в знакоместах (0-7)
-
-                if (CallSequence >> 8) - (($) >> 8)
-                error "whole table must be within single 256 byte block"
-                endif
+RowCounter      DB #00                                                          ; счётчик строк по вертикали в знакоместах (0-7)
 
                 endmodule
 

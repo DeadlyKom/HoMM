@@ -10,7 +10,8 @@ GameState       EQU Adr.GameState                                               
 .Input.VK       EQU GameState + FGameState.Input.VK                             ; номер "виртуальной" клавишаи
 .Input.Value    EQU GameState + FGameState.Input.Value                          ; дополнительный флаг (см описание в структуре)
 .Input.HotKeys  EQU GameState + FGameState.Input.HotKeys                        ; флаг ввода горячих клавиш
-.Input.Scroll   EQU GameState + FGameState.Input.Scroll                         ; флаги ввода скролла карты
+.Input.Timer    EQU GameState + FGameState.Input.Timer                          ; флаги таймера ввода
+.View           EQU GameState + FGameState.View                                 ; флаги вида
 .Event          EQU GameState + FGameState.Event                                ; событие
 .AssetID        EQU GameState + FGameState.AssetID                              ; идентификатор последнего загруженного ассета
 .Assets         EQU GameState + FGameState.Assets                               ; копия данных последнего загруженного ассета

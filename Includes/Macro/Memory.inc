@@ -136,6 +136,39 @@ JP_MEMCPY       macro Source?, Destination?, Size?
                 JP Memcpy.FastLDIR
                 endm
 ; -----------------------------------------
+; копирование данных между страницами
+; In:
+; Out:
+; Corrupt:
+;   HL, DE, BC, AF
+; Note:
+; -----------------------------------------
+MEMCPY_PAGE     macro Source?, Destination?, DestinationPage?, Size?
+                LD HL, .Continue
+                PUSH HL
+                PUSH_PAGE                                                       ; сохранение номера страницы в стеке
+                LD HL, SetPageStack
+                PUSH HL
+                ; -----------------------------------------
+                ; копирование данных между страницами
+                ; In:
+                ;   A HL - адрес исходника  (аккумулятор страница)
+                ;   A'DE - адрес назначения (аккумулятор страница)
+                ;   BC   - длина блока
+                ; Out:
+                ; Corrupt:
+                ; Note:
+                ; -----------------------------------------
+                LD HL, Source?
+                LD DE, Destination?
+                LD BC, Size?
+                EX AF, AF'
+                LD A, DestinationPage?
+                EX AF, AF'
+                JP Memcpy.BetweenPages
+.Continue       EQU $
+                endm
+; -----------------------------------------
 ; установка страницы (0-31) и номер видимого экрана (0,1)
 ; -----------------------------------------
 SetPort:        macro Page?, Screen?

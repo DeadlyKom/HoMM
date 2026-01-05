@@ -80,7 +80,7 @@ Scan:           ; проверка HardWare ограничения мыши
                 AND MOVEMENT_MASK
                 RET Z                                                           ; выход если нет онажатия клавиш
 
-                SET_SCROLL_FLAG SCROLL_MAP_BIT                                  ; установка флага разрешения обновления скрола карты
+                SET_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             ; установка флага разрешения обновления скрола карты
                 RET
 
                 endif ; ~_WORLD_INPUT_SCAN_

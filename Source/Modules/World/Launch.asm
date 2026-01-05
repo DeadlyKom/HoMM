@@ -15,6 +15,8 @@ Launch:         ; сохранение страницы
 
                 ATTR_IPB SCR_ADR_BASE, BLACK, BLACK, 0                          ; скрытие атрибутами основного экрана
                 MEMCPY Adr.Deploy.World, Adr.World, Size.Deploy.World           ; копирование блока
+                MEMCPY_PAGE Adr.Deploy.ScreenRefresh, Adr.ScreenRefresh, \
+                            Page.ScreenRefresh, Size.Deploy.ScreenRefresh       ; копирование блока между страницами
 
                 ; инициализация спрайтов
                 MEMCPY Adr.Deploy.Sprite, Adr.CodeToScr, Size.Deploy.Sprite     ; копирование блока

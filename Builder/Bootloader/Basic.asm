@@ -96,11 +96,11 @@ StartBoot:      DI
                 ; инициализация TR-DOS
                 CALL TRDOS.Initialize
 
-                ; инициализация прерывания
-                include "Source/Interrupt/Initialize.asm"
-
                 ; инициализация ресурс менеджера
-                include "Source/AssetsManager/Initialize.asm"
+                include "Source/AssetsManager/Initialize.asm"                   ; (0)
+
+                ; инициализация прерывания
+                include "Source/Interrupt/Initialize.asm"                       ; (1)
 
                 ; отметить занятую область данными в доступной ОЗУ (принудительно)
                 MARK_RAM PAGE_0, MemBank_03, BankSize                           ; отметить страницу памяти 0 занятой

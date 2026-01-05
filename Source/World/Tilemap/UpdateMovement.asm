@@ -135,9 +135,9 @@ UpdateTilemap   ; -----------------------------------------
                 LD HL, (GameSession.WorldInfo + FWorldInfo.Tilemap)
                 ADD HL, DE
                 LD (GameSession.WorldInfo + FWorldInfo.Tilemap), HL
-                POP HL
 
-                ; Update flag tile
+                SET_VIEW_FLAG UPDATE_TILEMAP_RENDER_BUF_BIT                     ; установка флага обновления Tilemap и Render буфера
+                POP HL
                 RET
                 
 DirectionTable  ; -----------------------------------------
