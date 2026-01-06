@@ -3,7 +3,6 @@
                 define _GRAPHICS_HEXAGON_GRASSLANDS_INCLUDE_
 
                 module Grasslands                                               ; луга
-
                 ORG #0000
 Begin           EQU $
                 include "Pack.inc"

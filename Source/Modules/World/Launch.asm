@@ -34,9 +34,12 @@ Launch:         ; сохранение страницы
                 SET_WORLD_RENDER World.Base.Render.Draw                         ; инициализаци главного рендера "мира"
                 SET_USER_HANDLER World.Base.Interrupt                           ; установка обработчика прерываний
                 RES_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                           ; разрешить сканирование ввода
-                RES_RENDER_FLAG SWAP_DISABLE_BIT                                ; разрешить смену экранов
+                SET_RENDER_FLAG SWAP_DISABLE_BIT                                ; запретить смену экранов
                 RES_RENDER_FLAG FPS_DISABLE_BIT                                 ; разрешить отображение FPS
                 SET_MOUSE_POSITION 128, 96                                      ; установить позицию мыши
+
+                ; ToDo времнно
+                SHOW_BASE_SCREEN                                                ; отображение базового экрана
                 RET
 
                 display " - Launch 'World':\t\t\t\t\t\t     \t= busy [ ", /D, $-Launch, " byte(s) ]"

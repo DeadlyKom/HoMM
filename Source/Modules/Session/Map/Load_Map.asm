@@ -8,6 +8,7 @@
 ; Out:
 ; Corrupt:
 ; Note:
+;   код расположен в общей
 ; -----------------------------------------
 Load.Map:       EX AF, AF'
                 CALL Sprite.Initialize                                          ; ToDo: вынести от сюда!
@@ -42,6 +43,7 @@ Load.Map:       EX AF, AF'
                 INC L
                 LD B, (HL)
                 INC L
+                ; ToDo: длина блока недолжна превышать Size.Hextile
 
                 ; чтение смещение от текущего адреса до блока данных
                 LD E, (HL)
@@ -65,6 +67,14 @@ Load.Map:       EX AF, AF'
                 EX AF, AF'
                 LD A, (.LoadedMapPage)
                 CALL Memcpy.BetweenPages
+
+                ; инициализация метаданных карты значением по умолчанию
+                ; ToDo: в дальнейшем эти данные должны браться из сохранения
+                LD HL, Adr.MapMetadata
+                LD DE, Adr.MapMetadata+1
+                LD BC, Size.MapMetadata-1
+                LD (HL), MAP_META_DEFAULT_VALUE
+                CALL Memcpy.FastLDIR
                 CALL .SetPageLoadedMap                                          ; установка страницы загруженной карты
 
                 EXX

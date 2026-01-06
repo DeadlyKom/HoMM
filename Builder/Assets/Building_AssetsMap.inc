@@ -95,6 +95,11 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     Graphics.Hero.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Graphic Hero\t\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_HEX_FOG, \
+                                    Hexagon.Fog.Size, \
+                                    Hexagon.Fog.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Hexagon Fog: 'base'\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_HEX_GRASSLANDS, \
                                     Hexagon.NaturalLandscapes.Grasslands.Size, \
                                     Hexagon.NaturalLandscapes.Grasslands.Size.Sector.ar, \

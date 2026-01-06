@@ -11,13 +11,12 @@ Begin:          EQU $
 ; Corrupt:
 ; Note:
 ;   код расположен рядом с картой (страница 1)
+;   854 такта
 ; -----------------------------------------
-Tilemap:
-.VISIBLE_X      EQU 6                                                           ; количество копируемых тайлов по горизонтали
-.VISIBLE_Y      EQU 8                                                           ; количество копируемых тайлов по вертикали
+TilemapBuffer:
+.VISIBLE_X      EQU TILEMAP_WIDTH_MEMCPY                                        ; количество копируемых тайлов по горизонтали
+.VISIBLE_Y      EQU TILEMAP_HEIGHT_MEMCPY                                       ; количество копируемых тайлов по вертикали
                 
-                RES_VIEW_FLAG UPDATE_TILEMAP_RENDER_BUF_BIT                     ; сброс флага обновления Tilemap и Render буфера
-
                 ; инициализация
                 LD HL, (GameSession.WorldInfo + FWorldInfo.Tilemap)             ; начальный адрес видимой части тайловой карты
                 LD (.ContainerSP), SP
