@@ -83,9 +83,8 @@ DrawByte:       LD B, A
                 ADC A, #30
                 DAA
                 CALL DrawChar
-
-                ; младший полубайт
                 LD A, B
+DrawHalfByte:   ; младший полубайт
                 AND #0F
                 
                 CP #0A

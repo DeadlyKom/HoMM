@@ -110,7 +110,8 @@ World:          ; инициализация
 
                 ; расчёт адреса таблицы в зависимости от смещения карты по горизонтали
                 LD B, SCR_WORLD_SIZE_X - HEXTILE_SIZE_X                         ; ширина строки
-                LD A, C
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
+                ADD A, C                                                        ; номер рисуемой строки
                 RRA
                 CCF
                 SBC A, A
@@ -121,9 +122,10 @@ World:          ; инициализация
                 
                 ; корректировка смещение по горизонтали в знакоместах (0-5)
                 CP #06
-                JR C, $+4
+                JR C, .Less                                                     ; переход, если меньше ширины гексагона
                 SUB #06
-                LD C, A
+                INC IYL                                                         ; смещение адреса читаемого тайла
+.Less           LD C, A
 
                 EX AF, AF'
                 LD H, A

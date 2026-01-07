@@ -154,36 +154,41 @@ Draw:           ; -----------------------------------------
                 ; -----------------------------------------
 
                 ; -----------------------------------------
-                ; отображение позиции карты
+                ; отображение позиции карты (горизонталь)
                 LD DE, #1706
                 CALL Console.SetCursor
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
                 CALL Console.DrawByte
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.X)
+                CALL Console.DrawHalfByte
                 LD A, ','
                 CALL Console.DrawChar
+                ; отображение позиции карты (вертикаль)
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
                 CALL Console.DrawByte
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.Y)
+                CALL Console.DrawHalfByte
                 ; -----------------------------------------
                 
-                ; -----------------------------------------
-                ; отображение размера видимой области в чанках
-                LD DE, #170C
-                CALL Console.SetCursor
-                LD A, (World.Base.Tilemap.VisibleObjects.VisibleSize + 0)
-                CALL Console.DrawByte
-                LD A, ','
-                CALL Console.DrawChar
-                LD A, (World.Base.Tilemap.VisibleObjects.VisibleSize + 1)
-                CALL Console.DrawByte
-                ; -----------------------------------------
+                ; ; -----------------------------------------
+                ; ; отображение размера видимой области в чанках
+                ; LD DE, #170C
+                ; CALL Console.SetCursor
+                ; LD A, (World.Base.Tilemap.VisibleObjects.VisibleSize + 0)
+                ; CALL Console.DrawByte
+                ; LD A, ','
+                ; CALL Console.DrawChar
+                ; LD A, (World.Base.Tilemap.VisibleObjects.VisibleSize + 1)
+                ; CALL Console.DrawByte
+                ; ; -----------------------------------------
 
-                ; -----------------------------------------
-                ; отображение количество видимых объектов
-                LD DE, #1712
-                CALL Console.SetCursor
-                LD A, (World.Base.Tilemap.VisibleObjects.Num)
-                CALL Console.DrawByte
-                ; -----------------------------------------
+                ; ; -----------------------------------------
+                ; ; отображение количество видимых объектов
+                ; LD DE, #1712
+                ; CALL Console.SetCursor
+                ; LD A, (World.Base.Tilemap.VisibleObjects.Num)
+                ; CALL Console.DrawByte
+                ; ; -----------------------------------------
 
                 endif
 

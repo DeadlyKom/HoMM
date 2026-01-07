@@ -4,6 +4,7 @@
 Console:
 .DrawChar       EQU Kernel.Console.DrawChar
 .DrawByte       EQU Kernel.Console.DrawByte
+.DrawHalfByte   EQU Kernel.Console.DrawHalfByte
 .DrawWord       EQU Kernel.Console.DrawWord
 .DrawWordFrom   EQU Kernel.Console.DrawWordFromAdr
 .DrawString     EQU Kernel.Console.DrawString

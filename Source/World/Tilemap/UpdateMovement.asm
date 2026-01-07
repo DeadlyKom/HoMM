@@ -79,7 +79,7 @@ ApplyToY_Axis_  ; -----------------------------------------
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.Y)
                 ADD A, (HL)
                 JP M, .IsNegative
-                CP HEXTILE_ALL_Y
+                CP HEXTILE_BASE_SIZE_Y
                 JP NC, .IsPositive
 
 .Set            LD (GameSession.WorldInfo + FWorldInfo.MapOffset.Y), A
@@ -94,7 +94,7 @@ ApplyToY_Axis_  ; -----------------------------------------
                 LD DE, -MAX_WORLD_HEX_X
                 CALL UpdateTilemap
 
-                LD A, HEXTILE_SIZE_X-1
+                LD A, HEXTILE_BASE_SIZE_Y-1
                 JR .Set
 
 .IsPositive     LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y) ; tile
