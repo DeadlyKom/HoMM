@@ -130,6 +130,9 @@ Draw:           ; -----------------------------------------
                 CALL NZ, World.Base.Tilemap.UpdateBuffers
                 ; -----------------------------------------
 
+                CALL Fog.Make
+                CALL Fog.Tick
+
                 RESTORE_BC                                                      ; защитная от порчи данных с разрешённым прерыванием
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
 
@@ -195,6 +198,123 @@ Draw:           ; -----------------------------------------
                 RES_ALL_MAIN_FLAGS                                              ; сброс всех флагов
                 SET_RENDER_FLAG FINISHED_BIT                                    ; установка флага завершения отрисовки
                 JP World.Base.Event.Handler                                     ; обработчик событий
+Fog.Make:       LD HL, MakeCounter
+                DEC (HL)
+                RET NZ
+
+                LD A, R
+                AND %00000011
+                ADD A, #04
+                LD (HL), A
+                
+                LD A, (BufferNum)
+                OR A
+                RET Z
+                EX AF, AF'
+
+                EXX
+                ; A = rand() % 48
+                CALL Math.Rand8
+                ; -----------------------------------------
+                ; деление D на E
+                ; In:
+                ;   D - делимое
+                ;   E - делитель
+                ; Out:
+                ;   D - результат деления (D / E)
+                ;   A - остаток (D % E)
+                ; Corrupt:
+                ;   D, AF
+                ; -----------------------------------------
+                LD D, A
+                LD E, 48
+                CALL Math.Div8x8                                                ; mod
+                EXX
+
+                LD E, A
+
+                EX AF, AF'
+                LD C, A
+                EX AF, AF'
+                LD B, #00
+                LD HL, Buffer
+
+                ; поиск одинакового индекса
+.IdxLoop        CPI
+                RET Z               ; есть такой индекс
+                JP PE, .IdxLoop
+
+                ; поиск свободного индекса
+                EX AF, AF'
+                LD C, A
+                EX AF, AF'
+                LD A, #FF
+                DEC HL
+
+.FreeLoop       CPD
+                JR Z, .Make         ; есть свободный индекс
+                JP PE, .FreeLoop
+                RET
+
+.Make           ; сохраним индекс
+                INC HL
+                LD (HL), E
+                LD D, HIGH Adr.RenderBuffer
+
+                LD A, %10001111
+                LD (DE), A
+
+                EX AF, AF'
+                DEC A
+                LD (BufferNum), A
+                RET
+
+Fog.Tick:       LD HL, TickCounter
+                DEC (HL)
+                RET NZ
+                LD (HL), 2
+
+                LD A, (BufferNum)
+                LD B, A
+                LD A, 10
+                SUB B
+                RET Z
+
+                LD B, A
+                LD HL, Buffer-1
+                LD D, HIGH Adr.RenderBuffer
+
+.Loop           INC HL
+                LD A, (HL)
+                CP #FF
+                JR Z, .Loop
+
+                LD E, A
+                EX DE, HL
+                DEC (HL)
+                LD A, (HL)
+
+                CP #7F
+                JR Z, .L1
+                
+                CP %10000111
+                JR NZ, .NextLoop
+
+.L1             LD (HL), %10000000
+                LD A, #FF
+                LD (DE), A
+
+                LD A, (BufferNum)
+                INC A
+                LD (BufferNum), A
+
+.NextLoop       EX DE, HL
+                DJNZ .Loop
+                RET
+Buffer          DS 10, #FF
+BufferNum       DB 10
+MakeCounter     DB #03
+TickCounter     DB #03
 
                 display " - Main draw:\t\t\t\t\t\t", /A, Draw, "\t= busy [ ", /D, $-Draw, " byte(s)  ]"
 

@@ -1,14 +1,6 @@
 
                 ifndef _METADATA_MAP_DEBUG_HEXAGON_GRAPHICS_PACKAGE_TABLE_
                 define _METADATA_MAP_DEBUG_HEXAGON_GRAPHICS_PACKAGE_TABLE_
-MAKE_HEXTILE_BIND macro IndexInListGraphicsPackage?, Offset?
-                DB MAP_HEXTILE_USABLE | (IndexInListGraphicsPackage? & 0x7F)
-                DB (Offset?) << 5
-                endm
-HEXTILE_NOT_USABLE macro
-                DB MAP_HEXTILE_NOT_USABLE
-                DB #00
-                endm
 
                 ; таблица сопоставления гексагональных тайлов и графического пакетов, где
                 ;  1. индекс массива - ID гексагонального тайла

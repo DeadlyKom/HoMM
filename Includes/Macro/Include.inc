@@ -14,6 +14,7 @@
                 include "Screen_.inc"
                 include "Interrupt.inc"
                 include "Functions.inc"
+                include "GraphicHex.inc"
 
                 include "Game/Include.inc"
                 include "Pages/Include.inc"

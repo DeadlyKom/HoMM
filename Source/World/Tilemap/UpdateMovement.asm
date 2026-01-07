@@ -42,7 +42,8 @@ UpdateMovement: ; установка задержки опроса скрола
                 AND ~MOVEMENT_MASK
                 LD (GameState.Input.Value), A
                 RET
-ApplyToX_Axis_  ; -----------------------------------------
+ApplyToX_Axis_  ; 0 - #2b5
+                ; -----------------------------------------
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.X)
                 ADD A, (HL)
                 JP M, .IsNegative
@@ -66,7 +67,7 @@ ApplyToX_Axis_  ; -----------------------------------------
 
 .IsPositive     LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X) ; tile
                 INC A
-                CP MAX_WORLD_HEX_X
+                CP MAX_WORLD_HEX_X-3
                 RET NC
                 LD (GameSession.WorldInfo + FWorldInfo.MapPosition.X), A ; tile
 
@@ -75,7 +76,8 @@ ApplyToX_Axis_  ; -----------------------------------------
 
                 XOR A
                 JR .Set
-ApplyToY_Axis_  ; -----------------------------------------
+ApplyToY_Axis_  ; 0 - #2a1
+                ; -----------------------------------------
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.Y)
                 ADD A, (HL)
                 JP M, .IsNegative
@@ -99,7 +101,7 @@ ApplyToY_Axis_  ; -----------------------------------------
 
 .IsPositive     LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y) ; tile
                 INC A
-                CP MAX_WORLD_HEX_Y
+                CP MAX_WORLD_HEX_Y-5
                 RET NC
                 LD (GameSession.WorldInfo + FWorldInfo.MapPosition.Y), A ; tile
 

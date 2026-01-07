@@ -206,14 +206,14 @@ PUSH_PAGE       macro
 ; -----------------------------------------
 ; восстановление номера страницы из стека
 ; Corrupt:
-;   BC, AF, AF'
+;   BC, AF
 ; -----------------------------------------
 POP_PAGE        macro
                 POP AF
                 SET_PAGE_A
                 endm
 JP_POP_PAGE     macro
-                JP Func.PopPage
+                JP SetPageStack
                 endm
 
                 endif ; ~_MACRO_MEMORY_
