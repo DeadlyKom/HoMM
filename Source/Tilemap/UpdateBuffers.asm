@@ -40,19 +40,22 @@ RENDER_BUFFER_COPY macro Offset?
 ; -----------------------------------------
 UpdateBuffers:  RES_VIEW_FLAG UPDATE_TILEMAP_RENDER_BUF_BIT                     ; сброс флага обновления Tilemap и Render буфера
 
+.LENGTH_LINE    EQU TILEMAP_WIDTH_DATA                                          ; длина линии 
+.LINE_REPEAT    EQU TILEMAP_HEIGHT_DATA                                         ; количество повторений строки
+
                 ; инициализация
                 LD HL, Adr.MapMetadata
                 LD A, (GameSession.MapSize.Width)
-                SUB TILEMAP_WIDTH_MEMCPY-1
+                SUB .LENGTH_LINE - 1
                 LD E, A
                 LD D, #00
                 LD BC, (RENDER_FLAG_HEX_UPDATE << 8) | MAP_META_FOG_PLAYER_1_MASK
 
                 ; копирование
 .Offset         defl 0
-                dup TILEMAP_HEIGHT_MEMCPY - 1
+                dup .LINE_REPEAT - 1
                 ; -----------------------------------------
-                dup TILEMAP_WIDTH_MEMCPY - 1
+                dup .LENGTH_LINE - 1
                 RENDER_BUFFER_COPY UpdateBuffers.Offset
 .Offset         = .Offset + 1
                 INC HL
@@ -64,7 +67,7 @@ UpdateBuffers:  RES_VIEW_FLAG UPDATE_TILEMAP_RENDER_BUF_BIT                     
                 edup
 
                 ; -----------------------------------------
-                dup TILEMAP_WIDTH_MEMCPY - 1
+                dup .LENGTH_LINE - 1
                 RENDER_BUFFER_COPY UpdateBuffers.Offset
 .Offset         = .Offset + 1
                 INC HL
@@ -72,7 +75,9 @@ UpdateBuffers:  RES_VIEW_FLAG UPDATE_TILEMAP_RENDER_BUF_BIT                     
                 RENDER_BUFFER_COPY UpdateBuffers.Offset
                 ; -----------------------------------------
 
-                ; 1737 тактов
+                ; блыор 1737 тактов для 6 копирований в ширину
+                ; сократил с 6 до 5 ширину копирования,
+                ; стало 1465 тактов, что позволит корректно работать с областью 5*8 = 40 байт!
 
                 ; ToDo: добавить инициализацию 22 * 8 стобов гексагонаЫ
 

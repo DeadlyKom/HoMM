@@ -29,27 +29,27 @@ Sprites:        ; таблицы смещений гексагонов
                 EMPTY_HEX_OFFSET                                                ; 
                 EMPTY_HEX_OFFSET                                                ; 
                 ; таблица смещений
-                incbin "sprite_1_offsets.bin"
-                incbin "sprite_2_offsets.bin"
-                incbin "sprite_3_offsets.bin"
-                incbin "sprite_4_offsets.bin"
-                incbin "sprite_5_offsets.bin"
-                incbin "sprite_6_offsets.bin"
-                incbin "sprite_7_offsets.bin"
                 incbin "sprite_8_offsets.bin"
+                incbin "sprite_7_offsets.bin"
+                incbin "sprite_6_offsets.bin"
+                incbin "sprite_5_offsets.bin"
+                incbin "sprite_4_offsets.bin"
+                incbin "sprite_3_offsets.bin"
+                incbin "sprite_2_offsets.bin"
+                incbin "sprite_1_offsets.bin"
                 
                 ; INCBIN_HEX_SIZE_SPRITE формирует 2 байта длины блока, после идут данные
 
                 ; графика спрайтов (флаг 0)
                 INCBIN_HEX_SIZE_SPRITE incbin "sprite_0.bin"
                 ; графика спрайтов (флаг 1)
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_1.bin"
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_2.bin"
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_3.bin"
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_4.bin"
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_5.bin"
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_6.bin"
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_7.bin"
                 INCBIN_HEX_SIZE_SPRITE incbin "sprite_8.bin"
+                INCBIN_HEX_SIZE_SPRITE incbin "sprite_7.bin"
+                INCBIN_HEX_SIZE_SPRITE incbin "sprite_6.bin"
+                INCBIN_HEX_SIZE_SPRITE incbin "sprite_5.bin"
+                INCBIN_HEX_SIZE_SPRITE incbin "sprite_4.bin"
+                INCBIN_HEX_SIZE_SPRITE incbin "sprite_3.bin"
+                INCBIN_HEX_SIZE_SPRITE incbin "sprite_2.bin"
+                INCBIN_HEX_SIZE_SPRITE incbin "sprite_1.bin"
 
                 endif ; ~ _GRAPHICS_HEXAGON_FOG_PACK_

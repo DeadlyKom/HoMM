@@ -1,8 +1,8 @@
 
                 ifndef _CONST_MAP_TILEMAP_
                 define _CONST_MAP_TILEMAP_
-TILEMAP_WIDTH_MEMCPY    EQU 6                                                   ; количество копируемых тайлов по горизонтали
-TILEMAP_HEIGHT_MEMCPY   EQU 8                                                   ; количество копируемых тайлов по вертикали
+TILEMAP_WIDTH_DATA      EQU 5                                                   ; ширина данных в тайловом буфере
+TILEMAP_HEIGHT_DATA     EQU 8                                                   ; высота данных в тайловом буфере
 
 ; флаги работы с тайлами при отрисовки гексагонов
 RENDER_FLAG_HEX_UPDATE_BIT  EQU 0x07                                            ; флаг, принудительного обновления гексагона (частично или полностью)

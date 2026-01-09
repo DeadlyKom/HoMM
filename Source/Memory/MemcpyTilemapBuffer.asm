@@ -14,8 +14,8 @@ Begin:          EQU $
 ;   854 такта
 ; -----------------------------------------
 TilemapBuffer:
-.VISIBLE_X      EQU TILEMAP_WIDTH_MEMCPY                                        ; количество копируемых тайлов по горизонтали
-.VISIBLE_Y      EQU TILEMAP_HEIGHT_MEMCPY                                       ; количество копируемых тайлов по вертикали
+.POP_PUSH_LINE  EQU 6                                                           ; длина линии POP & PUSH
+.LINE_REPEAT    EQU TILEMAP_HEIGHT_DATA                                         ; количество повторений строки
                 
                 ; инициализация
                 LD HL, (GameSession.WorldInfo + FWorldInfo.Tilemap)             ; начальный адрес видимой части тайловой карты
@@ -24,11 +24,11 @@ TilemapBuffer:
                 LD E, A
                 LD D, #00
                 
-                ; копирование VISIBLE_X * VISIBLE_Y байт тайлов
+                ; копирование POP_PUSH_LINE * LINE_REPEAT байт тайлов
 .Offset         defl 0
-                dup .VISIBLE_Y
+                dup .LINE_REPEAT
                 LD SP, HL
-                ; т.к. VISIBLE_X фиксированно и равно 6 байт, 
+                ; т.к. POP_PUSH_LINE фиксированно и равно 6 байт, 
                 ; код соответствет копированию строго 6 байт
                 POP BC      ; +2
                 POP AF      ; +4 
@@ -36,14 +36,13 @@ TilemapBuffer:
                 POP AF      ; +6
 
                 ; сохранение 6 байт
-                LD SP, Adr.TilemapBuffer + .VISIBLE_X + .Offset
-                PUSH AF
+                LD SP, Adr.TilemapBuffer + .POP_PUSH_LINE + .Offset
+                PUSH AF     ; -6
                 EX AF, AF'
-                PUSH AF
-                PUSH BC
+                PUSH AF     ; -4
+                PUSH BC     ; -2
                 ADD HL, DE
-
-.Offset         = .Offset + .VISIBLE_X
+.Offset         = .Offset + .POP_PUSH_LINE - (.POP_PUSH_LINE - TILEMAP_WIDTH_DATA)
                 edup
 .ContainerSP    EQU $+1
                 LD SP, #0000

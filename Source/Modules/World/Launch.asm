@@ -42,6 +42,6 @@ Launch:         ; сохранение страницы
                 SHOW_BASE_SCREEN                                                ; отображение базового экрана
                 RET
 
-                display " - Launch 'World':\t\t\t\t\t\t     \t= busy [ ", /D, $-Launch, " byte(s) ]"
+                display " - Launch 'World':\t\t\t\t\t\t\t= busy [ ", /D, $-Launch, " byte(s) ]"
 
                 endif ; ~_WORLD_LAUNCH_
