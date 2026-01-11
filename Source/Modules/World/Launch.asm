@@ -1,6 +1,6 @@
 
-                ifndef _WORLD_LAUNCH_
-                define _WORLD_LAUNCH_
+                ifndef _MODULE_WORLD_LAUNCH_
+                define _MODULE_WORLD_LAUNCH_
 ; -----------------------------------------
 ; запуск "мира"
 ; In:
@@ -9,7 +9,8 @@
 ; Note:
 ;    адрес исполнения неизвестен
 ; -----------------------------------------
-Launch:         ; сохранение страницы
+Launch:         ; -----------------------------------------
+                ; сохранение страницы
                 LD A, (GameState.Assets + FAssets.Address.Page)
                 LD (Kernel.Modules.World.Page), A
 
@@ -18,16 +19,26 @@ Launch:         ; сохранение страницы
                 MEMCPY_PAGE Adr.Deploy.ScreenRefresh, Adr.ScreenRefresh, \
                             Page.ScreenRefresh, Size.Deploy.ScreenRefresh       ; копирование блока между страницами
 
+                ; -----------------------------------------
+                ; генерация таблица для поиска первого установленного бита
+                LD HL, Adr.CodeToScr
+                CALL Tables.TG_BitScanLsbTable
+                MEMCPY_PAGE Adr.CodeToScr, Adr.BitScanLsbTable, \
+                            Page.BitScanLsbTable, Size.BitScanLsbTable          ; копирование блока cгенерированной таблицы для поиска первого установленного бита
+
+                ; -----------------------------------------
                 ; инициализация спрайтов
                 MEMCPY Adr.Deploy.Sprite, Adr.CodeToScr, Size.Deploy.Sprite     ; копирование блока
                 CALL World.Sprite.Hero.Load                                     ; загрузка и инициализация спрайтов героя
                 CALL World.Sprite.Cursor.Load                                   ; загрузка и инициализация спрайтов курсора
                 CALL World.Sprite.UI.Load                                       ; загрузка и инициализация спрайтов UI
 
+                ; -----------------------------------------
                 ; подготовка основного экрана
                 CLS SCR_ADR_BASE, 0xFF                                          ; очистка основного экрана
                 ATTR_IPB SCR_ADR_BASE, BLACK, WHITE, 0                          ; очистка атрибутов основного экрана
 
+                ; -----------------------------------------
                 ; инициализация мира 
                 SET_MAIN_LOOP World.Base.Loop                                   ; установка главного цикла
                 SET_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE             ; установка флагов
@@ -44,4 +55,4 @@ Launch:         ; сохранение страницы
 
                 display " - Launch 'World':\t\t\t\t\t\t\t= busy [ ", /D, $-Launch, " byte(s) ]"
 
-                endif ; ~_WORLD_LAUNCH_
+                endif ; ~_MODULE_WORLD_LAUNCH_

@@ -35,7 +35,6 @@ _2_PIXELS_LINES_ macro
                 LD (HL), C
                 DEC H
                 LD (HL), B
-                ; DEC H
                 POP BC
                 endm
 ; -----------------------------------------
