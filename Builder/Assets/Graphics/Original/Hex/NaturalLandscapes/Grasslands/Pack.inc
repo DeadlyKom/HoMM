@@ -2,15 +2,17 @@
                 ifndef _GRAPHICS_HEXAGON_GRASSLANDS_PACK_
                 define _GRAPHICS_HEXAGON_GRASSLANDS_PACK_
 
+                include "CreateSprites.inc"
+
                 ; блоковая таблица смещений, до первого спрайта
                 ; после загрузки ассета в память его смещения преобразуются в абсолютные адреса
-BlockTable      CREATE_HEX_SPRITE Sprites._0, 0, 0, 0                           ; 0-ой гексагон
-                ADD_HEX_SPRITE Sprites._1, 0, 0, 0
-                ADD_HEX_SPRITE Sprites._2, 0, 0, 0
-                ADD_HEX_SPRITE Sprites._3, 0, 0, 0
-                ADD_HEX_SPRITE Sprites._4, 0, 0, 0
-                ADD_HEX_SPRITE Sprites._5, 0, 0, 0
-                ADD_HEX_SPRITE Sprites._6, 0, 0, 0
+BlockTable      BIND_HEX_SPRITE Sprites._0, 0, 0, 0                             ; 0-ой гексагон
+                ADD_BIND_HEX_SPRITE Sprites._1, 0, 0, 0
+                ADD_BIND_HEX_SPRITE Sprites._2, 0, 0, 0
+                ADD_BIND_HEX_SPRITE Sprites._3, 0, 0, 0
+                ADD_BIND_HEX_SPRITE Sprites._4, 0, 0, 0
+                ADD_BIND_HEX_SPRITE Sprites._5, 0, 0, 0
+                ADD_BIND_HEX_SPRITE Sprites._6, 0, 0, 0
                 EMPTY_HEX_SPRITE
                 COUNT_HEX_SPRITE                                                ; количество гексагональных тайлов в блоке
 Sprites:        ; таблицы смещений гексагонов

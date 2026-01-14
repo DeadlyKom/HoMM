@@ -41,14 +41,14 @@ HEXTILE_NOT_USABLE macro
                 endm
 
                 ; макросы формирования гексагональных спрайтов
-CREATE_HEX_SPRITE macro Offset?, AmountAnimation_0F?, AmountAnimation_F0?, Flags?   ; добавление спрайта (всегда первый)
+BIND_HEX_SPRITE macro Offset?, AmountAnimation_0F?, AmountAnimation_F0?, Flags?   ; добавление спрайта (всегда первый)
 HEX_SPRITE      defl 0
                 DW Offset?
                 DB ((AmountAnimation_F0? & 0x0F) << 4) | ((AmountAnimation_0F?) & 0x0F)
                 DB Flags?
 HEX_SPRITE      = HEX_SPRITE + 1
                 endm
-ADD_HEX_SPRITE  macro Offset?, AmountAnimation_0F?, AmountAnimation_F0?, Flags? ; добавление спрайта
+ADD_BIND_HEX_SPRITE  macro Offset?, AmountAnimation_0F?, AmountAnimation_F0?, Flags? ; добавление спрайта
                 DW (Offset?) - HEX_SPRITE * 4
                 DB ((AmountAnimation_F0? & 0x07) << 4) | ((AmountAnimation_0F?) & 0x07)
                 DB Flags?
@@ -69,5 +69,48 @@ INCBIN_HEX_SIZE_SPRITE macro Include?                                           
                 Include?
 .Size           EQU $-.Begin
                 endm
+CREATE_HEX_SPRITE macro SpriteName?, SpriteOffset?, Include_0?, Include_1?, Include_2?, Include_3?, Include_4?, Include_5?                                           ; формирует 2 байта длины блока, после идут данные
+.Begin_0        EQU $
+                DW Kernel.Hex.Column.New.x2
+                DW Kernel.Hex.Column.New.x2
+                Include_0?
+.Size_0         EQU $-.Begin_0
+.Begin_1        EQU $
+                DW Kernel.Hex.Column.New.x6
+                DW Kernel.Hex.Column.New.x6
+                Include_1?
+.Size_1         EQU $-.Begin_1
+.Begin_2        EQU $
+                DW Kernel.Hex.Column.New.x8
+                DW Kernel.Hex.Column.New.x8
+                Include_2?
+.Size_2         EQU $-.Begin_2
+.Begin_3        EQU $
+                DW Kernel.Hex.Column.New.x8
+                DW Kernel.Hex.Column.New.x8
+                Include_3?
+.Size_3         EQU $-.Begin_3
+.Begin_4        EQU $
+                DW Kernel.Hex.Column.New.x6
+                DW Kernel.Hex.Column.New.x6
+                Include_4?
+.Size_4         EQU $-.Begin_4
+.Begin_5        EQU $
+                DW Kernel.Hex.Column.New.x2
+                DW Kernel.Hex.Column.New.x2
+                Include_5?
+.Size_5         EQU $-.Begin_5
+                SpriteName?, .Begin_0, .Size_0 + .Size_1 + .Size_2 + .Size_3 + .Size_4 + .Size_5
 
+.BeginOffsets   EQU $
+                DW #0000
+                DW .Size_0
+                DW .Size_0 + .Size_1
+                DW .Size_0 + .Size_1 + .Size_2
+                DW .Size_0 + .Size_1 + .Size_2 + .Size_3
+                DW .Size_0 + .Size_1 + .Size_2 + .Size_3 + .Size_4
+.SizeOffsets    EQU $-.BeginOffsets
+                SpriteOffset?, .BeginOffsets, .SizeOffsets
+                endm
+                
                 endif ; ~_MACRO_GRAPHIC_HEX_

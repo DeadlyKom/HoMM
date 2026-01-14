@@ -1,0 +1,511 @@
+[
+    {
+        "SprName": "Sprite 1",
+        "SprWidth": 48,
+        "SprHeight": 64,
+        "PoxImgX": 0,
+        "PoxImgY": 64,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Hex1.png",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/InkData_Sprite 1.bin",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/AttributeData_Sprite 1.bin",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/MaskData_Sprite 1.bin",
+        "Regions": [
+            {
+                "RegionRect": [
+                    0,
+                    24,
+                    16,
+                    32
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    16,
+                    16,
+                    32,
+                    24
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    32,
+                    24,
+                    48,
+                    32
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Sprite 2",
+        "SprWidth": 48,
+        "SprHeight": 64,
+        "PoxImgX": 144,
+        "PoxImgY": 128,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Hex1.png",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/InkData_Sprite 2.bin",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/AttributeData_Sprite 2.bin",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/MaskData_Sprite 2.bin",
+        "Regions": [
+            {
+                "RegionRect": [
+                    0,
+                    24,
+                    16,
+                    32
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    16,
+                    16,
+                    32,
+                    24
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    32,
+                    24,
+                    48,
+                    32
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Sprite 3",
+        "SprWidth": 48,
+        "SprHeight": 64,
+        "PoxImgX": 0,
+        "PoxImgY": 320,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Hex1.png",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/InkData_Sprite 3.bin",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/AttributeData_Sprite 3.bin",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/MaskData_Sprite 3.bin",
+        "Regions": [
+            {
+                "RegionRect": [
+                    0,
+                    16,
+                    16,
+                    32
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    16,
+                    16,
+                    32,
+                    24
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    32,
+                    16,
+                    48,
+                    32
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Sprite 4",
+        "SprWidth": 48,
+        "SprHeight": 64,
+        "PoxImgX": 240,
+        "PoxImgY": 448,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Hex1.png",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/InkData_Sprite 4.bin",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/AttributeData_Sprite 4.bin",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/MaskData_Sprite 4.bin",
+        "Regions": [
+            {
+                "RegionRect": [
+                    0,
+                    24,
+                    16,
+                    32
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    8,
+                    16,
+                    16,
+                    24
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    16,
+                    8,
+                    32,
+                    32
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    32,
+                    16,
+                    48,
+                    32
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Sprite 6",
+        "SprWidth": 48,
+        "SprHeight": 64,
+        "PoxImgX": 192,
+        "PoxImgY": 384,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Hex1.png",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/InkData_Sprite 6.bin",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/AttributeData_Sprite 6.bin",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/MaskData_Sprite 6.bin",
+        "Regions": [
+            {
+                "RegionRect": [
+                    0,
+                    24,
+                    16,
+                    32
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    16,
+                    16,
+                    32,
+                    24
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    32,
+                    24,
+                    48,
+                    32
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Sprite 7",
+        "SprWidth": 48,
+        "SprHeight": 64,
+        "PoxImgX": 0,
+        "PoxImgY": 256,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Hex1.png",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/InkData_Sprite 7.bin",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/AttributeData_Sprite 7.bin",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/MaskData_Sprite 7.bin",
+        "Regions": [
+            {
+                "RegionRect": [
+                    0,
+                    24,
+                    16,
+                    32
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    16,
+                    16,
+                    32,
+                    24
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    32,
+                    24,
+                    48,
+                    32
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Sprite 8",
+        "SprWidth": 48,
+        "SprHeight": 64,
+        "PoxImgX": 48,
+        "PoxImgY": 128,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Hex1.png",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/InkData_Sprite 8.bin",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/AttributeData_Sprite 8.bin",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/MaskData_Sprite 8.bin",
+        "Regions": [
+            {
+                "RegionRect": [
+                    0,
+                    24,
+                    16,
+                    32
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    16,
+                    16,
+                    32,
+                    24
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    32,
+                    24,
+                    48,
+                    32
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Sprite 9",
+        "SprWidth": 48,
+        "SprHeight": 64,
+        "PoxImgX": 48,
+        "PoxImgY": 192,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Hex1.png",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/InkData_Sprite 9.bin",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/AttributeData_Sprite 9.bin",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/MaskData_Sprite 9.bin",
+        "Regions": [
+            {
+                "RegionRect": [
+                    0,
+                    24,
+                    16,
+                    32
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    16,
+                    16,
+                    32,
+                    24
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    32,
+                    24,
+                    48,
+                    32
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Sprite 10",
+        "SprWidth": 48,
+        "SprHeight": 64,
+        "PoxImgX": 0,
+        "PoxImgY": 384,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Hex1.png",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/InkData_Sprite 10.bin",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/AttributeData_Sprite 10.bin",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Debug/MaskData_Sprite 10.bin",
+        "Regions": [
+            {
+                "RegionRect": [
+                    0,
+                    24,
+                    16,
+                    32
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    16,
+                    16,
+                    32,
+                    24
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    32,
+                    24,
+                    48,
+                    32
+                ],
+                "Metadata": [
+                    {
+                        "Type": "OverrideAttr",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
+    }
+]

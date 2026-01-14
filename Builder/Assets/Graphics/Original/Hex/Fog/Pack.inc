@@ -2,9 +2,11 @@
                 ifndef _GRAPHICS_HEXAGON_FOG_PACK_
                 define _GRAPHICS_HEXAGON_FOG_PACK_
 
+                include "CreateSprites.inc"
+
                 ; блоковая таблица смещений, до первого спрайта
                 ; после загрузки ассета в память его смещения преобразуются в абсолютные адреса
-BlockTable      CREATE_HEX_SPRITE Sprites._0, 1, 8, 0                           ; 0-ой гексагон
+BlockTable      BIND_HEX_SPRITE Sprites._0, 1, 8, 0                             ; 0-ой гексагон
                 EMPTY_HEX_SPRITE
                 EMPTY_HEX_SPRITE
                 EMPTY_HEX_SPRITE
