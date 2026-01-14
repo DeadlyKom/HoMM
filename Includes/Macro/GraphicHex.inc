@@ -71,13 +71,13 @@ INCBIN_HEX_SIZE_SPRITE macro Include?                                           
                 endm
 CREATE_HEX_SPRITE macro SpriteName?, SpriteOffset?, Include_0?, Include_1?, Include_2?, Include_3?, Include_4?, Include_5?                                           ; формирует 2 байта длины блока, после идут данные
 .Begin_0        EQU $
-                DW Kernel.Hex.Column.New.x2
-                DW Kernel.Hex.Column.New.x2
+                DW Kernel.Hex.Column.New.x2_
+                DW Kernel.Hex.Column.New.x2_
                 Include_0?
 .Size_0         EQU $-.Begin_0
 .Begin_1        EQU $
-                DW Kernel.Hex.Column.New.x6
-                DW Kernel.Hex.Column.New.x6
+                DW Kernel.Hex.Column.New.x6_
+                DW Kernel.Hex.Column.New.x6_
                 Include_1?
 .Size_1         EQU $-.Begin_1
 .Begin_2        EQU $
@@ -91,13 +91,13 @@ CREATE_HEX_SPRITE macro SpriteName?, SpriteOffset?, Include_0?, Include_1?, Incl
                 Include_3?
 .Size_3         EQU $-.Begin_3
 .Begin_4        EQU $
-                DW Kernel.Hex.Column.New.x6
-                DW Kernel.Hex.Column.New.x6
+                DW Kernel.Hex.Column.New.x6_
+                DW Kernel.Hex.Column.New.x6_
                 Include_4?
 .Size_4         EQU $-.Begin_4
 .Begin_5        EQU $
-                DW Kernel.Hex.Column.New.x2
-                DW Kernel.Hex.Column.New.x2
+                DW Kernel.Hex.Column.New.x2_
+                DW Kernel.Hex.Column.New.x2_
                 Include_5?
 .Size_5         EQU $-.Begin_5
                 SpriteName?, .Begin_0, .Size_0 + .Size_1 + .Size_2 + .Size_3 + .Size_4 + .Size_5

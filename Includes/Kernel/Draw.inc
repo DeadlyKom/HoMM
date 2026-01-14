@@ -4,6 +4,7 @@
 Draw:
 ; .Background     EQU Kernel.World.Background                                     ; отображение фона миры
 .Hex.World      EQU Kernel.Hex.World
+.HexByDL        EQU Kernel.Hex.HexByDL
 .Sprite         EQU Kernel.Sprite.DrawClipped                                   ; отображение спрайта
 .Sprite.HL      EQU Kernel.Sprite.DrawClipped.FSprite                           ; отображение спрайта (HL - адрес структуры FSprite)
 .Composite      EQU Kernel.Sprite.DrawComposite                                 ; отображение композитного спрайта

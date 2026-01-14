@@ -4,6 +4,9 @@
 
                 module Grasslands                                               ; луга
                 ORG #0000
+                include "CreateSprites.inc"
+
+                ORG #0000
 Begin           EQU $
                 include "Pack.inc"
 Size            EQU $-Begin

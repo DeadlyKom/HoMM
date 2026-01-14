@@ -2,8 +2,6 @@
                 ifndef _GRAPHICS_HEXAGON_GRASSLANDS_PACK_
                 define _GRAPHICS_HEXAGON_GRASSLANDS_PACK_
 
-                include "CreateSprites.inc"
-
                 ; блоковая таблица смещений, до первого спрайта
                 ; после загрузки ассета в память его смещения преобразуются в абсолютные адреса
 BlockTable      BIND_HEX_SPRITE Sprites._0, 0, 0, 0                             ; 0-ой гексагон

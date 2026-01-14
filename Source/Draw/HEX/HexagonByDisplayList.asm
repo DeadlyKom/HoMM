@@ -12,9 +12,8 @@ HexByDL:        CALL HexDLGeneration
                 ; инициализация
                 LD (HexByDL.Exit.ContainerSP), SP
                 LD SP, CallSequence + 30
-                LD IX, DisplayList - 4
+                LD IX, (GameState.DisplayList)
                 LD IY, HIGH Adr.RenderBuffer + 80                               ; для сохранения бит высоты столбца
-                LD H, HIGH Adr.RenderBuffer
                 LD BC, HexByDL.Exit
                 PUSH BC
 
@@ -23,6 +22,7 @@ HexByDL:        CALL HexDLGeneration
                 LD A, (GameState.DisplayListLen)
                 NEG
                 ADD A, #08
+                LD (.RowsJump), A
 .RowsJump       EQU $+1
                 JR $
                 PUSH BC
@@ -36,7 +36,7 @@ HexByDL:        CALL HexDLGeneration
 .RowsLoop       ; цикл отображения строк гексагонов
 
                 ; переход к следующему элементу списка отображения
-                LD BC, #0004
+                LD BC, #FFFC
                 ADD IX, BC
 
                 ; -----------------------------------------
@@ -47,23 +47,23 @@ HexByDL:        CALL HexDLGeneration
                 ; +3 - количество пропускаемых знакомест (спрайт находится ниже экрана)
                 ; -----------------------------------------
 
-                LD B, SCR_WORLD_SIZE_X - HEXTILE_SIZE_X                         ; ширина строки (константна 22-6)
-
                 ; -----------------------------------------
                 ; рассчёт адреса экранной области
                 LD H, HIGH Adr.ScrAdrTable
                 LD L, (IX + 2)                                                  ; номер строки по вертикали в пикселях
                 LD E, (HL)
+                INC E                                                           ; начало с 1 знакоместа
                 INC H
                 LD D, (HL)
                 RES 7, D                                                        ; сброс бита, переход на основной экран
 
                 ; -----------------------------------------
                 ; чтение индекса/смещения в рендер буфере
-                ADD A, (IX + 1)                                                 ; индекс/смещение в рендер буфере обрабатываемого гексагона
-                LD L, A
+                LD H, HIGH Adr.RenderBuffer
+                LD L, (IX + 1)                                                  ; индекс/смещение в рендер буфере обрабатываемого гексагона
 
                 ; -----------------------------------------
+                LD B, SCR_WORLD_SIZE_X                         ; ширина строки (константна 22-6)
                 LD C, (IX + 0)                                                  ; номер первой рисуемой колонки первого гексагона (0-6)
 .HexagonLoop    ; цикл отображения гексагонов
 
@@ -196,7 +196,12 @@ HexByDL:        CALL HexDLGeneration
                 ;
                 ; ⚠️ ВАЖНО ⚠️
                 ;   влияет как на количество рисуемых колонок, так и с какой колонки будет рисоваться гексагон
-                LD A, C
+                LD A, C                                                         ; номер колонки с какой рисуется гексагон
+                CP HEXTILE_SIZE_X
+                JR NZ, $+4
+                XOR A
+                LD C, A
+
                 OR A
                 JP P, $+7
                 LD C, #00                                                       ; принудительное обнуление номера колонки с которой будет рисоваться гексагон
@@ -222,9 +227,11 @@ HexByDL:        CALL HexDLGeneration
                 INC HL
                 LD B, (HL)
                 INC HL
-                LD (Column.OffsetTable), HL
+                LD (Column.New.OffsetTable), HL
 
 .DrawHexagon    ; отображение гексагона
+                LD HL, .NextHexagon
+                PUSH HL
 
                 ; формирование цикла по горизонтали (колонки гексагона)
                 LD HL, EntryPointDraw
@@ -273,18 +280,34 @@ HexByDL:        CALL HexDLGeneration
 
                 EXX
                 INC L                                                           ; переход к следующему гексогону
-                LD A, B                                                         ; ширина строки
+
+
+                LD A, B
                 SUB C                                                           ; счётчика отрисованных колонок гексангона
                 RET Z                                                           ; выход, если был отрисована последний гексагон в строке
-
-                LD B, A
+                
                 LD C, #00
-                JP P, .HexagonLoop                                              ; переход, если можно отобразить гексагон целиком
+                LD B, A
+                CP HEXTILE_SIZE_X
+                JP NC, .HexagonLoop                                             ; переход, если можно отобразить гексагон целиком
 
-                LD C, A                                                         ; сохраняем отрицательным, т.к. завершающий гексагон
-                NEG
-                LD B, A                                                         ; преобразуем в положительное число, количество осставшихся колонок
+                ADD A, -HEXTILE_SIZE_X
+                LD C, A
                 JP .HexagonLoop
+
+
+                ; LD A, B                                                         ; ширина строки
+                ; SUB C                                                           ; счётчика отрисованных колонок гексангона
+                ; RET Z                                                           ; выход, если был отрисована последний гексагон в строке
+
+                ; LD B, A
+                ; LD C, #00
+                ; JP P, .HexagonLoop                                              ; переход, если можно отобразить гексагон целиком
+
+                ; LD C, A                                                         ; сохраняем отрицательным, т.к. завершающий гексагон
+                ; ADD A, HEXTILE_SIZE_X
+                ; LD B, A                                                         ; количество оставшихся колонок
+                ; JP .HexagonLoop
 HexByDL.Exit:   ;
 .ContainerSP    EQU $+1
                 LD SP, #0000

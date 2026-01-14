@@ -8,9 +8,7 @@
 ; Note:
 ;   отображение производится снизу вверх
 ; -----------------------------------------
-World:          CALL HexByDL
-
-                ; инициализация
+World:          ; инициализация
                 LD IX, Adr.RenderBuffer + 64
                 LD IYH, HIGH Adr.RenderBuffer
                 LD (Exit.ContainerSP), SP
