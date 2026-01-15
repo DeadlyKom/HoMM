@@ -1,12 +1,13 @@
 
-                ifndef _TILEMAP_INCLUDE_
-                define _TILEMAP_INCLUDE_
+                ifndef _UPDATE_BUFFERS_INCLUDE_
+                define _UPDATE_BUFFERS_INCLUDE_
 
                 module Update
 
                 include "RenderBuffer.asm"
+                include "GetRenderBufferByIndex.asm"
                 include "Source/Memory/MemcpyTilemapBuffer.asm"
 
                 endmodule
 
-                endif ; ~_TILEMAP_INCLUDE_
+                endif ; ~_UPDATE_BUFFERS_INCLUDE_

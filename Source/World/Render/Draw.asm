@@ -34,9 +34,11 @@ Draw:           ; -----------------------------------------
                 LD (GameSession.WorldInfo + FWorldInfo.Tilemap), HL
 
                 ; принудительное обновление Tilemap- и Render-буферов
+                SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
                 CALL World.Base.Tilemap.Update.RenderBuffer
                 CALL World.Base.Tilemap.Update.TileBuffer
                 CALL Draw.HexDLGeneration
+                CALL Reset
 
 .Update         ; -----------------------------------------
                 ; обновление
@@ -128,14 +130,15 @@ Draw:           ; -----------------------------------------
                 CALL NZ, World.Base.Tilemap.UpdateMovement
                 ; -----------------------------------------
                 ; обновление Tilemap- и Render-буферов
+                SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
                 CHECK_VIEW_FLAG UPDATE_RENDER_BUF_BIT
                 CALL NZ, World.Base.Tilemap.Update.RenderBuffer
                 CHECK_VIEW_FLAG UPDATE_TILEMAP_BUF_BIT
                 CALL NZ, World.Base.Tilemap.Update.TileBuffer
                 ; -----------------------------------------
-
-                ; CALL Fog.Make
-                ; CALL Fog.Tick
+                CALL Fog.Make
+                CALL Fog.Tick
+                ; -----------------------------------------
 
                 RESTORE_BC                                                      ; защитная от порчи данных с разрешённым прерыванием
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
@@ -208,7 +211,7 @@ Fog.Make:       LD HL, MakeCounter
                 RET NZ
 
                 LD A, R
-                AND %00000011
+                AND %00000111
                 ADD A, #04
                 LD (HL), A
                 
@@ -218,7 +221,7 @@ Fog.Make:       LD HL, MakeCounter
                 EX AF, AF'
 
                 EXX
-                ; A = rand() % 48
+                ; A = rand() % 40
                 CALL Math.Rand8
                 ; -----------------------------------------
                 ; деление D на E
@@ -232,7 +235,7 @@ Fog.Make:       LD HL, MakeCounter
                 ;   D, AF
                 ; -----------------------------------------
                 LD D, A
-                LD E, 48
+                LD E, 40-5
                 CALL Math.Div8x8                                                ; mod
                 EXX
 
@@ -269,26 +272,7 @@ Fog.Make:       LD HL, MakeCounter
                 LD A, %10001111
                 LD (DE), A
 
-                LD A, E
-                ADD A, A ; x2
-                LD C, A
-                ADD A, A ; x4
-                ADD A, C ; x6
-                ADD A, 80
-                LD E, A
-                ; LD A, #01
-                ; LD (DE), A
-                ; INC E
-                ; LD (DE), A
-                ; INC E
-                ; LD (DE), A
-                ; INC E
-                ; LD (DE), A
-                ; INC E
-                ; LD (DE), A
-                ; INC E
-                ; LD (DE), A
-
+                CALL Update
                 EX AF, AF'
                 DEC A
                 LD (BufferNum), A
@@ -297,7 +281,7 @@ Fog.Make:       LD HL, MakeCounter
 Fog.Tick:       LD HL, TickCounter
                 DEC (HL)
                 RET NZ
-                LD (HL), 2
+                LD (HL), #08
 
                 LD A, (BufferNum)
                 LD B, A
@@ -315,49 +299,77 @@ Fog.Tick:       LD HL, TickCounter
                 JR Z, .Loop
 
                 LD E, A
-                EX DE, HL
-                DEC (HL)
-                SET 7, (HL)
-                LD A, (HL)
 
-                CP #7F
+                LD A, (DE)
+                AND %00000111
                 JR Z, .L1
-                
-                CP %10000111
-                JR NZ, .NextLoop
+                DEC A
+                JR NZ, .SetFog
 
-.L1             LD (HL), %10000000
-                LD A, #FF
-                LD (DE), A
-
+.L1             LD (HL), #FF
                 LD A, (BufferNum)
                 INC A
                 LD (BufferNum), A
 
-.NextLoop       EX DE, HL
+                LD A, %10000000
+                JR .Set
 
-                LD A, E
-                ADD A, A ; x2
-                LD C, A
-                ADD A, A ; x4
-                ADD A, C ; x6
-                ADD A, 80
-                LD E, A
-                ; LD A, #01
-                ; LD (DE), A
-                ; INC E
-                ; LD (DE), A
-                ; INC E
-                ; LD (DE), A
-                ; INC E
-                ; LD (DE), A
-                ; INC E
-                ; LD (DE), A
-                ; INC E
-                ; LD (DE), A
+.SetFog         OR %10001000
+.Set            LD (DE), A
 
+                CALL Update
                 DJNZ .Loop
                 RET
+
+Copy:           LD A, (BufferNum)
+                LD B, A
+                LD A, 10
+                SUB B
+                RET Z
+
+                LD B, A
+                LD HL, Buffer-1
+                LD D, HIGH Adr.RenderBuffer
+
+.Loop           INC HL
+                LD A, (HL)
+                CP #FF
+                JR Z, .Loop
+
+                LD E, A
+                LD A, (DE)
+                BIT 6, A
+                JR NZ, .Next
+
+
+
+.Next           DJNZ .Loop
+                RET
+
+Reset:          LD HL, Buffer
+                LD A, 10
+                LD (BufferNum), A
+                LD B, A
+.Loop           LD (HL), #FF
+                INC HL
+                DJNZ .Loop
+                RET
+
+Update:         PUSH DE
+                LD A, E
+                EXX
+                CALL UtilsBuffer.GetRender                                      ; обновление адреса Render-буфера по индексу гексагона
+                DEBUG_BREAK_POINT_C
+                POP DE
+                LD E, A
+                LD A, #01
+                LD B, C
+.Loop           LD (DE), A
+                INC E
+                DJNZ .Loop
+                EXX
+                RET
+
 Buffer          DS 10, #FF
 BufferNum       DB 10
 MakeCounter     DB #03

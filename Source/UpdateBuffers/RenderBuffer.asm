@@ -1,6 +1,6 @@
 
-                ifndef _TILEMAP_UPDATE_RENDER_BUFFER_
-                define _TILEMAP_UPDATE_RENDER_BUFFER_
+                ifndef _UPDATE_BUFFERS_RENDER_
+                define _UPDATE_BUFFERS_RENDER_
 RENDER_BUFFER_COPY macro Offset?
                 LD A, (HL)                                                      ; чтение метаданных карты (xFxxFFFx)
                 AND C       ; 0F000000
@@ -82,4 +82,4 @@ RenderBuffer:
                 LD DE, #0101
                 JP SafeFill.b176
 
-                endif ; ~_TILEMAP_UPDATE_RENDER_BUFFER_
+                endif ; ~_UPDATE_BUFFERS_RENDER_

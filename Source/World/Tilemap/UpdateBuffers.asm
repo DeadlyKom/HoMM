@@ -31,10 +31,9 @@
 ; -----------------------------------------
 Update:
 .TileBuffer     RES_VIEW_FLAG UPDATE_TILEMAP_BUF_BIT                            ; сброс флага обновления Tiled буфера
-                SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
+                CALL World.Base.Render.Reset
                 JP UpdateBuffer.Tilemap
 .RenderBuffer   RES_VIEW_FLAG UPDATE_RENDER_BUF_BIT                             ; сброс флага обновления Render буфера
-                SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
                 JP UpdateBuffer.Render
 
                 endif ; ~_WORLD_UPDATE_BUFFERS_
