@@ -2,9 +2,8 @@
                 ifndef _KERNEL_DRAW_
                 define _KERNEL_DRAW_
 Draw:
-; .Background     EQU Kernel.World.Background                                     ; отображение фона миры
-.Hex.World      EQU Kernel.Hex.World
 .HexByDL        EQU Kernel.Hex.HexByDL
+.HexDLGeneration EQU Kernel.Hex.HexDLGeneration                                 ; генерация списка отображения гексагонов
 .Sprite         EQU Kernel.Sprite.DrawClipped                                   ; отображение спрайта
 .Sprite.HL      EQU Kernel.Sprite.DrawClipped.FSprite                           ; отображение спрайта (HL - адрес структуры FSprite)
 .Composite      EQU Kernel.Sprite.DrawComposite                                 ; отображение композитного спрайта

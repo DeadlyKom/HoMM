@@ -18,6 +18,9 @@ VIEW_FLAGS      macro
 VIEW_FLAGS_A    macro
                 LD A, (GameState.View)
                 endm
+VIEW_FLAGS_A_SAVE  macro
+                LD (GameState.View), A
+                endm
 ; -----------------------------------------
 ; проверка View флага
 ; In:
@@ -57,6 +60,11 @@ CHECK_VIEW_FLAG_A macro FlagBit?
 SET_VIEW_FLAG   macro FlagBit?
                 VIEW_FLAGS
                 SET_FLAG (FlagBit?)
+                endm
+SET_VIEW_FLAG_A macro FlagBit?
+                VIEW_FLAGS_A
+                SET_FLAG_A (FlagBit?)
+                VIEW_FLAGS_A_SAVE
                 endm
 ; -----------------------------------------
 ; сброс View флага

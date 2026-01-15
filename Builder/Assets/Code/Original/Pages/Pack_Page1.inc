@@ -11,7 +11,7 @@
                 display "'Page 1':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.Code.Page1, " byte(s) / free ", /D, Size.Code.Page1 - Size, "]\t[", /D, Page.Page1, "]\t ------------------------"
 Begin:          EQU $
 
-                include "Source/Tilemap/Include.inc"
+                include "Source/UpdateBuffers/Include.inc"
 Size:           EQU $-Begin                                                     ; размер кода
 
                 ifdef _REBUILD

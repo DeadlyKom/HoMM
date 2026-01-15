@@ -16,6 +16,7 @@ SafeFill:                                                                       
 .b512           EQU Bootloader.KernelMinimal.Memset.SafeFill_512
 .b256           EQU Bootloader.KernelMinimal.Memset.SafeFill_256
 .b192           EQU Bootloader.KernelMinimal.Memset.SafeFill_192
+.b176           EQU Bootloader.KernelMinimal.Memset.SafeFill_176
 .b128           EQU Bootloader.KernelMinimal.Memset.SafeFill_128
 .b64            EQU Bootloader.KernelMinimal.Memset.SafeFill_64
 .b32            EQU Bootloader.KernelMinimal.Memset.SafeFill_32

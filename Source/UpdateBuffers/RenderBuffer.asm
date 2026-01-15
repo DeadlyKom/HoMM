@@ -1,7 +1,6 @@
 
-                ifndef _TILEMAP_UPDATE_BUFFERS_
-                define _TILEMAP_UPDATE_BUFFERS_
-
+                ifndef _TILEMAP_UPDATE_RENDER_BUFFER_
+                define _TILEMAP_UPDATE_RENDER_BUFFER_
 RENDER_BUFFER_COPY macro Offset?
                 LD A, (HL)                                                      ; чтение метаданных карты (xFxxFFFx)
                 AND C       ; 0F000000
@@ -9,7 +8,7 @@ RENDER_BUFFER_COPY macro Offset?
                 LD (Adr.RenderBuffer + (Offset?)), A
                 endm
 ; -----------------------------------------
-; обновление Tilemap- и Render-буферов
+; обновление Render-буфера
 ; In:
 ; Out:
 ; Corrupt:
@@ -38,8 +37,7 @@ RENDER_BUFFER_COPY macro Offset?
 ;
 ;   код расположен рядом с картой (страница 1)
 ; -----------------------------------------
-UpdateBuffers:  RES_VIEW_FLAG UPDATE_TILEMAP_RENDER_BUF_BIT                     ; сброс флага обновления Tilemap и Render буфера
-
+RenderBuffer:
 .LENGTH_LINE    EQU TILEMAP_WIDTH_DATA                                          ; длина линии 
 .LINE_REPEAT    EQU TILEMAP_HEIGHT_DATA                                         ; количество повторений строки
 
@@ -56,11 +54,11 @@ UpdateBuffers:  RES_VIEW_FLAG UPDATE_TILEMAP_RENDER_BUF_BIT                     
                 dup .LINE_REPEAT - 1
                 ; -----------------------------------------
                 dup .LENGTH_LINE - 1
-                RENDER_BUFFER_COPY UpdateBuffers.Offset
+                RENDER_BUFFER_COPY RenderBuffer.Offset
 .Offset         = .Offset + 1
                 INC HL
                 edup
-                RENDER_BUFFER_COPY UpdateBuffers.Offset
+                RENDER_BUFFER_COPY RenderBuffer.Offset
 .Offset         = .Offset + 1
                 ; -----------------------------------------
                 ADD HL, DE
@@ -68,17 +66,20 @@ UpdateBuffers:  RES_VIEW_FLAG UPDATE_TILEMAP_RENDER_BUF_BIT                     
 
                 ; -----------------------------------------
                 dup .LENGTH_LINE - 1
-                RENDER_BUFFER_COPY UpdateBuffers.Offset
+                RENDER_BUFFER_COPY RenderBuffer.Offset
 .Offset         = .Offset + 1
                 INC HL
                 edup
-                RENDER_BUFFER_COPY UpdateBuffers.Offset
+                RENDER_BUFFER_COPY RenderBuffer.Offset
                 ; -----------------------------------------
 
                 ; блыор 1737 тактов для 6 копирований в ширину
                 ; сократил с 6 до 5 ширину копирования,
                 ; стало 1465 тактов, что позволит корректно работать с областью 5*8 = 40 байт!
 
-                ; ToDo: добавить инициализацию 22 * 8 стобов гексагонаЫ
+                ; инициализация 22 * 8 стобов гексагона
+                LD HL, Adr.RenderBuffer + 80 + 176
+                LD DE, #0101
+                JP SafeFill.b176
 
-                endif ; ~_TILEMAP_UPDATE_BUFFERS_
+                endif ; ~_TILEMAP_UPDATE_RENDER_BUFFER_

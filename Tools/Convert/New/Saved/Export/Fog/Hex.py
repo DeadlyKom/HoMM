@@ -79,10 +79,10 @@ def draw(sprite: Dict[str, Any],
         if mask_height < 8:
             is_early_exit = True
         
-        # метаданные перегрузки для текущего знакоместа
-        metadata_values_override_attribute = get_metadata(sprite, bx * 8, by * 8, "OverrideAttr")
-        if metadata_values_override_attribute:
-            is_override_attribute = metadata_values_override_attribute[0].get("Value")
+    # метаданные перегрузки для текущего знакоместа
+    metadata_values_override_attribute = get_metadata(sprite, bx * 8, by * 8, "OverrideAttr")
+    if metadata_values_override_attribute:
+        is_override_attribute = metadata_values_override_attribute[0].get("Value")
              
     # основной цикл по знакоместам
     for dy in range(7 - skip_line, 7 - height, -1):

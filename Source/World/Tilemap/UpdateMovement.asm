@@ -41,7 +41,13 @@ UpdateMovement: ; установка задержки опроса скрола
                 LD A, (GameState.Input.Value)
                 AND ~MOVEMENT_MASK
                 LD (GameState.Input.Value), A
-                RET
+
+                ; инициализация 22 * 8 стобов гексагона
+                LD HL, Adr.RenderBuffer + 80 + 176
+                LD DE, #0101
+                CALL SafeFill.b176
+
+                JP Draw.HexDLGeneration
 ApplyToX_Axis_  ; 0 - #2b5
                 ; -----------------------------------------
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.X)
@@ -52,6 +58,7 @@ ApplyToX_Axis_  ; 0 - #2b5
 
 .Set            LD (GameSession.WorldInfo + FWorldInfo.MapOffset.X), A
                 LD (World.Shift_X), A                                           ; смещение внутри гексагона
+                SET_VIEW_FLAG_A UPDATE_RENDER_BUF_BIT                         ; установка флага обновления Render буфера
                 RET
 
 .IsNegative     LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X) ; tile
@@ -86,6 +93,7 @@ ApplyToY_Axis_  ; 0 - #2a1
 
 .Set            LD (GameSession.WorldInfo + FWorldInfo.MapOffset.Y), A
                 LD (World.Shift_Y), A                                           ; смещение внутри гексагона
+                SET_VIEW_FLAG_A UPDATE_RENDER_BUF_BIT                           ; установка флага обновления Render буфера
                 RET
 
 .IsNegative     LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y) ; tile
@@ -116,7 +124,7 @@ UpdateTilemap   ; -----------------------------------------
                 ADD HL, DE
                 LD (GameSession.WorldInfo + FWorldInfo.Tilemap), HL
 
-                SET_VIEW_FLAG UPDATE_TILEMAP_RENDER_BUF_BIT                     ; установка флага обновления Tilemap и Render буфера
+                SET_VIEW_FLAG UPDATE_TILEMAP_BUF_BIT                            ; установка флага обновления Tilemap буфера
                 POP HL
                 RET
 DirectionTable  ; -----------------------------------------

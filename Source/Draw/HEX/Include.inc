@@ -3,11 +3,8 @@
                 define _DRAW_HEX_WORLD_INCLUDE_
 
                 module Hex
-                
-                include "World.asm"                                             ; (0)
-                include "Column.asm"
 
-                include "ColumnNew.asm"
+                include "Column.asm"
                 include "HexagonByDisplayList.asm"
                 include "HexagonDisplayListGeneration.asm"
 ; TemplateSP      DS 2 * 4, 0
@@ -16,12 +13,17 @@ DisplayList     ; -----------------------------------------
                 ; представление дисплейного списка
                 ; +0 - первая рисуемая колонка первого гексагона (0-6)
                 ; +1 - индекс/смещение в рендер буфере обрабатываемого гексагона
-                ; +2 - номер строки по вертикали в пикселях
-                ; +3 - количество пропускаемых знакомест (спрайт находится ниже экрана)
+                ; +2 - индекс/смещение в рендер буфере обрабатываемого гексагона +80
+                ; +3 - номер строки по вертикали в пикселях
+                ; +4 - количество пропускаемых знакомест (спрайт находится ниже экрана)
                 ; -----------------------------------------
-                DS 8 * 4, 0
+.ElementSize    EQU 5
+                DS 8 * .ElementSize, 0
 .Size           EQU $-DisplayList
-RowCounter      DB #00                                                          ; счётчик строк по вертикали в знакоместах (0-7)
+
+                if (DisplayList >> 8) - ($ >> 8)
+                error "whole table must be within single 256 byte block"
+                endif
 
                 endmodule
 

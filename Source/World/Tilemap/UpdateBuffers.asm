@@ -1,6 +1,6 @@
 
-                ifndef _WORLD_TILEMAP_UPDATE_BUFFERS_
-                define _WORLD_TILEMAP_UPDATE_BUFFERS_
+                ifndef _WORLD_UPDATE_BUFFERS_
+                define _WORLD_UPDATE_BUFFERS_
 ; -----------------------------------------
 ; обновление Tilemap- и Render-буферов
 ; In:
@@ -29,7 +29,12 @@
 ;       * Render-буфер для каждого столбца гексагона выставляется флаг CU
 ;           необходимости обновить столбец гексагона (0 - обновление столбца не требуется)
 ; -----------------------------------------
-UpdateBuffers:  SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
-                JP Tilemap.UpdateBuffers
+Update:
+.TileBuffer     RES_VIEW_FLAG UPDATE_TILEMAP_BUF_BIT                            ; сброс флага обновления Tiled буфера
+                SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
+                JP UpdateBuffer.Tilemap
+.RenderBuffer   RES_VIEW_FLAG UPDATE_RENDER_BUF_BIT                             ; сброс флага обновления Render буфера
+                SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
+                JP UpdateBuffer.Render
 
-                endif ; ~_WORLD_TILEMAP_UPDATE_BUFFERS_
+                endif ; ~_WORLD_UPDATE_BUFFERS_

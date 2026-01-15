@@ -34,7 +34,9 @@ Draw:           ; -----------------------------------------
                 LD (GameSession.WorldInfo + FWorldInfo.Tilemap), HL
 
                 ; принудительное обновление Tilemap- и Render-буферов
-                CALL World.Base.Tilemap.UpdateBuffers
+                CALL World.Base.Tilemap.Update.RenderBuffer
+                CALL World.Base.Tilemap.Update.TileBuffer
+                CALL Draw.HexDLGeneration
 
 .Update         ; -----------------------------------------
                 ; обновление
@@ -126,17 +128,20 @@ Draw:           ; -----------------------------------------
                 CALL NZ, World.Base.Tilemap.UpdateMovement
                 ; -----------------------------------------
                 ; обновление Tilemap- и Render-буферов
-                CHECK_VIEW_FLAG UPDATE_TILEMAP_RENDER_BUF_BIT
-                CALL NZ, World.Base.Tilemap.UpdateBuffers
+                CHECK_VIEW_FLAG UPDATE_RENDER_BUF_BIT
+                CALL NZ, World.Base.Tilemap.Update.RenderBuffer
+                CHECK_VIEW_FLAG UPDATE_TILEMAP_BUF_BIT
+                CALL NZ, World.Base.Tilemap.Update.TileBuffer
                 ; -----------------------------------------
 
-                CALL Fog.Make
-                CALL Fog.Tick
+                ; CALL Fog.Make
+                ; CALL Fog.Tick
 
                 RESTORE_BC                                                      ; защитная от порчи данных с разрешённым прерыванием
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
 
-                CALL Draw.Hex.World
+                ; CALL Draw.Hex.World
+                CALL Draw.HexByDL
 
                 ; CALL World.Base.Tilemap.VisibleObjects                          ; определение видимых объектов - ОТКЛ
                 ; CALL NZ, Object.Draw                                            ; отображение объектов в массиве SortBuffer - ОТКЛ
@@ -264,6 +269,26 @@ Fog.Make:       LD HL, MakeCounter
                 LD A, %10001111
                 LD (DE), A
 
+                LD A, E
+                ADD A, A ; x2
+                LD C, A
+                ADD A, A ; x4
+                ADD A, C ; x6
+                ADD A, 80
+                LD E, A
+                ; LD A, #01
+                ; LD (DE), A
+                ; INC E
+                ; LD (DE), A
+                ; INC E
+                ; LD (DE), A
+                ; INC E
+                ; LD (DE), A
+                ; INC E
+                ; LD (DE), A
+                ; INC E
+                ; LD (DE), A
+
                 EX AF, AF'
                 DEC A
                 LD (BufferNum), A
@@ -292,6 +317,7 @@ Fog.Tick:       LD HL, TickCounter
                 LD E, A
                 EX DE, HL
                 DEC (HL)
+                SET 7, (HL)
                 LD A, (HL)
 
                 CP #7F
@@ -309,6 +335,27 @@ Fog.Tick:       LD HL, TickCounter
                 LD (BufferNum), A
 
 .NextLoop       EX DE, HL
+
+                LD A, E
+                ADD A, A ; x2
+                LD C, A
+                ADD A, A ; x4
+                ADD A, C ; x6
+                ADD A, 80
+                LD E, A
+                ; LD A, #01
+                ; LD (DE), A
+                ; INC E
+                ; LD (DE), A
+                ; INC E
+                ; LD (DE), A
+                ; INC E
+                ; LD (DE), A
+                ; INC E
+                ; LD (DE), A
+                ; INC E
+                ; LD (DE), A
+
                 DJNZ .Loop
                 RET
 Buffer          DS 10, #FF
