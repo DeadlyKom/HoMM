@@ -11,7 +11,7 @@ def get_metadata(sprite: Dict[str, Any], x: int, y: int, name: str) -> List[Dict
     result = []
     for region_data in sprite.get("Regions", []):
         x1, y1, x2, y2 = region_data["RegionRect"]
-        if x1 <= x <= x2 and y1 <= y <= y2:
+        if x1 <= x < x2 and y1 <= y < y2:
             for meta in region_data.get("Metadata", []):
                 if meta["Type"] == name:
                     result.append(meta)

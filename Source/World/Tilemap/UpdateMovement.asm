@@ -51,7 +51,12 @@ UpdateMovement: ; установка задержки опроса скрола
 ApplyToX_Axis_  ; 0 - #2b5
                 ; -----------------------------------------
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.X)
+                LD C, A
                 ADD A, (HL)
+                CP C
+                RET Z
+
+                OR A
                 JP M, .IsNegative
                 CP HEXTILE_SIZE_X
                 JP NC, .IsPositive
@@ -86,7 +91,12 @@ ApplyToX_Axis_  ; 0 - #2b5
 ApplyToY_Axis_  ; 0 - #2a1
                 ; -----------------------------------------
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.Y)
+                LD C, A
                 ADD A, (HL)
+                CP C
+                RET Z
+
+                OR A
                 JP M, .IsNegative
                 CP HEXTILE_BASE_SIZE_Y
                 JP NC, .IsPositive

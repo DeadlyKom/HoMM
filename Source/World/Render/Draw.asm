@@ -212,7 +212,7 @@ Fog.Make:       LD HL, MakeCounter
 
                 LD A, R
                 AND %00000111
-                ADD A, #04
+                ADD A, #06
                 LD (HL), A
                 
                 LD A, (BufferNum)
@@ -238,13 +238,10 @@ Fog.Make:       LD HL, MakeCounter
                 LD E, 40-5
                 CALL Math.Div8x8                                                ; mod
                 EXX
-
+                ; LD A, 6
                 LD E, A
 
-                EX AF, AF'
-                LD C, A
-                EX AF, AF'
-                LD B, #00
+                LD BC, 10
                 LD HL, Buffer
 
                 ; поиск одинакового индекса
@@ -302,11 +299,10 @@ Fog.Tick:       LD HL, TickCounter
 
                 LD A, (DE)
                 AND %00000111
-                JR Z, .L1
                 DEC A
-                JR NZ, .SetFog
+                JP P, .SetFog
 
-.L1             LD (HL), #FF
+                LD (HL), #FF
                 LD A, (BufferNum)
                 INC A
                 LD (BufferNum), A
@@ -321,30 +317,28 @@ Fog.Tick:       LD HL, TickCounter
                 DJNZ .Loop
                 RET
 
-Copy:           LD A, (BufferNum)
-                LD B, A
-                LD A, 10
-                SUB B
-                RET Z
-
-                LD B, A
-                LD HL, Buffer-1
-                LD D, HIGH Adr.RenderBuffer
-
-.Loop           INC HL
-                LD A, (HL)
-                CP #FF
-                JR Z, .Loop
-
-                LD E, A
-                LD A, (DE)
-                BIT 6, A
-                JR NZ, .Next
-
-
-
-.Next           DJNZ .Loop
-                RET
+; Copy:           LD A, (BufferNum)
+;                 LD B, A
+;                 LD A, 10
+;                 SUB B
+;                 RET Z
+;
+;                 LD B, A
+;                 LD HL, Buffer-1
+;                 LD D, HIGH Adr.RenderBuffer
+;
+; .Loop           INC HL
+;                 LD A, (HL)
+;                 CP #FF
+;                 JR Z, .Loop
+;
+;                 LD E, A
+;                 LD A, (DE)
+;                 BIT 6, A
+;                 JR NZ, .Next
+;
+; .Next           DJNZ .Loop
+;                 RET
 
 Reset:          LD HL, Buffer
                 LD A, 10
@@ -360,12 +354,64 @@ Update:         PUSH DE
                 EXX
                 CALL UtilsBuffer.GetRender                                      ; обновление адреса Render-буфера по индексу гексагона
                 DEBUG_BREAK_POINT_C
-                POP DE
+                POP HL
+                LD D, H
+                LD E, L
+                LD L, A
+
+                PUSH DE
+                LD A, E
+                ADD A, B
+                CP 5*7
+                JR NC, .L2
                 LD E, A
-                LD A, #01
+
+                EX DE, HL
+                SET 7, (HL)
+                INC L
+                LD A, L
+                CP 5*7
+                JR NC, $+4
+                SET 7, (HL)
+                EX DE, HL
+.L2             POP DE
+             
+                LD A, E
+                SUB B
+                JP M, .L21
+                LD E, A
+
+                EX DE, HL
+                SET 7, (HL)
+                DEC L
+                JP M, $+5
+                SET 7, (HL)
+                EX DE, HL
+.L21
+
                 LD B, C
-.Loop           LD (DE), A
-                INC E
+.Loop           LD (HL), #01
+
+                LD A, L
+                ADD A, 22
+                JR C, .L1
+                LD E, A
+                EX DE, HL
+                SET 0, (HL)
+                SET 1, (HL)
+                EX DE, HL
+.L1
+                LD A, L
+                SUB 22
+                CP 80
+                JR C, .L3
+                LD E, A
+                EX DE, HL
+                SET 0, (HL)
+                ; SET 1, (HL)
+                EX DE, HL
+.L3
+                INC L
                 DJNZ .Loop
                 EXX
                 RET
