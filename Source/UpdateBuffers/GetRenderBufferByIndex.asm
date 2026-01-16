@@ -56,9 +56,12 @@ GetRenderBuffer LD C, A
                 LD C, A                                                         ; ширина гексагона в ренер буфере (0-5)
                 LD A, (IX + 2)                                                  ; индекс/смещение в рендер буфере обрабатываемого гексагона +80
                 
-.Success        SRL B
-                SRL B
-                SRL B
+.Success        PUSH AF
+                LD A, B
+                ADD A, A    ; x2
+                SBC A, A
+                LD B, A         ; если нулевая строка то -1, иначе ноль
+                POP AF
                 
                 OR A                                                            ; успешное выполнение
                 RET

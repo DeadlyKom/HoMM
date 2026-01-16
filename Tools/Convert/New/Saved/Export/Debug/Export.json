@@ -179,8 +179,8 @@
                 "RegionRect": [
                     0,
                     24,
-                    16,
-                    32
+                    48,
+                    64
                 ],
                 "Metadata": [
                     {
@@ -191,9 +191,9 @@
             },
             {
                 "RegionRect": [
+                    16,
                     8,
-                    16,
-                    16,
+                    32,
                     24
                 ],
                 "Metadata": [
@@ -205,24 +205,10 @@
             },
             {
                 "RegionRect": [
-                    16,
                     8,
-                    32,
-                    32
-                ],
-                "Metadata": [
-                    {
-                        "Type": "OverrideAttr",
-                        "Value": true
-                    }
-                ]
-            },
-            {
-                "RegionRect": [
-                    32,
                     16,
-                    48,
-                    32
+                    40,
+                    24
                 ],
                 "Metadata": [
                     {

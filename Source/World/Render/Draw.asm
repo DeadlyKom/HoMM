@@ -238,7 +238,7 @@ Fog.Make:       LD HL, MakeCounter
                 LD E, 40-5
                 CALL Math.Div8x8                                                ; mod
                 EXX
-                ; LD A, 6
+                LD A, 17
                 LD E, A
 
                 LD BC, 10
@@ -359,39 +359,83 @@ Update:         PUSH DE
                 LD E, L
                 LD L, A
 
-                PUSH DE
+;                 PUSH DE
+;                 LD A, E
+;                 ADD A, B
+;                 CP 5*7
+;                 JR NC, .L2
+;                 LD E, A
+;
+;                 EX DE, HL
+;                 SET 7, (HL)
+;                 INC L
+;                 LD A, L
+;                 CP 5*7
+;                 JR NC, $+4
+;                 SET 7, (HL)
+;                 EX DE, HL
+; .L2             POP DE
+;
+;                 LD A, E
+;                 SUB B
+;                 JP M, .L21
+;                 LD E, A
+;
+;                 EX DE, HL
+;                 SET 7, (HL)
+;                 DEC L
+;                 JP M, $+5
+;                 SET 7, (HL)
+;                 EX DE, HL
+; .L21
+                PUSH BC
+
+.CalcOffset     ; расчёт смещения верёд/назад
+                LD A, B
+                NEG
+                ADD A, TILEMAP_WIDTH_DATA
+                LD C, A     ; назад
+                LD A, B
+                ADD A, TILEMAP_WIDTH_DATA
+                LD B, A     ; вперёд
+
+.SetFlagUpdate  ; вперёд
                 LD A, E
                 ADD A, B
-                CP 5*7
-                JR NC, .L2
+                LD B, E
+                CP 40
+                EX DE, HL
+                JR NC, .Back1
+
+                LD L, A
+                SET 7, (HL)
+                INC A
+                CP 40
+                JR NC, .Back1
+
+                LD L, A
+                SET 7, (HL)
+.Back1          EX DE, HL
+
+                ; назад
+                LD A, B
+                SUB C
                 LD E, A
+                EX DE, HL
+                JP M, .Back2
 
-                EX DE, HL
                 SET 7, (HL)
-                INC L
-                LD A, L
-                CP 5*7
-                JR NC, $+4
-                SET 7, (HL)
-                EX DE, HL
-.L2             POP DE
-             
-                LD A, E
-                SUB B
-                JP M, .L21
-                LD E, A
+.Back2          INC L
+                JP M, .Back3
 
-                EX DE, HL
                 SET 7, (HL)
-                DEC L
-                JP M, $+5
-                SET 7, (HL)
-                EX DE, HL
-.L21
+.Back3          EX DE, HL
 
+                POP BC
                 LD B, C
-.Loop           LD (HL), #01
+.Loop           LD (HL), #01    ; текущий тайл
 
+                ; тайл ниже
                 LD A, L
                 ADD A, 22
                 JR C, .L1
@@ -401,6 +445,7 @@ Update:         PUSH DE
                 SET 1, (HL)
                 EX DE, HL
 .L1
+                ; тайл выше
                 LD A, L
                 SUB 22
                 CP 80
@@ -408,7 +453,7 @@ Update:         PUSH DE
                 LD E, A
                 EX DE, HL
                 SET 0, (HL)
-                ; SET 1, (HL)
+                RES 1, (HL)
                 EX DE, HL
 .L3
                 INC L

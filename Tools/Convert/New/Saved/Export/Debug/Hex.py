@@ -11,7 +11,7 @@ def get_metadata(sprite: Dict[str, Any], x: int, y: int, name: str) -> List[Dict
     result = []
     for region_data in sprite.get("Regions", []):
         x1, y1, x2, y2 = region_data["RegionRect"]
-        if x1 <= x <= x2 and y1 <= y <= y2:
+        if x1 <= x < x2 and y1 <= y < y2:
             for meta in region_data.get("Metadata", []):
                 if meta["Type"] == name:
                     result.append(meta)
@@ -79,10 +79,10 @@ def draw(sprite: Dict[str, Any],
         if mask_height < 8:
             is_early_exit = True
         
-        # метаданные перегрузки для текущего знакоместа
-        metadata_values_override_attribute = get_metadata(sprite, bx * 8, by * 8, "OverrideAttr")
-        if metadata_values_override_attribute:
-            is_override_attribute = metadata_values_override_attribute[0].get("Value")
+    # метаданные перегрузки для текущего знакоместа
+    metadata_values_override_attribute = get_metadata(sprite, bx * 8, by * 8, "OverrideAttr")
+    if metadata_values_override_attribute:
+        is_override_attribute = metadata_values_override_attribute[0].get("Value")
              
     # основной цикл по знакоместам
     for dy in range(7 - skip_line, 7 - height, -1):
