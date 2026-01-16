@@ -34,6 +34,7 @@ Update:
                 CALL World.Base.Render.Reset
                 JP UpdateBuffer.Tilemap
 .RenderBuffer   RES_VIEW_FLAG UPDATE_RENDER_BUF_BIT                             ; сброс флага обновления Render буфера
+                CALL World.Base.Render.Reset
                 JP UpdateBuffer.Render
 
                 endif ; ~_WORLD_UPDATE_BUFFERS_

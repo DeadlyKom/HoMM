@@ -238,7 +238,7 @@ Fog.Make:       LD HL, MakeCounter
                 LD E, 40-5
                 CALL Math.Div8x8                                                ; mod
                 EXX
-                LD A, 17
+                ; LD A, 6
                 LD E, A
 
                 LD BC, 10
@@ -252,7 +252,6 @@ Fog.Make:       LD HL, MakeCounter
                 ; поиск свободного индекса
                 EX AF, AF'
                 LD C, A
-                EX AF, AF'
                 LD A, #FF
                 DEC HL
 
@@ -263,14 +262,26 @@ Fog.Make:       LD HL, MakeCounter
 
 .Make           ; сохраним индекс
                 INC HL
-                LD (HL), E
                 LD D, HIGH Adr.RenderBuffer
+                ; -----------------------------------------
+                ; обновление вокруг указанного гексагона
+                ; In:
+                ;   A - индекс в рендер буфере (0-39)
+                ; Out:
+                ; Corrupt:
+                ;   IX, HL', D', BC', AF, AF'
+                ; Note:
+                ;   код расположен рядом с картой (страница 1)
+                ; -----------------------------------------
+                CALL Update
+                RET C
+
+                LD (HL), E
 
                 LD A, %10001111
                 LD (DE), A
 
-                CALL Update
-                EX AF, AF'
+                LD A, (BufferNum)
                 DEC A
                 LD (BufferNum), A
                 RET
@@ -313,6 +324,16 @@ Fog.Tick:       LD HL, TickCounter
 .SetFog         OR %10001000
 .Set            LD (DE), A
 
+                ; -----------------------------------------
+                ; обновление вокруг указанного гексагона
+                ; In:
+                ;   A - индекс в рендер буфере (0-39)
+                ; Out:
+                ; Corrupt:
+                ;   IX, HL', D', BC', AF, AF'
+                ; Note:
+                ;   код расположен рядом с картой (страница 1)
+                ; -----------------------------------------
                 CALL Update
                 DJNZ .Loop
                 RET
@@ -352,42 +373,28 @@ Reset:          LD HL, Buffer
 Update:         PUSH DE
                 LD A, E
                 EXX
+                ; -----------------------------------------
+                ; определение адреса Render-буфера по индексу гексагона
+                ; In:
+                ;   A - индекс в рендер буфере (0-39)
+                ; Out:
+                ;   B - -1/0 чётность, нечётность строки
+                ;   C - ширина (оставшиеся/целая) гексагона
+                ;   A - найденый индекс/смещение в рендер буфере обрабатываемого гексагона +80
+                ; Corrupt:
+                ;   IX, D, BC, AF, AF'
+                ; Note:
+                ;   код расположен рядом с картой (страница 1)
+                ; -----------------------------------------
                 CALL UtilsBuffer.GetRender                                      ; обновление адреса Render-буфера по индексу гексагона
-                DEBUG_BREAK_POINT_C
                 POP HL
+                EXX
+                RET C
+                
+                EXX
                 LD D, H
                 LD E, L
                 LD L, A
-
-;                 PUSH DE
-;                 LD A, E
-;                 ADD A, B
-;                 CP 5*7
-;                 JR NC, .L2
-;                 LD E, A
-;
-;                 EX DE, HL
-;                 SET 7, (HL)
-;                 INC L
-;                 LD A, L
-;                 CP 5*7
-;                 JR NC, $+4
-;                 SET 7, (HL)
-;                 EX DE, HL
-; .L2             POP DE
-;
-;                 LD A, E
-;                 SUB B
-;                 JP M, .L21
-;                 LD E, A
-;
-;                 EX DE, HL
-;                 SET 7, (HL)
-;                 DEC L
-;                 JP M, $+5
-;                 SET 7, (HL)
-;                 EX DE, HL
-; .L21
                 PUSH BC
 
 .CalcOffset     ; расчёт смещения верёд/назад
@@ -459,6 +466,8 @@ Update:         PUSH DE
                 INC L
                 DJNZ .Loop
                 EXX
+
+                OR A
                 RET
 
 Buffer          DS 10, #FF
