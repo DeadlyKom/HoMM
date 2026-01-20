@@ -46,7 +46,7 @@ Draw:           ; -----------------------------------------
 
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 RES_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE             ; выборочный сброс Render флагов
-                SET_RENDER_FLAG FINISHED_BIT                                    ; установка флага завершения отрисовки
+                SET_RENDER_FLAG FRAME_READY_BIT                                 ; установка флага готовности кадра
                 RET
 
                 display " - Main draw:\t\t\t\t\t\t", /A, Draw, "\t= busy [ ", /D, $-Draw, " byte(s)  ]"

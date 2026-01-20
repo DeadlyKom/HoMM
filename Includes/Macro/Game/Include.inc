@@ -6,6 +6,7 @@
                 include "Game_Input.inc"
                 include "Game_Render.inc"
                 include "Game_Options.inc"
+                include "Game_MainSwap.inc"
                 include "Game_Interupt.inc"
                 include "Game_MainLoop.inc"
                 include "Game_MainMenu.inc"

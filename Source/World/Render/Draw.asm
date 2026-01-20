@@ -28,6 +28,7 @@ Draw:           ; -----------------------------------------
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 LD HL, Adr.TempBuffer + 2
                 LD (HL), #00
+                CALL ScreenBlock.Clear                                          ; очистка screen block'ов
 
                 ; первичная инициализация локации
                 LD HL, Adr.Hextile
@@ -51,80 +52,6 @@ Draw:           ; -----------------------------------------
                 ; -----------------------------------------
 
                 ; -----------------------------------------
-                ; ⚠️ холодный запуск:
-                ;    1. принудительно выставить адрес левого верхнего угла отображаемой карты
-                ;       данные о центрировании карты могут браться из метаданных карты и/или иным способом
-                ;    2. принудительное копирование в Tilemap-буфер из тайловой карты на странице 1
-                ;    3. принудительное выставление флагов в Render-буфере
-                ;       формируется для каждого тайла
-                ;
-                ; ⚠️ горячий запуск:
-                ;    не должен самовозбуждать флаги обновления в Render-буфере,
-                ;    дабы снизить нагрузку на обновление экрана
-                ;
-                ; ℹ️ цикл обновления экрана:
-                ;    1. в выставленные тайминги скролла проверить вектор движения карты,
-                ;       обновить адрес левого верхнего угла отображаемой карты
-                ;    2. принудительное обновление Tilemap- и Render-буферов по необходимости,
-                ;       если адрес левого верхнего угла отображения карты изменился
-                ;       * Tilemap-буфер копируется из тайловой карты на странице 1
-                ;       * Render-буфер формируется для каждого тайла, где:
-                ;         - выставляется флаг HU (принудительного обновления гексагона)
-                ;         - копируется флаг FG (тумана, 0 — гексагон закрашен туманом целиком)
-                ;           из буфера метаданных карты
-                ;         - номер анимации гексагона устанавливается в ноль,
-                ;           в последующих шагах он будет модифицирован
-                ;       * Render-буфер для каждого столбца гексагона выставляется флаг CU
-                ;           необходимости обновить столбец гексагона (0 - обновление столбца не требуется)
-                ;    3. применение внешних событий изменения/обновления гексагонов
-                ;       * основной список гексагон-объектов,
-                ;         которые обязаны менять анимацию каждый тик гексагонов
-                ;         каждый такой объект имеет информацию о количестве анимаций в цикле
-                ;       * дополнительный список гексагон-объектов,
-                ;         которые рандомно выбираются из доступных на экране
-                ;         каждый такой объект после проигрывания одного цикла анимации
-                ;         удаляется из списка
-                ;    4. отображение гексагонов
-                ;    5. отображение объектов на карте
-                ;       * список динамических объектов влияет на флаг HU (принудительного обновления гексагона)
-                ;         спрайты героя, VFX заклинаний и т.п.
-                ;    6. отображение тумана на видимых гексагонах
-                ;    7. копирование узора рамки на игровой части экрана
-                ;    8. анализ флагов HU (принудительного обновления гексагона) и высот гексагонов,
-                ;       позволяет определить, какие экранные блоки требуется копировать в теневой экран
-                ;       * выставленный флаг HU говорит о том, что гексагон изменился
-                ;         используя высоты гексагона, можно определить,
-                ;         какие соседние экранные блоки были задеты,
-                ;         и на их основе формируются флаги обновления грязных экранных блоков
-                ;       * экранные блоки копируются в теневой экран
-                ;
-                ; ℹ️ цикл обновления курсора:
-                ;    1. если не требуется копирование из основного экрана в теневой:
-                ;       ⚠️ важно: обязательно в начале прерывания (избежать сечения луча)
-                ;       * восстанавливаем фон под курсором (в теневом экране), если он имеется
-                ;       * отображаем курсор в новой позиции (в теневом экране)
-                ;       ℹ️ ToDo: можно избежать этого пункта,
-                ;           если предыдущая анимация и положение не изменились
-                ;       * любая логика прерывания
-                ;    2. буферный экран (основной) готов копироваться в теневой экран
-                ;       * включить в адресном пространстве #C000–#FFFF страницу 7
-                ;         (с теневым экраном)
-                ;       * отображаем курсор в новой позиции (в основном экране)
-                ;       * переключаемся на отображение основного экрана
-                ;         (теневой экран перестаёт быть видимым)
-                ;       * на странице 7 расположен код копирования экранных блоков,
-                ;         буфер под курсор и другие необходимые массивы
-                ;         (гексагон-объектов и т.п.)
-                ;         копируются блоки экрана в теневой
-                ;         (ℹ️ сечение луча не страшен)
-                ;       * отображаем курсор в новой позиции (в теневом экране)
-                ;       * переключаемся на отображение теневого экрана
-                ;         (основной экран перестаёт быть видимым)
-                ;       * восстановить фон в основном экране под курсором
-                ;       * сброс флагов готовности экрана
-                ; -----------------------------------------
-
-                ; -----------------------------------------
                 ; обновление позиции карты
                 CHECK_INPUT_TIMER_FLAG SCROLL_MAP_BIT
                 CALL NZ, World.Base.Tilemap.UpdateMovement
@@ -140,113 +67,105 @@ Draw:           ; -----------------------------------------
                 CALL Fog.Tick
                 ; -----------------------------------------
 
-                RESTORE_BC                                                      ; защитная от порчи данных с разрешённым прерыванием
-                CALL Draw.HexByDL
-                SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
-                CALL ScreenBlock.HexAnalysis                                    ; анализ обновления гексагонов
+                CALL PipelineHexagons
 
-                ; CALL World.Base.Tilemap.VisibleObjects                          ; определение видимых объектов - ОТКЛ
-                ; CALL NZ, Object.Draw                                            ; отображение объектов в массиве SortBuffer - ОТКЛ
-
-                ifdef _DEBUG
-                SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
-                CALL Convert.SetBaseScreen                                      ; установка работы с основным экраном
-                ; -----------------------------------------
-                ; отображение screen block'ов
-                LD DE, #031A
-                CALL Console.SetCursor
-                LD HL, Adr.ScreenBlock + 0
-                CALL DrawScreenBlock
-                LD DE, #041A
-                CALL Console.SetCursor
-                LD HL, Adr.ScreenBlock + 1
-                CALL DrawScreenBlock
-                LD DE, #051A
-                CALL Console.SetCursor
-                LD HL, Adr.ScreenBlock + 2
-                CALL DrawScreenBlock
-                LD DE, #061A
-                CALL Console.SetCursor
-                LD HL, Adr.ScreenBlock + 3
-                CALL DrawScreenBlock
-                ; -----------------------------------------
-
-                ; -----------------------------------------
-                ; отображение позиции мыши на экране
-                LD DE, #1700
-                CALL Console.SetCursor
-                LD A, (Mouse.PositionX)
-                CALL Console.DrawByte
-                LD A, ','
-                CALL Console.DrawChar
-                LD A, (Mouse.PositionY)
-                CALL Console.DrawByte
-                ; -----------------------------------------
-
-                ; -----------------------------------------
-                ; отображение позиции карты (горизонталь)
-                LD DE, #1706
-                CALL Console.SetCursor
-                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
-                CALL Console.DrawByte
-                LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.X)
-                CALL Console.DrawHalfByte
-                LD A, ','
-                CALL Console.DrawChar
-                ; отображение позиции карты (вертикаль)
-                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
-                CALL Console.DrawByte
-                LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.Y)
-                CALL Console.DrawHalfByte
-                ; -----------------------------------------
-                
+                ; ifdef _DEBUG
+                ; SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
+                ; CALL Convert.SetBaseScreen                                      ; установка работы с основным экраном
                 ; ; -----------------------------------------
-                ; ; отображение размера видимой области в чанках
-                ; LD DE, #170C
+                ; ; отображение screen block'ов
+                ; LD DE, #031A
                 ; CALL Console.SetCursor
-                ; LD A, (World.Base.Tilemap.VisibleObjects.VisibleSize + 0)
+                ; LD HL, Adr.ScreenBlock + 0
+                ; CALL DrawScreenBlock
+                ; LD DE, #041A
+                ; CALL Console.SetCursor
+                ; LD HL, Adr.ScreenBlock + 1
+                ; CALL DrawScreenBlock
+                ; LD DE, #051A
+                ; CALL Console.SetCursor
+                ; LD HL, Adr.ScreenBlock + 2
+                ; CALL DrawScreenBlock
+                ; LD DE, #061A
+                ; CALL Console.SetCursor
+                ; LD HL, Adr.ScreenBlock + 3
+                ; CALL DrawScreenBlock
+                ; ; -----------------------------------------
+
+                ; ; -----------------------------------------
+                ; ; отображение позиции мыши на экране
+                ; LD DE, #1700
+                ; CALL Console.SetCursor
+                ; LD A, (Mouse.PositionX)
                 ; CALL Console.DrawByte
                 ; LD A, ','
                 ; CALL Console.DrawChar
-                ; LD A, (World.Base.Tilemap.VisibleObjects.VisibleSize + 1)
+                ; LD A, (Mouse.PositionY)
                 ; CALL Console.DrawByte
                 ; ; -----------------------------------------
 
                 ; ; -----------------------------------------
-                ; ; отображение количество видимых объектов
-                ; LD DE, #1712
+                ; ; отображение позиции карты (горизонталь)
+                ; LD DE, #1706
                 ; CALL Console.SetCursor
-                ; LD A, (World.Base.Tilemap.VisibleObjects.Num)
+                ; LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
                 ; CALL Console.DrawByte
+                ; LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.X)
+                ; CALL Console.DrawHalfByte
+                ; LD A, ','
+                ; CALL Console.DrawChar
+                ; ; отображение позиции карты (вертикаль)
+                ; LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
+                ; CALL Console.DrawByte
+                ; LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.Y)
+                ; CALL Console.DrawHalfByte
                 ; ; -----------------------------------------
+                
+                ; ; ; -----------------------------------------
+                ; ; ; отображение размера видимой области в чанках
+                ; ; LD DE, #170C
+                ; ; CALL Console.SetCursor
+                ; ; LD A, (World.Base.Tilemap.VisibleObjects.VisibleSize + 0)
+                ; ; CALL Console.DrawByte
+                ; ; LD A, ','
+                ; ; CALL Console.DrawChar
+                ; ; LD A, (World.Base.Tilemap.VisibleObjects.VisibleSize + 1)
+                ; ; CALL Console.DrawByte
+                ; ; ; -----------------------------------------
 
-                endif
+                ; ; ; -----------------------------------------
+                ; ; ; отображение количество видимых объектов
+                ; ; LD DE, #1712
+                ; ; CALL Console.SetCursor
+                ; ; LD A, (World.Base.Tilemap.VisibleObjects.Num)
+                ; ; CALL Console.DrawByte
+                ; ; ; -----------------------------------------
+
+                ; endif
 
                 RES_ALL_MAIN_FLAGS                                              ; сброс всех флагов
-                SET_RENDER_FLAG FINISHED_BIT                                    ; установка флага завершения отрисовки
                 JP World.Base.Event.Handler                                     ; обработчик событий
-
-DrawScreenBlock:
-                CALL .Cell
-                LD A, L
-                ADD A, #04
-                LD L, A
-                CALL .Cell
-                LD A, L
-                ADD A, #04
-                LD L, A
-                CALL .Cell
-                LD A, L
-                ADD A, #04
-                LD L, A
-.Cell           PUSH HL
-                LD A, (HL)
-                CP #10
-                JR C, $+4
-                LD A, #0F
-                CALL Console.DrawHalfByte
-                POP HL
-                RET
+; DrawScreenBlock:
+;                 CALL .Cell
+;                 LD A, L
+;                 ADD A, #04
+;                 LD L, A
+;                 CALL .Cell
+;                 LD A, L
+;                 ADD A, #04
+;                 LD L, A
+;                 CALL .Cell
+;                 LD A, L
+;                 ADD A, #04
+;                 LD L, A
+; .Cell           PUSH HL
+;                 LD A, (HL)
+;                 CP #10
+;                 JR C, $+4
+;                 LD A, #0F
+;                 CALL Console.DrawHalfByte
+;                 POP HL
+;                 RET
 Fog.Make:       LD HL, MakeCounter
                 DEC (HL)
                 RET NZ
@@ -279,7 +198,7 @@ Fog.Make:       LD HL, MakeCounter
                 LD E, 40-5
                 CALL Math.Div8x8                                                ; mod
                 EXX
-                ; LD A, 6
+                ; LD A, 0
                 LD E, A
 
                 LD BC, 10
@@ -330,7 +249,7 @@ Fog.Make:       LD HL, MakeCounter
 Fog.Tick:       LD HL, TickCounter
                 DEC (HL)
                 RET NZ
-                LD (HL), #08
+                LD (HL), #04
 
                 LD A, (BufferNum)
                 LD B, A

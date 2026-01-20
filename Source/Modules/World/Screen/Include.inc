@@ -7,6 +7,8 @@
 
                 display "'World' code block 'screen refresh':\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.ScreenRefresh, " byte(s) / free ", /D, Size.ScreenRefresh - Size, "]\t[7]\t ------------------------"
 
+                include "ClearScreenBlocks.asm"
+                include "MemcpyScreenBlocks.asm"
                 include "HexagonUpdateAnalysis.asm"
                 include "Source/Memory/MemcpyScreenBlock.asm"
 Size            EQU $-Adr.ScreenRefresh

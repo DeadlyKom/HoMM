@@ -13,10 +13,18 @@ Begin:          EQU $
 ; -----------------------------------------
 POP_LINE_6      macro
                 LD SP, HL
+                INC H
                 POP DE
                 POP BC
                 POP AF
+                EX AF, AF'
+                EXX
+                endm
+POP_LINE_4      macro
+                LD SP, HL
                 INC H
+                POP DE
+                POP BC
                 EXX
                 endm
 POP_LINE_6_     macro
@@ -26,12 +34,25 @@ POP_LINE_6_     macro
                 POP AF
                 EXX
                 endm
+POP_LINE_4_     macro
+                LD SP, HL
+                POP DE
+                POP BC
+                EXX
+                endm
 POP_ATTR_6      macro
                 LD SP, HL
                 EX DE, HL
                 POP DE
                 POP BC
                 POP AF
+                EXX
+                endm
+POP_ATTR_4      macro
+                LD SP, HL
+                EX DE, HL
+                POP DE
+                POP BC
                 EXX
                 endm
 ; -----------------------------------------
@@ -45,7 +66,15 @@ PUSH_LINE_6     macro
                 LD SP, HL
                 INC H
                 EXX
+                EX AF, AF'
                 PUSH AF
+                PUSH BC
+                PUSH DE
+                endm
+PUSH_LINE_4     macro
+                LD SP, HL
+                INC H
+                EXX
                 PUSH BC
                 PUSH DE
                 endm
@@ -56,11 +85,24 @@ PUSH_LINE_6_    macro
                 PUSH BC
                 PUSH DE
                 endm
+PUSH_LINE_4_    macro
+                LD SP, HL
+                EXX
+                PUSH BC
+                PUSH DE
+                endm
 PUSH_ATTR_6     macro
                 LD SP, HL
                 EX DE, HL
                 EXX
                 PUSH AF
+                PUSH BC
+                PUSH DE
+                endm
+PUSH_ATTR_4     macro
+                LD SP, HL
+                EX DE, HL
+                EXX
                 PUSH BC
                 PUSH DE
                 endm
@@ -102,14 +144,15 @@ HL_TO_ATTR_HL   macro
                 LD L, E
                 endm
 ; -----------------------------------------
-; копирование экранного блока 
+; копирование экранного блока шириной в 6 знакомест
 ; In:
 ;   HL  - начальный адрес
+;   IXL - высота в знакоместах
 ; Out:
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Screen:         ; инициализация
+Screen_6:       ; инициализация
                 PUSH HL
                 LD A, L
                 ADD A, #06
@@ -119,7 +162,6 @@ Screen:         ; инициализация
                 POP HL
 
                 LD (.ContainerSP), SP
-                LD IXL, #06
 
 .Loop_06        ; копирование пикселей
 .l0             POP_LINE_6
@@ -153,6 +195,62 @@ Screen:         ; инициализация
 
                 DEC IXL
                 JP NZ, .Loop_06
+
+.ContainerSP    EQU $+1
+                LD SP, #0000
+                RET
+
+; -----------------------------------------
+; копирование экранного блока шириной в 6 знакомест
+; In:
+;   HL  - начальный адрес
+;   IXL - высота в знакоместах
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+Screen_4:       ; инициализация
+                PUSH HL
+                LD A, L
+                ADD A, #04
+                LD L, A
+                SET 7, H
+                EXX
+                POP HL
+
+                LD (.ContainerSP), SP
+.Loop_04        ; копирование пикселей
+.l0             POP_LINE_4
+                PUSH_LINE_4
+.l1             POP_LINE_4
+                PUSH_LINE_4
+.l2             POP_LINE_4
+                PUSH_LINE_4
+.l3             POP_LINE_4
+                PUSH_LINE_4
+.l4             POP_LINE_4
+                PUSH_LINE_4
+.l5             POP_LINE_4
+                PUSH_LINE_4
+.l6             POP_LINE_4
+                PUSH_LINE_4
+.l7             POP_LINE_4_
+                PUSH_LINE_4_
+
+                ; копирование атрибутов
+.PopAtr         HL_TO_ATTR_HL
+                POP_ATTR_4
+.PushAtr        HL_TO_ATTR_HL
+                PUSH_ATTR_4
+    
+                ; переход на знакоместо ниже
+                DOWN_HL
+                EXX
+                DOWN_HL
+                EXX
+
+                DEC IXL
+                JP NZ, .Loop_04
 
 .ContainerSP    EQU $+1
                 LD SP, #0000

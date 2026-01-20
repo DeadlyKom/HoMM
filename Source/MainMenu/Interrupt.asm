@@ -8,8 +8,8 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Interrupt:      ; проверка завершённости процесса отрисовки
-                CHECK_RENDER_FLAG FINISHED_BIT
+Interrupt:      ; проверка готовности кадра
+                CHECK_RENDER_FLAG FRAME_READY_BIT
                 JR Z, .RenderProcess                                            ; переход, если процесс отрисовки не завершён
 
 .SwapScreens    ; ************ Swap Screens ************

@@ -11,12 +11,12 @@
 InsufficientRAM ; -----------------------------------------
                 ; отображение строки
                 ; -----------------------------------------
-                SCREEN_ADR_REG HL, MemBank_01_SCR, 7 << 3, 11 << 3
+                SCREEN_ADR_REG HL, SCR_ADR_BASE, 7 << 3, 11 << 3
                 LD (DrawChar.ScreenAdr), HL
                 LD BC, .Message_1
                 CALL .DrawString
 
-                SCREEN_ADR_REG HL, MemBank_01_SCR, 2 << 3, 12 << 3
+                SCREEN_ADR_REG HL, SCR_ADR_BASE, 2 << 3, 12 << 3
                 LD (DrawChar.ScreenAdr), HL
                 LD BC, .Message_2
                 CALL .DrawString

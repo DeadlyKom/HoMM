@@ -16,15 +16,15 @@ TG_BitScanLsbTable:; инициализация генерации
                 LD B, #00
 
 .Loop           LD A, B
-                LD C, #00                                                       ; номер бита
+                LD C, #08                                                       ; номер бита
 
                 dup 8
                 RRA                                                             ; двиг вправо, LSB → CF
                 JR C, .BitFound                                                 ; переход, если найден включенный бит
-                INC C
+                DEC C
                 edup
 
-                DEC C   ; значения от 0 до 7, где 0 это 1, а 7 равна 8
+                LD C, #07
 
 .BitFound       LD (HL), C
                 INC L

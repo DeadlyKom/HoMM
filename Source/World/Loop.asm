@@ -10,9 +10,12 @@
 ; -----------------------------------------
 Loop:           
 .Render         ; ************ RENDER ************
-                CHECK_RENDER_FLAG FINISHED_BIT
-                RET NZ
-
+                RENDER_FLAGS
+                CHECK_FLAG SWAPPED_PENDING_BIT
+                JP NZ, World.Base.Render.PipelineHexagons.MemcpyScreen          ; переход, если кадр готов и была произведена смена экранов
+                CHECK_FLAG FRAME_READY_BIT
+                RET NZ                                                          ; выход, кадр готов, но смена экрана не произведена
+                                                                                ; исключает процесс начала следующей отрисовки, до сброса флага
                 ; проверка завершение цикла
                 CHECK_MAIN_FLAG ML_EXIT_BIT
 .FuncDraw       EQU $+1

@@ -7,6 +7,7 @@
                 include "Draw.asm"
                 include "Cursor.asm"
                 include "Object/Include.inc"
+                include "PipelineHexagons.asm"
 
                 endmodule
 

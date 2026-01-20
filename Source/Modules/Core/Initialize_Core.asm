@@ -23,7 +23,7 @@ Core:           EI
                 ; -----------------------------------------
                 ; отображение версию сборки
                 ; -----------------------------------------
-                SCREEN_ADR_REG HL, MemBank_01_SCR, 20 << 3, 23 << 3
+                SCREEN_ADR_REG HL, SCR_ADR_BASE, 20 << 3, 23 << 3
                 CALL Console.SetScreenAdr
                 SET_REG_ATTR_IPB A, CYAN, BLACK, 0
                 CALL Console.SetAttribute

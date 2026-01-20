@@ -4,7 +4,9 @@
 
                 include "Kernel_Bind.inc"
                 include "Launch.asm"
+                include "Source/TableGeneration/TG_MOD_6.asm"                   ; генератор таблицы
                 include "Source/TableGeneration/TG_BitScanLsbTable.asm"         ; генератор таблицы
+                include "Source/TableGeneration/TG_ScreenBlockTable.asm"        ; генератор таблицы
 
                 ; блок кода, копируемый при развёртывания модуля
 Adr.Deploy.Sprite   include "Sprite/Include.inc"

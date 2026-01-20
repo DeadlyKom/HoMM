@@ -39,6 +39,16 @@ CHECK_RENDER_FLAG_A macro FlagBit?
                 CHECK_FLAG_A (FlagBit?)
                 endm
 ; -----------------------------------------
+; проверка Render флагов
+; In:
+; Out:
+; Corrupt:
+; -----------------------------------------
+CHECK_RENDER_FLAGS macro Flags?
+                RENDER_FLAGS_A
+                CHECK_FLAGS (Flags?)
+                endm
+; -----------------------------------------
 ; установка Render флага
 ; In:
 ; Out:
@@ -47,6 +57,37 @@ CHECK_RENDER_FLAG_A macro FlagBit?
 SET_RENDER_FLAG macro FlagBit?
                 RENDER_FLAGS
                 SET_FLAG (FlagBit?)
+                endm
+; -----------------------------------------
+; установка Render флага переключение экрана автоматически
+; In:
+; Out:
+; Corrupt:
+; -----------------------------------------
+SET_RENDER_AUTO macro
+                RENDER_FLAGS
+                RES_FLAGS ((1 << SWAP_TARGET_BITS) | (1 <<(SWAP_TARGET_BITS+1)))
+                endm
+; -----------------------------------------
+; установка Render флага переключение экрана на базовый
+; In:
+; Out:
+; Corrupt:
+; -----------------------------------------
+SET_RENDER_BASE macro
+                RENDER_FLAGS
+                SET_FLAG SWAP_TARGET_BITS
+                RET_FLAG (SWAP_TARGET_BITS+1)
+                endm
+; -----------------------------------------
+; установка Render флага переключение экрана на теневой
+; In:
+; Out:
+; Corrupt:
+; -----------------------------------------
+SET_RENDER_SHADOW macro
+                RENDER_FLAGS
+                SET_FLAGS ((1 << SWAP_TARGET_BITS) | (1 <<(SWAP_TARGET_BITS+1)))
                 endm
 ; -----------------------------------------
 ; сброс Render флага

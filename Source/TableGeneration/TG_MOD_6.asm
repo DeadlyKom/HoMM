@@ -25,7 +25,7 @@ TG_Mod6Table:   ; инициализация генерации
 
                 RET
 
-                display " - Generate table mod 6:\t\t\t", /A, TG_BitScanLsbTable, "\t= busy [ ", /D, $-TG_BitScanLsbTable, " byte(s)  ]"
+                display " - Generate table mod 6:\t\t\t\t", /A, TG_BitScanLsbTable, "\t= busy [ ", /D, $-TG_BitScanLsbTable, " byte(s)  ]"
                 endmodule
 
                 endif ; ~ _TABLE_GENERATION_MOD_6_TABLE_
