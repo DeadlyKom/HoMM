@@ -25,7 +25,7 @@ GetRenderBuffer LD C, A
                 ; +4 - количество пропускаемых знакомест (спрайт находится ниже экрана)
                 ; -----------------------------------------
                 
-                LD IX, Kernel.Hex.DisplayList
+                LD IX, Adr.DisplayList
                 LD A, (GameState.DisplayListLen)
                 LD B, A
 .Loop           LD A, (IX + 1)
@@ -35,7 +35,7 @@ GetRenderBuffer LD C, A
 
                 ; следующий элемент списка отображения
                 LD A, IXL
-                ADD A, Kernel.Hex.DisplayList.ElementSize
+                ADD A, Size.DisplayList.ElementSize
                 LD IXL, A
 
                 DJNZ .Loop
@@ -96,5 +96,7 @@ GetRenderBuffer LD C, A
                 
                 OR A                                                            ; успешное выполнение
                 RET
+
+                display " - Get address render buffer by index:\t\t", /A, GetRenderBuffer, "\t= busy [ ", /D, $-GetRenderBuffer, " byte(s)  ]"
 
                 endif ; ~_UPDATE_BUFFERS_GET_RENDER_BY_INDEX_

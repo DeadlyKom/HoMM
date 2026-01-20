@@ -142,6 +142,8 @@ Draw:           ; -----------------------------------------
 
                 RESTORE_BC                                                      ; защитная от порчи данных с разрешённым прерыванием
                 CALL Draw.HexByDL
+                SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
+                CALL ScreenBlock.HexAnalysis                                    ; анализ обновления гексагонов
 
                 ; CALL World.Base.Tilemap.VisibleObjects                          ; определение видимых объектов - ОТКЛ
                 ; CALL NZ, Object.Draw                                            ; отображение объектов в массиве SortBuffer - ОТКЛ
@@ -149,6 +151,26 @@ Draw:           ; -----------------------------------------
                 ifdef _DEBUG
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 CALL Convert.SetBaseScreen                                      ; установка работы с основным экраном
+                ; -----------------------------------------
+                ; отображение screen block'ов
+                LD DE, #031A
+                CALL Console.SetCursor
+                LD HL, Adr.ScreenBlock + 0
+                CALL DrawScreenBlock
+                LD DE, #041A
+                CALL Console.SetCursor
+                LD HL, Adr.ScreenBlock + 1
+                CALL DrawScreenBlock
+                LD DE, #051A
+                CALL Console.SetCursor
+                LD HL, Adr.ScreenBlock + 2
+                CALL DrawScreenBlock
+                LD DE, #061A
+                CALL Console.SetCursor
+                LD HL, Adr.ScreenBlock + 3
+                CALL DrawScreenBlock
+                ; -----------------------------------------
+
                 ; -----------------------------------------
                 ; отображение позиции мыши на экране
                 LD DE, #1700
@@ -203,6 +225,28 @@ Draw:           ; -----------------------------------------
                 RES_ALL_MAIN_FLAGS                                              ; сброс всех флагов
                 SET_RENDER_FLAG FINISHED_BIT                                    ; установка флага завершения отрисовки
                 JP World.Base.Event.Handler                                     ; обработчик событий
+
+DrawScreenBlock:
+                CALL .Cell
+                LD A, L
+                ADD A, #04
+                LD L, A
+                CALL .Cell
+                LD A, L
+                ADD A, #04
+                LD L, A
+                CALL .Cell
+                LD A, L
+                ADD A, #04
+                LD L, A
+.Cell           PUSH HL
+                LD A, (HL)
+                CP #10
+                JR C, $+4
+                LD A, #0F
+                CALL Console.DrawHalfByte
+                POP HL
+                RET
 Fog.Make:       LD HL, MakeCounter
                 DEC (HL)
                 RET NZ
@@ -270,7 +314,7 @@ Fog.Make:       LD HL, MakeCounter
                 ; Note:
                 ;   код расположен рядом с картой (страница 1)
                 ; -----------------------------------------
-                CALL Update
+                CALL UtilsBuffer.UpdateHextile
                 RET C
 
                 LD (HL), E
@@ -331,33 +375,9 @@ Fog.Tick:       LD HL, TickCounter
                 ; Note:
                 ;   код расположен рядом с картой (страница 1)
                 ; -----------------------------------------
-                CALL Update
+                CALL UtilsBuffer.UpdateHextile
                 DJNZ .Loop
                 RET
-
-; Copy:           LD A, (BufferNum)
-;                 LD B, A
-;                 LD A, 10
-;                 SUB B
-;                 RET Z
-;
-;                 LD B, A
-;                 LD HL, Buffer-1
-;                 LD D, HIGH Adr.RenderBuffer
-;
-; .Loop           INC HL
-;                 LD A, (HL)
-;                 CP #FF
-;                 JR Z, .Loop
-;
-;                 LD E, A
-;                 LD A, (DE)
-;                 BIT 6, A
-;                 JR NZ, .Next
-;
-; .Next           DJNZ .Loop
-;                 RET
-
 Reset:          LD HL, Buffer
                 LD A, 10
                 LD (BufferNum), A
@@ -365,110 +385,6 @@ Reset:          LD HL, Buffer
 .Loop           LD (HL), #FF
                 INC HL
                 DJNZ .Loop
-                RET
-
-Update:         PUSH DE
-                LD A, E
-                EXX
-                ; -----------------------------------------
-                ; определение адреса Render-буфера по индексу гексагона
-                ; In:
-                ;   A - индекс в рендер буфере (0-39)
-                ; Out:
-                ;   B - -1/0 чётность, нечётность строки
-                ;   C - ширина (оставшиеся/целая) гексагона
-                ;   A - найденый индекс/смещение в рендер буфере обрабатываемого гексагона +80
-                ; Corrupt:
-                ;   IX, D, BC, AF, AF'
-                ; Note:
-                ;   код расположен рядом с картой (страница 1)
-                ; -----------------------------------------
-                CALL UtilsBuffer.GetRender                                      ; обновление адреса Render-буфера по индексу гексагона
-                POP HL
-                EXX
-                RET C
-                
-                EXX
-                LD D, H
-                LD E, L
-                LD L, A
-                PUSH BC
-
-.CalcOffset     ; расчёт смещения верёд/назад
-                LD A, B
-                NEG
-                ADD A, TILEMAP_WIDTH_DATA
-                LD C, A     ; назад
-                LD A, B
-                ADD A, TILEMAP_WIDTH_DATA
-                LD B, A     ; вперёд
-
-.SetFlagUpdate  ; вперёд
-                LD A, E
-                ADD A, B
-                LD B, E
-                CP 40
-                EX DE, HL
-                JR NC, .Back1
-
-                LD L, A
-                SET 7, (HL)
-                INC A
-                CP 40
-                JR NC, .Back1
-
-                LD L, A
-                SET 7, (HL)
-.Back1          EX DE, HL
-
-                ; назад
-                LD A, B
-                SUB C
-                LD E, A
-                EX DE, HL
-                JP M, .Back2
-
-                SET 7, (HL)
-.Back2          INC L
-                JP M, .Back3
-
-                SET 7, (HL)
-.Back3          EX DE, HL
-
-                POP BC
-                LD B, C
-.Loop           LD (HL), #01    ; текущий тайл
-
-                ; тайл ниже
-                LD A, L
-                ADD A, 22
-                JR C, .L1
-                LD E, A
-                EX DE, HL
-                SET 0, (HL)
-                SET 1, (HL)                                                     ; ToDo: установка флага обновления половины гексагона
-                                                                                ; если под текущим гексагоном тоже обновляется, то данный включенный флаг
-                                                                                ; блокирует обновление нижнего.
-                                                                                ; необходимо удостовериться что нижний тайл не убновляется перед тем как ставить,
-                                                                                ; иначе нужно его сбрасывать!
-                EX DE, HL
-.L1
-                ; тайл выше
-                LD A, L
-                SUB 22
-                CP 80
-                JR C, .L3
-                LD E, A
-                EX DE, HL
-                SET 0, (HL)
-                RES 1, (HL)
-                EX DE, HL
-.L3
-                INC L
-                DJNZ .Loop
-                EXX
-
-                OR A
                 RET
 
 Buffer          DS 10, #FF

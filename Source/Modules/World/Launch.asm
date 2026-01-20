@@ -18,14 +18,23 @@ Launch:         ; -----------------------------------------
                 MEMCPY Adr.Deploy.World, Adr.World, Size.Deploy.World           ; копирование блока
                 MEMCPY_PAGE Adr.Deploy.ScreenRefresh, Adr.ScreenRefresh, \
                             Page.ScreenRefresh, Size.Deploy.ScreenRefresh       ; копирование блока между страницами
-
                 ; -----------------------------------------
                 ; генерация таблица для поиска первого установленного бита
                 LD HL, Adr.CodeToScr
                 CALL Tables.TG_BitScanLsbTable
                 MEMCPY_PAGE Adr.CodeToScr, Adr.BitScanLsbTable, \
                             Page.BitScanLsbTable, Size.BitScanLsbTable          ; копирование блока cгенерированной таблицы для поиска первого установленного бита
-
+                ; генерация таблица вычисления mod 6 числа (0-21)
+                LD HL, Adr.CodeToScr
+                CALL Tables.TG_Mod6Table
+                MEMCPY_PAGE Adr.CodeToScr, Adr.Mod6Table, \
+                            Page.Mod6Table, Size.Mod6Table                      ; копирование блока cгенерированной таблицы для вычисления mod 6 числа (0-21)
+                ; генерация таблицы номера экранного блока (с 1 по 22 строку включительно) с высотой гексагона
+                LD HL, Adr.CodeToScr+80
+                LD D, HIGH Adr.CodeToScr
+                CALL Tables.TG_ScrBlockTable
+                MEMCPY_PAGE Adr.CodeToScr+80, Adr.ScrBlockTable, \
+                            Page.ScrBlockTable, Size.ScrBlockTable              ; копирование блока cгенерированной таблицы номера экранного блока (с 1 по 22 строку включительно) с высотой гексагона
                 ; -----------------------------------------
                 ; инициализация спрайтов
                 MEMCPY Adr.Deploy.Sprite, Adr.CodeToScr, Size.Deploy.Sprite     ; копирование блока

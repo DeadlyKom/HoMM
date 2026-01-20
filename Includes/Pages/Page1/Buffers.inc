@@ -7,5 +7,5 @@ UpdateBuffer:
 
 UtilsBuffer:
 .GetRender      EQU Page1.Update.GetRenderBuffer                                ; обновление адреса Render-буфера по индексу гексагона
-
+.UpdateHextile  EQU Page1.Update.Hextile
                 endif ; ~_PAGE_1_BUFFERS_

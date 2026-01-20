@@ -82,4 +82,6 @@ RenderBuffer:
                 LD DE, #0101
                 JP SafeFill.b176
 
+                display " - Update render buffer:\t\t\t\t", /A, RenderBuffer, "\t= busy [ ", /D, $-RenderBuffer, " byte(s)  ]"
+
                 endif ; ~_UPDATE_BUFFERS_RENDER_

@@ -5,6 +5,7 @@
                 module Update
 
                 include "RenderBuffer.asm"
+                include "UpdateHextile.asm"
                 include "GetRenderBufferByIndex.asm"
                 include "Source/Memory/MemcpyTilemapBuffer.asm"
 

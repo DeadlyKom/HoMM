@@ -24,6 +24,8 @@ TG_BitScanLsbTable:; инициализация генерации
                 INC C
                 edup
 
+                DEC C   ; значения от 0 до 7, где 0 это 1, а 7 равна 8
+
 .BitFound       LD (HL), C
                 INC L
                 DJNZ .Loop

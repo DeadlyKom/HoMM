@@ -8,12 +8,8 @@
 ; Note:
 ; -----------------------------------------
 HexByDL:        ; инициализация
-                LD (HexByDL.Exit.ContainerSP), SP
-                LD SP, CallSequence + 30
                 LD IX, (GameState.DisplayList)
                 LD IYH, HIGH Adr.RenderBuffer                                   ; для сохранения бит высоты столбца
-                LD BC, HexByDL.Exit
-                PUSH BC
 
                 ; формирование цикла по вертикали (строк гексагонов)
                 LD BC, .RowsLoop
@@ -34,7 +30,7 @@ HexByDL:        ; инициализация
 .RowsLoop       ; цикл отображения строк гексагонов
 
                 ; переход к следующему элементу списка отображения
-                LD BC, -DisplayList.ElementSize
+                LD BC, -Size.DisplayList.ElementSize
                 ADD IX, BC
 
                 ; -----------------------------------------
@@ -80,7 +76,7 @@ HexByDL:        ; инициализация
                 ;   влияет как на количество рисуемых колонок, так и с какой колонки будет рисоваться гексагон
 
                 LD A, (HL)                                                      ; чтение значения флагов из рендер буфера (Adr.RenderBuffer)
-                RES 7, (HL)                                                     ; сброс флага обновления гексагона
+                ; RES RENDER_FLAG_HEX_UPDATE_BIT, (HL)                            ; сброс флага обновления гексагона
                 EXX
                 ; -----------------------------------------
                 ;      7    6    5    4    3    2    1    0
@@ -307,10 +303,6 @@ HexByDL:        ; инициализация
                 ADD A, -HEXTILE_SIZE_X
                 LD C, A
                 JP .HexagonLoop
-HexByDL.Exit:   ;
-.ContainerSP    EQU $+1
-                LD SP, #0000
-                RET
 
                 display " - Draw hexagon by display list:\t\t\t", /A, HexByDL, "\t= busy [ ", /D, $-HexByDL, " byte(s)  ]"
 
