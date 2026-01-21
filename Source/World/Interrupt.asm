@@ -114,6 +114,49 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
 
                 RET
 
+.Memcpy         LD (.Container_SP), SP                                          ; сохранить исходный указатель стека
+                LD SP, Int.StackTop                                             ; использовать стек прерывания
+                PUSH AF
+                PUSH HL
+                PUSH DE
+
+.Container_SP   EQU $+1
+                LD HL, #0000
+                DEC HL
+
+                BIT 7, H
+                JR NZ, .CorruptShadow
+                
+                ; испорчен основной экран
+                ; копирование 2х байт их теневого экрана
+                SET 7, H
+                LD E, (HL)
+                DEC HL
+                LD D, (HL)
+
+                RES 7, H
+                LD (HL), D
+                INC HL
+                LD (HL), E
+                JR .Continue
+
+.CorruptShadow  ; испорчен теневой экран
+                ; копирование 2х байт их основного экрана
+                RES 7, H
+                LD E, (HL)
+                DEC HL
+                LD D, (HL)
+
+                SET 7, H
+                LD (HL), D
+                INC HL
+                LD (HL), E
+
+.Continue       POP DE
+                POP HL
+                POP AF
+                JP Bootloader.KernelMinimal.Interrupt.Handler.SaveRegs
+
                 display " - Main interrupt:\t\t\t\t\t", /A, Interrupt, "\t= busy [ ", /D, $-Interrupt, " byte(s)  ]"
     
                 endif ; ~ _WORLD_MAIN_INTERRUPT_

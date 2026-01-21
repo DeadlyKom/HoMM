@@ -17,5 +17,6 @@ SCR_STACK_ADR_BASE      EQU MemBank_01_SCR  + ImageSize
 SCR_SHADOW              EQU 0x01
 SCR_ADR_SHADOW          EQU MemBank_03_SCR
 SCR_STACK_ADR_SHADOW    EQU MemBank_03_SCR + ImageSize
+SCR_SIZE                EQU ImageSize + AttributeSize
 
                 endif ; ~_CONFIG_ZX_SPECTRUM_

@@ -46,7 +46,11 @@ Launch:         ; -----------------------------------------
                 ; подготовка основного экрана
                 CLS SCR_ADR_BASE, 0xFF                                          ; очистка основного экрана
                 ATTR_IPB SCR_ADR_BASE, BLACK, WHITE, 0                          ; очистка атрибутов основного экрана
-
+                SHOW_BASE_SCREEN                                                ; отображение базового экрана
+                ; подготовка теневого экрана
+                MEMCPY_PAGE SCR_ADR_BASE, SCR_ADR_SHADOW,  PAGE_7, SCR_SIZE     ; копирование экрана в теневой
+                CALL Console.SetDrawToTwo                                       ; отображение консоли в 2х экранах
+                SHOW_SHADOW_SCREEN                                              ; отображение теневого экрана
                 ; -----------------------------------------
                 ; инициализация мира 
                 SET_MAIN_LOOP World.Base.Loop                                   ; установка главного цикла

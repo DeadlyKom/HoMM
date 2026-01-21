@@ -11,7 +11,8 @@ Console:
 .SetCursor      EQU Kernel.Console.SetCursor
 .SetScreenAdr   EQU Kernel.Console.SetScreenAdr
 .SetAttribute   EQU Kernel.Console.SetAttribute
-.Attribute      EQU Kernel.Console.DrawChar.Attribute
+.SetDrawToOne   EQU Kernel.Console.SetDrawToOne
+.SetDrawToTwo   EQU Kernel.Console.SetDrawToTwo
 
                 endif ; ~_KERNEL_CONSOLE_
  

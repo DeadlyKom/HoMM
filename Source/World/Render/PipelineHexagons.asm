@@ -100,7 +100,9 @@ PipelineHexagons:
 .Swap           SET_RENDER_FLAG SWAPPED_PENDING_BIT                             ; установить флаг успеного переключения экрана, ожидаем окончание прерывания
                 JP_SHOW_BASE_SCREEN                                             ; отображение базового экрана
 
-.MemcpyScreen   CALL ScreenBlock.Memcpy                                         ; копирование screen block'и в теневой экран
+.MemcpyScreen   RESTORE_SCR World.Base.Interrupt.Memcpy
+                CALL ScreenBlock.Memcpy                                         ; копирование screen block'и в теневой экран
+                RESTORE_SCR_
                 RES_RENDER_FLAGS SWAPPED_PENDING | SWAP_PENDING                 ; сброс флага переключения экранов
                 RET
 

@@ -32,8 +32,9 @@ DrawChar:       ; расчёт адреса символа
                 ; адрес экрана
 .ScreenAdr      EQU $+1
                 LD DE, #0000
-
-                ; проверка запрета смены экранов
+.Function       EQU $+1
+                JR TwoScreen
+OneScreen:      ; проверка запрета смены экранов
                 CHECK_RENDER_FLAG_A SWAP_DISABLE_BIT
                 JR NZ, .SkipAdjust
 
@@ -54,9 +55,38 @@ DrawChar:       ; расчёт адреса символа
                 EX DE, HL
 .Attribute      EQU $+1
                 LD (HL), #00
+                ; переход к следующему знакоместу
+                LD HL, DrawChar.ScreenAdr
+                INC (HL)
+
+                RET
+TwoScreen:      ; вывод на экран
+                dup  7
+                LD A, (HL)
+                LD (DE), A
+                SET 7, D
+                LD (DE), A
+                RES 7, D
+                INC HL
+                INC D
+                edup
+                LD A, (HL)
+                SET 7, D
+                LD (DE), A
+                RES 7, D
+                LD (DE), A
+
+                ; преобразование адреса пикселей в адрес атрибутов
+                CALL Convert.ToAttribute
+.Attribute      EQU $+1
+                LD A, #00
+                SET 7, D
+                LD (DE), A
+                RES 7, D
+                LD (DE), A
 
                 ; переход к следующему знакоместу
-                LD HL, .ScreenAdr
+                LD HL, DrawChar.ScreenAdr
                 INC (HL)
 
                 RET
@@ -169,7 +199,30 @@ SetScreenAdr:   LD (DrawChar.ScreenAdr), HL
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-SetAttribute:   LD (DrawChar.Attribute), A
+SetAttribute:   LD (OneScreen.Attribute), A
+                LD (TwoScreen.Attribute), A
+                RET
+; -----------------------------------------
+; установка отображения в один экран
+; In:
+;   A - атрибут вывода
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+SetDrawToOne:   XOR A
+                LD (DrawChar.Function), A
+                RET
+; -----------------------------------------
+; установка отображения в два экрана
+; In:
+;   A - атрибут вывода
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+SetDrawToTwo:   LD A, TwoScreen-DrawChar.Function-1
+                LD (DrawChar.Function), A
                 RET
 
                 display " - Console:\t\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
