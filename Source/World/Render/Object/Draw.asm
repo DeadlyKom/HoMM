@@ -45,7 +45,7 @@ Draw:           ; инициализация
                 SBC HL, BC
                 LD BC, SCR_WORLD_POS_X << 7
                 ADD HL, BC
-                LD (Kernel.Sprite.DrawClipped.PositionX), HL
+                LD (Kernel.Sprite.DrawClipping.PositionX), HL
 
                 ; расчёт положения объекта относительно верхнего-левого видимойго края (по вертикали)
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
@@ -57,7 +57,7 @@ Draw:           ; инициализация
                 SBC HL, BC
                 LD BC, SCR_WORLD_POS_Y << 7
                 ADD HL, BC
-                LD (Kernel.Sprite.DrawClipped.PositionY), HL
+                LD (Kernel.Sprite.DrawClipping.PositionY), HL
 
                 ; определение способа отображения объекта
                 LD A, (IY + FObjectDefaultSettings.Class)

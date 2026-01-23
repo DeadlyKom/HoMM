@@ -1,6 +1,6 @@
 
-                ifndef _STRUCTS_SPRITE_
-                define _STRUCTS_SPRITE_
+                ifndef _STRUCTS_SPRITE_CLIPPING_
+                define _STRUCTS_SPRITE_CLIPPING_
 
                 struct FSpriteData
 ; -----------------------------------------
@@ -85,4 +85,4 @@ Num             DB #00
 Offset          DW #0000
                 ends
 
-                endif ; ~_STRUCTS_SPRITE_
+                endif ; ~_STRUCTS_SPRITE_CLIPPING_

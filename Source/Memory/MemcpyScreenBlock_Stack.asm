@@ -1,6 +1,6 @@
 
-                ifndef _MEMORY_COPY_SCREEN_BLOCK_
-                define _MEMORY_COPY_SCREEN_BLOCK_
+                ifndef _MEMORY_COPY_SCREEN_BLOCK_STACK_
+                define _MEMORY_COPY_SCREEN_BLOCK_STACK_
 
                 module Memcpy
 Begin:          EQU $
@@ -256,7 +256,7 @@ Screen_4:       ; инициализация
                 LD SP, #0000
                 RET
 
-                display " - Memcpy screen block:\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
+                display " - Memcpy screen block 'Stack':\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
                 endmodule
 
-                endif ; ~_MEMORY_COPY_SCREEN_BLOCK_
+                endif ; ~_MEMORY_COPY_SCREEN_BLOCK_STACK_

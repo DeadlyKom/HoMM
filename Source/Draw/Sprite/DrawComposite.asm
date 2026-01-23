@@ -89,7 +89,7 @@ DrawComposite:  ; сохранение счётчика, от которого �
                 ; Corrupt:
                 ; Note:
                 ; -----------------------------------------
-                CALL Draw.Sprite
+                CALL Draw.SpriteClipping
                 POP HL
 
                 POP BC

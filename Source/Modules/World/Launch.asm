@@ -13,7 +13,7 @@ Launch:         ; -----------------------------------------
                 ; сохранение страницы
                 LD A, (GameState.Assets + FAssets.Address.Page)
                 LD (Kernel.Modules.World.Page), A
-
+                ; -----------------------------------------
                 ATTR_IPB SCR_ADR_BASE, BLACK, BLACK, 0                          ; скрытие атрибутами основного экрана
                 MEMCPY Adr.Deploy.World, Adr.World, Size.Deploy.World           ; копирование блока
                 MEMCPY_PAGE Adr.Deploy.ScreenRefresh, Adr.ScreenRefresh, \
@@ -40,17 +40,9 @@ Launch:         ; -----------------------------------------
                 MEMCPY Adr.Deploy.Sprite, Adr.CodeToScr, Size.Deploy.Sprite     ; копирование блока
                 CALL World.Sprite.Hero.Load                                     ; загрузка и инициализация спрайтов героя
                 CALL World.Sprite.Cursor.Load                                   ; загрузка и инициализация спрайтов курсора
-                CALL World.Sprite.UI.Load                                       ; загрузка и инициализация спрайтов UI
-
+                ; CALL World.Sprite.UI.Load                                       ; загрузка и инициализация спрайтов UI
                 ; -----------------------------------------
-                ; подготовка основного экрана
-                CLS SCR_ADR_BASE, 0xFF                                          ; очистка основного экрана
-                ATTR_IPB SCR_ADR_BASE, BLACK, WHITE, 0                          ; очистка атрибутов основного экрана
-                SHOW_BASE_SCREEN                                                ; отображение базового экрана
-                ; подготовка теневого экрана
-                MEMCPY_PAGE SCR_ADR_BASE, SCR_ADR_SHADOW,  PAGE_7, SCR_SIZE     ; копирование экрана в теневой
-                CALL Console.SetDrawToTwo                                       ; отображение консоли в 2х экранах
-                SHOW_SHADOW_SCREEN                                              ; отображение теневого экрана
+                CALL Display.GameWindow                                         ; отображение рамки игрового мира
                 ; -----------------------------------------
                 ; инициализация мира 
                 SET_MAIN_LOOP World.Base.Loop                                   ; установка главного цикла

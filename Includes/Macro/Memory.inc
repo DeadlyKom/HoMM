@@ -114,7 +114,9 @@ SWAP_SCREEN     macro
 SHOW_SHADOW_SCREEN macro
                 CALL Screen.ShowShadow
                 endm
-
+JP_SHOW_SHADOW_SCREEN macro
+                JP Screen.ShowShadow
+                endm
 ; -----------------------------------------
 ; копирование блока
 ; In:
@@ -147,7 +149,7 @@ MEMCPY_PAGE     macro Source?, Destination?, DestinationPage?, Size?
                 LD HL, .Continue
                 PUSH HL
                 PUSH_PAGE                                                       ; сохранение номера страницы в стеке
-                LD HL, SetPageStack
+                LD HL, SetPageInStack
                 PUSH HL
                 ; -----------------------------------------
                 ; копирование данных между страницами
@@ -213,7 +215,7 @@ POP_PAGE        macro
                 SET_PAGE_A
                 endm
 JP_POP_PAGE     macro
-                JP SetPageStack
+                JP SetPageInStack
                 endm
 
                 endif ; ~_MACRO_MEMORY_

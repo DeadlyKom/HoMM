@@ -35,14 +35,14 @@ Initialize:     ; проверка наличия 5 кнопочного (кла
 
 .Button_5       RES_HARD_INPUT_FLAG HARD_INPUT_KEMPSTON_BUTTON_BIT
                 ifdef _DEBUG
-                LD HL, SCR_ADR_BASE + ScreenSize - 1
+                LD HL, SCR_ADR_BASE + SCR_SIZE - 1
                 SET_ATTR_IP BLACK, GREEN
                 endif
                 RET
 
 .Button_8       SET_HARD_INPUT_FLAG HARD_INPUT_KEMPSTON_BUTTON_BIT
                 ifdef _DEBUG
-                LD HL, SCR_ADR_BASE + ScreenSize - 1
+                LD HL, SCR_ADR_BASE + SCR_SIZE - 1
                 SET_ATTR_IP BLACK, BLUE
                 endif
                 RET
@@ -50,7 +50,7 @@ Initialize:     ; проверка наличия 5 кнопочного (кла
 .Error          RES_HARD_INPUT_FLAG HARD_INPUT_KEMPSTON_BIT
                 SCF
                 ifdef _DEBUG
-                LD HL, SCR_ADR_BASE + ScreenSize - 1
+                LD HL, SCR_ADR_BASE + SCR_SIZE - 1
                 SET_ATTR_IP BLACK, RED
                 endif
                 RET

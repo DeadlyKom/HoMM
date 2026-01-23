@@ -11,10 +11,11 @@
                 include "Event.inc"
                 include "Setup.inc"
                 include "Cursor.inc"
-                include "Sprite.inc"
                 include "Gameplay.inc"
                 include "SaveSlot.inc"
                 include "Interrupt.inc"
+                include "SpriteClipping.inc"
+                include "SpriteNotClipping.inc"
 
                 include "Map/Include.inc"
                 include "Game/Include.inc"

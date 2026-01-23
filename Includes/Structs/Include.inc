@@ -13,9 +13,10 @@
                 include "Size.inc"
                 include "Keys.inc"
                 include "Event.inc"
-                include "Sprite.inc"
                 include "Item_ID.inc"
                 include "WorldInfo.inc"
+                include "SpriteClipping.inc"
+                include "SpriteNotClipping.inc"
                 
                 include "Map/Include.inc"
                 include "SaveSlot.inc"

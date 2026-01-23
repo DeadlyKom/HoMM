@@ -1,6 +1,6 @@
 
-                ifndef _DRAW_SPRITE_DRAW_CLIPPED_
-                define _DRAW_SPRITE_DRAW_CLIPPED_
+                ifndef _DRAW_SPRITE_DRAW_CLIPPING_
+                define _DRAW_SPRITE_DRAW_CLIPPING_
 ; -----------------------------------------
 ; отсечение спрайта с последующим отображение
 ; In:
@@ -15,7 +15,7 @@
 ;    если доступ к ним через FSpritesRef
 ;   - отражённые спрайты должны иметь ширину кратную 8
 ; -----------------------------------------
-DrawClipped:    ; --------------------------------------------------------------
+DrawClipping:   ; --------------------------------------------------------------
                 ; *вставка для отражающего спрайта
                 EX AF, AF'
                 XOR A
@@ -556,6 +556,7 @@ DrawClipped:    ; --------------------------------------------------------------
                 DW Exit
 Exit:           ; выход
                 RET
-                display " - Draw function 'Clipped':\t\t\t\t", /A, DrawClipped, "\t= busy [ ", /D, $-DrawClipped, " byte(s)  ]"
 
-                endif ; ~ _DRAW_SPRITE_DRAW_CLIPPED_
+                display " - Draw function 'Clipping':\t\t\t\t", /A, DrawClipping, "\t= busy [ ", /D, $-DrawClipping, " byte(s)  ]"
+
+                endif ; ~ _DRAW_SPRITE_DRAW_CLIPPING_

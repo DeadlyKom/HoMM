@@ -111,9 +111,9 @@ Cursor.Draw:    LD IX, CurrentState
                 LD (HL), A
 
                 ; сохранение позиции ранее рисуемого спрайта функции отсечения
-                LD DE, (Kernel.Sprite.DrawClipped.PositionX)
+                LD DE, (Kernel.Sprite.DrawClipping.PositionX)
                 PUSH DE
-                LD DE, (Kernel.Sprite.DrawClipped.PositionY)
+                LD DE, (Kernel.Sprite.DrawClipping.PositionY)
                 PUSH DE
 
                 ; установка положения спрайта курсора
@@ -125,7 +125,7 @@ Cursor.Draw:    LD IX, CurrentState
                 ADD HL, HL ; x4
                 ADD HL, HL ; x8
                 ADD HL, HL ; x16
-                LD (Kernel.Sprite.DrawClipped.PositionX), HL
+                LD (Kernel.Sprite.DrawClipping.PositionX), HL
 
                 LD A, (Mouse.PositionY)
                 LD L, A
@@ -134,7 +134,7 @@ Cursor.Draw:    LD IX, CurrentState
                 ADD HL, HL ; x4
                 ADD HL, HL ; x8
                 ADD HL, HL ; x16
-                LD (Kernel.Sprite.DrawClipped.PositionY), HL
+                LD (Kernel.Sprite.DrawClipping.PositionY), HL
 
                 ; сохранение отсечение спрайтов
                 LD HL, (GameState.LeftEdge)
@@ -153,7 +153,7 @@ Cursor.Draw:    LD IX, CurrentState
                 EX DE, HL
 
                 ; сохранение флагов функции отсечения
-                LD A, (Kernel.Sprite.DrawClipped.Flags)
+                LD A, (Kernel.Sprite.DrawClipping.Flags)
                 PUSH AF
 
                 ; расчёт адреса структуры FSprite в буфере спрайтов
@@ -194,12 +194,12 @@ Cursor.Draw:    LD IX, CurrentState
                 endr
                 SPRITE_HL SPRITE_CUR_IDX
 
-                CALL Draw.Sprite.HL                                             ; отображение спрайта из временного буфера
+                CALL Draw.SpriteClipping.HL                                     ; отображение спрайта из временного буфера
                                                                                 ; HL - указывает на структуру FSprite
 
                 ; всосстановление флагов функции отсечения
                 POP AF
-                LD (Kernel.Sprite.DrawClipped.Flags), A
+                LD (Kernel.Sprite.DrawClipping.Flags), A
 
                 ; восстановление отсечение спрайтов
                 POP HL
@@ -209,9 +209,9 @@ Cursor.Draw:    LD IX, CurrentState
 
                 ; восстановление позиции ранее рисуемого спрайта функции отсечения
                 POP DE
-                LD (Kernel.Sprite.DrawClipped.PositionY), DE
+                LD (Kernel.Sprite.DrawClipping.PositionY), DE
                 POP DE
-                LD (Kernel.Sprite.DrawClipped.PositionX), DE
+                LD (Kernel.Sprite.DrawClipping.PositionX), DE
                 
 .Screen         EQU $+1
                 LD A, #00

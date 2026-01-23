@@ -1,6 +1,6 @@
 
-                ifndef _CONST_SPRITE_
-                define _CONST_SPRITE_
+                ifndef _CONST_SPRITE_CLIPPING_
+                define _CONST_SPRITE_CLIPPING_
 SPRITE_BUF_MAX  EQU 126                                                         ; максимальное количество спрайтов в буфере SpriteInfoBuffer
 SPRITE_TEMP_IDX EQU 127                                                         ; временный индекс спрайта
 SPRITE_CUR_IDX  EQU 126                                                         ; временный индекс спрайта спрайта
@@ -25,4 +25,4 @@ M_OR_XOR        EQU 0x03 << SPR_MIRROR_BIT
 LD_ATTR         EQU 0x04 << SPR_MIRROR_BIT
 OR_XOR_ATTR     EQU 0x06 << SPR_MIRROR_BIT
 
-                endif ; ~_CONST_SPRITE_
+                endif ; ~_CONST_SPRITE_CLIPPING_

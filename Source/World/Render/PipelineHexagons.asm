@@ -88,6 +88,10 @@ PipelineHexagons:
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 CALL ScreenBlock.HexAnalysis                                    ; анализ обновления гексагонов
 
+                SET_MODULE_PAGE_World                                           ; включить страницу модуля "World"
+                CALL World.Display.GameWindow.Ornament
+                SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
+
                 ; CALL World.Base.Tilemap.VisibleObjects                          ; определение видимых объектов - ОТКЛ
                 ; CALL NZ, Object.Draw                                            ; отображение объектов в массиве SortBuffer - ОТКЛ
                  

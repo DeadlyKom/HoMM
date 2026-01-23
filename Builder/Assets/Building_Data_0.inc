@@ -41,8 +41,8 @@ ADD_ASSETS_DEBUG macro Bank?, Page?, ORG?, Include?
                 ; ADD_ASSETS 3, Page.TileSprites, Adr.TileSprites, incbin "Builder/Assets/Metadata/Compressed/Default/DefaultSettings.meta.ar"
                 ; ASSETS_ID_CURSOR_PACK
                 ADD_ASSETS 3, PAGE_N, 0x0000, incbin "Builder/Assets/Graphics/Compressed/Cursor.pack.ar"
-                ; ASSETS_ID_UI_ARROW_PATH_PACK
-                ADD_ASSETS 3, PAGE_N, 0x0000, incbin "Builder/Assets/Graphics/Compressed/UI_ArrowPath.pack.ar"
+                ; ; ASSETS_ID_UI_ARROW_PATH_PACK
+                ; ADD_ASSETS 3, PAGE_N, 0x0000, incbin "Builder/Assets/Graphics/Compressed/UI_ArrowPath.pack.ar"
                 ; ASSETS_ID_HERO_PACK
                 ADD_ASSETS 3, PAGE_N, 0x0000, incbin "Builder/Assets/Graphics/Compressed/Hero.pack.ar"
                 ; ASSETS_ID_HEX_FOG

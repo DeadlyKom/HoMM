@@ -4,7 +4,8 @@
 
                 module UI
                 
-                include "ArrowPath/Include.inc"
+                ; include "ArrowPath/Include.inc"
+                include "Game/World/Include.inc"
 
                 endmodule
 

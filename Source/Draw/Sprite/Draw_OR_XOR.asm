@@ -22,7 +22,7 @@ DrawOR_XOR      EXX
                 LD B, A                                                         ; хранит при левом клипе -отрицательное смещение, в остальных позиции спрайта по горизонтали в пикселях
 
                 ; расчёт смещения от начала адреса спрайта
-                LD A, (DrawClipped.Flags)
+                LD A, (DrawClipping.Flags)
                 LD H, A     ; %ddmppppp                                         ; FSpriteData.Page
                 LD A, L     ; %000rrrrr
                 DEC A       ; началос с 1
@@ -134,7 +134,7 @@ DrawOR_XOR      EXX
                 ;   MR      [5]         - флаг, зеркального отображения спрайта по горизонтали
                 ;   P4-P0   [4..0]      - страница хранения спрайта (32 страницы)
                 ; -----------------------------------------
-                LD A, (DrawClipped.Flags)
+                LD A, (DrawClipping.Flags)
                 RRA     ; %Sddmpppp : p
                 RRA     ; %xSddmppp : p
                 XOR C

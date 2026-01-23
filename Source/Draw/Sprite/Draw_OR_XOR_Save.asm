@@ -38,7 +38,7 @@ DrawOR_XOR_Save ; сохранение в буфер адрес экарана
                 LD B, A                                                         ; ширина невидимой части спрайта в пикселях (-/+)
 
                 ; расчёт смещения от начала адреса спрайта
-                LD A, (DrawClipped.Flags)
+                LD A, (DrawClipping.Flags)
                 LD H, A     ; %ddmppppp                                         ; FSpriteData.Page
                 LD A, L     ; %000rrrrr
                 DEC A       ; началос с 1
@@ -159,7 +159,7 @@ DrawOR_XOR_Save ; сохранение в буфер адрес экарана
                 ;   MR      [5]         - флаг, зеркального отображения спрайта по горизонтали
                 ;   P4-P0   [4..0]      - страница хранения спрайта (32 страницы)
                 ; -----------------------------------------
-                LD A, (DrawClipped.Flags)
+                LD A, (DrawClipping.Flags)
                 RRA     ; %Sddmpppp : p
                 RRA     ; %xSddmppp : p
                 XOR C

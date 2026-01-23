@@ -13,6 +13,6 @@
 PopPage:        POP AF                                                          ; восстановление номера страницы из стека
                 JP_PAGE_A
 
-                ; ToDo заменить функцию на SetPageStack
+                ; ToDo заменить функцию на SetPageInStack
 
                 endif ; ~_FUNCTIONS_POP_PAGE_
