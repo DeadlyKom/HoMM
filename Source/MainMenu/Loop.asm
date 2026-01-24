@@ -10,7 +10,7 @@
 ; -----------------------------------------
 Loop:           
 .Render         ; ************ RENDER ************
-                CHECK_RENDER_FLAG FINISHED_BIT
+                CHECK_RENDER_FLAG FRAME_READY_BIT
                 RET NZ
 
                 ; проверка завершение цикла

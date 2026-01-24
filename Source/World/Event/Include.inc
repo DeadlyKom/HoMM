@@ -5,7 +5,7 @@
                 module Event
 
                 include "Handler.asm"
-                include "Pathfinding.asm"
+                ; include "Pathfinding.asm"
 
                 endmodule
 

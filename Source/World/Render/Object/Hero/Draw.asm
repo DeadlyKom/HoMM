@@ -78,6 +78,6 @@ Draw:           ; --------------------------------------------------------------
                 LD A, B                                                         ; номер анимации
                 SCF                                                             ; указываем на структуру FSpritesRef
 
-                JP Draw.Sprite
+                JP Draw.SpriteClipping
 
                 endif ; ~_WORLD_RENDER_OBJECT_HERO_DRAW_

@@ -234,6 +234,8 @@ LOAD_ASSETS_A   macro
 ; Out:
 ;   HL   - адрес загрузки/распаковки
 ; Corrupt:
+; Note:
+;   - портит данные буферов начиная с Adr.ExtraBuffer (TR-DOS)
 ; -----------------------------------------
 LOAD_ASSETS_REG macro Reg?
                 LD A, Reg?

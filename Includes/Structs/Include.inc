@@ -8,22 +8,22 @@
                 include "Vector16.inc"
                 include "Address.inc"
                 include "Assets.inc"
-
-                include "AStar.inc"
                 
                 include "Tick.inc"
                 include "Size.inc"
                 include "Keys.inc"
                 include "Event.inc"
-                include "Sprite.inc"
                 include "Item_ID.inc"
                 include "WorldInfo.inc"
+                include "SpriteClipping.inc"
+                include "SpriteNotClipping.inc"
                 
                 include "Map/Include.inc"
                 include "SaveSlot.inc"
 
                 include "Game_State.inc"
                 include "Game_Config.inc"
+                include "Hard_Config.inc"
                 include "Game_Session.inc"
 
                 include "Hero/Include.inc"

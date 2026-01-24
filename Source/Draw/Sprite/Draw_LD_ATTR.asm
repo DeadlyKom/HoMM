@@ -22,7 +22,7 @@ DrawLD_ATTR     EXX
                 LD B, A                                                         ; ширина невидимой части спрайта в пикселях (-/+)
 
                 ; расчёт смещения от начала адреса спрайта
-                LD A, (DrawClipped.Flags)
+                LD A, (DrawClipping.Flags)
                 LD H, A     ; %ddmppppp                                         ; FSpriteData.Page
                 XOR C
                 AND %10000000

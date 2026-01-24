@@ -23,7 +23,8 @@ Core:           EI
                 ; -----------------------------------------
                 ; отображение версию сборки
                 ; -----------------------------------------
-                SCREEN_ADR_REG HL, MemBank_01_SCR, 20 << 3, 23 << 3
+                SCREEN_ADR_REG HL, SCR_ADR_BASE, 20 << 3, 23 << 3
+                CALL Console.SetDrawToOne
                 CALL Console.SetScreenAdr
                 SET_REG_ATTR_IPB A, CYAN, BLACK, 0
                 CALL Console.SetAttribute
@@ -94,7 +95,6 @@ Core:           EI
                     VK_S,                                                       ; клавиша по умолчанию "вниз"
                     VK_W,                                                       ; клавиша по умолчанию "вверх"
                     INPUT_KEYBOARD,                                             ; флаги игровых настроек
-                    0,                                                          ; флаги ограничения железа
                     CURSOR_MIN_SPEED,                                           ; минимальная скорость курсора
                     CURSOR_MAX_SPEED,                                           ; максимальная скорость курсора
                     1                                                           ; скорость скролла тайловой карты

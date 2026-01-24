@@ -2,10 +2,18 @@
                 ifndef _CONST_MAP_METADATA_
                 define _CONST_MAP_METADATA_
 ; флаги работы с метаданными карты
-MAP_META_BLOCK_TILE_BIT     EQU 0x07                                            ; флаг, невозможности проходить данный тайл
-MAP_META_CLOSE_LIST_BIT     EQU 0x06                                            ; флаг, указывает нахождение тайла в закрытом списке (исключает из обработки в поиске пути)
-MAP_META_FOG_OF_WAR_MASK    EQU %00001111                                       ; биты тумана войны, соответствующие каждому игроку
-MAP_META_BLOCK_TILE         EQU 1 << MAP_META_BLOCK_TILE_BIT
-MAP_META_CLOSE_LIST         EQU 1 << MAP_META_CLOSE_LIST_BIT
+
+; флаг сброшен — гексагон закрашен туманом целиком
+MAP_META_FOG_ENABLE         EQU 0x00                                            ; гексагон затуманен полностью
+MAP_META_FOG_DISABLE        EQU 0x01                                            ; гексагон виден игроку (возможно частичное затуманивание)
+MAP_META_FOG_PLAYER_1_MASK  EQU %01000000                                       ; маска тумана первого игрока
+MAP_META_FOG_PLAYER_2_MASK  EQU %00000010                                       ; маска тумана второго игрока
+MAP_META_FOG_PLAYER_3_MASK  EQU %00000100                                       ; маска тумана третьего игрока
+MAP_META_FOG_PLAYER_4_MASK  EQU %00001000                                       ; маска тумана четвёртого игрока
+MAP_META_FOG_OF_WAR_MASK    EQU MAP_META_FOG_PLAYER_1_MASK | \
+                                MAP_META_FOG_PLAYER_2_MASK | \
+                                MAP_META_FOG_PLAYER_3_MASK | \
+                                MAP_META_FOG_PLAYER_4_MASK                      ; маска бит тумана, соответствующие каждому игроку
+MAP_META_DEFAULT_VALUE      EQU %00000000                                       ; значение по умолчанию при инициализации карты
 
                 endif ; ~_CONST_MAP_METADATA_

@@ -6,6 +6,8 @@
 Begin           EQU $
                 include "Delay.asm"
                 include "JumpTable.asm"
+                include "CopyScreen.asm"
+                include "ClearScreen.asm"
                 include "JumpPopPage.asm"
                 include "ExecuteAssetCode.asm"
 

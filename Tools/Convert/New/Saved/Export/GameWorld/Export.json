@@ -1,0 +1,146 @@
+[
+    {
+        "SprName": "Gem up",
+        "SprWidth": 8,
+        "SprHeight": 8,
+        "PoxImgX": 8,
+        "PoxImgY": 8,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/Рамка игрового мира.png",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/InkData_Gem up.bin",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/AttributeData_Gem up.bin",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/MaskData_Gem up.bin",
+        "Regions": [],
+		"Metadata": [
+            {
+				"Type": "SpriteType",
+				"Value": 0
+            }
+        ]
+    },
+    {
+        "SprName": "Gem down",
+        "SprWidth": 8,
+        "SprHeight": 8,
+        "PoxImgX": 8,
+        "PoxImgY": 176,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/Рамка игрового мира.png",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/InkData_Gem down.bin",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/AttributeData_Gem down.bin",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/MaskData_Gem down.bin",
+        "Regions": [],
+		"Metadata": [
+            {
+				"Type": "SpriteType",
+				"Value": 0
+            }
+        ]
+    },
+    {
+        "SprName": "Ornament vert",
+        "SprWidth": 8,
+        "SprHeight": 16,
+        "PoxImgX": 8,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/Рамка игрового мира.png",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/InkData_Ornament vert.bin",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/AttributeData_Ornament vert.bin",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/MaskData_Ornament vert.bin",
+        "Regions": [],
+		"Metadata": [
+            {
+				"Type": "SpriteType",
+				"Value": 1
+            }
+        ]
+    },
+    {
+        "SprName": "Ornament horz",
+        "SprWidth": 16,
+        "SprHeight": 8,
+        "PoxImgX": 16,
+        "PoxImgY": 8,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/Рамка игрового мира.png",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/InkData_Ornament horz.bin",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/AttributeData_Ornament horz.bin",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/MaskData_Ornament horz.bin",
+        "Regions": [],
+		"Metadata": [
+            {
+				"Type": "SpriteType",
+				"Value": 1
+            }
+        ]
+    },
+    {
+        "SprName": "Ornament edge up_down",
+        "SprWidth": 192,
+        "SprHeight": 8,
+        "PoxImgX": 0,
+        "PoxImgY": 0,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/Рамка игрового мира.png",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/InkData_Ornament edge up_down.bin",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/AttributeData_Ornament edge up_down.bin",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/MaskData_Ornament edge up_down.bin",
+        "Regions": [],
+		"Metadata": [
+            {
+				"Type": "SpriteType",
+				"Value": 0
+            }
+        ]
+    },
+    {
+        "SprName": "Ornament edge left_right",
+        "SprWidth": 8,
+        "SprHeight": 176,
+        "PoxImgX": 0,
+        "PoxImgY": 8,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/Рамка игрового мира.png",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/InkData_Ornament edge left_right.bin",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/AttributeData_Ornament edge left_right.bin",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/MaskData_Ornament edge left_right.bin",
+        "Regions": [],
+		"Metadata": [
+            {
+				"Type": "SpriteType",
+				"Value": 0
+            }
+        ]
+    },
+    {
+        "SprName": "Ornament minimap up_down",
+        "SprWidth": 64,
+        "SprHeight": 8,
+        "PoxImgX": 192,
+        "PoxImgY": 8,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/Рамка игрового мира.png",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/InkData_Ornament minimap up_down.bin",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/AttributeData_Ornament minimap up_down.bin",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/MaskData_Ornament minimap up_down.bin",
+        "Regions": [],
+		"Metadata": [
+            {
+				"Type": "SpriteType",
+				"Value": 0
+            }
+        ]
+    },
+    {
+        "SprName": "Ornament minimap left_right",
+        "SprWidth": 8,
+        "SprHeight": 48,
+        "PoxImgX": 192,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/Рамка игрового мира.png",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/InkData_Ornament minimap left_right.bin",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/AttributeData_Ornament minimap left_right.bin",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/GameWorld/MaskData_Ornament minimap left_right.bin",
+        "Regions": [],
+		"Metadata": [
+            {
+				"Type": "SpriteType",
+				"Value": 0
+            }
+        ]
+    }
+]

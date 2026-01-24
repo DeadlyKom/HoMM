@@ -22,7 +22,7 @@ DrawOR_XOR_ATTR EXX
                 LD B, A                                                         ; ширина невидимой части спрайта в пикселях (-/+)
 
                 ; расчёт смещения от начала адреса спрайта
-                LD A, (DrawClipped.Flags)
+                LD A, (DrawClipping.Flags)
                 LD H, A     ; %ddmppppp                                         ; FSpriteData.Page
                 LD A, L     ; %000rrrrr
                 DEC A       ; началос с 1
@@ -134,7 +134,7 @@ DrawOR_XOR_ATTR EXX
                 ;   MR      [5]         - флаг, зеркального отображения спрайта по горизонтали
                 ;   P4-P0   [4..0]      - страница хранения спрайта (32 страницы)
                 ; -----------------------------------------
-                LD A, (DrawClipped.Flags)
+                LD A, (DrawClipping.Flags)
                 RRA     ; %Sddmpppp : p
                 RRA     ; %xSddmppp : p
                 XOR C
@@ -226,6 +226,7 @@ DrawOR_XOR_ATTR.Exit
 .ContainerSP    EQU $+1
                 LD SP, #0000
                 RET
+
                 display " - Draw function 'OR XOR ATTR':\t\t\t", /A, DrawOR_XOR_ATTR, "\t= busy [ ", /D, $-DrawOR_XOR_ATTR, " byte(s)  ]"
 
                 endif ; ~ _DRAW_SPRITE_DRAW_OR_XOR_ATTR_

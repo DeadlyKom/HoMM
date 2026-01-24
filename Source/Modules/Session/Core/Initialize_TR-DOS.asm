@@ -13,8 +13,7 @@ Init_TR_DOS:    ; инициализация
                 ASSETS_TRDOS                                                    ; перенос драйвера TR-DOS во временный буффер
 
                 ; восстановление страницы расположения ассета
-                LD A, (Kernel.Modules.Session.Page)
-                JP_SET_PAGE_A
+                JP_SET_MODULE_PAGE_Session                                      ; включить страницу модуля "Session"
 
                 display " - Initialize TR-DOS:\t\t\t\t\t", /A, Init_TR_DOS, "\t= busy [ ", /D, $-Init_TR_DOS, " byte(s)  ]"
 

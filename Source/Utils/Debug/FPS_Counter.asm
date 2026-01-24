@@ -6,7 +6,7 @@
 
                 define FPS_X 30                                                 ; в знакоместах
                 define FPS_Y 0 * 8                                              ; в пикселях
-CURSOR_FPS      EQU SCR_ADR_SHADOW + /*Y*/ (((FPS_Y >> 3) & 0x18) << 8) + ((FPS_Y & 0x07) << 8) + ((FPS_Y & 0x38) << 2) + /*X*/FPS_X
+CURSOR_FPS      EQU SCR_ADR_BASE + /*Y*/ (((FPS_Y >> 3) & 0x18) << 8) + ((FPS_Y & 0x07) << 8) + ((FPS_Y & 0x38) << 2) + /*X*/FPS_X
 
                 define FPS_INC WHITE
                 define FPS_PAPER BLACK

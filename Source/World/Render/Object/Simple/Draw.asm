@@ -66,6 +66,6 @@ Draw:           ; расчёт адреса структуры FSpritesRef
                 LD E, A
                 EX AF, AF'
                 LD A, E
-                JP Draw.Sprite
+                JP Draw.SpriteClipping
 
                 endif ; ~_WORLD_RENDER_OBJECT_SIMPLE_DRAW_

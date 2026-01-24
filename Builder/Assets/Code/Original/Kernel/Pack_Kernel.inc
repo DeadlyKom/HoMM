@@ -33,8 +33,9 @@ Begin:          EQU $
                 include "Source/Input/Include.inc"
 
                 ; draw world
+                include "Source/Draw/HEX/Include.inc"
                 include "Source/Draw/Sprite/Include.inc"
-                include "Source/Draw/World/Background/Include.inc"
+                include "Source/Draw/Boundary/Include.inc"
 
                 ; работа с информацией о спрайтов в буфере Adr.SpriteInfoBuffer
                 include "Source/Sprite/Include.inc"

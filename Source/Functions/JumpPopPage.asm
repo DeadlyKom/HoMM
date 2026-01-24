@@ -7,10 +7,12 @@
 ;   SP+0 - адрес страницы
 ; Out:
 ; Corrupt:
-;   BC, AF, AF'
+;   BC, AF
 ; Note:
 ; -----------------------------------------
 PopPage:        POP AF                                                          ; восстановление номера страницы из стека
                 JP_PAGE_A
+
+                ; ToDo заменить функцию на SetPageInStack
 
                 endif ; ~_FUNCTIONS_POP_PAGE_

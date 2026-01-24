@@ -28,6 +28,10 @@ SafeFill_192:   RESTORE_DE
                 LD (MS_ContainerSP), SP
                 LD SP, HL
                 JP MemSet_192
+SafeFill_176:   RESTORE_DE
+                LD (MS_ContainerSP), SP
+                LD SP, HL
+                JP MemSet_176
 SafeFill_128:   RESTORE_DE
                 LD (MS_ContainerSP), SP
                 LD SP, HL
@@ -91,7 +95,10 @@ MemSet_512:     dup 128                                                         
 MemSet_256:     dup 32                                                          ; 32 * 2  = 64 byte(s)
                 PUSH DE
                 edup
-MemSet_192:     dup 32                                                          ; 32 * 2  = 64 byte(s)
+MemSet_192:     dup 8                                                           ; 8 * 2   = 16 byte(s)
+                PUSH DE
+                edup
+MemSet_176:     dup 24                                                          ; 24 * 2  = 48 byte(s)
                 PUSH DE
                 edup
 MemSet_128:     dup 32                                                          ; 32 * 2  = 64 byte(s)

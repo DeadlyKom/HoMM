@@ -13,6 +13,23 @@ RESTORE_BC      macro
                 LD A, #C5
                 LD (RestoreRegister), A
                 endm
+
+RESTORE_SCR     macro Handler?
+                LD A, #C3           ; JP
+                LD (RestoreRegister+0), A
+                LD A, LOW (Handler?)
+                LD (RestoreRegister+1), A
+                LD A, HIGH (Handler?)
+                LD (RestoreRegister+2), A
+                endm
+RESTORE_SCR_    macro
+                LD A, #00           ; NOP
+                LD (RestoreRegister+0), A
+                LD A, #31           ; LD SP, nnnn
+                LD (RestoreRegister+1), A
+                LD A, LOW Int.StackTop
+                LD (RestoreRegister+2), A
+                endm
 SET_USER_HANDLER macro Func?
                 LD BC, Func?
                 LD (UserInterrupt), BC

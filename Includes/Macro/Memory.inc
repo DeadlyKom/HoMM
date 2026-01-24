@@ -114,7 +114,9 @@ SWAP_SCREEN     macro
 SHOW_SHADOW_SCREEN macro
                 CALL Screen.ShowShadow
                 endm
-
+JP_SHOW_SHADOW_SCREEN macro
+                JP Screen.ShowShadow
+                endm
 ; -----------------------------------------
 ; копирование блока
 ; In:
@@ -134,6 +136,39 @@ JP_MEMCPY       macro Source?, Destination?, Size?
                 LD DE, Destination?
                 LD BC, Size?
                 JP Memcpy.FastLDIR
+                endm
+; -----------------------------------------
+; копирование данных между страницами
+; In:
+; Out:
+; Corrupt:
+;   HL, DE, BC, AF
+; Note:
+; -----------------------------------------
+MEMCPY_PAGE     macro Source?, Destination?, DestinationPage?, Size?
+                LD HL, .Continue
+                PUSH HL
+                PUSH_PAGE                                                       ; сохранение номера страницы в стеке
+                LD HL, SetPageInStack
+                PUSH HL
+                ; -----------------------------------------
+                ; копирование данных между страницами
+                ; In:
+                ;   A HL - адрес исходника  (аккумулятор страница)
+                ;   A'DE - адрес назначения (аккумулятор страница)
+                ;   BC   - длина блока
+                ; Out:
+                ; Corrupt:
+                ; Note:
+                ; -----------------------------------------
+                LD HL, Source?
+                LD DE, Destination?
+                LD BC, Size?
+                EX AF, AF'
+                LD A, DestinationPage?
+                EX AF, AF'
+                JP Memcpy.BetweenPages
+.Continue       EQU $
                 endm
 ; -----------------------------------------
 ; установка страницы (0-31) и номер видимого экрана (0,1)
@@ -173,14 +208,14 @@ PUSH_PAGE       macro
 ; -----------------------------------------
 ; восстановление номера страницы из стека
 ; Corrupt:
-;   BC, AF, AF'
+;   BC, AF
 ; -----------------------------------------
 POP_PAGE        macro
                 POP AF
                 SET_PAGE_A
                 endm
 JP_POP_PAGE     macro
-                JP Func.PopPage
+                JP SetPageInStack
                 endm
 
                 endif ; ~_MACRO_MEMORY_

@@ -4,7 +4,7 @@
 
                 module Map
                 
-                include "Debug.inc"                                             ; ASSETS_ID_MAP_DEBUG
+                include "Debug/Include.inc"                                     ; ASSETS_ID_MAP_DEBUG
 
                 endmodule
 

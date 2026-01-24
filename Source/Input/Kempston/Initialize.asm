@@ -26,31 +26,31 @@ Initialize:     ; проверка наличия 5 кнопочного (кла
                 AND C
                 JR NZ, .Error
 
-                SET_HARDWARE_FLAG HARDWARE_KEMPSTON_BIT
+                SET_HARD_INPUT_FLAG HARD_INPUT_KEMPSTON_BIT
 
                 ; проверка возможности наличия 8 кнопочного
                 IN A, (C)
                 AND %11100000
                 JR Z, .Button_8
 
-.Button_5       RES_HARDWARE_FLAG HARDWARE_KEMPSTON_BUTTON_BIT
+.Button_5       RES_HARD_INPUT_FLAG HARD_INPUT_KEMPSTON_BUTTON_BIT
                 ifdef _DEBUG
-                LD HL, SCR_ADR_BASE + ScreenSize - 1
+                LD HL, SCR_ADR_BASE + SCR_SIZE - 1
                 SET_ATTR_IP BLACK, GREEN
                 endif
                 RET
 
-.Button_8       SET_HARDWARE_FLAG HARDWARE_KEMPSTON_BUTTON_BIT
+.Button_8       SET_HARD_INPUT_FLAG HARD_INPUT_KEMPSTON_BUTTON_BIT
                 ifdef _DEBUG
-                LD HL, SCR_ADR_BASE + ScreenSize - 1
+                LD HL, SCR_ADR_BASE + SCR_SIZE - 1
                 SET_ATTR_IP BLACK, BLUE
                 endif
                 RET
 
-.Error          RES_HARDWARE_FLAG HARDWARE_KEMPSTON_BIT
+.Error          RES_HARD_INPUT_FLAG HARD_INPUT_KEMPSTON_BIT
                 SCF
                 ifdef _DEBUG
-                LD HL, SCR_ADR_BASE + ScreenSize - 1
+                LD HL, SCR_ADR_BASE + SCR_SIZE - 1
                 SET_ATTR_IP BLACK, RED
                 endif
                 RET

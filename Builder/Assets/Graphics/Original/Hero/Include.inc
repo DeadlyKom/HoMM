@@ -9,8 +9,8 @@
                 
                 include "Hero.inc"
 Size            EQU $
-                savebin "Builder/Assets/Graphics/Original/Hero.pack", 0, Size
-                shellexec "Tools\Compressor\salvador.exe -v Builder/Assets/Graphics/Original/Hero.pack Builder/Assets/Graphics/Compressed/Hero.pack.ar"
+                savebin "Builder/Assets/Graphics/Original/Hero/Hero.pack", 0, Size
+                shellexec "Tools\Compressor\salvador.exe -v Builder/Assets/Graphics/Original/Hero/Hero.pack Builder/Assets/Graphics/Compressed/Hero.pack.ar"
 
                 ORG 0x0000
 Begin.ar        incbin "Builder/Assets/Graphics/Compressed/Hero.pack.ar"

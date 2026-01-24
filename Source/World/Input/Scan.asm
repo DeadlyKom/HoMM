@@ -9,7 +9,7 @@
 ; Note:
 ; -----------------------------------------
 Scan:           ; проверка HardWare ограничения мыши
-                CHECK_HARDWARE_FLAG HARDWARE_KEMPSTON_MOUSE_BIT
+                CHECK_HARD_INPUT_FLAG HARD_INPUT_KEMPSTON_MOUSE_BIT
                 JR Z, .KeyCheck                                                 ; переход, если мышь недоступна
                 CALL Mouse.UpdateCursor                                         ; обновить положение курсора
 
@@ -80,7 +80,7 @@ Scan:           ; проверка HardWare ограничения мыши
                 AND MOVEMENT_MASK
                 RET Z                                                           ; выход если нет онажатия клавиш
 
-                SET_SCROLL_FLAG SCROLL_MAP_BIT                                  ; установка флага разрешения обновления скрола карты
+                SET_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             ; установка флага разрешения обновления скрола карты
                 RET
 
                 endif ; ~_WORLD_INPUT_SCAN_

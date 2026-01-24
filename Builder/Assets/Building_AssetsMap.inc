@@ -75,47 +75,52 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     World.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - World\t\t\t\t\t\t"
-                REG_BUILD_ASSETS_ID ASSETS_ID_DEFAULT_SETTINGS, \
-                                    Default.Size, \
-                                    Default.Size.Sector.ar, \
-                                    ASSETS_ARCHIVE, \
-                                    "  - Object default settings\t\t\t\t"
-                REG_BUILD_ASSETS_ID ASSETS_ID_TILE_BIOME_GRASS_SAND, \
-                                    Biomes.Grass_Sand.Size, \
-                                    Biomes.Grass_Sand.Size.Sector.ar, \
-                                    ASSETS_ARCHIVE, \
-                                    "  - Graphic tile biome 'Grass-Sand'\t\t\t"
+                ; REG_BUILD_ASSETS_ID ASSETS_ID_DEFAULT_SETTINGS, \
+                ;                     Default.Size, \
+                ;                     Default.Size.Sector.ar, \
+                ;                     ASSETS_ARCHIVE, \
+                ;                     "  - Object default settings\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_CURSOR_PACK, \
                                     Graphics.Cursor.Size, \
                                     Graphics.Cursor.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Graphic Cursor\t\t\t\t\t"
-                REG_BUILD_ASSETS_ID ASSETS_ID_UI_ARROW_PATH_PACK, \
-                                    UI.Graphics.ArrowPath.Size, \
-                                    UI.Graphics.ArrowPath.Size.Sector.ar, \
-                                    ASSETS_ARCHIVE, \
-                                    "  - UI Graphic 'Arrow Path'\t\t\t\t"
+                ; REG_BUILD_ASSETS_ID ASSETS_ID_UI_ARROW_PATH_PACK, \
+                ;                     UI.Graphics.ArrowPath.Size, \
+                ;                     UI.Graphics.ArrowPath.Size.Sector.ar, \
+                ;                     ASSETS_ARCHIVE, \
+                ;                     "  - UI Graphic 'Arrow Path'\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_HERO_PACK, \
                                     Graphics.Hero.Size, \
                                     Graphics.Hero.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Graphic Hero\t\t\t\t\t"
-                REG_BUILD_ASSETS_ID ASSETS_ID_GRAPH_PACK_01, \
-                                    Graph.Pack_01.Size, \
-                                    Graph.Pack_01.Size.Sector.ar, \
+                REG_BUILD_ASSETS_ID ASSETS_ID_HEX_FOG, \
+                                    Hexagon.Fog.Size, \
+                                    Hexagon.Fog.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
-                                    "  - Graphic pack #01\t\t\t\t"
+                                    "  - Hexagon Fog: 'base'\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_HEX_GRASSLANDS, \
+                                    Hexagon.NaturalLandscapes.Grasslands.Size, \
+                                    Hexagon.NaturalLandscapes.Grasslands.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Hexagon NaturalLandscapes: 'Grasslands'\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_MAP_DEBUG, \
                                     Map.Debug.Size, \
                                     Map.Debug.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Map 'Debug'\t\t\t\t\t"
-Num             EQU $ / 3                                                       ; количество ресурсов а карте
+Num             EQU $ / 3                                                       ; количество ресурсов в карте
 Size            EQU (((Num % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Num >> 8)) << 8  ; размер карты ресурсов (кратный 256)
 Sector          EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)       ; размер карты ресурсов (в секторах)
 
                 if PASS = 2
                 savetrd TRD_FILENAME, "Resource.#", 0, Num * 3
                 endif
+
+                if Num * FAssets > Size.AssetsTable
+                error "превышен доступный размер таблицы"
+                endif
+                
 
                 endif ; ~_BUILDING_ASSETS_MAP_

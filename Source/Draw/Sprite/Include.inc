@@ -4,7 +4,7 @@
 
                 module Sprite
 
-                include "DrawClipped.asm"
+                include "DrawClipping.asm"
                 include "Draw_OR_XOR.asm"
                 include "Draw_LD_ATTR.asm"
                 include "Draw_M_OR_XOR.asm"

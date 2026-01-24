@@ -30,6 +30,9 @@ CHECK_FLAG_A    macro FlagBit?
 SET_FLAG        macro FlagBit?
                 SET FlagBit?, (HL)
                 endm
+SET_FLAG_A      macro FlagBit?
+                SET FlagBit?, A
+                endm
 ; -----------------------------------------
 ; установка флагов
 ; In:

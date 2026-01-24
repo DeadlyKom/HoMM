@@ -31,8 +31,7 @@ Load:           ; загрузка графики курсора
                 CALL Sprite.FillSpriteIndices
 
                 ; восстановление страницы расположения загруженого ассетаа карты
-                LD A, (Kernel.Modules.World.Page)
-                JP_SET_PAGE_A
+                JP_SET_MODULE_PAGE_World                                        ; включить страницу модуля "World"
 
                 ;   HL - адрес выходного массива индексов спрайтов (Adr.SpriteInfoBuffer)
                 ;   DE - смещение до структуры FSpritesRef (от начала ассета)

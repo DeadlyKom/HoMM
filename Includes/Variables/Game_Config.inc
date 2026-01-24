@@ -12,7 +12,6 @@ GameConfig      EQU Adr.GameConfig                                              
 .KeyAccel       EQU GameConfig + FGameConfig.Keys.Acceleration                  ; клавиша по умолчанию "ускорить"
 .KeyMenu        EQU GameConfig + FGameConfig.Keys.Menu                          ; клавиша по умолчанию "меню/пауза"
 .Options        EQU GameConfig + FGameConfig.Options                            ; флаги игровых настроек
-.Hardware       EQU GameConfig + FGameConfig.Hardware                           ; флаги ограничения железа
 .SpeedCursorMin EQU GameConfig + FGameConfig.SpeedCursorMin                     ; минимальная скорость курсора
 .SpeedCursorMax EQU GameConfig + FGameConfig.SpeedCursorMax                     ; максимальная скорость курсора
 .SpeedScroll    EQU GameConfig + FGameConfig.SpeedScroll                        ; скорость скролла тайловой карты

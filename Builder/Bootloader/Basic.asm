@@ -57,6 +57,7 @@ StartBoot:      DI
                 LD 	BC, TRDOS.Size
                 LDIR
 
+                MEMSET_BYTE Adr.HardConfig, 0, Size.HardConfig                  ; очистка конфигурации железа
                 ; -----------------------------------------
                 ; определение доступной памяти
                 ; In:
@@ -68,14 +69,22 @@ StartBoot:      DI
                 ; -----------------------------------------
                 CALL Adr.SharedPoint
                 EX AF, AF'
-                CP #08
+                CP MIN_PAGES_ALLOWED
                 JP C, Memory.InsufficientRAM                                    ; недостаточно памяти!
+                LD (HardConfig.AvailablePages), A                               ; сохранение количества доступных страниц памяти по 16кб
 
                 ; копирование битового массива доступного ОЗУ
                 SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
-                LD HL, Adr.ExtraBuffer
+                LD HL, Adr.TilemapBuffer
                 LD DE, Adr.AvailableMem
                 LD BC, Size.AvailableMem
+                LDIR
+                ; очистка битового массива начальных блоков памяти
+                LD H, D
+                LD L, E
+                INC E
+                LD BC, Size.InitialBlockMem-1
+                LD (HL), B
                 LDIR
 
                 ; копирование кода в стеш
@@ -87,11 +96,11 @@ StartBoot:      DI
                 ; инициализация TR-DOS
                 CALL TRDOS.Initialize
 
-                ; инициализация прерывания
-                include "Source/Interrupt/Initialize.asm"
-
                 ; инициализация ресурс менеджера
-                include "Source/AssetsManager/Initialize.asm"
+                include "Source/AssetsManager/Initialize.asm"                   ; (0)
+
+                ; инициализация прерывания
+                include "Source/Interrupt/Initialize.asm"                       ; (1)
 
                 ; отметить занятую область данными в доступной ОЗУ (принудительно)
                 MARK_RAM PAGE_0, MemBank_03, BankSize                           ; отметить страницу памяти 0 занятой

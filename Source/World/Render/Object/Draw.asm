@@ -15,10 +15,10 @@ Draw:           ; инициализация
                 DEC E
 
                 ; установка отсечение спрайтов
-                LD HL, (SCR_WORLD_SIZE_X * 2 - 1) << 8 | (SCR_WORLD_POS_X << 3) ; LeftEdge      - левая грань видимой части     (в пикселах)
+                LD HL, (SCR_WORLD_SIZE_X - 1) << 8 | (SCR_WORLD_POS_X << 3)     ; LeftEdge      - левая грань видимой части     (в пикселах)
                                                                                 ; VisibleWidth  - ширина видимой части          (в знакоместах)
                 LD (GameState.LeftEdge), HL
-                LD HL, ((SCR_WORLD_SIZE_Y << 3) << 9)  | (SCR_WORLD_POS_Y << 3) ; TopEdge       - верхняя грань видимой части   (в пикселах)
+                LD HL, ((SCR_WORLD_SIZE_Y << 2) << 9)  | (SCR_WORLD_POS_Y << 3) ; TopEdge       - верхняя грань видимой части   (в пикселах)
                                                                                 ; VisibleHeight - высота видимой части          (в пикселах)
                 LD (GameState.TopEdge), HL
 
@@ -45,7 +45,7 @@ Draw:           ; инициализация
                 SBC HL, BC
                 LD BC, SCR_WORLD_POS_X << 7
                 ADD HL, BC
-                LD (Kernel.Sprite.DrawClipped.PositionX), HL
+                LD (Kernel.Sprite.DrawClipping.PositionX), HL
 
                 ; расчёт положения объекта относительно верхнего-левого видимойго края (по вертикали)
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
@@ -57,7 +57,7 @@ Draw:           ; инициализация
                 SBC HL, BC
                 LD BC, SCR_WORLD_POS_Y << 7
                 ADD HL, BC
-                LD (Kernel.Sprite.DrawClipped.PositionY), HL
+                LD (Kernel.Sprite.DrawClipping.PositionY), HL
 
                 ; определение способа отображения объекта
                 LD A, (IY + FObjectDefaultSettings.Class)

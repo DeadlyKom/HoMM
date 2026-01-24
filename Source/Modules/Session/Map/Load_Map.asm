@@ -8,53 +8,49 @@
 ; Out:
 ; Corrupt:
 ; Note:
+;   код расположен в общей
 ; -----------------------------------------
-Load_Map:       EX AF, AF'
-                PUSH_PAGE                                                       ; сохранение номера страницы в стеке
-                CALL Sprite.Initialize
+Load.Map:       EX AF, AF'
+                CALL Sprite.Initialize                                          ; ToDo: вынести от сюда!
 
                 ; -----------------------------------------
                 ; загрузка ресурса карты
                 ; -----------------------------------------
                 SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
                 EX AF, AF'
-                PUSH AF
+                PUSH AF                                                         ; сохранение идентификатора загружаемой карты
                 LOAD_ASSETS_A                                                   ; загрузка ресурса
                                                                                 ;   HL - адрес загрузки/распаковки
+                ; сохранение страницы загруженной карты
+                LD A, (GameState.Assets + FAssets.Address.Page)
+                LD (.LoadedMapPage), A
                 ; -----------------------------------------
                 ; парсинг FMapHeader
                 ; -----------------------------------------
 
-                ; сохранение информации о карте
+                ; сохранение информации о карте (0)
                 LD DE, GameSession.MapInfo
                 LD BC, FMapInfo
                 LDIR
 
-                ; загрузка ассета ID тайлового биома
+                ; -----------------------------------------
+                ; сохранение данных гексагоных тайлов
+                ; -----------------------------------------
+
+                ; чтение размера блока
+                LD C, (HL)
+                INC L
+                LD B, (HL)
+                INC L
+                ; ToDo: длина блока недолжна превышать Size.Hextile
+
+                ; чтение смещение от текущего адреса до блока данных
                 LD E, (HL)
-                INC HL
-                PUSH HL
-                SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
-                SET_LOAD_ASSETS_REG E, Page.TileSprites, Adr.TileSprites        ; принудительная установка места загрузки ресурса
-                LOAD_ASSETS_REG E                                               ; загрузка ресурса
-
-                ; восстановление страницы расположения ассета
-                LD A, (Kernel.Modules.Session.Page)
-                SET_PAGE_A
-
-                POP HL
-                ; чтение длины блока данных биома (тайлы)
-                LD C, (HL)                                                      ; FMapHeader.BiomeSize.Low
-                INC HL
-                LD B, (HL)                                                      ; FMapHeader.BiomeSize.High
-                INC HL
-
-                ; расчёт адреса до данных биома (тайлы)
-                LD E, (HL)                                                      ; FMapHeader.BiomeOffset.Low
-                INC HL
-                LD D, (HL)                                                      ; FMapHeader.BiomeOffset.High
-                PUSH HL
-                ADD HL, DE
+                INC L
+                LD D, (HL)
+                INC L
+                PUSH HL                                                         ; сохранение адреса FMapHeader.HextileTable
+                ADD HL, DE                                                      ; расчёт адреса блока данных
                 ; -----------------------------------------
                 ; копирование данных между страницами
                 ; In:
@@ -65,61 +61,214 @@ Load_Map:       EX AF, AF'
                 ; Corrupt:
                 ; Note:
                 ; -----------------------------------------
-                LD A, Page.MapBiome
-                LD DE, Adr.MapBiome
+                LD A, Page.Hextile
+                LD DE, Adr.Hextile
                 EX AF, AF'
-                CALL GetPage                                                    ; получение текущей страницы
+                LD A, (.LoadedMapPage)
                 CALL Memcpy.BetweenPages
+                MEMSET_BYTE Adr.HextileBorder, 0, Size.HextileBorder            ; обнуление бордюрного буфера индексов гексагонов
+
+                ; инициализация метаданных карты значением по умолчанию
+                ; ToDo: в дальнейшем эти данные должны браться из сохранения
+                LD HL, Adr.MapMetadata
+                LD DE, Adr.MapMetadata+1
+                LD BC, Size.MapMetadata-1
+                LD (HL), MAP_META_DEFAULT_VALUE
+                CALL Memcpy.FastLDIR
+                CALL .SetPageLoadedMap                                          ; установка страницы загруженной карты
+
+                EXX
+                POP HL                                                          ; восстановление адреса FMapHeader.HextileTable
+
+                ; -----------------------------------------
+                ; блок данных таблицы сопоставления гексагонального тайла и графического пакета
+                ; -----------------------------------------
                 
-                ; -----------------------------------------
-                ; инициализация объектов карты
-                ; -----------------------------------------
-                SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
-                CALL ChunkArray.Initialize                                      ; первичная инициализация массива чанков
-                                                                                ; должна быть включена страница расположения карты
-                ; восстановление страницы расположения ассета
-                LD A, (Kernel.Modules.Session.Page)
-                SET_PAGE_A
+                ; чтение размера блока
+                LD C, (HL)
+                INC L
+                LD B, (HL)
+                INC L
 
-                POP HL
-                INC HL                                                          ; FMapHeader.DefaultSettings
-
-                ; загрузка ассета ID дефолтных настроек объектов
+                ; чтение смещение от текущего адреса до блока данных
                 LD E, (HL)
-                PUSH HL
-                SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
-                SET_LOAD_ASSETS_REG E, Page.ObjectDefaultSettings, Adr.ObjectDefaultSettings ; принудительная установка места загрузки ресурса
-                LOAD_ASSETS_REG E                                               ; загрузка ресурса
+                INC L
+                LD D, (HL)
+                INC L
+                PUSH HL                                                         ; сохранение адреса FMapHeader.GraphicPack
+                ADD HL, DE                                                      ; расчёт адреса блока данных
 
-                ; восстановление страницы расположения ассета
-                LD A, (Kernel.Modules.Session.Page)
-                SET_PAGE_A
+                ; HL - адрес блока данных таблицы сопоставления гексагонального тайла и графического пакета
+                ; BC - размер блока данных таблицы сопоставления гексагонального тайла и графического пакета
 
-                POP HL
-                INC HL                                                          ; FMapHeader.GraphicPack
+                EXX
+                POP HL                                                          ; восстановление адреса FMapHeader.GraphicPack
 
-                ; загрузка ассета ID необходимого графического пакета для текущей карты
+                ; -----------------------------------------
+                ; блок данных необходимых графических пакетов для текущей карты
+                ; -----------------------------------------
+
+                ; чтение размера блока
+                LD C, (HL)
+                INC L
+                LD B, (HL)
+                INC L
+
+                ; чтение смещение от текущего адреса до блока данных
                 LD E, (HL)
-                PUSH HL
-                SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
-                LOAD_ASSETS_REG E                                               ; загрузка ресурса
+                INC L
+                LD D, (HL)
+                INC L
+                PUSH HL                                                         ; сохранение адреса FMapHeader.Objects
+                ADD HL, DE                                                      ; расчёт адреса блока данных
+                ; HL - адрес блока данных необходимых графических пакетов для текущей карты
+                ; BC - размер блока данных необходимых графических пакетов для текущей карты
 
-                ; восстановление страницы расположения загруженого ассетаа карты
-                LD A, (Kernel.Modules.Session.Page)
-                SET_PAGE_A
+                ; загрузка базовых графических пакетов                          ; (0)
+                CALL Load.BaseGraphics
+                PUSH AF                                                         ; сохранить количество загруженных спрайтов
 
-                POP HL
-                INC HL                                                          ; FMapHeader.ObjectNum
-                CALL Init_Objects                                               ; инициализация объектов карты после загрузки
+                ; загрузка графических пакетов карты                            ; (1)
+                LD D, HIGH Adr.TilemapBuffer
+                CALL Load.GraphicsPackages                                      ; загрузка графических пакетов
+
+                ; -----------------------------------------
+                ; проверка переполнения буфера спрайтов (Adr.SpriteInfoBuffer) новых гексагонных тайлов
+                POP BC                                                          ; восстановить количество загруженных спрайтов
+                EX AF, AF'
+                ADD A, B                                                        ; общее количество загруженных спрайтов
+
+                ; деление на 4 с округлением в большую сторону
+                ; OR A
+                RRA         ; >> 1
+                ADC A, #00  ; округлением в большую сторону
+                RRA         ; >> 2
+                ADC A, #00  ; округлением в большую сторону
+                LD B, A
+
+                ; проверка размещения спрайтов в буфере спрайтов
+                LD A, (GameState.SpriteInfoNum)
+                ADD A, B
+                CP SPRITE_BUF_MAX
+                ; ToDo: в будущем предоставить пользователю сообщение об ошибке
+                DEBUG_BREAK_POINT_NC                                            ; ошибка, если массив переполнен
+                LD (GameState.SpriteInfoNum), A
+
+                ; инициализация стартового индекса отрисовки гексагональных тайлов в буфере спрайтов (Adr.SpriteInfoBuffer)
+                SUB B
+                ; базовые графические пакеты находятся HEX.StartRenderIdx-8 всегда
+                INC A                                                           ; пропуск системных спрайтов гексагонов (4 шт)
+                INC A                                                           ; пропуск системных спрайтов гексагонов (+4 шт)
+                ADD A, A    ; x2
+                LD (HEX.StartRenderIdx), A                                      ; стартовый индекс отрисовки гексагональных тайлов в буфере спрайтов (Adr.SpriteInfoBuffer) x2
+                ; -----------------------------------------
+                CALL Initialize.BaseGraphics                                    ; инициализация базовые графические пакеты
+
+                LD D, HIGH Adr.TilemapBuffer
+                LD A, (HEX.StartRenderIdx)
+                CALL Initialize.GraphicsPackages                                ; инициализация графических пакетов
+                POP HL                                                          ; восстановление адрес FMapHeader.Objects
+
+                ; -----------------------------------------
+                ; блок данных об объектах
+                ; -----------------------------------------
+
+                ; ; !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                ; ; загрузка ассета ID тайлового биома
+                ; LD E, (HL)
+                ; INC HL
+                ; PUSH HL
+                ; SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
+                ; SET_LOAD_ASSETS_REG E, Page.TileSprites, Adr.TileSprites        ; принудительная установка места загрузки ресурса
+                ; LOAD_ASSETS_REG E                                               ; загрузка ресурса
+                ;
+                ; ; восстановление страницы расположения ассета
+                ; LD A, (Kernel.Modules.Session.Page)
+                ; SET_PAGE_A
+                ;
+                ; POP HL
+                ; ; чтение длины блока данных биома (тайлы)
+                ; LD C, (HL)                                                      ; FMapHeader.BiomeSize.Low
+                ; INC HL
+                ; LD B, (HL)                                                      ; FMapHeader.BiomeSize.High
+                ; INC HL
+                ;
+                ; ; расчёт адреса до данных биома (тайлы)
+                ; LD E, (HL)                                                      ; FMapHeader.BiomeOffset.Low
+                ; INC HL
+                ; LD D, (HL)                                                      ; FMapHeader.BiomeOffset.High
+                ; PUSH HL
+                ; ADD HL, DE
+                ; ; -----------------------------------------
+                ; ; копирование данных между страницами
+                ; ; In:
+                ; ;   A HL - адрес исходника  (аккумулятор страница)
+                ; ;   A'DE - адрес назначения (аккумулятор страница)
+                ; ;   BC   - длина блока
+                ; ; Out:
+                ; ; Corrupt:
+                ; ; Note:
+                ; ; -----------------------------------------
+                ; LD A, Page.MapBiome
+                ; LD DE, Adr.MapBiome
+                ; EX AF, AF'
+                ; CALL GetPage                                                    ; получение текущей страницы
+                ; CALL Memcpy.BetweenPages
+                ;
+                ; ; -----------------------------------------
+                ; ; инициализация объектов карты
+                ; ; -----------------------------------------
+                ; SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
+                ; CALL ChunkArray.Initialize                                      ; первичная инициализация массива чанков
+                ;                                                                 ; должна быть включена страница расположения карты
+                ; ; восстановление страницы расположения ассета
+                ; LD A, (Kernel.Modules.Session.Page)
+                ; SET_PAGE_A
+                ;
+                ; POP HL
+                ; INC HL                                                          ; FMapHeader.DefaultSettings
+                ;
+                ; ; загрузка ассета ID дефолтных настроек объектов
+                ; LD E, (HL)
+                ; PUSH HL
+                ; SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
+                ; SET_LOAD_ASSETS_REG E, Page.ObjectDefaultSettings, Adr.ObjectDefaultSettings ; принудительная установка места загрузки ресурса
+                ; LOAD_ASSETS_REG E                                               ; загрузка ресурса
+                ;
+                ; ; восстановление страницы расположения ассета
+                ; LD A, (Kernel.Modules.Session.Page)
+                ; SET_PAGE_A
+                ;
+                ; POP HL
+                ; INC HL                                                          ; FMapHeader.GraphicPack
+                ;
+                ; ; загрузка ассета ID необходимого графического пакета для текущей карты
+                ; LD E, (HL)
+                ; PUSH HL
+                ; SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
+                ; LOAD_ASSETS_REG E                                               ; загрузка ресурса
+                ;
+                ; ; восстановление страницы расположения загруженого ассетаа карты
+                ; LD A, (Kernel.Modules.Session.Page)
+                ; SET_PAGE_A
+                ;
+                ; POP HL
+                ; INC HL                                                          ; FMapHeader.ObjectNum
+                ; CALL Init_Objects                                               ; инициализация объектов карты после загрузки
 
                 ; -----------------------------------------
                 ; освобождение ресурса карты
                 ; -----------------------------------------
                 SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
-                POP AF
+                POP AF                                                          ; восстановление идентификатора загруженной карты
                 RELEASE_ASSET_A
-                JP_POP_PAGE                                                     ; восстановление номера страницы из стека
+                JP_SET_MODULE_PAGE_Session                                      ; включить страницу модуля "Session"
 
-                display " - Load map:\t\t\t\t\t\t", /A, Load_Map, "\t= busy [ ", /D, $-Load_Map, " byte(s)  ]"
+.SetPageLoadedMap ; установка страницы загруженной карты
+.LoadedMapPage  EQU $+1                                                         ; номер страницы загруженной карты
+                LD A, #00
+                JP_SET_PAGE_A
+
+                display " - Load map:\t\t\t\t\t\t", /A, Load.Map, "\t= busy [ ", /D, $-Load.Map, " byte(s)  ]"
 
                 endif ; ~_MODULE_SESSION_LOAD_MAP_

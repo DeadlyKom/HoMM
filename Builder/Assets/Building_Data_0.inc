@@ -37,18 +37,18 @@ ADD_ASSETS_DEBUG macro Bank?, Page?, ORG?, Include?
                 ADD_ASSETS 1, PAGE_N, 0x0000, incbin "Builder/Assets/Code/Compressed/Session.pack.ar"
                 ; ASSETS_ID_WORLD
                 ADD_ASSETS 1, PAGE_N, 0x0000, incbin "Builder/Assets/Code/Compressed/world.pack.ar"
-                ; ASSETS_ID_DEFAULT_SETTINGS
-                ADD_ASSETS 3, Page.TileSprites, Adr.TileSprites, incbin "Builder/Assets/Metadata/Compressed/Default/DefaultSettings.meta.ar"
-                ; ASSETS_ID_TILE_BIOME_GRASS_SAND
-                ADD_ASSETS 3, Page.TileSprites, Adr.TileSprites, incbin "Builder/Assets/Graphics/Compressed/Biomes/Grass_Sand.pack.ar"
+                ; ; ASSETS_ID_DEFAULT_SETTINGS
+                ; ADD_ASSETS 3, Page.TileSprites, Adr.TileSprites, incbin "Builder/Assets/Metadata/Compressed/Default/DefaultSettings.meta.ar"
                 ; ASSETS_ID_CURSOR_PACK
                 ADD_ASSETS 3, PAGE_N, 0x0000, incbin "Builder/Assets/Graphics/Compressed/Cursor.pack.ar"
-                ; ASSETS_ID_UI_ARROW_PATH_PACK
-                ADD_ASSETS 3, PAGE_N, 0x0000, incbin "Builder/Assets/Graphics/Compressed/UI_ArrowPath.pack.ar"
+                ; ; ASSETS_ID_UI_ARROW_PATH_PACK
+                ; ADD_ASSETS 3, PAGE_N, 0x0000, incbin "Builder/Assets/Graphics/Compressed/UI_ArrowPath.pack.ar"
                 ; ASSETS_ID_HERO_PACK
                 ADD_ASSETS 3, PAGE_N, 0x0000, incbin "Builder/Assets/Graphics/Compressed/Hero.pack.ar"
-                ; ASSETS_ID_GRAPH_PACK_01
-                ADD_ASSETS 3, PAGE_N, 0x0000, incbin "Builder/Assets/Graphics/Compressed/GraphPack/01.pack.ar"
+                ; ASSETS_ID_HEX_FOG
+                ADD_ASSETS 3, PAGE_N, 0x0000, incbin "Builder/Assets/Graphics/Compressed/Hex/Fog.pack.ar"
+                ; ASSETS_ID_HEX_GRASSLANDS
+                ADD_ASSETS 3, PAGE_N, 0x0000, incbin "Builder/Assets/Graphics/Compressed/Hex/Grasslands.pack.ar"
                 ; ASSETS_ID_MAP_DEBUG
                 ADD_ASSETS 3, PAGE_N, 0x0000, incbin "Builder/Assets/Metadata/Compressed/Map/Debug.map.ar"
 
