@@ -10,7 +10,7 @@
                 include "ClearScreenBlocks.asm"
                 include "MemcpyScreenBlocks.asm"
                 include "HexagonUpdateAnalysis.asm"
-                include "Source/Memory/MemcpyScreenBlock_Stack.asm"
+                include "Source/Memory/MemcpyScreenBlock_LDI.asm"
 Size            EQU $-Adr.ScreenRefresh
 
                 ENT

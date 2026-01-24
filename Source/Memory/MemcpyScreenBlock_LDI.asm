@@ -5,106 +5,42 @@
                 module Memcpy
 Begin:          EQU $
 ; -----------------------------------------
-; 
+; копирование строки в 6 байт
 ; In:
 ; Out:
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-POP_LINE_6      macro
-                LD SP, HL
+MEMCPY_BYTES    macro NumByte?
+                rept (NumByte?)-1
+                LDI
+                endr
+                LD A, (HL)
+                LD (DE), A
                 INC H
-                POP DE
-                POP BC
-                POP AF
-                EX AF, AF'
-                EXX
+                INC D
                 endm
-POP_LINE_4      macro
-                LD SP, HL
+MEMCPY_BYTES_   macro NumByte?
+                rept (NumByte?)
+                LDI
+                endr
+                endm
+
+MEMCPY_BYTES_R  macro NumByte?
+                rept (NumByte?)-1
+                LDD
+                endr
+                LD A, (HL)
+                LD (DE), A
                 INC H
-                POP DE
-                POP BC
-                EXX
+                INC D
                 endm
-POP_LINE_6_     macro
-                LD SP, HL
-                POP DE
-                POP BC
-                POP AF
-                EXX
-                endm
-POP_LINE_4_     macro
-                LD SP, HL
-                POP DE
-                POP BC
-                EXX
-                endm
-POP_ATTR_6      macro
-                LD SP, HL
-                EX DE, HL
-                POP DE
-                POP BC
-                POP AF
-                EXX
-                endm
-POP_ATTR_4      macro
-                LD SP, HL
-                EX DE, HL
-                POP DE
-                POP BC
-                EXX
-                endm
-; -----------------------------------------
-; 
-; In:
-; Out:
-; Corrupt:
-; Note:
-; -----------------------------------------
-PUSH_LINE_6     macro
-                LD SP, HL
-                INC H
-                EXX
-                EX AF, AF'
-                PUSH AF
-                PUSH BC
-                PUSH DE
-                endm
-PUSH_LINE_4     macro
-                LD SP, HL
-                INC H
-                EXX
-                PUSH BC
-                PUSH DE
-                endm
-PUSH_LINE_6_    macro
-                LD SP, HL
-                EXX
-                PUSH AF
-                PUSH BC
-                PUSH DE
-                endm
-PUSH_LINE_4_    macro
-                LD SP, HL
-                EXX
-                PUSH BC
-                PUSH DE
-                endm
-PUSH_ATTR_6     macro
-                LD SP, HL
-                EX DE, HL
-                EXX
-                PUSH AF
-                PUSH BC
-                PUSH DE
-                endm
-PUSH_ATTR_4     macro
-                LD SP, HL
-                EX DE, HL
-                EXX
-                PUSH BC
-                PUSH DE
+MEMCPY_BYTES_R_ macro NumByte?
+                rept (NumByte?)-1
+                LDD
+                endr
+                LD A, (HL)
+                LD (DE), A
                 endm
 ; -----------------------------------------
 ; 
@@ -129,19 +65,17 @@ DOWN_HL         macro
 ;   HL  - адрес экрана
 ; Out:
 ;   HL  - адрес знакоместа атрибутов
-;   DE  - адрес экрана
 ; Corrupt:
 ;   DE
 ; Note:
 ;   отображение производится снизу вверх
 ; -----------------------------------------
 HL_TO_ATTR_HL   macro
-                LD E, L
-                LD D, H
+                LD A, L
                 LD L, H
                 LD H, HIGH Adr.ScrAttrAdrTable
                 LD H, (HL)
-                LD L, E
+                LD L, A
                 endm
 ; -----------------------------------------
 ; копирование экранного блока шириной в 6 знакомест
@@ -152,93 +86,39 @@ HL_TO_ATTR_HL   macro
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Screen_6:       LD D, H
+Screen_6:       
+.Loop_06        LD D, H
                 LD E, L
                 SET 7, D
-
-                ; альтернатива через LDI
-                LDI
-                LDI
-                LDI
-                LDI
-                LDI
-                LDI
-
-                LD BC, -(6 + 256)
-                ADD HL, BC
-                EX DE, HL
-                ADD HL, BC
-                EX DE, HL
-
-                ; макрос
-                LD SP, HL
-                INC H
-                POP DE
-                POP BC
-                POP AF
-                EX AF, AF'
-                EXX
-                LD SP, HL
-                INC H
-                EXX
-                EX AF, AF'
-                PUSH AF
-                PUSH BC
-                PUSH DE
-
-
-
-
-                ; инициализация
-                PUSH HL
-                LD A, L
-                ADD A, #06
-                LD L, A
-                SET 7, H
-                EXX
-                POP HL
-
-                LD (.ContainerSP), SP
-
-.Loop_06        ; копирование пикселей
-.l0             POP_LINE_6
-                PUSH_LINE_6
-.l1             POP_LINE_6
-                PUSH_LINE_6
-.l2             POP_LINE_6
-                PUSH_LINE_6
-.l3             POP_LINE_6
-                PUSH_LINE_6
-.l4             POP_LINE_6
-                PUSH_LINE_6
-.l5             POP_LINE_6
-                PUSH_LINE_6
-.l6             POP_LINE_6
-                PUSH_LINE_6
-.l7             POP_LINE_6_
-                PUSH_LINE_6_
+                
+                ; копирование пикселей
+.l0             MEMCPY_BYTES 6
+.l1             MEMCPY_BYTES_R 6
+.l2             MEMCPY_BYTES 6
+.l3             MEMCPY_BYTES_R 6
+.l4             MEMCPY_BYTES 6
+.l5             MEMCPY_BYTES_R 6
+.l6             MEMCPY_BYTES 6
+.l7             MEMCPY_BYTES_R_ 6
 
                 ; копирование атрибутов
-.PopAtr         HL_TO_ATTR_HL
-                POP_ATTR_6
-.PushAtr        HL_TO_ATTR_HL
-                PUSH_ATTR_6
+                PUSH HL
+                HL_TO_ATTR_HL
+                LD D, H
+                LD E, L
+                SET 7, D
+                MEMCPY_BYTES_ 6
     
                 ; переход на знакоместо ниже
+                POP HL
                 DOWN_HL
-                EXX
-                DOWN_HL
-                EXX
 
                 DEC IXL
                 JP NZ, .Loop_06
-
-.ContainerSP    EQU $+1
-                LD SP, #0000
                 RET
 
 ; -----------------------------------------
-; копирование экранного блока шириной в 6 знакомест
+; копирование экранного блока шириной в 4 знакомест
 ; In:
 ;   HL  - начальный адрес
 ;   IXL - высота в знакоместах
@@ -246,51 +126,35 @@ Screen_6:       LD D, H
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Screen_4:       ; инициализация
-                PUSH HL
-                LD A, L
-                ADD A, #04
-                LD L, A
-                SET 7, H
-                EXX
-                POP HL
-
-                LD (.ContainerSP), SP
-.Loop_04        ; копирование пикселей
-.l0             POP_LINE_4
-                PUSH_LINE_4
-.l1             POP_LINE_4
-                PUSH_LINE_4
-.l2             POP_LINE_4
-                PUSH_LINE_4
-.l3             POP_LINE_4
-                PUSH_LINE_4
-.l4             POP_LINE_4
-                PUSH_LINE_4
-.l5             POP_LINE_4
-                PUSH_LINE_4
-.l6             POP_LINE_4
-                PUSH_LINE_4
-.l7             POP_LINE_4_
-                PUSH_LINE_4_
+Screen_4:
+.Loop_04        LD D, H
+                LD E, L
+                SET 7, D
+                
+                ; копирование пикселей
+.l0             MEMCPY_BYTES 4
+.l1             MEMCPY_BYTES_R 4
+.l2             MEMCPY_BYTES 4
+.l3             MEMCPY_BYTES_R 4
+.l4             MEMCPY_BYTES 4
+.l5             MEMCPY_BYTES_R 4
+.l6             MEMCPY_BYTES 4
+.l7             MEMCPY_BYTES_R_ 4
 
                 ; копирование атрибутов
-.PopAtr         HL_TO_ATTR_HL
-                POP_ATTR_4
-.PushAtr        HL_TO_ATTR_HL
-                PUSH_ATTR_4
+                PUSH HL
+                HL_TO_ATTR_HL
+                LD D, H
+                LD E, L
+                SET 7, D
+                MEMCPY_BYTES_ 4
     
                 ; переход на знакоместо ниже
+                POP HL
                 DOWN_HL
-                EXX
-                DOWN_HL
-                EXX
 
                 DEC IXL
                 JP NZ, .Loop_04
-
-.ContainerSP    EQU $+1
-                LD SP, #0000
                 RET
 
                 display " - Memcpy screen block 'LDI':\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
