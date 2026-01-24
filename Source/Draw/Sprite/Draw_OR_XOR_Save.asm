@@ -16,12 +16,11 @@
 ; Note:
 ; -----------------------------------------
 DrawOR_XOR_Save ; сохранение в буфер адрес экарана
-
                 PUSH_PAGE
                 PUSH BC
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 POP BC
-                LD HL, Adr.TempBuffer
+                LD HL, Adr.CursorStorageA + 1                                   ; 0 байт хранит данные о размере заполнения
                 LD (HL), E
                 INC L
                 LD (HL), D
@@ -231,7 +230,7 @@ DrawOR_XOR_Save ; сохранение в буфер адрес экарана
                 ADD A, (HIGH Adr.ShiftTable) - 2                                ; таблица не хранит нулевое смещение
                 LD D, A
 
-                LD HL, Adr.TempBuffer + 4
+                LD HL, Adr.CursorStorageA + 4 + 1                               ; 0 байт хранит данные о размере заполнения
                 EX DE, HL                                                       ; HL - указывает на таблицу сдвига, DE - указывает на буфер
                 
                 EXX
@@ -253,6 +252,13 @@ DrawOR_XOR_Save ; сохранение в буфер адрес экарана
                 LD SP, #0000
                 JP (IX)                                                         ; отобращение спрайта
 DrawOR_XOR_Save.Exit
+                
+                ; сохранение в первом байте данные о размере заполнения
+                EXX
+                LD A, E
+                EXX
+                LD (Adr.CursorStorageA), A
+
 .ContainerSP    EQU $+1
                 LD SP, #0000
                 RET

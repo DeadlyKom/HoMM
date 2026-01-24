@@ -9,7 +9,7 @@
 ; Note:
 ; -----------------------------------------
 Interrupt:      SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
-                ; CALL Draw.Restore                                               ; восстановление фона под курсором - ОТКЛ
+                CALL Draw.Restore                                               ; восстановление фона под курсором (только для OR_XOR_SAVE)
 
                 ; проверка готовности кадра
                 CHECK_RENDER_FLAG FRAME_READY_BIT
@@ -59,7 +59,7 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 ; --------------------------------------------------------------
 
 .RenderProcess  ; процесс отрисовки не завершён
-                ; CALL Render.Cursor.Draw                                         ; отображение курсора - ОТКЛ
+                CALL Render.Cursor.Draw                                         ; отображение курсора
                 
 .Input          ; ************ Scan Input ************
                 CHECK_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                         ; проверка разрешения сканирования ввода

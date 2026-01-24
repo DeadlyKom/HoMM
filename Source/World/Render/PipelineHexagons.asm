@@ -105,7 +105,30 @@ PipelineHexagons:
                 JP_SHOW_BASE_SCREEN                                             ; отображение базового экрана
 
 .MemcpyScreen   RESTORE_SCR World.Base.Interrupt.Memcpy
+                
+                ; ToDo: мб такая ситуация, когда за время копирование, данные в буфере фона курсора устарели
+                ;       придётся их копировать в другой и восстанавливать из него
+
+                ; 0 байт хранит данные о размере заполнения
+                LD HL, Adr.CursorStorageA
+                LD DE, Adr.CursorStorageB
+                LD B, #00
+                LD C, (HL)
+
+                CALL Memcpy.FastLDIR
+
+                ; копирование блоков, если курсор находится в игровой зоне, он скопируется тоже
                 CALL ScreenBlock.Memcpy                                         ; копирование screen block'и в теневой экран
+
+                ; принудительно меняем адрес на теневой буфер,
+                ; затераем возможное копирование курсора
+                LD HL, Adr.CursorStorageB+1
+                LD E, (HL)
+                INC L
+                LD D, (HL)
+                SET 7, D
+                CALL Draw.RestoreByScrAdr                                       ; восстановление фона под курсором в указанном адресе экрана (только для OR_XOR_SAVE)
+
                 RESTORE_SCR_
                 RES_RENDER_FLAGS SWAPPED_PENDING | SWAP_PENDING                 ; сброс флага переключения экранов
                 RET

@@ -2,9 +2,8 @@
                 ifndef _DRAW_SPRITE_RESTORE_BACKGROUND_
                 define _DRAW_SPRITE_RESTORE_BACKGROUND_
 ; -----------------------------------------
-; отсечение спрайта с последующим отображение
+; восстановление фона под спрайтом (только для OR_XOR_SAVE)
 ; In:
-;   HL - адрес спрайта FSprite
 ; Out:
 ; Corrupt:
 ; Note:
@@ -14,17 +13,21 @@
 ;   - высота видимой части спрайта в пикселях
 ;   - данные
 ; -----------------------------------------
-Restore:        ;
-                LD HL, Adr.TempBuffer
+Restore:        ; инициализация
+                LD HL, Adr.CursorStorageA
 
+                ; 0 байт хранит данные о размере заполнения
+                LD A, (HL)
+                OR A
+                RET Z
+
+                INC L
                 LD E, (HL)
                 INC L
                 LD D, (HL)
-                INC L
+.ByScrAdr       INC L
 
                 LD A, (HL)                                                      ; FSize.Width
-                OR A
-                RET Z
                 INC L
                 LD C, (HL)                                                      ; FSize.Height
                 INC L

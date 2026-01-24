@@ -26,8 +26,8 @@ Draw:           ; -----------------------------------------
 
                 ; сброс возможности восстановления фона курсора
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
-                LD HL, Adr.TempBuffer + 2
-                LD (HL), #00
+                LD HL, Adr.CursorStorageA
+                LD (HL), #00                                                    ; 0 байт хранит данные о размере заполнения
                 CALL ScreenBlock.Clear                                          ; очистка screen block'ов
 
                 ; первичная инициализация локации
@@ -63,8 +63,8 @@ Draw:           ; -----------------------------------------
                 CHECK_VIEW_FLAG UPDATE_TILEMAP_BUF_BIT
                 CALL NZ, World.Base.Tilemap.Update.TileBuffer
                 ; -----------------------------------------
-                CALL Fog.Make
-                CALL Fog.Tick
+                ; CALL Fog.Make
+                ; CALL Fog.Tick
                 ; -----------------------------------------
 
                 CALL PipelineHexagons
