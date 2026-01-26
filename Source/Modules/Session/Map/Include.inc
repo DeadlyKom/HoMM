@@ -2,13 +2,11 @@
                 ifndef _MODULE_SESSION_MAP_INCLUDE_
                 define _MODULE_SESSION_MAP_INCLUDE_
 
+                include "Load/Include.inc"
+                include "DataBlock/Include.inc"
+                include "Initialize/Include.inc"
                 include "Load_Map.asm"
-                include "Load_BaseGraphics.asm"
-                include "Load_GraphicsPackages.asm"
-                
-                include "Initialize_Objects.asm"
-                include "Initialize_BaseGraphics.asm"
-                include "Initialize_GraphicsPackages.asm"
+                include "Utils.asm"
 
                 align 256, #55
 BaseGraphicsBuffer: DS 256, 0

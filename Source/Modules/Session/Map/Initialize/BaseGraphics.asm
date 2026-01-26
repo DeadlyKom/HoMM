@@ -1,6 +1,6 @@
 
-                ifndef _MODULE_SESSION_INITIALIZE_BASE_GRAPHICS_PACKAGES_
-                define _MODULE_SESSION_INITIALIZE_BASE_GRAPHICS_PACKAGES_
+                ifndef _MODULE_SESSION_MAP_INITIALIZE_BASE_GRAPHICS_PACKAGES_
+                define _MODULE_SESSION_MAP_INITIALIZE_BASE_GRAPHICS_PACKAGES_
 ; -----------------------------------------
 ; инициализация графических пакетов
 ; In:
@@ -10,21 +10,20 @@
 ;   - включена страница загруженной карты!
 ;   - размер блока данных необходимых графических пакетов для текущей карты, не должен превышать 128
 ; -----------------------------------------
-Initialize.BaseGraphics:
-                EXX
-                PUSH HL
-                PUSH BC
+BaseGraphics:   EXX
+                PUSH HL                                                         ; HL' - адрес блока данных таблицы сопоставления гексагонального тайла и графического пакета
+                PUSH BC                                                         ; BC' - размер блока данных таблицы сопоставления гексагонального тайла и графического пакета
 
                 ; загрузка обязательных - системныз графических пакетов
                 LD HL, Block.HextileTable
                 LD BC, Block.HextileTable.Size
                 EXX
-                LD D, HIGH BaseGraphicsBuffer
+                LD D, HIGH Session.SharedCode.BaseGraphicsBuffer
 
                 ; переход к базовым спрайтам гексагонов
                 LD A, (HEX.StartRenderIdx)
                 SUB 2 << 1
-                CALL Initialize.GraphicsPackages
+                CALL Session.SharedCode.Initialize.GraphicsPackages
 
                 POP BC
                 POP HL
@@ -48,9 +47,9 @@ Initialize.BaseGraphics:
                 ;   I6-I0   [14..8]     - ндекс в массиве FMapHeader.GraphicPack
                 ;   O2-O0   [7..5]      - смещение внутри текущего графического пакета (0-7)
 Block.HextileTable:
-                MAKE_HEXTILE_BIND BASE_HEX_GRAPHICS_PACKAGE, #00                ; 0 
+                MAKE_HEXTILE_BIND BASE_HEX_GRAPHICS_PACKAGE, #00                ; 0
 Block.HextileTable.Size EQU $-Block.HextileTable
 
-                display " - Initialize base graphics packages:\t\t\t", /A, Initialize.GraphicsPackages, "\t= busy [ ", /D, $-Initialize.GraphicsPackages, " byte(s)  ]"
+                display " - Initialize base graphics packages:\t\t\t", /A, GraphicsPackages, "\t= busy [ ", /D, $-GraphicsPackages, " byte(s)  ]"
 
-                endif ; ~_MODULE_SESSION_INITIALIZE_BASE_GRAPHICS_PACKAGES_
+                endif ; ~_MODULE_SESSION_MAP_INITIALIZE_BASE_GRAPHICS_PACKAGES_

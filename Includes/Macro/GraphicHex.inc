@@ -5,7 +5,7 @@
                 ; макросы позволяютт связать графические пакеты с ID ассетом
 MAKE_TO_GRAPHICS_PACKAGE macro Label?, AssetID?
 GRAPHICS_PACKAGE_COUNTER  defl 0                                                ; счётчик гексагональных тайлов
-Label?          EQU GRAPHICS_PACKAGE_COUNTER
+@Label?         EQU GRAPHICS_PACKAGE_COUNTER
                 DB AssetID?
 GRAPHICS_PACKAGE_COUNTER = GRAPHICS_PACKAGE_COUNTER+1
                 endm

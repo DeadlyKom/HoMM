@@ -29,8 +29,8 @@ Handler         ; обработка события
                 ; сброс события
                 LD HL, GameState.Event
                 LD (HL), EVENT_NONE
-                RET
+.RET            RET
 
-.JumpTable      DW #0000 ; Pathfinding                                                  ; EVENT_PATHFINDING
+.JumpTable      DW .RET ; Pathfinding                                                  ; EVENT_PATHFINDING
 
                 endif ; ~_WORLD_EVENT_HANDLER_

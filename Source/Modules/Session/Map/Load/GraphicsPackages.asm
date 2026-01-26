@@ -1,6 +1,6 @@
 
-                ifndef _MODULE_SESSION_LOAD_GRAPHICS_PACKAGES_
-                define _MODULE_SESSION_LOAD_GRAPHICS_PACKAGES_
+                ifndef _MODULE_SESSION_MAP_LOAD_GRAPHICS_PACKAGES_
+                define _MODULE_SESSION_MAP_LOAD_GRAPHICS_PACKAGES_
 ; -----------------------------------------
 ; загрузка графических пакетов
 ; In:
@@ -17,7 +17,7 @@
 ;   - включена страница загруженной карты!
 ;   - размер блока данных необходимых графических пакетов для текущей карты, не должен превышать 128
 ; -----------------------------------------
-Load.GraphicsPackages:
+GraphicsPackages:
                 PUSH_PAGE                                                       ; сохранение номера страницы в стеке
                 
                 ; копирование блока данных необходимых графических пакетов для текущей карты
@@ -48,7 +48,7 @@ Load.GraphicsPackages:
                 
                 ; загрузка ассета
                 LD E, (HL)                                                      ; чтение ID ассета
-                CALL Load.GraphicAsset
+                CALL Session.SharedCode.Load.GraphicAsset
                 
                 ; добавить количество загруженых спрайтов в общий список
                 LD B, A
@@ -83,8 +83,7 @@ Load.GraphicsPackages:
 ;   - включена страница загруженной карты!
 ;   - размер блока данных необходимых графических пакетов для текущей карты, не должен превышать 128
 ; -----------------------------------------
-Load.GraphicAsset:
-                PUSH HL
+GraphicAsset:   PUSH HL
                 PUSH BC
 
                 ; загрузка ассета
@@ -219,7 +218,6 @@ ColumnOffset:   ; проверка первого пустого смещени�
                 EX DE, HL
                 RET                                                             ; ранний выход, т.к. пустое смещение
 
+                display " - Load graphics packages:\t\t\t\t", /A, GraphicsPackages, "\t= busy [ ", /D, $-GraphicsPackages, " byte(s)  ]"
 
-                display " - Load graphics packages:\t\t\t\t", /A, Load.GraphicsPackages, "\t= busy [ ", /D, $-Load.GraphicsPackages, " byte(s)  ]"
-
-                endif ; ~_MODULE_SESSION_LOAD_GRAPHICS_PACKAGES_
+                endif ; ~_MODULE_SESSION_MAP_LOAD_GRAPHICS_PACKAGES_

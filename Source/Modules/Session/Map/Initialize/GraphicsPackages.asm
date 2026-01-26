@@ -1,6 +1,6 @@
 
-                ifndef _MODULE_SESSION_INITIALIZE_GRAPHICS_PACKAGES_
-                define _MODULE_SESSION_INITIALIZE_GRAPHICS_PACKAGES_
+                ifndef _MODULE_SESSION_MAP_INITIALIZE_GRAPHICS_PACKAGES_
+                define _MODULE_SESSION_MAP_INITIALIZE_GRAPHICS_PACKAGES_
 ; -----------------------------------------
 ; инициализация графических пакетов
 ; In:
@@ -16,8 +16,7 @@
 ;   - включена страница загруженной карты!
 ;   - размер блока данных необходимых графических пакетов для текущей карты, не должен превышать 128
 ; -----------------------------------------
-Initialize.GraphicsPackages:
-                ; расчёт начального адреса сохранения значений                                  
+GraphicsPackages; расчёт начального адреса сохранения значений                                  
                 LD L, A
                 LD H, HIGH Adr.SpriteInfoBuffer >> 2
                 ADD HL, HL  ; x4
@@ -91,6 +90,6 @@ Initialize.GraphicsPackages:
                 DJNZ .Loop
                 RET
 
-                display " - Initialize graphics packages:\t\t\t", /A, Initialize.GraphicsPackages, "\t= busy [ ", /D, $-Initialize.GraphicsPackages, " byte(s)  ]"
+                display " - Initialize graphics packages:\t\t\t", /A, GraphicsPackages, "\t= busy [ ", /D, $-GraphicsPackages, " byte(s)  ]"
 
-                endif ; ~_MODULE_SESSION_INITIALIZE_GRAPHICS_PACKAGES_
+                endif ; ~_MODULE_SESSION_MAP_INITIALIZE_GRAPHICS_PACKAGES_

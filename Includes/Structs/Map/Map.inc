@@ -14,7 +14,7 @@ Offset          DW #0000                                                        
 
                 struct FMapHeader                                               ; заголовок карты
 Info            FMapInfo                                                        ; базовая информация о карте
-HexTile         FMapDataBlockInfo                                               ; блока данных гексагоных тайлов
+Hextile         FMapDataBlockInfo                                               ; блока данных гексагоных тайлов
 HextileTable    FMapDataBlockInfo                                               ; блок данных таблицы сопоставления гексагонального тайла и графического пакета
 GraphicPack     FMapDataBlockInfo                                               ; блок данных необходимых графических пакетов для текущей карты
 Objects         FMapDataBlockInfo                                               ; блок данных об объектах
