@@ -4,6 +4,7 @@
 
                 module DataBlock
                 include "Hextile.asm"
+                include "Objects.asm"
                 include "HextileTable.asm"
                 include "GraphicPack.asm"
                 endmodule

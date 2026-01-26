@@ -10,6 +10,9 @@ MAKE_MAP_OBJECT macro Label?, X?, x?, Y?, y?, SpriteIndex?
                 }
                 endm
 
+                DB ASSETS_ID_DEFAULT_SETTINGS                                   ; идентификатор ассета дефолтных настроек объектов
+                DB Objects.Num
+
                 MAKE_MAP_OBJECT                                                 \
                 /*тип объекта*/                     ODS_ID_TEST,                \
                 /*позиция объекта на карте*/        5,0,    5,1,                \
@@ -24,5 +27,7 @@ MAKE_MAP_OBJECT macro Label?, X?, x?, Y?, y?, SpriteIndex?
                 ; /*тип объекта*/                     ODS_ID_TEST,                \
                 ; /*позиция объекта на карте*/        21,0,   27,1,               \
                 ; /*ID спрайта в Graphic pack #01*/   SPRITE_ID_TELEPORT
+
+Objects.Num     EQU ($-Objects) / FMapObject
 
                 endif ; ~ _METADATA_MAP_DEBUG_OBJECTS_

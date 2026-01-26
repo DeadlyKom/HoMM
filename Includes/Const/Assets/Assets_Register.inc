@@ -22,7 +22,7 @@ REG_ASSETS_ID_DEBUG macro Label?
                     REG_ASSETS_ID       ASSETS_ID_MAIN_MENU                     ; главное меню
                     REG_ASSETS_ID       ASSETS_ID_SESSION                       ; сессия
                     REG_ASSETS_ID       ASSETS_ID_WORLD                         ; мир
-                    ; REG_ASSETS_ID       ASSETS_ID_DEFAULT_SETTINGS              ; дефолтные настройки объектов
+                    REG_ASSETS_ID       ASSETS_ID_DEFAULT_SETTINGS              ; дефолтные настройки объектов
                     REG_ASSETS_ID       ASSETS_ID_CURSOR_PACK                   ; графика курсора
                     ; REG_ASSETS_ID       ASSETS_ID_UI_ARROW_PATH_PACK            ; графика UI стрелок пути
                     REG_ASSETS_ID       ASSETS_ID_HERO_PACK                     ; графика героев

@@ -27,7 +27,7 @@ Load.Map:       ; сохранение идентификатора загруж
 
                 ; инициализация фикла обхода блоков данных FMapHeader
                 LD IX, .ProcessedBlocks
-                LD B, 3                                                         ; количество блоков (FMapDataBlockInfo) в FMapHeader
+                LD B, .NumBlocks                                                ; количество блоков (FMapDataBlockInfo) в FMapHeader
 
 .DataBlockLoop  PUSH BC
 
@@ -46,12 +46,14 @@ Load.Map:       ; сохранение идентификатора загруж
                 ADD HL, DE                                                      ; расчёт адреса блока данных
                 EX DE, HL
 
+                PUSH IX
                 LD HL, .NextDataBlock
                 PUSH HL
                 LD HL, (IX + 0)
                 JP (HL)
 
-.NextDataBlock  INC IX
+.NextDataBlock  POP IX
+                INC IX
                 INC IX
                 POP HL                                                          ; восстановление адреса
                 POP BC
@@ -73,6 +75,8 @@ Load.Map:       ; сохранение идентификатора загруж
                 DW DataBlock.Hextile
                 DW DataBlock.HextileTable
                 DW DataBlock.GraphicPack
+                DW DataBlock.Objects
+.NumBlocks      EQU ($-.ProcessedBlocks) / 2
 
                 display " - Load map:\t\t\t\t\t\t", /A, Load.Map, "\t= busy [ ", /D, $-Load.Map, " byte(s)  ]"
 

@@ -19,7 +19,6 @@ HextileTable    FMapDataBlockInfo                                               
 GraphicPack     FMapDataBlockInfo                                               ; блок данных необходимых графических пакетов для текущей карты
 Objects         FMapDataBlockInfo                                               ; блок данных об объектах
 Rules           FMapDataBlockInfo                                               ; блок данных об правилах (ToDo)
-; DefaultSettings DB #00                                                          ; ассет ID дефолтных настроек объектов (пока непонятно как с ними работать в новой концепции)
 
                 ends
 

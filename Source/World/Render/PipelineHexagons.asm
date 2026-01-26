@@ -92,8 +92,8 @@ PipelineHexagons:
                 CALL World.Display.GameWindow.Ornament
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
 
-                ; CALL World.Base.Tilemap.VisibleObjects                          ; определение видимых объектов - ОТКЛ
-                ; CALL NZ, Object.Draw                                            ; отображение объектов в массиве SortBuffer - ОТКЛ
+                CALL World.Base.Tilemap.VisibleObjects                          ; определение видимых объектов
+                CALL NZ, Object.Draw                                            ; отображение объектов в массиве SortBuffer
                  
                 ; установка флага готовности кадра и долгого переключения экранов
                 RENDER_FLAGS

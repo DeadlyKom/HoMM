@@ -37,8 +37,8 @@ ADD_ASSETS_DEBUG macro Bank?, Page?, ORG?, Include?
                 ADD_ASSETS 1, PAGE_N, 0x0000, incbin "Builder/Assets/Code/Compressed/Session.pack.ar"
                 ; ASSETS_ID_WORLD
                 ADD_ASSETS 1, PAGE_N, 0x0000, incbin "Builder/Assets/Code/Compressed/world.pack.ar"
-                ; ; ASSETS_ID_DEFAULT_SETTINGS
-                ; ADD_ASSETS 3, Page.TileSprites, Adr.TileSprites, incbin "Builder/Assets/Metadata/Compressed/Default/DefaultSettings.meta.ar"
+                ; ASSETS_ID_DEFAULT_SETTINGS
+                ADD_ASSETS 3, Page.ObjectDefaultSettings, Adr.ObjectDefaultSettings, incbin "Builder/Assets/Metadata/Compressed/Default/DefaultSettings.meta.ar"
                 ; ASSETS_ID_CURSOR_PACK
                 ADD_ASSETS 3, PAGE_N, 0x0000, incbin "Builder/Assets/Graphics/Compressed/Cursor.pack.ar"
                 ; ; ASSETS_ID_UI_ARROW_PATH_PACK
