@@ -72,7 +72,7 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 LD HL, GameSession.PeriodTick + FTick.Scroll
                 LD BC, #0001
 
-                ; уменьшение счётчика задержки скрола карты
+                ; уменьшение счётчика задержки скрола карты (FTick.Scroll)
                 LD A, (HL)
                 SUB C
                 ADC A, B
@@ -80,7 +80,7 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
 
                 INC L
 
-                ; уменьшение счётчика задержки тайлов
+                ; уменьшение счётчика задержки тайлов       (FTick.Tile)
                 LD A, (HL)
                 SUB C
                 ADC A, B
@@ -88,7 +88,7 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
 
                 INC L
 
-                ; уменьшение счётчика задержки героя
+                ; уменьшение счётчика задержки героя        (FTick.Hero)
                 LD A, (HL)
                 SUB C
                 ADC A, B
@@ -96,7 +96,7 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
 
                 INC L
 
-                ; уменьшение счётчика задержки объектов
+                ; уменьшение счётчика задержки объектов     (FTick.Objects)
                 LD A, (HL)
                 SUB C
                 ADC A, B

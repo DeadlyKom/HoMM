@@ -71,7 +71,7 @@ Core:           EI
                 CALL Core.Tables.TG_ShiftTable                                  ; генерация таблицы сдвигов
                 CALL Core.Tables.TG_ByteMirror                                  ; генерация таблицы зеркальных байт
                 CALL Core.Tables.TG_MulSprTable                                 ; генерация таблицы умножения для спрайтов
-                CALL Convert.SetShadowScreen
+                CALL Convert.SetShadowScreen                                    ; установка работы с теневым экраном
                 
                 ; инициализация работы с объектами
                 SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами

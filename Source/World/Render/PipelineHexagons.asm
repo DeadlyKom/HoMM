@@ -9,6 +9,7 @@
 ; Note:
 ; -----------------------------------------
 PipelineHexagons:
+                CALL Convert.SetBaseScreen                                      ; установка работы с основным экраном
                 ; -----------------------------------------
                 ; ⚠️ холодный запуск:
                 ;    1. принудительно выставить адрес левого верхнего угла отображаемой карты
@@ -99,6 +100,7 @@ PipelineHexagons:
                 RENDER_FLAGS
                 SET_FLAG FRAME_READY_BIT
                 SET_FLAG SWAP_PENDING_BIT
+                RES_VIEW_FLAG FORCED_FRAME_UPDATE_BIT                           ; сброс флага принудительного обновления кадра
                 RET
 
 .Swap           SET_RENDER_FLAG SWAPPED_PENDING_BIT                             ; установить флаг успеного переключения экрана, ожидаем окончание прерывания

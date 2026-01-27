@@ -65,7 +65,13 @@ Draw:           ; инициализация
                 LD IYL, A
                 DEC E
 
-                PUSH DE
+                ; проверка флага обновления объекта
+                BIT OBJECT_DIRTY_BIT, (IY + FObject.Flags)
+                JR Z, .ForcedVisibility                                          ; переход, если флаг не установлен,
+                                                                                ; но необходимо проверить обновление screen block'а или принудительное обновление
+                RES OBJECT_DIRTY_BIT, (IY + FObject.Flags)                      ; сброс флага
+
+.NeedRefresh    PUSH DE
                 PUSH BC
 
                 SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
@@ -130,11 +136,19 @@ Draw:           ; инициализация
                 LD HL, .JumpTable
                 CALL Func.JumpTable
 
-.NextDraw       POP BC
+                POP BC
                 POP DE
 
-                DJNZ .Loop
+.NextObject     DJNZ .Loop
                 RET
+
+.ForcedVisibility; проверка принудительной видимости
+                CHECK_VIEW_FLAG FORCED_FRAME_UPDATE_BIT
+                JR NZ, .NeedRefresh                                             ; переход, если требуется принудительное обновление
+
+                ; проверка обновления screen block'а
+                ; JR .NeedRefresh                                                 ; переход, если screen block обновляется, необходимо обновить и объект
+                JR .NextObject                                                  ; переход, если screen block не обновляется
 
 .JumpTable      DW Hero.Draw                                                    ; OBJECT_CLASS_HERO
                 DW Simple.Draw                                                  ; OBJECT_CLASS_CONSTRUCTION

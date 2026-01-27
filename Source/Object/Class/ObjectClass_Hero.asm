@@ -12,8 +12,8 @@
 ; Note:
 ; -----------------------------------------
 Hero:           ; -----------------------------------------
-                LD (IY + FObject.Flags), OBJECT_TICK
-                LD (IY + FObject.Sprite), ANIM_STATE_IDLE | (DIR_LEFT << SPRITE_DIR_BIT)
+                LD (IY + FObject.Flags), OBJECT_DIRTY | OBJECT_TICK
+                LD (IY + FObject.Sprite), ANIM_STATE_IDLE | (DIR_DOWN_LEFT << SPRITE_DIR_BIT)
                 ; -----------------------------------------
 
                 LD (IY + FObjectHero.HeroID), HERO_ID_NONE

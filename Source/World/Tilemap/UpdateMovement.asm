@@ -63,7 +63,7 @@ ApplyToX_Axis_  ; 0 - #2b5
 
 .Set            LD (GameSession.WorldInfo + FWorldInfo.MapOffset.X), A
                 LD (World.Shift_X), A                                           ; смещение внутри гексагона
-                SET_VIEW_FLAG_A UPDATE_RENDER_BUF_BIT                         ; установка флага обновления Render буфера
+                SET_VIEW_FLAG_A UPDATE_RENDER_BUF_BIT                           ; установка флага обновления Render буфера
                 RET
 
 .IsNegative     LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X) ; tile

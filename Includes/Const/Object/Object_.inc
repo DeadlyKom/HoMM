@@ -8,9 +8,10 @@ OBJECT_DEFAULT_SETTINGS_MAX EQU 128                                             
 OBJECT_EMPTY_ELEMENT        EQU #FF                                             ; свободный элемент массива
 
 ; значения для поля FObject.Flags
-OBJECT_TICK_BIT             EQU 0x04                                            ; объект тикает
+OBJECT_DIRTY_BIT            EQU 0x05                                            ; флаг, объект необходимо обновить
+OBJECT_TICK_BIT             EQU 0x04                                            ; флаг, сигнализирующий о тиканье объекта
 
-
+OBJECT_DIRTY                EQU 1 << OBJECT_DIRTY_BIT
 OBJECT_TICK                 EQU 1 << OBJECT_TICK_BIT
 
                 endif ; ~_CONST_OBJECT_INCLUDE_
