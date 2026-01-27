@@ -10,12 +10,11 @@
 ; Note:
 ; -----------------------------------------
 Objects:        ; чтение данных об объектах
-                LD A, (HL)                                                      ; FMapHeader.ObjectNum
+                LD A, (HL)
+                OR A
+                RET Z                                                           ; выход, если нет объектов для инициализации
+
                 INC HL
-                LD E, (HL)                                                      ; FMapHeader.ObjectOffset.Low
-                INC HL
-                LD D, (HL)                                                      ; FMapHeader.ObjectOffset.High
-                ADD HL, DE
 
                 PUSH AF
                 EX DE, HL

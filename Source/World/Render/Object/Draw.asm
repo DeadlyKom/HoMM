@@ -15,12 +15,47 @@ Draw:           ; инициализация
                 DEC E
 
                 ; установка отсечение спрайтов
-                LD HL, (SCR_WORLD_SIZE_X - 1) << 8 | (SCR_WORLD_POS_X << 3)     ; LeftEdge      - левая грань видимой части     (в пикселах)
+                LD HL, (SCR_WORLD_SIZE_X) << 8 | (SCR_WORLD_POS_X << 3)         ; LeftEdge      - левая грань видимой части     (в пикселах)
                                                                                 ; VisibleWidth  - ширина видимой части          (в знакоместах)
                 LD (GameState.LeftEdge), HL
-                LD HL, ((SCR_WORLD_SIZE_Y << 2) << 9)  | (SCR_WORLD_POS_Y << 3) ; TopEdge       - верхняя грань видимой части   (в пикселах)
+                LD HL, ((SCR_WORLD_SIZE_Y << 3) << 8)  | (SCR_WORLD_POS_Y << 3) ; TopEdge       - верхняя грань видимой части   (в пикселах)
                                                                                 ; VisibleHeight - высота видимой части          (в пикселах)
                 LD (GameState.TopEdge), HL
+
+                PUSH BC
+                ; расчёт положения карты по горизонтали
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)        ; положение в гексагонах (6)
+                ADD A, A    ; x2
+                LD C, A
+                ADD A, A    ; x4
+                ADD A, C    ; x6
+                LD B, A
+                RR B
+                RR C
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.X)          ; положение в знакоместах
+                LD L, #00
+                LD H, A
+                RR H
+                RR L
+                ADD HL, BC
+                ; LD BC, SCR_WORLD_POS_X << 7
+                ; SBC HL, BC
+                LD (.MapPositionX), HL
+
+                ; расчёт положения карты по вертикали
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)        ; положение в гексагонах (4)
+                ADD A, A    ; x2
+                ADD A, A    ; x4
+                LD H, A
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.Y)          ; положение в знакоместах
+                INC A                                                           ; дополнительное смещение гексагона по вертикали
+                ADD A, H
+                LD L, #00
+                LD H, A
+                RR H
+                RR L
+                LD (.MapPositionY), HL
+                POP BC
 
 .Loop           ; чтение адреса объекта
                 LD A, (DE)
@@ -34,29 +69,52 @@ Draw:           ; инициализация
                 PUSH BC
 
                 SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
-
                 ; расчёт положения объекта относительно верхнего-левого видимойго края (по горизонтали)
-                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
+                LD A, (IY + FObject.Position.Y.High)
+                RRA
+                CCF
+                SBC A, A
+                AND #03
                 LD B, A
+
+                LD A, (IY + FObject.Position.X.High)                            ; положение в гексагонах (6)
+                ADD A, A    ; x2
+                LD C, A
+                ADD A, A    ; x4
+                ADD A, C    ; x6
+                SUB B       ; вычесть смещение по горизонтали в зависимости от чётности строки
                 LD C, #00
-                SRL B
+                LD B, A
+                RR B
                 RR C
-                LD HL, (IY + FObject.Position.X)
-                SBC HL, BC
-                LD BC, SCR_WORLD_POS_X << 7
+                LD A, (IY + FObject.Position.X.Low)                             ; положение в пикселях, сдвинутое в левую часть (биты 7-3)
+                LD L, A
+                LD H, #00
+                ADD HL, HL  ; x2
+                ADD HL, HL  ; x4
                 ADD HL, BC
+.MapPositionX   EQU $+1
+                LD BC, #0000
+                SBC HL, BC
                 LD (Kernel.Sprite.DrawClipping.PositionX), HL
 
                 ; расчёт положения объекта относительно верхнего-левого видимойго края (по вертикали)
-                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
-                LD B, A
+                LD A, (IY + FObject.Position.Y.High)                            ; положение в гексагонах (4)
+                ADD A, A    ; x2
+                ADD A, A    ; x4
                 LD C, #00
-                SRL B
+                LD B, A
+                RR B
                 RR C
-                LD HL, (IY + FObject.Position.Y)
-                SBC HL, BC
-                LD BC, SCR_WORLD_POS_Y << 7
+                LD A, (IY + FObject.Position.Y.Low)                             ; положение в пикселях, сдвинутое в левую часть (биты 7-3)
+                LD L, A
+                LD H, #00
+                ADD HL, HL  ; x2
+                ADD HL, HL  ; x4
                 ADD HL, BC
+.MapPositionY   EQU $+1
+                LD BC, #0000
+                SBC HL, BC
                 LD (Kernel.Sprite.DrawClipping.PositionY), HL
 
                 ; определение способа отображения объекта

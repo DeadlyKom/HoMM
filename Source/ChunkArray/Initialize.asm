@@ -22,8 +22,9 @@ Initialize:     LD DE, #0000
 
                 ; подготовка
                 LD C, #00
-                
+
                 ; округление
+                ; LD A, (GameSession.MapSize.Width)
                 LD A, 64                                                        ; размер карты по горизонтали
                 rept CHUNK_SHIFT
                 RRA
@@ -33,6 +34,7 @@ Initialize:     LD DE, #0000
                 LD (GetChunkIndex.Mask), A
 
                 ; округление
+                ; LD A, (GameSession.MapSize.Height)
                 LD A, 64                                                        ; размер карты по вертикали
                 rept CHUNK_SHIFT
                 RRA

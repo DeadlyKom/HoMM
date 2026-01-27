@@ -69,9 +69,9 @@ Draw:           ; -----------------------------------------
 
                 CALL PipelineHexagons
 
-                ; ifdef _DEBUG
-                ; SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
-                ; CALL Convert.SetBaseScreen                                      ; установка работы с основным экраном
+                ifdef _DEBUG
+                SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
+                CALL Convert.SetBaseScreen                                      ; установка работы с основным экраном
                 ; ; -----------------------------------------
                 ; ; отображение screen block'ов
                 ; LD DE, #031A
@@ -104,22 +104,20 @@ Draw:           ; -----------------------------------------
                 ; CALL Console.DrawByte
                 ; ; -----------------------------------------
 
-                ; ; -----------------------------------------
-                ; ; отображение позиции карты (горизонталь)
-                ; LD DE, #1706
-                ; CALL Console.SetCursor
-                ; LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
-                ; CALL Console.DrawByte
-                ; LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.X)
-                ; CALL Console.DrawHalfByte
-                ; LD A, ','
-                ; CALL Console.DrawChar
-                ; ; отображение позиции карты (вертикаль)
-                ; LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
-                ; CALL Console.DrawByte
-                ; LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.Y)
-                ; CALL Console.DrawHalfByte
-                ; ; -----------------------------------------
+                ; -----------------------------------------
+                ; отображение позиции карты (горизонталь)
+                LD DE, #0919
+                CALL Console.SetCursor
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
+                CALL Console.DrawByte
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.X)
+                CALL Console.DrawHalfByte
+                ; отображение позиции карты (вертикаль)
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
+                CALL Console.DrawByte
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.Y)
+                CALL Console.DrawHalfByte
+                ; -----------------------------------------
                 
                 ; ; ; -----------------------------------------
                 ; ; ; отображение размера видимой области в чанках
@@ -141,7 +139,7 @@ Draw:           ; -----------------------------------------
                 ; ; CALL Console.DrawByte
                 ; ; ; -----------------------------------------
 
-                ; endif
+                endif
 
                 RES_ALL_MAIN_FLAGS                                              ; сброс всех флагов
                 JP World.Base.Event.Handler                                     ; обработчик событий
