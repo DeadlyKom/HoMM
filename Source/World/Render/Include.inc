@@ -5,7 +5,7 @@
                 module Render
 
                 include "Draw.asm"
-                include "Cursor.asm"
+                include "Source/Cursor/Draw.asm"
                 include "Object/Include.inc"
                 include "PipelineHexagons.asm"
 

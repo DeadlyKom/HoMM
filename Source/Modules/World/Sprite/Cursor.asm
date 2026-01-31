@@ -9,6 +9,7 @@
 ; Out:
 ; Corrupt:
 ; Note:
+;   в общей памяти
 ; -----------------------------------------
 Load:           ; загрузка графики курсора
                 SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
@@ -30,15 +31,16 @@ Load:           ; загрузка графики курсора
                 LD DE, .HashSequence
                 CALL Sprite.FillSpriteIndices
 
+                SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
+
                 ; "Idle"
                 LD A, (Cursor.Indexes + 0)
-                LD (World.Base.Render.Idle.SpriteID), A
+                LD (UI_Cursor.Idle.SpriteID), A
 
                 ; "Click"
                 LD A, (Cursor.Indexes + 1)
-                LD (World.Base.Render.Click.SpriteID), A
-
-                CALL World.Base.Render.Cursor.Draw.Initialize                   ; инициализация состояние курсора
+                LD (UI_Cursor.Click.SpriteID), A
+                CALL UI_Cursor.Initialize                                       ; инициализация состояние курсора
 
                 ; восстановление страницы расположения загруженого ассетаа карты
                 JP_SET_MODULE_PAGE_World                                        ; включить страницу модуля "World"

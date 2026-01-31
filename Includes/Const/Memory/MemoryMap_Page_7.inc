@@ -18,11 +18,14 @@
                 ;   +-------+------------------------------------------+-------+
                 ;   | #E300 |                           СursorStorageB | #0100 | ; буфер сохранения фона под курсором (дополнительный см PipelineHexagons.MemcpyScreen)
                 ;   +-------+------------------------------------------+-------+
-                ;   | #E400 |                                 свободно | #1С00 | ; свободно
+                ;   | #E400 |                                 свободно | #0C00 | ; свободно
+                ;   +-------+------------------------------------------+-------+
+                ;   | #F000 |                             SharedScreen | #1000 | ; общая память для кода
                 ;   +-------+------------------------------------------+-------+
 
                 module Page
 ScreenRefresh   EQU PAGE_7
+SharedScreen    EQU PAGE_7
 BitScanLsbTable EQU PAGE_7
 Mod6Table       EQU PAGE_7
 ScrBlockTable   EQU PAGE_7
@@ -35,6 +38,7 @@ BitScanLsbTable EQU #0100                                                       
 Mod6Table       EQU #0016                                                       ; размер таблицы вычисления mod 6 числа (0-21)
 ScrBlockTable   EQU #00B0                                                       ; размер таблицы номера экранного блока (с 1 по 22 строку включительно) с высотой гексагона
 CursorStorage   EQU #0100                                                       ; размер буфера сохранения фона под курсором
+SharedScreen    EQU #1000                                                       ; размер общей памяти для кода
                 endmodule
 
                 module Adr
@@ -45,6 +49,7 @@ ScreenBlock     EQU #E116                                                       
 ScrBlockTable   EQU #E150                                                       ; адрес раположения таблицы номера экранного блока (с 1 по 22 строку включительно) с высотой гексагона
 CursorStorageA  EQU #E200                                                       ; адрес буфера сохранения фона под курсором
 CursorStorageB  EQU #E300                                                       ; адрес буфера сохранения фона под курсором (дополнительный см PipelineHexagons.MemcpyScreen)
+SharedScreen    EQU #F000                                                       ; адрес общей памяти для кода
                 endmodule
 
                 endif ; ~_CONST_MEMORY_MAP_PAGE_7_

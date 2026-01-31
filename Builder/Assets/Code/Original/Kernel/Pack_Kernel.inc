@@ -43,6 +43,9 @@ Begin:          EQU $
                 ; chunk array
                 include "Source/ChunkArray/Include.inc"
 
+                ; UI
+                include "Source/UI/Include.inc"
+
                 ifdef SHOW_FPS | _DEBUG
                 include "Source/Utils/Debug/Console.asm"
                 include "Source/Utils/Debug/FPS_Counter.asm"

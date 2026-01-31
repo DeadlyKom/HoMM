@@ -1,103 +1,14 @@
 
                 ifndef _WORLD_RENDER_DRAW_CURSOR_
                 define _WORLD_RENDER_DRAW_CURSOR_
-
-ANIMATION_FORWARD EQU 1
-ANIMATION_BACK    EQU -1
-
-; состояние крусора
-CURSOR_STATE_IDLE   EQU #00                                                     ; бездействие
-CURSOR_STATE_CLICK  EQU #01                                                     ; нажатие
-
-                struct FCursorState
-State           DB #00
-Direction       DB #00
-SpriteIndex     DB #00
-SpriteID        DB #00
-Counter         DB #00
-IndexMax        DB #00
-                ends
-
 ; -----------------------------------------
-; отображение "мира"
+; отображение курсора
 ; In:
 ; Out:
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Cursor.Draw:    LD IX, CurrentState
-
-                ; проверка состояния курсора
-                LD A, (IX + FCursorState.State)
-                OR A        ; CURSOR_STATE_NONE
-                JR NZ, .StateTick
-
-                ; состояние курсора отсутствует
-
-                ; проверка нажатия клавиши "выбор"
-                LD A, (GameState.Input.Value)
-                BIT SELECT_KEY_BIT, A
-                LD A, CURSOR_STATE_CLICK
-                JR NZ, .SetState_A                                              ; переход, была нажата клавиша "выбор"
-
-                ; проверка бездействия курсора
-                LD A, (Mouse.PositionFlag)                                      ; если курсор не поменяет позицию, хранит #FF
-                OR A
-                JR Z, .SetState_Idle                                            ; переход, если курсор переместился
-
-.StateTick      ; уменьшение счётчика
-                DEC (IX + FCursorState.Counter)
-                JR NZ, .Draw                                                    ; переход, если счётчик бездействия курсора не обнулён
-
-                ; счётчик времени достик нуля,
-                ; необходимо перейти к следующему кадру
-                LD A, (IX + FCursorState.SpriteIndex)
-                ADD A, (IX + FCursorState.Direction)
-                JP M, .SetState_Idle                                            ; переход, если достигли последнего кадра анимации flip-flop
-
-                ; проверка достижения максимального кадра
-                CP (IX + FCursorState.IndexMax)
-                JR NZ, .SetAnimIndex                                            ; переход, если не достигли максимальный кадр анимации
-
-                ; достигли максимальный кадр анимации,
-                ; необходимо сменить направление анимации
-                LD (IX + FCursorState.Direction), ANIMATION_BACK
-                JR .SetSubcounter
-
-.Initialize     LD IX, CurrentState
-                LD A, CURSOR_STATE_IDLE
-
-.SetState       ; копирование дефолтных настроек устанавливаемого состояния
-                LD (IX + FCursorState.State), A
-                LD (IX + FCursorState.Direction), ANIMATION_FORWARD
-
-                ADD A, A    ; x2
-                ADD A, A    ; x4
-                ADD A, LOW StateTable
-                LD L, A
-                ADC A, HIGH StateTable
-                SUB L
-                LD H, A
-
-                LD DE, CurrentState + FCursorState.SpriteIndex
-                LDI
-                LDI
-                LDI
-                LDI
-
-                RET
-
-.SetState_Idle  LD A, CURSOR_STATE_IDLE
-.SetState_A     CALL .SetState
-                JR .Draw
-
-.SetAnimIndex   ; сохранение индекса анимации
-                LD (IX + FCursorState.SpriteIndex), A
-
-.SetSubcounter  ; установка промежуточного счётчика
-                LD (IX + FCursorState.Counter), DURATION.DELAY_CURSOR
-
-.Draw           ; вывод курсора
+Cursor.Draw:    ; вывод курсора
                 LD HL, GameState.Screen
                 LD A, (HL)
                 LD (.Screen), A
@@ -217,18 +128,6 @@ Cursor.Draw:    LD IX, CurrentState
                 LD A, #00
                 LD (GameState.Screen), A
                 RET
-CurrentState    EQU $
-                FCursorState
-StateTable:
-Idle            ; CURSOR_STATE_IDLE
-                DB #00
-.SpriteID       DB #00
-                DB DURATION.IDLE_CURSOR
-                DB #03
-Click           ; CURSOR_STATE_CLICK
-                DB #00
-.SpriteID       DB #00
-                DB DURATION.CLICK_CURSOR
-                DB #02
+Cursor.CurrentState FCursorState
 
                 endif ; ~_WORLD_RENDER_DRAW_CURSOR_

@@ -52,6 +52,12 @@ Draw:           ; -----------------------------------------
                 ; -----------------------------------------
 
                 ; -----------------------------------------
+                ; проверка пересечения курсором UI элементов
+                SET_MODULE_PAGE_World                                           ; включить страницу модуля "World"
+                LD HL, World.Base.Layers
+                LD B, World.Base.Layers.Num
+                CALL UI.Update
+                ; -----------------------------------------
                 ; обновление позиции карты
                 CHECK_INPUT_TIMER_FLAG SCROLL_MAP_BIT
                 CALL NZ, World.Base.Tilemap.UpdateMovement
@@ -143,6 +149,7 @@ Draw:           ; -----------------------------------------
 
                 RES_ALL_MAIN_FLAGS                                              ; сброс всех флагов
                 JP World.Base.Event.Handler                                     ; обработчик событий
+
 ; DrawScreenBlock:
 ;                 CALL .Cell
 ;                 LD A, L

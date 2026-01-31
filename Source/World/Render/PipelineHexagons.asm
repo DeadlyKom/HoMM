@@ -116,8 +116,9 @@ PipelineHexagons:
                 LD DE, Adr.CursorStorageB
                 LD B, #00
                 LD C, (HL)
-
-                CALL Memcpy.FastLDIR
+                LD A, C
+                OR A
+                CALL NZ, Memcpy.FastLDIR
 
                 ; копирование блоков, если курсор находится в игровой зоне, он скопируется тоже
                 CALL ScreenBlock.Memcpy                                         ; копирование screen block'и в теневой экран

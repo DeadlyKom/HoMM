@@ -8,6 +8,7 @@
                 include "Vector16.inc"
                 include "Address.inc"
                 include "Assets.inc"
+                include "Cursor.inc"
                 
                 include "Tick.inc"
                 include "Size.inc"
@@ -18,6 +19,7 @@
                 include "SpriteClipping.inc"
                 include "SpriteNotClipping.inc"
                 
+                include "UI.inc"
                 include "Map/Include.inc"
                 include "SaveSlot.inc"
 

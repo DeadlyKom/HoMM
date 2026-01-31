@@ -13,6 +13,7 @@
                 include "Event/Include.inc"
                 include "Render/Include.inc"
                 include "Tilemap/Include.inc"
+                include "Source/World/UI/Layers.inc"
 Size            EQU $-Adr.World
 
                 ENT
