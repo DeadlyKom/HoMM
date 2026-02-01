@@ -6,6 +6,8 @@
                 include "Launch.asm"
                 include "Utils/Include.inc"
                 include "Kernel/Include.inc"
+                include "Map/HextileShading.inc"
+                include "Map/HextileShadingTable.inc"
                 
                 ; блок кода, копируемый при развёртывания модуля
 Adr.Deploy      include "Session.inc"

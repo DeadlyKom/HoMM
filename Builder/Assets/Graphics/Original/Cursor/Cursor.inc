@@ -14,8 +14,8 @@ Idle:           ; анимации спрайтов курсора "бездей
                 SPRITE 24, 24, -2, -2, OR_XOR_SAVE, 0, Sprite._2
 .Num            EQU ($-Idle) / FSprite
 Click:           ; анимации спрайтов курсора "клик"
-                SPRITE 24, 23, -2, -1, OR_XOR_SAVE, 0, Sprite._0
-                SPRITE 24, 19, -2,  1, OR_XOR_SAVE, 0, Sprite.Click
+                SPRITE 24, 23, -2, -1-2, OR_XOR_SAVE, 0, Sprite._0
+                SPRITE 24, 19, -2,  1-4, OR_XOR_SAVE, 0, Sprite.Click
 .Num            EQU ($-Click) / FSprite
 
 Sprite:

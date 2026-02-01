@@ -37,12 +37,15 @@ RENDER_BUFFER_COPY macro Offset?
 ;
 ;   код расположен рядом с картой (страница 1)
 ; -----------------------------------------
-RenderBuffer:
+RenderBuffer:   
 .LENGTH_LINE    EQU TILEMAP_WIDTH_DATA                                          ; длина линии 
 .LINE_REPEAT    EQU TILEMAP_HEIGHT_DATA                                         ; количество повторений строки
 
                 ; инициализация
-                LD HL, Adr.MapMetadata
+                LD HL, (GameSession.WorldInfo + FWorldInfo.Tilemap)             ; начальный адрес видимой части тайловой карты
+                LD BC, Size.Hextile + Size.HextileBorder
+                ADD HL, BC
+
                 LD A, (GameSession.MapSize.Width)
                 SUB .LENGTH_LINE - 1
                 LD E, A

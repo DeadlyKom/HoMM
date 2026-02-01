@@ -40,6 +40,13 @@ Draw:           ; -----------------------------------------
                 CALL World.Base.Tilemap.Update.TileBuffer
                 CALL Draw.HexDLGeneration
                 CALL Reset
+                CALL Minimap.Compilation                                        ; компиляция миникарты
+                CALL Minimap.Memcpy                                             ; копирование миникарты
+                ; копирование миникарты в теневой экран
+                SET_PAGE_SCREEN_SHADOW
+                SCREEN_ADR_REG HL, SCR_ADR_BASE, SCR_MINIMAP_POS_X << 3, SCR_MINIMAP_POS_Y << 3
+                LD IXL, #06
+                CALL World.ScreenRefresh.Memcpy.Screen_6
 
 .Update         ; -----------------------------------------
                 ; обновление

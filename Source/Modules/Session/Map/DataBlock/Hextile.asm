@@ -27,6 +27,7 @@ Hextile:        EX DE, HL                                                       
                 LD A, (Session.SharedCode.SetPageLoadedMap.LoadedMapPage)
                 CALL Memcpy.BetweenPages
                 MEMSET_BYTE Adr.HextileBorder, 0, Size.HextileBorder            ; обнуление бордюрного буфера индексов гексагонов
+                CALL Minimap.GenMap                                             ; генерация карты для миникарты
 
                 ; инициализация метаданных карты значением по умолчанию
                 ; ToDo: в дальнейшем эти данные должны браться из сохранения
@@ -35,6 +36,8 @@ Hextile:        EX DE, HL                                                       
                 LD BC, Size.MapMetadata-1
                 LD (HL), MAP_META_DEFAULT_VALUE
                 CALL Memcpy.FastLDIR
+                CALL Minimap.GenFog                                             ; генерация тумана для миникарты
+
                 JP Session.SharedCode.SetPageLoadedMap                          ; установка страницы загруженной карты
 
                 display " - Parsing FMapDataBlockInfo for Hextile:\t\t", /A, Hextile, "\t= busy [ ", /D, $-Hextile, " byte(s)  ]"

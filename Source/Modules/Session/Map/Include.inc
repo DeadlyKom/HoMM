@@ -9,6 +9,6 @@
                 include "Utils.asm"
 
                 align 256, #55
-BaseGraphicsBuffer: DS 256, 0
+BaseGraphicsBuffer: DS 256, 0                                                   ; ToDo: при распаковки модуля, всегда есть 256 байт  в конце модуля, перенести туда буфер
                 
                 endif ; ~_MODULE_SESSION_MAP_INCLUDE_
