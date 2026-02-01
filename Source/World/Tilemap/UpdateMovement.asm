@@ -8,13 +8,18 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-UpdateMovement: ; установка задержки опроса скрола
+UpdateMovement: RES_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             ; усброс новка флага разрешения обновления скрола карты
+
+                ; проверить флаг установки положения карты по мини-карте
+                CHECK_VIEW_FLAG SET_MAP_POSITION_ON_MINIMAP_BIT
+                JR NZ, SetMapPosition                                           ; переход, если требуется установка положения карты по мини-карте
+
+                ; установка задержки опроса скрола
                 LD HL, GameSession.PeriodTick + FTick.Scroll
                 LD A, (HL)
                 OR A
                 RET NZ                                                          ; выход, если задержка незакончилась
                 LD (HL), DURATION.MAP_SCROLL+1                                  ; обновление задежки скрола
-
                 ; -----------------------------------------
                 ; определение вектора перемещения
                 ; -----------------------------------------
@@ -42,12 +47,16 @@ UpdateMovement: ; установка задержки опроса скрола
                 AND ~MOVEMENT_MASK
                 LD (GameState.Input.Value), A
 
-                ; инициализация 22 * 8 стобов гексагона
+.Genaration     ; инициализация 22 * 8 стобов гексагона
                 LD HL, Adr.RenderBuffer + 80 + 176
                 LD DE, #0101
                 CALL SafeFill.b176
-
                 JP Draw.HexDLGeneration
+SetMapPosition  RES_VIEW_FLAG SET_MAP_POSITION_ON_MINIMAP_BIT                   ; сброс флага установления положения карты по мини-карте
+                VIEW_FLAGS
+                SET_FLAG UPDATE_TILEMAP_BUF_BIT                                 ; установка флага обновления Tilemap буфера
+                SET_FLAG UPDATE_RENDER_BUF_BIT                                  ; установка флага обновления Render буфера
+                JR UpdateMovement.Genaration
 ApplyToX_Axis_  ; 0 - #2b5
                 ; -----------------------------------------
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.X)

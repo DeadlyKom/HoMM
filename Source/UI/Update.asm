@@ -91,8 +91,8 @@ Update:         ; сброс флага, найденого перекрытия
 
                 ; вызов обработчика
                 OR A                                                            ; сброс флага, для обработчика, сигнализирующий обнуление таймера подсказки
-                JP (IX)
-
+.Prev           EQU $+1
+                JP #0000
 ResetTimer      LD HL, TooltipTimer
                 LD (HL), UI_TOOLTIP_HOVER_DELAY
                 RET
@@ -128,9 +128,8 @@ HandlerIfInRect:; инициализация
                 LD (Update.Flag), A
 
                 ; 
-.Prev           EQU $+1
-                LD BC, #0000
-                LD (.Prev), IX
+                LD BC, (Update.Prev)
+                LD (Update.Prev), IX
                 PUSH IX
                 POP HL
                 SBC HL, BC
