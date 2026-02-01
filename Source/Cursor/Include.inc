@@ -13,7 +13,7 @@ StateTable:
                 DB DURATION.IDLE_CURSOR
                 DB #03
 .Click          ; CURSOR_STATE_CLICK
-                DB #00
+                DB #01
 .Click.SpriteID DB #00
                 DB DURATION.CLICK_CURSOR
                 DB #02

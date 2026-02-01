@@ -10,18 +10,16 @@
 ; -----------------------------------------
 Update:         LD IX, UI_Cursor.CurrentState
 
-                ; проверка состояния курсора
-                LD A, (IX + FCursorState.State)
-                OR A                                                            ; CURSOR_STATE_NONE
-                JR NZ, .StateTick
-
-                ; состояние курсора отсутствует
-
                 ; проверка нажатия клавиши "выбор"
                 LD A, (GameState.Input.Value)
                 BIT SELECT_KEY_BIT, A
                 LD A, CURSOR_STATE_CLICK
                 JR NZ, .SetState_A                                              ; переход, была нажата клавиша "выбор"
+
+                ; проверка состояния курсора
+                LD A, (IX + FCursorState.State)
+                OR A                                                            ; CURSOR_STATE_NONE
+                JR NZ, .StateTick
 
                 ; проверка бездействия курсора
                 LD A, (Mouse.PositionFlag)                                      ; если курсор не поменяет позицию, хранит #FF
