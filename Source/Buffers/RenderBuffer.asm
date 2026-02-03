@@ -1,6 +1,6 @@
 
-                ifndef _UPDATE_BUFFERS_RENDER_
-                define _UPDATE_BUFFERS_RENDER_
+                ifndef _BUFFERS_RENDER_
+                define _BUFFERS_RENDER_
 RENDER_BUFFER_COPY macro Offset?
                 LD A, (HL)                                                      ; чтение метаданных карты (xFxxFFFx)
                 AND C       ; 0F000000
@@ -87,4 +87,4 @@ RenderBuffer:
 
                 display " - Update render buffer:\t\t\t\t", /A, RenderBuffer, "\t= busy [ ", /D, $-RenderBuffer, " byte(s)  ]"
 
-                endif ; ~_UPDATE_BUFFERS_RENDER_
+                endif ; ~_BUFFERS_RENDER_

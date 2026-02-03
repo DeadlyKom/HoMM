@@ -1,7 +1,7 @@
 
-                ifndef _MODULE_SESSION_MAP_UTILS_
-                define _MODULE_SESSION_MAP_UTILS_
-Begin.Utils     EQU $
+                ifndef _MODULE_SESSION_MAP_UTILITIES_
+                define _MODULE_SESSION_MAP_UTILITIES_
+Begin.Utilities EQU $
 ; -----------------------------------------
 ; установка страницы загруженной карты
 ; In:
@@ -14,6 +14,6 @@ SetPageLoadedMap
                 LD A, #00
                 JP_SET_PAGE_A
 
-                display " - Map utilities:\t\t\t\t\t", /A, Begin.Utils, "\t= busy [ ", /D, $-Begin.Utils, " byte(s)  ]"
+                display " - Map utilities:\t\t\t\t\t", /A, Begin.Utilities, "\t= busy [ ", /D, $-Begin.Utilities, " byte(s)  ]"
 
-                endif ; ~_MODULE_SESSION_MAP_UTILS_
+                endif ; ~_MODULE_SESSION_MAP_UTILITIES_

@@ -1,6 +1,6 @@
 
-                ifndef _HERO_UTILS_HERO_ADDRESS_
-                define _HERO_UTILS_HERO_ADDRESS_
+                ifndef _HERO_UTILITIES_HERO_ADDRESS_
+                define _HERO_UTILITIES_HERO_ADDRESS_
 ; -----------------------------------------
 ; получить адрес героя
 ; In:
@@ -25,4 +25,4 @@ Hero.Address.IX:; расчёт адреса распологаемого гер�
 
                 RET
 
-                endif ; ~_HERO_UTILS_HERO_ADDRESS_
+                endif ; ~_HERO_UTILITIES_HERO_ADDRESS_

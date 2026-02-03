@@ -12,6 +12,6 @@ ReleaseAsset:   SET_PAGE_ASSETS                                                 
                 LD A, ASSETS_ID_SESSION                                         ; идентификатора текущего ассета
                 JP_RELEASE_ASSET_A
 
-                display " - Utils release asset:\t\t\t\t", /A, ReleaseAsset, "\t= busy [ ", /D, $-ReleaseAsset, " byte(s)  ]"
+                display " - Utilities release asset:\t\t\t\t", /A, ReleaseAsset, "\t= busy [ ", /D, $-ReleaseAsset, " byte(s)  ]"
 
                 endif ; ~_MODULE_SESSION_CORE_RELEASE_ASSET_

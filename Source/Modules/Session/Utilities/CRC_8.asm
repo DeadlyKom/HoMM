@@ -1,6 +1,6 @@
 
-                ifndef _MODULE_SESSION_UTILS_CRC_8_BIT_
-                define _MODULE_SESSION_UTILS_CRC_8_BIT_
+                ifndef _MODULE_SESSION_UTILITIES_CRC_8_BIT_
+                define _MODULE_SESSION_UTILITIES_CRC_8_BIT_
 ; -----------------------------------------
 ; расчёт контрольной суммы 8-битный
 ; In:
@@ -34,6 +34,6 @@ CRC_8:          XOR A
 
                 RET
 
-                display " - Utils CRC 8-bit:\t\t\t\t\t\t     \t= busy [ ", /D, $-CRC_8, " byte(s) ]"
+                display " - Utilities CRC 8-bit:\t\t\t\t\t\t     \t= busy [ ", /D, $-CRC_8, " byte(s) ]"
 
-                endif ; ~_MODULE_SESSION_UTILS_CRC_8_BIT_
+                endif ; ~_MODULE_SESSION_UTILITIES_CRC_8_BIT_

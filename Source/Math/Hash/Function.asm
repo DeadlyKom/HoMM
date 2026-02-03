@@ -64,4 +64,4 @@ Hash.Function:  ; инициализация
                 display " - Hash function:\t\t\t\t\t", /A, Hash.Function, "\t= busy [ ", /D, $-Hash.Function, " byte(s)  ]"
                 endmodule
 
-                endif ; ~ _CORE_MODULE_OPEN_WORLD_UTILS_GET_HASH_
+                endif ; ~ _MATH_HASH_FUNCTION_

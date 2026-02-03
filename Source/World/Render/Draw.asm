@@ -36,10 +36,18 @@ Draw:           ; -----------------------------------------
 
                 ; принудительное обновление Tilemap- и Render-буферов
                 SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
+                ;   A  - радиус обзора в тайлах
+                ;   C  - номер бита туман отвечающий за игрока
+                ;   DE - координаты в тайлах (D - y, E - x)
+                LD A, 1
+                LD C, MAP_META_FOG_PLAYER_1_BIT
+                LD DE, #0302
+                CALL BufferUtilities.Reconnaissance                             ; рекогносцировка
                 CALL World.Base.Tilemap.Update.RenderBuffer
                 CALL World.Base.Tilemap.Update.TileBuffer
                 CALL Draw.HexDLGeneration
                 CALL Reset
+                CALL Minimap.GenFog                                             ; генерация тумана для миникарты
                 CALL Minimap.Compilation                                        ; компиляция миникарты
                 CALL Minimap.Memcpy                                             ; копирование миникарты
                 ; копирование миникарты в теневой экран
@@ -76,8 +84,8 @@ Draw:           ; -----------------------------------------
                 CHECK_VIEW_FLAG UPDATE_TILEMAP_BUF_BIT
                 CALL NZ, World.Base.Tilemap.Update.TileBuffer
                 ; -----------------------------------------
-                ; CALL Fog.Make
-                ; CALL Fog.Tick
+                CALL Fog.Make
+                CALL Fog.Tick
                 ; -----------------------------------------
 
                 CALL PipelineHexagons
@@ -213,6 +221,11 @@ Fog.Make:       LD HL, MakeCounter
                 ; LD A, 0
                 LD E, A
 
+                LD D, HIGH Adr.RenderBuffer
+                LD A, (DE)
+                BIT MAP_META_FOG_PLAYER_1_BIT, A
+                RET NZ
+
                 LD BC, 10
                 LD HL, Buffer
 
@@ -234,7 +247,7 @@ Fog.Make:       LD HL, MakeCounter
 
 .Make           ; сохраним индекс
                 INC HL
-                LD D, HIGH Adr.RenderBuffer
+                ; LD D, HIGH Adr.RenderBuffer
                 ; -----------------------------------------
                 ; обновление вокруг указанного гексагона
                 ; In:
@@ -245,7 +258,7 @@ Fog.Make:       LD HL, MakeCounter
                 ; Note:
                 ;   код расположен рядом с картой (страница 1)
                 ; -----------------------------------------
-                CALL UtilsBuffer.UpdateHextile
+                CALL BufferUtilities.UpdateHextile
                 RET C
 
                 LD (HL), E
@@ -306,7 +319,7 @@ Fog.Tick:       LD HL, TickCounter
                 ; Note:
                 ;   код расположен рядом с картой (страница 1)
                 ; -----------------------------------------
-                CALL UtilsBuffer.UpdateHextile
+                CALL BufferUtilities.UpdateHextile
                 DJNZ .Loop
                 RET
 Reset:          LD HL, Buffer

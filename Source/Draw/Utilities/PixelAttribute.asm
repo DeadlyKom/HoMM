@@ -2,7 +2,7 @@
                 ifndef _DRAW_UTILS_PIXEL_ATTRIBUTE_
                 define _DRAW_UTILS_PIXEL_ATTRIBUTE_
 
-                module Utils
+                module Utilities
 ; -----------------------------------------
 ; расчёт экраного адреса атрибутов
 ; In:

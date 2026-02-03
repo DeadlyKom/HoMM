@@ -1,6 +1,6 @@
 
-                ifndef _UPDATE_BUFFERS_GET_RENDER_BY_INDEX_
-                define _UPDATE_BUFFERS_GET_RENDER_BY_INDEX_
+                ifndef _BUFFERS_GET_RENDER_BY_INDEX_
+                define _BUFFERS_GET_RENDER_BY_INDEX_
 ; -----------------------------------------
 ; определение адреса Render-буфера по индексу гексагона
 ; In:
@@ -99,4 +99,4 @@ GetRenderBuffer LD C, A
 
                 display " - Get address render buffer by index:\t\t", /A, GetRenderBuffer, "\t= busy [ ", /D, $-GetRenderBuffer, " byte(s)  ]"
 
-                endif ; ~_UPDATE_BUFFERS_GET_RENDER_BY_INDEX_
+                endif ; ~_BUFFERS_GET_RENDER_BY_INDEX_

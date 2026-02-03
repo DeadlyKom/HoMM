@@ -1,6 +1,6 @@
 
-                ifndef _HERO_UTILS_HERO_ADDRESSES_
-                define _HERO_UTILS_HERO_ADDRESSES_
+                ifndef _HERO_UTILITIES_HERO_ADDRESSES_
+                define _HERO_UTILITIES_HERO_ADDRESSES_
 ; -----------------------------------------
 ; получить адреса героя
 ; In:
@@ -12,10 +12,10 @@
 ; Note:
 ; -----------------------------------------
 Hero.Addresses: ; получить адрес героя
-                CALL Hero.Utils.GetHeroAdr.IX
+                CALL Hero.Utilities.GetHeroAdr.IX
 
                 ; получить адрес объекта
                 LD A, (IX + FHero.ObjectID)
-                JP Object.Utils.GetAdr.IY
+                JP Object.Utilities.GetAdr.IY
 
-                endif ; ~_HERO_UTILS_HERO_ADDRESSES_
+                endif ; ~_HERO_UTILITIES_HERO_ADDRESSES_

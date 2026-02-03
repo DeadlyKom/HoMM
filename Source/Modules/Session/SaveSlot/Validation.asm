@@ -12,13 +12,13 @@
 Validation:     ; проверка наличия данных
                 LD HL, Adr.TilemapBuffer
                 LD BC, FSaveSlot-1
-                CALL Session.Utils.DataAvailable
+                CALL Session.Utilities.DataAvailable
                 RET NC                                                          ; выход, если данные слота сохранения, некорректны
 
                 ; проверка контрольной суммы
                 LD HL, Adr.TilemapBuffer
                 LD DE, FSaveSlot-1
-                CALL Session.Utils.CRC_8
+                CALL Session.Utilities.CRC_8
 
                 ; проверка соответствия контрольной суммы
                 LD HL, Adr.TilemapBuffer + FSaveSlot.CRC

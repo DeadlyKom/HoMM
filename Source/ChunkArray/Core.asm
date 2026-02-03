@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_UTILS_CHUNK_ARRAY_CORE_
-                define _CORE_MODULE_UTILS_CHUNK_ARRAY_CORE_
+                ifndef _CORE_MODULE_UTILITIES_CHUNK_ARRAY_CORE_
+                define _CORE_MODULE_UTILITIES_CHUNK_ARRAY_CORE_
 ; -----------------------------------------
 ; получение адреса указаннго чанка
 ; In:
@@ -63,4 +63,4 @@ GetChunkIndex:  LD A, D
 
                 RET
 
-                endif ; ~ _CORE_MODULE_UTILS_CHUNK_ARRAY_CORE_
+                endif ; ~ _CORE_MODULE_UTILITIES_CHUNK_ARRAY_CORE_

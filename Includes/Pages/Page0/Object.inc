@@ -12,6 +12,6 @@ Object.Class:
 .UI                     EQU Page0.Object.Class.UI
 .Hero                   EQU Page0.Object.Class.Hero
 .Construction           EQU Page0.Object.Class.Construction
-Object.Utils:
-.GetAdr.IY              EQU Page0.Object.Utils.Adr.IY                           ; получить адрес объекта
+Object.Utilities:
+.GetAdr.IY              EQU Page0.Object.Utilities.Adr.IY                       ; получить адрес объекта
                 endif ; ~_PAGE_0_OBJECT_

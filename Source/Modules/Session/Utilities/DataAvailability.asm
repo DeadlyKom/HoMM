@@ -1,6 +1,6 @@
 
-                ifndef _MODULE_SESSION_UTILS_DATA_AVAILABILITY_
-                define _MODULE_SESSION_UTILS_DATA_AVAILABILITY_
+                ifndef _MODULE_SESSION_UTILITIES_DATA_AVAILABILITY_
+                define _MODULE_SESSION_UTILITIES_DATA_AVAILABILITY_
 ; -----------------------------------------
 ; проверка доступных данных
 ; In:
@@ -23,6 +23,6 @@ DataAvailable:  XOR A
 .Found          SCF
                 RET
 
-                display " - Utils data availability:\t\t\t\t\t     \t= busy [ ", /D, $-DataAvailable, " byte(s) ]"
+                display " - Utilities data availability:\t\t\t\t\t     \t= busy [ ", /D, $-DataAvailable, " byte(s) ]"
 
-                endif ; ~_MODULE_SESSION_UTILS_DATA_AVAILABILITY_
+                endif ; ~_MODULE_SESSION_UTILITIES_DATA_AVAILABILITY_

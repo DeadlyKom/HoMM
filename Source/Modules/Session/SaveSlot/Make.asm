@@ -12,7 +12,7 @@
 Make_Info:      ; создание контрольной суммы
                 LD HL, GameSession.SaveSlot
                 LD DE, FSaveSlot-1
-                CALL Session.Utils.CRC_8
+                CALL Session.Utilities.CRC_8
                 LD (GameSession.SaveSlot + FSaveSlot.CRC), A
                 
                 ; копирование информации о слоте сохранения в буффер

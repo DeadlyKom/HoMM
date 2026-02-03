@@ -2,7 +2,7 @@
                 ifndef _DRAW_UTILS_PIXEL_ADDRESS_
                 define _DRAW_UTILS_PIXEL_ADDRESS_
 
-                module Utils
+                module Utilities
 ; -----------------------------------------
 ; расчёт экраного адреса
 ; In:

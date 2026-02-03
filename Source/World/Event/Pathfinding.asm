@@ -31,7 +31,7 @@ Pathfinding:    ; ToDo
                 ;   IX - адрес героя            (FHero)
                 ;   IY - адрес объекта героя    (FObjectHero)
                 ; -----------------------------------------
-                CALL Hero.Utils.GetHeroAdres
+                CALL Hero.Utilities.GetHeroAdres
                 LD A, (IY + FObjectHero.PathID)
                 CP PATH_ID_NONE
                 RET NZ                                                          ; ToDo временно выход, в дальнейшем, весь путь нужно очищать
@@ -54,7 +54,7 @@ Pathfinding:    ; ToDo
                                                                                 ;   C - длина пути
                 ; получить адреса героя
                 LD A, (GameState.Event + FEvent.HeroID)
-                CALL Hero.Utils.GetHeroAdres
+                CALL Hero.Utilities.GetHeroAdres
                 ; установить длины пути героя
                 DEC C
                 LD (IY + FObjectHero.PathID), C

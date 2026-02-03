@@ -47,8 +47,8 @@ Begin:          EQU $
                 include "Source/UI/Include.inc"
 
                 ifdef SHOW_FPS | _DEBUG
-                include "Source/Utils/Debug/Console.asm"
-                include "Source/Utils/Debug/FPS_Counter.asm"
+                include "Source/Utilities/Debug/Console.asm"
+                include "Source/Utilities/Debug/FPS_Counter.asm"
                 endif
 Size:           EQU $-Begin                                                     ; размер кода
 

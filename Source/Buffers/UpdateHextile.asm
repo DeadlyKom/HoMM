@@ -1,6 +1,6 @@
 
-                ifndef _UPDATE_BUFFERS_UPDATE_HEXTILE_
-                define _UPDATE_BUFFERS_UPDATE_HEXTILE_
+                ifndef _BUFFERS_UPDATE_HEXTILE_
+                define _BUFFERS_UPDATE_HEXTILE_
 ; -----------------------------------------
 ; обновление Render-буфера указанного гексогонального тайла
 ; In:
@@ -26,7 +26,7 @@ Hextile:        PUSH DE
                 ; Note:
                 ;   код расположен рядом с картой (страница 1)
                 ; -----------------------------------------
-                CALL UtilsBuffer.GetRender                                      ; обновление адреса Render-буфера по индексу гексагона
+                CALL BufferUtilities.GetRender                                  ; обновление адреса Render-буфера по индексу гексагона
                 POP HL
                 EXX
                 RET C
@@ -116,4 +116,4 @@ Hextile:        PUSH DE
 
                 display " - Update hextile:\t\t\t\t\t", /A, Hextile, "\t= busy [ ", /D, $-Hextile, " byte(s)  ]"
 
-                endif ; ~_UPDATE_BUFFERS_UPDATE_HEXTILE_
+                endif ; ~_BUFFERS_UPDATE_HEXTILE_

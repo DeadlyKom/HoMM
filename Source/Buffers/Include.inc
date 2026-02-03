@@ -1,14 +1,13 @@
 
-                ifndef _UPDATE_BUFFERS_INCLUDE_
-                define _UPDATE_BUFFERS_INCLUDE_
+                ifndef _BUFFERS_INCLUDE_
+                define _BUFFERS_INCLUDE_
 
-                module Update
-
+                module Buffer
                 include "RenderBuffer.asm"
                 include "UpdateHextile.asm"
+                include "Reconnaissance.asm"
                 include "GetRenderBufferByIndex.asm"
                 include "Source/Memory/MemcpyTilemapBuffer.asm"
-
                 endmodule
 
-                endif ; ~_UPDATE_BUFFERS_INCLUDE_
+                endif ; ~_BUFFERS_INCLUDE_

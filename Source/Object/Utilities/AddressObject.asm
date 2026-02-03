@@ -1,6 +1,6 @@
 
-                ifndef _HERO_UTILS_ADDRESS_OBJECT_
-                define _HERO_UTILS_ADDRESS_OBJECT_
+                ifndef _HERO_UTILITIES_ADDRESS_OBJECT_
+                define _HERO_UTILITIES_ADDRESS_OBJECT_
 ; -----------------------------------------
 ; получить адрес объекта
 ; In:
@@ -26,4 +26,4 @@ Adr.IY:         ; адрес расположения объекта = адре�
 
                 RET
 
-                endif ; ~_HERO_UTILS_ADDRESS_OBJECT_
+                endif ; ~_HERO_UTILITIES_ADDRESS_OBJECT_

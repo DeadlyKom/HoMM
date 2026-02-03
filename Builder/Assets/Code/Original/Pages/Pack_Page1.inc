@@ -12,7 +12,7 @@
 Begin:          EQU $
 
                 include "Source/Minimap/Include.inc"
-                include "Source/UpdateBuffers/Include.inc"
+                include "Source/Buffers/Include.inc"
 Size:           EQU $-Begin                                                     ; размер кода
 
                 ifdef _REBUILD

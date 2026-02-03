@@ -17,9 +17,9 @@ Begin:          EQU $
                 include "Source/Memory/MemSet.asm"
                 include "Source/Memory/MemcpyFastLDIR.asm"
 
-                ; utils
-                include "Source/Draw/Utils/PixelAddress.asm"
-                include "Source/Draw/Utils/PixelAttribute.asm"
+                ; Utilities
+                include "Source/Draw/Utilities/PixelAddress.asm"
+                include "Source/Draw/Utilities/PixelAttribute.asm"
 
                 ; decompressor
                 include "Source/Decompressor/Forward.asm"
