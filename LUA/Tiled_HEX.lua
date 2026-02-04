@@ -10,6 +10,7 @@
         local tiles = {}
 
         local transform = {
+            [0] = 7,
             [23] = 0,
             [46] = 4,
             [48] = 5,

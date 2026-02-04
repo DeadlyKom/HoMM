@@ -11,7 +11,8 @@ BlockTable      BIND_HEX_SPRITE Sprites._0, 0, 0, 0                             
                 ADD_BIND_HEX_SPRITE Sprites._4, 0, 0, 0
                 ADD_BIND_HEX_SPRITE Sprites._5, 0, 0, 0
                 ADD_BIND_HEX_SPRITE Sprites._6, 0, 0, 0
-                EMPTY_HEX_SPRITE
+                ADD_BIND_HEX_SPRITE Sprites._7, 0, 0, 0
+                ; EMPTY_HEX_SPRITE
                 COUNT_HEX_SPRITE                                                ; количество гексагональных тайлов в блоке
 Sprites:        ; таблицы смещений гексагонов
                 ; если данные лежат сразу за смещением, количество анимайий ограничено нулём
@@ -39,5 +40,7 @@ Sprites:        ; таблицы смещений гексагонов
 ._6             ; 111
                 incbin "sprite_3_offsets.bin"                                   ; таблица смещений столбцов гексагона (6 столбцов по 2 байта)
                 INCBIN_HEX_SIZE_SPRITE incbin "sprite_3.bin"
+._7             incbin "outline_offsets.bin"                                    ; таблица смещений столбцов гексагона (6 столбцов по 2 байта)
+                INCBIN_HEX_SIZE_SPRITE incbin "outline.bin"
 
                 endif ; ~ _GRAPHICS_HEXAGON_GRASSLANDS_PACK_

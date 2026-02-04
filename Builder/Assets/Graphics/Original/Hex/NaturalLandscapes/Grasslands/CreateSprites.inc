@@ -1,4 +1,24 @@
                 CREATE_HEX_SPRITE \
+                    savebin "Builder/Assets/Graphics/Original/Hex/NaturalLandscapes/Grasslands/grid.bin", \
+                    savebin "Builder/Assets/Graphics/Original/Hex/NaturalLandscapes/Grasslands/grid_offsets.bin", \
+                    incbin "grid_col_0.bin", \
+                    incbin "grid_col_1.bin", \
+                    incbin "grid_col_2.bin", \
+                    incbin "grid_col_3.bin", \
+                    incbin "grid_col_4.bin", \
+                    incbin "grid_col_5.bin"
+
+                CREATE_HEX_SPRITE \
+                    savebin "Builder/Assets/Graphics/Original/Hex/NaturalLandscapes/Grasslands/outline.bin", \
+                    savebin "Builder/Assets/Graphics/Original/Hex/NaturalLandscapes/Grasslands/outline_offsets.bin", \
+                    incbin "outline_col_0.bin", \
+                    incbin "outline_col_1.bin", \
+                    incbin "outline_col_2.bin", \
+                    incbin "outline_col_3.bin", \
+                    incbin "outline_col_4.bin", \
+                    incbin "outline_col_5.bin"
+
+                CREATE_HEX_SPRITE \
                     savebin "Builder/Assets/Graphics/Original/Hex/NaturalLandscapes/Grasslands/sprite_1.bin", \
                     savebin "Builder/Assets/Graphics/Original/Hex/NaturalLandscapes/Grasslands/sprite_1_offsets.bin", \
                     incbin "sprite_1_col_0.bin", \

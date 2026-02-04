@@ -34,12 +34,12 @@ Update:
                 VIEW_FLAGS
                 RES_FLAG UPDATE_TILEMAP_BUF_BIT                                 ; сброс флага обновления Tiled буфера
                 SET_FLAG FORCED_FRAME_UPDATE_BIT                                ; установка флага принудительного обновления кадра
-                ; CALL World.Base.Render.Reset
+                CALL World.Base.Render.Reset
                 JP Buffer.Memcpy.Tilemap
 .RenderBuffer   VIEW_FLAGS
                 RES_FLAG UPDATE_RENDER_BUF_BIT                                  ; сброс флага обновления Render буфера
                 SET_FLAG FORCED_FRAME_UPDATE_BIT                                ; установка флага принудительного обновления кадра
-                ; CALL World.Base.Render.Reset
+                CALL World.Base.Render.Reset
                 JP Buffer.Render
 
                 endif ; ~_WORLD_UPDATE_BUFFERS_

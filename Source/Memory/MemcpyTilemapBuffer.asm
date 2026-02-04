@@ -26,7 +26,7 @@ TilemapBuffer:
                 
                 ; копирование POP_PUSH_LINE * LINE_REPEAT байт тайлов
 .Offset         defl 0
-                dup .LINE_REPEAT
+                dup .LINE_REPEAT-1
                 LD SP, HL
                 ; т.к. POP_PUSH_LINE фиксированно и равно 6 байт, 
                 ; код соответствет копированию строго 6 байт
@@ -44,6 +44,25 @@ TilemapBuffer:
                 ADD HL, DE
 .Offset         = .Offset + .POP_PUSH_LINE - (.POP_PUSH_LINE - TILEMAP_WIDTH_DATA)
                 edup
+
+                LD SP, HL
+                ; т.к. POP_PUSH_LINE фиксированно и равно 6 байт, 
+                ; код соответствет копированию строго 6 байт
+                POP BC      ; +2
+                POP AF      ; +4 
+                EX AF, AF'
+                POP DE      ; +6
+
+                ; портит 1 байт #BB28, его пропускаем
+                LD HL, Adr.TilemapBuffer + .POP_PUSH_LINE + .Offset-2
+                LD (HL), E
+                ; сохранение 6 байт
+                LD SP, HL
+                EX AF, AF'
+                PUSH AF     ; -4
+                PUSH BC     ; -2
+
+
 .ContainerSP    EQU $+1
                 LD SP, #0000
 

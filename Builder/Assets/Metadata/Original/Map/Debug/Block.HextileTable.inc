@@ -26,6 +26,7 @@
                 MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #04              ; 4
                 MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #05              ; 5
                 MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #06              ; 6
-                HEXTILE_NOT_USABLE                                              ; 7 - не используется
+                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #07              ; 7
+                ; HEXTILE_NOT_USABLE                                              ; 8 - не используется
 
                 endif ; ~ _METADATA_MAP_DEBUG_HEXAGON_GRAPHICS_PACKAGE_TABLE_
