@@ -218,7 +218,6 @@ Rand8:          LD HL, .Table
                 endif
 
                 display " - RNG 8-bit: \t\t\t\t\t", /A, Rand8, "\t= busy [ ", /D, $ - Rand8, " byte(s)  ]"
-
                 endmodule
 
                 endif ; ~_MATH_RAND_8

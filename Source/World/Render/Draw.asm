@@ -139,6 +139,30 @@ Draw:           ; -----------------------------------------
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.Y)
                 CALL Console.DrawHalfByte
                 ; -----------------------------------------
+
+                ; -----------------------------------------
+                ; отображение позиции гексагона под курсором
+                LD DE, #0A1A
+                CALL Console.SetCursor
+                CALL Hexagon.GetPosByMouse
+                PUSH DE
+                LD A, B
+                EX AF, AF'
+                LD A, C
+                CALL Console.DrawByte       ; горизонталь
+                EX AF, AF'
+                CALL Console.DrawByte       ; вертикаль
+                LD DE, #0B1A
+                CALL Console.SetCursor
+                POP BC
+                LD A, B
+                EX AF, AF'
+                LD A, C
+                CALL Console.DrawByte       ; горизонталь
+                EX AF, AF'
+                CALL Console.DrawByte       ; вертикаль
+                ; -----------------------------------------
+
                 
                 ; ; ; -----------------------------------------
                 ; ; ; отображение размера видимой области в чанках

@@ -84,4 +84,18 @@ Minimap:        ; проверка нажатия клавиши "выбор"
 ;                 endr
 ;                 RET
 
+;                 ; расчёт позиции карты по горизонтали в знакоместах (MapPosition * 6 + MapOffset)
+;                 LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
+;                 ADD A, A    ; x2
+;                 LD C, A
+;                 ADD A, A    ; x4
+;                 ADC A, C    ; x6
+;                 LD C, A
+;                 LD B, #00
+;                 RL B
+;                 LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.X)
+;                 ADD A, C
+;                 JR NC, $+3
+;                 INC B
+
                 endif ; ~_MODULE_WORLD_UI_HANDLER_MINIMAP_

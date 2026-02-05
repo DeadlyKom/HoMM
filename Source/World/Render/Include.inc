@@ -8,7 +8,7 @@
                 include "Source/Cursor/Draw.asm"
                 include "Object/Include.inc"
                 include "PipelineHexagons.asm"
-
+                include "Source/Utilities/Hexagon/PositionByMouseCursor.asm"
                 endmodule
 
                 endif ; ~_WORLD_RENDER_INCLUDE_

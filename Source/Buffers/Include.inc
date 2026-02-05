@@ -6,7 +6,7 @@
                 include "RenderBuffer.asm"
                 include "UpdateHextile.asm"
                 include "Reconnaissance.asm"
-                include "GetRenderBufferByIndex.asm"
+                include "Utilities/Include.inc"
                 include "Source/Memory/MemcpyTilemapBuffer.asm"
                 endmodule
 

@@ -96,7 +96,7 @@ TwoScreen:      ; вывод на экран
 ;   A  - 8-битное значение
 ; Out:
 ; Corrupt:
-;   HL, DE, С, AF
+;   HL, DE, B, AF
 ; Note:
 ; -----------------------------------------
 DrawByte:       LD B, A
@@ -128,7 +128,7 @@ DrawHalfByte:   ; младший полубайт
 ;   HL  - адрес 16-битного значения
 ; Out:
 ; Corrupt:
-;   HL, DE, С, AF
+;   HL, DE, B, AF
 ; Note:
 ; -----------------------------------------
 DrawWordFromAdr PUSH HL
@@ -146,7 +146,7 @@ DrawWordFromAdr PUSH HL
 ;   BC  - 16-битное значение
 ; Out:
 ; Corrupt:
-;   HL, DE, С, AF
+;   HL, DE, B, AF
 ; Note:
 ; -----------------------------------------
 DrawWord:       LD A, B

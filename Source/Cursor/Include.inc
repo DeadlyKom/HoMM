@@ -3,7 +3,6 @@
                 define _CURSOR_INCLUDE_
 
                 module Cursor
-
                 include "Update.asm"
                 include "Initialize.asm"
 StateTable:
