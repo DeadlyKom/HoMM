@@ -40,6 +40,8 @@ def get_height_boundary(boundary_x: int, mask_data: bytearray, bx: int, by: int)
     """
     Определяет высоту заполнения знакоместа (поиск пустой маски).
     """
+    if by < 0:
+        return 0
     for dy in range(7, -1, -1):
         mask = mask_data[get_index(boundary_x, bx, by, dy)]
         if mask == 0:

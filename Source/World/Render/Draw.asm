@@ -72,7 +72,49 @@ Draw:           ; -----------------------------------------
                 LD HL, World.Base.Layers
                 LD B, World.Base.Layers.Num
                 CALL UI.Update
+
+                LD HL, (GameSession + FGameSession.WorldInfo.Cursor)
+                PUSH HL
                 CALL World.Hexagon.GetPosByMouse                                ; определение позиции гексагона под курсором мыши
+                POP HL
+                OR A
+                SBC HL, BC
+                JR Z, .L1
+
+                ADD HL, BC
+                PUSH BC
+                LD B, H
+                LD C, L
+                LD A, %11000000
+                CALL .L2
+                POP BC
+                LD A, %10000000
+                CALL .L2
+                JR .L1
+
+.L2             PUSH AF
+                PUSH BC
+                SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
+                POP BC
+                CALL BufferUtilities.GetIndexRender
+                LD E, A
+                LD D, HIGH Adr.RenderBuffer
+                POP AF
+                LD (DE), A
+                ; -----------------------------------------
+                ; обновление вокруг указанного гексагона
+                ; In:
+                ;   A - индекс в рендер буфере (0-39)
+                ; Out:
+                ; Corrupt:
+                ;   IX, HL', D', BC', AF, AF'
+                ; Note:
+                ;   код расположен рядом с картой (страница 1)
+                ; -----------------------------------------
+                CALL BufferUtilities.UpdateHextile
+                RET
+
+.L1
                 ; -----------------------------------------
                 ; обновление позиции карты
                 CHECK_INPUT_TIMER_FLAG SCROLL_MAP_BIT
@@ -263,7 +305,7 @@ Fog.Make:       LD HL, MakeCounter
                 ; -----------------------------------------
                 ; обновление вокруг указанного гексагона
                 ; In:
-                ;   A - индекс в рендер буфере (0-39)
+                ;   DE - адрес обновляемого гексогонального тайла
                 ; Out:
                 ; Corrupt:
                 ;   IX, HL', D', BC', AF, AF'

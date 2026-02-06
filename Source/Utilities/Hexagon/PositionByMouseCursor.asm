@@ -257,11 +257,7 @@ GetPosByMouse:  ; сброс флага, необходимости дополн
                 INC B       ; +1 смещение по вертикали
 
 .SetPosition    ; сохранение найденой позиции гексагона под курсором
-                LD A, C
-                LD (GameSession + FGameSession.WorldInfo.Cursor.X), A
-                LD A, B
-                LD (GameSession + FGameSession.WorldInfo.Cursor.Y), A
-
+                LD (GameSession + FGameSession.WorldInfo.Cursor), BC
                 RET
 
                 ; align 256

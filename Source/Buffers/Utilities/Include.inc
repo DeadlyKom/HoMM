@@ -4,6 +4,7 @@
 
                 module Utilities
                 include "GetRenderBufferByIndex.asm"
+                include "GetRenderIndexByCoordinates.asm"
                 endmodule
 
                 endif ; ~_BUFFERS_UTILITIES_INCLUDE_

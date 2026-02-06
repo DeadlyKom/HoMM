@@ -7,6 +7,7 @@ Buffer:
 
 BufferUtilities:
 .GetRender      EQU Page1.Buffer.Utilities.GetRenderBuffer                      ; определение адреса Render-буфера по индексу гексагона
+.GetIndexRender EQU Page1.Buffer.Utilities.GetIndexRender                       ; определение индекса Render-буфера по координатам гексагона
 .UpdateHextile  EQU Page1.Buffer.Hextile                                        ; обновление Render-буфера указанного гексогонального тайла
 .Reconnaissance EQU Page1.Buffer.Reconnaissance                                 ; рекогносцировка
                 endif ; ~_PAGE_1_BUFFERS_
