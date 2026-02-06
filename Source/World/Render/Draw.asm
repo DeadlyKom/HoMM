@@ -72,6 +72,7 @@ Draw:           ; -----------------------------------------
                 LD HL, World.Base.Layers
                 LD B, World.Base.Layers.Num
                 CALL UI.Update
+                CALL World.Hexagon.GetPosByMouse                                ; определение позиции гексагона под курсором мыши
                 ; -----------------------------------------
                 ; обновление позиции карты
                 CHECK_INPUT_TIMER_FLAG SCROLL_MAP_BIT
@@ -89,6 +90,7 @@ Draw:           ; -----------------------------------------
                 ; -----------------------------------------
 
                 CALL PipelineHexagons
+
 
                 ifdef _DEBUG
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
@@ -144,12 +146,9 @@ Draw:           ; -----------------------------------------
                 ; отображение позиции гексагона под курсором
                 LD DE, #0A1A
                 CALL Console.SetCursor
-                CALL Hexagon.GetPosByMouse
-                LD A, B
-                EX AF, AF'
-                LD A, C
+                LD A, (GameSession + FGameSession.WorldInfo.Cursor.X)
                 CALL Console.DrawByte       ; горизонталь
-                EX AF, AF'
+                LD A, (GameSession + FGameSession.WorldInfo.Cursor.Y)
                 CALL Console.DrawByte       ; вертикаль
                 ; -----------------------------------------
                 

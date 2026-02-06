@@ -9,6 +9,7 @@
                 include "Source/TableGeneration/TG_MOD_6.asm"                   ; генератор таблицы
                 include "Source/TableGeneration/TG_BitScanLsbTable.asm"         ; генератор таблицы
                 include "Source/TableGeneration/TG_ScreenBlockTable.asm"        ; генератор таблицы
+                include "Source/Utilities/Hexagon/PositionByMouseCursor.asm"
 
 ; блок кода, копируемый при развёртывания модуля
 Adr.Deploy.Sprite           include "Sprite/Include.inc"
