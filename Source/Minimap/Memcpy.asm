@@ -63,6 +63,6 @@ Memcpy:         ; инициализация
                 RET
                 RET
 
-                display " - Memory copy minimap:\t\t\t\t\t\t", /A, Memcpy, "\t= busy [ ", /D, $-Memcpy, " byte(s)  ]"
+                display " - Memory copy minimap:\t\t\t\t", /A, Memcpy, "\t= busy [ ", /D, $-Memcpy, " byte(s)  ]"
 
                 endif ; ~_MINIMAP_MEMORY_COPY_

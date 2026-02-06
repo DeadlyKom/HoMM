@@ -129,6 +129,6 @@ Objects:        ; чтение данных об объектах
                 POP HL
                 RET
 
-                display " - Initialize objects:\t\t\t\t\t", /A, Objects, "\t= busy [ ", /D, $-Objects, " byte(s)  ]"
+                display " - Initialize objects:\t\t\t\t", /A, Objects, "\t= busy [ ", /D, $-Objects, " byte(s)  ]"
 
                 endif ; ~_MODULE_SESSION_INITIALIZE_OBJECTS_

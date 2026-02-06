@@ -72,6 +72,6 @@ FogByte:        LD B, #00       ; аккумулирующее значение
 
                 RET
 
-                display " - Generate minimap fog:\t\t\t\t\t\t", /A, GenerateFog, "\t= busy [ ", /D, $-GenerateFog, " byte(s)  ]"
+                display " - Generate minimap fog:\t\t\t\t", /A, GenerateFog, "\t= busy [ ", /D, $-GenerateFog, " byte(s)  ]"
 
                 endif ; ~_MINIMAP_GENERATE_FOG_

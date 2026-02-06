@@ -34,6 +34,6 @@ GameWorld:      ; игровой слой
                 UI_VISIBLE | UI_ENABLED
 .ElementNum     EQU ($-GameWorld) / FUIElement
 
-                display " - UI layers:\t\t\t\t\t", /A, Layers, "\t= busy [ ", /D, $-Layers, " byte(s)  ]"
+                display " - UI layers:\t\t\t\t\t\t", /A, Layers, "\t= busy [ ", /D, $-Layers, " byte(s)  ]"
     
                 endif ; ~ _WORLD_UI_LAYERS_

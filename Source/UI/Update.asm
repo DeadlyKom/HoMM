@@ -139,6 +139,6 @@ HandlerIfInRect:; инициализация
                 SCF                                                             ; установка флага, для обработчика, сигнализирующий вызов по перекрытию
                 JP (IX)                                                         ; переход в обработчик, если в области элемента
 
-                display " - Update UI elements:\t\t\t\t\t\t", /A, Update, "\t= busy [ ", /D, $-Update, " byte(s)  ]"
+                display " - Update UI elements:\t\t\t\t", /A, Update, "\t= busy [ ", /D, $-Update, " byte(s)  ]"
 
                 endif ; ~_UI_UPDATE_

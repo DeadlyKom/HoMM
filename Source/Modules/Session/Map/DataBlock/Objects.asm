@@ -23,6 +23,6 @@ Objects:        EX DE, HL                                                       
                 POP HL
                 JP Session.SharedCode.Initialize.Objects                        ; инициализация объектов карты после загрузки
 
-                display " - Parsing FMapDataBlockInfo for Objects:\t", /A, Objects, "\t= busy [ ", /D, $-Objects, " byte(s)  ]"
+                display " - Parsing FMapDataBlockInfo for Objects:\t\t", /A, Objects, "\t= busy [ ", /D, $-Objects, " byte(s)  ]"
 
                 endif ; ~_MODULE_SESSION_MAP_DATA_BLOCK_OBJECTS_

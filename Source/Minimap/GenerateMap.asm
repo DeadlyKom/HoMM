@@ -86,6 +86,6 @@ TemplateByte:   LD B, #00       ; аккумулирующее значение
 
                 RET
 
-                display " - Generate minimap map:\t\t\t\t\t\t", /A, GenerateMap, "\t= busy [ ", /D, $-GenerateMap, " byte(s)  ]"
+                display " - Generate minimap map:\t\t\t\t", /A, GenerateMap, "\t= busy [ ", /D, $-GenerateMap, " byte(s)  ]"
 
                 endif ; ~_MINIMAP_GENERATE_MAP_

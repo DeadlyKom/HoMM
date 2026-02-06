@@ -31,6 +31,6 @@ Compilation:    LD HL, Adr.FogShadingBuf
 
                 RET
 
-                display " - Compilation minimap:\t\t\t\t\t\t", /A, Compilation, "\t= busy [ ", /D, $-Compilation, " byte(s)  ]"
+                display " - Compilation minimap:\t\t\t\t", /A, Compilation, "\t= busy [ ", /D, $-Compilation, " byte(s)  ]"
 
                 endif ; ~_MINIMAP_COMPILATION_
