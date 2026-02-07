@@ -5,6 +5,7 @@
                 include "Kernel_Bind.inc"
                 include "Launch.asm"
                 include "UI/Include.inc"
+                include "Tilemap/Include.inc"
                 include "Graphics/Include.inc"
                 include "Source/TableGeneration/TG_MOD_6.asm"                   ; генератор таблицы
                 include "Source/TableGeneration/TG_BitScanLsbTable.asm"         ; генератор таблицы

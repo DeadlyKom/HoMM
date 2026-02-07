@@ -14,13 +14,25 @@ Minimap:        ; проверка нажатия клавиши "выбор"
                 BIT SELECT_KEY_BIT, A
                 RET Z                                                           ; выход, если небыла нажата клавиша "выбор"
 
+                ; -----------------------------------------
                 ; расчёт клика по миникарте (вертикаль)
+                ; -----------------------------------------
                 LD A, (Mouse.PositionY)
                 SUB SCR_MINIMAP_POS_Y << 3
                 CP MAX_WORLD_HEX_Y-HEXTILE_BASE_SIZE_Y-2-4                      ; учёт нижнего смещения
                 JR C, .SubOffsetY
-                LD A, MAX_WORLD_HEX_Y-HEXTILE_BASE_SIZE_Y-2
-                JR .SetPositionY
+                LD A, MAX_WORLD_HEX_Y-HEXTILE_BASE_SIZE_Y-1
+                ; проверка нижнего края карты
+                CP MAX_WORLD_HEX_Y - 5
+                JR C, .SetPositionY                                             ; переход, если меньше границы - пропуск корректировки
+
+                ; ToDo: хардкорное выставление границы #2A1
+                DEC A
+                LD L, A
+                LD (GameSession.WorldInfo + FWorldInfo.MapPosition.Y), A
+                LD A, #01
+                JR .SetOffsetY
+
 .SubOffsetY     ; добавить смещение
                 SUB HEXTILE_BASE_SIZE_Y >> 1
                 JR NC, $+3
@@ -30,8 +42,8 @@ Minimap:        ; проверка нажатия клавиши "выбор"
                 LD L, A
                 LD (GameSession.WorldInfo + FWorldInfo.MapPosition.Y), A
                 XOR A
+.SetOffsetY     LD (GameSession.WorldInfo + FWorldInfo.MapOffset.Y), A
                 LD (World.Shift_Y), A
-                LD (GameSession.WorldInfo + FWorldInfo.MapOffset.Y), A
 
                 ; расчёт адреса гексогональной карты учитывая только вертикаль
                 LD H, #00
@@ -46,13 +58,25 @@ Minimap:        ; проверка нажатия клавиши "выбор"
                 LD BC, Adr.Hextile
                 ADD HL, BC
 
+                ; -----------------------------------------
                 ; расчёт клика по миникарте (горизонталь)
+                ; -----------------------------------------
                 LD A, (Mouse.PositionX)
                 SUB SCR_MINIMAP_POS_X << 3
                 CP MAX_WORLD_HEX_X-(HEXTILE_SIZE_X >> 1)-1-3                    ; учёт правого смещения
                 JR C, .SubOffsetX
                 LD A, MAX_WORLD_HEX_X-(HEXTILE_SIZE_X >> 1)-1
-                JR .SetPositionX
+
+                ; проверка правого края карты
+                CP MAX_WORLD_HEX_X - 4
+                JR C, .SetPositionX                                             ; переход, если меньше границы - пропуск корректировки
+
+                ; ToDo: хардкорное выставление границы #2B5
+                DEC A
+                LD C, A
+                LD (GameSession.WorldInfo + FWorldInfo.MapPosition.X), A
+                LD A, #05
+                JR .SetOffsetX
 
 .SubOffsetX     ; добавить смещение
                 SUB HEXTILE_SIZE_X >> 1
@@ -63,8 +87,8 @@ Minimap:        ; проверка нажатия клавиши "выбор"
                 LD C, A
                 LD (GameSession.WorldInfo + FWorldInfo.MapPosition.X), A
                 XOR A
+.SetOffsetX     LD (GameSession.WorldInfo + FWorldInfo.MapOffset.X), A
                 LD (World.Shift_X), A
-                LD (GameSession.WorldInfo + FWorldInfo.MapOffset.X), A
 
                 ; добавить смещение по горизонтали к адресу гексогональной карты
                 LD B, #00
@@ -95,6 +119,7 @@ Minimap:        ; проверка нажатия клавиши "выбор"
 ;                 RL B
 ;                 LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.X)
 ;                 ADD A, C
+;                 LD C, A
 ;                 JR NC, $+3
 ;                 INC B
 

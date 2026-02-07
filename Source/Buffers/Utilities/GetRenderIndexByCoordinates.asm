@@ -42,13 +42,13 @@ GetIndexRender: ; вертикаль
 
                 ; горизонталь
                 BIT 0, B
-                JR NZ, .L1
+                JR NZ, .Half
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.X)
                 CP HEXTILE_SIZE_X >> 1
                 JR C, $+3
                 DEC C
-.L1
-                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
+
+.Half           LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
                 NEG
                 ADD A, C
                 SCF

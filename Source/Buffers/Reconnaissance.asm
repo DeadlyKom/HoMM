@@ -118,7 +118,7 @@ Reconnaissance: ; расчёт адреса из таблицы
                 POP HL
                 
                 INC D
-                LD A, (GameSession.MapSize.Height)
+                LD A, (GameSession.MapSize.Height)                              ; размер какрты по вертикали
                 LD C, A
                 LD A, D
                 CP C
