@@ -1,6 +1,6 @@
 
-                ifndef _WORLD_INPUT_MOVEMENT_
-                define _WORLD_INPUT_MOVEMENT_
+                ifndef _MODULE_WORLD_INPUT_MOVEMENT_
+                define _MODULE_WORLD_INPUT_MOVEMENT_
 ; -----------------------------------------
 ; перемещение влево
 ; In:
@@ -120,4 +120,4 @@ Movement.Down   ; проверка достижения нижнего края 
                 SET MOVEMENT_DOWN_BIT, (HL)
                 RET
 
-                endif ; ~_WORLD_INPUT_MOVEMENT_
+                endif ; ~_MODULE_WORLD_INPUT_MOVEMENT_

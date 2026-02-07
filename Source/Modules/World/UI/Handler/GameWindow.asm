@@ -9,6 +9,11 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-GameWindow:     RET
+GameWindow:     ; проверка клавиши "выбор"
+                LD A, (GameConfig.KeySelect)
+                CALL Input.CheckKeyState
+                RET NZ                                                          ; выход, если не нажата клавиша "выбор"
+                JR$
+                RET
 
                 endif ; ~_MODULE_WORLD_UI_HANDLER_GAME_WINDOW_

@@ -13,7 +13,7 @@
                 include "Tick.inc"
                 include "Size.inc"
                 include "Keys.inc"
-                include "Event.inc"
+                ; include "Event.inc"                                             ; DEPRECATE
                 include "Item_ID.inc"
                 include "WorldInfo.inc"
                 include "SpriteClipping.inc"

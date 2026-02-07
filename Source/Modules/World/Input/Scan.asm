@@ -1,6 +1,6 @@
 
-                ifndef _WORLD_INPUT_SCAN_
-                define _WORLD_INPUT_SCAN_
+                ifndef _MODULE_WORLD_INPUT_SCAN_
+                define _MODULE_WORLD_INPUT_SCAN_
 ; -----------------------------------------
 ; сканирование устроиств ввода
 ; In:
@@ -40,9 +40,9 @@ Scan:           ; проверка HardWare ограничения мыши
                 LD (GameState.Input.Value), A
                 ; --------------------------------------------------------------
                 ; проверка клавиши "выбор"
-                LD A, (GameConfig.KeySelect)
-                CALL Input.CheckKeyState
-                CALL Z, IputEvent.Select                                        ; переход, если клавиша нажата
+                ; LD A, (GameConfig.KeySelect)
+                ; CALL Input.CheckKeyState
+                ; CALL Z, IputEvent.Select                                        ; переход, если клавиша нажата
 
                 ; проверка клавиши "выход"
                 ; LD A, (GameConfig.KeyESC)
@@ -53,7 +53,7 @@ Scan:           ; проверка HardWare ограничения мыши
                 ; проверка клавиш перемещения
                 LD A, (GameConfig.KeyAccel)
                 CALL Input.CheckKeyState
-                CALL Z, IputEvent.Accelerate
+                CALL Z, Iput.Accelerate
                 ; --------------------------------------------------------------
                 ; опрос перемещения влево
                 LD A, (GameConfig.KeyLeft)
@@ -83,4 +83,4 @@ Scan:           ; проверка HardWare ограничения мыши
                 SET_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             ; установка флага разрешения обновления скрола карты
                 RET
 
-                endif ; ~_WORLD_INPUT_SCAN_
+                endif ; ~_MODULE_WORLD_INPUT_SCAN_

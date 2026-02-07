@@ -217,7 +217,7 @@ Draw:           ; -----------------------------------------
                 endif
 
                 RES_ALL_MAIN_FLAGS                                              ; сброс всех флагов
-                JP World.Base.Event.Handler                                     ; обработчик событий
+                RET
 
 ; DrawScreenBlock:
 ;                 CALL .Cell

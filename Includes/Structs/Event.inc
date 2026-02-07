@@ -2,7 +2,7 @@
                 ifndef _STRUCTS_EVENT_
                 define _STRUCTS_EVENT_
 
-                struct FEvent                                                   ; структура описывающая собитие
+                struct FEvent                                                   ; структура описывающая собитие     DEPRECATE
 Type            DB #00                                                          ; тип события
 HeroID          DB #00                                                          ; идентификатор активного героя
 Position        FVector8                                                        ; позиция курсора,
