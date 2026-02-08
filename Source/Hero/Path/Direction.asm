@@ -29,7 +29,7 @@ Directon:       ;
                 LD C, A
 
                 LD E, (HL)
-                INC HL
+                INC L
 
                 LD A, D
                 SUB (HL)

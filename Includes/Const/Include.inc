@@ -9,7 +9,7 @@
                 include "Assets/Include.inc"
 
                 include "UI.inc"
-                include "Event.inc"
+                ; include "Event.inc"                                             ; DEPRECATE
                 include "Setup.inc"
                 include "Cursor.inc"
                 include "Gameplay.inc"

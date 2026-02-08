@@ -3,12 +3,9 @@
                 define _HERO_PATH_INCLUDE_
 
                 module Path
-
-                include "MemcpyPath.asm"
-
-                include "ReificationHeroPath.asm"
+                ; include "ReificationHeroPath.asm"
                 include "Direction.asm"
-
+                include "PathInitialize.asm"
                 endmodule
 
                 endif ; ~ _HERO_PATH_INCLUDE_

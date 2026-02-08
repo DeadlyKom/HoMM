@@ -10,6 +10,7 @@
                 include "Assets.inc"
                 include "Cursor.inc"
                 
+                include "Path.inc"
                 include "Tick.inc"
                 include "Size.inc"
                 include "Keys.inc"
@@ -23,13 +24,13 @@
                 include "Map/Include.inc"
                 include "SaveSlot.inc"
 
+                include "Hero/Include.inc"
+                include "Player/Include.inc"
+                include "Object/Include.inc"
+
                 include "Game_State.inc"
                 include "Game_Config.inc"
                 include "Hard_Config.inc"
                 include "Game_Session.inc"
-
-                include "Hero/Include.inc"
-                include "Player/Include.inc"
-                include "Object/Include.inc"
 
                 endif ; ~_STRUCTS_INCLUDE_

@@ -25,17 +25,13 @@ Hero:           ; проверка смены анимации героя
                 CP PATH_ID_NONE
                 RET Z                                                           ; выход, если нет пути
 
-                ; расчёт адреса позиции движения
-                ; +2 добавлен для цикла в функции ReificationPath
+                ; расчёт адреса текущей FPath
                 ADD A, A    ; x2
-                ADD A, LOW (Adr.HeroPath + 2)
+                ADD A, A    ; x4
                 LD L, A
-                ADC A, HIGH (Adr.HeroPath + 2)
-                SUB L
-                LD H, A
+                LD H, HIGH Adr.HeroPath
 
-                ; --------------------------------------------------------------
-                ; определение направления
+                ; определение направление спрайта
                 LD E, (IX + FObjectHero.Super.Position.X.High)
                 LD D, (IX + FObjectHero.Super.Position.Y.High)
                 CALL Hero.DirectonPath
@@ -164,9 +160,9 @@ Move            ; --------------------------------------------------------------
                 LD A, L
                 ADD HL, BC
                 LD (IX + FObjectHero.Super.Position.X), HL
-                XOR L
-                ADD A, A    ; << 1
-                CALL C, RemoveUIArrow
+                ; XOR L
+                ; ADD A, A    ; << 1
+                ; CALL C, RemoveUIArrow
                 ; --------------------------------------------------------------
 
                 INC DE
@@ -214,9 +210,9 @@ Move            ; --------------------------------------------------------------
                 LD A, L
                 ADD HL, BC
                 LD (IX + FObjectHero.Super.Position.Y), HL
-                XOR L
-                ADD A, A    ; << 1
-                CALL C, RemoveUIArrow
+                ; XOR L
+                ; ADD A, A    ; << 1
+                ; CALL C, RemoveUIArrow
                 ; --------------------------------------------------------------
                 ; установить состояние перемещения героя,
                 ; изменить кадр спрайта
@@ -247,31 +243,31 @@ SetCell:        ; установить доступное расстояние �
                 LD (IX + FObjectHero.Delta.Y), HL
 
                 RET
-RemoveUIArrow:  PUSH DE
-                PUSH IX
+; RemoveUIArrow:  PUSH DE
+;                 PUSH IX
 
-                LD A, (IX + FObjectHero.PathID)
-                ; +2 добавлен для цикла
-                ADD A, A    ; x2
-                ADD A, LOW (Adr.HeroPath + 2)
-                LD L, A
-                ADC A, HIGH (Adr.HeroPath + 2)
-                SUB L
-                LD H, A
+;                 LD A, (IX + FObjectHero.PathID)
+;                 ; +2 добавлен для цикла
+;                 ADD A, A    ; x2
+;                 ADD A, LOW (Adr.HeroPath + 2)
+;                 LD L, A
+;                 ADC A, HIGH (Adr.HeroPath + 2)
+;                 SUB L
+;                 LD H, A
 
-                ; чтение смещения
-                LD E, (HL)                                                      ; x
-                INC HL
-                LD D, (HL)                                                      ; y
+;                 ; чтение смещения
+;                 LD E, (HL)                                                      ; x
+;                 INC HL
+;                 LD D, (HL)                                                      ; y
 
-                LD IX, .Predicate
-                CALL Object.FindLastByPredicate
-                CALL NC, Object.SmartRemove
+;                 LD IX, .Predicate
+;                 CALL Object.FindLastByPredicate
+;                 CALL NC, Object.SmartRemove
 
-                POP IX
-                POP DE
+;                 POP IX
+;                 POP DE
 
-                RET
+;                 RET
 
 ;   функция предиката, осуществляет проверку соответствия требуемым условиям
 ;   сброшенный флаг переполнения сигнализирует, об успешности поиска, поиск завершается

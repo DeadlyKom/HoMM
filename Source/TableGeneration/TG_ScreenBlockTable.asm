@@ -84,7 +84,7 @@ TG_ScrBlockTable:; инициализация генерации
 
                 RET
 
-                display " - Generate table screen block:\t\t\t", /A, TG_ScrBlockTable, "\t= busy [ ", /D, $-TG_ScrBlockTable, " byte(s)  ]"
+                display " - Generate table screen block:\t\t\t\t\t= busy [ ", /D, $-TG_ScrBlockTable, " byte(s) ]"
                 endmodule
 
                 endif ; ~ _TABLE_GENERATION_SCREEN_BLOCK_TABLE_

@@ -34,6 +34,6 @@ CRC_8:          XOR A
 
                 RET
 
-                display " - Utilities CRC 8-bit:\t\t\t\t\t\t     \t= busy [ ", /D, $-CRC_8, " byte(s) ]"
+                display " - Utilities CRC 8-bit:\t\t\t\t\t     \t= busy [ ", /D, $-CRC_8, " byte(s) ]"
 
                 endif ; ~_MODULE_SESSION_UTILITIES_CRC_8_BIT_

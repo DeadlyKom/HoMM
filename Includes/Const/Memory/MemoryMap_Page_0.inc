@@ -27,6 +27,7 @@
 
                 module Page
 Page0                   EQU PAGE_0
+Object                  EQU PAGE_0
 ObjectDefaultSettings   EQU PAGE_0
                 endmodule
 
@@ -46,8 +47,8 @@ ChunkArrayValues        EQU #0100                                               
 
 ObjectsArray            EQU #C000                                               ; адрес массива объектов
 HeroArray               EQU #D000                                               ; адрес массива героев
-ParticipantArray        EQU Adr.HeroArray + Size.HeroArray                      ; адрес массива участников
-HeroPath                EQU Adr.ParticipantArray + Size.ParticipantArray        ; адрес массива найденого пути в виде последовательности координат тайлов (FPath),
+ParticipantArray        EQU #D400                                               ; адрес массива участников
+HeroPath                EQU #D500                                               ; адрес массива найденого пути в виде последовательности координат тайлов (FPath),
                                                                                 ; где нулевой элемент является последним
 Code.Page0              EQU #F000                                               ; адрес блока кода
                                                                                 ; (помещён в центр, при распоковке затрутся ObjectDefaultSettings)

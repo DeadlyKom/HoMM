@@ -1,6 +1,6 @@
 
-                ifndef _STRUCTS_PARTICIPANT_
-                define _STRUCTS_PARTICIPANT_
+                ifndef _STRUCTS_PLAYER_PARTICIPANT_
+                define _STRUCTS_PLAYER_PARTICIPANT_
 
 ;-------------------------------------------------------------------------------
                 struct FParticipantFaction                                      ; фракция участника                                             [байта]
@@ -37,4 +37,4 @@ Heroes          DS MAX_PARTICIPANT_HEROES * FHero                               
                                                                                 ;   обновлять идентификатор объекта
                 ends
 ;-------------------------------------------------------------------------------
-                endif ; ~_STRUCTS_PARTICIPANT_
+                endif ; ~_STRUCTS_PLAYER_PARTICIPANT_

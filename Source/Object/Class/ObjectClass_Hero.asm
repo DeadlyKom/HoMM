@@ -18,6 +18,13 @@ Hero:           ; -----------------------------------------
 
                 LD (IY + FObjectHero.HeroID), HERO_ID_NONE
                 LD (IY + FObjectHero.PathID), PATH_ID_NONE
+                LD (IY + FObjectHero.WayPointID), WAY_POINT_NONE
+
+                XOR A
+                LD (IY + FObjectHero.Delta.X.Low), A
+                LD (IY + FObjectHero.Delta.X.High), A
+                LD (IY + FObjectHero.Delta.Y.Low), A
+                LD (IY + FObjectHero.Delta.Y.High), A
 
                 OR A                                                            ; сброс флага переполнения, успешная инициализация
                 RET

@@ -9,6 +9,7 @@
 ;   IX - адрес героя            (FHero)
 ;   IY - адрес объекта героя    (FObjectHero)
 ; Corrupt:
+;   HL, AF, IX, IY
 ; Note:
 ; -----------------------------------------
 Hero.Addresses: ; получить адрес героя

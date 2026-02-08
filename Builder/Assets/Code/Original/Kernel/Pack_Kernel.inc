@@ -24,10 +24,15 @@ Begin:          EQU $
 
                 ; math
                 include "Source/Math/RNG/Rand8.asm"
+                include "Source/Math/Normalize.asm"
+                include "Source/Math/Sqrt/Sqrt.asm"
                 include "Source/Math/Div/Div8x8.asm"
+                include "Source/Math/Mul/16x8_16.asm"
                 include "Source/Math/Hash/Function.asm"
+                include "Source/Math/Div/Div16x8_16.asm"
                 include "Source/Math/Rotate/Left_x32.asm"
                 include "Source/Math/Rotate/Right_x32.asm"
+                include "Source/Math/Sqrt/DistSquared.asm"
 
                 ; input
                 include "Source/Input/Include.inc"

@@ -9,6 +9,7 @@ Begin           EQU $
                 include "CopyScreen.asm"
                 include "ClearScreen.asm"
                 include "JumpPopPage.asm"
+                include "CallAnotherPage.asm"
                 include "ExecuteAssetCode.asm"
 
                 display " - Functions:\t\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"

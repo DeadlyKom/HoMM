@@ -103,6 +103,7 @@ Input.Timer     DB #00                                                          
 ; -----------------------------------------
 View            DB #00                                                          ; флаги вида                                                    [1 байт]
 ; Event           FEvent                                                          ; событие                                                       [4 байт]    DEPRECATE
+PlayerActions   FPlayerActions                                                  ; действия игрока                                               [? байт]
 AssetID         DB #00                                                          ; идентификатор последнего загруженного ассета                  [1 байт]
 Assets          FAssets                                                         ; копия данных последнего загруженного ассета                   [8 байт]
 SpriteInfoNum   DB #00                                                          ; количество спрайтов в массиве SpriteInfoBuffer                [1 байт]

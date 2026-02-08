@@ -32,7 +32,7 @@ TG_BitScanLsbTable:; инициализация генерации
 
                 RET
 
-                display " - Generate table to bit scan LSB:\t\t\t", /A, TG_BitScanLsbTable, "\t= busy [ ", /D, $-TG_BitScanLsbTable, " byte(s)  ]"
+                display " - Generate table to bit scan LSB:\t\t\t\t\t= busy [ ", /D, $-TG_BitScanLsbTable, " byte(s) ]"
                 endmodule
 
                 endif ; ~ _TABLE_GENERATION_BIT_SCAN_LSB_

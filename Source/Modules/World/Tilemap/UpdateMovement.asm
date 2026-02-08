@@ -216,6 +216,6 @@ DirectionTable  ; -----------------------------------------
                 end
                 endlua
 
-                display " - Update movement tilemap:\t\t\t\t", /A, UpdateMovement, "\t= busy [ ", /D, $-UpdateMovement, " byte(s)  ]"
+                display " - Update movement tilemap:\t\t\t\t\t\t= busy [ ", /D, $-UpdateMovement, " byte(s) ]"
 
                 endif ; ~_WORLD_TILEMAP_UPDATE_MOVEMENT_

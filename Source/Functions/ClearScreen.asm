@@ -42,6 +42,6 @@ ShadowClear:    ; очистка теневого экрана
 ShadowFillATTR: SCREEN_ATTR_ADR_REG HL, SCR_ADR_SHADOW + 0x0300, 0, 0
                 JP SafeFill.b768
 
-                display " - Function screen fill:\t\t\t\t", /A, BaseClear, " = busy [ ", /D, $-BaseClear, " byte(s)  ]"
+                display " - Function screen fill:\t\t\t\t", /A, BaseClear, "\t= busy [ ", /D, $-BaseClear, " byte(s)  ]"
 
                 endif ; ~_FUNCTIONS_CLEAR_SCREEN_

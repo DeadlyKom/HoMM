@@ -3,6 +3,7 @@
                 define _CONST_OBJECT_HERO_
 HERO_ID_NONE        EQU #FF                                                     ; идентификатор героя отсутствует
 PATH_ID_NONE        EQU #FF                                                     ; индекс в массиве пути отсутствует
+WAY_POINT_NONE      EQU #FF                                                     ; индекс WayPoint'а отсутствует
 
 ; значения для поля FObject.Sprite
 ANIM_STATE_BIT      EQU 0x06                                                    ; флаг,  состояния анимации

@@ -2,7 +2,7 @@
                 ifndef _STRUCT_OBJECT_HERO_
                 define _STRUCT_OBJECT_HERO_
 
-                struct FObjectHero                                              ; объект                                                    [11 байт]
+                struct FObjectHero                                              ; объект                                                    [14 байт]
 Super           FObject                                                         ; базовый класс объекта                                     [9 байт]
 ; -----------------------------------------
 ;   FObjectHero.Super.Sprite
@@ -27,7 +27,8 @@ Super           FObject                                                         
 ; -----------------------------------------
 HeroID          DB #00                                                          ; идентификатор владельца, указатель на структуру FHero     [1 байт]
 PathID          DB #00                                                          ; текущий воспроизводимый индекс в массиве пути             [1 байт]
-Delta           FVector16
+WayPointID      DB #00                                                          ; текущий воспроизводимый индекс WayPoint                   [1 байт]
+Delta           FVector16                                                       ; значения дельт оставшиеся до достижения WayPointID        [2 байта]
                 ends
 
                 endif ; ~_STRUCT_OBJECT_HERO_

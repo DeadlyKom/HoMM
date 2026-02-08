@@ -59,6 +59,6 @@ ShadowScrcpyInPage: ; копирование экрана в теневой
                 EX AF, AF'
                 JP Memcpy.BetweenPages
 
-                display " - Function screen copy:\t\t\t\t", /A, BaseScrcpy, " = busy [ ", /D, $-BaseScrcpy, " byte(s)  ]"
+                display " - Function screen copy:\t\t\t\t", /A, BaseScrcpy, "\t= busy [ ", /D, $-BaseScrcpy, " byte(s)  ]"
 
                 endif ; ~_FUNCTIONS_COPY_SCREEN_

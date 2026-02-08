@@ -35,7 +35,7 @@ Draw:           ; -----------------------------------------
                 LD (GameSession.WorldInfo + FWorldInfo.Tilemap), HL
 
                 ; принудительное обновление Tilemap- и Render-буферов
-                SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
+                SET_PAGE_MAP                                                    ; включить страницу работы с картой
                 ;   A  - радиус обзора в тайлах
                 ;   C  - номер бита туман отвечающий за игрока
                 ;   DE - координаты в тайлах (D - y, E - x)
@@ -94,7 +94,7 @@ Draw:           ; -----------------------------------------
 ;                 JR .L1
 ; .L2             PUSH AF
 ;                 PUSH BC
-;                 SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
+;                 SET_PAGE_MAP                                                  ; включить страницу работы с картой
 ;                 POP BC
 ;                 CALL BufferUtilities.GetIndexRender
 ;                 LD E, A
@@ -121,7 +121,7 @@ Draw:           ; -----------------------------------------
                 CALL NZ, World.Tilemap.UpdateMovement
                 ; -----------------------------------------
                 ; обновление Tilemap- и Render-буферов
-                SET_PAGE_WORLD                                                  ; включить страницу работы с картой "мира"
+                SET_PAGE_MAP                                                    ; включить страницу работы с картой
                 CHECK_VIEW_FLAG UPDATE_RENDER_BUF_BIT
                 CALL NZ, World.Base.Tilemap.Update.RenderBuffer
                 CHECK_VIEW_FLAG UPDATE_TILEMAP_BUF_BIT

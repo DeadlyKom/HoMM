@@ -23,6 +23,6 @@ DataAvailable:  XOR A
 .Found          SCF
                 RET
 
-                display " - Utilities data availability:\t\t\t\t\t     \t= busy [ ", /D, $-DataAvailable, " byte(s) ]"
+                display " - Utilities data availability:\t\t\t\t\t= busy [ ", /D, $-DataAvailable, " byte(s) ]"
 
                 endif ; ~_MODULE_SESSION_UTILITIES_DATA_AVAILABILITY_

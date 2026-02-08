@@ -15,6 +15,7 @@ GameState       EQU Adr.GameState                                               
 .Input.Timer    EQU GameState + FGameState.Input.Timer                          ; флаги таймера ввода
 .View           EQU GameState + FGameState.View                                 ; флаги вида
 ; .Event          EQU GameState + FGameState.Event                                ; событие                       DEPRECATE
+.PlayerActions  EQU GameState + FGameState.PlayerActions                        ; действия игрока
 .AssetID        EQU GameState + FGameState.AssetID                              ; идентификатор последнего загруженного ассета
 .Assets         EQU GameState + FGameState.Assets                               ; копия данных последнего загруженного ассета
 .SpriteInfoNum  EQU GameState + FGameState.SpriteInfoNum                        ; количество спрайтов в массиве SpriteInfoBuffer

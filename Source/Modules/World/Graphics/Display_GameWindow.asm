@@ -28,6 +28,6 @@ GameWindow:     ; подготовка основного экрана
                 LD HL, Ornament
                 JP Draw.SpriteNotBound
 
-                display " - Display game window:\t\t\t\t", /A, GameWindow, "\t= busy [ ", /D, $ - GameWindow, " byte(s)  ]"
+                display " - Display game window:\t\t\t\t\t\t= busy [ ", /D, $-GameWindow, " byte(s) ]"
 
                 endif ; ~_MODULE_WORLD_DISPLAY_GAME_WINDOW_
