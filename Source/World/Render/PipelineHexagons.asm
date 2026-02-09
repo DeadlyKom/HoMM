@@ -83,13 +83,19 @@ PipelineHexagons:
                 ;       * восстановить фон в основном экране под курсором
                 ;       * сброс флагов готовности экрана
                 ; -----------------------------------------
-
+                CALL World.Base.Render.Object.InView                            ; формирование списка объектов в области видимости
+                PUSH AF
+                ; анализ видимых объектов и выставление флагов гексагонов, которые требуется перерисовать
+                ; CALL World.Base.Render.Object.DirtyEnvir
+                
+                SET_PAGE_MAP                                                    ; включить страницу работы с картой
                 RESTORE_BC                                                      ; защитная от порчи данных с разрешённым прерыванием
                 CALL Draw.HexByDL
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 CALL ScreenBlock.HexAnalysis                                    ; анализ обновления гексагонов
 
-                CALL World.Base.Tilemap.VisibleObjects                          ; определение видимых объектов
+                POP AF
+                OR A
                 CALL NZ, Object.Draw                                            ; отображение объектов в массиве SortBuffer
 
                 SET_MODULE_PAGE_World                                           ; включить страницу модуля "World"
@@ -136,6 +142,6 @@ PipelineHexagons:
                 RES_RENDER_FLAGS SWAPPED_PENDING | SWAP_PENDING                 ; сброс флага переключения экранов
                 RET
 
-                display " - Main draw:\t\t\t\t\t\t", /A, Draw, "\t= busy [ ", /D, $-Draw, " byte(s)  ]"
+                display " - Pipeline hexagons:\t\t\t\t\t", /A, PipelineHexagons, "\t= busy [ ", /D, $-PipelineHexagons, " byte(s)  ]"
 
                 endif ; ~_WORLD_RENDER_PIPELINE_HEXAGONS_

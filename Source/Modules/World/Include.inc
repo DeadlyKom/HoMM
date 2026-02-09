@@ -8,7 +8,7 @@
                 include "Input/Include.inc"
                 include "Tilemap/Include.inc"
                 include "Graphics/Include.inc"
-                include "Source/TableGeneration/TG_MOD_6.asm"                   ; генератор таблицы
+                include "Source/TableGeneration/TG_DIV_6.asm"                   ; генератор таблицы
                 include "Source/TableGeneration/TG_BitScanLsbTable.asm"         ; генератор таблицы
                 include "Source/TableGeneration/TG_ScreenBlockTable.asm"        ; генератор таблицы
                 include "Source/Utilities/Hexagon/Distance.asm"

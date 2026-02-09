@@ -61,22 +61,23 @@ Directon:       ;
 
                 RET
 
-.DirectionTable ; направление                                                   ; ---- yy xx
-                DB DIR_UP                                                       ; 0000 00 00    (не действительная)
+.DirectionTable ; оси X и Y инвертированы
+                ; направление                                                   ; ---- yy xx
+                DB DIR_NONE                                                     ; 0000 00 00    (не действительная)
                 DB DIR_LEFT                                                     ; 0000 00 01
-                DB DIR_UP                                                       ; 0000 00 10    (не действительная)
+                DB DIR_NONE                                                     ; 0000 00 10    (не действительная)
                 DB DIR_RIGHT                                                    ; 0000 00 11
-                DB DIR_UP                                                       ; 0000 01 00
-                DB DIR_UP_LEFT                                                  ; 0000 01 01
-                DB DIR_UP                                                       ; 0000 01 10    (не действительная)
-                DB DIR_UP_RIGHT                                                 ; 0000 01 11
-                DB DIR_UP                                                       ; 0000 10 00    (не действительная)
-                DB DIR_UP                                                       ; 0000 10 01    (не действительная)
-                DB DIR_UP                                                       ; 0000 10 10    (не действительная)
-                DB DIR_UP                                                       ; 0000 10 11    (не действительная)
-                DB DIR_DOWN                                                     ; 0000 11 00
-                DB DIR_DOWN_LEFT                                                ; 0000 11 01
-                DB DIR_UP                                                       ; 0000 11 10    (не действительная)
+                DB DIR_UP_LEFT                                                  ; 0000 01 00
+                DB DIR_NONE                                                     ; 0000 01 01    (не действительная)
+                DB DIR_NONE                                                     ; 0000 01 10    (не действительная)
+                DB DIR_UP_RIGHT                                                 ; 0000 01 11    (не действительная)
+                DB DIR_NONE                                                     ; 0000 10 00    (не действительная)
+                DB DIR_NONE                                                     ; 0000 10 01    (не действительная)
+                DB DIR_NONE                                                     ; 0000 10 10    (не действительная)
+                DB DIR_NONE                                                     ; 0000 10 11    (не действительная)
+                DB DIR_DOWN_LEFT                                                ; 0000 11 00
+                DB DIR_NONE                                                     ; 0000 11 01
+                DB DIR_NONE                                                     ; 0000 11 10    (не действительная)
                 DB DIR_DOWN_RIGHT                                               ; 0000 11 11
 
                 endif ; ~_HERO_PATH_DIRECTION_

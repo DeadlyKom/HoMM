@@ -29,6 +29,7 @@ Hero:           ; проверка смены анимации героя
                 ADD A, A    ; x2
                 ADD A, A    ; x4
                 LD L, A
+                SET 7, L    ; Adr.HeroPath начинается с 0x80
                 LD H, HIGH Adr.HeroPath
 
                 ; определение направление спрайта
@@ -157,7 +158,7 @@ Move            ; --------------------------------------------------------------
 .SetDeltaX      LD (IX + FObjectHero.Delta.X), HL
 
                 LD HL, (IX + FObjectHero.Super.Position.X)
-                LD A, L
+                ; LD A, L
                 ADD HL, BC
                 LD (IX + FObjectHero.Super.Position.X), HL
                 ; XOR L
@@ -207,7 +208,7 @@ Move            ; --------------------------------------------------------------
 .ResetDeltaY    LD HL, #0000
 .SetDeltaY      LD (IX + FObjectHero.Delta.Y), HL
                 LD HL, (IX + FObjectHero.Super.Position.Y)
-                LD A, L
+                ; LD A, L
                 ADD HL, BC
                 LD (IX + FObjectHero.Super.Position.Y), HL
                 ; XOR L
@@ -243,32 +244,6 @@ SetCell:        ; установить доступное расстояние �
                 LD (IX + FObjectHero.Delta.Y), HL
 
                 RET
-; RemoveUIArrow:  PUSH DE
-;                 PUSH IX
-
-;                 LD A, (IX + FObjectHero.PathID)
-;                 ; +2 добавлен для цикла
-;                 ADD A, A    ; x2
-;                 ADD A, LOW (Adr.HeroPath + 2)
-;                 LD L, A
-;                 ADC A, HIGH (Adr.HeroPath + 2)
-;                 SUB L
-;                 LD H, A
-
-;                 ; чтение смещения
-;                 LD E, (HL)                                                      ; x
-;                 INC HL
-;                 LD D, (HL)                                                      ; y
-
-;                 LD IX, .Predicate
-;                 CALL Object.FindLastByPredicate
-;                 CALL NC, Object.SmartRemove
-
-;                 POP IX
-;                 POP DE
-
-;                 RET
-
 ;   функция предиката, осуществляет проверку соответствия требуемым условиям
 ;   сброшенный флаг переполнения сигнализирует, об успешности поиска, поиск завершается
 ;   IY - адрес проверяемого объекта

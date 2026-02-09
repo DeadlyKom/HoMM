@@ -17,6 +17,7 @@ Memcpy:         LD HL, .Table
                 OR A
                 JR Z, .NextScrBlock
 
+                ; очистка ранее прочитаного счётчика
                 XOR A
                 LD (DE), A
 

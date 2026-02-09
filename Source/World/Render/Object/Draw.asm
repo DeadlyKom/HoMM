@@ -5,14 +5,13 @@
 ; отображение объектов "мира"
 ; In:
 ;   A  - количество объектов в массиве SortBuffer
-;   DE - адрес поледнего элемента
 ; Out:
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
 Draw:           ; инициализация
+                LD DE, Adr.SortBuffer
                 LD B, A
-                DEC E
 
                 ; установка отсечение спрайтов
                 LD HL, (SCR_WORLD_SIZE_X) << 8 | (SCR_WORLD_POS_X << 3)         ; LeftEdge      - левая грань видимой части     (в пикселах)
@@ -38,8 +37,6 @@ Draw:           ; инициализация
                 RR H
                 RR L
                 ADD HL, BC
-                ; LD BC, SCR_WORLD_POS_X << 7
-                ; SBC HL, BC
                 LD (.MapPositionX), HL
 
                 ; расчёт положения карты по вертикали
@@ -59,22 +56,22 @@ Draw:           ; инициализация
 
 .Loop           ; чтение адреса объекта
                 LD A, (DE)
-                LD IYH, A
-                DEC E
-                LD A, (DE)
                 LD IYL, A
-                DEC E
+                INC E
+                LD A, (DE)
+                LD IYH, A
+                INC E
+
+                PUSH BC
+                SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
 
                 ; проверка флага обновления объекта
                 BIT OBJECT_DIRTY_BIT, (IY + FObject.Flags)
-                JR Z, .ForcedVisibility                                          ; переход, если флаг не установлен,
+                JR Z, .ForcedVisibility                                         ; переход, если флаг не установлен,
                                                                                 ; но необходимо проверить обновление screen block'а или принудительное обновление
                 RES OBJECT_DIRTY_BIT, (IY + FObject.Flags)                      ; сброс флага
 
 .NeedRefresh    PUSH DE
-                PUSH BC
-
-                SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
                 ; расчёт положения объекта относительно верхнего-левого видимойго края (по горизонтали)
                 LD A, (IY + FObject.Position.Y.High)
                 RRA
@@ -136,10 +133,9 @@ Draw:           ; инициализация
                 LD HL, .JumpTable
                 CALL Func.JumpTable
 
-                POP BC
                 POP DE
-
-.NextObject     DJNZ .Loop
+.NextObject     POP BC
+                DJNZ .Loop
                 RET
 
 .ForcedVisibility; проверка принудительной видимости

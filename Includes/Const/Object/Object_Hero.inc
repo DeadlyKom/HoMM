@@ -18,6 +18,7 @@ ANIM_STATE_TURN     EQU 0 << ANIM_STATE_BIT                                     
 ANIM_STATE_MOVE     EQU 1 << ANIM_STATE_BIT                                     ; перемещения
 
 ; направления анимации/движения
+DIR_NONE            EQU 0xFF                                                    ; не действительный
 DIR_UP              EQU 0x00                                                    ; вверх
 DIR_UP_RIGHT        EQU 0x01                                                    ; вверх-вправо
 DIR_RIGHT           EQU 0x02                                                    ; вправо

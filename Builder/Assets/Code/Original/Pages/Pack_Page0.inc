@@ -14,6 +14,7 @@ Begin:          EQU $
                 include "Source/Hero/Include.inc"
                 include "Source/Tick/Include.inc"
                 include "Source/Object/Include.inc"
+                include "Source/ChunkArray/Include.inc"
                 include "Source/Participant/Include.inc"
 Size:           EQU $-Begin                                                     ; размер кода
 

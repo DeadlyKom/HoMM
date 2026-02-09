@@ -76,7 +76,7 @@ HexUpdateAnalysis:
                 ; -----------------------------------------
                 ; инициализация
                 LD H, HIGH Adr.RenderBuffer
-                LD D, HIGH Adr.Mod6Table
+                LD D, HIGH Adr.Div6Table22
                 EXX
                 LD IX, (GameState.DisplayList)
                 LD D, HIGH Adr.RenderBuffer                                     ; для чтения бит высоты столбца
@@ -170,14 +170,14 @@ HexUpdateAnalysis:
                 LD L, A
                 LD H, HIGH Adr.ScrBlockTable
 
-                ; вычисление номера текущего screen block'а (B % 6)
+                ; вычисление номера текущего screen block'а (B / 6)
                 LD A, SCR_WORLD_SIZE_X
                 SUB B
                 ADD A, C
                 EXX
                 EX DE, HL
                 LD L, A
-                LD A, (HL)  ; чтение B % 6 (0-3)
+                LD A, (HL)  ; чтение B / 6 (0-3)
                 EX DE, HL
                 EXX
                 ADD A, A    ; x2

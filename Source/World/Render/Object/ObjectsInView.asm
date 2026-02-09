@@ -1,26 +1,27 @@
 
-                ifndef _WORLD_TILEMAP_VISIBLE_OBJECTS_
-                define _WORLD_TILEMAP_VISIBLE_OBJECTS_
+                ifndef _WORLD_OBJECTS_IN_VIEW_
+                define _WORLD_OBJECTS_IN_VIEW_
 ; -----------------------------------------
-; определение видимых объектов
+; формирование списка объектов в области видимости
 ; In:
 ; Out:
-;   A - количество объектов в массиве
+;   Adr.SortBuffer - адреса объектов
+;   A              - количество объектов в массиве
+;   DE             - адрес последнего элемента
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-VisibleObjects: SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
-
-                ;
+InView:         SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
+                ; инициализация
                 XOR A
                 LD (.Num), A
                 LD IX, AddObjects
                 LD DE, Adr.SortBuffer
                 EXX
 
-                ;
+                ; формирование рамки захвата
                 LD HL, GameSession.WorldInfo + FWorldInfo.MapPosition
-                LD BC, #0202                                                    ; минимальный захватываемое окно в чанках
+                LD BC, #0101                                                    ; минимальный захватываемое окно в чанках
                 LD E, (HL)                                                      ; X
                 INC L
                 LD D, (HL)                                                      ; Y
@@ -31,26 +32,26 @@ VisibleObjects: SET_PAGE_OBJECT                                                 
 
                 ; корректировка ширины захвата чанков, если не выровнено
                 LD A, E
-                AND Kernel.ChunkArray.CHUNK_SIZE_MASK
+                AND CHUNK_SIZE_MASK
                 JR Z, $+3
                 INC C
 
                 ; корректировка центрирования захвата видимого окна
                 LD A, E
-                SUB Kernel.ChunkArray.CHUNK_SIZE
+                SUB CHUNK_SIZE
                 JR C, $+4
                 LD E, A
                 INC C
 
                 ; корректировка высоты захвата чанков, если не выровнено
                 LD A, D
-                AND Kernel.ChunkArray.CHUNK_SIZE_MASK
+                AND CHUNK_SIZE_MASK
                 JR Z, $+3
                 INC B
 
                 ; корректировка центрирования захвата видимого окна
                 LD A, D
-                SUB Kernel.ChunkArray.CHUNK_SIZE
+                SUB CHUNK_SIZE
                 JR C, $+4
                 LD D, A
                 INC B
@@ -83,8 +84,6 @@ VisibleObjects: SET_PAGE_OBJECT                                                 
 
 .Num            EQU $+1
                 LD A, #00
-                OR A
-
                 RET
 ;   A - количествой добавляемых элементов
 ;   H - старший адрес текущего массива чанков
@@ -97,7 +96,7 @@ AddObjects:     ;
 
                 EX AF, AF'
                 LD B, A
-                LD HL, VisibleObjects.Num
+                LD HL, InView.Num
                 ADD A, (HL)
                 LD (HL), A
                 EX AF, AF'
@@ -133,6 +132,6 @@ AddObjects:     ;
                 EXX
                 RET
 
-                display " - Visible objects on tilemap:\t\t\t", /A, VisibleObjects, "\t= busy [ ", /D, $-VisibleObjects, " byte(s)  ]"
+                display " - Objects in view:\t\t\t\t\t", /A, InView, "\t= busy [ ", /D, $-InView, " byte(s)  ]"
 
-                endif ; ~_WORLD_TILEMAP_VISIBLE_OBJECTS_
+                endif ; ~_WORLD_OBJECTS_IN_VIEW_

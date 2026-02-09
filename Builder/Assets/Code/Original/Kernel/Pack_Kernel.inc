@@ -45,9 +45,6 @@ Begin:          EQU $
                 ; работа с информацией о спрайтов в буфере Adr.SpriteInfoBuffer
                 include "Source/Sprite/Include.inc"
 
-                ; chunk array
-                include "Source/ChunkArray/Include.inc"
-
                 ; UI
                 include "Source/UI/Include.inc"
 
