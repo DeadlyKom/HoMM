@@ -29,14 +29,15 @@
 ;       * Render-буфер для каждого столбца гексагона выставляется флаг CU
 ;           необходимости обновить столбец гексагона (0 - обновление столбца не требуется)
 ; -----------------------------------------
-Update:
+Update: 
 .TileBuffer     RES_VIEW_FLAG UPDATE_TILEMAP_BUF_BIT                            ; сброс флага обновления Tiled буфера
                 VIEW_FLAGS
                 RES_FLAG UPDATE_TILEMAP_BUF_BIT                                 ; сброс флага обновления Tiled буфера
                 SET_FLAG FORCED_FRAME_UPDATE_BIT                                ; установка флага принудительного обновления кадра
                 CALL World.Base.Render.Reset
                 JP Buffer.Memcpy.Tilemap
-.RenderBuffer   VIEW_FLAGS
+.RenderBuffer   CALL Convert.MapPosToSprFormat                                  ; преобразовать положение на карте в формату спрайта (достаточно один раз после пермещения карты)
+                VIEW_FLAGS
                 RES_FLAG UPDATE_RENDER_BUF_BIT                                  ; сброс флага обновления Render буфера
                 SET_FLAG FORCED_FRAME_UPDATE_BIT                                ; установка флага принудительного обновления кадра
                 CALL World.Base.Render.Reset

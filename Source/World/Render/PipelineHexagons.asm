@@ -83,10 +83,10 @@ PipelineHexagons:
                 ;       * восстановить фон в основном экране под курсором
                 ;       * сброс флагов готовности экрана
                 ; -----------------------------------------
+                SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
                 CALL World.Base.Render.Object.InView                            ; формирование списка объектов в области видимости
                 PUSH AF
-                ; анализ видимых объектов и выставление флагов гексагонов, которые требуется перерисовать
-                ; CALL World.Base.Render.Object.DirtyEnvir
+                CALL NZ, World.Base.Render.Object.DirtyEnvir                    ; анализ видимых объектов и выставление флагов гексагонов, которые требуется перерисовать
                 
                 SET_PAGE_MAP                                                    ; включить страницу работы с картой
                 RESTORE_BC                                                      ; защитная от порчи данных с разрешённым прерыванием
@@ -95,7 +95,6 @@ PipelineHexagons:
                 CALL ScreenBlock.HexAnalysis                                    ; анализ обновления гексагонов
 
                 POP AF
-                OR A
                 CALL NZ, Object.Draw                                            ; отображение объектов в массиве SortBuffer
 
                 SET_MODULE_PAGE_World                                           ; включить страницу модуля "World"

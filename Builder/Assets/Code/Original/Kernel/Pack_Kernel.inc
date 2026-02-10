@@ -34,6 +34,11 @@ Begin:          EQU $
                 include "Source/Math/Rotate/Right_x32.asm"
                 include "Source/Math/Sqrt/DistSquared.asm"
 
+                ; utilities
+                include "Source/Draw/Utilities/GetSpriteAABB.asm"
+                include "Source/Draw/Utilities/TransformPositionObjectToScreen.asm"
+                include "Source/Draw/Utilities/ConvertMapPositionToSpriteFormat.asm"
+
                 ; input
                 include "Source/Input/Include.inc"
 

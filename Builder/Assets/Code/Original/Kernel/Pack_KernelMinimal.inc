@@ -17,7 +17,7 @@ Begin:          EQU $
                 include "Source/Memory/MemSet.asm"
                 include "Source/Memory/MemcpyFastLDIR.asm"
 
-                ; Utilities
+                ; utilities
                 include "Source/Draw/Utilities/PixelAddress.asm"
                 include "Source/Draw/Utilities/PixelAttribute.asm"
 
