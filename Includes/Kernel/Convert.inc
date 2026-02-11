@@ -12,7 +12,8 @@ Convert:
 .ToAttribute            EQU Bootloader.KernelMinimal.Utilities.PixelAttribute       ; конверсия экраного адреса в адрес атрибутов
 .ToPixel                EQU Bootloader.KernelMinimal.Utilities.AttributePixel       ; конверсия экраного адреса атрибутов в адрес пикселей
 .MapPosToSprFormat      EQU Kernel.Utilities.MapPosToSprFormat                      ; преобразовать положение на карте в формату спрайта
+Utilities:
+.SpriteBound            EQU Kernel.Utilities.SpriteBound                            ; получить ограничивающий прямоугольник спрайта
 .TransformToScr         EQU Kernel.Utilities.TransformToScr                         ; преобразование положения объекта относительно экрана
-.GetSpriteAABB          EQU Kernel.Utilities.GetSpriteAABB                          ; получить ограничивающий прямоугольник спрайта
 
                 endif ; ~_KERNEL_CONVERT_

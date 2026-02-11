@@ -7,6 +7,7 @@
                 include "Source/Cursor/Draw.asm"
                 include "Object/Include.inc"
                 include "PipelineHexagons.asm"
+                include "SetViewWorldBound.asm"
                 endmodule
 
                 endif ; ~_WORLD_RENDER_INCLUDE_

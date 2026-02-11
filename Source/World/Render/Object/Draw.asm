@@ -9,15 +9,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Draw:           ; установка отсечение спрайтов
-                LD HL, (SCR_WORLD_SIZE_X) << 8 | (SCR_WORLD_POS_X << 3)         ; LeftEdge      - левая грань видимой части     (в пикселах)
-                                                                                ; VisibleWidth  - ширина видимой части          (в знакоместах)
-                LD (GameState.LeftEdge), HL
-                LD HL, ((SCR_WORLD_SIZE_Y << 3) << 8)  | (SCR_WORLD_POS_Y << 3) ; TopEdge       - верхняя грань видимой части   (в пикселах)
-                                                                                ; VisibleHeight - высота видимой части          (в пикселах)
-                LD (GameState.TopEdge), HL
-
-                ; инициализация
+Draw:           ; инициализация
                 LD DE, Adr.SortBuffer
                 LD B, A
 
@@ -40,7 +32,7 @@ Draw:           ; установка отсечение спрайтов
 
 .NeedRefresh    PUSH DE
                 ; расчёт положения объекта относительно верхнего-левого видимойго края
-                CALL Convert.TransformToScr                     
+                CALL Utilities.TransformToScr                     
                 LD (Kernel.Sprite.DrawClipping.PositionX), DE
                 LD (Kernel.Sprite.DrawClipping.PositionY), HL
 
@@ -55,12 +47,13 @@ Draw:           ; установка отсечение спрайтов
                 endif
 
                 LD HL, .JumpTable
+                LD IX, Draw.SpriteClipping
                 CALL Func.JumpTable
 
                 POP DE
 .NextObject     POP BC
                 DJNZ .Loop
-                RET
+.RET            RET
 
 .ForcedVisibility; проверка принудительной видимости
                 CHECK_VIEW_FLAG FORCED_FRAME_UPDATE_BIT
@@ -72,10 +65,10 @@ Draw:           ; установка отсечение спрайтов
 
 .JumpTable      DW Hero.Draw                                                    ; OBJECT_CLASS_HERO
                 DW Simple.Draw                                                  ; OBJECT_CLASS_CONSTRUCTION
-                DW #0000                                                        ; OBJECT_CLASS_PROPS
-                DW #0000                                                        ; OBJECT_CLASS_INTERACTION
-                DW #0000                                                        ; OBJECT_CLASS_PARTICLE
-                DW #0000                                                        ; OBJECT_CLASS_DECAL
+                DW .RET                                                         ; OBJECT_CLASS_PROPS
+                DW .RET                                                         ; OBJECT_CLASS_INTERACTION
+                DW .RET                                                         ; OBJECT_CLASS_PARTICLE
+                DW .RET                                                         ; OBJECT_CLASS_DECAL
                 DW UI.Draw                                                      ; OBJECT_CLASS_UI
 
                 endif ; ~_WORLD_RENDER_OBJECT_DRAW_

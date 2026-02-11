@@ -35,7 +35,7 @@ Begin:          EQU $
                 include "Source/Math/Sqrt/DistSquared.asm"
 
                 ; utilities
-                include "Source/Draw/Utilities/GetSpriteAABB.asm"
+                include "Source/Draw/Utilities/SpriteBound.asm"
                 include "Source/Draw/Utilities/TransformPositionObjectToScreen.asm"
                 include "Source/Draw/Utilities/ConvertMapPositionToSpriteFormat.asm"
 

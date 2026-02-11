@@ -4,6 +4,7 @@
 ; -----------------------------------------
 ; отображение простого объекта
 ; In:
+;   IX - адрес функции обработки спрайта
 ;   IY - адрес структуры объекта
 ; Out:
 ; Corrupt:
@@ -66,6 +67,6 @@ Draw:           ; расчёт адреса структуры FSpritesRef
                 LD E, A
                 EX AF, AF'
                 LD A, E
-                JP Draw.SpriteClipping
+                JP (IX)
 
                 endif ; ~_WORLD_RENDER_OBJECT_SIMPLE_DRAW_
