@@ -39,6 +39,13 @@ UpdateMovement: RES_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             
                 SUB L
                 LD H, A
 
+                ; сохранение значения смещения
+                LD A, (World.Shift_X)
+                LD C, A
+                LD A, (World.Shift_Y)
+                LD B, A
+                PUSH BC
+
                 ; применение данных таблицы для осей
                 LD A, (HL)
                 OR A
@@ -53,6 +60,19 @@ UpdateMovement: RES_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             
                 LD A, (GameState.Input.Value)
                 AND ~MOVEMENT_MASK
                 LD (GameState.Input.Value), A
+
+                POP BC
+                LD A, C
+                OR B
+                LD C, A
+                LD A, (World.Shift_X)
+                LD B, A
+                LD A, (World.Shift_Y)
+                OR B
+                CP C
+                RET Z
+
+                SET_VIEW_FLAG_A UPDATE_RENDER_BUF_BIT                           ; установка флага обновления Render буфера
 
 .Genaration     ; инициализация 22 * 8 стобов гексагона
                 LD HL, Adr.RenderBuffer + 80 + 176
@@ -131,7 +151,6 @@ ApplyToX_Axis_  ; #000 - #2B5
 
                 LD (GameSession.WorldInfo + FWorldInfo.MapOffset.X), A
                 LD (World.Shift_X), A                                           ; смещение внутри гексагона
-                SET_VIEW_FLAG_A UPDATE_RENDER_BUF_BIT                           ; установка флага обновления Render буфера
 
                 LD A, E
                 CP D
@@ -165,7 +184,6 @@ ApplyToY_Axis_  ; #000 - #2A1
                 AND %00000011
                 LD (GameSession.WorldInfo + FWorldInfo.MapOffset.Y), A
                 LD (World.Shift_Y), A                                           ; смещение внутри гексагона
-                SET_VIEW_FLAG_A UPDATE_RENDER_BUF_BIT                           ; установка флага обновления Render буфера
 
                 LD A, C
                 RRA

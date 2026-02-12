@@ -10,7 +10,9 @@
                 include "RenderBuffer.asm"
                 include "UpdateHextile.asm"
                 include "Reconnaissance.asm"
+                include "UpdateSpriteBound.asm"
                 include "Utilities/Include.inc"
+                include "AdjustRenderBufferColumns.asm"
                 include "Source/Memory/MemcpyTilemapBuffer.asm"
                 endmodule
 

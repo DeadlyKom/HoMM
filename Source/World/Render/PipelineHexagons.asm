@@ -90,6 +90,7 @@ PipelineHexagons:
                 CALL NZ, World.Base.Render.Object.DirtyEnvir                    ; анализ видимых объектов и выставление флагов гексагонов, которые требуется перерисовать
                 
                 SET_PAGE_MAP                                                    ; включить страницу работы с картой
+                CALL BufferUtilities.AdjRenderBufCol                            ; корректировка столбцов рендер буфера
                 RESTORE_BC                                                      ; защитная от порчи данных с разрешённым прерыванием
                 CALL Draw.HexByDL
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
