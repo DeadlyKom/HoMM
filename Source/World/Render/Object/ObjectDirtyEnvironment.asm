@@ -32,26 +32,28 @@ DirtyEnvir:     ; инициализация
                 PUSH DE
 
                 ; расчёт положения объекта относительно верхнего-левого видимойго края
-                CALL Utilities.TransformToScr                     
-                LD (Kernel.Utilities.SpriteBound.PositionX), DE
-                LD (Kernel.Utilities.SpriteBound.PositionY), HL
+                ; CALL Utilities.TransformToScr
+                ; LD (Kernel.Utilities.SpriteBound.PositionX), DE
+                ; LD (Kernel.Utilities.SpriteBound.PositionY), HL
 
-                ; определение способа отображения объекта
-                LD A, (IY + FObjectDefaultSettings.Class)
-                AND OBJECT_CLASS_MASK
+                ; ; определение способа отображения объекта
+                ; LD A, (IY + FObjectDefaultSettings.Class)
+                ; AND OBJECT_CLASS_MASK
 
-                ; ловушка
-                ifdef _DEBUG
-                CP OBJECT_CLASS_MAX
-                DEBUG_BREAK_POINT_NC                                            ; ошибка, нет такого объекта
-                endif
+                ; ; ловушка
+                ; ifdef _DEBUG
+                ; CP OBJECT_CLASS_MAX
+                ; DEBUG_BREAK_POINT_NC                                            ; ошибка, нет такого объекта
+                ; endif
 
-                LD HL, .JumpTable
-                CALL Func.JumpTable
-                JR C, .Failed                                                   ; переход, если не удалось определить bound спрайта
+                ; LD HL, .JumpTable
+                ; CALL Func.JumpTable
+                ; JR C, .Failed                                                   ; переход, если не удалось определить bound спрайта
 
                 ;   DE - позиция спрайта в пикселях (D - y, E - x)
                 ;   BC - размер bound спрайта в пикселях (B - y, C - x)
+                LD DE, (IY + FObject.Bound + FSpriteBound.Location)
+                LD BC, (IY + FObject.Bound + FSpriteBound.Size)
 
                 ; сохранени значени, для обсчёта на стадии рисования спрайтов
 .Bound          EQU $+1

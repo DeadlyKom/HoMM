@@ -2,7 +2,7 @@
                 ifndef _STRUCTS_GAME_STATE_
                 define _STRUCTS_GAME_STATE_
 
-                struct FGameState                                               ; переменные состояния игры                                     [34 байт]
+                struct FGameState                                               ; переменные состояния игры                                     [38 байт]
 ; -----------------------------------------
 ;      7    6    5    4    3    2    1    0
 ;   +----+----+----+----+----+----+----+----+
@@ -107,6 +107,7 @@ PlayerActions   FPlayerActions                                                  
 AssetID         DB #00                                                          ; идентификатор последнего загруженного ассета                  [1 байт]
 Assets          FAssets                                                         ; копия данных последнего загруженного ассета                   [8 байт]
 SpriteInfoNum   DB #00                                                          ; количество спрайтов в массиве SpriteInfoBuffer                [1 байт]
+SpriteBound     FSpriteBound                                                    ; bound спрайта после его отрисовки на экране                   [4 байт]
 LeftEdge        DB #00                                                          ; левая грань видимой части     (в пикселах)                    [1 байт]
 VisibleWidth    DB #00                                                          ; ширина видимой части          (в знакоместах)                 [1 байт]
 TopEdge         DB #00                                                          ; верхняя грань видимой части   (в пикселах)                    [1 байт]

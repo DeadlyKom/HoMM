@@ -19,39 +19,31 @@ SpriteBound:    ; -----------------------------------------
                 ; +3 - номер строки по вертикали в пикселях
                 ; +4 - количество пропускаемых знакомест (спрайт находится ниже экрана)
                 ; -----------------------------------------
-
-                ; ToDo: грубое увеличение bound спрайта
-                ; увеличим размеры очищаемой области вокруг спрайта в 2 раза
-                ; позволяет не хранить предыдущее состояние спрайта, дабы очистить точно его место
-                ; а так же заставить перерисовать перед новым состоянием спрайта
-                
-                ; модификация ширины обновления
-                LD A, C
-                LD L, A
-                ADD A, C
-                LD C, A
-
-                ; центрируем новую ширину обновления
-                LD A, E
-                SRA L
-                SUB L
-                LD E, A
-
-                PUSH DE
-                
-                ; нижняя грань bound спрайта
-                LD A, D         ; позиция спрайта в пикселях по оси Y
-                ADD A, B
-                LD D, A
-
                 ;
+                PUSH DE
                 PUSH BC
                 CALL .UpdateRow
                 POP BC
                 POP DE
-                RET NC  ; выход, если не получается обнаружить bound спрайта
-                SUB B
-                RET NC  ; спрайт поместился в гексагоне
+                RET C   ; выход, если не получается обнаружить bound спрайта
+
+                ; нижняя грань bound спрайта
+                EX AF, AF'
+                LD A, D         ; позиция спрайта в пикселях по оси Y
+                ADD A, B
+                LD D, A
+                EX AF, AF'
+                JR Z, .UpdateRow
+
+                PUSH DE
+                PUSH BC
+                CALL .UpdateRow
+                POP BC
+                POP DE
+
+                LD A, D         ; позиция спрайта в пикселях по оси Y
+                ADD A, B
+                LD D, A
 
 .UpdateRow      ; округление до знакоместах
                 LD A, C                                                         ; ширины спрайта в пикселях
@@ -68,45 +60,30 @@ SpriteBound:    ; -----------------------------------------
                 ; корректировка позиции относительно левого края игрового мира
                 LD A, E
                 SUB SCR_WORLD_POS_X << 3
-                LD E, #00
-                SRL A
-                ADC A, E
-                RRA
-                ADC A, E
-                RRA
-                ADC A, E
                 LD E, A
+                AND %00000111
+                JR Z, $+3
+                INC C
+                SRL E
+                SRL E
+                SRL E
 
-                ; ; сохранение высоты спрайта
-                ; LD A, B
-                ; EX AF, AF'
-
-                ; обратный поиск от верхней строки к нижней
                 LD IX, (GameState.DisplayList)
                 LD A, (GameState.DisplayListLen)
-                INC A           ; +1
                 LD B, A
+.Loop           ; следующий элемент списка отображения
+                LD A, IXL
+                ADD A, -Size.DisplayList.ElementSize
+                LD IXL, A
                 
-.Djnz           DJNZ .Loop
-                ; строка не была найдена
-                OR A
-                RET
-
-.Loop           ; переход к следующему элементу списка отображения
-                EX DE, HL
-                LD DE, -Size.DisplayList.ElementSize
-                ADD IX, DE
-                EX DE, HL
-
-                ; определение строки экранного блока
                 LD A, (IX + 3)                                                  ; номер строки по вертикали в пикселях
                 CP D            ; D - позиция спрайта в пикселях по оси Y
-                JR C, .Djnz
-                ; найдена нужная строка
-
+                JR NC, .FoundRow; найдена нужная строка
+                DJNZ .Loop
+                SCF                                                             ; строка не была найдена
+                RET
+.FoundRow       ; найдена нужная строка
                 SUB D           ; отступ от нижней границы гексагона
-                NEG
-                ADD A, HEXTILE_BASE_SIZE_Y << 3
                 PUSH AF         ; оставшаяся высота
 
                 ; расчёт ширины гексагона в ренер буфере
@@ -118,52 +95,85 @@ SpriteBound:    ; -----------------------------------------
 
                 ; чтение индексов
                 LD L, (IX + 1)                                                  ; индекс/смещение в рендер буфере обрабатываемого гексагона
-                LD H, (IX + 2)                                                  ; индекс/смещение в рендер буфере обрабатываемого гексагона +80
-
-                ;
-                LD A, E
-                LD E, HEXTILE_SIZE_X
-
-.HexagonLoop    SUB B
-                JR C, .Found
-                INC L
-                EX AF, AF'
-                LD A, H
-                ADD A, B
+                LD A, SCR_WORLD_SIZE_X
+                SUB E
                 LD H, A
+                LD A, E
+                LD E, H     ; количество доступных колонок
                 EX AF, AF'
-                LD B, E
+                LD A, (IX + 2)                                                  ; индекс/смещение в рендер буфере обрабатываемого гексагона +80
+
+                ; цикл поиска
+.HexagonLoop    EX AF, AF'
+                SUB B                                                           ; ширина гексагона в ренер буфере (0-5)
+                JR Z, .Found
+                JR C, .Found
+
+                ; смещение колонок в строке
+                EX AF, AF'
+                ADD A, B
+                
+                LD B, HEXTILE_SIZE_X                                            ; ширина гексагона (следующего)
+                INC L
                 JR .HexagonLoop
 
-.Found          ; добавить смещение к столбцам рендер буфера
+.Found          EX AF, AF'
+                LD H, A
+                EX AF, AF'
+
+                ; добавить смещение к столбцам рендер буфера
                 ADD A, B
-                LD B, A
-                JR NZ, $+3
-                LD B, E
-                ADD A, H
+                ; LD B, A             ; смещение внутри гексагона
+                ADD A, H            ; сместить строку в гексагоне
                 LD H, A
 
                 LD A, E
-                LD D, HIGH Adr.RenderBuffer
-                LD E, L
-                EX DE, HL
-                
-                SUB B
-                SET 7, (HL)     ; текущий гексагон
-                SUB C
-                JR NC, $+5
-                INC L
-                ; есть вероятность что такое огрубление может переполниться
-                SET 7, (HL)     ; следующий гексагон
+                EX AF, AF'
 
+                ; адрес в рендер буфере гексагонов
+                LD E, L
+
+                ; количество доступных гексагонов в строке
+                LD D, (IX + 0)                                                  ; первая рисуемая колонка первого гексагона (0-5)
+                BIT 0, D
+                JR Z, .L1
+                LD A, #82
+                SUB D
+                JR C, .L1
+                INC L
+.L1             LD A, TILEMAP_WIDTH_DATA;-1
+                SUB L
+                ADD A, (IX + 1)                                                    ; индекс/смещение в рендер буфере обрабатываемого гексагона
+                LD L, A
+
+                LD D, HIGH Adr.RenderBuffer
+                EX DE, HL
+
+                JR Z, .L2
+                SET 7, (HL)     ; текущий гексагон
+                ; LD A, HEXTILE_SIZE_X
+                ; SUB B           ; смещение внутри гексагона
+                ; SUB C           ; ширины спрайта в колонках
+                ; JR NC, .L2      ; не нужно следующий гексагон обновлять
+
+                ; проверка доступности следующего гексагона
+                DEC E
+                JR Z, .L2
+                INC L
+                SET 7, (HL)     ; следующий гексагон
+.L2
                 LD B, C
                 LD L, D
-.RenderLoop     SET 0, (HL)
+                EX AF, AF'
+.RenderLoop     EX AF, AF'
+                SET 0, (HL)
                 INC L
-                JR Z, $         ; переполнение ОШИБКА!
+                EX AF, AF'
+                DEC A
+                JR Z, .Finish
                 DJNZ .RenderLoop
 
-                POP AF
+.Finish         POP AF
                 RET
 
                 display " - Update sprite bound:\t\t\t\t", /A, SpriteBound, "\t= busy [ ", /D, $-SpriteBound, " byte(s)  ]"

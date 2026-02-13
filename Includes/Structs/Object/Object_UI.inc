@@ -3,7 +3,7 @@
                 define _STRUCT_OBJECT_UI_
 
                 struct FObjectUI                                                ; объект - элетент UI                                       [байт]
-Super           FObject                                                         ; базовый класс объекта                                     [9 байт]
+Super           FObject                                                         ; базовый класс объекта                                     [13 байт]
 ; -----------------------------------------
 ; Note:
 ;   для ассета ASSETS_ID_UI_ARROW_PATH_PACK,

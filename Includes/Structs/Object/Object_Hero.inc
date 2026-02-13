@@ -2,8 +2,8 @@
                 ifndef _STRUCT_OBJECT_HERO_
                 define _STRUCT_OBJECT_HERO_
 
-                struct FObjectHero                                              ; объект                                                    [14 байт]
-Super           FObject                                                         ; базовый класс объекта                                     [9 байт]
+                struct FObjectHero                                              ; объект                                                    [18 байт]
+Super           FObject                                                         ; базовый класс объекта                                     [13 байт]
 ; -----------------------------------------
 ;   FObjectHero.Super.Sprite
 ;      7    6    5    4    3    2    1    0

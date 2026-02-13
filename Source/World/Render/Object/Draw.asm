@@ -46,9 +46,22 @@ Draw:           ; инициализация
                 DEBUG_BREAK_POINT_NC                                            ; ошибка, нет такого объекта
                 endif
 
+                PUSH IY
                 LD HL, .JumpTable
                 LD IX, Draw.SpriteClipping
                 CALL Func.JumpTable
+
+                SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
+                ; копирование bound спрайта
+                POP HL
+                LD DE, FObject.Bound
+                ADD HL, DE
+                LD DE, GameState.SpriteBound
+                EX DE, HL
+                LDI
+                LDI
+                LDI
+                LDI
 
                 POP DE
 .NextObject     POP BC

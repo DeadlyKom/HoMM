@@ -3,7 +3,7 @@
                 define _STRUCT_OBJECT_CONSTRUCTION_
 
                 struct FObjectConstruction                                      ; объект - постройка                                        [байт]
-Super           FObject                                                         ; базовый класс объекта                                     [9 байт]
+Super           FObject                                                         ; базовый класс объекта                                     [13 байт]
                 ends
 
                 endif ; ~_STRUCT_OBJECT_CONSTRUCTION_

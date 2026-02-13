@@ -88,7 +88,7 @@ PipelineHexagons:
                 CALL World.Base.Render.Object.InView                            ; формирование списка объектов в области видимости
                 PUSH AF
                 CALL NZ, World.Base.Render.Object.DirtyEnvir                    ; анализ видимых объектов и выставление флагов гексагонов, которые требуется перерисовать
-                
+
                 SET_PAGE_MAP                                                    ; включить страницу работы с картой
                 CALL BufferUtilities.AdjRenderBufCol                            ; корректировка столбцов рендер буфера
                 RESTORE_BC                                                      ; защитная от порчи данных с разрешённым прерыванием

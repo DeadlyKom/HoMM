@@ -39,8 +39,6 @@ GetRenderBuffer LD C, A
                 LD IXL, A
 
                 DJNZ .Loop
-                NOP
-
 .Unsuccess      SCF                                                             ; неудачное выполнение
                 RET
 

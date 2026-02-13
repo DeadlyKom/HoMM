@@ -19,6 +19,7 @@ GameState       EQU Adr.GameState                                               
 .AssetID        EQU GameState + FGameState.AssetID                              ; идентификатор последнего загруженного ассета
 .Assets         EQU GameState + FGameState.Assets                               ; копия данных последнего загруженного ассета
 .SpriteInfoNum  EQU GameState + FGameState.SpriteInfoNum                        ; количество спрайтов в массиве SpriteInfoBuffer
+.SpriteBound    EQU GameState + FGameState.SpriteBound                          ; bound спрайта после его отрисовки на экране
 .LeftEdge       EQU GameState + FGameState.LeftEdge                             ; левая грань видимой части     (в пикселах)
 .VisibleWidth   EQU GameState + FGameState.VisibleWidth                         ; ширина видимой части          (в знакоместах)
 .TopEdge        EQU GameState + FGameState.TopEdge                              ; верхняя грань видимой части   (в пикселах)

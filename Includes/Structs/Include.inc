@@ -17,6 +17,7 @@
                 ; include "Event.inc"                                             ; DEPRECATE
                 include "Item_ID.inc"
                 include "WorldInfo.inc"
+                include "SpriteBound.inc"
                 include "SpriteClipping.inc"
                 include "SpriteNotClipping.inc"
                 

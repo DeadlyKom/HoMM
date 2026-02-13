@@ -94,7 +94,6 @@ Cursor.Indexes  ; индексы спрайтов в буфере спрайто
                 DB #00                                                          ; "Click"
 
                 display " - Sprite initialize cursor:\t\t\t\t", /A, Load, "\t= busy [ ", /D, $-Load, " byte(s)  ]"
-
                 endmodule
 
                 endif ; ~ _MODULE_WORLD_SPRITE_CURSOR_
