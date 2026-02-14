@@ -9,7 +9,12 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-GameWindow:     ; проверка клавиши "выбор"
+GameWindow:     ; проверка бездействия игрока
+                LD A, (GameState.PlayerActions + FPlayerActions.Action)
+                OR A                                                            ; PLAYER_ACTION_NONE
+                RET NZ                                                          ; выход, если действие игрока незакончено
+
+                ; проверка клавиши "выбор"
                 LD A, (GameConfig.KeySelect)
                 CALL Input.CheckKeyState
                 RET NZ                                                          ; выход, если не нажата клавиша "выбор"
@@ -40,20 +45,17 @@ GameWindow:     ; проверка клавиши "выбор"
                 RET Z                                                           ; выход, если позиции совпадают
                 ADD HL, BC
 
-                ; проверка на перемещение по оси Y, необходимо учитывать чётность осиY
-                LD A, B
-                SUB H
-                JR Z, $+4
-                LD A, #0C   ; INC C
-                LD (.AxisAdjust), A                                             ; NOP/INC C
-
                 ; проверка длины шага
                 PUSH BC
                 EX DE, HL
                 CALL World.Hexagon.Distance                                     ; определение расстояния между гексагонами
                 DEC A
                 POP BC
-                RET NZ
+                RET NZ                                                          ; выход, если расстояние больше 1
+
+                ; установить действие игрока, перемещение героя
+                LD A, PLAYER_ACTION_HERO_MOVEMENT
+                LD (GameState.PlayerActions + FPlayerActions.Action), A
 
                 ; определение индекса Render-буфера по координатам гексагона
                 PUSH BC
@@ -70,13 +72,6 @@ GameWindow:     ; проверка клавиши "выбор"
                 LD HL, Adr.SortBuffer                                           ; т.к. обновление UI и обработка событий,
                                                                                 ; происходит перед отрисовкой, данный буфер свободный
                                                                                 ; для временного хранения
-                ; корректировка значения, позволяет корректно в
-                ; tick'е считать направление (Directon) персонажа
-                BIT 0, B
-                JR Z, $+3
-.AxisAdjust     EQU $
-                INC C
-
                 LD (HL), C      ; FPath.HexCoord.X
                 INC L
                 LD (HL), B      ; FPath.HexCoord.Y

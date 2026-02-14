@@ -40,9 +40,9 @@ Scan:           ; проверка HardWare ограничения мыши
                 LD (GameState.Input.Value), A
                 ; --------------------------------------------------------------
                 ; проверка клавиши "выбор"
-                ; LD A, (GameConfig.KeySelect)
-                ; CALL Input.CheckKeyState
-                ; CALL Z, IputEvent.Select                                        ; переход, если клавиша нажата
+                LD A, (GameConfig.KeySelect)
+                CALL Input.CheckKeyState
+                CALL Z, Input.Select                                        ; переход, если клавиша нажата
 
                 ; проверка клавиши "выход"
                 ; LD A, (GameConfig.KeyESC)
@@ -53,7 +53,7 @@ Scan:           ; проверка HardWare ограничения мыши
                 ; проверка клавиш перемещения
                 LD A, (GameConfig.KeyAccel)
                 CALL Input.CheckKeyState
-                CALL Z, Iput.Accelerate
+                CALL Z, Input.Accelerate
                 ; --------------------------------------------------------------
                 ; опрос перемещения влево
                 LD A, (GameConfig.KeyLeft)

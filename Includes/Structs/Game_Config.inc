@@ -2,7 +2,7 @@
                 ifndef _STRUCTS_GAME_CONFIG_
                 define _STRUCTS_GAME_CONFIG_
 
-                struct FGameConfig                                              ; переменные конфигурации игры                                  [12 байт]
+                struct FGameConfig                                              ; переменные конфигурации игры                                  [13 байт]
 Keys            FKeys                                                           ; клавиши                                                       [8 байт]
 ; -----------------------------------------
 ;      7    6    5    4    3    2    1    0
@@ -25,7 +25,7 @@ Options         DB #00                                                          
 SpeedCursorMin  DB #00                                                          ; минимальная скорость курсора                                  [1 байт]
 SpeedCursorMax  DB #00                                                          ; максимальная скорость курсора                                 [1 байт]
 SpeedScroll     DB #00                                                          ; скорость скролла тайловой карты                               [1 байт]
-
+SpeedHero       DB #00                                                          ; скорость перемещения героя по карте                           [1 байт]
                 ends
 
                 endif ; ~_STRUCTS_GAME_CONFIG_

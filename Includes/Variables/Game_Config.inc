@@ -15,5 +15,6 @@ GameConfig      EQU Adr.GameConfig                                              
 .SpeedCursorMin EQU GameConfig + FGameConfig.SpeedCursorMin                     ; минимальная скорость курсора
 .SpeedCursorMax EQU GameConfig + FGameConfig.SpeedCursorMax                     ; максимальная скорость курсора
 .SpeedScroll    EQU GameConfig + FGameConfig.SpeedScroll                        ; скорость скролла тайловой карты
+.SpeedHero      EQU GameConfig + FGameConfig.SpeedHero                          ; скорость перемещения героя по карте
 
                 endif ; ~_VARIABLES_GAME_CONFIG_
