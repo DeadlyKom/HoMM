@@ -47,7 +47,7 @@ MapPosToSprFormat:
 
                 RET
 
-                display " - Convert map position to sprite format:\t\t\t\t\t", /A, MapPosToSprFormat, "\t= busy [ ", /D, $ - MapPosToSprFormat, " byte(s)  ]"
+                display " - Convert map position to sprite format:\t\t", /A, MapPosToSprFormat, "\t= busy [ ", /D, $ - MapPosToSprFormat, " byte(s)  ]"
                 endmodule
 
                 endif ; ~ _DRAW_UTILS_CONVERT_MAP_POSITION_TO_SPRITE_FORMAT_

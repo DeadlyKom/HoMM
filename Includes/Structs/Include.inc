@@ -14,7 +14,6 @@
                 include "Tick.inc"
                 include "Size.inc"
                 include "Keys.inc"
-                ; include "Event.inc"                                             ; DEPRECATE
                 include "Item_ID.inc"
                 include "WorldInfo.inc"
                 include "SpriteBound.inc"
@@ -26,6 +25,7 @@
                 include "SaveSlot.inc"
 
                 include "Hero/Include.inc"
+                include "Event/Include.inc"
                 include "Player/Include.inc"
                 include "Object/Include.inc"
 
