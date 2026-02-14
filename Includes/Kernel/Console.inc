@@ -8,6 +8,7 @@ Console:
 .DrawWord       EQU Kernel.Console.DrawWord
 .DrawWordFrom   EQU Kernel.Console.DrawWordFromAdr
 .DrawString     EQU Kernel.Console.DrawString
+.StringLength   EQU Kernel.Console.StringLength
 .SetCursor      EQU Kernel.Console.SetCursor
 .SetScreenAdr   EQU Kernel.Console.SetScreenAdr
 .SetAttribute   EQU Kernel.Console.SetAttribute

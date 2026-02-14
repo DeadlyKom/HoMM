@@ -3,7 +3,7 @@
                 define _HERO_PATH_INCLUDE_
 
                 module Path
-                ; include "ReificationHeroPath.asm"
+                include "Distance.asm"
                 include "Direction.asm"
                 include "PathInitialize.asm"
                 endmodule

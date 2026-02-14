@@ -170,6 +170,25 @@ DrawString:     LD A, (BC)
                 CALL DrawChar
                 JR DrawString
 ; -----------------------------------------
+; опредление длины строки
+; In:
+;   BC  - адрес строки
+; Out:
+;   E   - длина строки
+; Corrupt:
+;   HL, E, AF
+; Note:
+; -----------------------------------------
+StringLength:   LD H, B
+                LD L, C
+                LD E, #00
+.Loop           XOR A
+                OR (HL)
+                RET Z
+                INC HL
+                INC E
+                JR .Loop
+; -----------------------------------------
 ; установка курсора вывода
 ; In:
 ;   DE - координаты в знакоместах (D - y, E - x)

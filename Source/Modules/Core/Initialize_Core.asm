@@ -21,16 +21,20 @@ Core:           EI
                 ATTR_IPB SCR_ADR_SHADOW, BLACK, WHITE, 0                        ; очистка атрибутов теневого экрана
 
                 ; -----------------------------------------
-                ; отображение версию сборки
+                ; отображение версии сборки
                 ; -----------------------------------------
-                SCREEN_ADR_REG HL, SCR_ADR_BASE, 20 << 3, 23 << 3
                 CALL Console.SetDrawToOne
-                CALL Console.SetScreenAdr
+                CALL Convert.SetBaseScreen                                      ; установка работы с основным экраном
                 SET_REG_ATTR_IPB A, CYAN, BLACK, 0
                 CALL Console.SetAttribute
                 LD BC, VersionText
+                CALL Console.StringLength
+                LD A, #20 - 1
+                SUB E
+                LD E, A
+                LD D, #16
+                CALL Console.SetCursor
                 CALL Console.DrawString
-
                 ; -----------------------------------------
                 ; принудительная установка места загрузки ресурса
                 ; -----------------------------------------

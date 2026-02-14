@@ -3,6 +3,7 @@
                 define _PAGE_0_HERO_
 Hero:
 .DirectonPath           EQU Page0.Hero.Path.Directon                            ; определение направления движения
+.DistancePath           EQU Page0.Hero.Path.Distance                            ; определение расстояние пути
 .PathInitialize         EQU Page0.Hero.Path.PathInitialize                      ; инициализация пути
 .PathInitialize.Wrap    EQU Page0.Hero.Path.PathInitialize.Wrap                 ; инициализация пути                                            (обёртка)
 ; .ReificationPath        EQU Page0.Hero.Path.ReificationPath                     ; овеществление путь героя                                      DEPRECATE

@@ -18,7 +18,7 @@ Hero:           ; проверка смены анимации героя
                 ; проверка перемещения героя
                 LD C, (IX + FObjectHero.Super.Sprite)
                 BIT ANIM_STATE_BIT, C
-                JR NZ, Move.Prepare                                             ; переход, если герой движется
+                JR NZ, Move;.Prepare                                             ; переход, если герой движется
 
                 ; проверка наличия пути
                 LD A, (IX + FObjectHero.PathID)
@@ -33,12 +33,14 @@ Hero:           ; проверка смены анимации героя
                 LD H, HIGH Adr.HeroPath
 
                 ; определение направление спрайта
+                PUSH HL
                 LD E, (IX + FObjectHero.Super.Position.X.High)
                 LD D, (IX + FObjectHero.Super.Position.Y.High)
                 CALL Hero.DirectonPath
                 LD B, (HL)                                                      ; направление
-
-                CALL SetCell
+                ; определение расстояние пути
+                POP DE
+                
                 ; --------------------------------------------------------------
                 ; проверка необходимости поворота в направление движения
                 LD C, (IX + FObjectHero.Super.Sprite)
@@ -52,7 +54,7 @@ Hero:           ; проверка смены анимации героя
 
                 ; сравнение напрвлений
                 SUB B
-                JR Z, Move                                                      ; перехд, если направление совподает, поворот не требуется
+                JR Z, Move.Init                                                     ; перехд, если направление совподает, поворот не требуется
                 
                 ; требуется поворот в направлдение движения
                 CCF                                                             ; меняем знак
@@ -96,125 +98,235 @@ Turn:           ; --------------------------------------------------------------
                 LD (IX + FObjectHero.Super.Sprite), A
                 SET OBJECT_DIRTY_BIT, (IX + FObject.Flags)                      ; установить флаг, объект требуется обновиться
                 RET
-Move.Prepare    ; --------------------------------------------------------------
-                ; направление спрайта
-                LD A, C
-                RRA
-                RRA
-                RRA
-                AND DIR_MASK
-                LD B, A
+; Move.Prepare    ; --------------------------------------------------------------
+;                 ; направление спрайта
+;                 LD A, C
+;                 RRA
+;                 RRA
+;                 RRA
+;                 AND DIR_MASK
+;                 LD B, A
+
+Move.Init       CALL SetDistance
 Move            ; --------------------------------------------------------------
                 ; перемещение
 
-                ; расчёт адреса хранения направления
-                LD A, B
-                ADD A, A    ; x2
-                ADD A, LOW Velocity
-                LD E, A
-                ADC A, HIGH Velocity
-                SUB E
-                LD D, A
-                
-                ; --------------------------------------------------------------
-                ; горизонтальное смещение
-
-                ; приведение шага к 16-битному числу
-                LD A, (DE)
-                LD C, A
-                ADD A, A    ; x2
-                SBC A, A
-                LD B, A
-
                 ; проверка доступности шага
                 LD HL, (IX + FObjectHero.Delta.X)
-                LD A, C
-                OR A
-                JR Z, .ResetDeltaX                                              ; переход, если шаг равен 0
-                JP P, .IsPositiveX                                              ; переход, если шаг положительный
+                LD A, L
+                OR H
+                JR Z, .CalcY                                                    ; переход, если дельта нулевая
+                
+                LD BC, (IX + FObjectHero.Direction.X)                           ; чтение шага
+                ; проверка знака дельты
+                BIT 7, H
+                JP NZ, .DeltaNegX    ; отрицательаня дельта (движение вправо)
 
-                ADC HL, BC
-                JP P, .SetDeltaX                                                ; переход, если шаг возможен
-
-                ; перемещение на ширину шага невозможно,
-                ; расчёт нового шага, с учётом размещения в центре тайла
-
-                ; NEG BC
-                LD BC, (IX + FObjectHero.Delta.X)
-                XOR A
-                SUB C
-                LD C, A
-                SBC A, A
-                SUB B
-                LD B, A
-                JR .ResetDeltaX
-
-.IsPositiveX    SBC HL, BC
-                JP P, .SetDeltaX                                                ; переход, если шаг возможен
-
-                LD BC, (IX + FObjectHero.Delta.X)
-
-.ResetDeltaX    LD HL, #0000
-.SetDeltaX      LD (IX + FObjectHero.Delta.X), HL
-
-                LD HL, (IX + FObjectHero.Super.Position.X)
-                ; LD A, L
-                ADD HL, BC
-                LD (IX + FObjectHero.Super.Position.X), HL
-                ; XOR L
-                ; ADD A, A    ; << 1
-                ; CALL C, RemoveUIArrow
-                ; --------------------------------------------------------------
-
-                INC DE
-
-                ; --------------------------------------------------------------
-                ; вертикальное смещение
-                ; приведение шага к 16-битному числу
-                LD A, (DE)
-                LD C, A
-                ADD A, A    ; x2
-                SBC A, A
-                LD B, A
+.DeltaPosX      ; положительная дельта (HL), отрицательный шаг (BC) (движение влево)
 
                 ; проверка доступности шага
-                LD HL, (IX + FObjectHero.Delta.Y)
-                LD A, C
                 OR A
-                JR Z, .ResetDeltaY                                              ; переход, если шаг равен 0
-                JP P, .IsPositiveY                                              ; переход, если шаг положительный
-
                 ADC HL, BC
-                JP P, .SetDeltaY                                                ; переход, если шаг возможен
-
-                ; перемещение на ширину шага невозможно,
-                ; расчёт нового шага, с учётом размещения в центре тайла
-
-                ; NEG BC
-                LD BC, (IX + FObjectHero.Delta.Y)
+                JP P, .ApplyStepLeft                                            ; переход, если шаг возможен
+                
+                OR A
+                SBC HL, BC
+                
+                ; перемещение на ширину шага невозможно, остаток дельты - новый шаг (отрицательный)
+                ; NEG HL
                 XOR A
-                SUB C
+                SUB L
                 LD C, A
                 SBC A, A
-                SUB B
+                SUB H
                 LD B, A
-                JR .ResetDeltaY
 
-.IsPositiveY    SBC HL, BC
-                JP P, .SetDeltaY                                                ; переход, если шаг возможен
+                ; сброс дельты
+                LD H, #00
+                LD L, H
 
-                LD BC, (IX + FObjectHero.Delta.Y)
+.ApplyStepLeft  ; сохранение новой дельты
+                LD (IX + FObjectHero.Delta.X), HL
+                
+                ; смещение влево (шаг отрицательный)
+                LD L, #00
+                LD A, (IX + FObject.Position.X.Low)
+                SRL A
+                RR L
+                RRA
+                RR L
+                LD H, A
+                ADC HL, BC
+                JP P, .ResultPosX                                               ; положительный результат
 
-.ResetDeltaY    LD HL, #0000
-.SetDeltaY      LD (IX + FObjectHero.Delta.Y), HL
-                LD HL, (IX + FObjectHero.Super.Position.Y)
-                ; LD A, L
-                ADD HL, BC
-                LD (IX + FObjectHero.Super.Position.Y), HL
-                ; XOR L
-                ; ADD A, A    ; << 1
-                ; CALL C, RemoveUIArrow
-                ; --------------------------------------------------------------
+                ; переход на левый гексагон
+                DEC (IX + FObject.Position.X.High)
+                LD DE, (HEXTILE_SIZE_X << 3) << 8                               ; правая граница гексагона
+                ADD HL, DE
+
+.ResultPosX     ADD HL, HL  ; x2
+                ADD HL, HL  ; x4
+                LD (IX + FObject.Position.X.Low), H
+                JR .CalcY
+
+.DeltaNegX      ; отрицательаня дельта (HL), положительный шаг (BC) (движение вправо)
+
+                ; проверка доступности шага
+                OR A
+                ADC HL, BC
+                JP M, .ApplyStepRight                                           ; переход, если шаг возможен
+                
+                OR A
+                SBC HL, BC
+                
+                ; перемещение на ширину шага невозможно, остаток дельты - новый шаг (отрицательный)
+                ; NEG HL
+                XOR A
+                SUB L
+                LD C, A
+                SBC A, A
+                SUB H
+                LD B, A
+
+                ; сброс дельты
+                LD H, #00
+                LD L, H
+                
+.ApplyStepRight ; сохранение новой дельты
+                LD (IX + FObjectHero.Delta.X), HL
+
+                ; смещение вправо (шаг положительный)
+                LD L, #00
+                LD A, (IX + FObject.Position.X.Low)
+                SRL A
+                RR L
+                RRA
+                RR L
+                LD H, A
+                ADC HL, BC
+                LD A, H
+                CP HEXTILE_SIZE_X << 3                                          ; правая граница гексагона
+                JP C, .ResultPosX_
+
+                ; переход на правый гексагон
+                INC (IX + FObject.Position.X.High)
+                LD DE, (HEXTILE_SIZE_X << 3) << 8                               ; правая граница гексагона
+                OR A
+                SBC HL, DE
+
+.ResultPosX_    ADD HL, HL  ; x2
+                ADD HL, HL  ; x4
+                LD (IX + FObject.Position.X.Low), H
+
+.CalcY          ; -----------------------------------------
+                ; проверка доступности шага
+                LD HL, (IX + FObjectHero.Delta.Y)
+                LD A, L
+                OR H
+                JR Z, .SetState                                                 ; переход, если дельта нулевая
+
+                LD BC, (IX + FObjectHero.Direction.Y)                           ; чтение шага
+                ; проверка знака дельты
+                BIT 7, H
+                JP NZ, .DeltaNegY    ; отрицательаня дельта (движение вниз)
+
+.DeltaPosY      ; положительная дельта (HL), отрицательный шаг (BC) (движение вверх)
+
+                ; проверка доступности шага
+                OR A
+                ADC HL, BC
+                JP P, .ApplyStepUp                                            ; переход, если шаг возможен
+                
+                OR A
+                SBC HL, BC
+                
+                ; перемещение на ширину шага невозможно, остаток дельты - новый шаг (отрицательный)
+                ; NEG HL
+                XOR A
+                SUB L
+                LD C, A
+                SBC A, A
+                SUB H
+                LD B, A
+
+                ; сброс дельты
+                LD H, #00
+                LD L, H
+
+.ApplyStepUp    ; сохранение новой дельты
+                LD (IX + FObjectHero.Delta.Y), HL
+                
+                ; смещение вверх (шаг отрицательный)
+                LD L, #00
+                LD A, (IX + FObject.Position.Y.Low)
+                SRL A
+                RR L
+                RRA
+                RR L
+                LD H, A
+                ADC HL, BC
+                JP P, .ResultPosY                                               ; положительный результат
+
+                ; переход на верхний гексагон
+                DEC (IX + FObject.Position.Y.High)
+                LD DE, (HEXTILE_SIZE_Y << 3) << 8                               ; правая граница гексагона
+                ADD HL, DE
+
+.ResultPosY     ADD HL, HL  ; x2
+                ADD HL, HL  ; x4
+                LD (IX + FObject.Position.Y.Low), H
+                JR .SetState
+
+.DeltaNegY      ; отрицательаня дельта (HL), положительный шаг (BC) (движение вниз)
+
+                ; проверка доступности шага
+                OR A
+                ADC HL, BC
+                JP M, .ApplyStepDown                                            ; переход, если шаг возможен
+                
+                OR A
+                SBC HL, BC
+
+                ; перемещение на ширину шага невозможно, остаток дельты - новый шаг (отрицательный)
+                ; NEG HL
+                XOR A
+                SUB L
+                LD C, A
+                SBC A, A
+                SUB H
+                LD B, A
+
+                ; сброс дельты
+                LD H, #00
+                LD L, H
+
+.ApplyStepDown  ; сохранение новой дельты
+                LD (IX + FObjectHero.Delta.Y), HL
+
+                ; смещение вниз (шаг положительный)
+                LD L, #00
+                LD A, (IX + FObject.Position.Y.Low)
+                SRL A
+                RR L
+                RRA
+                RR L
+                LD H, A
+                ADC HL, BC
+                LD A, H
+                CP HEXTILE_SIZE_Y << 3                                          ; правая нижняя гексагона
+                JP C, .ResultPosY_
+
+                ; переход на правый гексагон
+                INC (IX + FObject.Position.Y.High)
+                LD DE, (HEXTILE_SIZE_X << 3) << 8                               ; нижняя граница гексагона
+                OR A
+                SBC HL, DE
+
+.ResultPosY_    ADD HL, HL  ; x2
+                ADD HL, HL  ; x4
+                LD (IX + FObject.Position.Y.Low), H
+
+.SetState       ; --------------------------------------------------------------
                 ; установить состояние перемещения героя,
                 ; изменить кадр спрайта
                 LD C, (IX + FObjectHero.Super.Sprite)
@@ -229,65 +341,83 @@ Move            ; --------------------------------------------------------------
                 SET OBJECT_DIRTY_BIT, (IX + FObject.Flags)                      ; установить флаг, объект требуется обновиться
                 ; --------------------------------------------------------------
                 ; проверка что герой дошёл до центра тайла
-                LD A, (IX + FObjectHero.Delta.X.Low)
-                OR (IX + FObjectHero.Delta.X.High)
-                OR (IX + FObjectHero.Delta.Y.Low)
-                OR (IX + FObjectHero.Delta.Y.High)
+                LD A, (IX + FObjectHero.Delta.X)
+                OR (IX + FObjectHero.Delta.Y)
 
                 RET NZ                                                          ; выход, если недостигли центра тайла
 
                 DEC (IX + FObjectHero.PathID)
                 RES ANIM_STATE_BIT, (IX + FObjectHero.Super.Sprite)
-SetCell:        ; установить доступное расстояние между тайлами 16х16 пикселей 
-                LD HL, 16 << 4
-                LD (IX + FObjectHero.Delta.X), HL
-                LD (IX + FObjectHero.Delta.Y), HL
+
+                ; расчёт адреса текущей FPath
+                LD A, (IX + FObjectHero.PathID)
+                ADD A, A    ; x2
+                ADD A, A    ; x4
+                LD E, A
+                SET 7, E    ; Adr.HeroPath начинается с 0x80
+                LD D, HIGH Adr.HeroPath
+SetDistance:    ; установить доступное расстояние между точками
+                ;   DE - адрес хранения FPath
+                ;   IX - адрес структуры объекта (FObjectHero)
+                CALL Hero.DistancePath
+
+                ; меняем знаки дельт
+                LD A, E
+                NEG
+                LD (IX + FObjectHero.Delta.X.High), A
+                LD (IX + FObjectHero.Delta.X.Low), #00
+                LD A, L
+                NEG
+                LD (IX + FObjectHero.Delta.Y.High), A
+                LD (IX + FObjectHero.Delta.Y.Low), #00
+
+                ; -----------------------------------------
+                ; нормализация ветора
+                ; In:
+                ;   DE - вектор (D - y [-128..127], E - x [-128..127])
+                ; Out:
+                ;   DE - нормализованный ветор (D - y [-128..127], E - x [-128..127])
+                ;   A' - Sqrt(squared)
+                ; Corrupt:
+                ; Note:
+                ; -----------------------------------------
+                LD D, L
+                CALL Math.Normalize
+                LD C, D
+
+                ; приведение к 16-битному значению
+                LD A, E
+                RLA
+                SBC A, A
+                LD D, A
+                ; -----------------------------------------
+                ; In :
+                ;   DE - множимое
+                ;   A  - множитель
+                ; Out :
+                ;   HL - результат умножения DE * A
+                ; -----------------------------------------
+                LD A, #05   ; скорость
+                CALL Math.Mul16x8_16
+                LD (IX + FObjectHero.Direction.X), HL
+
+                ; приведение к 16-битному значению
+                LD E, C
+                LD A, C
+                RLA
+                SBC A, A
+                LD D, A
+                ; -----------------------------------------
+                ; In :
+                ;   DE - множимое
+                ;   A  - множитель
+                ; Out :
+                ;   HL - результат умножения DE * A
+                ; -----------------------------------------
+                LD A, #05   ; скорость
+                CALL Math.Mul16x8_16
+                LD (IX + FObjectHero.Direction.Y), HL
 
                 RET
-;   функция предиката, осуществляет проверку соответствия требуемым условиям
-;   сброшенный флаг переполнения сигнализирует, об успешности поиска, поиск завершается
-;   IY - адрес проверяемого объекта
-.Predicate      LD A, (IY + FObject.Class)
-                CP OBJECT_CLASS_UI
-                SCF
-                RET NZ                                                          ; выход, если не является UI объектом
-                
-                LD A, (IY + FObject.Position.X.High)
-                CP E
-                SCF
-                RET NZ
-
-                LD A, (IY + FObject.Position.Y.High)
-                CP D
-                SCF
-                RET NZ
-                OR A
-                RET
-Velocity:       ; скорость перемещения
-                lua allpass
-                local speed = 1.0 / 10.0
-                local dir = {   {  0, -1 },
-                                {  1, -1 },
-                                {  1,  0 },
-                                {  1,  1 },
-                                {  0,  1 },
-                                { -1,  1 },
-                                { -1,  0 },
-                                { -1, -1 },
-                            }
-                for i = 1, #dir do
-                    local x = dir[i][1]
-                    local y = dir[i][2]
-
-                    local angle = math.atan(y,x)
-                    local cos = math.floor(math.cos(angle) * speed * 256) & 0xFF
-                    local sin = math.floor(math.sin(angle) * speed * 256) & 0xFF
-
-                    _pc("DB " .. cos)
-                    _pc("DB " .. sin)
-
-                    --print (x, y, math.deg(angle), string.format("#%02X", cos), cos, string.format("#%02X", sin), sin)
-                end
-                endlua
 
                 endif ; ~_TICK_OBJECT_HERO_
