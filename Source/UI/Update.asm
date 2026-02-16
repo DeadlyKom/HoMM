@@ -11,8 +11,7 @@
 ; Note:
 ; -----------------------------------------
 Update:         ; сброс флага, найденого перекрытия
-                LD A, #B7                                                       ; OR A/SCF #B7/#37
-                LD (.Flag), A
+                RES_FLAG_MODIFY Update.Flag
 
 .LayerLoop      ; основной цикл обхода слои
                 BIT LAYER_UI_VISIBLE_BIT, (HL)
@@ -124,8 +123,7 @@ HandlerIfInRect:; инициализация
                 RET C                                                           ; выход, если курсор находится ниже прямоугольника
 
                 ; установка флага найденого перекрытия
-                LD A, #37                                                       ; OR A/SCF #B7/#37
-                LD (Update.Flag), A
+                SET_FLAG_MODIFY Update.Flag
 
                 ; 
                 LD BC, (Update.Prev)

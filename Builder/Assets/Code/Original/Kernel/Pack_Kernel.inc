@@ -52,6 +52,9 @@ Begin:          EQU $
 
                 ; UI
                 include "Source/UI/Include.inc"
+                
+                ; event
+                include "Source/Event/Include.inc"
 
                 ifdef SHOW_FPS | _DEBUG
                 include "Source/Utilities/Debug/Console.asm"

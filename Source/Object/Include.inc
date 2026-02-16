@@ -3,7 +3,6 @@
                 define _OBJECT_INCLUDE_
 
                 module Object
-
                 include "Initialize.asm"
                 include "Spawn.asm"
                 include "SmartRemove.asm"
@@ -13,7 +12,6 @@
 
                 include "Class/Include.inc"
                 include "Utilities/Include.inc"
-
                 endmodule
 
                 endif ; ~_OBJECT_INCLUDE_

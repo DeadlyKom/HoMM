@@ -19,7 +19,7 @@ Hero:           ; проверка смены анимации героя
                 ; проверка перемещения героя
                 LD C, (IX + FObjectHero.Super.Sprite)
                 BIT ANIM_STATE_BIT, C
-                JR NZ, Move;.Prepare                                             ; переход, если герой движется
+                JR NZ, Move                                                     ; переход, если герой движется
 
                 ; проверка наличия пути
                 LD A, (IX + FObjectHero.PathID)
@@ -99,15 +99,6 @@ Turn:           ; --------------------------------------------------------------
                 LD (IX + FObjectHero.Super.Sprite), A
                 SET OBJECT_DIRTY_BIT, (IX + FObject.Flags)                      ; установить флаг, объект требуется обновиться
                 RET
-; Move.Prepare    ; --------------------------------------------------------------
-;                 ; направление спрайта
-;                 LD A, C
-;                 RRA
-;                 RRA
-;                 RRA
-;                 AND DIR_MASK
-;                 LD B, A
-
 Move.Init       CALL SetDistance
 Move            ; --------------------------------------------------------------
                 ; перемещение
@@ -182,13 +173,16 @@ Move            ; --------------------------------------------------------------
                 LD E, A
                 SET 7, E    ; Adr.HeroPath начинается с 0x80
                 LD D, HIGH Adr.HeroPath
-SetDistance:    ; установить доступное расстояние между точками
+SetDistance:    ; сброс запроса ивента
+                RES_FLAG_MODIFY RequestEvent.Flag
+
+                ; установить доступное расстояние между точками
                 ;   DE - адрес хранения FPath
                 ;   IX - адрес структуры объекта (FObjectHero)
-                CALL Hero.DistancePath
                 ; Out:
                 ;   HL - растояние между точками по вертикали
                 ;   DE - растояние между точками по горизонтали
+                CALL Hero.DistancePath
 
                 ; меняем знаки дельт
                 LD A, E
@@ -292,6 +286,8 @@ Move.Horizontal ; -----------------------------------------
                 ADC HL, BC
                 JP P, .ResultPosX                                               ; положительный результат
 
+                CALL RequestEvent                                               ; запрос на создание ивента
+
                 ; переход на левый гексагон
                 DEC (IX + FObject.Position.X.High)
                 LD DE, (HEXTILE_SIZE_X << 3) << 8                               ; правая граница гексагона
@@ -340,6 +336,8 @@ Move.Horizontal ; -----------------------------------------
                 LD A, H
                 CP HEXTILE_SIZE_X << 3                                          ; правая граница гексагона
                 JP C, .ResultPosX_
+
+                CALL RequestEvent                                               ; запрос на создание ивента
 
                 ; переход на правый гексагон
                 INC (IX + FObject.Position.X.High)
@@ -395,6 +393,8 @@ Move.Vertical   ; -----------------------------------------
                 ADC HL, BC
                 JP P, .ResultPosY                                               ; положительный результат
 
+                CALL RequestEvent                                               ; запрос на создание ивента
+    
                 ; корректировка позиций при пересечении 0, необходимо сделать плавный переход
                 ; между гексагонами верикально, с учётов чётности строк
 
@@ -469,9 +469,10 @@ Move.Vertical   ; -----------------------------------------
                 RR L
                 LD H, A
                 ADC HL, BC
-                ; LD A, H
-                ; CP HEXTILE_SIZE_Y << 3                                          ; правая нижняя гексагона
+                LD A, H
+                CP HEXTILE_SIZE_Y << 3                                          ; правая нижняя гексагона
                 ; JP C, .ResultPosY_
+                CALL NC, RequestEvent                                           ; запрос на создание ивента
 
                 ; ; переход на правый гексагон
                 ; INC (IX + FObject.Position.Y.High)
@@ -483,5 +484,33 @@ Move.Vertical   ; -----------------------------------------
                 ADD HL, HL  ; x4
                 LD (IX + FObject.Position.Y.Low), H
                 RET
+RequestEvent    ; запрос на создание ивента
+.Flag           EQU $
+                NOP
+                RET C                                                           ; выход, если ивент активирован
+                SET_FLAG_MODIFY RequestEvent.Flag                               ; установка флага создания ивента
+
+                ; инициализация события
+                LD IY, Adr.ExtraBuffer
+                LD (IY + FEventReconnaissance.Super.Flags), EVENT_BEFORE_RENDER | EVENT_LIFETIME_CONDITION
+                LD (IY + FEventReconnaissance.Super.Page), Page.Page1
+                LD (IY + FEventReconnaissance.Super.Function), LOW 0
+                LD (IY + FEventReconnaissance.Super.Function), HIGH 0
+                LD A, (IX + FObjectHero.HeroID)
+                LD (IY + FEventReconnaissance.HeroID), A
+
+                ; расчёт адреса текущей FPath
+                LD A, (IX + FObjectHero.PathID)
+                ADD A, A    ; x2
+                ADD A, A    ; x4
+                LD C, A
+                SET 7, C    ; Adr.HeroPath начинается с 0x80
+                LD B, HIGH Adr.HeroPath
+                LD A, (BC)
+                LD (IY + FEventReconnaissance.Position.X), A
+                INC C
+                LD A, (BC)
+                LD (IY + FEventReconnaissance.Position.Y), A
+                JP Event.Add
 
                 endif ; ~_TICK_OBJECT_HERO_

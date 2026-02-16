@@ -55,6 +55,6 @@ AdjRenderBufCol:;
                 EX DE, HL
                 JR .ColumnLoop 
 
-                display " - Adjust render buffer columns:\t\t\t\t", /A, AdjRenderBufCol, "\t= busy [ ", /D, $-AdjRenderBufCol, " byte(s)  ]"
+                display " - Adjust render buffer columns:\t\t\t", /A, AdjRenderBufCol, "\t= busy [ ", /D, $-AdjRenderBufCol, " byte(s)  ]"
 
                 endif ; ~_BUFFERS_ADJUST_RENDER_BUFFER_COLUMNS_

@@ -3,17 +3,10 @@
                 define _MODULE_WORLD_SCREEN_REFRESH_INCLUDE_
 
                 module ScreenRefresh
-                DISP Adr.ScreenRefresh
-
-                display "'World' code block 'screen refresh':\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.ScreenRefresh, " byte(s) / free ", /D, Size.ScreenRefresh - Size, "]\t[7]\t ------------------------"
-
                 include "ClearScreenBlocks.asm"
                 include "MemcpyScreenBlocks.asm"
                 include "HexagonUpdateAnalysis.asm"
                 include "Source/Memory/MemcpyScreenBlock_LDI.asm"
-Size            EQU $-Adr.ScreenRefresh
-
-                ENT
                 endmodule
 
                 endif ; ~_MODULE_WORLD_SCREEN_REFRESH_INCLUDE_

@@ -29,6 +29,7 @@ Draw:           ; -----------------------------------------
                 LD HL, Adr.CursorStorageA
                 LD (HL), #00                                                    ; 0 байт хранит данные о размере заполнения
                 CALL ScreenBlock.Clear                                          ; очистка screen block'ов
+                CALL Event.Initialize                                           ; инициализация работы с событиями
 
                 ; первичная инициализация локации
                 LD HL, Adr.Hextile
@@ -54,7 +55,7 @@ Draw:           ; -----------------------------------------
                 SET_PAGE_SCREEN_SHADOW
                 SCREEN_ADR_REG HL, SCR_ADR_BASE, SCR_MINIMAP_POS_X << 3, SCR_MINIMAP_POS_Y << 3
                 LD IXL, #06
-                CALL World.ScreenRefresh.Memcpy.Screen_6
+                CALL World.SharedScreen.ScreenRefresh.Memcpy.Screen_6
 
 .Update         ; -----------------------------------------
                 ; обновление
@@ -65,6 +66,8 @@ Draw:           ; -----------------------------------------
 .Tick           ; -----------------------------------------
                 ; тик
                 ; -----------------------------------------
+                CALL Event.Handler                                              ; обработчик событий (BEFORE_RENDER)
+                ; CALL Event.Handler                                              ; обработчик событий (AFTER_RENDER)
 
                 ; -----------------------------------------
                 ; проверка пересечения курсором UI элементов

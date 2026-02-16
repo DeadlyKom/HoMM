@@ -6,6 +6,7 @@
                 include "HEX.inc"
                 include "Math.inc"
                 include "Draw.inc"
+                include "Event.inc"
                 include "Input.inc"
                 include "World.inc"
                 include "Render.inc"

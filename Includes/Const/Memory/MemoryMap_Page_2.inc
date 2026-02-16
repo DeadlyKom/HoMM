@@ -21,36 +21,35 @@
                 ;   +-------+------------------------------------------+-------+
 
                 module Page
-Kernel          EQU PAGE_2                                                      ; модуль "кернель"
-KernelMinimal   EQU PAGE_2                                                      ; модуль "кернель" (минимальный)
+Kernel              EQU PAGE_2                                                  ; модуль "кернель"
+KernelMinimal       EQU PAGE_2                                                  ; модуль "кернель" (минимальный)
                 endmodule
 
                 module Size
-Int.Table       EQU #0101                                                       ; размер таблицы прерываний
-Int.Stack       EQU #0080                                                       ; размер стека прерывания
-KernelMinimal   EQU Bootloader.KernelMinimal.Size                               ; размер блока кернела (минимальный)
-SpriteInfoBuffer EQU SPRITE_SIZE * 128 /*SPRITE_BUF_MAX*/                       ; размер буфера информации о спрайтах
-ExtraBuffer     EQU #0100                                                       ; размер дополнительного буфера
-SortBuffer      EQU #0100                                                       ; размер буфера отсортированных объектов
-SharedBuffer    EQU #0100                                                       ; размер буфера общего назначения
-RenderBuffer    EQU #0100                                                       ; размер буфера отображения
-TilemapBuffer   EQU #0100                                                       ; размер буфера тайлов отображения (пока зарезервирован)
-
-DisplayList     EQU TILEMAP_HEIGHT_DATA * DisplayList.ElementSize
-.ElementSize    EQU 5
+Int.Table           EQU #0101                                                   ; размер таблицы прерываний
+Int.Stack           EQU #0080                                                   ; размер стека прерывания
+KernelMinimal       EQU Bootloader.KernelMinimal.Size                           ; размер блока кернела (минимальный)
+SpriteInfoBuffer    EQU SPRITE_SIZE * 128 /*SPRITE_BUF_MAX*/                    ; размер буфера информации о спрайтах
+ExtraBuffer         EQU #0100                                                   ; размер дополнительного буфера
+SortBuffer          EQU #0100                                                   ; размер буфера отсортированных объектов
+SharedBuffer        EQU #0100                                                   ; размер буфера общего назначения
+RenderBuffer        EQU #0100                                                   ; размер буфера отображения
+TilemapBuffer       EQU #0100                                                   ; размер буфера тайлов отображения (пока зарезервирован)
+DisplayList         EQU TILEMAP_HEIGHT_DATA * DisplayList.ElementSize
+.ElementSize        EQU 5
                 endmodule
 
                 module Adr
-Interrupt       EQU #8181                                                       ; адрес вектора прерывания
-KernelMinimal   EQU Adr.Interrupt                                               ; адрес блока кернела (минимальный)
-Kernel          EQU KernelMinimal + Size.KernelMinimal                          ; адрес блока кернела (основной)
-ExtraBuffer     EQU #B700                                                       ; адрес дополнительного буфера
-SortBuffer      EQU #B800                                                       ; адрес буфера сортировки
-SharedBuffer    EQU #B900                                                       ; адрес буфера общего назначения
-RenderBuffer    EQU #BA00                                                       ; адрес буфера отображения
-TilemapBuffer   EQU #BB00                                                       ; адрес буфера тайловов отображения (пока зарезервирован)
-SpriteInfoBuffer EQU #BC00                                                      ; адрес буфера информации о спрайтах
-DisplayList     EQU TilemapBuffer + TILEMAP_DATA_SIZE                           ; адрес списка отображения
+Interrupt           EQU #8181                                                   ; адрес вектора прерывания
+KernelMinimal       EQU Adr.Interrupt                                           ; адрес блока кернела (минимальный)
+Kernel              EQU KernelMinimal + Size.KernelMinimal                      ; адрес блока кернела (основной)
+ExtraBuffer         EQU #B700                                                   ; адрес дополнительного буфера
+SortBuffer          EQU #B800                                                   ; адрес буфера сортировки
+SharedBuffer        EQU #B900                                                   ; адрес буфера общего назначения
+RenderBuffer        EQU #BA00                                                   ; адрес буфера отображения
+TilemapBuffer       EQU #BB00                                                   ; адрес буфера тайловов отображения (пока зарезервирован)
+SpriteInfoBuffer    EQU #BC00                                                   ; адрес буфера информации о спрайтах
+DisplayList         EQU TilemapBuffer + TILEMAP_DATA_SIZE                       ; адрес списка отображения
                                                                                 ; -----------------------------------------
                                                                                 ; представление дисплейного списка
                                                                                 ; +0 - первая рисуемая колонка первого гексагона (0-5)

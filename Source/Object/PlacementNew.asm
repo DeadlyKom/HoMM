@@ -12,32 +12,33 @@
 ;   HL, AF, AF'
 ; Note:
 ; -----------------------------------------
-PlacemantNewObj ; инициализация
+PlacemantNew    ; инициализация
                 LD HL, GameSession.WorldInfo + FWorldInfo.ObjectNum
 
                 ; проверка переполнения массива
                 LD A, (HL)
-                INC A                                                           ; OBJECT_MAX
+                CP OBJECT_MAX
                 CCF
-                RET Z                                                           ; выход, если нет места для размещения объекта
-                DEC A
-                
+                RET C                                                           ; выход, если нет места для размещения объекта
+
                 INC (HL)                                                        ; увеличение счётчика объектов
                 LD L, A                                                         ; сохранение номера элемента
                 EX AF, AF'                                                      ; сохранение номера элемента
                 
                 ; расчёт адреса последнего элемента в массиве
                 ; адрес расположения объекта = адрес первого элемента + N объекта * OBJECT_SIZE
-                LD H, HIGH Adr.ObjectsArray >> 4    ; %00001100
+                LD H, HIGH Adr.ObjectsArray >> 5    ; %00000110
                 LD A, L     ; %aaaaaaaa
                 ADD A, A    ; %aaaaaaa0 : a
-                RL H        ; %0001100a
+                RL H        ; %0000110a
                 ADD A, A    ; %aaaaaa00 : a
-                RL H        ; %001100aa
+                RL H        ; %000110aa
                 ADD A, A    ; %aaaaa000 : a
-                RL H        ; %01100aaa
+                RL H        ; %00110aaa
                 ADD A, A    ; %aaaa0000 : a
-                RL H        ; %1100aaaa
+                RL H        ; %0110aaaa
+                ADD A, A    ; %aaa00000 : a
+                RL H        ; %110aaaaa
 
                 LD IYL, A
                 LD A, H
@@ -45,6 +46,6 @@ PlacemantNewObj ; инициализация
 
                 RET
 
-                display " - Placemant new object:\t\t\t\t", /A, PlacemantNewObj, "\t= busy [ ", /D, $-PlacemantNewObj, " byte(s)  ]"
+                display " - Placemant new object:\t\t\t\t", /A, PlacemantNew, "\t= busy [ ", /D, $-PlacemantNew, " byte(s)  ]"
 
                 endif ; ~_OBJECT_PLACEMENT_NEW_
