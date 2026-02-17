@@ -47,15 +47,10 @@ Draw:           ; -----------------------------------------
                 CALL World.Base.Tilemap.Update.RenderBuffer
                 CALL World.Base.Tilemap.Update.TileBuffer
                 CALL Draw.HexDLGeneration
-                CALL Reset
                 CALL Minimap.GenFog                                             ; генерация тумана для миникарты
                 CALL Minimap.Compilation                                        ; компиляция миникарты
                 CALL Minimap.Memcpy                                             ; копирование миникарты
-                ; копирование миникарты в теневой экран
-                SET_PAGE_SCREEN_SHADOW
-                SCREEN_ADR_REG HL, SCR_ADR_BASE, SCR_MINIMAP_POS_X << 3, SCR_MINIMAP_POS_Y << 3
-                LD IXL, #06
-                CALL World.SharedScreen.ScreenRefresh.Memcpy.Screen_6
+                CALL UpdateMinimap                                              ; обновление миникарты (теневого экрана)
 
 .Update         ; -----------------------------------------
                 ; обновление
@@ -66,9 +61,7 @@ Draw:           ; -----------------------------------------
 .Tick           ; -----------------------------------------
                 ; тик
                 ; -----------------------------------------
-                CALL Event.Handler                                              ; обработчик событий (BEFORE_RENDER)
-                ; CALL Event.Handler                                              ; обработчик событий (AFTER_RENDER)
-
+                CALL Event.Handler.Before                                       ; обработчик событий (BEFORE_RENDER)
                 ; -----------------------------------------
                 ; проверка пересечения курсором UI элементов
                 SET_MODULE_PAGE_World                                           ; включить страницу модуля "World"
@@ -135,8 +128,9 @@ Draw:           ; -----------------------------------------
                 ; -----------------------------------------
 
                 CALL PipelineHexagons
-
-
+                ; -----------------------------------------
+                CALL Event.Handler.After                                        ; обработчик событий (AFTER_RENDER)
+                ; -----------------------------------------
                 ifdef _DEBUG
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 CALL Convert.SetBaseScreen                                      ; установка работы с основным экраном

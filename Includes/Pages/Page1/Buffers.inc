@@ -17,4 +17,5 @@ BufferUtilities:
 .AdjRenderBufCol            EQU Page1.Buffer.AdjRenderBufCol                    ; корректировка столбцов рендер буфера
 .SpriteBound                EQU Page1.Buffer.SpriteBound                        ; обновление Render-буфера указанного bound спрайта
 .Reconnaissance             EQU Page1.Buffer.Reconnaissance                     ; рекогносцировка
+.Reconnaissance.Event       EQU Page1.Buffer.Reconnaissance.Event               ; рекогносцировка                                               (обёртка)
                 endif ; ~_PAGE_1_BUFFERS_

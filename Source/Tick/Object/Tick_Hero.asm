@@ -494,8 +494,8 @@ RequestEvent    ; запрос на создание ивента
                 LD IY, Adr.ExtraBuffer
                 LD (IY + FEventReconnaissance.Super.Flags), EVENT_BEFORE_RENDER | EVENT_LIFETIME_CONDITION
                 LD (IY + FEventReconnaissance.Super.Page), Page.Page1
-                LD (IY + FEventReconnaissance.Super.Function), LOW 0
-                LD (IY + FEventReconnaissance.Super.Function), HIGH 0
+                LD (IY + FEventReconnaissance.Super.Function + 0), LOW BufferUtilities.Reconnaissance.Event
+                LD (IY + FEventReconnaissance.Super.Function + 1), HIGH BufferUtilities.Reconnaissance.Event
                 LD A, (IX + FObjectHero.HeroID)
                 LD (IY + FEventReconnaissance.HeroID), A
 
