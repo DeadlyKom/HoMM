@@ -110,7 +110,7 @@ def OR_XOR(sprite: Dict[str, Any],
            sprite_height: int,
            ink_data: bytearray,
            attribute_data: bytearray,
-           mask_data: bytearray,          # неиспользуется
+           mask_data: bytearray,
            sprite_data: bytearray):
     
     boundary_width = sprite_width >> 3
