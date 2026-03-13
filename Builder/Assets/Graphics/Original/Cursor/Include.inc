@@ -7,7 +7,7 @@
 
                 ORG #0000
                 
-                include "Cursor.inc"
+                include "Pack.inc"
 Size            EQU $
                 savebin "Builder/Assets/Graphics/Original/Cursor/Cursor.pack", 0, Size
                 shellexec "Tools\Compressor\salvador.exe -v Builder/Assets/Graphics/Original/Cursor/Cursor.pack Builder/Assets/Graphics/Compressed/Cursor.pack.ar"

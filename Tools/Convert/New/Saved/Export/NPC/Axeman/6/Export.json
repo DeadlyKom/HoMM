@@ -1,0 +1,110 @@
+[
+    {
+        "SprName": "left_0",
+        "SprWidth": 32,
+        "SprHeight": 32,
+        "PoxImgX": 64,
+        "PoxImgY": 96,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/NPC_Axeman.aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_0.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_0.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_0.mask",
+        "AsepriteIndex": 0
+    },
+    {
+        "SprName": "left_1",
+        "SprWidth": 32,
+        "SprHeight": 32,
+        "PoxImgX": 64,
+        "PoxImgY": 96,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/NPC_Axeman.aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_1.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_1.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_1.mask",
+        "AsepriteIndex": 1
+    },
+    {
+        "SprName": "left_2",
+        "SprWidth": 32,
+        "SprHeight": 32,
+        "PoxImgX": 64,
+        "PoxImgY": 96,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/NPC_Axeman.aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_2.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_2.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_2.mask",
+        "AsepriteIndex": 2
+    },
+    {
+        "SprName": "left_3",
+        "SprWidth": 32,
+        "SprHeight": 32,
+        "PoxImgX": 64,
+        "PoxImgY": 96,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/NPC_Axeman.aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_3.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_3.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_3.mask",
+        "AsepriteIndex": 3
+    },
+    {
+        "SprName": "left_4",
+        "SprWidth": 32,
+        "SprHeight": 32,
+        "PoxImgX": 64,
+        "PoxImgY": 96,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/NPC_Axeman.aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_4.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_4.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_4.mask",
+        "AsepriteIndex": 4
+    },
+    {
+        "SprName": "left_5",
+        "SprWidth": 32,
+        "SprHeight": 32,
+        "PoxImgX": 64,
+        "PoxImgY": 96,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/NPC_Axeman.aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_5.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_5.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_5.mask",
+        "AsepriteIndex": 5
+    },
+    {
+        "SprName": "left_6",
+        "SprWidth": 32,
+        "SprHeight": 32,
+        "PoxImgX": 64,
+        "PoxImgY": 96,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/NPC_Axeman.aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_6.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_6.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_6.mask",
+        "AsepriteIndex": 6
+    },
+    {
+        "SprName": "left_7",
+        "SprWidth": 32,
+        "SprHeight": 32,
+        "PoxImgX": 64,
+        "PoxImgY": 96,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/NPC_Axeman.aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_7.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_7.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_7.mask",
+        "AsepriteIndex": 7
+    },
+    {
+        "SprName": "left_Idle",
+        "SprWidth": 32,
+        "SprHeight": 32,
+        "PoxImgX": 96,
+        "PoxImgY": 96,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/NPC_Axeman.aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_Idle.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_Idle.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/NPC/Axeman/6/left_Idle.mask",
+        "AsepriteIndex": 6
+    }
+]

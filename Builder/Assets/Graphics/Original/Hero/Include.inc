@@ -7,7 +7,7 @@
 
                 ORG #0000
                 
-                include "Hero.inc"
+                include "Pack.inc"
 Size            EQU $
                 savebin "Builder/Assets/Graphics/Original/Hero/Hero.pack", 0, Size
                 shellexec "Tools\Compressor\salvador.exe -v Builder/Assets/Graphics/Original/Hero/Hero.pack Builder/Assets/Graphics/Compressed/Hero.pack.ar"
