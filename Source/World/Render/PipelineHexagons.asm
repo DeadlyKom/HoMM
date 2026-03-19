@@ -113,7 +113,8 @@ PipelineHexagons:
 .Swap           SET_RENDER_FLAG SWAPPED_PENDING_BIT                             ; установить флаг успеного переключения экрана, ожидаем окончание прерывания
                 JP_SHOW_BASE_SCREEN                                             ; отображение базового экрана
 
-.MemcpyScreen   RESTORE_SCR World.Base.Interrupt.Memcpy
+.MemcpyScreen   ; ToDo: см Interrupt.Memcpy описание ошибки
+                ; RESTORE_SCR World.Base.Interrupt.Memcpy
                 
                 ; ToDo: мб такая ситуация, когда за время копирование, данные в буфере фона курсора устарели
                 ;       придётся их копировать в другой и восстанавливать из него
@@ -139,7 +140,8 @@ PipelineHexagons:
                 SET 7, D
                 CALL Draw.RestoreByScrAdr                                       ; восстановление фона под курсором в указанном адресе экрана (только для OR_XOR_SAVE)
 
-                RESTORE_SCR_
+                ; ToDo: см Interrupt.Memcpy описание ошибки
+                ; RESTORE_SCR_
                 RES_RENDER_FLAGS SWAPPED_PENDING | SWAP_PENDING                 ; сброс флага переключения экранов
                 RET
 
