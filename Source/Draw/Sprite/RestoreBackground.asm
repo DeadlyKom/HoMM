@@ -14,6 +14,7 @@
 ;   - данные
 ; -----------------------------------------
 Restore:        ; инициализация
+.BufferAdr      EQU $+1
                 LD HL, Adr.CursorStorageA
 
                 ; 0 байт хранит данные о размере заполнения
@@ -64,6 +65,7 @@ Restore:        ; инициализация
                 JR NZ, .Loop
 
                 RET
+
                 display " - Draw function 'Restore background':\t\t", /A, Restore, "\t= busy [ ", /D, $-Restore, " byte(s)  ]"
 
                 endif ; ~ _DRAW_SPRITE_RESTORE_BACKGROUND_

@@ -9,7 +9,8 @@
 ; Note:
 ; -----------------------------------------
 Interrupt:      SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
-                CALL Draw.Restore                                               ; восстановление фона под курсором (только для OR_XOR_SAVE)
+                CALL Render.CursorMemcpyGate                                    ; проверка разрешения работы с буфером курсора
+                CALL NC, Draw.Restore                                           ; восстановление фона под курсором (только для OR_XOR_SAVE)
 
                 ; проверка готовности кадра
                 CHECK_RENDER_FLAG FRAME_READY_BIT
@@ -60,6 +61,8 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
 
 .RenderProcess  ; процесс отрисовки не завершён
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
+                CALL Render.CursorMemcpyGate                                    ; проверка разрешения работы с буфером курсора
+                JR C, .Input
                 CALL UI_Cursor.Update                                           ; обновление курсора
                 CALL C, UI_Cursor.Draw                                          ; отображение курсора
                 

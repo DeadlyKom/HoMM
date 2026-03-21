@@ -118,22 +118,19 @@ PipelineHexagons:
                 
                 ; ToDo: мб такая ситуация, когда за время копирование, данные в буфере фона курсора устарели
                 ;       придётся их копировать в другой и восстанавливать из него
-
-                ; 0 байт хранит данные о размере заполнения
-                LD HL, Adr.CursorStorageA
-                LD DE, Adr.CursorStorageB
-                LD B, #00
-                LD C, (HL)
-                LD A, C
-                OR A
-                CALL NZ, Memcpy.FastLDIR
+                
+                SET_FLAG_MODIFY CursorMemcpyGate.Flag                           ; блокировка работы с буфером курсора
 
                 ; копирование блоков, если курсор находится в игровой зоне, он скопируется тоже
                 CALL ScreenBlock.Memcpy                                         ; копирование screen block'и в теневой экран
 
                 ; принудительно меняем адрес на теневой буфер,
                 ; затераем возможное копирование курсора
-                LD HL, Adr.CursorStorageB+1
+                LD HL, (Kernel.Sprite.Restore.BufferAdr)
+                LD A, (HL)
+                OR A
+                JR Z, .SkipCursorRestore
+                INC L
                 LD E, (HL)
                 INC L
                 LD D, (HL)
@@ -142,7 +139,17 @@ PipelineHexagons:
 
                 ; ToDo: см Interrupt.Memcpy описание ошибки
                 ; RESTORE_SCR_
+
+.SkipCursorRestore
+                RES_FLAG_MODIFY CursorMemcpyGate.Flag                           ; разрешение работы с буфером курсора
                 RES_RENDER_FLAGS SWAPPED_PENDING | SWAP_PENDING                 ; сброс флага переключения экранов
+                RET
+
+                ; вентель, блокирующий восстановление курсора из буфера вовремя 
+                ; обновления теневого экрана
+CursorMemcpyGate:
+.Flag           EQU $
+                NOP                                                             ; OR A/SCF #B7/#37
                 RET
 
                 display " - Pipeline hexagons:\t\t\t\t\t", /A, PipelineHexagons, "\t= busy [ ", /D, $-PipelineHexagons, " byte(s)  ]"

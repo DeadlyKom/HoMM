@@ -28,6 +28,9 @@ Draw:           ; -----------------------------------------
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 LD HL, Adr.CursorStorageA
                 LD (HL), #00                                                    ; 0 байт хранит данные о размере заполнения
+                INC H
+                LD (HL), #00                                                    ; 0 байт хранит данные о размере заполнения
+                RES_FLAG_MODIFY CursorMemcpyGate.Flag                           ; разрешение работы с буфером курсора
                 CALL ScreenBlock.Clear                                          ; очистка screen block'ов
                 CALL Event.Initialize                                           ; инициализация работы с событиями
 
