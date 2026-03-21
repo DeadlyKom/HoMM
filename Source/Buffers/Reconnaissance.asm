@@ -27,6 +27,9 @@ Reconnaissance.Event
                 LD DE, (IY + FEventReconnaissance.Position)
                 CALL Reconnaissance                                             ; рекогносцировка
                 SET_VIEW_FLAG_A UPDATE_RENDER_BUF_BIT                           ; установка флага обновления Render буфера
+
+                ; ToDo: вызывает принудительно FORCED_FRAME_UPDATE_BIT 
+                ;       и вызывает фриз!
                 JP World.Base.Render.UpdateMinimap                              ; обновление миникарты (теневого экрана)
 ; -----------------------------------------
 ; рекогносцировка
