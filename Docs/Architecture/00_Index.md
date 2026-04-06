@@ -1,292 +1,238 @@
-﻿# Книга Архитектуры HoMM
+﻿# Путеводитель по архитектурной книге HoMM
 
-Этот раздел документации описывает проект как систему слоёв, контрактов, модулей, структур данных и runtime-потоков.
-Его задача — объяснить не только из каких папок состоит репозиторий, но и как эти папки превращаются в целостную исполняемую систему.
+Эта глава нужна не для повторного пересказа всей книги, а для навигации.
+Если `ProjectOverview.md` — это титульная страница, то этот файл отвечает на вопрос:
+куда именно идти дальше в зависимости от задачи.
 
-## О Чём Эта Книга
+## Что это за книга
 
-В корне проекта уже есть несколько документов, но у каждого из них своя роль:
-- `README.md` объясняет замысел проекта и общий человеческий контекст разработки;
-- `ToDo.md` фиксирует рабочие задачи и технические долги;
-- `Description (ru).txt` даёт краткое текстовое описание;
-- `Docs/Architecture/` хранит системное архитектурное описание проекта.
+`Docs/Architecture/` описывает проект как систему связанных слоёв:
+- сборка и упаковка;
+- контрактный слой `Includes`;
+- исполняемый runtime;
+- модель данных;
+- asset engine;
+- AI и `StateTree`;
+- подробные разборы структур и модулей.
 
-Эта книга не заменяет `README.md` и не дублирует `ToDo.md`.
-Она отвечает на вопрос: как именно проект устроен изнутри.
+Книга не заменяет:
+- `README.md`, где описан общий замысел;
+- `ToDo.md`, где живут рабочие задачи.
 
-## Как Читать Книгу
+Её роль — объяснить, как проект устроен изнутри.
 
-Есть несколько маршрутов чтения.
+## Как лучше читать книгу
 
-### 1. Быстрый маршрут
+Ниже не "правильный порядок для всех", а несколько понятных маршрутов.
 
-Если нужно быстро понять общую архитектуру, достаточно пройти главы в таком порядке:
-1. [01_Repository_and_Docs.md](01_Repository_and_Docs.md)
-2. [03_Includes_and_Contracts.md](03_Includes_and_Contracts.md)
-3. [04_Source_Runtime_and_Modules.md](04_Source_Runtime_and_Modules.md)
-4. [16_Asset_Centric_Runtime_Approach.md](16_Asset_Centric_Runtime_Approach.md)
-5. [05_Data_Model.md](05_Data_Model.md)
-6. [26_AssetsManager_and_Asset_Execution.md](26_AssetsManager_and_Asset_Execution.md)
-7. [07_AI_and_StateTree.md](07_AI_and_StateTree.md)
+### Если нужна общая картина проекта
 
-### 2. Путь для нового разработчика
+Начни с этих глав:
+1. [Репозиторий и документация](01_Repository_and_Docs.md)
+2. [Сборка, упаковка и образ диска](02_Build_and_Packing.md)
+3. [Includes и контрактный слой](03_Includes_and_Contracts.md)
+4. [Source и runtime-модули](04_Source_Runtime_and_Modules.md)
+5. [Модель данных](05_Data_Model.md)
+6. [Главный архитектурный подход](16_Asset_Centric_Runtime_Approach.md)
+7. [AssetsManager и исполнение assets](26_AssetsManager_and_Asset_Execution.md)
 
-Если задача — включиться в работу над кодом, лучше читать так:
-1. [01_Repository_and_Docs.md](01_Repository_and_Docs.md)
-2. [02_Build_and_Packing.md](02_Build_and_Packing.md)
-3. [03_Includes_and_Contracts.md](03_Includes_and_Contracts.md)
-4. [04_Source_Runtime_and_Modules.md](04_Source_Runtime_and_Modules.md)
-5. [16_Asset_Centric_Runtime_Approach.md](16_Asset_Centric_Runtime_Approach.md)
-6. [05_Data_Model.md](05_Data_Model.md)
-7. [06_Runtime_Flow_and_Control.md](06_Runtime_Flow_and_Control.md)
-8. [15_FAssets_and_GameState_Assets.md](15_FAssets_and_GameState_Assets.md)
-9. [07_AI_and_StateTree.md](07_AI_and_StateTree.md)
-10. [09_Structs_Deep_Dive_Index.md](09_Structs_Deep_Dive_Index.md)
-11. [20_Modules_Deep_Dive_Index.md](20_Modules_Deep_Dive_Index.md)
-12. [26_AssetsManager_and_Asset_Execution.md](26_AssetsManager_and_Asset_Execution.md)
-13. [08_Architecture_Notes_and_Risks.md](08_Architecture_Notes_and_Risks.md)
+Это самый короткий путь к пониманию того, как проект собирается, как загружается и из каких слоёв состоит.
 
-### 3. Путь для проектирования AI
+### Если нужно включиться в разработку кода
 
-Если интересует в первую очередь логика поведения, полезнее такой порядок:
-1. [05_Data_Model.md](05_Data_Model.md)
-2. [06_Runtime_Flow_and_Control.md](06_Runtime_Flow_and_Control.md)
-3. [07_AI_and_StateTree.md](07_AI_and_StateTree.md)
-4. [14_FObjectCharacterAI_and_FAIContext.md](14_FObjectCharacterAI_and_FAIContext.md)
-5. [16_Asset_Centric_Runtime_Approach.md](16_Asset_Centric_Runtime_Approach.md)
-6. [25_World_Module.md](25_World_Module.md)
-7. [26_AssetsManager_and_Asset_Execution.md](26_AssetsManager_and_Asset_Execution.md)
-8. [08_Architecture_Notes_and_Risks.md](08_Architecture_Notes_and_Risks.md)
+Иди так:
+1. [Сборка, упаковка и образ диска](02_Build_and_Packing.md)
+2. [Includes и контрактный слой](03_Includes_and_Contracts.md)
+3. [Макро-система и флаги](17_Macro_System_and_Flag_Orchestration.md)
+4. [Source и runtime-модули](04_Source_Runtime_and_Modules.md)
+5. [Поток рантайма и управление](06_Runtime_Flow_and_Control.md)
+6. [Детальный разбор модулей](20_Modules_Deep_Dive_Index.md)
+7. [Архитектурные заметки и риски](08_Architecture_Notes_and_Risks.md)
 
-### 4. Путь для понимания asset engine
+Этот маршрут лучше всего объясняет:
+- как проект собирается;
+- как устроены контракты;
+- как макросы реально управляют рантаймом;
+- где искать код конкретных модулей.
 
-Если нужно понять главный runtime-механизм проекта, читать стоит так:
-1. [02_Build_and_Packing.md](02_Build_and_Packing.md)
-2. [03_Includes_and_Contracts.md](03_Includes_and_Contracts.md)
-3. [16_Asset_Centric_Runtime_Approach.md](16_Asset_Centric_Runtime_Approach.md)
-4. [15_FAssets_and_GameState_Assets.md](15_FAssets_and_GameState_Assets.md)
-5. [20_Modules_Deep_Dive_Index.md](20_Modules_Deep_Dive_Index.md)
-6. [26_AssetsManager_and_Asset_Execution.md](26_AssetsManager_and_Asset_Execution.md)
+### Если интересует макро-система, флаги и подмена поведения
 
-## Карта Книги
+Читай в таком порядке:
+1. [Includes и контрактный слой](03_Includes_and_Contracts.md)
+2. [Макро-система и флаги](17_Macro_System_and_Flag_Orchestration.md)
+3. [Поток рантайма и управление](06_Runtime_Flow_and_Control.md)
+4. [EntryPoint](21_EntryPoint.md)
+5. [Модуль World](25_World_Module.md)
+
+Это путь для задач, где важно понять:
+- как устроены флаги;
+- как патчатся loop, swap и interrupt handlers;
+- как self-modifying macros участвуют в реальном runtime.
+
+### Если интересует rendering pipeline
+
+Иди так:
+1. [Модуль World](25_World_Module.md)
+2. [Rendering pipeline](18_Rendering_Pipeline.md)
+3. [Макро-система и флаги](17_Macro_System_and_Flag_Orchestration.md)
+4. [Поток рантайма и управление](06_Runtime_Flow_and_Control.md)
+
+Здесь собран весь материал про:
+- draw-фазы мира;
+- двойную буферизацию;
+- dirty screen blocks;
+- длинный swap;
+- роль прерываний и курсорного микропайплайна.
+
+### Если интересует asset engine
+
+Этот путь даёт самую важную ось проекта:
+1. [Сборка, упаковка и образ диска](02_Build_and_Packing.md)
+2. [FAssets и runtime-зеркало ресурса](15_FAssets_and_GameState_Assets.md)
+3. [Главный архитектурный подход](16_Asset_Centric_Runtime_Approach.md)
+4. [AssetsManager и исполнение assets](26_AssetsManager_and_Asset_Execution.md)
+
+### Если интересует AI и `StateTree`
+
+Читай в таком порядке:
+1. [Модель данных](05_Data_Model.md)
+2. [AI и StateTree](07_AI_and_StateTree.md)
+3. [FObjectCharacterAI и FAIContext](14_FObjectCharacterAI_and_FAIContext.md)
+4. [Поток рантайма и управление](06_Runtime_Flow_and_Control.md)
+5. [Модуль World](25_World_Module.md)
+
+## Как устроена книга по слоям
+
+Книгу удобнее воспринимать не как один длинный список файлов, а как несколько этажей.
+
+### Этаж 1. Общая архитектура
+
+Это главы, которые дают базовую модель проекта:
+- [Репозиторий и документация](01_Repository_and_Docs.md)
+- [Сборка, упаковка и образ диска](02_Build_and_Packing.md)
+- [Includes и контрактный слой](03_Includes_and_Contracts.md)
+- [Source и runtime-модули](04_Source_Runtime_and_Modules.md)
+- [Модель данных](05_Data_Model.md)
+- [Поток рантайма и управление](06_Runtime_Flow_and_Control.md)
+- [AI и StateTree](07_AI_and_StateTree.md)
+
+### Этаж 2. Концептуальные механизмы
+
+Это главы, которые описывают самые сильные инженерные идеи проекта:
+- [Главный архитектурный подход](16_Asset_Centric_Runtime_Approach.md)
+- [Макро-система и флаги](17_Macro_System_and_Flag_Orchestration.md)
+- [Rendering pipeline](18_Rendering_Pipeline.md)
+
+### Этаж 3. Детальные разборы структур
+
+Если нужно разбирать сущности поштучно:
+- [Индекс структур](09_Structs_Deep_Dive_Index.md)
+- [FParticipant и PlayerActions](10_FParticipant_and_PlayerActions.md)
+- [FCharacter](11_FCharacter.md)
+- [FObject](12_FObject.md)
+- [FObjectCharacter](13_FObjectCharacter.md)
+- [FObjectCharacterAI и FAIContext](14_FObjectCharacterAI_and_FAIContext.md)
+- [FAssets и runtime-зеркало ресурса](15_FAssets_and_GameState_Assets.md)
+
+### Этаж 4. Детальные разборы модулей
+
+Если нужно разбирать runtime по крупным состояниям и подсистемам:
+- [Индекс модулей](20_Modules_Deep_Dive_Index.md)
+- [EntryPoint](21_EntryPoint.md)
+- [Модуль Core](22_Core_Module.md)
+- [Модуль MainMenu](23_MainMenu_Module.md)
+- [Модуль Session](24_Session_Module.md)
+- [Модуль World](25_World_Module.md)
+- [AssetsManager и исполнение assets](26_AssetsManager_and_Asset_Execution.md)
+
+### Этаж 5. Инженерные выводы и риски
+
+Финальная глава:
+- [Архитектурные заметки и риски](08_Architecture_Notes_and_Risks.md)
+
+Она нужна после чтения остальных разделов, а не до них.
+
+## Карта движения по книге
 
 ```mermaid
 flowchart TD
-    A[01 Repository and Docs] --> B[02 Build and Packing]
-    B --> C[03 Includes and Contracts]
-    C --> D[04 Source Runtime and Modules]
-    D --> K[16 Asset-Centric Runtime Approach]
-    K --> E[05 Data Model]
-    E --> F[06 Runtime Flow and Control]
-    F --> G[07 AI and StateTree]
-    G --> H[09 Structs Deep Dive]
-    H --> L[15 FAssets and GameState Assets]
-    H --> I[20 Modules Deep Dive]
-    I --> M[26 AssetsManager and Asset Execution]
-    M --> J[08 Architecture Notes and Risks]
+    A[Repository] --> B[Build]
+    B --> C[Includes]
+    C --> D[Macros]
+    C --> E[Source]
+    E --> F[Runtime Flow]
+    E --> G[World Module]
+    G --> H[Rendering Pipeline]
+    B --> I[Asset Runtime]
+    I --> J[AssetsManager]
+    E --> K[Data Model]
+    K --> L[AI and StateTree]
+    J --> M[Architecture Notes]
+    H --> M
+    L --> M
 ```
 
-## Структура Глав
+## Что держать в голове при чтении
 
-### Глава 01. Репозиторий и документация
+Есть несколько опорных идей, без которых книгу труднее собирать в цельную картину.
 
-Разбирает проект сверху вниз:
-- какие папки лежат в корне;
-- что является исходниками, а что артефактами и инструментами;
-- как разграничены `README`, `ToDo` и архитектурные документы.
+### Проект мыслит слоями
 
-### Глава 02. Сборка и упаковка
-
-Объясняет, как проект переходит от исходников к TR-DOS образу:
-- что делает `Builder`;
-- как разделяются `Pack` и `Build`;
-- как используются pages;
-- как организованы assets и их упаковка.
-
-### Глава 03. Includes и контрактный слой
-
-Разбирает `Includes` как основу архитектуры:
-- константы;
-- макросы;
-- страницы;
-- kernel bindings;
-- структуры;
-- глобальные переменные.
-
-### Глава 04. Source и модули рантайма
-
-Описывает исполняемый код:
-- `EntryPoint`;
-- `Modules`;
-- `Core`;
-- `MainMenu`;
-- `Session`;
-- `World`;
-- предметные и платформенные подсистемы.
-
-### Глава 05. Модель данных
-
-Подробно описывает игровые сущности и связи между ними:
-- `FParticipant`;
-- `FCharacter`;
-- `FObject`;
-- `FObjectCharacter`;
-- `FObjectCharacterAI`;
-- `FPlayerActions`.
-
-### Глава 06. Поток рантайма и управление
-
-Показывает, как система живёт во времени:
-- что происходит при старте;
-- как переключаются модули;
-- как запускается `World`;
-- как разводятся путь человека и путь AI.
-
-### Глава 07. AI и StateTree
-
-Определяет AI-слой проекта:
-- `FStateTreeDescriptor`;
-- `FStateTreeContext`;
-- `FBlackboard`;
-- `FAIContext`;
-- `FStateTreeTask`;
-- `FStateTreeTransition`.
-
-### Глава 09. Детальный разбор структур
-
-Открывает второй слой книги и раскладывает ключевые структуры как самостоятельные архитектурные единицы:
-- `FParticipant` и `FPlayerActions`;
-- `FCharacter`;
-- `FObject`;
-- `FObjectCharacter`;
-- `FObjectCharacterAI` и `FAIContext`.
-
-### Глава 15. `FAssets` и runtime-зеркало ассета
-
-Выделяет asset-запись как отдельную системную сущность:
-- как устроен `FAssets`;
-- почему он занимает всего 8 байт;
-- как он связывает диск, ОЗУ и runtime;
-- зачем в `GameState` хранится копия последнего загруженного ассета.
-
-### Глава 16. Главный архитектурный подход проекта
-
-Формулирует самую сильную идею проекта:
-- код и данные существуют как единый asset-space;
-- исполняемые модули рассматриваются как загружаемые assets;
-- память проектируется как явный page-based ресурс;
-- Builder и runtime связаны через один общий язык ресурсов.
-
-### Глава 20. Детальный разбор модулей
-
-Открывает второй слой книги для исполняемого кода и разбирает модульную ось проекта по отдельным runtime-единицам:
-- `EntryPoint`;
-- `Core`;
-- `MainMenu`;
-- `Session`;
-- `World`.
-
-### Глава 26. `AssetsManager` и движок исполнения ассетов
-
-Подробно разбирает центральный runtime-механизм проекта:
-- инициализацию asset-table;
-- выбор памяти под ресурс;
-- mark/release модель;
-- загрузку и распаковку;
-- запуск code-assets и функций внутри них;
-- связи между `AssetsManager`, макросами и модулями.
-
-### Глава 08. Архитектурные заметки и риски
-
-Фиксирует инженерные выводы:
-- сильные стороны модели;
-- текущие ограничения;
-- рискованные места;
-- направления дальнейшего углубления документации и архитектуры.
-
-## Детальные Индексы
-
-### Индекс структур
-
-- [09_Structs_Deep_Dive_Index.md](09_Structs_Deep_Dive_Index.md)
-- [10_FParticipant_and_PlayerActions.md](10_FParticipant_and_PlayerActions.md)
-- [11_FCharacter.md](11_FCharacter.md)
-- [12_FObject.md](12_FObject.md)
-- [13_FObjectCharacter.md](13_FObjectCharacter.md)
-- [14_FObjectCharacterAI_and_FAIContext.md](14_FObjectCharacterAI_and_FAIContext.md)
-- [15_FAssets_and_GameState_Assets.md](15_FAssets_and_GameState_Assets.md)
-
-### Индекс модулей
-
-- [20_Modules_Deep_Dive_Index.md](20_Modules_Deep_Dive_Index.md)
-- [21_EntryPoint.md](21_EntryPoint.md)
-- [22_Core_Module.md](22_Core_Module.md)
-- [23_MainMenu_Module.md](23_MainMenu_Module.md)
-- [24_Session_Module.md](24_Session_Module.md)
-- [25_World_Module.md](25_World_Module.md)
-- [26_AssetsManager_and_Asset_Execution.md](26_AssetsManager_and_Asset_Execution.md)
-
-### Концептуальные главы
-
-- [16_Asset_Centric_Runtime_Approach.md](16_Asset_Centric_Runtime_Approach.md)
-
-## Что Важно Держать В Голове При Чтении
-
-У проекта есть несколько ключевых архитектурных идей.
-
-### 1. Проект живёт как слоистая система
-
-Нельзя читать репозиторий просто как набор `.asm` и `.inc` файлов.
-Здесь есть чёткое расслоение:
+Здесь важно не только "что лежит в файле", но и на каком уровне ответственности этот файл находится:
 - сборка;
 - контракты;
-- исполняемый код;
-- данные карты и ассетов;
-- runtime-состояние;
-- AI-слой.
+- runtime;
+- данные;
+- экранный цикл;
+- AI.
 
-### 2. Includes — это не просто заголовки
+### `Includes` — это не просто заголовки
 
-`Includes/` в этом проекте — это словарь всей системы.
-Он задаёт термины, соглашения и layout памяти.
-Многие решения в `Source/` нельзя понять без `Includes/`.
+В этом проекте `Includes/` задаёт:
+- словарь терминов;
+- номера битов;
+- layout структур;
+- адресные константы;
+- макро-язык системы.
 
-### 3. Самая сильная идея проекта — asset-centric runtime
+### Макросы — часть архитектуры
 
-Код исполняется не только как резидентный бинарник.
-Крупные блоки логики, экраны и подготовительные модули живут как assets,
-которые можно загрузить, разместить в нужной странице памяти и сразу исполнить.
+Нельзя читать `Macro/` как набор удобных шорткатов.
+Через него проект реально:
+- патчит обработчики;
+- управляет main loop;
+- переключает экранный режим;
+- открывает и закрывает ветви поведения через self-modifying code.
 
-Это делает `AssetsManager` не побочным сервисом, а фактическим двигателем переходов между крупными состояниями проекта.
+### Рендер — это state machine, а не одна функция
 
-### 4. Код исполняется не там же, где хранится
+Для мира нужно держать в голове всю цепочку:
+- `Launch`
+- `Loop`
+- `Draw`
+- `PipelineHexagons`
+- `Interrupt`
+- `Swap`
+- `MemcpyScreen`
 
-Часть модулей хранится как assets и разворачивается в runtime-память при запуске соответствующего состояния игры.
-Это важно для понимания `Modules`, `Launch`, `Execute` и работы со страницами памяти.
+### `AssetsManager` — это один из главных двигателей рантайма
 
-### 5. AI не является отдельным внешним контроллером
+Он не просто загружает ресурсы.
+Через него проект:
+- размещает код и данные;
+- выбирает страницы памяти;
+- исполняет code-assets;
+- связывает builder и runtime в одну систему.
 
-В текущей архитектуре нет отдельного `Controller` в духе Unreal Engine.
-AI выражен через `FObjectCharacterAI -> FAIContext -> StateTree/Blackboard`.
-Поэтому анализ AI нужно делать через данные и runtime, а не через абстрактный слой контроллеров.
+## Как поддерживать книгу в актуальном состоянии
 
-## Объём Анализа
+Если меняется:
+- сборка и упаковка — обновлять главы 02, 16 и 26;
+- макро-система или флаговые контракты — обновлять главы 03 и 17;
+- экранный цикл мира — обновлять главы 18 и 25;
+- модель данных — обновлять главы 05 и 09-15;
+- AI-слой — обновлять главы 07 и 14;
+- модульная структура runtime — обновлять главы 04 и 20-26.
 
-На момент написания книги в проекте насчитывается примерно:
-- 436 файлов в `Builder/`;
-- 203 файла в `Includes/`;
-- 321 файл в `Source/`.
-
-Это значит, что архитектуру проекта нельзя адекватно описать одной диаграммой или одним обзорным файлом.
-Поэтому документация разложена по главам и по отдельным deep-dive разделам.
-
-## Принцип Поддержки Документации
-
-Эта книга должна развиваться вместе с проектом.
-Практическое правило простое:
-- если меняется слой данных, обновляется глава про модель данных и соответствующий deep dive;
-- если меняется порядок запуска или layout модулей, обновляются главы про `Builder`, `Source` и модульные deep dive;
-- если меняется asset-runtime слой, обновляются главы про `FAssets`, главный подход и `AssetsManager`;
-- если меняется AI-слой, обновляются главы про `StateTree`, `FAIContext` и связанные структуры.
-
-То есть книга является не рекламным описанием проекта, а рабочим архитектурным документом.
+То есть книга должна развиваться вместе с кодом.
+Её задача — быть рабочим архитектурным документом, а не разовым обзором.
