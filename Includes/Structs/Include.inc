@@ -9,6 +9,7 @@
                 include "Address.inc"
                 include "Assets.inc"
                 include "Cursor.inc"
+                include "Function.inc"
                 
                 include "Path.inc"
                 include "Tick.inc"
@@ -24,10 +25,11 @@
                 include "Map/Include.inc"
                 include "SaveSlot.inc"
 
-                include "Hero/Include.inc"
+                include "Character/Include.inc"
                 include "Event/Include.inc"
                 include "Player/Include.inc"
                 include "Object/Include.inc"
+                include "StateTree/Include.inc"
 
                 include "Game_State.inc"
                 include "Game_Config.inc"

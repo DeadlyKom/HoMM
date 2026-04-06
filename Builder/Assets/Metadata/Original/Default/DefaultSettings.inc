@@ -17,7 +17,7 @@ ODS_ID_COUNTER = ODS_ID_COUNTER + 1
 
                 ; герой
                 MAKE_ODS ODS_ID_HERO,                                           /*тестовый герой*/\
-                /*Class*/   OBJECT_CLASS_HERO,                                  \
+                /*Class*/   OBJECT_CLASS_CHARACTER,                                  \
                 /*Flags*/   OBJECT_NEUTRAL
                 
                 ; тестовый объект

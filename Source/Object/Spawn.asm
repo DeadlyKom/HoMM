@@ -124,7 +124,7 @@ Spawn:          ; -----------------------------------------
                 LD HL, .JumpTable
                 JP Func.JumpTable
 
-.JumpTable      DW Object.Class.Hero                                            ; OBJECT_CLASS_HERO
+.JumpTable      DW Object.Class.Character                                       ; OBJECT_CLASS_CHARACTER
                 DW Object.Class.Construction                                    ; OBJECT_CLASS_CONSTRUCTION
                 DW #0000                                                        ; OBJECT_CLASS_PROPS
                 DW #0000                                                        ; OBJECT_CLASS_INTERACTION

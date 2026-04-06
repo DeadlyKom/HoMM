@@ -4,7 +4,8 @@
 
                 include "Object_.inc"
                 include "Object_UI.inc"
-                include "Object_Hero.inc"
+                include "Object_Character.inc"
+                include "Object_CharacterAI.inc"
                 include "Object_Construction.inc"
                 include "ObjectDefaultSettings.inc"
 

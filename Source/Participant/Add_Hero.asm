@@ -5,7 +5,7 @@
 ; добавить героя
 ; In:
 ;   HL - стартовая позиция игрока
-;   DE - указатель на адрес структуры FHeroSettings
+;   DE - указатель на адрес структуры FCharacterSettings
 ;   IY - указатель на адрес структуры FParticipant
 ;   C  - идентификатор владельца героем
 ; Out:
@@ -15,8 +15,8 @@
 ; Note:
 ; -----------------------------------------
 Add_Hero:       ; проверка достижения максимального количества игроков
-                LD A, (IY + FParticipant.HeroesNum)                             ; получение индекса доступного элемента в массиве героев у игрока
-                CP MAX_PARTICIPANT_HEROES
+                LD A, (IY + FParticipant.CharactersNum)                         ; получение индекса доступного элемента в массиве героев у игрока
+                CP MAX_PARTICIPANT_CHARACTERS
                 RET NC                                                          ; выход, если массив переполнен
 
                 PUSH HL                                                         ; сохранение стартовой позиции игрока
@@ -32,13 +32,13 @@ Add_Hero:       ; проверка достижения максимальног
                 POP HL
                 LD A, B
                 EX AF, AF'                                                      ; сохранение идентификатора героя
-                LD BC, FParticipant.Heroes
+                LD BC, FParticipant.Characters
                 ADD HL, BC
                 ADD A, L
                 LD L, A
                 EX AF, AF'                                                      ; восстановление идентификатора героя
                 LD (HL), A                                                      ; добавление героя игроку
-                INC (IY + FParticipant.HeroesNum)                               ; увеличение счётчика героев у игрока
+                INC (IY + FParticipant.CharactersNum)                           ; увеличение счётчика персонажей у игрока
                 ;---------------------------------------------------------------
                 ; расчёт адреса распологаемого героя
                 ; HL = HERO_SIZE * индекс добовляемого героя (64)
@@ -54,20 +54,20 @@ Add_Hero:       ; проверка достижения максимальног
                 ADD HL, HL  ; x16
                 ADD HL, HL  ; x32
                 ;---------------------------------------------------------------
-                ; инициализация FHero
+                ; инициализация FCharacter
                 LD A, (DE)
                 INC DE
-                LD (HL), A                                                      ; FHero.Class
+                LD (HL), A                                                      ; FCharacter.Class
                 INC L
-                LD (HL), C                                                      ; FHero.ParticipantID
+                LD (HL), C                                                      ; FCharacter.ParticipantID
                 INC L
                 EX DE, HL
-                LD BC, FHeroSkills
-                CALL Memcpy.FastLDIR                                            ; копирование FHero.Skils
+                LD BC, FCharacterSkills
+                CALL Memcpy.FastLDIR                                            ; копирование FCharacter.Skils
                 EX DE, HL
-                ; обнуление FHero.CombatStates и FHero.Equipment
+                ; обнуление FCharacter.CombatStates и FCharacter.Equipment
                 XOR A
-                LD B, FCombatStates + FHeroEquipment
+                LD B, FCombatStates + FCharacterEquipment
 .ClearLoop      LD (HL), A
                 INC L
                 DJNZ .ClearLoop
@@ -79,7 +79,7 @@ Add_Hero:       ; проверка достижения максимальног
                 ; Out:
                 ;   A' - идентификатор объекта
                 ;   IX - адрес структуры FObjectDefaultSettings
-                ;   IY - адрес структуры FObject (FObjectHero)
+                ;   IY - адрес структуры FObject (FObjectCharacter)
                 ;   флаг переполнения Carry установлен, если нет свободного места в массиве
                 ; Corrupt:
                 ;   HL, DE, BC, AF, AF'
@@ -93,9 +93,9 @@ Add_Hero:       ; проверка достижения максимальног
                 EXX
                 JR C, .Exit                                                     ; переход, если была ошибка
                                                                                 ; пропус инициализации объекта
-                LD (IY + FObjectHero.HeroID), B                                 ; установка идентификатора героя
+                LD (IY + FObjectCharacter.CharacterID), B                       ; установка идентификатора владельца
                 EX AF, AF'
-                LD (HL), A                                                      ; FHero.ObjectID
+                LD (HL), A                                                      ; FCharacter.ObjectID
                 EX AF, AF'
 
 .Exit           CCF                                                             ; инверсия флага, после спавна героя

@@ -35,13 +35,13 @@ Add_Player:     ;---------------------------------------------------------------
                 LD (IY + FParticipant.CastleID), A
 
                 ; инициализация массива идентификаторов ID героев данного участника
-                LD (IY + FParticipant.HeroesNum), #00
+                LD (IY + FParticipant.CharactersNum), #00
                 ;---------------------------------------------------------------
-                ; расчтёт адреса структуры FHeroSettings
-                ; DE = IX + FParticipantSettings.Hero
+                ; расчтёт адреса структуры FCharacterSettings
+                ; DE = IX + FParticipantSettings.Character
                 PUSH IX
                 POP HL
-                LD DE, FParticipantSettings.Hero
+                LD DE, FParticipantSettings.Character
                 ADD HL, DE
                 EX DE, HL
 

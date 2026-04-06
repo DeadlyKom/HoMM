@@ -55,11 +55,11 @@ Loop:
                     { 2, 3 },                                                   ; стартовая позиция игрока
 
                     ; настройки стартового героя участника
-                    ; FHeroSettings
+                    ; FCharacterSettings
                     {
-                        Hero.Class.Druid,                                       ; класс героя
+                        Character.Class.Druid,                                  ; класс героя
                         ; навыки героя
-                        ; FHeroSkills
+                        ; FCharacterSkills
                         {
                             ; основные навыки
                             ; FPrimarySkill

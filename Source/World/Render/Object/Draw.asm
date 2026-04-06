@@ -76,7 +76,7 @@ Draw:           ; инициализация
                 ; JR .NeedRefresh                                                 ; переход, если screen block обновляется, необходимо обновить и объект
                 JR .NextObject                                                  ; переход, если screen block не обновляется
 
-.JumpTable      DW Hero.Draw                                                    ; OBJECT_CLASS_HERO
+.JumpTable      DW Character.Draw                                               ; OBJECT_CLASS_CHARACTER
                 DW Simple.Draw                                                  ; OBJECT_CLASS_CONSTRUCTION
                 DW .RET                                                         ; OBJECT_CLASS_PROPS
                 DW .RET                                                         ; OBJECT_CLASS_INTERACTION

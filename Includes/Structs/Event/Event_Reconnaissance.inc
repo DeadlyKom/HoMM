@@ -4,7 +4,7 @@
 
                 struct FEventReconnaissance                                     ; структура описывающая собитие "разведка"                  [8 байт]
 Super           FEvent                                                          ; базовый класс объекта                                     [5 байта]
-HeroID          DB #00                                                          ; идентификатор игрока                                      [1 байт]
+CharacterID     DB #00                                                          ; идентификатор владельца (структура FCharacter)            [1 байт]
 Position        FVector8                                                        ; позиция ивента                                            [2 байта]
                 ends
 

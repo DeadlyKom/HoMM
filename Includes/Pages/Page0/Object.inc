@@ -10,7 +10,7 @@ Object:
 .FindLastByPredicate    EQU Page0.Object.FindLastByPredicate                    ; поиск объекта с конца массива, используя предикат
 Object.Class:
 .UI                     EQU Page0.Object.Class.UI
-.Hero                   EQU Page0.Object.Class.Hero
+.Character              EQU Page0.Object.Class.Character
 .Construction           EQU Page0.Object.Class.Construction
 Object.Utilities:
 .GetAdr.IY              EQU Page0.Object.Utilities.Adr.IY                       ; получить адрес объекта

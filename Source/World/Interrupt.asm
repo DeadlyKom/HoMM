@@ -43,7 +43,7 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 LD A, (HL)
                 OR A
                 JR NZ, $+7
-                LD (HL), DURATION.HERO_TICK+1
+                LD (HL), DURATION.CHARACTER_TICK+1
                 EX DE, HL
                 INC (HL)
                 EX DE, HL

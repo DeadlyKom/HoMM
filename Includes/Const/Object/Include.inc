@@ -6,7 +6,7 @@
                 include "Class.inc"
                 include "Object_.inc"
                 include "Object_UI.inc"
-                include "Object_Hero.inc"
+                include "Object_Character.inc"
                 include "ObjectDefaultSettings.inc"
 
                 endif ; ~_CONST_OBJECT_INCLUDE_

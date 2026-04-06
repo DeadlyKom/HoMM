@@ -47,7 +47,7 @@ Tick:           ; количество обрабатываемых объект
 
 .RET            RET
 
-.JumpTable      DW Hero                                                         ; OBJECT_CLASS_HERO
+.JumpTable      DW Character                                                    ; OBJECT_CLASS_CHARACTER
                 DW #0000                                                        ; OBJECT_CLASS_CONSTRUCTION
                 DW #0000                                                        ; OBJECT_CLASS_PROPS
                 DW #0000                                                        ; OBJECT_CLASS_INTERACTION

@@ -28,16 +28,16 @@ GameWindow:     ; проверка бездействия игрока
                 LD DE, Adr.ExtraBuffer
                 EXX
                 LD A, Page.Object
-                LD HL, Hero.Utilities.MemcpyObject
+                LD HL, Character.Utilities.MemcpyObject
                 CALL Func.CallAnotherPage
-                ;   IX - адрес героя            (FHero)
-                ;   IY - адрес объекта героя    (FObjectHero)
+                ;   IX - адрес героя            (FCharacter)
+                ;   IY - адрес объекта героя    (FObjectCharacter)
 
                 CALL World.Hexagon.GetPosByMouse                                ; определение позиции гексагона под курсором мыши
 
                 ; координаты выбранного героя
-                LD L, (IY + FObjectHero.Super.Position.X.High)
-                LD H, (IY + FObjectHero.Super.Position.Y.High)
+                LD L, (IY + FObject.Position.X.High)
+                LD H, (IY + FObject.Position.Y.High)
 
                 ; сравнение позиций
                 OR A
@@ -85,7 +85,7 @@ GameWindow:     ; проверка бездействия игрока
                 LD C, #01       ; длина пути в массиве
                 EXX
                 LD A, Page.Page0
-                LD HL, Hero.PathInitialize.Wrap
+                LD HL, Character.PathInitialize.Wrap
                 JP Func.CallAnotherPage
 
                 endif ; ~_MODULE_WORLD_UI_HANDLER_GAME_WINDOW_

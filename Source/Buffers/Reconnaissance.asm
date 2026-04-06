@@ -11,14 +11,14 @@
 ;   код расположен рядом с картой (страница 1)
 ; -----------------------------------------
 Reconnaissance.Event
-                ; ToDo: получить по HeroID, данные о герое FHero
+                ; ToDo: получить по CharacterID, данные о персонаже FCharacter
                 ;       через него получить данные отб учаснике (принадлежности) к FParticipant
                 ;       и получить фракцию FParticipantFaction, тем самым получив бит отвечающий за
                 ;       разведку данной фракции, а пока укажим одну игрока MAP_META_FOG_PLAYER_1_BIT
-                ;       LD A, (IY + FEventReconnaissance.HeroID)
+                ;       LD A, (IY + FEventReconnaissance.CharacterID)
                 LD C, MAP_META_FOG_PLAYER_1_BIT
                 
-                ; ToDo: используя даннные о герое FHero, получить данные о дальности виденья
+                ; ToDo: используя даннные о герое FCharacter, получить данные о дальности виденья
                 ;       данным классом + скилами разведки у героя FSecondarySkill,
                 ;       a пока используем константные
                 LD A, 1

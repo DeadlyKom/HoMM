@@ -40,7 +40,7 @@ ParticipantArray        EQU #0100                                               
 Div6Table128            EQU #0080                                               ; размер таблицы деления 0-127 на 6
 HeroPath                EQU #0080                                               ; размер массива найденого пути в виде последовательности координат тайлов (FPath),
                                                                                 ; где нулевой элемент является последним
-HeroArray               EQU HERO_SIZE * MAX_PARTICIPANT_HEROES * MAX_PARTICIPANT; размер массива героев FHero
+HeroArray               EQU CHARACTER_SIZE * MAX_PARTICIPANT_CHARACTERS * MAX_PARTICIPANT ; размер массива героев FCharacter
 Code.Page0              EQU #0A00                                               ; размер блока кода
 ObjectDefaultSettings   EQU OBJECT_DEFAULT_SIZE * OBJECT_DEFAULT_SETTINGS_MAX   ; размер таблицы настроек объектов по умолчанию
 ChunkArrayCounters      EQU #0100                                               ; размер буфера чанков счётчиков

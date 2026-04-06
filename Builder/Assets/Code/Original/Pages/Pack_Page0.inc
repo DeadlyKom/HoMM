@@ -11,7 +11,7 @@
                 display "'Page 0':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.Code.Page0, " byte(s) / free ", /D, Size.Code.Page0 - Size, "]\t[", /D, Page.Page0, "]\t ------------------------"
 Begin:          EQU $
 
-                include "Source/Hero/Include.inc"
+                include "Source/Character/Include.inc"
                 include "Source/Tick/Include.inc"
                 include "Source/Object/Include.inc"
                 include "Source/ChunkArray/Include.inc"
