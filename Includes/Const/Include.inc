@@ -14,6 +14,7 @@
                 include "Gameplay.inc"
                 include "SaveSlot.inc"
                 include "Interrupt.inc"
+                include "StateTree.inc"
                 include "SpriteClipping.inc"
                 include "SpriteNotClipping.inc"
 
