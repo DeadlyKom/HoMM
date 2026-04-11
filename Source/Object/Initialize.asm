@@ -15,6 +15,6 @@ Initialize:     ; сброс количества элементов в масс
                 ; очистка массива
                 JP_MEMSET_BYTE Adr.ObjectsArray, OBJECT_EMPTY_ELEMENT, Size.ObjectsArray
 
-                display " - Initialize objects:\t\t\t\t", /A, Initialize, "\t= busy [ ", /D, $-Initialize, " byte(s)  ]"
+                display " - Initialize 'objects':\t\t\t\t", /A, Initialize, "\t= busy [ ", /D, $-Initialize, " byte(s)  ]"
 
                 endif ; ~_OBJECT_INITIALIZE_

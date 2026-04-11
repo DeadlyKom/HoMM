@@ -3,7 +3,7 @@
                 define _CONST_EVENT_
 EVENT_SIZE                          EQU 16                                      ; размер структуры объекта FEvent
 EVENT_MAX                           EQU 16                                      ; максимальное количество событий
-EVENT_EMPTY_ELEMENT                 EQU #FF                                     ; свободный элемент массива
+EVENT_EMPTY_ELEMENT                 EQU #FF                                     ; свободный элемент массива (значение заполнения массива)
 
 ; флаги FEvent.Flags 
 EVENT_EXECUTE_PHASE_BEFORE_RENDER   EQU 0x00                                    ; фаза выполнения события, перед орисовкой

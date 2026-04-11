@@ -5,15 +5,17 @@
                 ;   +-------+------------------------------------------+-------+
                 ;   | #C000 |                             ObjectsArray | #1000 |
                 ;   +-------+------------------------------------------+-------+
-                ;   | #D000 |                                HeroArray | #0400 |
+                ;   | #D000 |                           CharacterArray | #0400 |
                 ;   +-------+------------------------------------------+-------+
                 ;   | #D400 |                         ParticipantArray | #0100 |
                 ;   +-------+------------------------------------------+-------+
-                ;   | #D500 |                             Div6Table128 | #0080 | ; таблица деления 0-127 на 6 (пока не требуется!)
+                ;   | #D500 |                           AIContextArray | #0100 |
                 ;   +-------+------------------------------------------+-------+
-                ;   | #D580 |                                 HeroPath | #0080 |
+                ;   | #D600 |                             Div6Table128 | #0080 | ; таблица деления 0-127 на 6 (пока не требуется!)
                 ;   +-------+------------------------------------------+-------+
-                ;   | #D600 |                                 свободно | #1A00 |
+                ;   | #D680 |                                 HeroPath | #0080 |
+                ;   +-------+------------------------------------------+-------+
+                ;   | #D700 |                                 свободно | #1900 |
                 ;   +-------+------------------------------------------+-------+
                 ;   | #F000 |                                     Code | #0A00 | ; блок кода
                 ;   +-------+------------------------------------------+-------+
@@ -37,10 +39,12 @@ ObjectDefaultSettings   EQU PAGE_0
                 module Size
 ObjectsArray            EQU OBJECT_SIZE * OBJECT_MAX                            ; размер массива объектов
 ParticipantArray        EQU #0100                                               ; размер массива участников (PARTICIPANT_SIZE * MAX_PARTICIPANT)
+AIContextArray          EQU #0100                                               ; размер массива AI-контекстов (STATE_TREE_SIZE * STATE_TREE_ACTIVE_AI_MAX)
 Div6Table128            EQU #0080                                               ; размер таблицы деления 0-127 на 6
 HeroPath                EQU #0080                                               ; размер массива найденого пути в виде последовательности координат тайлов (FPath),
                                                                                 ; где нулевой элемент является последним
-HeroArray               EQU CHARACTER_SIZE * MAX_PARTICIPANT_CHARACTERS * MAX_PARTICIPANT ; размер массива героев FCharacter
+CharacterArray          EQU CHARACTER_SIZE * MAX_PARTICIPANT_CHARACTERS \
+                            * MAX_PARTICIPANT                                   ; размер массива персонажей FCharacter
 Code.Page0              EQU #0A00                                               ; размер блока кода
 ObjectDefaultSettings   EQU OBJECT_DEFAULT_SIZE * OBJECT_DEFAULT_SETTINGS_MAX   ; размер таблицы настроек объектов по умолчанию
 ChunkArrayCounters      EQU #0100                                               ; размер буфера чанков счётчиков
@@ -50,10 +54,11 @@ ChunkArrayValues        EQU #0100                                               
                 module Adr
 
 ObjectsArray            EQU #C000                                               ; адрес массива объектов
-HeroArray               EQU #D000                                               ; адрес массива героев
+CharacterArray          EQU #D000                                               ; адрес массива персонажей
 ParticipantArray        EQU #D400                                               ; адрес массива участников
-Div6Table128            EQU #D500                                               ; адрес раположения таблица деления 0-127 на 6
-HeroPath                EQU #D580                                               ; адрес массива найденого пути в виде последовательности координат тайлов (FPath),
+AIContextArray          EQU #D500                                               ; адрес массива AI-контекстов
+Div6Table128            EQU #D600                                               ; адрес раположения таблица деления 0-127 на 6
+HeroPath                EQU #D680                                               ; адрес массива найденого пути в виде последовательности координат тайлов (FPath),
                                                                                 ; где нулевой элемент является последним
 Code.Page0              EQU #F000                                               ; адрес блока кода
                                                                                 ; (помещён в центр, при распоковке затрутся ObjectDefaultSettings)

@@ -7,18 +7,15 @@
 ; Out:
 ; Corrupt:
 ; Note:
+;   необходимо включить страницу с массивом событий (страница 7)
 ; -----------------------------------------
-Initialize:     PUSH_PAGE
-                SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
-
-                ; сброс количества элементов в массиве
+Initialize:     ; сброс количества элементов в массиве
                 XOR A
                 LD (GameSession.WorldInfo + FWorldInfo.EventNum), A
 
                 ; очистка массива
-                MEMSET_BYTE Adr.EventArray, EVENT_EMPTY_ELEMENT, Size.EventArray
-                JP_POP_PAGE
+                JP_MEMSET_BYTE Adr.EventArray, EVENT_EMPTY_ELEMENT, Size.EventArray
 
-                display " - Initialize event:\t\t\t\t\t", /A, Initialize, "\t= busy [ ", /D, $-Initialize, " byte(s)  ]"
+                display " - Initialize 'event':\t\t\t\t\t", /A, Initialize, "\t= busy [ ", /D, $-Initialize, " byte(s)  ]"
 
                 endif ; ~_EVENT_INITIALIZE_

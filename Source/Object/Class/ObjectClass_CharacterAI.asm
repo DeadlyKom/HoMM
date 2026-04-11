@@ -1,8 +1,8 @@
 
-                ifndef _OBJECT_CLASS_CHARACTER_
-                define _OBJECT_CLASS_CHARACTER_
+                ifndef _OBJECT_CLASS_CHARACTER_AI_
+                define _OBJECT_CLASS_CHARACTER_AI_
 ; -----------------------------------------
-; инициализация объекта - персонаж
+; инициализация объекта - AI-персонаж
 ; In:
 ;   A' - идентификатор объекта
 ;   IX - адрес структуры FObjectDefaultSettings
@@ -11,7 +11,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Character:      XOR A
+CharacterAI:    XOR A
                 ; -----------------------------------------
                 LD (IY + FObject.Flags), OBJECT_SIGNIFIC_NONE | OBJECT_DIRTY | OBJECT_TICK
                 LD (IY + FObject.Sprite), ANIM_STATE_IDLE | (DIR_DOWN_LEFT << SPRITE_DIR_BIT)
@@ -29,7 +29,11 @@ Character:      XOR A
                 LD (IY + FObjectCharacter.Direction.X), A
                 LD (IY + FObjectCharacter.Direction.Y), A
 
+                ; -----------------------------------------
+                LD (IY + FObjectCharacterAI.AIContextID), CONTEXT_NONE          ; отсутствие идентификатора AI-контекста,
+                                                                                ; выдаётся/забирается в реальном времени методами Possess/Unpossess
+
                 OR A                                                            ; сброс флага переполнения, успешная инициализация
                 RET
                 
-                endif ; ~_OBJECT_CLASS_CHARACTER_
+                endif ; ~_OBJECT_CLASS_CHARACTER_AI_

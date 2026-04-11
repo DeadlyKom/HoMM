@@ -25,9 +25,10 @@ Skils           FCharacterSkills                                                
 CombatStates    FCombatStates                                                   ; боевые состояния                                                  [2 байта]
 Equipment       FCharacterEquipment                                             ; экипировка персонажа                                              [10 байт]
 ObjectID        DB #00                                                          ; идентификатор объекта, к которому привязан                        [1 байт]
-                                                                                ; Note: 
-                                                                                ;   при перемещении структуры FObjectCharacter в массиве, необходимо
-                                                                                ;   обновлять идентификатор объекта
+                                                                                ; ToDo: 
+                                                                                ;   при перемещении структуры FObjectCharacter в массиве через
+                                                                                ;   Object.RemoveAtSwap/Object.SmartRemove необходимо обновлять
+                                                                                ;   идентификатор объекта, иначе ссылка станет невалидной
                 ends
 ;-------------------------------------------------------------------------------
                 endif ; ~_STRUCTS_CHARACTER_

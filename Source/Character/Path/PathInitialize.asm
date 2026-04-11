@@ -5,8 +5,8 @@
 ; инициализация пути (обёртка)
 ; In:
 ;   C' - длина пути
-;   IX - адрес героя            (FCharacter)
-;   IY - адрес объекта героя    (FObjectCharacter)
+;   IX - адрес персонажа            (FCharacter)
+;   IY - адрес объекта персонажа    (FObjectCharacter)
 ; Out:
 ; Corrupt:
 ; Note:
@@ -18,8 +18,8 @@ PathInitialize.Wrap:
 ; инициализация пути
 ; In:
 ;   C  - длина пути
-;   IX - адрес героя            (FCharacter)
-;   IY - адрес объекта героя    (FObjectCharacter)
+;   IX - адрес персонажа            (FCharacter)
+;   IY - адрес объекта персонажа    (FObjectCharacter)
 ; Out:
 ; Corrupt:
 ;   HL, DE, BC, AF
@@ -30,7 +30,7 @@ PathInitialize  ; сохранение длины пути
                 LD A, C
                 EX AF, AF'
                 
-                ; инициализация героя в буфере
+                ; инициализация персонажа в буфере
                 DEC C                                                           ; начинается с -1
                 LD (IY + FObjectCharacter.PathID), C
 

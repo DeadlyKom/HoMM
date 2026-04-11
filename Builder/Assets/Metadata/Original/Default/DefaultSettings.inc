@@ -15,9 +15,14 @@ ODS_ID_COUNTER = ODS_ID_COUNTER + 1
             
                 ; таблица настроек объектов по умолчанию
 
-                ; герой
-                MAKE_ODS ODS_ID_HERO,                                           /*тестовый герой*/\
-                /*Class*/   OBJECT_CLASS_CHARACTER,                                  \
+                ; персонаж
+                MAKE_ODS ODS_ID_CHARACTER,                                      /*тестовый персонаж*/\
+                /*Class*/   OBJECT_CLASS_CHARACTER,                             \
+                /*Flags*/   OBJECT_NEUTRAL
+                
+                ; AI-персонаж
+                MAKE_ODS ODS_ID_AI_CHARACTER,                                   /*тестовый AI-персонаж*/\
+                /*Class*/   OBJECT_CLASS_CHARACTER_AI,                          \
                 /*Flags*/   OBJECT_NEUTRAL
                 
                 ; тестовый объект

@@ -6,8 +6,8 @@
 ; In:
 ;   A  - индекс персонажа
 ; Out:
-;   IX - адрес персонажа        (FCharacter)
-;   IY - адрес объекта персонажа(FObjectCharacter)
+;   IX - адрес персонажа            (FCharacter)
+;   IY - адрес объекта персонажа    (FObjectCharacter)
 ; Corrupt:
 ;   HL, AF, IX, IY
 ; Note:

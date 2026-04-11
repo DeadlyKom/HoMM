@@ -6,9 +6,9 @@
 
                 include "Append.asm"
                 include "Add_Player.asm"
-                include "Add_Hero.asm"
-                include "Remove_Hero.asm"
+                include "Add_Character.asm"
                 include "Remove_Player.asm"
+                include "Remove_Character.asm"
 
                 endmodule
 

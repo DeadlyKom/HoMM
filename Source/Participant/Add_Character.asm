@@ -1,8 +1,8 @@
 
-                ifndef _PARTICIPANT_ADD_HERO_
-                define _PARTICIPANT_ADD_HERO_
+                ifndef _PARTICIPANT_ADD_CHARACTER_
+                define _PARTICIPANT_ADD_CHARACTER_
 ; -----------------------------------------
-; добавить героя
+; добавить персонажа
 ; In:
 ;   HL - стартовая позиция игрока
 ;   DE - указатель на адрес структуры FCharacterSettings
@@ -10,44 +10,44 @@
 ;   C  - идентификатор владельца героем
 ; Out:
 ;   флаг переполнения Carry установлен,
-;   в случае успешного добавления героя
+;   в случае успешного добавления персонажа
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Add_Hero:       ; проверка достижения максимального количества игроков
+Add_Character:  ; проверка достижения максимального количества игроков
                 LD A, (IY + FParticipant.CharactersNum)                         ; получение индекса доступного элемента в массиве героев у игрока
                 CP MAX_PARTICIPANT_CHARACTERS
                 RET NC                                                          ; выход, если массив переполнен
 
                 PUSH HL                                                         ; сохранение стартовой позиции игрока
-                ; проверка переполнения массива Adr.HeroArray не требуется, т.к.
+                ; проверка переполнения массива Adr.CharacterArray не требуется, т.к.
                 ; позволяет вместить максимальное количество героев для каждого игрока
                 LD HL, GameSession.WorldInfo + FWorldInfo.HeroNum
-                LD B, (HL)                                                      ; чтение свободного идентификатора героя
-                INC (HL)                                                        ; увеличение общего счётчика героев в массиве Adr.HeroArray
-                PUSH BC                                                         ; сохранение идентификатора героя
+                LD B, (HL)                                                      ; чтение свободного идентификатора персонажа
+                INC (HL)                                                        ; увеличение общего счётчика героев в массиве Adr.CharacterArray
+                PUSH BC                                                         ; сохранение идентификатора персонажа
                 ;--------------------------------------
                 ; добавление в массиве героев у игрока идентификатор игрока
                 PUSH IY
                 POP HL
                 LD A, B
-                EX AF, AF'                                                      ; сохранение идентификатора героя
+                EX AF, AF'                                                      ; сохранение идентификатора персонажа
                 LD BC, FParticipant.Characters
                 ADD HL, BC
                 ADD A, L
                 LD L, A
-                EX AF, AF'                                                      ; восстановление идентификатора героя
-                LD (HL), A                                                      ; добавление героя игроку
+                EX AF, AF'                                                      ; восстановление идентификатора персонажа
+                LD (HL), A                                                      ; добавление геперсонажароя игроку
                 INC (IY + FParticipant.CharactersNum)                           ; увеличение счётчика персонажей у игрока
                 ;---------------------------------------------------------------
-                ; расчёт адреса распологаемого героя
-                ; HL = HERO_SIZE * индекс добовляемого героя (64)
+                ; расчёт адреса распологаемого персонажа
+                ; HL = HERO_SIZE * индекс добовляемого персонажа (64)
                 LD A, B
                 ADD A, A    ; x2
                 ADD A, A    ; x4
-                ADD A, LOW Adr.HeroArray >> 3
+                ADD A, LOW Adr.CharacterArray >> 3
                 LD L, A
-                ADC A, HIGH Adr.HeroArray >> 3
+                ADC A, HIGH Adr.CharacterArray >> 3
                 SUB L
                 LD H, A
                 ADD HL, HL  ; x8
@@ -85,9 +85,9 @@ Add_Hero:       ; проверка достижения максимальног
                 ;   HL, DE, BC, AF, AF'
                 ; Note:
                 ; -----------------------------------------
-                POP BC                                                          ; восстановление идентификатора героя
+                POP BC                                                          ; восстановление идентификатора персонажа
                 EXX
-                LD B, ODS_ID_HERO
+                LD B, ODS_ID_CHARACTER
                 POP DE                                                          ; восстановление стартовой позиции игрока
                 CALL Object.Spawn
                 EXX
@@ -98,10 +98,10 @@ Add_Hero:       ; проверка достижения максимальног
                 LD (HL), A                                                      ; FCharacter.ObjectID
                 EX AF, AF'
 
-.Exit           CCF                                                             ; инверсия флага, после спавна героя
+.Exit           CCF                                                             ; инверсия флага, после спавна персонажа
                                                                                 ; см. описание спавна
                 RET
 
-                display " - Add hero:\t\t\t\t\t\t", /A, Add_Hero, "\t= busy [ ", /D, $-Add_Hero, " byte(s)  ]"
+                display " - Add character:\t\t\t\t\t", /A, Add_Character, "\t= busy [ ", /D, $-Add_Character, " byte(s)  ]"
 
-                endif ; ~_PARTICIPANT_ADD_HERO_
+                endif ; ~_PARTICIPANT_ADD_CHARACTER_

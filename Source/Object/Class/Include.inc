@@ -6,6 +6,7 @@
 
                 include "ObjectClass_UI.asm"
                 include "ObjectClass_Character.asm"
+                include "ObjectClass_CharacterAI.asm"
                 include "ObjectClass_Construction.asm"
 
                 endmodule

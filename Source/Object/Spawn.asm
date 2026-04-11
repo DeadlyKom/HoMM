@@ -125,6 +125,7 @@ Spawn:          ; -----------------------------------------
                 JP Func.JumpTable
 
 .JumpTable      DW Object.Class.Character                                       ; OBJECT_CLASS_CHARACTER
+                DW Object.Class.CharacterAI                                     ; OBJECT_CLASS_CHARACTER_AI
                 DW Object.Class.Construction                                    ; OBJECT_CLASS_CONSTRUCTION
                 DW #0000                                                        ; OBJECT_CLASS_PROPS
                 DW #0000                                                        ; OBJECT_CLASS_INTERACTION

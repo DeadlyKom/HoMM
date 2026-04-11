@@ -11,6 +11,7 @@ Object:
 Object.Class:
 .UI                     EQU Page0.Object.Class.UI
 .Character              EQU Page0.Object.Class.Character
+.CharacterAI            EQU Page0.Object.Class.CharacterAI
 .Construction           EQU Page0.Object.Class.Construction
 Object.Utilities:
 .GetAdr.IY              EQU Page0.Object.Utilities.Adr.IY                       ; получить адрес объекта

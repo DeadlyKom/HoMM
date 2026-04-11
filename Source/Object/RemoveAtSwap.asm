@@ -26,6 +26,12 @@ RemoveAtSwap:   ; инициализация
                 LD D, H
                 LD E, L
 
+                ; --------------------------------------------------------------
+                ; ⚠️ ВАЖНО ⚠️
+                ;   размер объекта OBJECT_SIZE, равен 32, чтобы получить индекс,
+                ;   нужно сместить на 3 бита
+                ; --------------------------------------------------------------
+
                 ; проверка на последний удаляемый элемент в массиве
                 ADD HL, HL  ; x2
                 ADD HL, HL  ; x4
@@ -35,7 +41,7 @@ RemoveAtSwap:   ; инициализация
                 RET Z                                                           ; выход, если индекс удаляемого элемента последний
 
                 ; расчёт адреса последнего элемента в массиве
-                ; адрес расположения объекта = адрес первого элемента + N объекта * OBJECT_SIZE
+                ; адрес расположения элемента = адрес первого элемента + N элемента * OBJECT_SIZE
                 LD H, HIGH Adr.ObjectsArray >> 5    ; %00000110
                 ADD A, A    ; %aaaaaaa0 : a
                 RL H        ; %0000110a
@@ -67,6 +73,6 @@ RemoveAtSwap:   ; инициализация
                 OR A                                                            ; сброс флага, произведено пермещение
                 RET
 
-                display " - Remove by swap object:\t\t\t\t", /A, RemoveAtSwap, "\t= busy [ ", /D, $-RemoveAtSwap, " byte(s)  ]"
+                display " - Remove at swap 'object':\t\t\t\t", /A, RemoveAtSwap, "\t= busy [ ", /D, $-RemoveAtSwap, " byte(s)  ]"
 
                 endif ; ~_OBJECT_REMOVE_AT_SWAP_

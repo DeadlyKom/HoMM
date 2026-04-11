@@ -15,9 +15,9 @@ Character.Address.IX:; расчёт адреса распологаемого п
                 ; IX = CHARACTER_SIZE * индекс персонажа (64)
                 ADD A, A    ; x2
                 ADD A, A    ; x4
-                ADD A, LOW Adr.HeroArray >> 3
+                ADD A, LOW Adr.CharacterArray >> 3
                 LD IXL, A
-                ADC A, HIGH Adr.HeroArray >> 3
+                ADC A, HIGH Adr.CharacterArray >> 3
                 SUB IXL
                 LD IXH, A
                 ADD IX, IX  ; x8

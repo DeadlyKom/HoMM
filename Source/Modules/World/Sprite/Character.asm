@@ -85,7 +85,7 @@ Load:           ; загрузка графики курсора
                 Hash16("UpLeft")
                 endlua
 
-                display " - Sprite initialize character:\t\t\t\t", /A, Load, "\t= busy [ ", /D, $-Load, " byte(s)  ]"
+                display " - Sprite initialize character:\t\t\t", /A, Load, "\t= busy [ ", /D, $-Load, " byte(s)  ]"
 
                 endmodule
 
