@@ -2,8 +2,8 @@
                 ifndef _STRUCT_OBJECT_CHARACTER_
                 define _STRUCT_OBJECT_CHARACTER_
 
-                struct FObjectCharacter                                         ; базовый объект персонажа на карте                         [24 байт]
-Super           FObject                                                         ; базовый класс объекта                                     [13 байт]
+                struct FObjectCharacter                                         ; базовый объект персонажа на карте                         [25 байт]
+Super           FObject                                                         ; базовый класс объекта                                     [14 байт]
 ; -----------------------------------------
 ;   FObjectCharacter.Super.Sprite
 ;      7    6    5    4    3    2    1    0

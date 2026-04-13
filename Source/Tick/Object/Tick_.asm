@@ -20,7 +20,7 @@ Tick:           ; количество обрабатываемых объект
 .ObjectLoop     PUSH BC
 
                 ; проверка необходимости тика
-                BIT OBJECT_TICK_BIT, (IX + FObject.Flags)
+                BIT OBJECT_EVALUATE_SIGNIF_BIT, (IX + FObject.Flags)
                 JR Z, .NextObject                                               ; переход, если у объекта отключен флаг тика
 
                 ; получение типа элемента
@@ -48,6 +48,7 @@ Tick:           ; количество обрабатываемых объект
 .RET            RET
 
 .JumpTable      DW Character                                                    ; OBJECT_CLASS_CHARACTER
+                DW #0000                                                        ; OBJECT_CLASS_CHARACTER_AI
                 DW #0000                                                        ; OBJECT_CLASS_CONSTRUCTION
                 DW #0000                                                        ; OBJECT_CLASS_PROPS
                 DW #0000                                                        ; OBJECT_CLASS_INTERACTION

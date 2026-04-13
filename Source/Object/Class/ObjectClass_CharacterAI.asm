@@ -13,11 +13,15 @@
 ; -----------------------------------------
 CharacterAI:    XOR A
                 ; -----------------------------------------
-                LD (IY + FObject.Flags), OBJECT_SIGNIFIC_NONE | OBJECT_DIRTY | OBJECT_TICK
+                LD (IY + FObject.Flags), OBJECT_SIGNIFIC_NONE | OBJECT_DIRTY | OBJECT_EVALUATE_SIGNIF
                 LD (IY + FObject.Sprite), ANIM_STATE_IDLE | (DIR_DOWN_LEFT << SPRITE_DIR_BIT)
                 ; обнуление размера bound спрайта
                 LD (IY + FObject.Bound.Size.Width), A
                 LD (IY + FObject.Bound.Size.Height), A
+                ; отключение уровеня значимости locomotion и AI
+                LD (IY + FObject.Significance), \
+                    (OBJECT_SIGNIFIC_NONE << OBJECT_SIGNIFICANCE_LOCOMOTION_BIT) |\
+                    (OBJECT_SIGNIFIC_NONE << OBJECT_SIGNIFICANCE_AI_BIT)
                 ; -----------------------------------------
 
                 LD (IY + FObjectCharacter.CharacterID), CHARACTER_ID_NONE

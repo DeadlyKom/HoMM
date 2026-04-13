@@ -11,6 +11,7 @@
                 include "FindLastByPredicate.asm"
 
                 include "Class/Include.inc"
+                include "Significance/Include.inc"
                 include "Utilities/Include.inc"
                 endmodule
 

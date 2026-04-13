@@ -77,6 +77,7 @@ Draw:           ; инициализация
                 JR .NextObject                                                  ; переход, если screen block не обновляется
 
 .JumpTable      DW Character.Draw                                               ; OBJECT_CLASS_CHARACTER
+                DW Character.Draw                                               ; OBJECT_CLASS_CHARACTER_AI
                 DW Simple.Draw                                                  ; OBJECT_CLASS_CONSTRUCTION
                 DW .RET                                                         ; OBJECT_CLASS_PROPS
                 DW .RET                                                         ; OBJECT_CLASS_INTERACTION
