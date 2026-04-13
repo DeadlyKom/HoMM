@@ -14,6 +14,10 @@ Begin:          EQU $
                 DW #0000
 Size:           EQU $-Begin                                                     ; размер кода
 
+                if (Size.Code.Page3 - Size) < 0
+                    error "allocated memory ran out!"
+                endif
+
                 ifdef _REBUILD
                 savebin "Builder/Assets/Code/Original/Pages/Page3.pack", Begin, Size
                 shellexec "Tools\Compressor\salvador.exe -v Builder/Assets/Code/Original/Pages/Page3.pack Builder/Assets/Code/Compressed/Page3.pack.ar"

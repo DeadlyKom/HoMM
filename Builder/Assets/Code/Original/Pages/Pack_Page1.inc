@@ -15,6 +15,10 @@ Begin:          EQU $
                 include "Source/Buffers/Include.inc"
 Size:           EQU $-Begin                                                     ; размер кода
 
+                if (Size.Code.Page1 - Size) < 0
+                    error "allocated memory ran out!"
+                endif
+
                 ifdef _REBUILD
                 savebin "Builder/Assets/Code/Original/Pages/Page1.pack", Begin, Size
                 shellexec "Tools\Compressor\salvador.exe -v Builder/Assets/Code/Original/Pages/Page1.pack Builder/Assets/Code/Compressed/Page1.pack.ar"

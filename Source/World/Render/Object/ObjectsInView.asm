@@ -113,12 +113,13 @@ AddObjects:     ;
                 ; %0aaaaaaa
                 LD C, HIGH Adr.ObjectsArray >> 4    ; %00001100
                 ADD A, A    ; %aaaaaaa0 : 0
-                RL C        ; %0001100a
                 ADD A, A    ; %aaaaaa00 : a
-                RL C        ; %001100aa
+                RL C        ; %0001100a
                 ADD A, A    ; %aaaaa000 : a
-                RL C        ; %01100aaa
+                RL C        ; %001100aa
                 ADD A, A    ; %aaaa0000 : a
+                RL C        ; %01100aaa
+                ADD A, A    ; %aaa00000 : a
                 RL C        ; %1100aaaa
 
                 ; сохранение адреса

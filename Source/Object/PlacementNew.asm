@@ -27,18 +27,17 @@ PlacemantNew    ; инициализация
                 
                 ; расчёт адреса последнего элемента в массиве
                 ; адрес расположения объекта = адрес первого элемента + N объекта * OBJECT_SIZE
-                LD H, HIGH Adr.ObjectsArray >> 5    ; %00000110
-                LD A, L     ; %aaaaaaaa
-                ADD A, A    ; %aaaaaaa0 : a
-                RL H        ; %0000110a
+                LD H, HIGH Adr.ObjectsArray >> 4    ; %00001100
+                LD A, L     ; %0aaaaaaa
+                ADD A, A    ; %aaaaaaa0 : 0
                 ADD A, A    ; %aaaaaa00 : a
-                RL H        ; %000110aa
+                RL H        ; %0001100a
                 ADD A, A    ; %aaaaa000 : a
-                RL H        ; %00110aaa
+                RL H        ; %001100aa
                 ADD A, A    ; %aaaa0000 : a
-                RL H        ; %0110aaaa
+                RL H        ; %01100aaa
                 ADD A, A    ; %aaa00000 : a
-                RL H        ; %110aaaaa
+                RL H        ; %1100aaaa
 
                 LD IYL, A
                 LD A, H

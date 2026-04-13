@@ -29,6 +29,7 @@ Unpossess:      ; -----------------------------------------
                 CALL RemoveAtSwapByIndex                                        ; удаление AI-контекста по индексу, перемещая последний элемент в массиве
                 LD (IY + FObjectCharacterAI.AIContextID), CONTEXT_NONE          ; удаление идентификатора AI-контекста
                 RET
+
                 display " - Unpossess AI-context:\t\t\t\t", /A, Unpossess, "\t= busy [ ", /D, $-Unpossess, " byte(s)  ]"
 
                 endif ; ~_STATE_TREE_UNPOSSESS_
