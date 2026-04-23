@@ -33,8 +33,9 @@
 3. [Includes и контрактный слой](03_Includes_and_Contracts.md)
 4. [Source и runtime-модули](04_Source_Runtime_and_Modules.md)
 5. [Модель данных](05_Data_Model.md)
-6. [Главный архитектурный подход](16_Asset_Centric_Runtime_Approach.md)
-7. [AssetsManager и исполнение assets](26_AssetsManager_and_Asset_Execution.md)
+6. [TickScheduler и cadence-обновление объектов](19_TickScheduler_and_Object_Cadence.md)
+7. [Главный архитектурный подход](16_Asset_Centric_Runtime_Approach.md)
+8. [AssetsManager и исполнение assets](26_AssetsManager_and_Asset_Execution.md)
 
 Это самый короткий путь к пониманию того, как проект собирается, как загружается и из каких слоёв состоит.
 
@@ -46,8 +47,9 @@
 3. [Макро-система и флаги](17_Macro_System_and_Flag_Orchestration.md)
 4. [Source и runtime-модули](04_Source_Runtime_and_Modules.md)
 5. [Поток рантайма и управление](06_Runtime_Flow_and_Control.md)
-6. [Детальный разбор модулей](20_Modules_Deep_Dive_Index.md)
-7. [Архитектурные заметки и риски](08_Architecture_Notes_and_Risks.md)
+6. [TickScheduler и cadence-обновление объектов](19_TickScheduler_and_Object_Cadence.md)
+7. [Детальный разбор модулей](20_Modules_Deep_Dive_Index.md)
+8. [Архитектурные заметки и риски](08_Architecture_Notes_and_Risks.md)
 
 Этот маршрут лучше всего объясняет:
 - как проект собирается;
@@ -83,6 +85,21 @@
 - dirty screen blocks;
 - длинный swap;
 - роль прерываний и курсорного микропайплайна.
+
+### Если интересует object tick, cadence и scheduler
+
+Читай в таком порядке:
+1. [FObject](12_FObject.md)
+2. [Поток рантайма и управление](06_Runtime_Flow_and_Control.md)
+3. [TickScheduler и cadence-обновление объектов](19_TickScheduler_and_Object_Cadence.md)
+4. [Модуль Session](24_Session_Module.md)
+5. [Модуль World](25_World_Module.md)
+
+Этот маршрут нужен для задач, где важно понять:
+- как `FObject` связывается с chunk-моделью мира;
+- как `Spawn` получает `CadencePassId`;
+- почему нужен bootstrap первого прохода;
+- где scheduler уже встроен в runtime, а где ещё остаётся незавершённым.
 
 ### Если интересует asset engine
 
@@ -122,6 +139,7 @@
 - [Главный архитектурный подход](16_Asset_Centric_Runtime_Approach.md)
 - [Макро-система и флаги](17_Macro_System_and_Flag_Orchestration.md)
 - [Rendering pipeline](18_Rendering_Pipeline.md)
+- [TickScheduler и cadence-обновление объектов](19_TickScheduler_and_Object_Cadence.md)
 
 ### Этаж 3. Детальные разборы структур
 
@@ -230,6 +248,7 @@ flowchart TD
 - сборка и упаковка — обновлять главы 02, 16 и 26;
 - макро-система или флаговые контракты — обновлять главы 03 и 17;
 - экранный цикл мира — обновлять главы 18 и 25;
+- объектный tick, cadence или `TickScheduler` — обновлять главу 19;
 - модель данных — обновлять главы 05 и 09-15;
 - AI-слой — обновлять главы 07 и 14;
 - модульная структура runtime — обновлять главы 04 и 20-26.
