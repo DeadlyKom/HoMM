@@ -17,6 +17,7 @@
                 include "Keys.inc"
                 include "Item_ID.inc"
                 include "WorldInfo.inc"
+                include "TickScheduler.inc"
                 include "SpriteBound.inc"
                 include "SpriteClipping.inc"
                 include "SpriteNotClipping.inc"

@@ -30,8 +30,6 @@ Launch:         ; -----------------------------------------
                 CALL Tables.TG_Div6Table
                 MEMCPY_PAGE Adr.CodeToScr, Adr.Div6Table22, \
                             Page.Div6Table22, Size.Div6Table22                  ; копирование блока cгенерированной таблицы деления 0-21 на 6
-                ; MEMCPY_PAGE Adr.CodeToScr, Adr.Div6Table128, \
-                ;             Page.Div6Table128, Size.Div6Table128                ; копирование блока cгенерированной таблицы деления 0-127 на 6 (пока не требуется)
                 ; генерация таблицы номера экранного блока (с 1 по 22 строку включительно) с высотой гексагона
                 LD HL, Adr.CodeToScr+80
                 LD D, HIGH Adr.CodeToScr

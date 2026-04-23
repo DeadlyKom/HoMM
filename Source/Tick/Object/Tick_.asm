@@ -19,8 +19,8 @@ Tick:           ; количество обрабатываемых объект
 
 .ObjectLoop     PUSH BC
 
-                ; проверка необходимости тика
-                BIT OBJECT_EVALUATE_SIGNIF_BIT, (IX + FObject.Flags)
+                ; проверка разрешения тика
+                BIT OBJECT_TICK_ENABLED_BIT, (IX + FObject.Flags)
                 JR Z, .NextObject                                               ; переход, если у объекта отключен флаг тика
 
                 ; получение типа элемента

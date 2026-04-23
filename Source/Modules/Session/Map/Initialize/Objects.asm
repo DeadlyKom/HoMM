@@ -53,6 +53,8 @@ Objects:        ; чтение данных об объектах
                 POP BC
 
                 DJNZ .ObjectLoop
+
+                CALL Object.Utilities.IncCadencePassIDs                         ; увеличение CadencePass'ы ID
                 RET
 
 .ObjectInit     LD B, (HL)                                                      ; FMapObject.Type

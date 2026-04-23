@@ -80,6 +80,7 @@ Core:           EI
                 ; инициализация работы с объектами
                 SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
                 CALL Object.Initialize
+                CALL TickScheduler.Initialize                                   ; инициализация планировщика по умолчанию
 
                 DELAY 1
                 ; -----------------------------------------

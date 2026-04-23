@@ -11,8 +11,9 @@
                 include "FindLastByPredicate.asm"
 
                 include "Class/Include.inc"
-                include "Significance/Include.inc"
                 include "Utilities/Include.inc"
+                include "TickScheduler/Include.inc"
+TickScheduler   FTickScheduler
                 endmodule
 
                 endif ; ~_OBJECT_INCLUDE_

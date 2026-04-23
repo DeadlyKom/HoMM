@@ -70,25 +70,28 @@ Spawn:          ; -----------------------------------------
                 ;   E  - количество элементов в массиве
                 ; Out:
                 ; Corrupt:
-                ;   L, BC, AF
+                ;   L, BC, AF, AF'
                 ; Note:
                 ; -----------------------------------------
                 LD HL, Adr.ChunkArrayCounters
                 LD D, C
                 LD E, C
+                CALL ChunkArray.Insert
+
                 ; -----------------------------------------
-                ; вставка значения в массив чанков
+                ; получить CadencePassId по номеру чанка
                 ; In:
-                ;   A  - порядковый номер чанка
-                ;   HL - адрес счётчиков массива чанков (выровненый 256 байт)
-                ;   D  - добавляемое значение
-                ;   E  - количество элементов в массиве
+                ;   A - порядковый номер чанка
                 ; Out:
+                ;   A - текущий CadencePassId диапазона,
+                ;       если чанк не найден в ChunkOrder, возвращает #FF
                 ; Corrupt:
-                ;   L, BC, AF, AF'
+                ;   HL, BC, AF
                 ; Note:
                 ; -----------------------------------------
-                CALL ChunkArray.Insert
+                LD A, (IY + FObject.Chunk)
+                CALL Object.Utilities.CadencePassIdByChunk
+                LD (IY + FObject.CadencePassID), A
 
                 ; -----------------------------------------
                 ; установка значений по умолчанию
@@ -110,6 +113,9 @@ Spawn:          ; -----------------------------------------
                 LD IXH, A
                 LD A, L
                 LD IXL, A
+
+                ; ToDo: при спавне из TickScheduler передавать в инициализатор
+                ;       текущий CadencePassId диапазона
 
                 LD A, (IX + FObjectDefaultSettings.Class)
                 AND OBJECT_CLASS_MASK
