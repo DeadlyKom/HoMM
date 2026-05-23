@@ -32,26 +32,26 @@ InView:         ; инициализация
 
                 ; корректировка ширины захвата чанков, если не выровнено
                 LD A, E
-                AND CHUNK_SIZE_MASK
+                AND Page0.ChunkArray.CHUNK_SIZE_MASK
                 JR Z, $+3
                 INC C
 
                 ; корректировка центрирования захвата видимого окна
                 LD A, E
-                SUB CHUNK_SIZE
+                SUB Page0.ChunkArray.CHUNK_SIZE
                 JR C, $+4
                 LD E, A
                 INC C
 
                 ; корректировка высоты захвата чанков, если не выровнено
                 LD A, D
-                AND CHUNK_SIZE_MASK
+                AND Page0.ChunkArray.CHUNK_SIZE_MASK
                 JR Z, $+3
                 INC B
 
                 ; корректировка центрирования захвата видимого окна
                 LD A, D
-                SUB CHUNK_SIZE
+                SUB Page0.ChunkArray.CHUNK_SIZE
                 JR C, $+4
                 LD D, A
                 INC B

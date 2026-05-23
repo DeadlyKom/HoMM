@@ -17,43 +17,45 @@ Initialize:     LD DE, #0000
                 ; очистка массива чанков для статических объектов
                 LD HL, (Adr.ChunkArrayValues + Size.ChunkArrayValues) & 0xFFFF
                 CALL SafeFill.b256
-                
-                ; ToDo сделать инициализацию на основе размера карты
 
-                ; подготовка
-                LD C, #00
+                ; инициализацию на основе размера карты
+                LD A, (GameSession.MapSize.Width)                               ; размер карты по горизонтали
+                LD C, A
+                LD A, (GameSession.MapSize.Height)                              ; размер карты по вертикали
+                CP C
+                DEBUG_BREAK_POINT_NZ                                            ; произошла ошибка!
+                                                                                ; размеры ширины и высоты карты различаются
 
-                ; округление
-                ; LD A, (GameSession.MapSize.Width)
-                LD A, 64                                                        ; размер карты по горизонтали
-                rept CHUNK_SHIFT
-                RRA
-                ADC A, C
-                endr
-                DEC A
-                LD (GetChunkIndex.Mask), A
+                ; определение индекса в таблице адресов функций
+                RRA             ; %0HHHHHHH : H
+                RRA             ; %H0HHHHHH : H
+                RRA             ; %HH0HHHHH : H
+                AND %00011110   ; %000HHHH0 : 0
+                SUB #03 << 1
+                DEBUG_BREAK_POINT_C                                             ; произошла ошибка!
+                                                                                ; размеры карты меньше 48
+                ifdef _DEBUG
+                CP #03 << 1
+                DEBUG_BREAK_POINT_NC                                            ; произошла ошибка!
+                                                                                ; размер карты больше 80
+                endif
 
-                ; округление
-                ; LD A, (GameSession.MapSize.Height)
-                LD A, 64                                                        ; размер карты по вертикали
-                rept CHUNK_SHIFT
-                RRA
-                ADC A, C
-                endr
+                ; определение адреса в таблице
+                ADD A, LOW .Table
+                LD L, A
+                ADC A, HIGH .Table
+                SUB L
+                LD H, A
 
-                RRA                                                             ; пропуск 1 бита
-                LD HL, #1F1F                                                    ; x2 (RRA : RRA)
-                RRA
-                JR C, .SetOperation
-                LD H, C                                                         ; x4
-                RRA
-                JR C, .SetOperation
-                LD L, C                                                         ; x8
-                RRA
-                JR C, .SetOperation
-                LD L, #87                                                       ; x16 (ADD A, A)
-.SetOperation   LD (GetChunkIndex.Operation), HL
+                ; чтение адреса
+                LD E, (HL)
+                INC HL
+                LD D, (HL)
 
+                ; установка адреса функции
+                LD (GetChunkIndex + 1), DE
                 RET
+
+.Table          DW Shift._48, Shift._64, Shift._80
 
                 endif ; ~ _CHUNK_ARRAY_INITIALIZE_

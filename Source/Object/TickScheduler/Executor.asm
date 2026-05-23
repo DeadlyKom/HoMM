@@ -108,12 +108,9 @@ CheckEpochBarrier:
                 AND %00000111
                 RET NZ                                                          ; выход, если объекты во всех "шаг обновления" не обработались
 
+                BIT 7, (HL)                                                     ; проверка флага обновление массива ChunkOrder
                 LD (HL), %00000111                                              ; сброс флагов cadence
-
-                ; проверка обновление массива ChunkOrder
-                LD A, (TickScheduler.Variables + FTickScheduler.Flags)
-                ADD A, A
-                JP NZ, Builder                                                  ; необходимо перестроить массив ChunkOrder
-                RET
+                RET Z                                                           ; выход, если нет необходимости перестроить массив ChunkOrder
+                JP BuilderTwoPass
 
                 endif ; ~_OBJECT_TICK_SCHEDULER_EXECUTOR_

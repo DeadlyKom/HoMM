@@ -26,15 +26,15 @@ Launch:         ; -----------------------------------------
                             Page.BitScanLsbTable, Size.BitScanLsbTable          ; копирование блока cгенерированной таблицы для поиска первого установленного бита
                 ; генерация таблица вычисления mod 6 числа (0-21)
                 LD HL, Adr.CodeToScr
-                LD B, 128
+                LD B, 22
                 CALL Tables.TG_Div6Table
                 MEMCPY_PAGE Adr.CodeToScr, Adr.Div6Table22, \
                             Page.Div6Table22, Size.Div6Table22                  ; копирование блока cгенерированной таблицы деления 0-21 на 6
                 ; генерация таблицы номера экранного блока (с 1 по 22 строку включительно) с высотой гексагона
-                LD HL, Adr.CodeToScr+80
+                LD HL, Adr.CodeToScr + 80
                 LD D, HIGH Adr.CodeToScr
                 CALL Tables.TG_ScrBlockTable
-                MEMCPY_PAGE Adr.CodeToScr+80, Adr.ScrBlockTable, \
+                MEMCPY_PAGE Adr.CodeToScr + 80, Adr.ScrBlockTable, \
                             Page.ScrBlockTable, Size.ScrBlockTable              ; копирование блока cгенерированной таблицы номера экранного блока (с 1 по 22 строку включительно) с высотой гексагона
                 ; -----------------------------------------
                 ; инициализация спрайтов
