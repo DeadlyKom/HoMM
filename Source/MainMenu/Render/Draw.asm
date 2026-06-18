@@ -25,7 +25,11 @@ Draw:           ; -----------------------------------------
                 LAUNCH_ASSET_FUNCTION_RESTORE Session.Make, ExecuteModule.Session
 
                 ; установка флага завершение цикла
-                SET_MAIN_FLAG ML_EXIT_BIT
+                ; SET_MAIN_FLAG ML_EXIT_BIT
+
+                ; загрузка данных контента "главного меню"
+                CALL MainMenu.Base.Content.Portal.Load
+                CALL MainMenu.Base.Render.Portal.Initialize                     ; первичная инициализация
                 ;---------------------------------------------------------------
 
 .Enter          ; -----------------------------------------
@@ -43,8 +47,9 @@ Draw:           ; -----------------------------------------
 .Tick           ; -----------------------------------------
                 ; тик
                 ; -----------------------------------------
+                CALL Portal.Play                                                ; проигрывание анимации "портала"
 
-                SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
+                ; SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 RES_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE             ; выборочный сброс Render флагов
                 SET_RENDER_FLAG FRAME_READY_BIT                                 ; установка флага готовности кадра
                 RET

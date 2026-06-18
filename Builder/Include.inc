@@ -47,7 +47,7 @@
                 define TRD_DISK_1   "Disk A"                                    ; название диска А
 
                 define MAX_PAGES 32                                             ; максимальное количество страниц памяти по 16кб
-                define MIN_PAGES_ALLOWED 8                                      ; минимальное допустимое количество страниц памяти по 16кб
+                define MIN_PAGES_ALLOWED 16                                     ; минимальное допустимое количество страниц памяти по 16кб
 
                 include "LUA/Include.inc"
                 include "Includes/Include.inc"

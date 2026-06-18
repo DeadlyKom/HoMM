@@ -71,10 +71,15 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     ASSETS_ARCHIVE, \
                                     "  - Main menu (content #01)\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_MAIN_MENU_GRAPH_PACK_1, \
-                                    UI.Graphics.MainMenu.Portal.Pack.Frame8_16.Size, \
-                                    UI.Graphics.MainMenu.Portal.Pack.Frame8_16.Size.Sector.ar, \
+                                    UI.Graphics.MainMenu.Portal.Pack.Frame8_11.Size, \
+                                    UI.Graphics.MainMenu.Portal.Pack.Frame8_11.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Main menu (content #02)\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_MAIN_MENU_GRAPH_PACK_2, \
+                                    UI.Graphics.MainMenu.Portal.Pack.Frame12_16.Size, \
+                                    UI.Graphics.MainMenu.Portal.Pack.Frame12_16.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Main menu (content #03)\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_SESSION, \
                                     Session.Size, \
                                     Session.Size.Sector.ar, \

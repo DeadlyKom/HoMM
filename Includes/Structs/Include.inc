@@ -15,6 +15,7 @@
                 include "Tick.inc"
                 include "Size.inc"
                 include "Keys.inc"
+                include "Frame.inc"
                 include "Item_ID.inc"
                 include "WorldInfo.inc"
                 include "TickScheduler.inc"

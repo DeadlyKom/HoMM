@@ -2,7 +2,7 @@
                 ifndef _MAIN_MENU_CONTENT_PORTAL_LOAD_
                 define _MAIN_MENU_CONTENT_PORTAL_LOAD_
 ; -----------------------------------------
-; загрузка контент данных "главного меню"
+; загрузка данных контента "главного меню"
 ; In:
 ; Out:
 ; Corrupt:
@@ -10,8 +10,10 @@
 ; -----------------------------------------
 Load:           ; инициализация
                 LD HL, ArrayAssets
-                LD IY, Frame
-                LD B, ArrayAssets.Num
+                LD IY, Adr.FrameArray
+                LD BC, ArrayAssets.Num << 8                                     ; С - счётчик количества элементов в массиве Adr.FrameArray
+                LD A, C
+                LD (FrameArray.Num), A
 
 .Loop           ; чтение идентификатора загружаемого ассета
                 LD A, (HL)
@@ -24,6 +26,11 @@ Load:           ; инициализация
                                                                                 ;   HL - адрес загрузки/распаковки
                 ; чтение количество кадров в блоке
                 LD B, (HL)
+                LD A, B
+                EXX
+                ADD A, C
+                LD C, A
+                EXX
                 INC HL
 
 .FrameLoop      ; чтение продолжительности кадра
@@ -42,7 +49,8 @@ Load:           ; инициализация
                 INC HL
                 EX DE, HL
                 ADD HL, DE
-                LD (IY + FFrame.Address.Adr), HL
+                EX DE, HL
+                LD (IY + FFrame.Address.Adr), DE
 
                 ; слудующий кадр
                 LD DE, FFrame
@@ -51,6 +59,10 @@ Load:           ; инициализация
 
                 EXX
                 DJNZ .Loop
+
+                ; сохранение количество элементов в массиве Adr.FrameArray
+                LD A, C
+                LD (FrameArray.Num), A
                 RET
 
                 endif ; ~_MAIN_MENU_CONTENT_PORTAL_LOAD_

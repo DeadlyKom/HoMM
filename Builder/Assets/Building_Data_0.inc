@@ -35,8 +35,10 @@ ADD_ASSETS_DEBUG macro Bank?, Page?, ORG?, Include?
                 ADD_ASSETS 1, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/MainMenu.pack.ar"
                 ; ASSETS_ID_MAIN_MENU_GRAPH_PACK_0
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/MainMenu/First/0_7.pack.ar"
-                ; ; ASSETS_ID_MAIN_MENU_GRAPH_PACK_1
-                ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/MainMenu/First/8_16.pack.ar"
+                ; ASSETS_ID_MAIN_MENU_GRAPH_PACK_1
+                ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/MainMenu/First/8_11.pack.ar"
+                ; ASSETS_ID_MAIN_MENU_GRAPH_PACK_2
+                ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/MainMenu/First/12_16.pack.ar"
                 ; ASSETS_ID_SESSION
                 ADD_ASSETS 1, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/Session.pack.ar"
                 ; ASSETS_ID_WORLD
