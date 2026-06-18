@@ -69,17 +69,9 @@ Size:           EQU $-Begin                                                     
                 display " - Render buffer:\t\t\t\t\t", /A, Adr.RenderBuffer, "\t= busy [ ", /D, Size.RenderBuffer, " byte(s)  ]"
                 display " - Tilemap buffer:\t\t\t\t\t", /A, Adr.TilemapBuffer, "\t= busy [ ", /D, Size.TilemapBuffer, " byte(s)  ]"
 BufferSize:     EQU Size.SpriteInfoBuffer + Size.ExtraBuffer + Size.SortBuffer +  Size.SharedBuffer + Size.RenderBuffer + Size.TilemapBuffer
-
-                ifdef _REBUILD
-                savebin "Builder/Assets/Code/Original/Kernel/Kernel.pack", Begin, Size
-                shellexec "Tools\Compressor\salvador.exe -v Builder/Assets/Code/Original/Kernel/Kernel.pack Builder/Assets/Code/Compressed/Kernel.pack.ar"
-                endif
-
-                ORG 0x0000
-Begin.ar        incbin "Builder/Assets/Code/Compressed/Kernel.pack.ar"
-Size.ar         EQU $-Begin.ar
-Size.Sector.ar  EQU ((Size.ar % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size.ar >> 8)
-
+                COMPRESSED_ASSET \
+                "Builder/Assets/Code/Original/Kernel/Kernel.pack", \
+                "Builder/Assets/Code/Compressed/Kernel.pack.ar"
                 endmodule
 
                 endif ; ~ _CODE_KERNEL_PACK_

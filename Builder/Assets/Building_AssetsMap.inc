@@ -65,6 +65,16 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     MainMenu.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Main menu\t\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_MAIN_MENU_GRAPH_PACK_0, \
+                                    UI.Graphics.MainMenu.Portal.Pack.Frame0_7.Size, \
+                                    UI.Graphics.MainMenu.Portal.Pack.Frame0_7.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Main menu (content #01)\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_MAIN_MENU_GRAPH_PACK_1, \
+                                    UI.Graphics.MainMenu.Portal.Pack.Frame8_16.Size, \
+                                    UI.Graphics.MainMenu.Portal.Pack.Frame8_16.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Main menu (content #02)\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_SESSION, \
                                     Session.Size, \
                                     Session.Size.Sector.ar, \
@@ -119,7 +129,7 @@ Sector          EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)       
                 endif
 
                 if Num * FAssets > Size.AssetsTable
-                error "превышен доступный размер таблицы"
+                error "превышен доступный размер таблицы"                       ; см. ASSETS_MAX
                 endif
                 
 

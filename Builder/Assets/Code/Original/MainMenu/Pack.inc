@@ -47,12 +47,7 @@ Size            EQU $                                                           
                 endif
 
                 ; -----------------------------------------
-
-                ORG 0x0000
-Begin.ar        incbin "Builder/Assets/Code/Compressed/MainMenu.pack.ar"
-Size.ar         EQU $-Begin.ar
-Size.Sector.ar  EQU ((Size.ar % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size.ar >> 8)
-
+                ASSETS_SIZE "Builder/Assets/Code/Compressed/MainMenu.pack.ar"
                 endmodule
 
                 endif ; ~ _CODE_MAIN_MENU_PACK_

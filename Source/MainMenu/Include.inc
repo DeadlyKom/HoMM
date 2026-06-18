@@ -12,6 +12,7 @@
                 include "Core/Include.inc"
                 include "Input/Include.inc"
                 include "Render/Include.inc"
+                include "Content/Include.inc"
 Size            EQU $-Adr.MainMenu
 
                 ENT

@@ -10,6 +10,7 @@
 *.tzx
 .exp
 *.pack
+*.bin.ar
 *.pack.ar
 *.pack.pass-1
 *.pack.pass-2

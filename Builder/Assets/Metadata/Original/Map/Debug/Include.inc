@@ -38,12 +38,7 @@ Objects.Size    EQU $-Objects
 Size            EQU $
                 savebin "Builder/Assets/Metadata/Original/Map/Debug.map", 0, Size
                 shellexec "Tools\Compressor\salvador.exe -v Builder/Assets/Metadata/Original/Map/Debug.map Builder/Assets/Metadata/Compressed/Map/Debug.map.ar"
-
-                ORG 0x0000
-Begin.ar        incbin "Builder/Assets/Metadata/Compressed/Map/Debug.map.ar"
-Size.ar         EQU $
-Size.Sector.ar  EQU ((Size.ar % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size.ar >> 8)
-
+                ASSETS_SIZE "Builder/Assets/Metadata/Compressed/Map/Debug.map.ar"
                 endmodule
 
                 endif ; ~ _METADATA_MAP_DEBUG_

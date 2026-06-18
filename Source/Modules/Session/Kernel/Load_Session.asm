@@ -24,7 +24,6 @@ Load_Session:   ; копирование блока
                 ; загрузка карты
                 LD A, (GameSession.SaveSlot + FSaveSlot.MapID)
                 CALL SharedCode.Load.Map
-
                 JP SharedCode.Core.ReleaseAsset                                 ; освобождение текущего ресурса ("сессии")
 
                 display " - Load 'Session':\t\t\t\t\t\t     \t= busy [ ", /D, $-Load_Session, " byte(s) ]"

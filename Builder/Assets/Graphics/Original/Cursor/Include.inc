@@ -6,16 +6,12 @@
                 module Cursor
 
                 ORG #0000
-                
+Begin:          EQU $
                 include "Pack.inc"
-Size            EQU $
-                savebin "Builder/Assets/Graphics/Original/Cursor/Cursor.pack", 0, Size
-                shellexec "Tools\Compressor\salvador.exe -v Builder/Assets/Graphics/Original/Cursor/Cursor.pack Builder/Assets/Graphics/Compressed/Cursor.pack.ar"
-
-                ORG 0x0000
-Begin.ar        incbin "Builder/Assets/Graphics/Compressed/Cursor.pack.ar"
-Size.ar         EQU $
-Size.Sector.ar  EQU ((Size.ar % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size.ar >> 8)
+Size            EQU $-Begin
+                COMPRESSED_ASSET \
+                "Builder/Assets/Graphics/Original/Cursor/Cursor.pack", \
+                "Builder/Assets/Graphics/Compressed/Cursor.pack.ar"
                 endmodule
                 endmodule
 

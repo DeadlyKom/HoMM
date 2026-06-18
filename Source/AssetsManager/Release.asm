@@ -15,6 +15,11 @@
 ; -----------------------------------------
 ReleaseAsset:   ; расчёт адреса информации о ресурсе
                 ASSETS_ADR_A                                                    ; расчёт адреса информации о ресурсе
+                
+                ; проверить необходимость загрузки ресурса
+                BIT ASSETS_LOAD_BIT, (IX + FAssets.Flags)
+                RET Z                                                           ; выход, если ресурс не загружен
+
                 RES ASSETS_LOAD_BIT, (IX + FAssets.Flags)                       ; сброс флага загрузки ресурса
                 SET ASSETS_MARKED_BIT, (IX + FAssets.Address.Page)              ; установка флага невостребованный
                 SET ASSETS_ALLOCATION_BIT, (IX + FAssets.Address.Page)          ; установка флага, требуется автоматическая аллокация

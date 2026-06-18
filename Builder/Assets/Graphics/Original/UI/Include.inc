@@ -6,6 +6,7 @@
                 
                 ; include "ArrowPath/Include.inc"
                 include "Game/World/Include.inc"
+                include "MainMenu/Include.inc"
 
                 endmodule
 

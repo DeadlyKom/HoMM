@@ -18,7 +18,6 @@ Make_Session:   ; копирование блока
 
                 ; ToDo: в будущем предоставить пользователю сообщение об ошибке
                 DEBUG_BREAK_POINT_NC                                            ; ошибка, слот сохранения не является корректным
-
                 JP SharedCode.Core.ReleaseAsset                                 ; освобождение текущего ресурса
 
                 display " - Make 'Session':\t\t\t\t\t\t     \t= busy [ ", /D, $-Make_Session, " byte(s) ]"
