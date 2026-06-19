@@ -25,6 +25,7 @@ Draw:           ; -----------------------------------------
                 LAUNCH_ASSET_FUNCTION_RESTORE Session.Make, ExecuteModule.Session
 
                 ; ToDo: временная проверка запуска меню
+                ifndef ENABLE_MAIN_MENU
                 ; проверка клавиш 'М'
                 LD A, VK_M
                 CALL Input.CheckKeyState
@@ -33,6 +34,7 @@ Draw:           ; -----------------------------------------
                 ; установка флага завершение цикла
                 SET_MAIN_FLAG ML_EXIT_BIT
                 JR .Enter
+                endif
 
 .InitMenu       ; загрузка данных контента "главного меню"
                 CALL MainMenu.Base.Content.Portal.Load

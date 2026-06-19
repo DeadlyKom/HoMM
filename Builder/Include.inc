@@ -33,6 +33,7 @@
 
                 ; препроцессоры вкл/откл
                 ; define ENABLE_MUSIC                                             ; разрешить музыку
+                ; define ENABLE_MAIN_MENU                                         ; разрешить главное меню
                 define ENABLE_MOUSE                                             ; разрешить мышь
                 define ENABLE_KEMSTON_JOYSTICK_SEGA                             ; разрешить использовать расширенный Кемстон Джойстик (SEGA 8 bits)
 
