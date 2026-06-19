@@ -9,7 +9,11 @@
 ; Note:
 ;    адрес исполнения неизвестен
 ; -----------------------------------------
-Launch:         ; сохранение страницы
+Launch:         ; очистка экрана
+                CLS SCR_ADR_BASE, 0xFF                                          ; очистка основного экрана
+                ATTR_IPB SCR_ADR_BASE, BLACK, WHITE, 0                          ; очистка атрибутов основного экрана
+                
+                ; сохранение страницы
                 LD A, (GameState.Assets + FAssets.Address.Page)
                 LD (Kernel.Modules.MainMenu.Page), A
 

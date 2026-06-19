@@ -18,16 +18,23 @@ Draw:           ; -----------------------------------------
                 CHECK_MAIN_FLAG ML_TRANSITION_BIT
                 JR Z, .Enter
 
-                ; ToDo: временноя инициализация, без взаимодействия с пользователем
+                ; ToDo: временная инициализация, без взаимодействия с пользователем
                 ;---------------------------------------------------------------
                 ; создание слота сохранения и инициализация
                 RES_USER_HANDLER                                                ; отключение обработчика прерываний
                 LAUNCH_ASSET_FUNCTION_RESTORE Session.Make, ExecuteModule.Session
 
-                ; установка флага завершение цикла
-                ; SET_MAIN_FLAG ML_EXIT_BIT
+                ; ToDo: временная проверка запуска меню
+                ; проверка клавиш 'М'
+                LD A, VK_M
+                CALL Input.CheckKeyState
+                JR Z, .InitMenu
 
-                ; загрузка данных контента "главного меню"
+                ; установка флага завершение цикла
+                SET_MAIN_FLAG ML_EXIT_BIT
+                JR .Enter
+
+.InitMenu       ; загрузка данных контента "главного меню"
                 CALL MainMenu.Base.Content.Portal.Load
                 CALL MainMenu.Base.Render.Portal.Initialize                     ; первичная инициализация
                 ;---------------------------------------------------------------
