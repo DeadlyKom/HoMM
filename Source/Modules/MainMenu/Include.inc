@@ -5,6 +5,7 @@
                 include "Kernel/Bind.inc"
                 include "Launch.asm"
                 include "Kernel/Include.inc"
+                include "Source/TableGeneration/TG_Force.asm"
                 
                 ; блок кода, копируемый при развёртывания модуля
 Adr.Deploy.MainMenu     include "Source/MainMenu/Include.inc"

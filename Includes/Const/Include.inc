@@ -12,6 +12,7 @@
                 include "Setup.inc"
                 include "Cursor.inc"
                 include "Gameplay.inc"
+                include "Particle.inc"
                 include "SaveSlot.inc"
                 include "Interrupt.inc"
                 include "StateTree.inc"

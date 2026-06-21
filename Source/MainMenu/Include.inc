@@ -13,6 +13,8 @@
                 include "Input/Include.inc"
                 include "Render/Include.inc"
                 include "Content/Include.inc"
+
+                include "Particle/Include.inc"                                  ; ToDo вынести код в 7 стр
 Size            EQU $-Adr.MainMenu
 
                 ENT

@@ -36,9 +36,7 @@ Draw:           ; -----------------------------------------
                 JR .Enter
                 endif
 
-.InitMenu       ; загрузка данных контента "главного меню"
-                CALL MainMenu.Base.Content.Portal.Load
-                CALL MainMenu.Base.Render.Portal.Initialize                     ; первичная инициализация
+.InitMenu       CALL MainMenu.Base.Core.Initialize                              ; первичная инициализация "главного меню"
                 ;---------------------------------------------------------------
 
 .Enter          ; -----------------------------------------

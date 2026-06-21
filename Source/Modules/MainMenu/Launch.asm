@@ -9,20 +9,20 @@
 ; Note:
 ;    адрес исполнения неизвестен
 ; -----------------------------------------
-Launch:         ; очистка экрана
-                CLS SCR_ADR_BASE, 0xFF                                          ; очистка основного экрана
-                ATTR_IPB SCR_ADR_BASE, BLACK, WHITE, 0                          ; очистка атрибутов основного экрана
-                
-                ; сохранение страницы
+Launch:         ; сохранение страницы
                 LD A, (GameState.Assets + FAssets.Address.Page)
                 LD (Kernel.Modules.MainMenu.Page), A
 
+                ; очистка экрана
+                CLS SCR_ADR_BASE, 0xFF                                          ; очистка основного экрана
+                ATTR_IPB SCR_ADR_BASE, BLACK, WHITE, 0                          ; очистка атрибутов основного экрана
+
                 MEMCPY Adr.Deploy.MainMenu, Adr.MainMenu, Size.Deploy.MainMenu  ; копирование блока
 
-                ; инициализация мира 
+                ; инициализация "главного меню"
                 SET_MAIN_LOOP MainMenu.Base.Loop                                ; установка главного цикла
                 SET_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE             ; установка флагов
-                SET_MAIN_MENU_RENDER MainMenu.Base.Render.Draw                  ; инициализаци главного рендера "мира"
+                SET_MAIN_MENU_RENDER MainMenu.Base.Render.Draw                  ; инициализаци главного рендера "главного меню"
                 SET_USER_HANDLER MainMenu.Base.Interrupt                        ; установка обработчика прерываний
                 RES_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                           ; разрешить сканирование ввода
                 SET_RENDER_FLAG SWAP_DISABLE_BIT                                ; запретить смену экранов
