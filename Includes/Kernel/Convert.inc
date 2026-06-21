@@ -6,11 +6,11 @@ Convert:
 .SetShadowScreen        EQU Bootloader.KernelMinimal.Utilities.SetShadowScreen      ; установка работы с теневым экраном
 .DrawToVisibleScreen    EQU Bootloader.KernelMinimal.Utilities.DrawToVisibleScreen  ; установка работы функций с видимым экраном
 .DrawToHiddenScreen     EQU Bootloader.KernelMinimal.Utilities.DrawToHiddenScreen   ; установка работы функций со скрытым экраном
-.CharToScreen           EQU Bootloader.KernelMinimal.Utilities.PixelAddressC        ; расчёт экраного адреса (в знакоместах)
-.PixelToScreen          EQU Bootloader.KernelMinimal.Utilities.PixelAddressP        ; расчёт экраного адреса (в пикселях)
-.AttributeAdr           EQU Bootloader.KernelMinimal.Utilities.AttributeAdr         ; расчёт экраного адреса атрибутов
-.ToAttribute            EQU Bootloader.KernelMinimal.Utilities.PixelAttribute       ; конверсия экраного адреса в адрес атрибутов
-.ToPixel                EQU Bootloader.KernelMinimal.Utilities.AttributePixel       ; конверсия экраного адреса атрибутов в адрес пикселей
+.CharToScreen           EQU Bootloader.KernelMinimal.Utilities.PixelAddressC        ; расчёт экранного адреса (в знакоместах)
+.PixelToScreen          EQU Bootloader.KernelMinimal.Utilities.PixelAddressP        ; расчёт экранного адреса (в пикселях)
+.AttributeAdr           EQU Bootloader.KernelMinimal.Utilities.AttributeAdr         ; расчёт экранного адреса атрибутов
+.ToAttribute            EQU Bootloader.KernelMinimal.Utilities.PixelAttribute       ; конверсия экранного адреса в адрес атрибутов
+.ToPixel                EQU Bootloader.KernelMinimal.Utilities.AttributePixel       ; конверсия экранного адреса атрибутов в адрес пикселей
 .MapPosToSprFormat      EQU Kernel.Utilities.MapPosToSprFormat                      ; преобразовать положение на карте в формату спрайта
 Utilities:
 .SpriteBound            EQU Kernel.Utilities.SpriteBound                            ; получить ограничивающий прямоугольник спрайта

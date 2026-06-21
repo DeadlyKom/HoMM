@@ -39,7 +39,7 @@ ObjectDefaultSettings   EQU PAGE_0
 ObjectsArray            EQU OBJECT_SIZE * OBJECT_MAX                            ; размер массива объектов
 ParticipantArray        EQU #0100                                               ; размер массива участников (PARTICIPANT_SIZE * MAX_PARTICIPANT)
 AIContextArray          EQU #0100                                               ; размер массива AI-контекстов (STATE_TREE_SIZE * STATE_TREE_ACTIVE_AI_MAX)
-HeroPath                EQU #0080                                               ; размер массива найденого пути в виде последовательности координат тайлов (FPath),
+HeroPath                EQU #0080                                               ; размер массива найденного пути в виде последовательности координат тайлов (FPath),
                                                                                 ; где нулевой элемент является последним
 CharacterArray          EQU CHARACTER_SIZE * MAX_PARTICIPANT_CHARACTERS \
                             * MAX_PARTICIPANT                                   ; размер массива персонажей FCharacter
@@ -55,7 +55,7 @@ ObjectsArray            EQU #C000                                               
 CharacterArray          EQU #D000                                               ; адрес массива персонажей
 ParticipantArray        EQU #D400                                               ; адрес массива участников
 AIContextArray          EQU #D500                                               ; адрес массива AI-контекстов
-HeroPath                EQU #D680                                               ; адрес массива найденого пути в виде последовательности координат тайлов (FPath),
+HeroPath                EQU #D680                                               ; адрес массива найденного пути в виде последовательности координат тайлов (FPath),
                                                                                 ; где нулевой элемент является последним
 Code.Page0              EQU #E000                                               ; адрес блока кода
                                                                                 ; (помещён в центр, при распоковке затрутся ObjectDefaultSettings)

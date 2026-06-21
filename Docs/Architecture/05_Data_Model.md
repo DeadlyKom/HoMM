@@ -88,7 +88,7 @@ classDiagram
 Это уже полноценная игровая сущность данных, которая хранит:
 - `Class`;
 - `ParticipantID`;
-- `Skils`;
+- `Skills`;
 - `CombatStates`;
 - `Equipment`;
 - `ObjectID`.
