@@ -110,6 +110,10 @@ AddObjects:     ;
                 LD A, (HL)
                 INC L
 
+                if OBJECT_SIZE > 32
+                error "address calculation error"
+                endif
+
                 ; %0aaaaaaa
                 LD C, HIGH Adr.ObjectsArray >> 4    ; %00001100
                 ADD A, A    ; %aaaaaaa0 : 0

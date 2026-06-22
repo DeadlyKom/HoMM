@@ -1,6 +1,6 @@
 
-                ifndef _OBJECT_PLACEMENT_NEW_
-                define _OBJECT_PLACEMENT_NEW_
+                ifndef _MAIN_MENU_PARTICLE_PLACEMENT_NEW_
+                define _MAIN_MENU_PARTICLE_PLACEMENT_NEW_
 ; -----------------------------------------
 ; размещение нового объекта
 ; In:
@@ -13,42 +13,35 @@
 ; Note:
 ; -----------------------------------------
 PlacemantNew    ; инициализация
-                LD HL, GameSession.WorldInfo + FWorldInfo.ObjectNum
+                LD HL, Update.ParticleNum
 
                 ; проверка переполнения массива
                 LD A, (HL)
-                CP OBJECT_MAX
+                CP MAX_TARGET_PARTICLE
                 CCF
                 RET C                                                           ; выход, если нет места для размещения элемента
 
                 INC (HL)                                                        ; увеличение счётчика элементов
                 LD L, A                                                         ; сохранение номера элемента
                 EX AF, AF'                                                      ; сохранение номера элемента
-                
-                if OBJECT_SIZE > 32
+
+                if TARGET_PARTICLE_SIZE > 12
                 error "address calculation error"
                 endif
 
                 ; расчёт адреса последнего элемента в массиве
-                ; адрес расположения элемента = адрес первого элемента + N элемента * OBJECT_SIZE    
-                LD H, HIGH Adr.ObjectsArray >> 4    ; %00001100
-                LD A, L     ; %0aaaaaaa
-                ADD A, A    ; %aaaaaaa0 : 0
-                ADD A, A    ; %aaaaaa00 : a
-                RL H        ; %0001100a
-                ADD A, A    ; %aaaaa000 : a
-                RL H        ; %001100aa
-                ADD A, A    ; %aaaa0000 : a
-                RL H        ; %01100aaa
-                ADD A, A    ; %aaa00000 : a
-                RL H        ; %1100aaaa
-
-                LD IYL, A
-                LD A, H
-                LD IYH, A
+                ; адрес расположения элемента = адрес первого элемента + N элемента * TARGET_PARTICLE_SIZE
+                LD H, #00
+                LD D, H
+                LD E, L
+                ADD HL, HL  ; x2
+                ADD HL, DE  ; x3
+                ADD HL, HL  ; x6
+                ADD HL, HL  ; x12
+                EX DE, HL
+                LD IY, Adr.ParticleArray
+                ADD IY, DE
 
                 RET
 
-                display " - Placemant new object:\t\t\t\t", /A, PlacemantNew, "\t= busy [ ", /D, $-PlacemantNew, " byte(s)  ]"
-
-                endif ; ~_OBJECT_PLACEMENT_NEW_
+                endif ; ~_MAIN_MENU_PARTICLE_PLACEMENT_NEW_

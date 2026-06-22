@@ -17,6 +17,10 @@ FindLastByPredicate:
                 LD A, (GameSession.WorldInfo + FWorldInfo.ObjectNum)
                 LD B, A
 
+                if OBJECT_SIZE > 32
+                error "address calculation error"
+                endif
+
                 ; расчёт адреса последнего элемента в массиве
                 ; адрес расположения объекта = адрес первого элемента + N объекта * OBJECT_SIZE
                 ; %0aaaaaaa

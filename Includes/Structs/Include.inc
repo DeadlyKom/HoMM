@@ -24,6 +24,7 @@
                 include "SpriteNotClipping.inc"
                 
                 include "UI.inc"
+                include "Glyph.inc"
                 include "Map/Include.inc"
                 include "SaveSlot.inc"
 

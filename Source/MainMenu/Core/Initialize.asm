@@ -18,6 +18,7 @@ Initialize:     ; генерация таблицы
                 ; загрузка данных контента "главного меню"
                 CALL MainMenu.Base.Content.Portal.Load
                 CALL MainMenu.Base.Render.Portal.Initialize                     ; первичная инициализация
+                CALL MainMenu.Base.Particle.Initialize                          ; инициализация работы счастицами
                 RET
 
                 endif ; ~_MODULE_MAIN_MENU_CORE_INITIALIZE_
