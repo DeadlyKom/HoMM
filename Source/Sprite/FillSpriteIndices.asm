@@ -17,7 +17,7 @@
 ; Corrupt:
 ; Note:
 ;   необходимо проинициализировать следующие переменные
-;       FindGraphHeader.HeaderNum - количество количество заголовков графики FGraphicHeader
+;       FindGraphHeader.HeaderNum - количество заголовков графики FGraphicHeader
 ;       FindGraphHeader.HeaderAdr - адрес массива заголовков графики FGraphicHeader
 ; -----------------------------------------
 FillSpriteIndices:

@@ -3,6 +3,7 @@
                 define _MAIN_MENU_CONTENT_INCLUDE_
 
                 module Content
+                include "Font/Include.inc"
                 include "Portal/Include.inc"
                 endmodule
 

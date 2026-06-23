@@ -23,6 +23,7 @@ REG_ASSETS_ID_DEBUG macro Label?
                     REG_ASSETS_ID       ASSETS_ID_MAIN_MENU_GRAPH_PACK_0        ; главное меню - графический пакет #00
                     REG_ASSETS_ID       ASSETS_ID_MAIN_MENU_GRAPH_PACK_1        ; главное меню - графический пакет #01
                     REG_ASSETS_ID       ASSETS_ID_MAIN_MENU_GRAPH_PACK_2        ; главное меню - графический пакет #02
+                    REG_ASSETS_ID       ASSETS_ID_FONT_RU_8_PARTICLE            ; русский шрифт 8 (для частиц)
                     REG_ASSETS_ID       ASSETS_ID_SESSION                       ; сессия
                     REG_ASSETS_ID       ASSETS_ID_WORLD                         ; мир
                     REG_ASSETS_ID       ASSETS_ID_DEFAULT_SETTINGS              ; дефолтные настройки объектов

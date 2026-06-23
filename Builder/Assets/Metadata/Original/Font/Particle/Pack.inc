@@ -6,6 +6,8 @@
 
                 ORG #0000
 Begin:          EQU $
+                DB Glyphs.Num                                                   ; количество глифов
+
                 ; таблица глифов
                 DW Glyphs.ru_0
                 DW Glyphs.ru_1
@@ -13,7 +15,7 @@ Begin:          EQU $
                 DW Glyphs.ru_3
                 DW Glyphs.ru_4
                 DW Glyphs.ru_5
-
+Glyphs.Num      EQU ($-Begin-1) / 2
 Glyphs:         ; глифы
 .ru_0           incbin "Glyph ru_0.bin"                                         ; А
 .ru_1           incbin "Glyph ru_1.bin"                                         ; Б

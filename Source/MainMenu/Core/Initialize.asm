@@ -16,7 +16,8 @@ Initialize:     ; генерация таблицы
                             Page.ForceTable, Size.ForceTable                    ; копирование блока между страницами
 
                 ; загрузка данных контента "главного меню"
-                CALL MainMenu.Base.Content.Portal.Load
+                CALL MainMenu.Base.Content.Font.Load                            ; загрузка ассета шрифта (для частиц)
+                CALL MainMenu.Base.Content.Portal.Load                          ; загрузка данных контента "главного меню"
                 CALL MainMenu.Base.Render.Portal.Initialize                     ; первичная инициализация
                 CALL MainMenu.Base.Particle.Initialize                          ; инициализация работы счастицами
                 RET

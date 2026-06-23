@@ -80,6 +80,11 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     UI.Graphics.MainMenu.Portal.Pack.Frame12_16.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Main menu (content #03)\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_FONT_RU_8_PARTICLE, \
+                                    Font.Pack.Size, \
+                                    Font.Pack.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Russian font 8 (for particle)\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_SESSION, \
                                     Session.Size, \
                                     Session.Size.Sector.ar, \

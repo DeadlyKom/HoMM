@@ -16,7 +16,7 @@ Load:           ; загрузка графики UI 'стрелок пути'
 
                 ; расчёт размера копируемых данных структур FSprite
                 LD HL, (GameState.Assets + FAssets.Address.Adr)
-                LD B, (HL)                                                      ; количество количество заголовков графики FGraphicHeader
+                LD B, (HL)                                                      ; количество заголовков графики FGraphicHeader
                 
                 ; инициализация функции поиска заголовка в массиве
                 LD A, B
