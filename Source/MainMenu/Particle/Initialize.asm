@@ -12,12 +12,17 @@ Initialize:     ; обнуление счётчика элементов в ма
                 XOR A
                 LD (UpdateParticles.ParticleNum), A
 
-                ; установка максимального количество элементов в буфере очереди точек
+                ; установка количество свободных элементов в буфере очереди точек
                 LD A, Size.PointQueue
                 LD (RefillPointQueue.NumAvailable), A
+                
                 ; установка адрес буфера очереди точек
                 LD HL, Adr.PointQueue
                 LD (RefillPointQueue.Pointer), HL
+
+                ; установка адрес буфера восстановления экрана
+                LD HL, Adr.RestoreBuf
+                LD (RestoreScreen.Pointer), HL
 
                 ; сброс флага установки базовой линии
                 RES_FLAG_MODIFY RefillPointQueue.BaselineFlag

@@ -16,6 +16,10 @@ UpdateParticles:
                 OR A
                 RET Z                                                           ; выход, если массив пустой
                 
+                EX AF, AF'
+                SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
+                EX AF, AF'
+
                 ; инициализация
                 LD IX, Adr.ParticleArray
                 LD B, A
@@ -31,7 +35,7 @@ UpdateParticles:
                 POP BC
 
 .NextParticle   ; переход к следующей частице
-                LD DE, FTargetParticle
+                LD DE, TARGET_PARTICLE_SIZE
                 ADD IX, DE
 
                 DJNZ .Loop

@@ -13,7 +13,8 @@ Begin           EQU $
                 include "RefillPointQueue.asm"
 Adr.RestoreBuf  EQU SCR_STACK_ADR_SHADOW                                        ; адрес буфера восстановления экрана
 Adr.PointQueue  EQU Adr.SpriteInfoBuffer                                        ; адрес буфера очереди точек
-Size.PointQueue EQU 128                                                         ; максимальное количество элементов в буфере очереди точек
+Size.PointQueue EQU 64                                                         ; максимальное количество элементов в буфере очереди точек
+Size.Particle   EQU 6                                                           ; максимальное количество добавляемых частиц за раз
 
                 display " - Particle system:\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $-Begin, " byte(s)  ]"
                 endmodule

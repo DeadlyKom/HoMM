@@ -11,20 +11,25 @@
 RestoreScreen:  ; проверка налияия точек
                 LD HL, Adr.RestoreBuf
 .Pointer        EQU $+1                                                         ; указатель на последнюю пару восстановления
-                LD DE, #0000
+                LD DE, Adr.RestoreBuf                                           ; обязательно инициализировать!
                 OR A
                 SBC HL, DE
                 LD A, L
-                OR A
+                OR H
                 RET Z                                                           ; выход, если массив пустой (указатель указывает на начало буфера)
+
+                ; количество элементов в буфере
+                RR H
+                RR L
+                RR H
+                RR L
+                LD B, L
 
                 ; инициализация
                 LD (.ContainerSP), SP                                           ; сохранени стека
                 EX DE, HL
                 LD SP, HL
-                RRA     ; /2
-                SRA A   ; /4
-                LD B, A
+
                 
 .Loop           POP AF                                                          ; чтение байта экрана из буфере
                 POP HL                                                          ; чтение адреса экрана из буфера
