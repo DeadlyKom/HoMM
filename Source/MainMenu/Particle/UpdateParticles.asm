@@ -2,13 +2,13 @@
                 ifndef _MAIN_MENU_PARTICLE_UPDATE_
                 define _MAIN_MENU_PARTICLE_UPDATE_
 ; -----------------------------------------
-; обновление частиц
+; обновление позиции активных частиц
 ; In:
 ; Out:
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Update:         
+UpdateParticles:
 .Damping        EQU 4                                                           ; демпфирование
                 ; проверка наличие элементов в массиве
 .ParticleNum    EQU $+1

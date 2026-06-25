@@ -117,12 +117,20 @@
         [string.byte('¡')]  = 0x20,  -- ¡
         [string.byte('¿')]  = 0x5F,  -- ¿
 
+        -- ToDo: временно отключена
+        -- [0xD090] = 0x21,  -- A
+        -- [0xD091] = 0x61,  -- Б
+        -- [0xD092] = 0x22,  -- В
+        -- [0xD093] = 0x64,  -- Г
+        -- [0xD094] = 0x66,  -- Д
+        -- [0xD095] = 0x25,  -- E
         [0xD090] = 0x21,  -- A
-        [0xD091] = 0x61,  -- Б
-        [0xD092] = 0x22,  -- В
-        [0xD093] = 0x64,  -- Г
-        [0xD094] = 0x66,  -- Д
-        [0xD095] = 0x25,  -- E
+        [0xD091] = 0x22,  -- Б
+        [0xD092] = 0x23,  -- В
+        [0xD093] = 0x24,  -- Г
+        [0xD094] = 0x25,  -- Д
+        [0xD095] = 0x26,  -- E
+
         [0xD096] = 0x6B,  -- Ж
         [0xD097] = 0x6D,  -- З
         [0xD098] = 0x6F,  -- И
@@ -214,7 +222,7 @@
                 _pc("DB " .. get(word) + 32)
                 word = 0
             else                    -- en
-                local byte = get(string.byte(char) - 32)
+                local byte = get(byte - 32)
                 _pc("DB " .. byte + 32)
                 --print (string.format("%s,  %s", char, byte))
             end

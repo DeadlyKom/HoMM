@@ -3,9 +3,6 @@
                 define _GRAPHICS_UI_MAIN_MENU_PORTAL_FIRST_PACK_
 
                 module Pack
-                ; продолжительность кадра
-Duration        EQU 80 /*миллисекунды*/ / 20 /*период прерывания в миллисекундах*/
-
                 ; ----------------------------------------
                 module Frame0_7
 
@@ -15,22 +12,22 @@ Begin:          EQU $
                 DB Frame.Num
 
                 /* дополнительное смещения -2 для удобства расчёта */
-                DB UI.Graphics.MainMenu.Portal.Pack.Duration * 3
+                DB #03
                 DW Frame._0-$-2
 
-                DB UI.Graphics.MainMenu.Portal.Pack.Duration
+                DB #01
                 DW Frame._3-$-2
 
-                DB UI.Graphics.MainMenu.Portal.Pack.Duration
+                DB #01
                 DW Frame._4-$-2
 
-                DB UI.Graphics.MainMenu.Portal.Pack.Duration
+                DB #01
                 DW Frame._5-$-2
 
-                DB UI.Graphics.MainMenu.Portal.Pack.Duration
+                DB #01
                 DW Frame._6-$-2
 
-                DB UI.Graphics.MainMenu.Portal.Pack.Duration
+                DB #01
                 DW Frame._7-$-2
 Frame:
 ._0             incbin "Builder/Assets/Graphics/Original/UI/MainMenu/Portal/First/Frame_0.bin"
@@ -55,16 +52,16 @@ Begin:          EQU $
                 DB Frame.Num
 
                 /* дополнительное смещения -2 для удобства расчёта */
-                DB UI.Graphics.MainMenu.Portal.Pack.Duration
+                DB #01
                 DW Frame._8-$-2
 
-                DB UI.Graphics.MainMenu.Portal.Pack.Duration
+                DB #01
                 DW Frame._9-$-2
 
-                DB UI.Graphics.MainMenu.Portal.Pack.Duration
+                DB #01
                 DW Frame._10-$-2
 
-                DB UI.Graphics.MainMenu.Portal.Pack.Duration
+                DB #01
                 DW Frame._11-$-2
 Frame:
 ._8             incbin "Builder/Assets/Graphics/Original/UI/MainMenu/Portal/First/Frame_8.bin"
@@ -88,19 +85,19 @@ Begin:          EQU $
                 DB Frame.Num
 
                 /* дополнительное смещения -2 для удобства расчёта */
-                DB UI.Graphics.MainMenu.Portal.Pack.Duration
+                DB #01
                 DW Frame._12-$-2
 
-                DB UI.Graphics.MainMenu.Portal.Pack.Duration
+                DB #01
                 DW Frame._13-$-2
 
-                DB UI.Graphics.MainMenu.Portal.Pack.Duration
+                DB #01
                 DW Frame._14-$-2
 
-                DB UI.Graphics.MainMenu.Portal.Pack.Duration
+                DB #01
                 DW Frame._15-$-2
 
-                DB UI.Graphics.MainMenu.Portal.Pack.Duration
+                DB #01
                 DW Frame._16-$-2
 Frame:
 ._12            incbin "Builder/Assets/Graphics/Original/UI/MainMenu/Portal/First/Frame_12.bin"

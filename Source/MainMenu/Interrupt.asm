@@ -8,14 +8,11 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Interrupt:      ; проверка готовности кадра
-                CHECK_RENDER_FLAG FRAME_READY_BIT
-                JR Z, .RenderProcess                                            ; переход, если процесс отрисовки не завершён
-
-.SwapScreens    ; ************ Swap Screens ************
-                CALL Render.Swap
-
-.RenderProcess  ; процесс отрисовки не завершён
+Interrupt:      ; период обновления 4 фрейма, позволяя распредлеить нагрузку в начале кадра
+                LD A, (TickCounterRef)
+                AND %00000011
+                LD HL, .JumpTable
+                CALL Func.JumpTable
 
 .Input          ; ************ Scan Input ************
                 CHECK_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                         ; проверка разрешения сканирования ввода
@@ -26,7 +23,12 @@ Interrupt:      ; проверка готовности кадра
                 CALL FPS_Counter.Tick
                 endif
 
-                RET
+.RET           RET
+
+.JumpTable      DW MainMenu.Base.Render.UpdateScreen                            ; обновление экрана
+                DW MainMenu.Base.Particle.Draw                                  ; отображение частиц
+                DW .RET                                                         ; бездействие
+                DW .RET                                                         ; бездействие
 
                 display " - Main interrupt:\t\t\t\t\t", /A, Interrupt, "\t= busy [ ", /D, $-Interrupt, " byte(s)  ]"
     

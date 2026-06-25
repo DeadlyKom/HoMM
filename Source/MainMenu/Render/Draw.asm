@@ -2,7 +2,7 @@
                 ifndef _MAIN_MENU_RENDER_DRAW_
                 define _MAIN_MENU_RENDER_DRAW_
 ; -----------------------------------------
-; отображение "мира"
+; отображение "главного меню"
 ; In:
 ; Out:
 ; Corrupt:
@@ -54,12 +54,22 @@ Draw:           ; -----------------------------------------
 .Tick           ; -----------------------------------------
                 ; тик
                 ; -----------------------------------------
-                CALL Portal.Play                                                ; проигрывание анимации "портала"
+                CALL MainMenu.Base.Particle.RefillPointQueue                    ; пополнение очереди точек
+                CALL MainMenu.Base.Particle.ParticleSampling                    ; выборка частиц из очереди точек
 
-                ; SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 RES_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE             ; выборочный сброс Render флагов
-                SET_RENDER_FLAG FRAME_READY_BIT                                 ; установка флага готовности кадра
                 RET
+
+; -----------------------------------------
+; обновление экрана
+; In:
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+UpdateScreen:   SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
+                CALL MainMenu.Base.Particle.RestoreScreen
+                JP Portal.Play                                                  ; проигрывание анимации "портала"
 
                 display " - Main draw:\t\t\t\t\t\t", /A, Draw, "\t= busy [ ", /D, $-Draw, " byte(s)  ]"
 

@@ -13,7 +13,7 @@
 ; Note:
 ; -----------------------------------------
 PlacemantNew    ; инициализация
-                LD HL, Update.ParticleNum
+                LD HL, UpdateParticles.ParticleNum
 
                 ; проверка переполнения массива
                 LD A, (HL)
