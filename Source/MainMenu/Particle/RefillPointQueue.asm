@@ -17,13 +17,18 @@ RefillPointQueue:
                 NOP
                 JR C, .IsIndicated                                              ; переход, если базовая линия указана
 
-                ; чтение позиции текста на экране
+.NextLine       ; чтение позиции текста на экране
                 LD E, (HL)  ; X
                 INC HL
                 LD D, (HL)  ; Y
                 INC HL
+                ; проверка завершения текста
+                LD A, D
+                XOR E
+                INC A
+                RET Z
+
                 LD (.BaselinePos), DE                                           ; сохранение позиции базовой линии
-                
                 ; установка флага завершения
                 SET_FLAG_MODIFY RefillPointQueue.BaselineFlag
 
@@ -35,7 +40,9 @@ RefillPointQueue:
                 ; чтение символа
                 LD A, (HL)
                 OR A
-                RET Z                                                           ; выход, если текст закончился
+                INC HL
+                JR Z, .NextLine                                                 ; переход, если текст закончился
+                DEC HL
                 SUB #21 + #20 ; временно!
 
                 ; сохранение адреса позиции курсора
@@ -124,5 +131,18 @@ RefillPointQueue:
                 lua allpass
                 Convert ("АБВГДЕ")
                 endlua
+                DW #77B0                                                        ; позиция базовой линии строки в пикселях
+                lua allpass
+                Convert ("АГБВДЕ")
+                endlua
+                DW #87B3                                                        ; позиция базовой линии строки в пикселях
+                lua allpass
+                Convert ("АБДЕВГ")
+                endlua
+                DW #97BC                                                        ; позиция базовой линии строки в пикселях
+                lua allpass
+                Convert ("АБВГДЕ")
+                endlua
+                DW #AA55                                                        ; завершающий
 
                 endif ; ~_MAIN_MENU_PARTICLE_REFILL_POINT_QUEUE_

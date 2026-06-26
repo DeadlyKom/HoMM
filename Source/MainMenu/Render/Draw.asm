@@ -37,6 +37,7 @@ Draw:           ; -----------------------------------------
                 endif
 
 .InitMenu       CALL MainMenu.Base.Core.Initialize                              ; первичная инициализация "главного меню"
+                RES_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag                  ; сброс флага завершения
                 ;---------------------------------------------------------------
 
 .Enter          ; -----------------------------------------
@@ -54,10 +55,11 @@ Draw:           ; -----------------------------------------
 .Tick           ; -----------------------------------------
                 ; тик
                 ; -----------------------------------------
-                CALL MainMenu.Base.Particle.RefillPointQueue                    ; пополнение очереди точек
-                CALL MainMenu.Base.Particle.ParticleSampling                    ; выборка частиц из очереди точек
-                CALL MainMenu.Base.Particle.UpdateParticles                     ; обновление позиции активных частиц
-
+                ; проверка флага проигрывания портала
+.Flag           EQU $
+                NOP
+                CALL C, Update                                                  ; переход, если проигрывание анимации портала завершено
+                
                 RES_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE             ; выборочный сброс Render флагов
                 RET
 
@@ -71,7 +73,23 @@ Draw:           ; -----------------------------------------
 UpdateScreen:   SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 CALL MainMenu.Base.Particle.RestoreScreen
                 JP MainMenu.Base.Particle.Draw
-                ; JP Portal.Play                                                  ; проигрывание анимации "портала"
+Update:         CALL MainMenu.Base.Particle.RefillPointQueue                    ; пополнение очереди точек
+                CALL MainMenu.Base.Particle.ParticleSampling                    ; выборка частиц из очереди точек
+
+                ; проверка клавиш 'SPACE'
+                LD A, VK_SPACE
+                CALL Input.CheckKeyState
+                LD B, #03
+                JR NZ, .Loop
+                LD B, #08
+
+.Loop           PUSH BC
+                CALL MainMenu.Base.Particle.UpdateParticles                     ; обновление позиции активных частиц
+                POP BC
+                DJNZ .Loop
+
+                RES_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag                  ; сброс флага завершения
+                RET
 
                 display " - Main draw:\t\t\t\t\t\t", /A, Draw, "\t= busy [ ", /D, $-Draw, " byte(s)  ]"
 

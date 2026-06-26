@@ -9,7 +9,7 @@
 ; Note:
 ; -----------------------------------------
 UpdateParticles:
-.Damping        EQU 4                                                           ; демпфирование
+.Damping        EQU 5                                                           ; демпфирование
                 ; проверка наличие элементов в массиве
 .ParticleNum    EQU $+1
                 LD A, #00
@@ -21,29 +21,44 @@ UpdateParticles:
                 EX AF, AF'
 
                 ; инициализация
-                LD IX, Adr.ParticleArray
+                LD IY, Adr.ParticleArray
                 LD B, A
 
 .Loop           ; -----------------------------------------
                 ; проверка флага состоянии покоя
                 ; -----------------------------------------
-                BIT 0, (IX + FTargetParticle.Flags)
+                BIT 0, (IY + FTargetParticle.Flags)
                 JP NZ, .NextParticle                                            ; переход, если частица в состоянии покоя
 
                 PUSH BC
                 CALL .Calculate
                 POP BC
 
+                ; флаг переполнения установлен, если удалён последний элемент в массиве
+                ; не требуется дополнительных действий
+                ;
+                ; флаг переполнения сброшен
+                ; требуется дополнительные действие:
+                ; - уменьшить счётчик обрабатываемых элементов
+                ; - не увеличивать адрес следуюзего элемента
+                JR C, .NextParticle
+
+                DEC B
+                RET Z                                                           ; выход, если счётчик обрабатываемых элементов обнулился
+
+                DJNZ .Loop
+                RET
+
 .NextParticle   ; переход к следующей частице
                 LD DE, TARGET_PARTICLE_SIZE
-                ADD IX, DE
+                ADD IY, DE
 
                 DJNZ .Loop
                 RET
                 
 .Calculate      ; расчёт оставшегося пути по горизонтали (dx)
-                LD A, (IX + FTargetParticle.Target.X)
-                SUB (IX + FTargetParticle.Super.Position.X.High)
+                LD A, (IY + FTargetParticle.Target.X)
+                SUB (IY + FTargetParticle.Super.Position.X.High)
                 LD E, A                                                         ; дельта по горизонтали
                 
                 ; модуль |dx|
@@ -53,8 +68,8 @@ UpdateParticles:
                 EX AF, AF'                                                      ; сохранение результата
 
                 ; расчёт оставшегося пути по горизонтали (dy)
-                LD A, (IX + FTargetParticle.Target.Y)
-                SUB (IX + FTargetParticle.Super.Position.Y.High)
+                LD A, (IY + FTargetParticle.Target.Y)
+                SUB (IY + FTargetParticle.Super.Position.Y.High)
                 LD D, A                                                         ; дельта по вертикали
 
                 ; модуль |dy|
@@ -78,7 +93,19 @@ UpdateParticles:
                 ; защита от переполнения
                 JR NC, $+3
                 SBC A, A
-                
+
+                CP #01
+                JR NC, .L1
+
+                LD H, A
+                LD A, (IY + FTargetParticle.Super.Velocity.X.High)
+                ; OR (IY + FTargetParticle.Super.Velocity.X.Low)
+                OR (IY + FTargetParticle.Super.Velocity.Y.High)
+                ; OR (IY + FTargetParticle.Super.Velocity.Y.Low)
+                JP Z, .Remove
+                LD A, H
+
+.L1    
                 ; -----------------------------------------
                 ; расчёт силы по осям
                 ; -----------------------------------------
@@ -168,8 +195,8 @@ UpdateParticles:
                 ; вертикаль
                 ; -----------------------------------------
                 ; расчёт демпфирования
-                LD E, (IX + FTargetParticle.Super.Velocity.Y.High)
-                LD A, (IX + FTargetParticle.Super.Velocity.Y.Low)
+                LD E, (IY + FTargetParticle.Super.Velocity.Y.High)
+                LD A, (IY + FTargetParticle.Super.Velocity.Y.Low)
                 LD C, A
                 LD B, E
 
@@ -188,20 +215,20 @@ UpdateParticles:
                 OR A
                 SBC HL, DE
                 ADD HL, BC
-                LD (IX + FTargetParticle.Super.Velocity.Y), HL
+                LD (IY + FTargetParticle.Super.Velocity.Y), HL
 
                 ; расчёт нового положения по вертикали
-                LD DE, (IX + FTargetParticle.Super.Position.Y)
+                LD DE, (IY + FTargetParticle.Super.Position.Y)
                 ADD HL, DE
-                LD (IX + FTargetParticle.Super.Position.Y), HL
+                LD (IY + FTargetParticle.Super.Position.Y), HL
                 ; -----------------------------------------
 
                 ; -----------------------------------------
                 ; горизонталь
                 ; -----------------------------------------
                 ; расчёт демпфирования
-                LD E, (IX + FTargetParticle.Super.Velocity.X.High)
-                LD A, (IX + FTargetParticle.Super.Velocity.X.Low)
+                LD E, (IY + FTargetParticle.Super.Velocity.X.High)
+                LD A, (IY + FTargetParticle.Super.Velocity.X.Low)
                 LD C, A
                 LD B, E
 
@@ -221,14 +248,44 @@ UpdateParticles:
                 OR A
                 SBC HL, DE
                 ADD HL, BC
-                LD (IX + FTargetParticle.Super.Velocity.X), HL
+                LD (IY + FTargetParticle.Super.Velocity.X), HL
 
                 ; расчёт нового положения по горизонтали
-                LD DE, (IX + FTargetParticle.Super.Position.X)
+                LD DE, (IY + FTargetParticle.Super.Position.X)
                 ADD HL, DE
-                LD (IX + FTargetParticle.Super.Position.X), HL
+                LD (IY + FTargetParticle.Super.Position.X), HL
                 ; -----------------------------------------
                 EXX
+                
+                SCF                                                             ; флаг установлен
+                                                                                ; не требуется дополнительных действий
                 RET
+
+.Remove         ; определение адреса экрана
+                LD H, HIGH Adr.ScrAdrTable
+                LD L, (IY + FTargetParticle.Target.Y)
+                LD A, (HL)
+                INC H
+                LD D, (HL)
+
+                ; корректировка адреса по горизонтали
+                INC H
+                LD L, (IY + FTargetParticle.Target.X)
+                OR (HL)
+                LD E, A
+
+                ; отображение точки на экране
+                LD A, (DE)                                                      ; чтение байта для последующего восстановления
+                INC H
+                XOR (HL)
+                LD (DE), A
+
+                JP RemoveAtSwap                                                 ; флаг переполнения установлен, если удалён последний элемент в массиве
+                                                                                ; не требуется дополнительных действий
+                                                                                ;
+                                                                                ; флаг переполнения сброшен
+                                                                                ; требуется дополнительные действие:
+                                                                                ; - уменьшить счётчик обрабатываемых элементов
+                                                                                ; - не увеличивать адрес следуюзего элемента
 
                 endif ; ~_MAIN_MENU_PARTICLE_UPDATE_

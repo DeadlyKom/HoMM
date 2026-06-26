@@ -16,6 +16,7 @@ Launch:         ; сохранение страницы
                 ; очистка экрана
                 CLS SCR_ADR_BASE, 0xFF                                          ; очистка основного экрана
                 ATTR_IPB SCR_ADR_BASE, BLACK, WHITE, 0                          ; очистка атрибутов основного экрана
+                ATTR_RECT_IPB SCR_ADR_BASE, 18, 0, 14, 24, BLACK, BLUE, 1
 
                 MEMCPY Adr.Deploy.MainMenu, Adr.MainMenu, Size.Deploy.MainMenu  ; копирование блока
 

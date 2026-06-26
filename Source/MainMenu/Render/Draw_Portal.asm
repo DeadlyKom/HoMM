@@ -46,6 +46,7 @@ Portal:
                 NOP
                 RET C                                                           ; выход, если проигрывание завершено
                 
+                SET_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag
                 ; уменьшение счётчика
                 LD HL, .FrameIntLeft
                 DEC (HL)
@@ -72,6 +73,7 @@ Portal:
                 INC HL
                 LD (.FrameNum), HL
                 PUSH DE                                                         ; адрес функции обновления
+
 
 .State          ; состояние
 .CurrentState   EQU $+1                                                         ; состояни портала

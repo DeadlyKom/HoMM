@@ -5,7 +5,7 @@
                 module Debug
 
                 ORG #0000
-                
+Begin:          EQU $
                 ; FMapHeader
                 lua allpass
                 local width, height = ConvertTMX_Hex("Tools/Tiled/DebugHex.tmx", "Builder/Assets/Metadata/Original/Map/Debug/Block.Hextile.bin")
@@ -36,9 +36,9 @@ GraphPackage.Size EQU $-GraphPackage
 Objects         include "Block.Object.inc"
 Objects.Size    EQU $-Objects
 Size            EQU $
-                savebin "Builder/Assets/Metadata/Original/Map/Debug.map", 0, Size
-                shellexec "Tools\Compressor\salvador.exe -v Builder/Assets/Metadata/Original/Map/Debug.map Builder/Assets/Metadata/Compressed/Map/Debug.map.ar"
-                ASSETS_SIZE "Builder/Assets/Metadata/Compressed/Map/Debug.map.ar"
+                COMPRESSED_ASSET \
+                "Builder/Assets/Metadata/Original/Map/Debug.map", \
+                "Builder/Assets/Metadata/Compressed/Map/Debug.map.ar"
                 endmodule
 
                 endif ; ~ _METADATA_MAP_DEBUG_

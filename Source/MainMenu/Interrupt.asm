@@ -27,7 +27,6 @@ Interrupt:      ; период обновления 4 фрейма, позвол
 
 .JumpTable      DW MainMenu.Base.Render.UpdateScreen                            ; обновление экрана
                 DW MainMenu.Base.Render.Portal.Play                             ; проигрывание анимации "портала"
-                 ; MainMenu.Base.Particle.Draw                                  ; отображение частиц
                 DW .RET                                                         ; бездействие
                 DW .RET                                                         ; бездействие
 

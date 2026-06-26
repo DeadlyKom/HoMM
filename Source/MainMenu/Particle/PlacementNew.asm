@@ -25,19 +25,17 @@ PlacemantNew    ; инициализация
                 LD L, A                                                         ; сохранение номера элемента
                 EX AF, AF'                                                      ; сохранение номера элемента
 
-                if TARGET_PARTICLE_SIZE > 12
+                if TARGET_PARTICLE_SIZE > 16
                 error "address calculation error"
                 endif
 
                 ; расчёт адреса последнего элемента в массиве
                 ; адрес расположения элемента = адрес первого элемента + N элемента * TARGET_PARTICLE_SIZE
                 LD H, #00
-                LD D, H
-                LD E, L
                 ADD HL, HL  ; x2
-                ADD HL, DE  ; x3
-                ADD HL, HL  ; x6
-                ADD HL, HL  ; x12
+                ADD HL, HL  ; x4
+                ADD HL, HL  ; x8
+                ADD HL, HL  ; x16
                 EX DE, HL
                 LD IY, Adr.ParticleArray
                 ADD IY, DE

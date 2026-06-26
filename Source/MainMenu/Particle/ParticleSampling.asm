@@ -4,6 +4,7 @@
 ; выборка частиц из очереди точек
 ; In:
 ; Out:
+;   IY - адрес свободного элемента
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
@@ -35,11 +36,11 @@ ParticleSampling:
                 ; Corrupt:
                 ;   D, AF
                 ; -----------------------------------------
-                LD E, A
+                LD D, A
                 EXX
                 LD A, C
                 EXX
-                LD D, A
+                LD E, A
                 CALL Math.Div8x8                                                ; mod
 
                 ; чтение позиции назначения частицы
@@ -84,7 +85,7 @@ ParticleSampling:
                 LD (IY + FTargetParticle.Super.Position.X.High), 144                ; горизонтальное начало
                 CALL Math.Rand8
                 AND %00111111
-                ADD A, 72
+                ADD A, 72-16
                 LD (IY + FTargetParticle.Super.Position.Y.High), A                   ; вертикальное начало 72 + 0..31
 
                 XOR A
