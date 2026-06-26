@@ -28,7 +28,7 @@ Interrupt:      ; период обновления 4 фрейма, позвол
 .JumpTable      DW MainMenu.Base.Render.UpdateScreen                            ; обновление экрана
                 DW MainMenu.Base.Render.Portal.Play                             ; проигрывание анимации "портала"
                 DW .RET                                                         ; бездействие
-                DW .RET                                                         ; бездействие
+                DW MainMenu.Base.Render.Update.Force                            ; бездействие
 
                 display " - Main interrupt:\t\t\t\t\t", /A, Interrupt, "\t= busy [ ", /D, $-Interrupt, " byte(s)  ]"
     

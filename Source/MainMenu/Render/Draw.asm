@@ -75,20 +75,11 @@ UpdateScreen:   SET_PAGE_SCREEN_SHADOW                                          
                 JP MainMenu.Base.Particle.Draw
 Update:         CALL MainMenu.Base.Particle.RefillPointQueue                    ; пополнение очереди точек
                 CALL MainMenu.Base.Particle.ParticleSampling                    ; выборка частиц из очереди точек
-
-                ; проверка клавиш 'SPACE'
-                LD A, VK_SPACE
-                CALL Input.CheckKeyState
-                LD B, #03
-                JR NZ, .Loop
-                LD B, #08
-
-.Loop           PUSH BC
                 CALL MainMenu.Base.Particle.UpdateParticles                     ; обновление позиции активных частиц
-                POP BC
-                DJNZ .Loop
 
                 RES_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag                  ; сброс флага завершения
+                RET
+.Force          SET_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag
                 RET
 
                 display " - Main draw:\t\t\t\t\t\t", /A, Draw, "\t= busy [ ", /D, $-Draw, " byte(s)  ]"
