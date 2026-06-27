@@ -1,0 +1,6 @@
+{
+    "Name": "Sprite Type",
+    "Properties": [
+        { "Name": "SpriteType", "Type": "int", "Value": 0 }
+    ]
+}

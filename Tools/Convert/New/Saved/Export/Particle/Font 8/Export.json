@@ -5,7 +5,7 @@
         "SprHeight": 16,
         "PoxImgX": 0,
         "PoxImgY": 0,
-        "FileImg": "D:/Work/[Sprite]/Геройчики/UI/font 16x16 (pix).aseprite",
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
         "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_0.ink",
         "AttributeData": "",
         "MaskData": "",
@@ -30,7 +30,7 @@
         "SprHeight": 16,
         "PoxImgX": 16,
         "PoxImgY": 0,
-        "FileImg": "D:/Work/[Sprite]/Геройчики/UI/font 16x16 (pix).aseprite",
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
         "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_1.ink",
         "AttributeData": "",
         "MaskData": "",
@@ -55,7 +55,7 @@
         "SprHeight": 16,
         "PoxImgX": 32,
         "PoxImgY": 0,
-        "FileImg": "D:/Work/[Sprite]/Геройчики/UI/font 16x16 (pix).aseprite",
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
         "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_2.ink",
         "AttributeData": "",
         "MaskData": "",
@@ -80,7 +80,7 @@
         "SprHeight": 16,
         "PoxImgX": 48,
         "PoxImgY": 0,
-        "FileImg": "D:/Work/[Sprite]/Геройчики/UI/font 16x16 (pix).aseprite",
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
         "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_3.ink",
         "AttributeData": "",
         "MaskData": "",
@@ -105,7 +105,7 @@
         "SprHeight": 16,
         "PoxImgX": 64,
         "PoxImgY": 0,
-        "FileImg": "D:/Work/[Sprite]/Геройчики/UI/font 16x16 (pix).aseprite",
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
         "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_4.ink",
         "AttributeData": "",
         "MaskData": "",
@@ -130,7 +130,7 @@
         "SprHeight": 16,
         "PoxImgX": 80,
         "PoxImgY": 0,
-        "FileImg": "D:/Work/[Sprite]/Геройчики/UI/font 16x16 (pix).aseprite",
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
         "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_5.ink",
         "AttributeData": "",
         "MaskData": "",
@@ -140,6 +140,2006 @@
                     {
                         "Type": "Advance",
                         "Value": 9
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_6",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 96,
+        "PoxImgY": 0,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_6.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 8
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 12
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_7",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 112,
+        "PoxImgY": 0,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_7.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 14
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_8",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 128,
+        "PoxImgY": 0,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_8.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 9
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_9",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 144,
+        "PoxImgY": 0,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_9.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 10
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_10",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 160,
+        "PoxImgY": 0,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_10.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 10
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 12
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_11",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 176,
+        "PoxImgY": 0,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_11.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 10
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_12",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 192,
+        "PoxImgY": 0,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_12.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 9
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_13",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 208,
+        "PoxImgY": 0,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_13.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 13
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_14",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 224,
+        "PoxImgY": 0,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_14.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 10
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_15",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 240,
+        "PoxImgY": 0,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_15.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 9
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_16",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 0,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_16.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 10
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_17",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 16,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_17.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 9
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_18",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 32,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_18.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 9
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_19",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 48,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_19.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 11
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_20",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 64,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_20.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 10
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 11
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_21",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 80,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_21.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 13
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 10
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_22",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 96,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_22.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 10
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_23",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 112,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_23.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 11
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_24",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 128,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_24.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 9
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_25",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 144,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_25.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 14
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_26",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 160,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_26.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 14
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_27",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 176,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_27.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 8
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_28",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 192,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_28.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 12
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_29",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 208,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_29.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 8
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_30",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 224,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_30.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 9
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_31",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 240,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_31.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 13
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_32",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 0,
+        "PoxImgY": 32,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_32.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 13
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_0",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 0,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_0.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 8
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_1",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 16,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_1.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 8
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_2",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 32,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_2.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 7
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_3",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 48,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_3.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 7
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_4",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 64,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_4.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 8
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_5",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 80,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_5.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 6
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_6",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 96,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_6.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 6
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 10
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_7",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 112,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_7.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 12
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_8",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 128,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_8.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 9
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_9",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 144,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_9.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 8
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_10",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 160,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_10.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 8
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 10
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_11",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 176,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_11.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 8
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_12",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 192,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_12.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 8
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_13",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 208,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_13.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 10
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_14",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 224,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_14.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 8
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_15",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 240,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_15.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 7
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_16",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 0,
+        "PoxImgY": 64,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_16.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 8
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_17",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 16,
+        "PoxImgY": 64,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_17.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 6
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_18",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 32,
+        "PoxImgY": 64,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_18.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 6
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_19",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 48,
+        "PoxImgY": 64,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_19.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 8
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_20",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 64,
+        "PoxImgY": 64,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_20.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 7
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 10
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_21",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 80,
+        "PoxImgY": 64,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_21.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 9
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 8
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_22",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 96,
+        "PoxImgY": 64,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_22.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 9
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_23",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 112,
+        "PoxImgY": 64,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_23.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 8
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_24",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 128,
+        "PoxImgY": 64,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_24.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 7
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_25",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 144,
+        "PoxImgY": 64,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_25.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 10
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_26",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 160,
+        "PoxImgY": 64,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_26.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 10
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_27",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 176,
+        "PoxImgY": 64,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_27.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 7
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_28",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 192,
+        "PoxImgY": 64,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_28.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 10
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_29",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 208,
+        "PoxImgY": 64,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_29.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 7
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_30",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 224,
+        "PoxImgY": 64,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_30.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 8
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_31",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 240,
+        "PoxImgY": 64,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_31.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 10
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_32",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 0,
+        "PoxImgY": 80,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_32.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 11
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_33",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 16,
+        "PoxImgY": 80,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_33.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 9
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 11
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_34",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 32,
+        "PoxImgY": 80,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_34.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 5
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 10
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph ru_low_35",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 48,
+        "PoxImgY": 80,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph ru_low_35.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 10
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph sym_0",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 16,
+        "PoxImgY": 96,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph sym_0.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 4
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph sym_1",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 32,
+        "PoxImgY": 96,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph sym_1.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 6
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph sym_2",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 48,
+        "PoxImgY": 96,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph sym_2.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 3
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 7
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph sym_3",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 64,
+        "PoxImgY": 96,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph sym_3.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 7
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 3
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph sym_4",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 80,
+        "PoxImgY": 96,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph sym_4.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 4
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph sym_5",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 96,
+        "PoxImgY": 96,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph sym_5.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 3
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph sym_6",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 112,
+        "PoxImgY": 96,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph sym_6.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 4
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 4
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph num_0",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 0,
+        "PoxImgY": 112,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph num_0.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 8
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph num_1",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 16,
+        "PoxImgY": 112,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph num_1.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 6
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph num_2",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 32,
+        "PoxImgY": 112,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph num_2.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 7
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph num_3",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 48,
+        "PoxImgY": 112,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph num_3.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 7
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph num_4",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 64,
+        "PoxImgY": 112,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph num_4.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 7
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph num_5",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 80,
+        "PoxImgY": 112,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph num_5.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 7
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph num_6",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 96,
+        "PoxImgY": 112,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph num_6.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 7
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph num_7",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 112,
+        "PoxImgY": 112,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph num_7.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 7
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph num_8",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 128,
+        "PoxImgY": 112,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph num_8.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 7
+                    },
+                    {
+                        "Type": "Baseline",
+                        "Value": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "Glyph num_9",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 144,
+        "PoxImgY": 112,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/font 16x16 (pix).aseprite",
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/Particle/Font 8/Glyph num_9.ink",
+        "AttributeData": "",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "Advance",
+                        "Value": 7
                     },
                     {
                         "Type": "Baseline",

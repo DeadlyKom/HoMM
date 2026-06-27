@@ -1,0 +1,7 @@
+{
+    "Name": "Font Glyph",
+    "Properties": [
+        { "Name": "Advance", "Type": "int", "Value": 0 },
+        { "Name": "Baseline", "Type": "int", "Value": 0 }
+    ]
+}
