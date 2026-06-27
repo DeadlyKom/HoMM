@@ -1,6 +1,6 @@
 
     lua allpass
-
+        -- https://www.compart.com/en/unicode
     local id = 0 -- autoincremented id
     function ID(set)
         if set then
@@ -117,84 +117,83 @@
         [string.byte('¡')]  = 0x20,  -- ¡
         [string.byte('¿')]  = 0x5F,  -- ¿
 
-        -- ToDo: временно отключена
-        -- [0xD090] = 0x21,  -- A
-        -- [0xD091] = 0x61,  -- Б
-        -- [0xD092] = 0x22,  -- В
-        -- [0xD093] = 0x64,  -- Г
-        -- [0xD094] = 0x66,  -- Д
-        -- [0xD095] = 0x25,  -- E
-        [0xD090] = 0x21,  -- A
-        [0xD091] = 0x22,  -- Б
-        [0xD092] = 0x23,  -- В
-        [0xD093] = 0x24,  -- Г
-        [0xD094] = 0x25,  -- Д
-        [0xD095] = 0x26,  -- E
+        [0xD090] = 0x60,  -- A
+        [0xD091] = 0x61,  -- Б
+        [0xD092] = 0x62,  -- В
+        [0xD093] = 0x63,  -- Г
+        [0xD094] = 0x64,  -- Д
+        [0xD095] = 0x65,  -- E
+        [0xD081] = 0x66,  -- Ё
+        [0xD096] = 0x67,  -- Ж
+        [0xD097] = 0x68,  -- З
+        [0xD098] = 0x69,  -- И
+        [0xD099] = 0x6A,  -- Й
+        [0xD09A] = 0x6B,  -- К
+        [0xD09B] = 0x6C,  -- Л
+        [0xD09C] = 0x6D,  -- М
+        [0xD09D] = 0x6E,  -- Н
+        [0xD09E] = 0x6F,  -- О
 
-        [0xD096] = 0x6B,  -- Ж
-        [0xD097] = 0x6D,  -- З
-        [0xD098] = 0x6F,  -- И
-        [0xD099] = 0x71,  -- Й
-        [0xD09A] = 0x2B,  -- К
-        [0xD09B] = 0x74,  -- Л
-        [0xD09C] = 0x2D,  -- М
-        [0xD09D] = 0x28,  -- Н
-        [0xD09E] = 0x2F,  -- О
-        [0xD09F] = 0x78,  -- П
+        [0xD09F] = 0x70,  -- П
+        [0xD0A0] = 0x71,  -- Р
+        [0xD0A1] = 0x72,  -- С
+        [0xD0A2] = 0x73,  -- Т
+        [0xD0A3] = 0x74,  -- У
+        [0xD0A4] = 0x75,  -- Ф
+        [0xD0A5] = 0x76,  -- Х
+        [0xD0A6] = 0x77,  -- Ц
+        [0xD0A7] = 0x78,  -- Ч
+        [0xD0A8] = 0x79,  -- Ш
+        [0xD0A9] = 0x7A,  -- Щ
+        [0xD0AA] = 0x7B,  -- Ъ
+        [0xD0AB] = 0x7C,  -- Ы
+        [0xD0AC] = 0x7D,  -- Ь
+        [0xD0AD] = 0x7E,  -- Э
+        [0xD0AE] = 0x7F,  -- Ю
 
-        [0xD0A0] = 0x30,  -- Р
-        [0xD0A1] = 0x23,  -- С
-        [0xD0A2] = 0x34,  -- Т
-        [0xD0A3] = 0x7C,  -- У
-        [0xD0A4] = 0x7D,  -- Ф
-        [0xD0A5] = 0x38,  -- Х
-        [0xD0A6] = 0x7F,  -- Ц
-        [0xD0A7] = 0x81,  -- Ч
-        [0xD0A8] = 0x83,  -- Ш
-        [0xD0A9] = 0x85,  -- Щ
-        [0xD0AA] = 0x8B,  -- Ъ
-        [0xD0AB] = 0x87,  -- Ы
-        [0xD0AC] = 0x89,  -- Ь
-        [0xD0AD] = 0x8D,  -- Э
-        [0xD0AE] = 0x8F,  -- Ю
-        [0xD0AF] = 0x91,  -- Я
+        [0xD0AF] = 0x80,  -- Я
+        [0xD0B0] = 0x81,  -- а
+        [0xD0B1] = 0x82,  -- б
+        [0xD0B2] = 0x83,  -- в
+        [0xD0B3] = 0x84,  -- г
+        [0xD0B4] = 0x85,  -- д
+        [0xD0B5] = 0x86,  -- е
+        [0xD191] = 0x87,  -- ё
+        [0xD0B6] = 0x88,  -- ж
+        [0xD0B7] = 0x89,  -- з
+        [0xD0B8] = 0x8A,  -- и
+        [0xD0B9] = 0x8B,  -- й
+        [0xD0BA] = 0x8C,  -- к
+        [0xD0BB] = 0x8D,  -- л
+        [0xD0BC] = 0x8E,  -- м
+        [0xD0BD] = 0x8F,  -- н
 
-        [0xD0B0] = 0x60,  -- а
-        [0xD0B1] = 0x62,  -- б
-        [0xD0B2] = 0x63,  -- в
-        [0xD0B3] = 0x65,  -- г
-        [0xD0B4] = 0x67,  -- д
-        [0xD0B5] = 0x68,  -- е
-        [0xD0B6] = 0x6C,  -- ж
-        [0xD0B7] = 0x6E,  -- з
-        [0xD0B8] = 0x70,  -- и
-        [0xD0B9] = 0x72,  -- й
-        [0xD0BA] = 0x73,  -- к
-        [0xD0BB] = 0x75,  -- л
-        [0xD0BC] = 0x76,  -- м
-        [0xD0BD] = 0x77,  -- н
-        [0xD0BE] = 0x4F,  -- о
-        [0xD0BF] = 0x79,  -- п
+        [0xD0BE] = 0x90,  -- о
+        [0xD0BF] = 0x91,  -- п
+        [0xD180] = 0x92,  -- р
+        [0xD181] = 0x93,  -- с
+        [0xD182] = 0x94,  -- т
+        [0xD183] = 0x95,  -- у
+        [0xD184] = 0x96,  -- ф
+        [0xD185] = 0x97,  -- х
+        [0xD186] = 0x98,  -- ц
+        [0xD187] = 0x99,  -- ч
+        [0xD188] = 0x9A,  -- ш
+        [0xD189] = 0x9B,  -- щ
+        [0xD18A] = 0x9C,  -- ъ
+        [0xD18B] = 0x9D,  -- ы
+        [0xD18C] = 0x9E,  -- ь
+        [0xD18D] = 0x9F,  -- э
 
-        [0xD180] = 0x7A,  -- р
-        [0xD181] = 0x43,  -- с
-        [0xD182] = 0x7B,  -- т
-        [0xD183] = 0x59,  -- у
-        [0xD184] = 0x7E,  -- ф
-        [0xD185] = 0x58,  -- х
-        [0xD186] = 0x80,  -- ц
-        [0xD187] = 0x82,  -- ч
-        [0xD188] = 0x84,  -- ш
-        [0xD189] = 0x86,  -- щ
-        [0xD18A] = 0x8C,  -- ъ
-        [0xD18B] = 0x88,  -- ы
-        [0xD18C] = 0x8A,  -- ь
-        [0xD18D] = 0x8E,  -- э
-        [0xD18E] = 0x90,  -- ю
-        [0xD18F] = 0x92,  -- я
+        [0xD18E] = 0xA0,  -- ю
+        [0xD18F] = 0xA1,  -- я
+        [0xD1A3] = 0xA2,  -- ѣ
+        [0xD197] = 0xA3,  -- ї
+        [0xD1A5] = 0xA4,  -- ѥ
 
-        [0xD081] = 0x69,  -- Ё
-        [0xD191] = 0x6A,  -- ё
+        -- дублирующие
+        [0xEA998A] = 0x74,  -- Ꙋ (У)
+        [0xEA998B] = 0x95,  -- ꙋ (у)
     };
 
     -- Get a value by ID
@@ -211,16 +210,28 @@
 
     function Convert(string)
         local word = 0
+        local bytesLeft = 0
         for i = 1, #string do
             local char = string:sub(i,i)
             local byte = string.byte(char)
-            if byte >= 208 and word == 0 then
-                word = byte
-            elseif word > 0 then    -- ru
+
+            if bytesLeft > 0 then
                 word = word * 256 + byte
-                --print (string.format("%s,  %s", word, get(word)))
-                _pc("DB " .. get(word) + 32)
-                word = 0
+                bytesLeft = bytesLeft - 1
+
+                if bytesLeft == 0 then
+                    _pc("DB " .. get(word) + 32)
+                    word = 0
+                end
+            elseif byte >= 0xF0 then
+                word = byte
+                bytesLeft = 3
+            elseif byte >= 0xE0 then
+                word = byte
+                bytesLeft = 2
+            elseif byte >= 0xC0 then
+                word = byte
+                bytesLeft = 1
             else                    -- en
                 local byte = get(byte - 32)
                 _pc("DB " .. byte + 32)

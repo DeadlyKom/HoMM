@@ -9,7 +9,7 @@
 ; Note:
 ; -----------------------------------------
 UpdateParticles:
-.Damping        EQU 5                                                           ; демпфирование
+.Damping        EQU 4                                                           ; демпфирование
                 ; проверка наличие элементов в массиве
 .ParticleNum    EQU $+1
                 LD A, #00
@@ -253,7 +253,24 @@ UpdateParticles:
 
                 ; расчёт нового положения по горизонтали
                 LD DE, (IY + FTargetParticle.Super.Position.X)
+
+                ; HL - скорость signed 8.8, DE - позиция unsigned 8.8
+                BIT 7, H
+                JR NZ, .MoveLeft
+
+                ; при движении вправо перенос означает выход за правый край
                 ADD HL, DE
+                JR NC, .StoreX
+
+                LD HL, #FF00
+                JR .StoreX
+
+.MoveLeft       ; при движении влево нет переноса при выходе за левый край
+                ADD HL, DE
+                JR C, .StoreX
+                LD HL, #0000
+
+.StoreX
                 LD (IY + FTargetParticle.Super.Position.X), HL
                 ; -----------------------------------------
                 EXX

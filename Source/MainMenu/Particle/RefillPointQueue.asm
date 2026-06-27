@@ -43,7 +43,7 @@ RefillPointQueue:
                 INC HL
                 JR Z, .NextLine                                                 ; переход, если текст закончился
                 DEC HL
-                SUB #21 + #20 ; временно!
+                SUB #20                                                         ; дополнительное смещение
 
                 ; сохранение адреса позиции курсора
                 LD B, H
@@ -52,6 +52,8 @@ RefillPointQueue:
                 ; расчёт адреса символа по таблице
                 LD HL, (MainMenu.Base.Content.Font.Adr)
                 ADD A, A    ; x2
+                JR NC, $+3
+                INC H
                 ADD A, L
                 LD L, A
                 ADC A, H
@@ -76,9 +78,15 @@ RefillPointQueue:
                 LD (.Cursor), BC
 
                 ; чтение FGlyphHeader
-                LD B, (HL)                                                      ; количество точек в глифе
+                LD A, (HL)                                                      ; количество точек в глифе
                 INC HL
                 LD C, (HL)                                                      ; насколько сдвинуть курсор после буквы (шиирина буквы + пробел)
+                
+                ; проверка наличие точек
+                OR A
+                JR Z, .Next                                                     ; перейти, если точки отсутствуют
+                LD B, A
+                
                 INC HL
                 LD A, (HL)                                                      ; базовая линия глифа
                 INC HL
@@ -119,7 +127,7 @@ RefillPointQueue:
 
                 DJNZ .Loop
 
-                ; сместить курсор по горизонтали
+.Next           ; сместить курсор по горизонтали
                 LD A, (.BaselinePos)
                 ADD A, C
                 LD (.BaselinePos), A
@@ -127,21 +135,21 @@ RefillPointQueue:
                 RET
 
 .TestText       ; отображение текста "АБВГДЕ"
-                DW #67B2                                                        ; позиция базовой линии строки в пикселях
+                DW #37A6                                                        ; позиция базовой линии строки в пикселях
                 lua allpass
-                Convert ("АБВГДЕ")
+                Convert ("Начать пꙋть")
                 endlua
-                DW #77B0                                                        ; позиция базовой линии строки в пикселях
+                DW #49A6                                                        ; позиция базовой линии строки в пикселях
                 lua allpass
-                Convert ("АГБВДЕ")
+                Convert ("Продолжить")
                 endlua
-                DW #87B3                                                        ; позиция базовой линии строки в пикселях
+                DW #5BA9                                                        ; позиция базовой линии строки в пикселях
                 lua allpass
-                Convert ("АБДЕВГ")
+                Convert ("Ꙋправленїѥ")
                 endlua
-                DW #97BC                                                        ; позиция базовой линии строки в пикселях
+                DW #6DB5                                                        ; позиция базовой линии строки в пикселях
                 lua allpass
-                Convert ("АБВГДЕ")
+                Convert ("Настрой")
                 endlua
                 DW #AA55                                                        ; завершающий
 
