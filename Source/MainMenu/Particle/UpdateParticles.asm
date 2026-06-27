@@ -9,7 +9,8 @@
 ; Note:
 ; -----------------------------------------
 UpdateParticles:
-.Damping        EQU 4                                                           ; демпфирование
+.Damping        EQU 5                                                           ; демпфирование
+.SnapRadius     EQU 1                                                           ; радиус фиксации частицы в цели
                 ; проверка наличие элементов в массиве
 .ParticleNum    EQU $+1
                 LD A, #00
@@ -94,18 +95,10 @@ UpdateParticles:
                 JR NC, $+3
                 SBC A, A
 
-                CP #01
-                JR NC, .L1
+                ; малый остаточный размах больше не раскачиваем
+                CP .SnapRadius
+                JP C, .Remove
 
-                LD H, A
-                LD A, (IY + FTargetParticle.Super.Velocity.X.High)
-                ; OR (IY + FTargetParticle.Super.Velocity.X.Low)
-                OR (IY + FTargetParticle.Super.Velocity.Y.High)
-                ; OR (IY + FTargetParticle.Super.Velocity.Y.Low)
-                JP Z, .Remove
-                LD A, H
-
-.L1    
                 ; -----------------------------------------
                 ; расчёт силы по осям
                 ; -----------------------------------------
@@ -219,6 +212,7 @@ UpdateParticles:
                 LD (IY + FTargetParticle.Super.Velocity.Y), HL
 
                 ; расчёт нового положения по вертикали
+                ADD HL, HL                                                     ; скорость 9.7 -> дельта позиции 8.8
                 LD DE, (IY + FTargetParticle.Super.Position.Y)
                 ADD HL, DE
                 LD (IY + FTargetParticle.Super.Position.Y), HL
@@ -254,11 +248,12 @@ UpdateParticles:
                 ; расчёт нового положения по горизонтали
                 LD DE, (IY + FTargetParticle.Super.Position.X)
 
-                ; HL - скорость signed 8.8, DE - позиция unsigned 8.8
+                ; HL - скорость signed 9.7, DE - позиция unsigned 8.8
                 BIT 7, H
                 JR NZ, .MoveLeft
 
                 ; при движении вправо перенос означает выход за правый край
+                ADD HL, HL                                                     ; скорость 9.7 -> дельта позиции 8.8
                 ADD HL, DE
                 JR NC, .StoreX
 
@@ -266,6 +261,7 @@ UpdateParticles:
                 JR .StoreX
 
 .MoveLeft       ; при движении влево нет переноса при выходе за левый край
+                ADD HL, HL                                                     ; скорость 9.7 -> дельта позиции 8.8
                 ADD HL, DE
                 JR C, .StoreX
                 LD HL, #0000

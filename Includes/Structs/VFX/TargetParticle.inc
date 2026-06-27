@@ -2,9 +2,9 @@
                 ifndef _STRUCT_TARGET_PARTICLE_
                 define _STRUCT_TARGET_PARTICLE_
 
-                struct FTargetParticle                                          ; частица с фиксированной точкой 8.8            [11 байтов]
-Super           FFixedParticle                                                  ; базовый класс частицы                         [8 байтов]
-Target          FVector8                                                        ; точка назначения                              [2 байта]
+                struct FTargetParticle                                          ; ччастица со смешанной фиксированной точкой (9.7)  [11 байтов]
+Super           FFixedParticle                                                  ; базовый класс частицы                             [8 байтов]
+Target          FVector8                                                        ; точка назначения                                  [2 байта]
 ; -----------------------------------------
 ;      7    6    5    4    3    2    1    0
 ;   +----+----+----+----+----+----+----+----+
@@ -13,7 +13,7 @@ Target          FVector8                                                        
 ;
 ;   EN      [0]         - флаг, частица в спокойном состоянии
 ; -----------------------------------------
-Flags           DB #00                                                          ; флаги                                         [1 байт]
+Flags           DB #00                                                          ; флаги                                             [1 байт]
                 ends
 
                 endif ; ~_STRUCT_TARGET_PARTICLE_
