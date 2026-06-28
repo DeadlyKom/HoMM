@@ -60,6 +60,11 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     Page3.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Page 3\t\t\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_PAGE_4, \
+                                    Page4.Size, \
+                                    Page4.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Page 4\t\t\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_MAIN_MENU, \
                                     MainMenu.Size, \
                                     MainMenu.Size.Sector.ar, \
@@ -130,6 +135,11 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     Map.Debug.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Map 'Debug'\t\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_MUSIC_01, \
+                                    Sound.Music_01.Size, \
+                                    Sound.Music_01.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Music #01\t\t\t\t\t"
 Num             EQU $ / 3                                                       ; количество ресурсов в карте
 Size            EQU (((Num % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Num >> 8)) << 8  ; размер карты ресурсов (кратный 256)
 Sector          EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)       ; размер карты ресурсов (в секторах)

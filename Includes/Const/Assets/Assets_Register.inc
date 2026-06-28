@@ -19,6 +19,7 @@ REG_ASSETS_ID_DEBUG macro Label?
                     REG_ASSETS_ID       ASSETS_ID_PAGE_0                        ; код 0 страницы
                     REG_ASSETS_ID       ASSETS_ID_PAGE_1                        ; код 1 страницы
                     REG_ASSETS_ID       ASSETS_ID_PAGE_3                        ; код 3 страницы
+                    REG_ASSETS_ID       ASSETS_ID_PAGE_4                        ; код 4 страницы
                     REG_ASSETS_ID       ASSETS_ID_MAIN_MENU                     ; главное меню
                     REG_ASSETS_ID       ASSETS_ID_MAIN_MENU_GRAPH_PACK_0        ; главное меню - графический пакет #00
                     REG_ASSETS_ID       ASSETS_ID_MAIN_MENU_GRAPH_PACK_1        ; главное меню - графический пакет #01
@@ -33,5 +34,6 @@ REG_ASSETS_ID_DEBUG macro Label?
                     REG_ASSETS_ID       ASSETS_ID_HEX_FOG                       ; графика гексагонная, туман
                     REG_ASSETS_ID       ASSETS_ID_HEX_GRASSLANDS                ; графика гексагонная, природные ландшафты - луга
                     REG_ASSETS_ID       ASSETS_ID_MAP_DEBUG                     ; карта "отладочная"
+                    REG_ASSETS_ID       ASSETS_ID_MUSIC_01                      ; музыка №01
 
                 endif ; ~_CONST_ASSETS_REGISTER_

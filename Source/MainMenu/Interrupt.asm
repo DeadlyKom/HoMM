@@ -11,8 +11,9 @@
 Interrupt:      ; период обновления 4 фрейма, позволяя распредлеить нагрузку в начале кадра
                 LD A, (TickCounterRef)
                 AND %00000011
-                LD HL, .JumpTable
-                CALL Func.JumpTable
+                ; LD HL, .JumpTable
+                ; CALL Func.JumpTable
+                CALL Z, MainMenu.Base.Render.UpdateScreen                       ; обновление экрана
 
 .Input          ; ************ Scan Input ************
                 CHECK_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                         ; проверка разрешения сканирования ввода
@@ -25,10 +26,11 @@ Interrupt:      ; период обновления 4 фрейма, позвол
 
 .RET           RET
 
-.JumpTable      DW MainMenu.Base.Render.UpdateScreen                            ; обновление экрана
-                DW MainMenu.Base.Render.Portal.Play                             ; проигрывание анимации "портала"
-                DW .RET                                                         ; бездействие
-                DW MainMenu.Base.Render.Update.Force                            ; бездействие
+; .JumpTable      
+;                 DW MainMenu.Base.Render.UpdateScreen                            ; обновление экрана
+;                 DW .RET                                                         ; бездействие
+;                 DW .RET                                                         ; бездействие
+;                 DW .RET                                                         ; бездействие
 
                 display " - Main interrupt:\t\t\t\t\t", /A, Interrupt, "\t= busy [ ", /D, $-Interrupt, " byte(s)  ]"
     

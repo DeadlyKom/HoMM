@@ -50,11 +50,11 @@ Handler:        ; ********** HANDLER IM 2 *********
 
 .Music          ; *********** PLAY MUSIC **********
                 ; play music
-                ; ifdef ENABLE_MUSIC
-                ; SET_PAGE_MUSIC                                                  ; включение страницы с музыкой
-                ; CHECK_MUSIC_FLAG MUSIC_ENABLE_BIT
-                ; CALL NZ, Music.Tick
-                ; endif
+                ifdef ENABLE_MUSIC
+                SET_PAGE_MUSIC                                                  ; включение страницы с музыкой
+                CHECK_MUSIC_FLAG MUSIC_ENABLE_BIT
+                CALL NZ, Sound.Tick
+                endif
                 ; ~ PLAY MUSIC
 
 .RestoreMemPage ; ****** RESTORE MEMORY PAGE ******

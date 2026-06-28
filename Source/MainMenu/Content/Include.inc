@@ -4,6 +4,7 @@
 
                 module Content
                 include "Font/Include.inc"
+                include "Music/Include.inc"
                 include "Portal/Include.inc"
                 endmodule
 

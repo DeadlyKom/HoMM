@@ -18,8 +18,12 @@ Initialize:     ; генерация таблицы
                 ; загрузка данных контента "главного меню"
                 CALL MainMenu.Base.Content.Font.Load                            ; загрузка ассета шрифта (для частиц)
                 CALL MainMenu.Base.Content.Portal.Load                          ; загрузка данных контента "главного меню"
+                CALL MainMenu.Base.Content.Music.Load                           ; загрузка данных контента "музыка"
                 CALL MainMenu.Base.Render.Portal.Initialize                     ; первичная инициализация
                 CALL MainMenu.Base.Particle.Initialize                          ; инициализация работы счастицами
+                SET_PAGE_MUSIC                                                  ; включение страницу работы с музыкой
+                LD HL, Adr.Music.Slots
+                CALL Sound.Initialize                                           ; инициализация проигрывателя
                 RET
 
                 endif ; ~_MODULE_MAIN_MENU_CORE_INITIALIZE_

@@ -4,6 +4,7 @@
 GameState       EQU Adr.GameState                                               ; адрес структуры состояния игры
 .MainLoop       EQU GameState + FGameState.MainLoop                             ; флаги главного цикла
 .Render         EQU GameState + FGameState.Render                               ; флаги отрисовки
+.Music          EQU GameState + FGameState.Music                                ; флаги музыки
 .DisplayList    EQU GameState + FGameState.DisplayList                          ; адрес список отображения
 .DisplayListLen EQU GameState + FGameState.DisplayListLen                       ; длина список отображения
 .Interrupt      EQU GameState + FGameState.Interrupt                            ; флаги прерывания

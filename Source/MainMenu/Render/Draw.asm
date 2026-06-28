@@ -72,14 +72,15 @@ Draw:           ; -----------------------------------------
 ; -----------------------------------------
 UpdateScreen:   SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 CALL MainMenu.Base.Particle.RestoreScreen
-                JP MainMenu.Base.Particle.Draw
+                CALL MainMenu.Base.Render.Portal.Play                             ; проигрывание анимации "портала"
+                CALL MainMenu.Base.Particle.Draw                                  ; отображение частиц
+                SET_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag
+                RET
 Update:         CALL MainMenu.Base.Particle.RefillPointQueue                    ; пополнение очереди точек
                 CALL MainMenu.Base.Particle.ParticleSampling                    ; выборка частиц из очереди точек
                 CALL MainMenu.Base.Particle.UpdateParticles                     ; обновление позиции активных частиц
 
                 RES_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag                  ; сброс флага завершения
-                RET
-.Force          SET_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag
                 RET
 
                 display " - Main draw:\t\t\t\t\t\t", /A, Draw, "\t= busy [ ", /D, $-Draw, " byte(s)  ]"

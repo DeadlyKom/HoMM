@@ -107,7 +107,7 @@ StartBoot:      DI
                 MARK_RAM PAGE_1, MemBank_03, BankSize                           ; отметить страницу памяти 1 занятой
                 MARK_RAM PAGE_2, MemBank_02, BankSize                           ; отметить страницу памяти 2 занятой
                 MARK_RAM PAGE_3, MemBank_03, BankSize                           ; отметить страницу памяти 3 занятой
-                ; MARK_RAM PAGE_4, MemBank_03, BankSize                           ; отметить страницу памяти 4 занятой
+                MARK_RAM PAGE_4, MemBank_03, BankSize                           ; отметить страницу памяти 4 занятой
                 MARK_RAM PAGE_5, MemBank_01, BankSize                           ; отметить страницу памяти 5 занятой
                 ; MARK_RAM PAGE_6, MemBank_03, BankSize                           ; отметить страницу памяти 6 занятой
                 MARK_RAM PAGE_7, MemBank_03, BankSize                           ; отметить страницу памяти 7 занятой
@@ -131,6 +131,11 @@ StartBoot:      DI
                 SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
                 SET_LOAD_ASSETS ASSETS_ID_PAGE_3, Page.Page3, Adr.Code.Page3
                 LOAD_ASSETS ASSETS_ID_PAGE_3
+
+                ; подготовка и загрузка кода страницы 3
+                SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
+                SET_LOAD_ASSETS ASSETS_ID_PAGE_4, Page.Page4, Adr.Code.Page4
+                LOAD_ASSETS ASSETS_ID_PAGE_4
 
                 ; переход по точке входа
                 LD SP, Adr.StackTop
