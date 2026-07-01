@@ -46,6 +46,9 @@ ADJUST_HIDDEN_SCR_ADR macro Reg?
 SCREEN_ADR_REG  macro Register?, ScreenAddress?, X?, Y?
                 LD Register?, ScreenAddress? + ((((Y?) >> 3) & 0x18) << 8) + (((Y?) & 0x07) << 8) + (((Y?) & 0x38) << 2) + ((X?) >> 3)
                 endm
+SET_TO_SCREEN_ADR macro Register?, ScreenAddress?, X?, Y?
+                LD (ScreenAddress? + ((((Y?) >> 3) & 0x18) << 8) + (((Y?) & 0x07) << 8) + (((Y?) & 0x38) << 2) + ((X?) >> 3)), Register?
+                endm
 SCREEN_ADR_DW   macro ScreenAddress?, X?, Y?
                 DW ScreenAddress? + ((((Y?) >> 3) & 0x18) << 8) + (((Y?) & 0x07) << 8) + (((Y?) & 0x38) << 2) + ((X?) >> 3)
                 endm

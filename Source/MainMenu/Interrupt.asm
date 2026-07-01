@@ -11,8 +11,6 @@
 Interrupt:      ; период обновления 4 фрейма, позволяя распредлеить нагрузку в начале кадра
                 LD A, (TickCounterRef)
                 AND %00000011
-                ; LD HL, .JumpTable
-                ; CALL Func.JumpTable
                 CALL Z, MainMenu.Base.Render.UpdateScreen                       ; обновление экрана
 
 .Input          ; ************ Scan Input ************
@@ -24,14 +22,7 @@ Interrupt:      ; период обновления 4 фрейма, позвол
                 CALL FPS_Counter.Tick
                 endif
 
-.RET           RET
-
-; .JumpTable      
-;                 DW MainMenu.Base.Render.UpdateScreen                            ; обновление экрана
-;                 DW .RET                                                         ; бездействие
-;                 DW .RET                                                         ; бездействие
-;                 DW .RET                                                         ; бездействие
-
+                RET
                 display " - Main interrupt:\t\t\t\t\t", /A, Interrupt, "\t= busy [ ", /D, $-Interrupt, " byte(s)  ]"
     
                 endif ; ~ _MAIN_MENU_MAIN_INTERRUPT_

@@ -72,8 +72,11 @@ Draw:           ; -----------------------------------------
 ; -----------------------------------------
 UpdateScreen:   SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 CALL MainMenu.Base.Particle.RestoreScreen
-                CALL MainMenu.Base.Render.Portal.Play                             ; проигрывание анимации "портала"
-                CALL MainMenu.Base.Particle.Draw                                  ; отображение частиц
+                CALL MainMenu.Base.Render.Portal.Play                           ; проигрывание анимации "портала"
+.ChurFlag       EQU $                                                           ; флаг обновления символа "Чур"
+                OR A
+                CALL C, Draw_Chur                                               ; отображение символа "Чур"
+                CALL MainMenu.Base.Particle.Draw                                ; отображение частиц
                 SET_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag
                 RET
 Update:         CALL MainMenu.Base.Particle.RefillPointQueue                    ; пополнение очереди точек

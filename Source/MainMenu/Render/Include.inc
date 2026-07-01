@@ -5,6 +5,7 @@
                 module Render
 
                 include "Draw.asm"
+                include "Draw_Chur.asm"
                 include "Draw_Portal.asm"
 
                 endmodule

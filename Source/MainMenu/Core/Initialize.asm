@@ -15,6 +15,11 @@ Initialize:     ; генерация таблицы
                 MEMCPY_TO_PAGE Adr.ExtraBuffer, Adr.ForceTable, \
                             Page.ForceTable, Size.ForceTable                    ; копирование блока между страницами
 
+                ; сброс счётчика скипа
+                XOR A
+                LD (MainMenu.Base.Render.Draw_Chur.Counter), A
+                RES_FLAG_MODIFY MainMenu.Base.Render.UpdateScreen.ChurFlag      ; сброс флага обновления символа "Чур"
+
                 ; загрузка данных контента "главного меню"
                 CALL MainMenu.Base.Content.Font.Load                            ; загрузка ассета шрифта (для частиц)
                 CALL MainMenu.Base.Content.Portal.Load                          ; загрузка данных контента "главного меню"

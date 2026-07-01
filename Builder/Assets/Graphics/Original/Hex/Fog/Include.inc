@@ -10,9 +10,9 @@
 Begin           EQU $
                 include "Pack.inc"
 Size            EQU $-Begin
-                savebin "Builder/Assets/Graphics/Original/Hex/Fog/Pack.pack", Begin, Size
-                shellexec "Tools\Compressor\salvador.exe -v Builder/Assets/Graphics/Original/Hex/Fog/Pack.pack Builder/Assets/Graphics/Compressed/Hex/Fog.pack.ar"
-                ASSETS_SIZE "Builder/Assets/Graphics/Compressed/Hex/Fog.pack.ar"
+                COMPRESSED_ASSET \
+                "Builder/Assets/Graphics/Original/Hex/Fog/Pack.pack", \
+                "Builder/Assets/Graphics/Compressed/Hex/Fog.pack.ar"
                 endmodule
 
                 endif ; ~ _GRAPHICS_HEXAGON_FOG_INCLUDE_
