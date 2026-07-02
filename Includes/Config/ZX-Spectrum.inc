@@ -13,10 +13,13 @@ PAGE_N                  EQU 0x08
 
 SCR_BASE                EQU 0x00
 SCR_ADR_BASE            EQU MemBank_01_SCR
+SCR_ATTR_BASE           EQU MemBank_01 + ImageSize
 SCR_STACK_ADR_BASE      EQU MemBank_01_SCR  + ImageSize
 SCR_SHADOW              EQU 0x01
 SCR_ADR_SHADOW          EQU MemBank_03_SCR
+SCR_ATTR_SHADOW         EQU MemBank_03_SCR + ImageSize
 SCR_STACK_ADR_SHADOW    EQU MemBank_03_SCR + ImageSize
 SCR_SIZE                EQU ScreenSize
+ATTR_SIZE               EQU AttributeSize
 
                 endif ; ~_CONFIG_ZX_SPECTRUM_

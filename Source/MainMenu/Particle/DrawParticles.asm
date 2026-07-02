@@ -11,7 +11,7 @@
 ; -----------------------------------------
 Draw:           SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 
-                ; сброс указателя на последнюю пару дял восстановления экрана
+.Reset          ; сброс указателя на последнюю пару дял восстановления экрана
                 LD HL, Adr.RestoreBuf
                 LD (RestoreScreen.Pointer), HL
 
@@ -62,5 +62,48 @@ Draw:           SET_PAGE_SCREEN_SHADOW                                          
 .ContainerSP    EQU $+1
                 LD SP, #0000
                 RET
+
+; высвобождение частиц в массиве
+.Flush          ; проверка налияия точек
+                LD A, (UpdateParticles.ParticleNum)
+                OR A
+                RET Z                                                           ; выход, если массив пустой
+
+                ; инициализация
+                LD IX, Adr.ParticleArray
+                LD B, A
+
+.FlushLoop      ; определение адреса экрана
+                LD H, HIGH Adr.ScrAdrTable
+                LD L, (IX + FTargetParticle.Target.Y)
+                LD A, (HL)
+                INC H
+                LD D, (HL)
+
+                ; корректировка адреса по горизонтали
+                INC H
+                LD L, (IX + FTargetParticle.Target.X)
+                OR (HL)
+                LD E, A
+
+                ; сохранение данных для восстановления
+                RES 7, D                                                        ; сброс бита, переход на основной экран
+                LD A, (DE)                                                      ; чтение байта для последующего восстановления
+                
+                ; отображение точки на экране
+                INC H
+                XOR (HL)
+                LD (DE), A
+
+                ; переход к следующей частице
+                LD DE, TARGET_PARTICLE_SIZE
+                ADD IX, DE
+
+                DJNZ .FlushLoop
+
+                ; очистка буфера
+                XOR A
+                LD (UpdateParticles.ParticleNum), A
+                JR .Reset                                                       ; сброс указателя на последнюю пару дял восстановления экрана
 
                 endif ; ~_MAIN_MENU_PARTICLE_DRAW_

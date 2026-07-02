@@ -14,6 +14,7 @@ Interrupt:
                 CALL Z, Input.Scan
 
 .Render         ; ************** Render **************
+                SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 ; период обновления 4 фрейма, позволяя распредлеить нагрузку в начале кадра
                 LD A, (TickCounterRef)
                 AND %00000011

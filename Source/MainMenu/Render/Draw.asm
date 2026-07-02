@@ -37,7 +37,7 @@ Draw:           ; -----------------------------------------
                 endif
 
 .InitMenu       CALL MainMenu.Base.Core.Initialize                              ; первичная инициализация "главного меню"
-                RES_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag                  ; сброс флага завершения
+                RES_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag                  ; сброс флага завершения проигрывании анимации портала
                 ;---------------------------------------------------------------
 
 .Enter          ; -----------------------------------------
@@ -69,22 +69,37 @@ Draw:           ; -----------------------------------------
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-UpdateScreen:   SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
-                CALL MainMenu.Base.Particle.RestoreScreen
+UpdateScreen:   CALL MainMenu.Base.Particle.RestoreScreen                       ; восстановление экрана
                 CALL MainMenu.Base.Render.Portal.Play                           ; проигрывание анимации "портала"
 .ChurFlag       FLAG_MODIFY 0                                                   ; флаг обновления символа "Чур"
                 CALL C, Draw_Chur                                               ; отображение символа "Чур"
                 CALL MainMenu.Base.Particle.Draw                                ; отображение частиц
-                SET_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag
+                SET_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag                  ; установка флага завершения проигрывании анимации портала
                 RET
-Update:         CALL MainMenu.Base.Particle.RefillPointQueue                    ; пополнение очереди точек
+Update:         ; проверка наличие флага активации завершения интро (блокируется пропуском интро)
+                CHECK_FLAG_MODIFY MainMenu.Base.Render.ActivateIntro.Flag
+                JR C, .ResetFlag                                                ; переход, если активен флаг активации завершения интро
+                                                                                ; позволяет блокировать появление новых частиц (ВАЖНО)
+
+                CALL MainMenu.Base.Particle.RefillPointQueue                    ; пополнение очереди точек
                 CALL MainMenu.Base.Particle.ParticleSampling                    ; выборка частиц из очереди точек
                 CALL MainMenu.Base.Particle.UpdateParticles                     ; обновление позиции активных частиц
 
-                RES_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag                  ; сброс флага завершения
+.ResetFlag      RES_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag                  ; сброс флага завершения проигрывании анимации портала
                 RET
+; -----------------------------------------
 ; активации пропуска интро
-ActivateIntro:
+; In:
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+ActivateIntro:  ; проверка наличие завершения проигрывании анимации портала (блокируется обновлением частиц)
+                CHECK_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag
+                RET C                                                           ; выход, если активен флаг завершения проигрывании анимации портала
+                                                                                ; позволяет блокировать завершение интро, 
+                                                                                ; пока незавершится цикл обновления оставшихся частиц (ВАЖНО)
+
 .Flag           FLAG_MODIFY 0                                                   ; флаг завершения интро
                 RET NC
 
@@ -92,7 +107,13 @@ ActivateIntro:
                 SET_FLAG_MODIFY MainMenu.Base.Render.PrepareIntro.Flag          ; установка флага активации подготовки завершения интро
                 JP MainMenu.Base.Render.Draw_Flash.Show
 
+; -----------------------------------------
 ; подготовка пропуска интро
+; In:
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
 PrepareIntro:
 .Flag           FLAG_MODIFY 0                                                   ; флаг активации подготовки завершения интро
                 RET NC
