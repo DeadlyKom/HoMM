@@ -20,7 +20,8 @@ Initialize:     ; генерация таблицы
                 LD (MainMenu.Base.Render.Draw_Chur.Counter), A
                 RES_FLAG_MODIFY MainMenu.Base.Render.UpdateScreen.ChurFlag      ; сброс флага обновления символа "Чур"
                 RES_FLAG_MODIFY MainMenu.Base.Render.ActivateIntro.Flag         ; сброс флага активации завершения интро
-                RES_FLAG_MODIFY MainMenu.Base.Render.PrepareIntro.Flag          ; сброс флага активации подготовки завершения интро
+                RES_FLAG_MODIFY MainMenu.Base.Render.FlushIntro.Flag            ; сброс флага высвобождения завершения интро
+                RES_FLAG_MODIFY MainMenu.Base.Render.CompliteIntro.Flag         ; сброс флага завершения интро
                 RES_FLAG_MODIFY MainMenu.Base.Input.Scan.DisableSkipFlag        ; сброс флага запрещения пропуска интро
 
                 ; загрузка данных контента "главного меню"

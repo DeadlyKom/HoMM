@@ -12,7 +12,7 @@ ParticleSampling:
                 ; определение количество доступных элементов в буфере очереди точек
                 LD A, (RefillPointQueue.NumAvailable)
                 NEG
-                ADD A, Size.PointQueue-1
+                ADD A, Size.PointQueue
                 OR A
                 RET Z                                                           ; выход, если буфер очереди точек пустой
                 EX AF, AF'
@@ -82,11 +82,11 @@ ParticleSampling:
                 LD (IY + FTargetParticle.Target), BC
                 RES 0, (IY + FTargetParticle.Flags)                             ; сброс флага спокойствия
 
-                LD (IY + FTargetParticle.Super.Position.X.High), 144                ; горизонтальное начало
+                LD (IY + FTargetParticle.Super.Position.X.High), 144            ; горизонтальное начало
                 CALL Math.Rand8
                 AND %00111111
                 ADD A, 72-16
-                LD (IY + FTargetParticle.Super.Position.Y.High), A                   ; вертикальное начало 72 + 0..31
+                LD (IY + FTargetParticle.Super.Position.Y.High), A              ; вертикальное начало 72 + 0..31
 
                 XOR A
                 LD (IY + FTargetParticle.Super.Position.X.Low), A
@@ -95,6 +95,62 @@ ParticleSampling:
                 LD (IY + FTargetParticle.Super.Velocity.X.Low), A
                 LD (IY + FTargetParticle.Super.Velocity.Y.High), A
                 LD (IY + FTargetParticle.Super.Velocity.Y.Low), A
+
+                RET
+
+; высвобождение подготовленных элементов в буфере очереди точек
+.Flush          LD A, (RefillPointQueue.NumAvailable)
+                NEG
+                ADD A, Size.PointQueue-1
+                OR A
+                RET Z                                                           ; выход, если буфер очереди точек пустой
+
+                ; инициализация
+                LD HL, Adr.PointQueue
+
+.FlushLoop      EX AF, AF'
+
+                ; чтение координат точки
+                LD C, (HL)      ; X
+                INC HL
+                LD B, (HL)      ; Y
+                INC HL
+                EX DE, HL
+
+                ; определение адреса экрана
+                LD H, HIGH Adr.ScrAdrTable
+                LD L, B         ; Y
+                LD A, (HL)
+                INC H
+                LD B, (HL)
+
+                ; корректировка адреса по горизонтали
+                INC H
+                LD L, C         ; X
+                OR (HL)
+                LD C, A
+
+                ; сохранение данных для восстановления
+                RES 7, B                                                               ; сброс бита, переход на основной экран
+                LD A, (BC)                                                      ; чтение байта для последующего восстановления
+                
+                ; отображение точки на экране
+                INC H
+                XOR (HL)
+                LD (BC), A
+
+                EX DE, HL
+                EX AF, AF'
+                DEC A
+                JR NZ, .FlushLoop
+
+                ; установка количество свободных элементов в буфере очереди точек
+                LD A, Size.PointQueue
+                LD (RefillPointQueue.NumAvailable), A
+
+                ; установка адрес буфера очереди точек
+                LD HL, Adr.PointQueue
+                LD (RefillPointQueue.Pointer), HL                      
 
                 RET
 

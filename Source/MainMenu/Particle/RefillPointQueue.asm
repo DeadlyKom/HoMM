@@ -12,9 +12,8 @@ RefillPointQueue:
 .Cursor         EQU $+1
                 LD HL, .TestText
 
-                ; проверка флага завершения
-.BaselineFlag   EQU $
-                NOP
+                ; проверка флага базовой линия
+.BaselineFlag   FLAG_MODIFY 0                                                   ; флаг инициализации базовой линия
                 JR C, .IsIndicated                                              ; переход, если базовая линия указана
 
 .NextLine       ; чтение позиции текста на экране
@@ -26,14 +25,14 @@ RefillPointQueue:
                 LD A, D
                 XOR E
                 INC A
-                RET Z
+                SCF
+                RET Z                                                           ; выход, если текст закончился
 
                 LD (.BaselinePos), DE                                           ; сохранение позиции базовой линии
-                ; установка флага завершения
+                ; установка флага базовой линия
                 SET_FLAG_MODIFY RefillPointQueue.BaselineFlag
 
-.IsIndicated    ;
-                ; установка страницы шрифта
+.IsIndicated    ; установка страницы шрифта
                 LD A, (MainMenu.Base.Content.Font.Page)
                 SET_PAGE_A
 
@@ -70,7 +69,8 @@ RefillPointQueue:
 .NumAvailable   EQU $+1                                                         ; количество свободных элементов в буфере очереди точек
                 LD A, #00
                 SUB (HL)                                                        ; количество точек в глифе
-                RET C                                                           ; выход, если доступного места недостаточно
+                CCF
+                RET NC                                                           ; выход, если доступного места недостаточно
                 LD (.NumAvailable), A                                           ; сохранение количество свободных элементов
 
                 ; сохранение адреса следующего символа
@@ -132,6 +132,7 @@ RefillPointQueue:
                 ADD A, C
                 LD (.BaselinePos), A
     
+                OR A
                 RET
 
 .TestText       ; отображение текста "АБВГДЕ"

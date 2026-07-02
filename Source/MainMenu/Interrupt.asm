@@ -28,8 +28,8 @@ Interrupt:
 .RET            RET
 .ManageTable    ; таблица распределения времени
                 DW MainMenu.Base.Render.ActivateIntro                           ; активации пропуска интро
-                DW MainMenu.Base.Render.PrepareIntro                            ; подготовка пропуска интро
-                DW .RET                                                         ; бездействие
+                DW MainMenu.Base.Render.FlushIntro                              ; высвободение завершения интро
+                DW MainMenu.Base.Render.CompliteIntro                           ; завершение пропуска интро
                 DW MainMenu.Base.Render.UpdateScreen                            ; обновление экрана
 
                 display " - Main interrupt:\t\t\t\t\t", /A, Interrupt, "\t= busy [ ", /D, $-Interrupt, " byte(s)  ]"
