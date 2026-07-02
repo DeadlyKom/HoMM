@@ -55,6 +55,9 @@ SCREEN_ADR_DW   macro ScreenAddress?, X?, Y?
 SCREEN_ATTR_ADR_REG  macro Register?, ScreenAddress?, X?, Y?
                 LD Register?, (ScreenAddress?) | 0x1800 + ((((Y?) & 0x1F) << 5) + ((X?) & 0x1F))
                 endm
+SET_TO_ATTR_ADR_REG macro Register?, ScreenAddress?, X?, Y?
+                LD ((ScreenAddress?) | 0x1800 + ((((Y?) & 0x1F) << 5) + ((X?) & 0x1F))), Register?
+                endm
 SET_ATTR_IP     macro Inc?, Paper?
                 LD (HL), ((0 << 7) | (0 << 6) | ((Paper?) << 3) | (Inc?))
                 endm

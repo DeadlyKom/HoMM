@@ -14,7 +14,8 @@ Scan:           ; проверка HardWare ограничения мыши
                 CALL Mouse.UpdateCursor                                         ; обновить положение курсора
 
 .KeyCheck       ; проверка клавиши 'SPACE' (пропуск интро)
-                CALL SkipIntro
+.DisableSkipFlag FLAG_MODIFY 0                                                  ; флаг разрешения скипа
+                CALL NC, SkipIntro
 
                 ; ToDo: выбор слота должен осуществляться в игровом меню
                 ; ToDo: произвести выборку карты в игровом меню, снастройками сессии

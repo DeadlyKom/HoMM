@@ -56,8 +56,7 @@ Draw:           ; -----------------------------------------
                 ; тик
                 ; -----------------------------------------
                 ; проверка флага проигрывания портала
-.Flag           EQU $
-                NOP
+.Flag           FLAG_MODIFY 0                                                   ; флаг завершения проигрывании анимации портала
                 CALL C, Update                                                  ; переход, если проигрывание анимации портала завершено
                 
                 RES_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE             ; выборочный сброс Render флагов
@@ -73,8 +72,7 @@ Draw:           ; -----------------------------------------
 UpdateScreen:   SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 CALL MainMenu.Base.Particle.RestoreScreen
                 CALL MainMenu.Base.Render.Portal.Play                           ; проигрывание анимации "портала"
-.ChurFlag       EQU $                                                           ; флаг обновления символа "Чур"
-                OR A
+.ChurFlag       FLAG_MODIFY 0                                                   ; флаг обновления символа "Чур"
                 CALL C, Draw_Chur                                               ; отображение символа "Чур"
                 CALL MainMenu.Base.Particle.Draw                                ; отображение частиц
                 SET_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag
@@ -85,6 +83,24 @@ Update:         CALL MainMenu.Base.Particle.RefillPointQueue                    
 
                 RES_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag                  ; сброс флага завершения
                 RET
+; активации пропуска интро
+ActivateIntro:
+.Flag           FLAG_MODIFY 0                                                   ; флаг завершения интро
+                RET NC
+
+                RES_FLAG_MODIFY MainMenu.Base.Render.ActivateIntro.Flag         ; сброс флага активации завершения интро
+                SET_FLAG_MODIFY MainMenu.Base.Render.PrepareIntro.Flag          ; установка флага активации подготовки завершения интро
+                JP MainMenu.Base.Render.Draw_Flash.Show
+
+; подготовка пропуска интро
+PrepareIntro:
+.Flag           FLAG_MODIFY 0                                                   ; флаг активации подготовки завершения интро
+                RET NC
+
+                RES_FLAG_MODIFY MainMenu.Base.Render.PrepareIntro.Flag          ; сброс флага активации подготовки завершения интро
+
+                ; ToDo: добавить флаг для следующего фрейма, где будет проигрываться эффект волны, скрытия частиц
+                JP MainMenu.Base.Render.Draw_Flash.Hide
 
                 display " - Main draw:\t\t\t\t\t\t", /A, Draw, "\t= busy [ ", /D, $-Draw, " byte(s)  ]"
 

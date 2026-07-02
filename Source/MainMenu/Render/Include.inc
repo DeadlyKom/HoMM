@@ -6,6 +6,7 @@
 
                 include "Draw.asm"
                 include "Draw_Chur.asm"
+                include "Draw_Flash.asm"
                 include "Draw_Portal.asm"
 
                 endmodule
