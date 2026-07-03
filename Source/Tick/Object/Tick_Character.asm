@@ -37,7 +37,7 @@ Character:      ; проверка смены анимации героя
                 PUSH HL
                 LD E, (IX + FObject.Position.X.High)
                 LD D, (IX + FObject.Position.Y.High)
-                CALL Character.DirectonPath
+                CALL Character.DirectionPath
                 LD B, (HL)                                                      ; направление
                 ; определение расстояние пути
                 POP DE

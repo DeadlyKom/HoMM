@@ -1,6 +1,23 @@
                 ifndef _MACRO_FLAGS_
                 define _MACRO_FLAGS_
 ; -----------------------------------------
+; объявление флага
+; In:
+;   FlagValue? - начальное значение флага (0 или 1)
+; Out:
+; Corrupt:
+; -----------------------------------------
+FLAG_MODIFY     macro FlagValue?
+                if (FlagValue?) == 0
+                OR A
+                elseif (FlagValue?) == 1
+                SCF
+                else
+                error "FLAG_MODIFY: incorrect value!"
+                NOP
+                endif
+                endm   
+; -----------------------------------------
 ; проверка флага
 ; In:
 ;   HL - адрес хранения флагов
@@ -39,9 +56,9 @@ SET_FLAG_A      macro FlagBit?
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-SET_FLAG_MODIFY macro Adr?
+SET_FLAG_MODIFY macro LabelFlag?
                 LD A, #37                                                       ; OR A/SCF #B7/#37
-                LD (Adr?), A
+                LD (LabelFlag?), A
                 endm             
 ; -----------------------------------------
 ; установка флагов
@@ -95,9 +112,9 @@ RES_FLAGS       macro Flags?
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-RES_FLAG_MODIFY macro Adr?
+RES_FLAG_MODIFY macro LabelFlag?
                 LD A, #B7                                                       ; OR A/SCF #B7/#37
-                LD (Adr?), A
+                LD (LabelFlag?), A
                 endm     
 ; -----------------------------------------
 ; сброс всех флагов
@@ -131,6 +148,16 @@ SWAP_FLAG       macro FlagBit?
 CHECK_FLAGS     macro Flags?
                 AND Flags?
                 endm
+; -----------------------------------------
+; проверка флага (модификация кода)
+; In:
+; Out:
+; Corrupt:
+; -----------------------------------------
+CHECK_FLAG_MODIFY macro LabelFlag?
+                LD A, (LabelFlag?)                                              ; OR A/SCF #B7/#37
+                CP #B7
+                endm   
 ; -----------------------------------------
 ; изъятие флага
 ; In:

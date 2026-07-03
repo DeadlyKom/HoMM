@@ -4,6 +4,7 @@
 
                 include "Code/Packing.inc"
                 include "Text/Packing.inc"
+                include "Sound/Packing.inc"
                 include "Metadata/Packing.inc"
                 include "Graphics/Packing.inc"
 

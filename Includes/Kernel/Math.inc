@@ -6,6 +6,7 @@ Math
 
 .Div8x8         EQU Kernel.Math.Div8x8
 .Div16x8_16     EQU Kernel.Math.Div16x8_16
+.Div16x16_16    EQU Kernel.Math.Div16x16_16
 
 .Sqrt           EQU Kernel.Math.Sqrt
 .DistSquared    EQU Kernel.Math.DistSquared

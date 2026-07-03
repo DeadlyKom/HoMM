@@ -73,6 +73,7 @@ GameSession     EQU Adr.MemoryMap + Size.MemoryMap                              
 EntryPoint      EQU Adr.GameSession + Size.GameSession                          ; адрес точки входа
 SharedPoint     EQU Adr.EntryPoint + Size.EntryPoint                            ; адрес точки входа
 Port_7FFD       EQU PORT_7FFD                                                   ; адрес хранения номера странички
+AY.R7_Settings  EQU #7FFF                                                       ; адрес хранения настроек микшера AY
 Booloader
 .StackTop       EQU MemBank_03-2                                                ; расположение стека (загрузчика)
                 endmodule

@@ -13,7 +13,7 @@ SecondarySkill  FSecondarySkill                                                 
 Class           DB #00                                                          ; класс персонажа                                                   [1 байт]
                                                                                 ; Note: 
                                                                                 ;   влияет на вероятность выподания вторичных навыков
-Skils           FCharacterSkills                                                ; навыки персонажа                                                  [байт]
+Skills          FCharacterSkills                                                ; навыки персонажа                                                  [байт]
                 ends
 ;-------------------------------------------------------------------------------
                 struct FCharacter                                               ; персонаж "аватар", за которого играет человек или ИИ              [32 байта]
@@ -21,7 +21,7 @@ Class           DB #00                                                          
                                                                                 ; Note: 
                                                                                 ;   влияет на вероятность выподания вторичных навыков
 ParticipantID   DB #00                                                          ; идентификатор владельца, указатель на структуру FParticipant      [1 байт]
-Skils           FCharacterSkills                                                ; навыки персонажа                                                  [байт]
+Skills          FCharacterSkills                                                ; навыки персонажа                                                  [байт]
 CombatStates    FCombatStates                                                   ; боевые состояния                                                  [2 байта]
 Equipment       FCharacterEquipment                                             ; экипировка персонажа                                              [10 байт]
 ObjectID        DB #00                                                          ; идентификатор объекта, к которому привязан                        [1 байт]

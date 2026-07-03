@@ -4,6 +4,7 @@
 
                 include "Game_View.inc"
                 include "Game_Input.inc"
+                include "Game_Music.inc"
                 include "Game_Render.inc"
                 include "Game_Options.inc"
                 include "Game_MainSwap.inc"

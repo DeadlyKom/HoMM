@@ -80,7 +80,7 @@ Dummy           DS 4, 0                                                         
                 ends
 
                 struct FGraphicHeader                                           ; структура описывающая заголовок графики
-Lable           TEXT 13, {"", 0}
+Label           TEXT 13, {"", 0}
 Num             DB #00
 Offset          DW #0000
                 ends

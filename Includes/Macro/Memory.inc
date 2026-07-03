@@ -171,6 +171,23 @@ MEMCPY_PAGE     macro Source?, Destination?, DestinationPage?, Size?
 .Continue       EQU $
                 endm
 ; -----------------------------------------
+; копирование данных в страницу (находясь в другой странице)
+; In:
+; Out:
+; Corrupt:
+;   HL, DE, BC, AF
+; Note:
+; -----------------------------------------
+MEMCPY_TO_PAGE  macro Source?, Destination?, DestinationPage?, Size?
+                LD A, DestinationPage?
+                EX AF, AF'
+                CALL GetPage
+                LD HL, Source?
+                LD DE, Destination?
+                LD BC, Size?
+                CALL Memcpy.FromPage
+                endm
+; -----------------------------------------
 ; установка страницы (0-31) и номер видимого экрана (0,1)
 ; -----------------------------------------
 SetPort:        macro Page?, Screen?

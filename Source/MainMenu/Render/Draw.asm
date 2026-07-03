@@ -2,7 +2,7 @@
                 ifndef _MAIN_MENU_RENDER_DRAW_
                 define _MAIN_MENU_RENDER_DRAW_
 ; -----------------------------------------
-; отображение "мира"
+; отображение "главного меню"
 ; In:
 ; Out:
 ; Corrupt:
@@ -36,9 +36,8 @@ Draw:           ; -----------------------------------------
                 JR .Enter
                 endif
 
-.InitMenu       ; загрузка данных контента "главного меню"
-                CALL MainMenu.Base.Content.Portal.Load
-                CALL MainMenu.Base.Render.Portal.Initialize                     ; первичная инициализация
+.InitMenu       CALL MainMenu.Base.Core.Initialize                              ; первичная инициализация "главного меню"
+                RES_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag                  ; сброс флага завершения проигрывании анимации портала
                 ;---------------------------------------------------------------
 
 .Enter          ; -----------------------------------------
@@ -56,12 +55,87 @@ Draw:           ; -----------------------------------------
 .Tick           ; -----------------------------------------
                 ; тик
                 ; -----------------------------------------
-                CALL Portal.Play                                                ; проигрывание анимации "портала"
-
-                ; SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
+                ; проверка флага проигрывания портала
+.Flag           FLAG_MODIFY 0                                                   ; флаг завершения проигрывании анимации портала
+                CALL C, Update                                                  ; переход, если проигрывание анимации портала завершено
+                
                 RES_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE             ; выборочный сброс Render флагов
-                SET_RENDER_FLAG FRAME_READY_BIT                                 ; установка флага готовности кадра
                 RET
+
+; -----------------------------------------
+; обновление экрана
+; In:
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+UpdateScreen:   CALL MainMenu.Base.Particle.RestoreScreen                       ; восстановление экрана
+                CALL MainMenu.Base.Render.Portal.Play                           ; проигрывание анимации "портала"
+.ChurFlag       FLAG_MODIFY 0                                                   ; флаг обновления символа "Чур"
+                CALL C, Draw_Chur                                               ; отображение символа "Чур"
+                CALL MainMenu.Base.Particle.Draw                                ; отображение частиц
+                SET_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag                  ; установка флага завершения проигрывании анимации портала
+                RET
+Update:         ; проверка наличие флага активации завершения интро (блокируется пропуском интро)
+                CHECK_FLAG_MODIFY MainMenu.Base.Render.ActivateIntro.Flag
+                JR C, .ResetFlag                                                ; переход, если активен флаг активации завершения интро
+                                                                                ; позволяет блокировать появление новых частиц (ВАЖНО)
+
+                CALL MainMenu.Base.Particle.RefillPointQueue                    ; пополнение очереди точек
+                CALL C, .DisbleSkip
+                CALL MainMenu.Base.Particle.ParticleSampling                    ; выборка частиц из очереди точек
+                CALL MainMenu.Base.Particle.UpdateParticles                     ; обновление позиции активных частиц
+
+.ResetFlag      RES_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag                  ; сброс флага завершения проигрывании анимации портала
+                RET
+.DisbleSkip     SET_FLAG_MODIFY MainMenu.Base.Input.Scan.DisableSkipFlag        ; установка флага запрещения пропуска интро
+                RET
+; -----------------------------------------
+; активации пропуска интро
+; In:
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+ActivateIntro:  ; проверка наличие завершения проигрывании анимации портала (блокируется обновлением частиц)
+                CHECK_FLAG_MODIFY MainMenu.Base.Render.Draw.Flag
+                RET C                                                           ; выход, если активен флаг завершения проигрывании анимации портала
+                                                                                ; позволяет блокировать завершение интро, 
+                                                                                ; пока незавершится цикл обновления оставшихся частиц (ВАЖНО)
+
+.Flag           FLAG_MODIFY 0                                                   ; флаг завершения интро
+                RET NC
+
+                RES_FLAG_MODIFY MainMenu.Base.Render.ActivateIntro.Flag         ; сброс флага активации завершения интро
+                SET_FLAG_MODIFY MainMenu.Base.Render.FlushIntro.Flag            ; установка флага высвобождения завершения интро
+                JP MainMenu.Base.Render.Draw_Flash.Show
+
+; -----------------------------------------
+; высвободить завершения интро
+; In:
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+FlushIntro:
+.Flag           FLAG_MODIFY 0                                                   ; флаг высвобождения завершения интро
+                RET NC
+                RES_FLAG_MODIFY MainMenu.Base.Render.FlushIntro.Flag            ; сброс флага высвобождения завершения интро
+                SET_FLAG_MODIFY MainMenu.Base.Render.CompliteIntro.Flag         ; установка флага завершения интро
+                ; ToDo: добавить флаг для следующего фрейма, где будет проигрываться эффект волны, скрытия частиц
+                JP MainMenu.Base.Render.Draw_Flash.Flush
+; -----------------------------------------
+; завершение интро
+; In:
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+CompliteIntro:
+.Flag           FLAG_MODIFY 0                                                   ; флаг завершения интро
+                RET NC
+                RES_FLAG_MODIFY MainMenu.Base.Render.CompliteIntro.Flag         ; сброс флага завершения интро
+                JP MainMenu.Base.Render.Draw_Flash.Hide
 
                 display " - Main draw:\t\t\t\t\t\t", /A, Draw, "\t= busy [ ", /D, $-Draw, " byte(s)  ]"
 

@@ -45,7 +45,7 @@ Portal:
 .Flag           EQU $
                 NOP
                 RET C                                                           ; выход, если проигрывание завершено
-                
+
                 ; уменьшение счётчика
                 LD HL, .FrameIntLeft
                 DEC (HL)
@@ -72,6 +72,7 @@ Portal:
                 INC HL
                 LD (.FrameNum), HL
                 PUSH DE                                                         ; адрес функции обновления
+
 
 .State          ; состояние
 .CurrentState   EQU $+1                                                         ; состояни портала
@@ -106,7 +107,8 @@ Portal:
 
                 ; ToDo: добавит копирование из буфера до 64 элементов следующей цепочки
                 POP DE                                                          ; удаление адреса состека (неверный)
-                
+                JP Portal.Initialize    ; ToDo: временно!
+
                 ; переход к следующему состоянию
                 LD A, PORTAL_STATE_LOOP
 

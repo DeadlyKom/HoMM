@@ -47,7 +47,7 @@ ExtraBuffer         EQU #B700                                                   
 SortBuffer          EQU #B800                                                   ; адрес буфера сортировки
 SharedBuffer        EQU #B900                                                   ; адрес буфера общего назначения
 RenderBuffer        EQU #BA00                                                   ; адрес буфера отображения
-TilemapBuffer       EQU #BB00                                                   ; адрес буфера тайловов отображения (пока зарезервирован)
+TilemapBuffer       EQU #BB00                                                   ; адрес буфера тайлов отображения (пока зарезервирован)
 SpriteInfoBuffer    EQU #BC00                                                   ; адрес буфера информации о спрайтах
 DisplayList         EQU TilemapBuffer + TILEMAP_DATA_SIZE                       ; адрес списка отображения
                                                                                 ; -----------------------------------------

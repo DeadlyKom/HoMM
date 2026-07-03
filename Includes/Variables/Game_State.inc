@@ -4,6 +4,7 @@
 GameState       EQU Adr.GameState                                               ; адрес структуры состояния игры
 .MainLoop       EQU GameState + FGameState.MainLoop                             ; флаги главного цикла
 .Render         EQU GameState + FGameState.Render                               ; флаги отрисовки
+.Music          EQU GameState + FGameState.Music                                ; флаги музыки
 .DisplayList    EQU GameState + FGameState.DisplayList                          ; адрес список отображения
 .DisplayListLen EQU GameState + FGameState.DisplayListLen                       ; длина список отображения
 .Interrupt      EQU GameState + FGameState.Interrupt                            ; флаги прерывания
@@ -14,7 +15,7 @@ GameState       EQU Adr.GameState                                               
 .Input.HotKeys  EQU GameState + FGameState.Input.HotKeys                        ; флаг ввода горячих клавиш
 .Input.Timer    EQU GameState + FGameState.Input.Timer                          ; флаги таймера ввода
 .View           EQU GameState + FGameState.View                                 ; флаги вида
-; .Event          EQU GameState + FGameState.Event                                ; событие                       DEPRECATE
+; .Event          EQU GameState + FGameState.Event                                ; событие                       DEPRECATED
 .PlayerActions  EQU GameState + FGameState.PlayerActions                        ; действия игрока
 .AssetID        EQU GameState + FGameState.AssetID                              ; идентификатор последнего загруженного ассета
 .Assets         EQU GameState + FGameState.Assets                               ; копия данных последнего загруженного ассета

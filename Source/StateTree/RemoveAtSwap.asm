@@ -17,6 +17,7 @@ RemoveAtSwap:   ; инициализация
                 LD HL, GameSession.WorldInfo + FWorldInfo.AIContextNum
                 DEC (HL)
                 LD B, (HL)                                                      ; чтение количества элементов в массиве AI-контекстов
+                SCF                                                             ; флаг установлен, отсутствует перемещение
                 RET Z                                                           ; выход, если массив пуст
 
                 ; расчёт индекса удаляемого элемента

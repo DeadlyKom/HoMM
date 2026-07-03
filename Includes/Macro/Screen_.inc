@@ -46,11 +46,17 @@ ADJUST_HIDDEN_SCR_ADR macro Reg?
 SCREEN_ADR_REG  macro Register?, ScreenAddress?, X?, Y?
                 LD Register?, ScreenAddress? + ((((Y?) >> 3) & 0x18) << 8) + (((Y?) & 0x07) << 8) + (((Y?) & 0x38) << 2) + ((X?) >> 3)
                 endm
+SET_TO_SCREEN_ADR macro Register?, ScreenAddress?, X?, Y?
+                LD (ScreenAddress? + ((((Y?) >> 3) & 0x18) << 8) + (((Y?) & 0x07) << 8) + (((Y?) & 0x38) << 2) + ((X?) >> 3)), Register?
+                endm
 SCREEN_ADR_DW   macro ScreenAddress?, X?, Y?
                 DW ScreenAddress? + ((((Y?) >> 3) & 0x18) << 8) + (((Y?) & 0x07) << 8) + (((Y?) & 0x38) << 2) + ((X?) >> 3)
                 endm
 SCREEN_ATTR_ADR_REG  macro Register?, ScreenAddress?, X?, Y?
                 LD Register?, (ScreenAddress?) | 0x1800 + ((((Y?) & 0x1F) << 5) + ((X?) & 0x1F))
+                endm
+SET_TO_ATTR_ADR_REG macro Register?, ScreenAddress?, X?, Y?
+                LD ((ScreenAddress?) | 0x1800 + ((((Y?) & 0x1F) << 5) + ((X?) & 0x1F))), Register?
                 endm
 SET_ATTR_IP     macro Inc?, Paper?
                 LD (HL), ((0 << 7) | (0 << 6) | ((Paper?) << 3) | (Inc?))
@@ -167,10 +173,10 @@ CLS_RECT        macro ScreenAddress?, X?, Y?, SizeX?, SizeY?, Value?
 ; значением чернил (Inc) и бумаги (Paper)
 ; -----------------------------------------
 ATTR_IP         macro ScreenAddress?, Inc?, Paper?
-                MEMSET_BYTE (ScreenAddress? + ImageSize), ((Paper?) << 3) | (Inc?), AttributeSize
+                MEMSET_BYTE (ScreenAddress? + ImageSize), ((Paper?) << 3) | (Inc?), ATTR_SIZE
                 endm
 JP_ATTR_IP      macro ScreenAddress?, Inc?, Paper?
-                JP_MEMSET_BYTE (ScreenAddress? + ImageSize), ((Paper?) << 3) | (Inc?), AttributeSize
+                JP_MEMSET_BYTE (ScreenAddress? + ImageSize), ((Paper?) << 3) | (Inc?), ATTR_SIZE
                 endm
 ; -----------------------------------------
 ; заполнение 768 байт (экранная область)
@@ -178,15 +184,15 @@ JP_ATTR_IP      macro ScreenAddress?, Inc?, Paper?
 ; значением чернил (Inc), бумаги (Paper) и яркости (Bright)
 ; -----------------------------------------
 ATTR_IPB        macro ScreenAddress?, Inc?, Paper?, Bright?
-                MEMSET_BYTE (ScreenAddress? + ImageSize), (0 << 7) | ((Bright?) << 6) | ((Paper?) << 3) | (Inc?), AttributeSize
+                MEMSET_BYTE (ScreenAddress? + ImageSize), (0 << 7) | ((Bright?) << 6) | ((Paper?) << 3) | (Inc?), ATTR_SIZE
                 endm
 JP_ATTR_IPB     macro ScreenAddress?, Inc?, Paper?, Bright?
-                JP_MEMSET_BYTE (ScreenAddress? + ImageSize), (0 << 7) | ((Bright?) << 6) | ((Paper?) << 3) | (Inc?), AttributeSize
+                JP_MEMSET_BYTE (ScreenAddress? + ImageSize), (0 << 7) | ((Bright?) << 6) | ((Paper?) << 3) | (Inc?), ATTR_SIZE
                 endm
 ATTR_IPB_LDIR   macro ScreenAddress?, Inc?, Paper?, Bright?
                 SCREEN_ATTR_ADR_REG HL, (ScreenAddress?) + 0, 0, 0
                 SCREEN_ATTR_ADR_REG DE, (ScreenAddress?) + 1, 0, 0
-                LD BC, AttributeSize-1
+                LD BC, ATTR_SIZE-1
                 SET_ATTR_IPB Inc?, Paper?, Bright?
                 LDIR
                 endm

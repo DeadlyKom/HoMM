@@ -1,0 +1,6 @@
+{
+    "Name": "Override Attribute",
+    "Properties": [
+        { "Name": "OverrideAttr", "Type": "bool", "Value": false }
+    ]
+}

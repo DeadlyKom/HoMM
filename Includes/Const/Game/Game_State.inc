@@ -31,4 +31,7 @@ SWAPPED_PENDING     EQU 1 << SWAPPED_PENDING_BIT
 ; флаги работы с прерыванием
 INT_DISABLE_GLOBAL_TICK_BIT EQU 0x00                                            ; флаг, отключения глобального тика
 
+; флаги работы с музыкой
+MUSIC_ENABLE_BIT    EQU 0x00                                                    ; флаг разрешения проигрывания музыки
+
                 endif ; ~_CONST_GAME_STATE_

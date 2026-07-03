@@ -26,7 +26,7 @@ GetCadencePassIdByChunk:
                 RET
 
 .Found          ; регистр C указывает оставшиеся место в массиве,
-                ; перобразуем его в индекс найденого чанка (OrderIndex)
+                ; преобразуем его в индекс найденного чанка (OrderIndex)
                 LD A, MAX_WORLD_CHUNK_SIZE - 1
                 SUB C
                 LD C, A

@@ -5,6 +5,7 @@
                 include "Page0/Include.inc"
                 include "Page1/Include.inc"
                 include "Page3/Include.inc"
+                include "Page4/Include.inc"
                 include "Page7/Include.inc"
 
                 endif ; ~_PAGES_INCLUDE_

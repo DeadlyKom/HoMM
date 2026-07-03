@@ -24,10 +24,12 @@
                 include "SpriteNotClipping.inc"
                 
                 include "UI.inc"
+                include "Glyph.inc"
                 include "Map/Include.inc"
                 include "SaveSlot.inc"
 
                 include "Character/Include.inc"
+                include "VFX/Include.inc"
                 include "Event/Include.inc"
                 include "Player/Include.inc"
                 include "Object/Include.inc"

@@ -32,7 +32,7 @@
                 define _OPTIMIZE                                                ; включить оптимизацию (ускорение)
 
                 ; препроцессоры вкл/откл
-                ; define ENABLE_MUSIC                                             ; разрешить музыку
+                define ENABLE_MUSIC                                             ; разрешить музыку
                 ; define ENABLE_MAIN_MENU                                         ; разрешить главное меню
                 define ENABLE_MOUSE                                             ; разрешить мышь
                 define ENABLE_KEMSTON_JOYSTICK_SEGA                             ; разрешить использовать расширенный Кемстон Джойстик (SEGA 8 bits)
@@ -44,7 +44,7 @@
                 define MAJOR 0
                 define MINOR 0
 
-                define TRD_FILENAME "HoMM.trd"                                  ; имя образа TRD
+                define TRD_FILENAME "L&M.trd"                                   ; имя образа TRD
                 define TRD_DISK_1   "Disk A"                                    ; название диска А
 
                 define MAX_PAGES 32                                             ; максимальное количество страниц памяти по 16кб

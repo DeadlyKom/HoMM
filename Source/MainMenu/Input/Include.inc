@@ -5,6 +5,7 @@
                 module Input
 Input.Begin     EQU $
                 include "Scan.asm"
+                include "Input_SkipIntro.asm"
 
                 display " - Main input:\t\t\t\t\t", /A, Input.Begin, "\t= busy [ ", /D, $-Input.Begin, " byte(s)  ]"
 

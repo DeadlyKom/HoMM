@@ -3,6 +3,7 @@
                 define _MACRO_PAGE_INCLUDE_
 
                 include "UI.inc"
+                include "Music.inc"
                 include "World.inc"
                 include "Module.inc"
                 include "Object.inc"

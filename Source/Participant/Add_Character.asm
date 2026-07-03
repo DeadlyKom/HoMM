@@ -63,7 +63,7 @@ Add_Character:  ; проверка достижения максимальног
                 INC L
                 EX DE, HL
                 LD BC, FCharacterSkills
-                CALL Memcpy.FastLDIR                                            ; копирование FCharacter.Skils
+                CALL Memcpy.FastLDIR                                            ; копирование FCharacter.Skills
                 EX DE, HL
                 ; обнуление FCharacter.CombatStates и FCharacter.Equipment
                 XOR A
