@@ -203,7 +203,7 @@ BuilderTwoPass: ; -----------------------------------------
 
                 ; порядок чанков актуален
                 LD HL, TickScheduler.Variables + FTickScheduler.Flags
-                RES 7, (HL)
+                RES CHUNK_ORDER_NEED_REBUID_BIT, (HL)
                 RET
 
                 endif ; ~_OBJECT_TICK_SCHEDULER_BUILDER_TWO_PASS_

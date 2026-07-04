@@ -37,16 +37,16 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 INC (HL)
                 EX DE, HL
 
-                INC L
-                INC E
+                ; INC L
+                ; INC E
 
-                LD A, (HL)
-                OR A
-                JR NZ, $+7
-                LD (HL), DURATION.CHARACTER_TICK+1
-                EX DE, HL
-                INC (HL)
-                EX DE, HL
+                ; LD A, (HL)
+                ; OR A
+                ; JR NZ, $+7
+                ; LD (HL), DURATION.CHARACTER_TICK+1
+                ; EX DE, HL
+                ; INC (HL)
+                ; EX DE, HL
 
                 INC L
                 INC E
@@ -92,13 +92,13 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 ADC A, B
                 LD (HL), A
 
-                INC L
+                ; INC L
 
-                ; уменьшение счётчика задержки героя        (FTick.Hero)
-                LD A, (HL)
-                SUB C
-                ADC A, B
-                LD (HL), A
+                ; ; уменьшение счётчика задержки героя        (FTick.Hero)
+                ; LD A, (HL)
+                ; SUB C
+                ; ADC A, B
+                ; LD (HL), A
 
                 INC L
 

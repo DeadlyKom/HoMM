@@ -38,6 +38,7 @@ RunCadence_1_8: ; инициализация
                 LD (RunCadence.Renge_Pointer), HL
                 LD A, (TickScheduler.Variables + FTickScheduler.Range_2.FirstIndex)
                 LD (RunCadence.Range_FirstIdx), A                               ; установка первого индекса текущего диапазона
+                LD A, CADENCE_RANGE_1_8
                 JP RunCadence
 ; "шаг обновления" 1/4
 RunCadence_1_4: ; инициализация
@@ -45,6 +46,7 @@ RunCadence_1_4: ; инициализация
                 LD (RunCadence.Renge_Pointer), HL
                 LD A, (TickScheduler.Variables + FTickScheduler.Range_1.FirstIndex)
                 LD (RunCadence.Range_FirstIdx), A                               ; установка первого индекса текущего диапазона
+                LD A, CADENCE_RANGE_1_4
                 JP RunCadence
 
 ; "шаг обновления" 1/2
@@ -53,6 +55,7 @@ RunCadence_1_2: ; инициализация
                 LD (RunCadence.Renge_Pointer), HL
                 XOR A
                 LD (RunCadence.Range_FirstIdx), A                               ; установка первого индекса текущего диапазона
+                LD A, CADENCE_RANGE_1_2
                 ; JP RunCadence
 ; -----------------------------------------
 ; запуск "шаг обновления" тика объектов в чанке
@@ -63,7 +66,9 @@ RunCadence_1_2: ; инициализация
 ; Note:
 ;   необходимо включить страницу работы с объектами (страница 0)
 ; ----------------------------------------
-RunCadence:     ; основной цикл обхода объектов в чанке
+RunCadence:     LD (TickObjectChunk.RelativeDeltaTime), A                       ; установка относительного временного шага тика
+
+                ; основной цикл обхода объектов в чанке
 .Loop           DEC HL                                                          ; переход к СadencePassId
                 LD E, (HL)                                                      ; чтение текущего CadencePassId
                 INC HL                                                          ; переход к указателю
@@ -127,7 +132,7 @@ CheckEpochBarrier:
                 JR NZ, .RebuildChunkOrder
 
                 LD HL, TickScheduler.Variables + FTickScheduler.Flags
-                BIT 7, (HL)                                                     ; проверка принудительного запроса на перестроение ChunkOrder
+                BIT CHUNK_ORDER_NEED_REBUID_BIT, (HL)                           ; проверка принудительного запроса на перестроение ChunkOrder
                 RET Z                                                           ; выход, если порядок чанков остался актуальным
 
 .RebuildChunkOrder:

@@ -5,6 +5,7 @@
 ; обработчик тика объекта "персонаж"
 ; In:
 ;   IX - адрес структуры объекта (FObjectCharacter)
+;   C  - относительный временной шаг: 0 - x1, 1 - x2, 2 - x4
 ; Out:
 ;   IX - сохраняет исходное значение
 ; Corrupt:
@@ -14,9 +15,17 @@
 ;   код расположен в странице 0
 ; ----------------------------------------
 Character:      ; проверка смены анимации героя
-                LD A, (GameSession.PeriodTick + FTick.Hero)
-                CP DURATION.CHARACTER_TICK
-                RET NZ                                                          ; выход, если счётчик не обнулён
+                ; LD A, (GameSession.PeriodTick + FTick.Hero)
+                ; CP DURATION.CHARACTER_TICK
+                ; RET NZ                                                          ; выход, если счётчик не обнулён
+                INC C
+.L1             EQU $+1
+                LD A, #05
+                SUB C
+                LD (.L1), A
+                RET NC
+                LD A, #05
+                LD (.L1), A
 
                 ; проверка перемещения героя
                 LD C, (IX + FObjectCharacter.Super.Sprite)

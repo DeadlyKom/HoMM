@@ -16,6 +16,7 @@
                 include "SaveSlot.inc"
                 include "Interrupt.inc"
                 include "StateTree.inc"
+                include "TickScheduler.inc"
                 include "SpriteClipping.inc"
                 include "SpriteNotClipping.inc"
 

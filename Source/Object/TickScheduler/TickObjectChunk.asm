@@ -68,6 +68,8 @@ TickObjectChunk:; получение объектов в чанке
                 LD HL, TickObjectJumpTable
                 PUSH BC                                                         ; сохранение CadencePassId и количества оставшихся объектов
                 PUSH DE                                                         ; сохранение указателя на текущий объект в массиве чанка
+.RelativeDeltaTime EQU $+1
+                LD C, #00                                                       ; относительный временной шаг: 0 - x1, 1 - x2, 2 - x4
                 CALL Func.JumpTable
                 POP DE
                 POP BC
@@ -89,6 +91,7 @@ TickObjectChunk:; получение объектов в чанке
 ; диспетчер тика объекта
 ; In:
 ;   IX - адрес структуры объекта (FObject)
+;   C  - относительный временной шаг: 0 - x1, 1 - x2, 2 - x4
 ; Out:
 ;   IX - сохраняет исходное значение
 ; Corrupt:
