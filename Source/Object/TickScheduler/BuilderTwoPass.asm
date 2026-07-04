@@ -106,7 +106,7 @@ BuilderTwoPass: ; -----------------------------------------
                 INC H   ; H = 2
 
 .SelectPriority LD A, H
-                LD H, HIGH Adr.ExtraBuffer
+                LD H, HIGH Adr.TickSchedulerPriority
                 LD (HL), A
                 DEC L
 
@@ -170,7 +170,7 @@ BuilderTwoPass: ; -----------------------------------------
 
                 ; чтение уже вычисленного приоритета и раскладка чанка
                 ; в конец соответствующего диапазона
-                LD DE, Adr.ExtraBuffer
+                LD DE, Adr.TickSchedulerPriority
                 LD BC, MAX_WORLD_CHUNK_SIZE << 8                                ; C - текущий индекс чанка
 
 .PassTwoLoop    ; чтение приоритета первого прохода

@@ -11,7 +11,9 @@
                 ;   +-------+------------------------------------------+-------+
                 ;   | #D500 |                           AIContextArray | #0100 |
                 ;   +-------+------------------------------------------+-------+
-                ;   | #D600 |                                 свободно | #0080 |
+                ;   | #D600 |                    TickSchedulerPriority | #0024 |
+                ;   +-------+------------------------------------------+-------+
+                ;   | #D624 |                                 свободно | #005C |
                 ;   +-------+------------------------------------------+-------+
                 ;   | #D680 |                                 HeroPath | #0080 |
                 ;   +-------+------------------------------------------+-------+
@@ -39,6 +41,7 @@ ObjectDefaultSettings   EQU PAGE_0
 ObjectsArray            EQU OBJECT_SIZE * OBJECT_MAX                            ; размер массива объектов
 ParticipantArray        EQU #0100                                               ; размер массива участников (PARTICIPANT_SIZE * MAX_PARTICIPANT)
 AIContextArray          EQU #0100                                               ; размер массива AI-контекстов (STATE_TREE_SIZE * STATE_TREE_ACTIVE_AI_MAX)
+TickSchedulerPriority   EQU MAX_WORLD_CHUNK_SIZE                                ; размер временного массива приоритетов чанков
 HeroPath                EQU #0080                                               ; размер массива найденного пути в виде последовательности координат тайлов (FPath),
                                                                                 ; где нулевой элемент является последним
 CharacterArray          EQU CHARACTER_SIZE * MAX_PARTICIPANT_CHARACTERS \
@@ -55,6 +58,7 @@ ObjectsArray            EQU #C000                                               
 CharacterArray          EQU #D000                                               ; адрес массива персонажей
 ParticipantArray        EQU #D400                                               ; адрес массива участников
 AIContextArray          EQU #D500                                               ; адрес массива AI-контекстов
+TickSchedulerPriority   EQU #D600                                               ; адрес временного массива приоритетов чанков
 HeroPath                EQU #D680                                               ; адрес массива найденного пути в виде последовательности координат тайлов (FPath),
                                                                                 ; где нулевой элемент является последним
 Code.Page0              EQU #E000                                               ; адрес блока кода

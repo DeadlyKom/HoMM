@@ -20,9 +20,18 @@ Initialize:     ; порядок чанков по умолчанию: 0..35
                 DJNZ .FillChunkOrder
 
                 ; FTickScheduler.Flags
-                LD (HL), %10000111                                              ; дефолтные флаги:
-                                                                                ; bit 7 - требуется перестроение ChunkOrder
-                                                                                ; bits 2..0 - дефолтное состояние cadence
+                LD (HL), %10000000                                              ; первоначальный запрос на построение ChunkOrder
+                INC HL
+
+                ; FTickScheduler.CadenceStep
+                LD (HL), #01                                                    ; первая эпоха начинается с прохода 1/2;
+                                                                                ; шаг 0 будет выполнен после шагов 1..7
+                INC HL
+
+                ; FTickScheduler.LastCenterChunk
+                LD A, #FF
+                LD (HL), A                                                      ; #FF не является допустимым номером чанка
+                                                                                ; и гарантирует первое перестроение после начальной эпохи
                 INC HL
                 XOR A
 

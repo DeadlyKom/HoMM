@@ -7,7 +7,8 @@
 ;   A - номер чанка
 ;   E - текущий CadencePassId
 ; Out:
-;   флаг переполнения Carry сброшен, если объекты в чанке закончились или отсутствовали
+;   Carry установлен, если во время обхода начался новый кадр;
+;   Carry сброшен, если объекты в чанке закончились или отсутствовали
 ; Corrupt:
 ;   HL, DE, BC, AF, AF', IX
 ; Note:
@@ -41,11 +42,6 @@ TickObjectChunk:; получение объектов в чанке
                 INC H                                                           ; переход на страницу значений чанка
                 EX DE, HL
 
-                ; сохранение текущего фрейма
-                ; ToDo: вынести это в начало Executor'а, дабы более точно ловить смену фрейма
-                LD A, (TickCounterRef)
-                LD (.LastFrame), A
-
 .Loop           LD A, (DE)                                                      ; чтение ID объекта
                 CALL Object.Utilities.GetAdr.IX
 
@@ -72,7 +68,7 @@ TickObjectChunk:; получение объектов в чанке
                 LD HL, TickObjectJumpTable
                 CALL Func.JumpTable
 
-.SkipObject     OR A                                                            ; сброс флага переполнения
+.SkipObject     OR A                                                            ; текущий кадр не завершён
                 DEC C
                 RET Z                                                           ; выход, если объекты в чанке закончились
 
@@ -80,7 +76,7 @@ TickObjectChunk:; получение объектов в чанке
                 LD A, (TickCounterRef)
 .LastFrame      EQU $+1
                 SUB #00
-                SCF                                                             ; установка флага переполнения
+                SCF                                                             ; текущий кадр завершён
                 RET NZ                                                          ; выход, если фрейм сменился, продолжим в следующем таком же "шаге обновления"
                 INC E                                                           ; следующий объект в массиве
                 JR .Loop
