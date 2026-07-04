@@ -109,10 +109,6 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 LD (HL), A
                 ; -----------------------------------------
 
-                SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
-                CHECK_INTERRUPT_FLAG INT_DISABLE_GLOBAL_TICK_BIT                ; проверка разрешения глобального тика
-                CALL Z, Tick.Global                                             ; обработчик глобального тика
-
                 ifdef SHOW_FPS | _DEBUG
 .Debug_FPS      ; ************** Draw FPS **************
                 CALL FPS_Counter.Tick

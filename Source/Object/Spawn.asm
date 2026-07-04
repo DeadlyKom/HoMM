@@ -114,9 +114,6 @@ Spawn:          ; -----------------------------------------
                 LD A, L
                 LD IXL, A
 
-                ; ToDo: при спавне из TickScheduler передавать в инициализатор
-                ;       текущий CadencePassId диапазона
-
                 LD A, (IX + FObjectDefaultSettings.Class)
                 AND OBJECT_CLASS_MASK
                 LD (IY + FObject.Class), A                                      ; сохранение класса объекта

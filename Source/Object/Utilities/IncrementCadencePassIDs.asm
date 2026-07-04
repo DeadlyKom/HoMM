@@ -9,11 +9,11 @@
 ; Note:
 ; -----------------------------------------
 IncCadencePassIDs:
-                LD HL, TickScheduler + FTickScheduler.Range_0 + FCadenceRange.CadencePassId
+                LD HL, TickScheduler.Variables + FTickScheduler.Range_0 + FCadenceRange.CadencePassId
                 INC (HL)
-                LD HL, TickScheduler + FTickScheduler.Range_1 + FCadenceRange.CadencePassId
+                LD HL, TickScheduler.Variables + FTickScheduler.Range_1 + FCadenceRange.CadencePassId
                 INC (HL)
-                LD HL, TickScheduler + FTickScheduler.Range_2 + FCadenceRange.CadencePassId
+                LD HL, TickScheduler.Variables + FTickScheduler.Range_2 + FCadenceRange.CadencePassId
                 INC (HL)
                 RET
 

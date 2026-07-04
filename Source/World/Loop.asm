@@ -10,23 +10,37 @@
 ; -----------------------------------------
 Loop:           
 .Render         ; ************ RENDER ************
-                RENDER_FLAGS
-                CHECK_FLAG SWAPPED_PENDING_BIT
-                JP NZ, World.Base.Render.PipelineHexagons.MemcpyScreen          ; переход, если кадр готов и была произведена смена экранов
-                CHECK_FLAG FRAME_READY_BIT
-                RET NZ                                                          ; выход, кадр готов, но смена экрана не произведена
-                                                                                ; исключает процесс начала следующей отрисовки, до сброса флага
+                CHECK_RENDER_FLAG SWAPPED_PENDING_BIT
+                CALL NZ, World.Base.Render.PipelineHexagons.MemcpyScreen        ; завершение обработки готового кадра, если смена экранов уже произведена
+                                                                                ; после возврата начинается подготовка следующего кадра
+
+                ; если готовый кадр ещё ожидает смены экранов,
+                ; новая отрисовка не начинается, а оставшееся время передаётся планировщику
+                CHECK_RENDER_FLAG FRAME_READY_BIT
+                JR NZ, .ExecuteTickScheduler                                    ; переход, если кадр готов, но смена экранов не произведена
+                                                                                ; исключает начало следующей отрисовки до сброса флага готовности кадра
                 ; проверка завершение цикла
                 CHECK_MAIN_FLAG ML_EXIT_BIT
-.FuncDraw       EQU $+1
-                JP Z, $
+                JR NZ, .Exit
 
-                ; сброс флага завершение цикла
+.FuncDraw       EQU $+1
+                CALL Z, $                                                       ; подготовка нового кадра
+
+.ExecuteTickScheduler
+                ; оставшееся время кадра передаётся планировщику обновления объектов
+                CHECK_INTERRUPT_FLAG INT_DISABLE_GLOBAL_TICK_BIT
+                RET NZ                                                          ; выход, если глобальный тик отключён
+
+                PUSH_PAGE
+                SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
+                CALL Page0.Object.TickScheduler.Executor
+                JP_POP_PAGE
+
+.Exit           ; сброс флага завершение цикла
                 RES_MAIN_FLAG ML_EXIT_BIT
 
                 ; установка флагов
                 SET_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE
-                
                 JR$
 
                 display " - Main loop:\t\t\t\t\t\t", /A, Loop, "\t= busy [ ", /D, $-Loop, " byte(s)  ]"
