@@ -18,14 +18,6 @@ Character:      ; проверка смены анимации героя
                 ; LD A, (GameSession.PeriodTick + FTick.Hero)
                 ; CP DURATION.CHARACTER_TICK
                 ; RET NZ                                                          ; выход, если счётчик не обнулён
-                INC C
-.L1             EQU $+1
-                LD A, #05
-                SUB C
-                LD (.L1), A
-                RET NC
-                LD A, #05
-                LD (.L1), A
 
                 ; проверка перемещения героя
                 LD C, (IX + FObjectCharacter.Super.Sprite)
@@ -505,8 +497,7 @@ RequestEvent    ; запрос на создание ивента
                 SET_FLAG_MODIFY RequestEvent.Flag                               ; установка флага создания ивента
 
                 ; инициализация события
-                ; ToDo: Adr.ExtraBuffer может быть коллизия с курсором!
-                LD IY, Adr.ExtraBuffer
+                LD IY, Adr.EventBuffer
                 LD (IY + FEventReconnaissance.Super.Flags), EVENT_BEFORE_RENDER | EVENT_LIFETIME_CONDITION
                 LD (IY + FEventReconnaissance.Super.Page), Page.Page1
                 LD (IY + FEventReconnaissance.Super.Function + 0), LOW BufferUtilities.Reconnaissance.Event
