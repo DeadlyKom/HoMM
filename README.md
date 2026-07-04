@@ -5,12 +5,9 @@
 Идея принадлежит: Рома Beaver.    
 За основу была взята графика :pig: Dragon Lord'а и [Snake](https://zxart.ee/rus/avtory/s/snake1/)'а, которая по необходимости будет перериовываться.    
 
-Участники:    
-- Роман Beaver
-- Dragon Lord
+Участники:
 - Jerri
 - Антон Прохоров
-- Volutar D
 - Андрей (Black Cat) Гуненко
 - Андрей Яковлев
   
