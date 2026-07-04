@@ -9,12 +9,7 @@
 ; Note:
 ;   необходимо включить страницу работы с объектами (страница 0)
 ; ----------------------------------------
-Initialize:     ; инициализация кадрового барьера
-                LD A, (TickCounterRef)
-                DEC A
-                LD (TickObjectChunk.LastFrame), A                               ; гарантирует первый запуск Executor
-
-                ; порядок чанков по умолчанию: 0..35
+Initialize:     ; порядок чанков по умолчанию: 0..35
                 LD HL, TickScheduler.Variables + FTickScheduler.ChunkOrder
                 LD B, MAX_WORLD_CHUNK_SIZE
                 XOR A

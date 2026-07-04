@@ -27,6 +27,14 @@ Loop:
                 CALL Z, $                                                       ; подготовка нового кадра
 
 .ExecuteTickScheduler
+                ; кадровый барьер проверяется до переключения страницы,
+                ; чтобы повторные вызовы в одном кадре не переключали память
+                LD A, (TickCounterRef)
+.LastTickCounter EQU $+1
+                CP #00
+                RET Z                                                           ; выход, если в текущем кадре запуск уже выполнялся
+                LD (.LastTickCounter), A
+
                 ; оставшееся время кадра передаётся планировщику обновления объектов
                 CHECK_INTERRUPT_FLAG INT_DISABLE_GLOBAL_TICK_BIT
                 RET NZ                                                          ; выход, если глобальный тик отключён

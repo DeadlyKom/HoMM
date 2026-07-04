@@ -500,12 +500,12 @@ Move.Vertical   ; -----------------------------------------
                 LD (IX + FObject.Position.Y.Low), H
                 RET
 RequestEvent    ; запрос на создание ивента
-.Flag           EQU $
-                NOP
+.Flag           FLAG_MODIFY 0
                 RET C                                                           ; выход, если ивент активирован
                 SET_FLAG_MODIFY RequestEvent.Flag                               ; установка флага создания ивента
 
                 ; инициализация события
+                ; ToDo: Adr.ExtraBuffer может быть коллизия с курсором!
                 LD IY, Adr.ExtraBuffer
                 LD (IY + FEventReconnaissance.Super.Flags), EVENT_BEFORE_RENDER | EVENT_LIFETIME_CONDITION
                 LD (IY + FEventReconnaissance.Super.Page), Page.Page1
