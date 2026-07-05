@@ -4,14 +4,14 @@
 
                 ; блоковая таблица смещений, до первого спрайта
                 ; после загрузки ассета в память его смещения преобразуются в абсолютные адреса
-BlockTable      BIND_HEX_SPRITE Sprites._0, 0, 0, 0                             ; 0-ой гексагон
-                ADD_BIND_HEX_SPRITE Sprites._1, 0, 0, 0
-                ADD_BIND_HEX_SPRITE Sprites._2, 0, 0, 0
-                ADD_BIND_HEX_SPRITE Sprites._3, 0, 0, 0
-                ADD_BIND_HEX_SPRITE Sprites._4, 0, 0, 0
-                ADD_BIND_HEX_SPRITE Sprites._5, 0, 0, 0
-                ADD_BIND_HEX_SPRITE Sprites._6, 0, 0, 0
-                ADD_BIND_HEX_SPRITE Sprites._7, 0, 0, 0
+BlockTable      BIND_HEX_SPRITE Sprites._0, 0, 0, 0                             ; смещение 0: трава
+                ADD_BIND_HEX_SPRITE Sprites._1, 0, 0, 0                         ; смещение 1: гора
+                ADD_BIND_HEX_SPRITE Sprites._2, 0, 0, 0                         ; смещение 2: болото
+                ADD_BIND_HEX_SPRITE Sprites._3, 0, 0, 0                         ; смещение 3: маленькое поселение
+                ADD_BIND_HEX_SPRITE Sprites._4, 0, 0, 0                         ; смещение 4: лес в центре гекса
+                ADD_BIND_HEX_SPRITE Sprites._5, 0, 0, 0                         ; смещение 5: плотный лес
+                ADD_BIND_HEX_SPRITE Sprites._6, 0, 0, 0                         ; смещение 6: укрепление
+                ADD_BIND_HEX_SPRITE Sprites._7, 0, 0, 0                         ; смещение 7: пустой гекс/контур
                 ; EMPTY_HEX_SPRITE
                 COUNT_HEX_SPRITE                                                ; количество гексагональных тайлов в блоке
 Sprites:        ; таблицы смещений гексагонов
@@ -19,25 +19,25 @@ Sprites:        ; таблицы смещений гексагонов
                 ; если анимации имеются хоть в одной половинке, таблица смещений должна быть полной
 
                 ; номер анимации (максимум 8) * 12 байт + горизонтальное смещение (0-5 номер столбца) * 2
-._0             ; 23
+._0             ; 23  - трава
                 incbin "sprite_1_offsets.bin"                                   ; таблица смещений столбцов гексагона (6 столбцов по 2 байта)
                 INCBIN_HEX_SIZE_SPRITE incbin "sprite_1.bin"
-._1             ; 160
+._1             ; 160 - гора
                 incbin "sprite_4_offsets.bin"                                   ; таблица смещений столбцов гексагона (6 столбцов по 2 байта)
                 INCBIN_HEX_SIZE_SPRITE incbin "sprite_4.bin"
-._2             ; 137
+._2             ; 137 - болото
                 incbin "sprite_6_offsets.bin"                                   ; таблица смещений столбцов гексагона (6 столбцов по 2 байта)
                 INCBIN_HEX_SIZE_SPRITE incbin "sprite_6.bin"
-._3             ; 133
+._3             ; 133 - маленькое поселение
                 incbin "sprite_10_offsets.bin"                                  ; таблица смещений столбцов гексагона (6 столбцов по 2 байта)
                 INCBIN_HEX_SIZE_SPRITE incbin "sprite_10.bin"
-._4             ; 46
+._4             ; 46  - лес в середине гекса
                 incbin "sprite_8_offsets.bin"                                   ; таблица смещений столбцов гексагона (6 столбцов по 2 байта)
                 INCBIN_HEX_SIZE_SPRITE incbin "sprite_8.bin"
-._5             ; 48
+._5             ; 48  - плотный лес
                 incbin "sprite_2_offsets.bin"                                   ; таблица смещений столбцов гексагона (6 столбцов по 2 байта)
                 INCBIN_HEX_SIZE_SPRITE incbin "sprite_2.bin"
-._6             ; 111
+._6             ; 111 - укрепление
                 incbin "sprite_3_offsets.bin"                                   ; таблица смещений столбцов гексагона (6 столбцов по 2 байта)
                 INCBIN_HEX_SIZE_SPRITE incbin "sprite_3.bin"
 ._7             incbin "outline_offsets.bin"                                    ; таблица смещений столбцов гексагона (6 столбцов по 2 байта)
