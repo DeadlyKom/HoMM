@@ -11,6 +11,9 @@
 ; Note:
 ; ----------------------------------------
 Tick:           ; уменьшение числа "мировых тиков" до следующего часа
+                ifdef _DEBUG
+                SET_FLAG_MODIFY DebugRender.Flag                               ; установка флага, изменения календаря
+                endif
                 LD HL, (IX + FWorldTime.WorldTick)
                 DEC HL
                 LD A, H

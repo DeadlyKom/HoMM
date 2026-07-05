@@ -137,6 +137,8 @@ Draw:           ; -----------------------------------------
                 ifdef _DEBUG
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 CALL Convert.SetBaseScreen                                      ; установка работы с основным экраном
+
+                CALL WorldTime.DebugRender                                      ; отображение игрового календаря
                 ; ; -----------------------------------------
                 ; ; отображение screen block'ов
                 ; LD DE, #031A
@@ -171,7 +173,7 @@ Draw:           ; -----------------------------------------
 
                 ; -----------------------------------------
                 ; отображение позиции карты (горизонталь)
-                LD DE, #0919
+                LD DE, #0D19
                 CALL Console.SetCursor
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
                 CALL Console.DrawByte
@@ -186,7 +188,7 @@ Draw:           ; -----------------------------------------
 
                 ; -----------------------------------------
                 ; отображение позиции гексагона под курсором
-                LD DE, #0A1A
+                LD DE, #0E1A
                 CALL Console.SetCursor
                 LD A, (GameSession + FGameSession.WorldInfo.Cursor.X)
                 CALL Console.DrawByte       ; горизонталь
