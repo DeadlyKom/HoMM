@@ -9,16 +9,42 @@
 ; -----------------------------------------
 ; повторное отображение невидимых гексагонов поверх объектов
 ; -----------------------------------------
-FogByDL:        LD HL, HexByDL.ToNextHexagon
-                JR HexByDL.SetVisibleHexTarget
+FogByDL:        ; подготовка независимых колонковых флагов:
+                ; каждый выбранный невидимый гексагон рисуется целиком
+                LD HL, Adr.SharedBuffer + 80
+                LD DE, Adr.SharedBuffer + 81
+                LD BC, Size.RenderBuffer - 81
+                LD (HL), #01
+                LDIR
+
+                LD A, HIGH Adr.SharedBuffer
+                LD HL, HexByDL.ToNextHexagon
+                CALL HexByDL.SetVisibleHexTarget
+
+                ; основной проход уже проанализирован, временные отметки объектов
+                ; больше не должны участвовать в следующем кадре
+                LD HL, Adr.RenderBuffer
+                LD B, TILEMAP_DATA_SIZE
+.ClearHexFlags  RES RENDER_FLAG_HEX_UPDATE_BIT, (HL)
+                INC L
+                DJNZ .ClearHexFlags
+
+                XOR A
+                LD HL, Adr.RenderBuffer + 80
+                LD DE, Adr.RenderBuffer + 81
+                LD BC, Size.RenderBuffer - 81
+                LD (HL), A
+                LDIR
+                RET
 
 HexByDL:        ; инициализация основного прохода: тайлы и туман
+                LD A, HIGH Adr.RenderBuffer
                 LD HL, .ReadIdxHextile
 
 .SetVisibleHexTarget
                 LD (.VisibleHexTarget), HL
                 LD IX, (GameState.DisplayList)
-                LD IYH, HIGH Adr.RenderBuffer                                   ; для сохранения бит высоты столбца
+                LD IYH, A                                                       ; RenderBuffer либо временные флаги прохода тумана
 
                 ; формирование цикла по вертикали (строк гексагонов)
                 LD BC, .RowsLoop
