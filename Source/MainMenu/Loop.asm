@@ -2,7 +2,7 @@
                 ifndef _MAIN_MENU_MAIN_LOOP_
                 define _MAIN_MENU_MAIN_LOOP_
 ; -----------------------------------------
-; главный цикл "мира"
+; главный цикл "главного меню"
 ; In:
 ; Out:
 ; Corrupt:

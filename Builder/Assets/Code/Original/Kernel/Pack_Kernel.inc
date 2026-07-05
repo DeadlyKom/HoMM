@@ -57,6 +57,9 @@ Begin:          EQU $
                 ; event
                 include "Source/Event/Include.inc"
 
+                ; time
+                include "Source/WorldTime/Include.inc"
+
                 ifdef SHOW_FPS | _DEBUG
                 include "Source/Utilities/Debug/Console.asm"
                 include "Source/Utilities/Debug/FPS_Counter.asm"

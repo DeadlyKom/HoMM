@@ -18,6 +18,7 @@
                 include "Frame.inc"
                 include "Item_ID.inc"
                 include "WorldInfo.inc"
+                include "WorldTime.inc"
                 include "TickScheduler.inc"
                 include "SpriteBound.inc"
                 include "SpriteClipping.inc"

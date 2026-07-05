@@ -17,9 +17,16 @@ Load_Session:   ; копирование блока
                 ; ToDo: в будущем предоставить пользователю сообщение об ошибке
                 DEBUG_BREAK_POINT_NC                                            ; ошибка, слот сохранения не является корректным
 
-                CALL SharedCode.SaveSlot.Validation                             ; вализация информации о слоте сохранения
+                CALL SharedCode.SaveSlot.Validation                             ; валидация информации о слоте сохранения
                 ; ToDo: в будущем предоставить пользователю сообщение об ошибке
                 DEBUG_BREAK_POINT_NC                                            ; ошибка, слот сохранения не прошёл валидацию
+
+                ; копирование календарного времени из слота в состояние сессии
+                ; ToDo: необходимо пересмотреть инициализацию
+                LD HL, GameSession.SaveSlot + FSaveSlot.WorldTime
+                LD DE, GameSession.WorldTime
+                LD BC, FWorldTime
+                CALL Memcpy.FastLDIR
 
                 ; загрузка карты
                 LD A, (GameSession.SaveSlot + FSaveSlot.MapID)

@@ -14,6 +14,7 @@
                 include "Gameplay.inc"
                 include "Particle.inc"
                 include "SaveSlot.inc"
+                include "WorldTime.inc"
                 include "Interrupt.inc"
                 include "StateTree.inc"
                 include "TickScheduler.inc"

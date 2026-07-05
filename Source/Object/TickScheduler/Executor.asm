@@ -58,15 +58,21 @@ RunCadence_1_2: ; инициализация
                 LD A, CADENCE_RANGE_1_2
                 ; JP RunCadence
 ; -----------------------------------------
-; запуск "шаг обновления" тика объектов в чанке
+; выполнение cadence-прохода по диапазону объектов
 ; In:
-;   HL - адрес диапозона со смещением на указатель
+;   A  - относительный временной шаг: 0 - x1, 1 - x2, 2 - x4
+;   HL - адрес поля FCadenceRange.Pointer текущего диапазона
 ; Out:
 ; Corrupt:
 ; Note:
 ;   необходимо включить страницу работы с объектами (страница 0)
 ; ----------------------------------------
-RunCadence:     LD (TickObjectChunk.RelativeDeltaTime), A                       ; установка относительного временного шага тика
+RunCadence:     LD (TickObjectChunk.RelativeDeltaTime), A                       ; установка относительного временного шага: 0 - x1, 1 - x2, 2 - x4
+
+                ; "мировой тик" не зависит от частоты cadence-диапазона
+                ; при активной фазе каждый диапазон получает "мировой тик" один раз за cadence-эпоху
+                CALL WorldTime.IsWorldTick
+                LD (TickObjectChunk.WorldDeltaTime), A
 
                 ; основной цикл обхода объектов в чанке
 .Loop           DEC HL                                                          ; переход к СadencePassId
@@ -84,7 +90,7 @@ RunCadence:     LD (TickObjectChunk.RelativeDeltaTime), A                       
 
                 ; проверка окончания текущего диапазона
 .Renge_Pointer  EQU $+1
-                LD HL, #0000                                                    ; адрес указателя диапозона
+                LD HL, #0000                                                    ; адрес указателя диапазона
                 INC (HL)                                                        ; увеличение указателя
                 LD A, (HL)                                                      ; чтение текущего указателя в массиве ChunkOrder
                 INC HL                                                          ; переход к первому индексу следующего диапазона
@@ -104,15 +110,21 @@ RunCadence:     LD (TickObjectChunk.RelativeDeltaTime), A                       
                 ; назначенного текущим шагом прохода диапазона
                 LD HL, TickScheduler.Variables + FTickScheduler.CadenceStep
                 LD A, (HL)
+
+                ; после шага 4 последний диапазон (1/8) уже получил "мировой тик"
+                CP #04
+                CALL Z, WorldTime.CloseEpoch
+
                 INC A
                 AND %00000111
                 LD (HL), A
+                JP Z, WorldTime.AdvanceEpoch                                    ; переход 7 -> 0: начало новой cadence-эпохи
                 RET
 
 ; барьер / проверка эпохи
 CheckEpochBarrier:
-                ; шаг 0 завершает предыдущую эпоху; следующая эпоха начинается
-                ; с первого рабочего прохода каденции
+                ; шаг 0 служит барьером после перехода 7 -> 0;
+                ; рабочие проходы текущей эпохи начинаются с шага 1
                 LD A, #01
                 LD (TickScheduler.Variables + FTickScheduler.CadenceStep), A
 
