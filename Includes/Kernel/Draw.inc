@@ -3,6 +3,7 @@
                 define _KERNEL_DRAW_
 Draw:
 .HexByDL            EQU Kernel.Hex.HexByDL
+.FogByDL            EQU Kernel.Hex.FogByDL                                      ; отображение невидимых гексагонов поверх объектов
 .HexDLGeneration    EQU Kernel.Hex.HexDLGeneration                              ; генерация списка отображения гексагонов
 .SpriteClipping     EQU Kernel.Sprite.DrawClipping                              ; отображение спрайта с поддержкой обрезки
 .SpriteClipping.HL  EQU Kernel.Sprite.DrawClipping.FSprite                      ; отображение спрайта (HL - адрес структуры FSprite)

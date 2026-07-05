@@ -7,7 +7,16 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-HexByDL:        ; инициализация
+; повторное отображение невидимых гексагонов поверх объектов
+; -----------------------------------------
+FogByDL:        LD HL, HexByDL.ToNextHexagon
+                JR HexByDL.SetVisibleHexTarget
+
+HexByDL:        ; инициализация основного прохода: тайлы и туман
+                LD HL, .ReadIdxHextile
+
+.SetVisibleHexTarget
+                LD (.VisibleHexTarget), HL
                 LD IX, (GameState.DisplayList)
                 LD IYH, HIGH Adr.RenderBuffer                                   ; для сохранения бит высоты столбца
 
@@ -99,7 +108,8 @@ HexByDL:        ; инициализация
                 
                 ; определение отображения тумана или гексагоного тайла
                 ADD A, A                                                        ; выталкивание флага, видимости гексагона (целиком)
-                JR C, .ReadIdxHextile                                           ; переход, если необходимо отобразить видемый гексагоный тайл
+.VisibleHexTarget EQU $+1
+                JP C, .ReadIdxHextile                                           ; основной проход рисует тайл, проход тумана пропускает его
 
 .FOG            ; -----------------------------------------
                 ; отображение тумана (скрытый гексагонный тайл)

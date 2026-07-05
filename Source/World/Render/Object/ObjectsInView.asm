@@ -5,7 +5,7 @@
 ; формирование списка объектов в области видимости
 ; In:
 ; Out:
-;   Adr.SortBuffer - адреса объектов
+;   Adr.SortBuffer - адреса полей FObject.Position.Y видимых объектов
 ;   A              - количество объектов в массиве
 ;   DE             - адрес последнего элемента
 ; Corrupt:
@@ -84,6 +84,11 @@ InView:         ; инициализация
 
 .Num            EQU $+1
                 LD A, #00
+                OR A
+                RET Z
+                LD C, A
+                CALL Object.Sort.Quicksort                                      ; дальние по Y объекты рисуются раньше ближних
+                LD A, C
                 OR A                                                            ; выставление флагов
                 RET
 ;   A - количествой добавляемых элементов
@@ -126,7 +131,11 @@ AddObjects:     ;
                 ADD A, A    ; %aaa00000 : a
                 RL C        ; %1100aaaa
 
-                ; сохранение адреса
+                ; Sort ожидает адрес двухбайтового ключа; Position.Y одновременно
+                ; является ключом сортировки и позволяет восстановить начало FObject
+                ADD A, FObject.Position.Y
+                JR NC, $+3
+                INC C
                 LD (DE), A
                 INC E
                 LD A, C

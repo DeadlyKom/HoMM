@@ -3,6 +3,7 @@
                 define _TICK_INCLUDE_
 
                 module Tick
+                include "Utils/Include.inc"
                 include "Object/Include.inc"
                 endmodule
 

@@ -3,6 +3,7 @@
                 define _PAGE_0_INCLUDE_
 
                 include "Character.inc"
+                include "Tick.inc"
                 include "Object.inc"
                 include "ChunkArray.inc"
                 include "Participant.inc"

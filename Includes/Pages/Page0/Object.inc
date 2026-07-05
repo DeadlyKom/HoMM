@@ -8,6 +8,8 @@ Object:
 .RemoveAtSwap           EQU Page0.Object.RemoveAtSwap                           ; удаление объекта, перемещая последний элемент в массиве
 .SmartRemove            EQU Page0.Object.SmartRemove                            ; умное удаление объекта
 .FindLastByPredicate    EQU Page0.Object.FindLastByPredicate                    ; поиск объекта с конца массива, используя предикат
+Object.Sort:
+.Quicksort              EQU Page0.Object.Sort.Quicksort                         ; сортировка адресов видимых объектов по Position.Y
 
 TickScheduler:
 .Variables              EQU Page0.Object.TickScheduler                          ; структура переменных "планировщика тиков"

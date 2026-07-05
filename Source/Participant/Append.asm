@@ -24,9 +24,14 @@ Append:         ; инициализация
                 ;   флаг переполнения Carry установлен, 
                 ;   в случае успешного добавления персонажа с первым героем
                 ; -----------------------------------------
+                PUSH IX                                                         ; Add_Player/Object.Spawn изменяют IX
                 PUSH BC
                 CALL Add_Player
                 POP BC
+                POP IX
+
+                LD DE, FParticipantSettings                                     ; переход к настройкам следующего участника
+                ADD IX, DE
                 INC C
                 DJNZ .Loop
 

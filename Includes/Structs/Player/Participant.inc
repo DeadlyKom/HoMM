@@ -31,7 +31,7 @@ Character       FCharacterSettings                                              
 Faction         FParticipantFaction                                             ; флаги принадлежности участника                                [байт]
 CastleID        DB #00                                                          ; идентификатор стартового замка
 CharactersNum   DB #00                                                          ; количество персонажей                                             [1 байт]
-Characters      DS MAX_PARTICIPANT_CHARACTERS * FCharacter                      ; массив идентификаторов ID персонажей данного участника            [8 байт]
+Characters      DS MAX_PARTICIPANT_CHARACTERS                                   ; массив идентификаторов ID персонажей данного участника            [8 байт]
                                                                                 ; Note: 
                                                                                 ;   при перемещении структуры FCharacter в массиве, необходимо
                                                                                 ;   обновлять идентификатор объекта

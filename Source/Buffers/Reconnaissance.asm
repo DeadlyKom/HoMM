@@ -11,12 +11,7 @@
 ;   код расположен рядом с картой (страница 1)
 ; -----------------------------------------
 Reconnaissance.Event
-                ; ToDo: получить по CharacterID, данные о персонаже FCharacter
-                ;       через него получить данные отб учаснике (принадлежности) к FParticipant
-                ;       и получить фракцию FParticipantFaction, тем самым получив бит отвечающий за
-                ;       разведку данной фракции, а пока укажим одну игрока MAP_META_FOG_PLAYER_1_BIT
-                ;       LD A, (IY + FEventReconnaissance.CharacterID)
-                LD C, MAP_META_FOG_PLAYER_1_BIT
+                LD C, (IY + FEventReconnaissance.FogMask)                       ; общая видимость всех участников группы
                 
                 ; ToDo: используя даннные о герое FCharacter, получить данные о дальности виденья
                 ;       данным классом + скилами разведки у героя FSecondarySkill,
@@ -35,7 +30,7 @@ Reconnaissance.Event
 ; рекогносцировка
 ; In:
 ;   A  - радиус обзора в тайлах
-;   C  - номер бита туман отвечающий за игрока
+;   C  - маска видимости участников группы
 ;   DE - координаты в тайлах (D - y, E - x)
 ; Out:
 ; Corrupt:
@@ -43,6 +38,11 @@ Reconnaissance.Event
 ;   код расположен рядом с картой (страница 1)
 ; -----------------------------------------
 Reconnaissance: ; расчёт адреса из таблицы
+                EX AF, AF'
+                LD A, C
+                LD (.FogMask), A
+                EX AF, AF'
+
                 DEC A
                 ADD A, A    ; x2
                 ADD A, LOW .RadiusTable
@@ -50,14 +50,6 @@ Reconnaissance: ; расчёт адреса из таблицы
                 ADC A, HIGH .RadiusTable
                 SUB L
                 LD H, A
-
-                ; установить номер бита игрока
-                LD A, C
-                ADD A, A    ; x2
-                ADD A, A    ; x4
-                ADD A, A    ; x8
-                OR #C6      ; SET n, (HL)
-                LD (.PlayerBit), A
 
                 ; чтение адреса
                 LD A, (HL)
@@ -141,8 +133,10 @@ Reconnaissance: ; расчёт адреса из таблицы
                 JR NC, $+3      ; переполнение младшего байта?
                 INC H
 
-.PlayerBit      EQU $+1
-.ChordsLoop     SET 0, (HL)
+.ChordsLoop     LD A, (HL)
+.FogMask        EQU $+1
+                OR #00
+                LD (HL), A
                 INC HL
                 DJNZ .ChordsLoop
 

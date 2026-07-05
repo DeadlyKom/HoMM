@@ -41,10 +41,10 @@ Draw:           ; -----------------------------------------
                 ; принудительное обновление Tilemap- и Render-буферов
                 SET_PAGE_MAP                                                    ; включить страницу работы с картой
                 ;   A  - радиус обзора в тайлах
-                ;   C  - номер бита туман отвечающий за игрока
+                ;   C  - маска видимости участников группы
                 ;   DE - координаты в тайлах (D - y, E - x)
                 LD A, 1
-                LD C, MAP_META_FOG_PLAYER_1_BIT
+                LD C, MAP_META_FOG_PLAYER_1_MASK
                 LD DE, #0302
                 CALL BufferUtilities.Reconnaissance                             ; рекогносцировка
                 CALL World.Base.Tilemap.Update.RenderBuffer

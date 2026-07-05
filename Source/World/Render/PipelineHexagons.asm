@@ -94,10 +94,24 @@ PipelineHexagons:
                 RESTORE_BC                                                      ; защитная от порчи данных с разрешённым прерыванием
                 CALL Draw.HexByDL
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
-                CALL ScreenBlock.HexAnalysis                                    ; анализ обновления гексагонов
+                CALL ScreenBlock.HexAnalysis                                    ; анализ основного прохода гексагонов
 
                 POP AF
+                PUSH AF
                 CALL NZ, Object.Draw                                            ; отображение объектов в массиве SortBuffer
+                POP AF
+
+                ; повторное отображение невидимых гексагонов поверх объектов:
+                ; туман скрывает только пересёкшую невидимую область часть спрайта
+                CALL NZ, Object.RestoreBounds                                   ; первый проход уже израсходовал колонковые флаги
+                SET_PAGE_MAP
+                CALL BufferUtilities.AdjRenderBufCol
+                CALL Draw.FogByDL
+
+                ; повторный анализ учитывает области объектов и сбрасывает HU,
+                ; выставленные для прохода тумана
+                SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
+                CALL ScreenBlock.HexAnalysis                                    ; анализ прохода тумана
 
                 SET_MODULE_PAGE_World                                           ; включить страницу модуля "World"
                 CALL World.Display.GameWindow.Ornament
