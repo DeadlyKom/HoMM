@@ -74,7 +74,10 @@ UpdateMovement: RES_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             
                 CP B
                 RET Z
 
-.Changed        SET_VIEW_FLAG_A UPDATE_RENDER_BUF_BIT                           ; установка флага обновления буфера рендера
+.Changed        ifdef _DEBUG
+                SET_FLAG_MODIFY World.Base.Render.DebugInfo.Coordinates.Flag    ; установка флага, изменения координат мира
+                endif
+                SET_VIEW_FLAG_A UPDATE_RENDER_BUF_BIT                           ; установка флага обновления буфера рендера
 
 .Generation     ; установка признаков обновления для 22 * 8 столбцов гексагонов
                 LD HL, Adr.RenderBuffer + 80 + 176
@@ -82,6 +85,9 @@ UpdateMovement: RES_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             
                 CALL SafeFill.b176
                 JP Draw.HexDLGeneration
 SetMapPosition  RES_VIEW_FLAG SET_MAP_POSITION_ON_MINIMAP_BIT                   ; сброс флага установки положения карты по мини-карте
+                ifdef _DEBUG
+                SET_FLAG_MODIFY World.Base.Render.DebugInfo.Coordinates.Flag    ; установка флага, изменения координат мира
+                endif
                 VIEW_FLAGS
                 SET_FLAG UPDATE_TILEMAP_BUF_BIT                                 ; установка флага обновления буфера тайлов
                 SET_FLAG UPDATE_RENDER_BUF_BIT                                  ; установка флага обновления буфера рендера
