@@ -2,7 +2,7 @@
                 ifndef _STRUCT_OBJECT_CHARACTER_
                 define _STRUCT_OBJECT_CHARACTER_
 
-                struct FObjectCharacter                                         ; базовый объект персонажа на карте                         [25 байт]
+                struct FObjectCharacter                                         ; базовый объект персонажа на карте                         [31 байт]
 Super           FObject                                                         ; базовый класс объекта                                     [14 байт]
 ; -----------------------------------------
 ;   FObjectCharacter.Super.Sprite
@@ -28,8 +28,14 @@ Super           FObject                                                         
 CharacterID     DB #00                                                          ; идентификатор владельца (структура FCharacter)            [1 байт]
 PathID          DB #00                                                          ; текущий воспроизводимый индекс в массиве пути             [1 байт]
 WayPointID      DB #00                                                          ; текущий воспроизводимый индекс WayPoint                   [1 байт]
-Delta           FVector16                                                       ; значения дельт оставшиеся до достижения WayPointID        [4 байта]
-Direction       FVector16                                                       ; нормализованное направление движения                      [4 байта]
+MajorRemaining  FValue                                                          ; оставшееся число шагов по главной оси DDA                  [2 байта]
+MajorLength     FValue                                                          ; длина сегмента по главной оси DDA                          [2 байта]
+MinorLength     FValue                                                          ; длина сегмента по вторичной оси DDA                        [2 байта]
+LineError       FValue                                                          ; накопленная ошибка DDA                                     [2 байта]
+MovementFlags   DB #00                                                          ; ось и направления движения DDA                             [1 байт]
+HextileID       DB #00                                                          ; тип поверхности текущего гекса                             [1 байт]
+MovementBudget  FValue                                                          ; накопленный бюджет движения                                [2 байта]
+MovementPending FValue                                                          ; бюджет текущего пакета времени, ещё не переданный движению [2 байта]
                 ends
 
                 endif ; ~_STRUCT_OBJECT_CHARACTER_

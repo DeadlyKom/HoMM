@@ -1,9 +1,9 @@
                 ifndef _STRUCT_OBJECT_CHARACTER_AI_
                 define _STRUCT_OBJECT_CHARACTER_AI_
 
-                struct FObjectCharacterAI                                       ; расширение объекта персонажа для AI-управления            [26 байт]
+                struct FObjectCharacterAI                                       ; расширение объекта персонажа для AI-управления            [32 байта]
                                                                                 ; содержит ссылку на FAIContext
-Super           FObjectCharacter                                                ; базовый класс объекта персонажа                           [25 байта]
+Super           FObjectCharacter                                                ; базовый класс объекта персонажа                           [31 байт]
 AIContextID     DB #00                                                          ; идентификатор AI-контекста                                [1 байт]
                                                                                 ; позволяет получить доступ к:
                                                                                 ;   Descriptor       - описание поведения

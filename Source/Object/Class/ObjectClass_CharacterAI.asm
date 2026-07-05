@@ -24,10 +24,20 @@ CharacterAI:    XOR A
                 LD (IY + FObjectCharacter.PathID), PATH_ID_NONE
                 LD (IY + FObjectCharacter.WayPointID), WAY_POINT_NONE
 
-                LD (IY + FObjectCharacter.Delta.X), A
-                LD (IY + FObjectCharacter.Delta.Y), A
-                LD (IY + FObjectCharacter.Direction.X), A
-                LD (IY + FObjectCharacter.Direction.Y), A
+                LD (IY + FObjectCharacter.MajorRemaining.Low), A
+                LD (IY + FObjectCharacter.MajorRemaining.High), A
+                LD (IY + FObjectCharacter.MajorLength.Low), A
+                LD (IY + FObjectCharacter.MajorLength.High), A
+                LD (IY + FObjectCharacter.MinorLength.Low), A
+                LD (IY + FObjectCharacter.MinorLength.High), A
+                LD (IY + FObjectCharacter.LineError.Low), A
+                LD (IY + FObjectCharacter.LineError.High), A
+                LD (IY + FObjectCharacter.MovementFlags), A
+                LD (IY + FObjectCharacter.HextileID), #FF
+                LD (IY + FObjectCharacter.MovementBudget.Low), A
+                LD (IY + FObjectCharacter.MovementBudget.High), A
+                LD (IY + FObjectCharacter.MovementPending.Low), A
+                LD (IY + FObjectCharacter.MovementPending.High), A
 
                 ; -----------------------------------------
                 LD (IY + FObjectCharacterAI.AIContextID), CONTEXT_NONE          ; отсутствие идентификатора AI-контекста,

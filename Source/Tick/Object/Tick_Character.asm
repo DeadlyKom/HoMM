@@ -15,7 +15,14 @@
 ;   анимация должна меняться после готовности предыдущего кадра
 ;   код расположен в странице 0
 ; ----------------------------------------
-Character:      ; проверка смены анимации героя
+Character:      ; сохранить параметры текущего cadence-прохода
+                LD A, C
+                LD (Move.TransferMovementBudget.RelativeCadence), A
+                EX AF, AF'
+                LD A, #00
+                ADC A, A                                                       ; 0 - обычный cadence-проход, 1 - доставлен "мировой тик"
+                LD (Move.WorldTickFlag), A
+
                 ; LD A, (GameSession.PeriodTick + FTick.Hero)
                 ; CP DURATION.CHARACTER_TICK
                 ; RET NZ                                                          ; выход, если счётчик не обнулён
@@ -102,28 +109,42 @@ Turn:           ; --------------------------------------------------------------
 
                 LD (IX + FObjectCharacter.Super.Sprite), A
                 SET OBJECT_DIRTY_BIT, (IX + FObject.Flags)                      ; установить флаг, объект требуется обновиться
-                RET
+                RET                                                             ; поворот не расходует и не запрашивает "мировые тики"
 Move.Init       CALL SetDistance
+                CALL Move.UpdateHextileID                                      ; определить поверхность начального гекса
 Move            ; --------------------------------------------------------------
                 ; перемещение
 
-                ; проверка доступности шага
-                LD HL, (IX + FObjectCharacter.Delta.X)
-                LD A, L
-                OR H
-                CALL NZ, Move.Horizontal                                        ; переход, если дельта не нулевая
-                
-                ; проверка доступности шага
-                LD HL, (IX + FObjectCharacter.Delta.Y)
-                LD A, L
-                OR H
-                CALL NZ, Move.Vertical                                          ; переход, если дельта не нулевая
+.WorldTickFlag  EQU $+1
+                LD A, #00
+                OR A
+                CALL NZ, Move.AddMovementBudget                                 ; временной бюджет начисляется один раз за cadence-эпоху
+                CALL Move.TransferMovementBudget                                ; передать движению долю пакета текущего cadence-прохода
+
+.StepLoop       ; стоимость всегда читается из таблицы по текущему типу поверхности
+                LD L, (IX + FObjectCharacter.HextileID)
+                LD H, HIGH Adr.SurfPass
+                LD E, (HL)
+                LD D, #00
+                LD A, E
+                OR A
+                JR Z, .Animation                                                ; нулевая стоимость запрещает движение по поверхности
+
+                LD HL, (IX + FObjectCharacter.MovementBudget)
+                OR A
+                SBC HL, DE
+                JR C, .Animation                                                ; бюджета недостаточно для четвертьпиксельного шага
+                LD (IX + FObjectCharacter.MovementBudget), HL
+
+                CALL Move.Step
+                JR C, .Animation                                                ; точка назначения достигнута
+                JR .StepLoop                                                    ; стоимость могла измениться после перехода в новый гекс
 
                 ; ToDo: после перемещения пересчитать номер чанка объекта;
                 ;       при смене чанка перенести объект через ChunkArray.Move,
                 ;       затем установить CadencePassID диапазона нового чанка (смотри спавн объекта)
 
-                ; --------------------------------------------------------------
+.Animation      ; --------------------------------------------------------------
                 ; установить состояние перемещения героя,
                 ; изменить кадр спрайта
                 LD C, (IX + FObjectCharacter.Super.Sprite)
@@ -137,11 +158,11 @@ Move            ; --------------------------------------------------------------
                 LD (IX + FObjectCharacter.Super.Sprite), A
                 SET OBJECT_DIRTY_BIT, (IX + FObject.Flags)                      ; установить флаг, объект требуется обновиться
                 ; --------------------------------------------------------------
-                ; проверка что герой дошёл до центра тайла
-                LD A, (IX + FObjectCharacter.Delta.X)
-                OR (IX + FObjectCharacter.Delta.Y)
+                ; проверка достижения заданной точки
+                LD A, (IX + FObjectCharacter.MajorRemaining.Low)
+                OR (IX + FObjectCharacter.MajorRemaining.High)
 
-                RET NZ                                                          ; выход, если недостигли центра тайла
+                JP NZ, RequestNextWorldTick                                     ; продолжить перемещение на следующем "мировом тике"
 
                 ; герой достиг точки назначения, принудительно назначим ему конечную точку пути
 
@@ -169,6 +190,17 @@ Move            ; --------------------------------------------------------------
                 CP PATH_ID_NONE
                 JR NZ, .NextPath                                                ; переход, если путь не закончился
 
+                ; завершить действие только для выбранного игроком персонажа
+                LD A, (GameState.PlayerActions + FPlayerActions.SelectedHeroID)
+                CP (IX + FObjectCharacter.CharacterID)
+                RET NZ
+
+                LD A, (GameState.PlayerActions + FPlayerActions.Action)
+                CP PLAYER_ACTION_HERO_MOVEMENT
+                RET NZ
+
+                CALL WorldTime.StopAdvance                                     ; удалить следующий "мировой тик", заранее запрошенный во время движения
+
                 ; сброс действия игрока
                 XOR A                                                           ; PLAYER_ACTION_NONE
                 LD (GameState.PlayerActions + FPlayerActions.Action), A
@@ -181,316 +213,377 @@ Move            ; --------------------------------------------------------------
                 LD E, A
                 SET 7, E    ; Adr.HeroPath начинается с 0x80
                 LD D, HIGH Adr.HeroPath
-SetDistance:    ; сброс запроса ивента
-                RES_FLAG_MODIFY RequestEvent.Flag
+                CALL SetDistance
+                JP RequestNextWorldTick
 
-                ; установить доступное расстояние между точками
+SetDistance:    ; рассчитать расстояние от объекта до центра точки пути
                 ;   DE - адрес хранения FPath
                 ;   IX - адрес структуры объекта (FObjectCharacter)
                 ; Out:
-                ;   HL - растояние между точками по вертикали
-                ;   DE - растояние между точками по горизонтали
+                ;   HL - знаковое расстояние по вертикали, в четвертях пикселя
+                ;   DE - знаковое расстояние по горизонтали, в четвертях пикселя
                 CALL Character.DistancePath
 
-                ; меняем знаки дельт
-                LD A, E
-                NEG
-                LD (IX + FObjectCharacter.Delta.X.High), A
-                LD (IX + FObjectCharacter.Delta.X.Low), #00
-                LD A, L
-                NEG
-                LD (IX + FObjectCharacter.Delta.Y.High), A
-                LD (IX + FObjectCharacter.Delta.Y.Low), #00
+; -----------------------------------------
+; подготовить DDA для движения на заданное расстояние
+; In:
+;   HL - знаковое расстояние по вертикали, в четвертях пикселя
+;   DE - знаковое расстояние по горизонтали, в четвертях пикселя
+;   IX - адрес структуры объекта (FObjectCharacter)
+; Note:
+;   источник конечной точки не имеет значения: центр гекса, WayPoint или
+;   произвольная локальная точка используют одно и то же состояние DDA
+; -----------------------------------------
+SetMovementLine:
+                RES_FLAG_MODIFY RequestEvent.Flag                              ; сброс запроса события от предыдущего сегмента
+                XOR A
+                LD (IX + FObjectCharacter.MovementFlags), A
 
-                ; -----------------------------------------
-                ; нормализация ветора
-                ; In:
-                ;   DE - вектор (D - y [-128..127], E - x [-128..127])
-                ; Out:
-                ;   DE - нормализованный ветор (D - y [-128..127], E - x [-128..127])
-                ;   A' - Sqrt(squared)
-                ; Corrupt:
-                ; Note:
-                ; -----------------------------------------
-                LD D, L
-                CALL Math.Normalize
-                LD C, D
-
-                ; приведение к 16-битному значению
-                LD A, E
-                RLA
+                ; модуль расстояния по X и направление шага
+                BIT 7, D
+                JR Z, .PositiveX
+                SET MOVEMENT_STEP_X_NEG_BIT, (IX + FObjectCharacter.MovementFlags)
+                XOR A
+                SUB E
+                LD E, A
                 SBC A, A
+                SUB D
                 LD D, A
-                ; -----------------------------------------
-                ; In :
-                ;   DE - множимое
-                ;   A  - множитель
-                ; Out :
-                ;   HL - результат умножения DE * A
-                ; -----------------------------------------
-                LD A, (GameConfig.SpeedHero)                                    ; скорость перемещения героя по карте
-                CALL Math.Mul16x8_16
-                LD (IX + FObjectCharacter.Direction.X), HL
 
-                ; приведение к 16-битному значению
-                LD E, C
-                LD A, C
-                RLA
-                SBC A, A
-                LD D, A
-                ; -----------------------------------------
-                ; In :
-                ;   DE - множимое
-                ;   A  - множитель
-                ; Out :
-                ;   HL - результат умножения DE * A
-                ; -----------------------------------------
-                LD A, (GameConfig.SpeedHero)                                    ; скорость перемещения героя по карте
-                CALL Math.Mul16x8_16
-                LD (IX + FObjectCharacter.Direction.Y), HL
-
-                RET
-Move.Horizontal ; -----------------------------------------
-                ; горизонтальное перемещение
-                LD BC, (IX + FObjectCharacter.Direction.X)                      ; чтение шага
-                ; проверка знака дельты
+.PositiveX      ; модуль расстояния по Y и направление шага
                 BIT 7, H
-                JP NZ, .DeltaNegX    ; отрицательаня дельта (движение вправо)
-
-.DeltaPosX      ; положительная дельта (HL), отрицательный шаг (BC) (движение влево)
-
-                ; проверка доступности шага
-                OR A
-                ADC HL, BC
-                JP P, .ApplyStepLeft                                            ; переход, если шаг возможен
-                
-                OR A
-                SBC HL, BC
-                
-                ; перемещение на ширину шага невозможно, остаток дельты - новый шаг (отрицательный)
-                ; NEG HL
+                JR Z, .PositiveY
+                SET MOVEMENT_STEP_Y_NEG_BIT, (IX + FObjectCharacter.MovementFlags)
                 XOR A
                 SUB L
-                LD C, A
+                LD L, A
                 SBC A, A
                 SUB H
-                LD B, A
-
-                ; сброс дельты
-                LD H, #00
-                LD L, H
-
-.ApplyStepLeft  ; сохранение новой дельты
-                LD (IX + FObjectCharacter.Delta.X), HL
-                
-                ; смещение влево (шаг отрицательный)
-                LD L, #00
-                LD A, (IX + FObject.Position.X.Low)
-                SRL A
-                RR L
-                RRA
-                RR L
                 LD H, A
-                ADC HL, BC
-                JP P, .ResultPosX                                               ; положительный результат
 
-                CALL RequestEvent                                               ; запрос на создание ивента
-
-                ; переход на левый гексагон
-                DEC (IX + FObject.Position.X.High)
-                LD DE, (HEXTILE_SIZE_X << 3) << 8                               ; правая граница гексагона
-                ADD HL, DE
-
-.ResultPosX     ADD HL, HL  ; x2
-                ADD HL, HL  ; x4
-                LD (IX + FObject.Position.X.Low), H
-                RET
-
-.DeltaNegX      ; отрицательаня дельта (HL), положительный шаг (BC) (движение вправо)
-
-                ; проверка доступности шага
-                OR A
-                ADC HL, BC
-                JP M, .ApplyStepRight                                           ; переход, если шаг возможен
-                
-                OR A
-                SBC HL, BC
-                
-                ; перемещение на ширину шага невозможно, остаток дельты - новый шаг (отрицательный)
-                ; NEG HL
-                XOR A
-                SUB L
-                LD C, A
-                SBC A, A
-                SUB H
-                LD B, A
-
-                ; сброс дельты
-                LD H, #00
-                LD L, H
-                
-.ApplyStepRight ; сохранение новой дельты
-                LD (IX + FObjectCharacter.Delta.X), HL
-
-                ; смещение вправо (шаг положительный)
-                LD L, #00
-                LD A, (IX + FObject.Position.X.Low)
-                SRL A
-                RR L
-                RRA
-                RR L
-                LD H, A
-                ADC HL, BC
-                LD A, H
-                CP HEXTILE_SIZE_X << 3                                          ; правая граница гексагона
-                JP C, .ResultPosX_
-
-                CALL RequestEvent                                               ; запрос на создание ивента
-
-                ; переход на правый гексагон
-                INC (IX + FObject.Position.X.High)
-                LD DE, (HEXTILE_SIZE_X << 3) << 8                               ; правая граница гексагона
+.PositiveY      ; выбор главной оси: при равных расстояниях используется X
+                PUSH HL
                 OR A
                 SBC HL, DE
-.ResultPosX_    ADD HL, HL  ; x2
-                ADD HL, HL  ; x4
-                LD (IX + FObject.Position.X.Low), H
+                POP HL
+                JR C, .MajorX
+                JR Z, .MajorX
+
+                ; Y - главная ось, X - вторичная
+                SET MOVEMENT_MAJOR_Y_BIT, (IX + FObjectCharacter.MovementFlags)
+                LD (IX + FObjectCharacter.MajorRemaining), HL
+                LD (IX + FObjectCharacter.MajorLength), HL
+                SRL H
+                RR L
+                LD (IX + FObjectCharacter.LineError), HL
+                PUSH DE
+                POP HL
+                LD (IX + FObjectCharacter.MinorLength), HL
                 RET
 
-Move.Vertical   ; -----------------------------------------
-                ; вертикальное перемещение
-                LD BC, (IX + FObjectCharacter.Direction.Y)                      ; чтение шага
-                ; проверка знака дельты
-                BIT 7, H
-                JP NZ, .DeltaNegY    ; отрицательаня дельта (движение вниз)
+.MajorX         ; X - главная ось, Y - вторичная
+                PUSH HL
+                PUSH DE
+                POP HL
+                LD (IX + FObjectCharacter.MajorRemaining), HL
+                LD (IX + FObjectCharacter.MajorLength), HL
+                SRL H
+                RR L
+                LD (IX + FObjectCharacter.LineError), HL
+                POP HL
+                LD (IX + FObjectCharacter.MinorLength), HL
+                RET
 
-.DeltaPosY      ; положительная дельта (HL), отрицательный шаг (BC) (движение вверх)
+; -----------------------------------------
+; запрос следующего "мирового тика" для продолжающегося действия игрока
+; In:
+;   IX - адрес структуры объекта (FObjectCharacter)
+; Out:
+; Corrupt:
+;   HL, AF
+; Note:
+;   объекты AI не управляют течением времени, но перемещаются во время
+;   "мировых тиков", запрошенных действиями игрока или другими системами
+; -----------------------------------------
+RequestNextWorldTick:
+                LD A, (GameState.PlayerActions + FPlayerActions.Action)
+                CP PLAYER_ACTION_HERO_MOVEMENT
+                RET NZ                                                          ; выход, если игрок не выполняет перемещение
 
-                ; проверка доступности шага
+                LD A, (GameState.PlayerActions + FPlayerActions.SelectedHeroID)
+                CP (IX + FObjectCharacter.CharacterID)
+                RET NZ                                                          ; выход, если это не выбранный игроком персонаж
+
+                LD HL, WORLD_TICK_PLAYBACK_SPEED
+                JP WorldTime.RequestAdvance
+
+; -----------------------------------------
+; добавить бюджет движения за пакет "мировых тиков" текущей cadence-эпохи
+; In:
+;   IX - адрес структуры объекта (FObjectCharacter)
+; Out:
+; Corrupt:
+;   HL, DE, AF
+; Note:
+;   базовая поверхность даёт два четвертьпиксельных шага на единицу SpeedHero
+; -----------------------------------------
+Move.AddMovementBudget:
+                LD A, (GameConfig.SpeedHero)
+                LD L, A
+                LD H, #00
+                ADD HL, HL  ; x2
+                ADD HL, HL  ; x4
+                ADD HL, HL  ; x8 = MOVEMENT_DEFAULT_COST * 2
+                PUSH HL
+                POP DE
+                LD A, (GameSession.WorldTimeCtrl + FWorldTimeControl.Delta)
+                CALL Math.Mul16x8_16
+                LD DE, (IX + FObjectCharacter.MovementPending)
+                ADD HL, DE
+                JR NC, .Store
+                LD HL, #FFFF                                                    ; защита от переполнения накопленного бюджета
+.Store          LD (IX + FObjectCharacter.MovementPending), HL
+                RET
+
+; -----------------------------------------
+; передать движению долю временного бюджета текущего cadence-прохода
+; In:
+;   IX - адрес структуры объекта (FObjectCharacter)
+; Out:
+; Corrupt:
+;   HL, DE, BC, AF
+; Note:
+;   четыре доли x1, две доли x2 и одна доля x4 передают одинаковый суммарный
+;   бюджет за cadence-эпоху; остаток меньше стоимости шага сохраняется
+; -----------------------------------------
+Move.TransferMovementBudget:
+                LD A, (GameConfig.SpeedHero)
+                LD L, A
+                LD H, #00
+                ADD HL, HL                                                    ; x2, четверть полного бюджета обычной поверхности
+.RelativeCadence EQU $+1
+                LD B, #00                                                       ; 0 - x1, 1 - x2, 2 - x4
+                INC B
+.ScaleCadence   DEC B
+                JR Z, .ScaleTime
+                ADD HL, HL
+                JR .ScaleCadence
+
+.ScaleTime      PUSH HL
+                POP DE
+                LD A, (GameSession.WorldTimeCtrl + FWorldTimeControl.Delta)
                 OR A
-                ADC HL, BC
-                JP P, .ApplyStepUp                                              ; переход, если шаг возможен
-                
+                RET Z
+                CALL Math.Mul16x8_16                                            ; доля бюджета с учётом скорости игрового времени
+                PUSH HL
+                POP BC                                                          ; BC - максимальная передаваемая доля
+
+                LD HL, (IX + FObjectCharacter.MovementPending)
                 OR A
                 SBC HL, BC
-                
-                ; перемещение на ширину шага невозможно, остаток дельты - новый шаг (отрицательный)
-                ; NEG HL
-                XOR A
-                SUB L
-                LD C, A
-                SBC A, A
-                SUB H
-                LD B, A
+                JR NC, .ShareFits
 
-                ; сброс дельты
-                LD H, #00
-                LD L, H
+                ; ожидающий бюджет меньше расчётной доли - передать его целиком
+                ADD HL, BC                                                      ; восстановить исходный MovementPending
+                PUSH HL
+                POP DE                                                          ; DE - передаваемый бюджет
+                LD HL, #0000
+                LD (IX + FObjectCharacter.MovementPending), HL
+                JR .AddBudget
 
-.ApplyStepUp    ; сохранение новой дельты
-                LD (IX + FObjectCharacter.Delta.Y), HL
-                
-                ; смещение вверх (шаг отрицательный)
-                LD L, #00
-                LD A, (IX + FObject.Position.Y.Low)
-                SRL A
-                RR L
-                RRA
-                RR L
-                LD H, A
-                ADC HL, BC
-                JP P, .ResultPosY                                               ; положительный результат
+.ShareFits      LD (IX + FObjectCharacter.MovementPending), HL
+                PUSH BC
+                POP DE                                                          ; DE - передаваемая доля
 
-                CALL RequestEvent                                               ; запрос на создание ивента
-    
-                ; корректировка позиций при пересечении 0, необходимо сделать плавный переход
-                ; между гексагонами верикально, с учётов чётности строк
-
-                ; переход на верхний гексагон
-                DEC (IX + FObject.Position.Y.High)
-                LD DE, ((HEXTILE_SIZE_Y-1) << 3) << 8                           ; правая граница гексагона
-                                                                                ; т.к. переход между гексагонами одно знакоместо
-                                                                                ; вычтим его из высоты
+.AddBudget      LD HL, (IX + FObjectCharacter.MovementBudget)
                 ADD HL, DE
+                JR NC, .Store
+                LD HL, #FFFF
+.Store          LD (IX + FObjectCharacter.MovementBudget), HL
+                RET
+
+; -----------------------------------------
+; обновить тип поверхности по текущим координатам объекта
+; In:
+;   IX - адрес структуры объекта (FObjectCharacter)
+; Out:
+; Corrupt:
+;   HL, DE, AF, AF'
+; Note:
+;   карта читается со страницы 1, стоимость остаётся в таблице страницы 0
+; -----------------------------------------
+Move.UpdateHextileID:
+                LD E, (IX + FObject.Position.X.High)
+                LD D, (IX + FObject.Position.Y.High)
+                EXX
+                LD A, Page.Page1
+                LD HL, BufferUtilities.GetHextileIDByCoord.Wrap
+                CALL Func.CallAnotherPage
+                EX AF, AF'
+                LD (IX + FObjectCharacter.HextileID), A
+                RET
+
+; -----------------------------------------
+; выполнить один шаг DDA, равный четверти пикселя по главной оси
+; In:
+;   IX - адрес структуры объекта (FObjectCharacter)
+; Out:
+;   Carry установлен, если заданная точка достигнута
+; Corrupt:
+;   HL, DE, AF
+; -----------------------------------------
+Move.Step:      PUSH BC
+                LD HL, (IX + FObjectCharacter.MajorRemaining)
+                LD A, L
+                OR H
+                JR Z, .Complete
+
+                DEC HL
+                LD (IX + FObjectCharacter.MajorRemaining), HL
+
+                ; шаг по главной оси
+                BIT MOVEMENT_MAJOR_Y_BIT, (IX + FObjectCharacter.MovementFlags)
+                JR NZ, .MajorY
+                CALL Move.StepX
+                JR .UpdateError
+.MajorY         CALL Move.StepY
+
+.UpdateError    ; определить необходимость шага по вторичной оси
+                LD HL, (IX + FObjectCharacter.LineError)
+                LD DE, (IX + FObjectCharacter.MinorLength)
+                OR A
+                SBC HL, DE
+                JR NC, .StoreError
+
+                LD DE, (IX + FObjectCharacter.MajorLength)
+                ADD HL, DE
+                LD (IX + FObjectCharacter.LineError), HL
+
+                BIT MOVEMENT_MAJOR_Y_BIT, (IX + FObjectCharacter.MovementFlags)
+                JR NZ, .MinorX
+                CALL Move.StepY
+                JR .CheckRemaining
+.MinorX         CALL Move.StepX
+                JR .CheckRemaining
+
+.StoreError     LD (IX + FObjectCharacter.LineError), HL
+
+.CheckRemaining LD A, (IX + FObjectCharacter.MajorRemaining.Low)
+                OR (IX + FObjectCharacter.MajorRemaining.High)
+                JR Z, .Complete
+                POP BC
+                OR A                                                            ; сброс Carry
+                RET
+
+.Complete       POP BC
+                SCF
+                RET
+
+; -----------------------------------------
+; выполнить один четвертьпиксельный шаг по горизонтали
+; -----------------------------------------
+Move.StepX:     BIT MOVEMENT_STEP_X_NEG_BIT, (IX + FObjectCharacter.MovementFlags)
+                JR NZ, .Negative
 
                 LD A, (IX + FObject.Position.X.Low)
-                SUB ((HEXTILE_SIZE_X << 3) >> 1) << 2                           ; половина ширины гексагона
-                JP M, .LeftUp                                                   ; переход, если дигается в влево-вверх
-                
-                ; перемещается вправо-вверх
+                INC A
+                CP HEXTILE_SIZE_X << 5
+                JR C, .Store
+                XOR A
                 LD (IX + FObject.Position.X.Low), A
-
-                ; проверка перехода с нечётной строки
-                BIT 0, (IX + FObject.Position.Y.High)
-                JR NZ, .ResultPosY
-                ; переход с нечётной строки на чётную
                 INC (IX + FObject.Position.X.High)
-                JR .ResultPosY
+                CALL Move.UpdateHextileID
+                JP RequestEvent
 
-.LeftUp         ; перемещается влево-вверх
-                ADD A, ((HEXTILE_SIZE_X)<< 3) << 2                              ; ширины гексагона
-                LD (IX + FObject.Position.X.Low), A
-                
-                ; проверка перехода с чётной строки
-                BIT 0, (IX + FObject.Position.Y.High)
-                JR Z, .ResultPosY
-                ; переход с чётной строки на нечётную
-                DEC (IX + FObject.Position.X.High)
-
-.ResultPosY     ADD HL, HL  ; x2
-                ADD HL, HL  ; x4
-                LD (IX + FObject.Position.Y.Low), H
+.Store          LD (IX + FObject.Position.X.Low), A
                 RET
 
-.DeltaNegY      ; отрицательаня дельта (HL), положительный шаг (BC) (движение вниз)
-
-                ; проверка доступности шага
+.Negative       LD A, (IX + FObject.Position.X.Low)
                 OR A
-                ADC HL, BC
-                JP M, .ApplyStepDown                                            ; переход, если шаг возможен
-                
-                OR A
-                SBC HL, BC
+                JR NZ, .Decrement
+                DEC (IX + FObject.Position.X.High)
+                LD A, (HEXTILE_SIZE_X << 5) - 1
+                LD (IX + FObject.Position.X.Low), A
+                CALL Move.UpdateHextileID
+                JP RequestEvent
 
-                ; перемещение на ширину шага невозможно, остаток дельты - новый шаг (отрицательный)
-                ; NEG HL
-                XOR A
-                SUB L
-                LD C, A
-                SBC A, A
-                SUB H
-                LD B, A
+.Decrement      DEC A
+                LD (IX + FObject.Position.X.Low), A
+                RET
 
-                ; сброс дельты
-                LD H, #00
-                LD L, H
+; -----------------------------------------
+; выполнить один четвертьпиксельный шаг по вертикали
+; -----------------------------------------
+Move.StepY:     BIT MOVEMENT_STEP_Y_NEG_BIT, (IX + FObjectCharacter.MovementFlags)
+                JR NZ, .Negative
 
-.ApplyStepDown  ; сохранение новой дельты
-                LD (IX + FObjectCharacter.Delta.Y), HL
-
-                ; смещение вниз (шаг положительный)
-                LD L, #00
+                ; смещение вниз
                 LD A, (IX + FObject.Position.Y.Low)
-                SRL A
-                RR L
-                RRA
-                RR L
-                LD H, A
-                ADC HL, BC
-                LD A, H
-                CP HEXTILE_SIZE_Y << 3                                          ; правая нижняя гексагона
-                ; JP C, .ResultPosY_
-                CALL NC, RequestEvent                                           ; запрос на создание ивента
+                INC A
+                CP (HEXTILE_SIZE_Y - 1) << 5
+                JR C, .Store
 
-                ; ; переход на правый гексагон
-                ; INC (IX + FObject.Position.Y.High)
-                ; LD DE, (HEXTILE_SIZE_X << 3) << 8                               ; нижняя граница гексагона
-                ; OR A
-                ; SBC HL, DE
+                XOR A
+                LD (IX + FObject.Position.Y.Low), A
+                INC (IX + FObject.Position.Y.High)
 
-.ResultPosY_    ADD HL, HL  ; x2
-                ADD HL, HL  ; x4
-                LD (IX + FObject.Position.Y.Low), H
+                ; при смене строки сохранить глобальную координату X
+                BIT 0, (IX + FObject.Position.Y.High)
+                JR NZ, .DownOddRow
+                CALL Move.AddHalfX
+                CALL Move.UpdateHextileID
+                JP RequestEvent
+.DownOddRow     CALL Move.SubHalfX
+                CALL Move.UpdateHextileID
+                JP RequestEvent
+
+.Store          LD (IX + FObject.Position.Y.Low), A
+                RET
+
+.Negative       ; смещение вверх
+                LD A, (IX + FObject.Position.Y.Low)
+                OR A
+                JR NZ, .Decrement
+
+                DEC (IX + FObject.Position.Y.High)
+                LD A, ((HEXTILE_SIZE_Y - 1) << 5) - 1
+                LD (IX + FObject.Position.Y.Low), A
+
+                ; при смене строки сохранить глобальную координату X
+                BIT 0, (IX + FObject.Position.Y.High)
+                JR NZ, .UpOddRow
+                CALL Move.AddHalfX
+                CALL Move.UpdateHextileID
+                JP RequestEvent
+.UpOddRow       CALL Move.SubHalfX
+                CALL Move.UpdateHextileID
+                JP RequestEvent
+
+.Decrement      DEC A
+                LD (IX + FObject.Position.Y.Low), A
+                RET
+
+; -----------------------------------------
+; сместить локальную координату X вправо на половину ширины гекса
+; -----------------------------------------
+Move.AddHalfX:  LD A, (IX + FObject.Position.X.Low)
+                ADD A, HEXTILE_SIZE_X << 4
+                CP HEXTILE_SIZE_X << 5
+                JR C, .Store
+                SUB HEXTILE_SIZE_X << 5
+                INC (IX + FObject.Position.X.High)
+.Store          LD (IX + FObject.Position.X.Low), A
+                RET
+
+; -----------------------------------------
+; сместить локальную координату X влево на половину ширины гекса
+; -----------------------------------------
+Move.SubHalfX:  LD A, (IX + FObject.Position.X.Low)
+                SUB HEXTILE_SIZE_X << 4
+                JR NC, .Store
+                ADD A, HEXTILE_SIZE_X << 5
+                DEC (IX + FObject.Position.X.High)
+.Store          LD (IX + FObject.Position.X.Low), A
                 RET
 RequestEvent    ; запрос на создание ивента
 .Flag           FLAG_MODIFY 0

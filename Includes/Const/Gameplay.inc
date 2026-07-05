@@ -10,4 +10,7 @@ DURATION
 .CLICK_CURSOR   EQU 0x02                                                        ; продолжительность нажатия курсора                     (1/50)
 .DELAY_CURSOR   EQU 0x08                                                        ; продолжительность между анимациями курсора            (1/50)
 
+MOVEMENT_DEFAULT_COST           EQU 0x0004                                     ; стоимость одного шага до подключения поверхности
+WORLD_TICK_PLAYBACK_SPEED       EQU 0x02                                       ; число "мировых тиков", проигрываемых за одну активную cadence-эпоху
+
                 endif ; ~_CONST_GAMEPLAY_

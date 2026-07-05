@@ -33,6 +33,11 @@ PathInitialize  ; сохранение длины пути
                 ; инициализация персонажа в буфере
                 DEC C                                                           ; начинается с -1
                 LD (IY + FObjectCharacter.PathID), C
+                XOR A
+                LD (IY + FObjectCharacter.MovementBudget.Low), A
+                LD (IY + FObjectCharacter.MovementBudget.High), A               ; новый маршрут не наследует остаток бюджета предыдущего действия
+                LD (IY + FObjectCharacter.MovementPending.Low), A
+                LD (IY + FObjectCharacter.MovementPending.High), A
 
                 ; копирования данных из буфера в массив
                 PUSH IY

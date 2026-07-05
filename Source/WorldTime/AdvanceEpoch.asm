@@ -10,26 +10,47 @@
 ; Note:
 ;   вызывается только на переходе CadenceStep 7 -> 0;
 ;   если остались запрошенные "мировые тики", новая эпоха продвигает игровое время
-;   ровно на один "мировой тик"
+;   на пакет до WORLD_TICK_PLAYBACK_SPEED тиков без повторного обхода планировщика
 ; ----------------------------------------
 AdvanceEpoch:   ; сброс флага, активной фазы предыдущей cadence-эпохи
                 LD HL, GameSession.WorldTimeCtrl + FWorldTimeControl.Flags
                 RES WORLD_EPOCH_ACTIVE_BIT, (HL)
+                XOR A
+                LD (GameSession.WorldTimeCtrl + FWorldTimeControl.Delta), A
 
-                ; проверка и уменьшение количества ожидающих "мировых тиков"
+                ; проверка количества ожидающих "мировых тиков"
                 LD HL, (GameSession.WorldTimeCtrl + FWorldTimeControl.AdvanceLeft)
                 LD A, H
                 OR L
                 RET Z
-                DEC HL
+
+                ; за одну эпоху обработать не больше WORLD_TICK_PLAYBACK_SPEED;
+                ; последний пакет может содержать меньшее число "мировых тиков"
+                LD DE, WORLD_TICK_PLAYBACK_SPEED
+                OR A
+                SBC HL, DE
+                JR NC, .FullDelta
+                ADD HL, DE                                                      ; восстановить остаток запроса
+                LD A, L                                                        ; остаток меньше WORLD_TICK_PLAYBACK_SPEED и помещается в байт
+                LD HL, #0000
+                JR .StoreDelta
+
+.FullDelta      LD A, WORLD_TICK_PLAYBACK_SPEED
+.StoreDelta     LD (GameSession.WorldTimeCtrl + FWorldTimeControl.Delta), A
                 LD (GameSession.WorldTimeCtrl + FWorldTimeControl.AdvanceLeft), HL
 
                 ; включить активную фазу "мирового тика" для новой cadence-эпохи
                 LD HL, GameSession.WorldTimeCtrl + FWorldTimeControl.Flags
                 SET WORLD_EPOCH_ACTIVE_BIT, (HL)
 
+                ; календарь получает весь пакет без повторного обхода мира
+                LD B, A
                 LD IX, GameSession.WorldTime
-                JP Tick
+.TickCalendar   PUSH BC
+                CALL Tick
+                POP BC
+                DJNZ .TickCalendar
+                RET
 ; -----------------------------------------
 ; запрос на прокрутку игрового времени
 ; In:
