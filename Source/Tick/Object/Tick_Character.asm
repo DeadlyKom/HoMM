@@ -23,10 +23,6 @@ Character:      ; сохранить параметры текущего cadence
                 ADC A, A                                                       ; 0 - обычный cadence-проход, 1 - доставлен "мировой тик"
                 LD (Move.WorldTickFlag), A
 
-                ; LD A, (GameSession.PeriodTick + FTick.Hero)
-                ; CP DURATION.CHARACTER_TICK
-                ; RET NZ                                                          ; выход, если счётчик не обнулён
-
                 ; проверка перемещения героя
                 LD C, (IX + FObjectCharacter.Super.Sprite)
                 BIT ANIM_STATE_BIT, C
@@ -204,7 +200,13 @@ RequestNextWorldTick:
                 CP (IX + FObjectCharacter.CharacterID)
                 RET NZ                                                          ; выход, если это не выбранный игроком персонаж
 
-                LD HL, WORLD_TICK_PLAYBACK_SPEED
+                LD A, (GameConfig.PlaybackSpeed)
+                ifdef _DEBUG
+                OR A
+                DEBUG_BREAK_POINT_Z                                             ; произошла ошибка!
+                endif
+                LD L, A
+                LD H, #00
                 JP WorldTime.RequestAdvance
 
 RequestEvent    ; запрос на создание ивента

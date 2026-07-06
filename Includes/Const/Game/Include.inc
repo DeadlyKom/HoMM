@@ -5,6 +5,7 @@
                 include "Game_View.inc"
                 include "Game_State.inc"
                 include "Game_Timer.inc"
+                include "Game_Design.inc"
                 include "Game_Config.inc"
                 include "Game_HardInput.inc"
                 include "Game_Screen_World.inc"

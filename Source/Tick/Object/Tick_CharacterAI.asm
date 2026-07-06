@@ -65,8 +65,9 @@ AI.Move         ; начислить время только в активной
                 LD A, (IX + FObject.Position.Y.High)
                 LD (AI.Move.PreviousHexY), A
 
+                ; сброс признака фактического перемещения в текущем cadence-проходе
                 XOR A
-                LD (.MovedFlag), A
+                LD (AI.Move.MovedFlag), A
 
 .StepLoop       LD L, (IX + FObjectCharacter.HextileID)
                 LD H, HIGH Adr.SurfPass
@@ -84,7 +85,7 @@ AI.Move         ; начислить время только в активной
 
                 CALL Tick.Utils.Movement.Step
                 LD A, #01
-                LD (.MovedFlag), A
+                LD (AI.Move.MovedFlag), A                                      ; выполнен хотя бы один четвертьпиксельный DDA-шаг
                 JR C, .Animation
                 JR .StepLoop
 
@@ -102,11 +103,12 @@ AI.Move         ; начислить время только в активной
                 LD D, (IX + FObject.Position.Y.High)
                 CALL Tick.Utils.Reconnaissance.Request                         ; союзники получают общую разведку группы
 
-.AnimationState
+.AnimationState ; установить состояние перемещения AI-персонажа,
+                ; изменить кадр спрайта после фактического перемещения
 .MovedFlag      EQU $+1
                 LD A, #00
                 OR A
-                JR Z, .CheckCompletion
+                JR Z, .CheckCompletion                                          ; переход, если позиция в текущем проходе не изменилась
 
                 LD C, (IX + FObjectCharacter.Super.Sprite)
                 LD A, C
@@ -119,6 +121,7 @@ AI.Move         ; начислить время только в активной
                 LD (IX + FObjectCharacter.Super.Sprite), A
                 SET OBJECT_DIRTY_BIT, (IX + FObject.Flags)
 
+                ; проверка достижения заданной точки
 .CheckCompletion:
                 LD A, (IX + FObjectCharacter.MajorRemaining.Low)
                 OR (IX + FObjectCharacter.MajorRemaining.High)
