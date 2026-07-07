@@ -80,7 +80,7 @@ Loop:
                             ; вторичные навыки
                             ; FSecondarySkill
                             {
-                                ; ToDo: вскоре появятся....
+                                SKILL_LEVEL_EXPERT                              ; Pathfinding, эксперт
                             }
                         }
                     }
@@ -102,6 +102,7 @@ Loop:
                                 2
                             },
                             {
+                                SKILL_LEVEL_NONE                                ; Pathfinding отсутствует
                             }
                         }
                     }

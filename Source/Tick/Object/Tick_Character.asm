@@ -52,27 +52,27 @@ Character:      ; сохранить параметры текущего cadence
                 JP NZ, Move.Init
                 JP RequestNextWorldTick
 Move.Init       CALL SetDistance
-                CALL Tick.Utils.Movement.UpdateHextileID                        ; определить поверхность начального гекса
+                CALL Tick.Utils.Movement.UpdateEffectiveStepCost                ; рассчитать стоимость шага начального гекса
 Move            ; --------------------------------------------------------------
                 ; перемещение
 
+                CALL Tick.Utils.Movement.GetCharacterMovementBudget             ; получить бюджет движения за один "мировой тик"
 .WorldTickFlag  EQU $+1
                 LD A, #00
                 OR A
                 CALL NZ, Tick.Utils.Movement.AddBudget                          ; временной бюджет начисляется один раз за cadence-эпоху
+                CALL Tick.Utils.Movement.GetCharacterMovementBudget             ; получить бюджет движения за один "мировой тик"
 .RelativeCadence EQU $+1
                 LD A, #00
-                CALL Tick.Utils.Movement.TransferBudget                        ; передать движению долю пакета текущего cadence-прохода
+                CALL Tick.Utils.Movement.TransferBudget                         ; передать движению долю пакета текущего cadence-прохода
 
                 LD A, (IX + FObject.Position.X.High)
                 LD (.PreviousHexX), A
                 LD A, (IX + FObject.Position.Y.High)
                 LD (.PreviousHexY), A
 
-.StepLoop       ; стоимость всегда читается из таблицы по текущему типу поверхности
-                LD L, (IX + FObjectCharacter.HextileID)
-                LD H, HIGH Adr.SurfPass
-                LD E, (HL)
+.StepLoop       ; чтение рассчитанной стоимости DDA-шага для текущего участка маршрута
+                LD E, (IX + FObjectCharacter.EffectiveStepCost)
                 LD D, #00
                 LD A, E
                 OR A
@@ -157,7 +157,7 @@ Move            ; --------------------------------------------------------------
                 CP PLAYER_ACTION_HERO_MOVEMENT
                 RET NZ
 
-                CALL WorldTime.StopAdvance                                     ; удалить следующий "мировой тик", заранее запрошенный во время движения
+                CALL WorldTime.StopAdvance                                      ; удалить следующий "мировой тик", заранее запрошенный во время движения
 
                 ; сброс действия игрока
                 XOR A                                                           ; PLAYER_ACTION_NONE
@@ -171,19 +171,28 @@ Move            ; --------------------------------------------------------------
                 LD E, A
                 SET 7, E    ; Adr.HeroPath начинается с 0x80
                 LD D, HIGH Adr.HeroPath
+
                 CALL SetDistance
                 JP RequestNextWorldTick
-
-SetDistance:    ; рассчитать расстояние от объекта до центра точки пути
-                ;   DE - адрес хранения FPath
-                ;   IX - адрес структуры объекта (FObjectCharacter)
-                ; Out:
-                ;   HL - знаковое расстояние по вертикали, в четвертях пикселя
-                ;   DE - знаковое расстояние по горизонтали, в четвертях пикселя
-                CALL Character.DistancePath
+; -----------------------------------------
+; рассчитать DDA-линию от объекта до текущей точки пути
+; In:
+;   DE - адрес структуры FPath
+;   IX - адрес структуры объекта (FObjectCharacter)
+; Out:
+;   FObjectCharacter - подготовлены поля DDA для движения к точке пути
+; Corrupt:
+;   HL, DE, AF
+; Note:
+;   Character.DistancePath рассчитывает знаковое расстояние до центра точки пути
+;   в четвертях пикселя
+;   Tick.Utils.Movement.SetLine преобразует расстояние в состояние DDA объекта
+;   сброс RequestEvent.Flag запрещает переносить запрос события между сегментами пути
+; -----------------------------------------
+SetDistance:    CALL Character.DistancePath
                 RES_FLAG_MODIFY RequestEvent.Flag                              ; сброс запроса события предыдущего сегмента
                 JP Tick.Utils.Movement.SetLine
-
+; -----------------------------------------
 ; запрос следующего "мирового тика" для продолжающегося действия игрока
 ; In:
 ;   IX - адрес структуры объекта (FObjectCharacter)
@@ -208,7 +217,6 @@ RequestNextWorldTick:
                 LD L, A
                 LD H, #00
                 JP WorldTime.RequestAdvance
-
 RequestEvent    ; запрос на создание ивента
 .Flag           FLAG_MODIFY 0
                 RET C                                                           ; выход, если ивент активирован
