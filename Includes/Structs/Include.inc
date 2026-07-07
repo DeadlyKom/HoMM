@@ -11,6 +11,7 @@
                 include "Cursor.inc"
                 include "Function.inc"
                 
+                include "DDA.inc"
                 include "Path.inc"
                 include "Tick.inc"
                 include "Size.inc"

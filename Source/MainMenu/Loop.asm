@@ -80,7 +80,7 @@ Loop:
                             ; вторичные навыки
                             ; FSecondarySkill
                             {
-                                SKILL_LEVEL_EXPERT                              ; Pathfinding, эксперт
+                                SKILL_LEVEL_NONE                                ; Pathfinding, эксперт
                             }
                         }
                     }

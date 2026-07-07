@@ -72,7 +72,7 @@ Move            ; --------------------------------------------------------------
                 LD (.PreviousHexY), A
 
 .StepLoop       ; чтение рассчитанной стоимости DDA-шага для текущего участка маршрута
-                LD E, (IX + FObjectCharacter.EffectiveStepCost)
+                LD E, (IX + FObjectCharacter.StepCost)
                 LD D, #00
                 LD A, E
                 OR A
@@ -117,8 +117,8 @@ Move            ; --------------------------------------------------------------
                 SET OBJECT_DIRTY_BIT, (IX + FObject.Flags)                      ; установить флаг, объект требуется обновиться
                 ; --------------------------------------------------------------
                 ; проверка достижения заданной точки
-                LD A, (IX + FObjectCharacter.MajorRemaining.Low)
-                OR (IX + FObjectCharacter.MajorRemaining.High)
+                LD A, (IX + FObjectCharacter.Movement.RemainingSteps.Low)
+                OR (IX + FObjectCharacter.Movement.RemainingSteps.High)
 
                 JP NZ, RequestNextWorldTick                                     ; продолжить перемещение на следующем "мировом тике"
 
