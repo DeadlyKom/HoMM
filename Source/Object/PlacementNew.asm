@@ -25,30 +25,9 @@ PlacemantNew    ; инициализация
                 INC (HL)                                                        ; увеличение счётчика элементов
                 LD L, A                                                         ; сохранение номера элемента
                 EX AF, AF'                                                      ; сохранение номера элемента
-                
-                if OBJECT_SIZE > 32
-                error "address calculation error"
-                endif
-
                 ; расчёт адреса последнего элемента в массиве
-                ; адрес расположения элемента = адрес первого элемента + N элемента * OBJECT_SIZE    
-                LD H, HIGH Adr.ObjectsArray >> 4    ; %00001100
                 LD A, L     ; %0aaaaaaa
-                ADD A, A    ; %aaaaaaa0 : 0
-                ADD A, A    ; %aaaaaa00 : a
-                RL H        ; %0001100a
-                ADD A, A    ; %aaaaa000 : a
-                RL H        ; %001100aa
-                ADD A, A    ; %aaaa0000 : a
-                RL H        ; %01100aaa
-                ADD A, A    ; %aaa00000 : a
-                RL H        ; %1100aaaa
-                LD L, A
-
-                LD IYL, A
-                LD A, H
-                LD IYH, A
-
+                CALL Object.Utilities.GetAdr.IY                                 ; получить адрес объекта
                 ; OR A                                                            ; сброс флага, элемент расположен
                 ; RL H выталкивает старший бит во флаг и он сброшен
                 RET

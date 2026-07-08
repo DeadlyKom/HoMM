@@ -8,8 +8,8 @@ Object:
 .RemoveAtSwap           EQU Page0.Object.RemoveAtSwap                           ; удаление объекта, перемещая последний элемент в массиве
 .SmartRemove            EQU Page0.Object.SmartRemove                            ; умное удаление объекта
 .FindLastByPredicate    EQU Page0.Object.FindLastByPredicate                    ; поиск объекта с конца массива, используя предикат
-Object.Sort:
-.Quicksort              EQU Page0.Object.Sort.Quicksort                         ; сортировка адресов видимых объектов по Position.Y
+; Object.Sort:
+; .GnomeSort              EQU Page0.Object.Sort.GnomeSort                         ; сортировка адресов видимых объектов по оси Y
 
 TickScheduler:
 .Variables              EQU Page0.Object.TickScheduler                          ; структура переменных "планировщика тиков"
@@ -20,6 +20,7 @@ Object.Class:
 .CharacterAI            EQU Page0.Object.Class.CharacterAI
 .Construction           EQU Page0.Object.Class.Construction
 Object.Utilities:
+.GetAdr.HL              EQU Page0.Object.Utilities.Adr.HL                       ; получить адрес объекта
 .GetAdr.IX              EQU Page0.Object.Utilities.Adr.IX                       ; получить адрес объекта
 .GetAdr.IY              EQU Page0.Object.Utilities.Adr.IY                       ; получить адрес объекта
 .CadencePassIdByChunk   EQU Page0.Object.Utilities.GetCadencePassIdByChunk      ; получить CadencePassId по номеру чанка
