@@ -10,86 +10,50 @@
 ;   IX - сохраняет исходное значение
 ; Corrupt:
 ;   HL, DE, BC, AF, AF', IY
+; Note:
+;   код расположен в странице 0
 ; -----------------------------------------
-Request:        PUSH DE                                                         ; сохранить координаты разведки
-
-                ; получить ParticipantID владельца объекта
-                LD L, (IX + FObjectCharacter.CharacterID)
-                LD H, #00
-                ADD HL, HL  ; x2
-                ADD HL, HL  ; x4
-                ADD HL, HL  ; x8
-                ADD HL, HL  ; x16
-                ADD HL, HL  ; x32
-                LD DE, Adr.CharacterArray
-                ADD HL, DE
-                INC HL                                                          ; FCharacter.ParticipantID
-                LD A, (HL)
+Request:        ; получить ParticipantID владельца объекта
+                LD A, (IX + FObjectCharacter.CharacterID)
+                CALL Character.Utilities.GetAdr.HL                              ; получить адрес персонажа
+                INC HL
+                LD A, (HL)                                                      ; FCharacter.ParticipantID
 
                 ; получить группу владельца
-                LD L, A
-                LD H, #00
-                ADD HL, HL  ; x2
-                ADD HL, HL  ; x4
-                ADD HL, HL  ; x8
-                ADD HL, HL  ; x16
-                ADD HL, HL  ; x32
-                LD DE, Adr.ParticipantArray
-                ADD HL, DE
-                LD A, (HL)
+                CALL Participant.Utilities.GetAdr.HL                            ; получить адрес участника
+
+                LD A, (HL)                                                      ; FParticipant.Faction.Flags
                 AND PLAYER_GROUP_MASK
-                LD D, A                                                         ; группа владельца
 
-                ; собрать маску видимости всех участников той же группы
-                LD A, (GameSession.SaveSlot + FSaveSlot.MapInfo.Participants)
-                LD B, A
-                LD C, #00                                                       ; ParticipantID
-                LD E, #00                                                       ; результирующая маска
-                LD HL, Adr.ParticipantArray
-
-.ParticipantLoop
-                LD A, (HL)
-                AND PLAYER_GROUP_MASK
-                CP D
-                JR NZ, .NextParticipant
-
-                PUSH HL
-                LD A, C
-                LD HL, .FogMaskTable
-                ADD A, L
+.Group          ; расчёт адреса группы в таблицы
+                ADD A, LOW .FogBitTable
                 LD L, A
-                ADC A, H
+                ADC A, HIGH .FogBitTable
                 SUB L
                 LD H, A
-                LD A, (HL)
-                OR E
-                LD E, A
-                POP HL
-
-.NextParticipant
-                LD A, L
-                ADD A, PARTICIPANT_SIZE
-                LD L, A
-                JR NC, $+3
-                INC H
-                INC C
-                DJNZ .ParticipantLoop
+                LD A, (HL)                                                      ; чтение номера бита из таблицы
 
                 ; сформировать событие
-                LD IY, Adr.EventBuffer
-                LD (IY + FEventReconnaissance.Super.Flags), EVENT_BEFORE_RENDER | EVENT_LIFETIME_CONDITION
-                LD (IY + FEventReconnaissance.Super.Page), Page.Page1
-                LD (IY + FEventReconnaissance.Super.Function + 0), LOW BufferUtilities.Reconnaissance.Event
-                LD (IY + FEventReconnaissance.Super.Function + 1), HIGH BufferUtilities.Reconnaissance.Event
-                LD (IY + FEventReconnaissance.FogMask), E
-                POP DE
-                LD (IY + FEventReconnaissance.Position.X), E
-                LD (IY + FEventReconnaissance.Position.Y), D
+                LD HL, Adr.EventBuffer
+                LD (HL), EVENT_BEFORE_RENDER | EVENT_LIFETIME_CONDITION         ; FEventReconnaissance.Super.Flags
+                INC L
+                INC L
+                LD (HL), Page.Page1                                             ; FEventReconnaissance.Super.Page
+                INC L
+                LD (HL), LOW BufferUtilities.Reconnaissance.Event               ; FEventReconnaissance.Super.Function + 0
+                INC L
+                LD (HL), HIGH BufferUtilities.Reconnaissance.Event              ; FEventReconnaissance.Super.Function + 1
+                INC L
+                LD (HL), A                                                      ; FEventReconnaissance.FogBit
+                INC L
+                LD (HL), E                                                      ; FEventReconnaissance.Position.X
+                INC L
+                LD (HL), D                                                      ; FEventReconnaissance.Position.Y
                 JP Event.Add
 
-.FogMaskTable   DB MAP_META_FOG_PLAYER_1_MASK
-                DB MAP_META_FOG_PLAYER_2_MASK
-                DB MAP_META_FOG_PLAYER_3_MASK
-                DB MAP_META_FOG_PLAYER_4_MASK
+.FogBitTable    DB MAP_META_FOG_PLAYER_1_BIT
+                DB MAP_META_FOG_PLAYER_2_BIT
+                DB MAP_META_FOG_PLAYER_3_BIT
+                DB MAP_META_FOG_PLAYER_4_BIT
 
                 endif ; ~_TICK_UTILS_RECONNAISSANCE_

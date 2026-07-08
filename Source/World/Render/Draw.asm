@@ -38,15 +38,14 @@ Draw:           ; -----------------------------------------
                 LD HL, Adr.Hextile
                 LD (GameSession.WorldInfo + FWorldInfo.Tilemap), HL
 
+                ; первичная рекогносцировка
+                SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
+                LD A, PLAYER_GROUP_0
+                LD DE, #0302
+                CALL Tick.Utils.Reconnaissance.Request.Group                    ; создать событие разведки для группы владельца персонажа
+
                 ; принудительное обновление Tilemap- и Render-буферов
                 SET_PAGE_MAP                                                    ; включить страницу работы с картой
-                ;   A  - радиус обзора в тайлах
-                ;   C  - маска видимости участников группы
-                ;   DE - координаты в тайлах (D - y, E - x)
-                LD A, 1
-                LD C, MAP_META_FOG_PLAYER_1_MASK
-                LD DE, #0302
-                CALL BufferUtilities.Reconnaissance                             ; рекогносцировка
                 CALL World.Base.Tilemap.Update.RenderBuffer
                 CALL World.Base.Tilemap.Update.TileBuffer
                 CALL Draw.HexDLGeneration

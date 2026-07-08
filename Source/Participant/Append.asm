@@ -10,6 +10,7 @@
 ; Out:
 ; Corrupt:
 ; Note:
+;   код расположен в странице 0
 ; -----------------------------------------
 Append:         ; инициализация
                 LD A, (GameSession.SaveSlot + FSaveSlot.MapInfo.Participants)

@@ -13,6 +13,7 @@
 ;   в случае успешного добавления персонажа
 ; Corrupt:
 ; Note:
+;   код расположен в странице 0
 ; -----------------------------------------
 Add_Character:  ; проверка достижения максимального количества игроков
                 LD A, (IY + FParticipant.CharactersNum)                         ; получение индекса доступного элемента в массиве героев у игрока
@@ -41,20 +42,8 @@ Add_Character:  ; проверка достижения максимальног
                 LD (HL), B                                                      ; добавить CharacterID персонажа участнику
                 INC (IY + FParticipant.CharactersNum)                           ; увеличение счётчика персонажей у игрока
                 ;---------------------------------------------------------------
-                ; расчёт адреса размещаемого персонажа
-                ; HL = CHARACTER_SIZE * CharacterID (32)
                 LD A, B
-                ADD A, A    ; x2
-                ADD A, A    ; x4
-                ADD A, LOW Adr.CharacterArray >> 3
-                LD L, A
-                ADC A, HIGH Adr.CharacterArray >> 3
-                SUB L
-                LD H, A
-                ADD HL, HL  ; x8
-                ADD HL, HL  ; x16
-                ADD HL, HL  ; x32
-                ;---------------------------------------------------------------
+                CALL Character.Utilities.GetAdr.HL                              ; получить адрес персонажа
                 ; инициализация FCharacter
                 LD A, (DE)
                 INC DE

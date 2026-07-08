@@ -11,20 +11,11 @@
 ;   в случае успешного добавления персонажа с первым героем
 ; Corrupt:
 ; Note:
+;   код расположен в странице 0
 ; -----------------------------------------
-Add_Player:     ;---------------------------------------------------------------
-                ; расчёт адреса распологаемого игрока
-                ; IY = PARTICIPANT_SIZE * индекс добовляемого игрока (8)
+Add_Player:     ; инициализация FParticipant
                 LD A, C
-                ADD A, A    ; x2
-                ADD A, A    ; x4
-                ADD A, A    ; x8
-                ADD A, A    ; x16
-                ADD A, A    ; x32
-                LD IYL, A
-                LD IYH, HIGH Adr.ParticipantArray
-                ;---------------------------------------------------------------
-                ; инициализация FParticipant
+                CALL Participant.Utilities.GetAdr.IY                            ; получить адрес участника
 
                 ; флаги принадлежности участника
                 LD A, (IX + FParticipantSettings.Faction)

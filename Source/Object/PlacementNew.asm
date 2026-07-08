@@ -49,6 +49,8 @@ PlacemantNew    ; инициализация
                 LD A, H
                 LD IYH, A
 
+                ; OR A                                                            ; сброс флага, элемент расположен
+                ; RL H выталкивает старший бит во флаг и он сброшен
                 RET
 
                 display " - Placemant new object:\t\t\t\t", /A, PlacemantNew, "\t= busy [ ", /D, $-PlacemantNew, " byte(s)  ]"

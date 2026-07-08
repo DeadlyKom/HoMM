@@ -13,5 +13,6 @@ Tick.Utils.Movement:
 
 Tick.Utils.Reconnaissance:
 .Request                    EQU Page0.Tick.Utils.Reconnaissance.Request                 ; запросить обновление рекогносцировки
+.Request.Group              EQU Page0.Tick.Utils.Reconnaissance.Request.Group           ; запросить обновление рекогносцировки
 
                 endif ; ~_PAGE_0_TICK_
