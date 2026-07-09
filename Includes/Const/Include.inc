@@ -27,5 +27,6 @@
                 include "Input/Include.inc"
                 include "Object/Include.inc"
                 include "Player/Include.inc"
+                include "Character/Include.inc"
 
                 endif ; ~_CONST_INCLUDE_

@@ -5,7 +5,7 @@ CHARACTER_ID_NONE   EQU #FF                                                     
 PATH_ID_NONE        EQU #FF                                                     ; индекс в массиве пути отсутствует
 WAY_POINT_NONE      EQU #FF                                                     ; индекс WayPoint'а отсутствует
 
-; значения FObjectCharacter.MovementFlags
+; значения FObjectCharacter.Movement.Flags
 MOVEMENT_MAJOR_Y_BIT     EQU 0x00                                               ; главная ось DDA: 0 - X, 1 - Y
 MOVEMENT_STEP_X_NEG_BIT  EQU 0x01                                               ; направление шага по X: 0 - вправо, 1 - влево
 MOVEMENT_STEP_Y_NEG_BIT  EQU 0x02                                               ; направление шага по Y: 0 - вниз,  1 - вверх

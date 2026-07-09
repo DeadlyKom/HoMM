@@ -105,7 +105,7 @@ TickObjectChunk:; получение объектов в чанке
 ; ----------------------------------------
 TickObjectJumpTable:
                 DW Page0.Tick.Object.Character                                  ; OBJECT_CLASS_CHARACTER
-                DW Page0.Tick.Object.Character                                  ; OBJECT_CLASS_CHARACTER_AI
+                DW Page0.Tick.Object.CharacterAI                                ; OBJECT_CLASS_CHARACTER_AI
                 DW TickObject_NoTick                                            ; OBJECT_CLASS_CONSTRUCTION
                 DW TickObject_NoTick                                            ; OBJECT_CLASS_PROPS
                 DW TickObject_NoTick                                            ; OBJECT_CLASS_INTERACTION

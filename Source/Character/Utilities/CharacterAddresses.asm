@@ -11,6 +11,7 @@
 ; Corrupt:
 ;   HL, AF, IX, IY
 ; Note:
+;   код расположен в странице 0
 ; -----------------------------------------
 Character.Addresses: ; получить адрес героя
                 CALL Character.Utilities.GetAdr.IX

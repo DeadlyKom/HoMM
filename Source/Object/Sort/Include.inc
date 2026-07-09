@@ -4,11 +4,11 @@
 
                 module Sort
 Begin           EQU $
-                include "Prepare.asm"
-                include "Sort.asm"
-                include "Quicksort.asm"
+                ; include "Prepare.asm"
+                ; include "Sort.asm"
+                include "GnomeSort.asm"
 
-                display " - Quick sort:\t\t\t\t\t", /A, Begin, " = busy [ ", /D, $-Begin, " byte(s)  ]"
+                display " - Gnome sort:\t\t\t\t\t", /A, Begin, " = busy [ ", /D, $-Begin, " byte(s)  ]"
 
                 endmodule
 

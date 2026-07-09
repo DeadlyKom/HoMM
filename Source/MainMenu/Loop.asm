@@ -44,11 +44,16 @@ Loop:
                 ; пользователь должен настроить кто за кого играет компьютер/человек и в каких группах
                 ; заполенняя массив участников структур FParticipantSettings,
                 ; размер массива храниться в GameSession.SaveSlot + FSaveSlot.MapInfo.Participants
+                ifdef ENABLE_DEBUG_AI_MOVEMENT
+                LD A, #02                                                      ; игрок и тестовый компьютерный противник
+                else
                 LD A, #01
+                endif
                 LD (GameSession.SaveSlot + FSaveSlot.MapInfo.Participants), A
                 SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
                 LD IX, .TmpParticipant; Adr.ExtraBuffer                                          ; адрес расположения массива FParticipantSettings
                 CALL Participant.Append                                         ; добавить участников
+
                 ;---------------------------------------------------------------
                 JP ExecuteModule.World                                          ; запуск "мира"
 
@@ -75,11 +80,34 @@ Loop:
                             ; вторичные навыки
                             ; FSecondarySkill
                             {
-                                ; ToDo: вскоре появятся....
+                                SKILL_LEVEL_NONE                                ; Pathfinding, эксперт
                             }
                         }
                     }
                 }
+
+                ifdef ENABLE_DEBUG_AI_MOVEMENT
+.TmpOpponent    FParticipantSettings {
+                    { COMPUTER | PLAYER_GROUP_1 },                              ; компьютерный противник из другой группы
+                    CASTLE_ID_NONE,
+                    { 3, 3 },                                                   ; первая точка демонстрационного маршрута
+
+                    {
+                        Character.Class.Druid,
+                        {
+                            {
+                                3,
+                                1,
+                                4,
+                                2
+                            },
+                            {
+                                SKILL_LEVEL_NONE                                ; Pathfinding отсутствует
+                            }
+                        }
+                    }
+                }
+                endif
 
                 display " - Main loop:\t\t\t\t\t\t", /A, Loop, "\t= busy [ ", /D, $-Loop, " byte(s)  ]"
 

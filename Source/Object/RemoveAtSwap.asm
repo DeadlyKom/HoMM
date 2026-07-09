@@ -45,20 +45,8 @@ RemoveAtSwap:   ; инициализация
                 RET Z                                                           ; выход, если индекс удаляемого элемента последний
 
                 ; расчёт адреса последнего элемента в массиве
-                ; адрес расположения элемента = адрес первого элемента + N элемента * OBJECT_SIZE
-                ; %0aaaaaaa
-                LD H, HIGH Adr.ObjectsArray >> 4    ; %00001100
-                ADD A, A    ; %aaaaaaa0 : 0
-                ADD A, A    ; %aaaaaa00 : a
-                RL H        ; %0001100a
-                ADD A, A    ; %aaaaa000 : a
-                RL H        ; %001100aa
-                ADD A, A    ; %aaaa0000 : a
-                RL H        ; %01100aaa
-                ADD A, A    ; %aaa00000 : a
-                RL H        ; %1100aaaa
-                LD L, A
-
+                CALL Object.Utilities.GetAdr.HL                                 ; получить адрес объекта
+                
                 PUSH HL
                 PUSH DE
 

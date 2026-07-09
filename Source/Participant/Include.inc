@@ -3,13 +3,12 @@
                 define _PARTICIPANT_INCLUDE_
 
                 module Participant
-
                 include "Append.asm"
                 include "Add_Player.asm"
                 include "Add_Character.asm"
                 include "Remove_Player.asm"
                 include "Remove_Character.asm"
-
+                include "Utilities/Include.inc"
                 endmodule
 
                 endif ; ~_PARTICIPANT_INCLUDE_
