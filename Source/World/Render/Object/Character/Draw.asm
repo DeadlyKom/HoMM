@@ -2,15 +2,17 @@
                 ifndef _WORLD_RENDER_OBJECT_HERO_DRAW_
                 define _WORLD_RENDER_OBJECT_HERO_DRAW_
 ; -----------------------------------------
-; отображение объекта "герой"
+; DEPRECATED: расчёт bound объекта "герой" без отрисовки
 ; In:
 ;   IX - адрес функции обработки спрайта
 ;   IY - адрес структуры объекта (FObjectCharacter)
 ; Out:
 ; Corrupt:
 ; Note:
+;   bound спрайта сейчас рассчитывается во время отрисовки объекта
+;   и сохраняется из GameState.SpriteBound в FObject.Bound
 ; -----------------------------------------
-Bound:          LD IX, Utilities.SpriteBound
+; Bound:          LD IX, Utilities.SpriteBound
 ; -----------------------------------------
 ; отображение объекта "герой"
 ; In:

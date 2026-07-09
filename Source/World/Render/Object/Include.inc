@@ -3,6 +3,7 @@
                 define _WORLD_RENDER_OBJECT_INCLUDE_
 
                 module Object
+                include "BoundScreenBlock.asm"
                 include "Draw.asm"
                 include "UI/Include.inc"
                 include "Character/Include.inc"
