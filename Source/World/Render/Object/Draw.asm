@@ -24,6 +24,39 @@ Draw:           ; инициализация
                 PUSH BC
                 SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
 
+                ; -----------------------------------------
+                ; проверка нахождения объекта на невидимом гексе
+                ; -----------------------------------------
+
+                ; получение индекса гекса в RenderBuffer
+                LD C, (IY + FObject.Position.X.High)
+                LD B, (IY + FObject.Position.Y.High)
+                PUSH BC
+                SET_PAGE_MAP
+                POP BC
+                ; -----------------------------------------
+                ; определение индекса Render-буфера по координатам гексагона
+                ; In:
+                ;   BC - координаты гексагона под курсором (B - y, C - x)
+                ; Out:
+                ;   A - индекс в рендер буфере (0-39)
+                ;   флаг переполнения Carry сброшен, если получилось определить индекс
+                ; Corrupt:
+                ;   HL, AF
+                ; Note:
+                ;   код расположен рядом с картой (страница 1)
+                ; -----------------------------------------
+                CALL BufferUtilities.GetIndexRender
+                JR C, .NextObject                                               ; переход, если гекс не попал в RenderBuffer
+
+                ; проверка флага видимости гекса
+                LD H, HIGH Adr.RenderBuffer
+                LD L, A
+                BIT RENDER_FLAG_HEX_FOG_BIT, (HL)
+                JR Z, .NextObject                                               ; переход, если гекс закрыт туманом
+
+                SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
+
                 ; проверка флага обновления объекта
                 BIT OBJECT_DIRTY_BIT, (IY + FObject.Flags)
                 JR Z, .ForcedVisibility                                         ; переход, если флаг не установлен,
