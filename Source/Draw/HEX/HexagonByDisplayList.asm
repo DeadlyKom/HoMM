@@ -7,44 +7,9 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-; повторное отображение невидимых гексагонов поверх объектов
-; -----------------------------------------
-FogByDL:        ; подготовка независимых колонковых флагов:
-                ; каждый выбранный невидимый гексагон рисуется целиком
-                LD HL, Adr.SharedBuffer + 80
-                LD DE, Adr.SharedBuffer + 81
-                LD BC, Size.RenderBuffer - 81
-                LD (HL), #01
-                LDIR
-
-                LD A, HIGH Adr.SharedBuffer
-                LD HL, HexByDL.ToNextHexagon
-                CALL HexByDL.SetVisibleHexTarget
-
-                ; основной проход уже проанализирован, временные отметки объектов
-                ; больше не должны участвовать в следующем кадре
-                LD HL, Adr.RenderBuffer
-                LD B, TILEMAP_DATA_SIZE
-.ClearHexFlags  RES RENDER_FLAG_HEX_UPDATE_BIT, (HL)
-                INC L
-                DJNZ .ClearHexFlags
-
-                XOR A
-                LD HL, Adr.RenderBuffer + 80
-                LD DE, Adr.RenderBuffer + 81
-                LD BC, Size.RenderBuffer - 81
-                LD (HL), A
-                LDIR
-                RET
-
-HexByDL:        ; инициализация основного прохода: тайлы и туман
-                LD A, HIGH Adr.RenderBuffer
-                LD HL, .ReadIdxHextile
-
-.SetVisibleHexTarget
-                LD (.VisibleHexTarget), HL
+HexByDL:        ; инициализация
                 LD IX, (GameState.DisplayList)
-                LD IYH, A                                                       ; RenderBuffer либо временные флаги прохода тумана
+                LD IYH, HIGH Adr.RenderBuffer                                   ; для сохранения бит высоты столбца
 
                 ; формирование цикла по вертикали (строк гексагонов)
                 LD BC, .RowsLoop
@@ -134,8 +99,7 @@ HexByDL:        ; инициализация основного прохода: 
                 
                 ; определение отображения тумана или гексагоного тайла
                 ADD A, A                                                        ; выталкивание флага, видимости гексагона (целиком)
-.VisibleHexTarget EQU $+1
-                JP C, .ReadIdxHextile                                           ; основной проход рисует тайл, проход тумана пропускает его
+                JR C, .ReadIdxHextile                                           ; переход, если необходимо отобразить видемый гексагоный тайл
 
 .FOG            ; -----------------------------------------
                 ; отображение тумана (скрытый гексагонный тайл)
@@ -343,4 +307,3 @@ HexByDL:        ; инициализация основного прохода: 
                 display " - Draw hexagon by display list:\t\t\t", /A, HexByDL, "\t= busy [ ", /D, $-HexByDL, " byte(s)  ]"
 
                 endif ; ~ _DRAW_HEXAGON_DISPLAY_LIST_
-

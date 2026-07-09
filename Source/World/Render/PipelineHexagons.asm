@@ -94,20 +94,11 @@ PipelineHexagons:
                 RESTORE_BC                                                      ; защитная от порчи данных с разрешённым прерыванием
                 CALL Draw.HexByDL
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
-                CALL ScreenBlock.HexAnalysis                                    ; анализ основного прохода гексагонов
+                CALL ScreenBlock.HexAnalysis                                    ; анализ обновления гексагонов
 
                 POP AF
-                OR A
-                JR Z, .ObjectsComplete                                          ; переход, если видимые объекты отсутствуют
-                CALL Object.Draw                                                ; отображение объектов в массиве SortBuffer
+                CALL NZ, Object.Draw                                            ; отображение объектов в массиве SortBuffer
 
-                ; повторное отображение невидимых гексагонов поверх объектов:
-                ; каждый невидимый гексагон, пересекающий изменённый bound,
-                ; полностью накладывается поверх объектов
-                CALL Object.RestoreBounds                                       ; добавить старые bounds к отметкам, созданным Object.Draw
-                CALL Draw.FogByDL
-
-.ObjectsComplete
                 SET_MODULE_PAGE_World                                           ; включить страницу модуля "World"
                 CALL World.Display.GameWindow.Ornament
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
