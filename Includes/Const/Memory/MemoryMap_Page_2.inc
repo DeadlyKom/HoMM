@@ -16,6 +16,7 @@
                 ;   | #BA00 |                             RenderBuffer | #0100 |
                 ;   +-------+------------------------------------------+-------+
                 ;   | #BB00 |                            TilemapBuffer | #0100 |
+                ;   | #BBF0 |                             - EventBuffer | #0010 | ; временный буфер структуры события FEvent
                 ;   +-------+------------------------------------------+-------+
                 ;   | #BC00 |                         SpriteInfoBuffer | #0400 |
                 ;   +-------+------------------------------------------+-------+
@@ -35,6 +36,7 @@ SortBuffer          EQU #0100                                                   
 SharedBuffer        EQU #0100                                                   ; размер буфера общего назначения
 RenderBuffer        EQU #0100                                                   ; размер буфера отображения
 TilemapBuffer       EQU #0100                                                   ; размер буфера тайлов отображения (пока зарезервирован)
+EventBuffer         EQU #0010                                                   ; размер временного буфера структуры события
 DisplayList         EQU TILEMAP_HEIGHT_DATA * DisplayList.ElementSize
 .ElementSize        EQU 5
                 endmodule
@@ -48,6 +50,7 @@ SortBuffer          EQU #B800                                                   
 SharedBuffer        EQU #B900                                                   ; адрес буфера общего назначения
 RenderBuffer        EQU #BA00                                                   ; адрес буфера отображения
 TilemapBuffer       EQU #BB00                                                   ; адрес буфера тайлов отображения (пока зарезервирован)
+EventBuffer         EQU TilemapBuffer + Size.TilemapBuffer - Size.EventBuffer   ; адрес временного буфера структуры события в конце TilemapBuffer
 SpriteInfoBuffer    EQU #BC00                                                   ; адрес буфера информации о спрайтах
 DisplayList         EQU TilemapBuffer + TILEMAP_DATA_SIZE                       ; адрес списка отображения
                                                                                 ; -----------------------------------------

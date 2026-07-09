@@ -10,6 +10,7 @@
                 include "RemoveAtSwap.asm"
                 include "FindLastByPredicate.asm"
 
+                ; include "Sort/Include.inc"                                      ; не требуется, сортировка осуществляется при вставке
                 include "Class/Include.inc"
                 include "Utilities/Include.inc"
                 include "TickScheduler/Include.inc"

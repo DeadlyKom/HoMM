@@ -17,10 +17,10 @@ Visible:        ; количество обрабатываемых объект
                 EX AF, AF'
 
                 ; сброс смещение
-                LD HL, Quicksort.Offset
+                LD HL, GnomeSort.Offset
                 LD (HL), #00
 
                 CALL Prepare
-                ; JP Quicksort
+                ; JP GnomeSort
 
                 endif ; ~_OBJECT_SORT_OBJECTS_

@@ -32,6 +32,40 @@ GetHextileIDByCoord:
                 CALL GetMapArrayAdr                                             ; определение адреса карты по координатам
                 LD A, (HL)
                 RET
+; -----------------------------------------
+; получение стоимости перемещения по координатам гексагона (обёртка)
+; In:
+;   DE' - координаты гексагона под объектом (D - y, E - x)
+; Out:
+;   A'  - базовая стоимость DDA-шага для поверхности
+; Corrupt:
+;   HL, AF
+; Note:
+;   код расположен рядом с картой и таблицей проходимости (страница 1)
+;   HextileID используется только как временный индекс таблицы SurfPass
+; -----------------------------------------
+GetSurfaceStepCostByCoord.Wrap:
+                EXX
+                CALL GetSurfaceStepCostByCoord
+                EX AF, AF'
+                RET
+; -----------------------------------------
+; получение стоимости перемещения по координатам гексагона
+; In:
+;   DE - координаты гексагона под объектом (D - y, E - x)
+; Out:
+;   A  - базовая стоимость DDA-шага для поверхности
+; Corrupt:
+;   HL, AF
+; Note:
+;   HextileID используется только как временный индекс таблицы SurfPass
+; -----------------------------------------
+GetSurfaceStepCostByCoord:
+                CALL GetHextileIDByCoord
+                LD L, A
+                LD H, HIGH Adr.SurfPass
+                LD A, (HL)
+                RET
 
                 display " - Get hextile ID by coodinates:\t\t\t", /A, GetHextileIDByCoord, "\t= busy [ ", /D, $-GetHextileIDByCoord, " byte(s)  ]"
 

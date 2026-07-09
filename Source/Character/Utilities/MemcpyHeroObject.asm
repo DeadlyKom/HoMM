@@ -9,6 +9,7 @@
 ; Out:
 ; Corrupt:
 ; Note:
+;   код расположен в странице 0
 ; -----------------------------------------
 Character.MemcpyObject; 
                 EXX

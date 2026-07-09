@@ -13,6 +13,7 @@
 ;   в случае успешного добавления персонажа
 ; Corrupt:
 ; Note:
+;   код расположен в странице 0
 ; -----------------------------------------
 Add_Character:  ; проверка достижения максимального количества игроков
                 LD A, (IY + FParticipant.CharactersNum)                         ; получение индекса доступного элемента в массиве героев у игрока
@@ -25,35 +26,24 @@ Add_Character:  ; проверка достижения максимальног
                 LD HL, GameSession.WorldInfo + FWorldInfo.HeroNum
                 LD B, (HL)                                                      ; чтение свободного идентификатора персонажа
                 INC (HL)                                                        ; увеличение общего счётчика героев в массиве Adr.CharacterArray
-                PUSH BC                                                         ; сохранение идентификатора персонажа
+                PUSH BC                                                         ; сохранение CharacterID и ParticipantID до спавна объекта
                 ;--------------------------------------
-                ; добавление в массиве героев у игрока идентификатор игрока
+                ; добавление CharacterID в массив персонажей участника
                 PUSH IY
                 POP HL
-                LD A, B
-                EX AF, AF'                                                      ; сохранение идентификатора персонажа
+                PUSH BC                                                         ; сохранить CharacterID и ParticipantID
                 LD BC, FParticipant.Characters
                 ADD HL, BC
+                POP BC
+
+                LD A, (IY + FParticipant.CharactersNum)                        ; индекс персонажа внутри массива участника
                 ADD A, L
                 LD L, A
-                EX AF, AF'                                                      ; восстановление идентификатора персонажа
-                LD (HL), A                                                      ; добавление геперсонажароя игроку
+                LD (HL), B                                                      ; добавить CharacterID персонажа участнику
                 INC (IY + FParticipant.CharactersNum)                           ; увеличение счётчика персонажей у игрока
                 ;---------------------------------------------------------------
-                ; расчёт адреса распологаемого персонажа
-                ; HL = HERO_SIZE * индекс добовляемого персонажа (64)
                 LD A, B
-                ADD A, A    ; x2
-                ADD A, A    ; x4
-                ADD A, LOW Adr.CharacterArray >> 3
-                LD L, A
-                ADC A, HIGH Adr.CharacterArray >> 3
-                SUB L
-                LD H, A
-                ADD HL, HL  ; x8
-                ADD HL, HL  ; x16
-                ADD HL, HL  ; x32
-                ;---------------------------------------------------------------
+                CALL Character.Utilities.GetAdr.HL                              ; получить адрес персонажа
                 ; инициализация FCharacter
                 LD A, (DE)
                 INC DE
@@ -85,9 +75,16 @@ Add_Character:  ; проверка достижения максимальног
                 ;   HL, DE, BC, AF, AF'
                 ; Note:
                 ; -----------------------------------------
-                POP BC                                                          ; восстановление идентификатора персонажа
+                POP BC                                                          ; восстановление идентификатора персонажа и участника
+
+                ; тип объекта определяется принадлежностью участника
+                LD A, (IY + FParticipant.Faction.Flags)
+                AND COMPUTER
                 EXX
                 LD B, ODS_ID_CHARACTER
+                JR Z, .Spawn
+                LD B, ODS_ID_AI_CHARACTER
+.Spawn
                 POP DE                                                          ; восстановление стартовой позиции игрока
                 CALL Object.Spawn
                 EXX

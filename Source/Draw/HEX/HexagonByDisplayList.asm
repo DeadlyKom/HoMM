@@ -307,4 +307,3 @@ HexByDL:        ; инициализация
                 display " - Draw hexagon by display list:\t\t\t", /A, HexByDL, "\t= busy [ ", /D, $-HexByDL, " byte(s)  ]"
 
                 endif ; ~ _DRAW_HEXAGON_DISPLAY_LIST_
-

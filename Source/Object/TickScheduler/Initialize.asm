@@ -7,7 +7,7 @@
 ; Out:
 ; Corrupt:
 ; Note:
-;   необходимо включить страницу с массивом событий (страница 0)
+;   необходимо включить страницу работы с объектами (страница 0)
 ; ----------------------------------------
 Initialize:     ; порядок чанков по умолчанию: 0..35
                 LD HL, TickScheduler.Variables + FTickScheduler.ChunkOrder
@@ -20,7 +20,7 @@ Initialize:     ; порядок чанков по умолчанию: 0..35
                 DJNZ .FillChunkOrder
 
                 ; FTickScheduler.Flags
-                LD (HL), %10000000                                              ; первоначальный запрос на построение ChunkOrder
+                LD (HL), CHUNK_ORDER_NEED_REBUID                                ; первоначальный запрос на построение ChunkOrder
                 INC HL
 
                 ; FTickScheduler.CadenceStep

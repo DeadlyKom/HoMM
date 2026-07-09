@@ -9,13 +9,14 @@ PLAYER_AFFILIATION_BIT  EQU 0x07                                                
                                                                                 ;   0 - человек
                                                                                 ;   1 - компьютер
 PLAYER_GROUP_BIT        EQU 0x00                                                ; принадлежность участника к группе
+PLAYER_GROUP_MASK       EQU %00000011                                           ; маска номера группы участника
 
 HUMANOID                EQU 0 << PLAYER_AFFILIATION_BIT
 COMPUTER                EQU 1 << PLAYER_AFFILIATION_BIT
 
 PLAYER_GROUP_0          EQU 0 << PLAYER_GROUP_BIT
-PLAYER_GROUP_1          EQU 0 << PLAYER_GROUP_BIT
-PLAYER_GROUP_2          EQU 0 << PLAYER_GROUP_BIT
-PLAYER_GROUP_3          EQU 0 << PLAYER_GROUP_BIT
+PLAYER_GROUP_1          EQU 1 << PLAYER_GROUP_BIT
+PLAYER_GROUP_2          EQU 2 << PLAYER_GROUP_BIT
+PLAYER_GROUP_3          EQU 3 << PLAYER_GROUP_BIT
 
                 endif ; ~_CONST_PARTICIPANT_

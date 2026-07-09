@@ -13,7 +13,7 @@
 ; Note:
 ; -----------------------------------------
 GetCadencePassIdByChunk:
-                LD HL, TickScheduler + FTickScheduler.ChunkOrder
+                LD HL, TickScheduler.Variables + FTickScheduler.ChunkOrder
                 LD BC, MAX_WORLD_CHUNK_SIZE
 
                 ; поиск чанка в ChunkOrder
@@ -32,23 +32,23 @@ GetCadencePassIdByChunk:
                 LD C, A
 
                 ; поиск в нулевом диапазоне (OrderIndex < Range_1.FirstIndex)
-                LD A, (TickScheduler + FTickScheduler.Range_1.FirstIndex)
+                LD A, (TickScheduler.Variables + FTickScheduler.Range_1.FirstIndex)
                 DEC A                                                           ; уменьшить на еденицу, для исключения индекса первого диапозона
                 CP C
                 JR C, .FirstRange                                               ; переход, если не нулевой диапозон
-                LD A, (TickScheduler + FTickScheduler.Range_0.CadencePassId)
+                LD A, (TickScheduler.Variables + FTickScheduler.Range_0.CadencePassId)
                 RET
 
 .FirstRange     ; поиск в первом диапазоне (OrderIndex < Range_2.FirstIndex)
-                LD A, (TickScheduler + FTickScheduler.Range_2.FirstIndex)
+                LD A, (TickScheduler.Variables + FTickScheduler.Range_2.FirstIndex)
                 DEC A                                                           ; уменьшить на еденицу, для исключения индекса второго диапозона
                 CP C
                 JR C, .SecondRange                                              ; переход, если не первый диапозон
-                LD A, (TickScheduler + FTickScheduler.Range_1.CadencePassId)
+                LD A, (TickScheduler.Variables + FTickScheduler.Range_1.CadencePassId)
                 RET
 
 .SecondRange    ; сравнение не требуется, это точно втрой диапозон
-                LD A, (TickScheduler + FTickScheduler.Range_2.CadencePassId)
+                LD A, (TickScheduler.Variables + FTickScheduler.Range_2.CadencePassId)
                 RET
 
                 endif ; ~ _OBJECT_UTILITIES_GET_CADENCE_PASS_ID_BY_CHUNK_

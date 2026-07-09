@@ -42,17 +42,6 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
 
                 LD A, (HL)
                 OR A
-                JR NZ, $+7
-                LD (HL), DURATION.CHARACTER_TICK+1
-                EX DE, HL
-                INC (HL)
-                EX DE, HL
-
-                INC L
-                INC E
-
-                LD A, (HL)
-                OR A
                 JR NZ, $+6
                 LD (HL), DURATION.OBJECT_TICK+1
                 EX DE, HL
@@ -92,13 +81,13 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 ADC A, B
                 LD (HL), A
 
-                INC L
+                ; INC L
 
-                ; уменьшение счётчика задержки героя        (FTick.Hero)
-                LD A, (HL)
-                SUB C
-                ADC A, B
-                LD (HL), A
+                ; ; уменьшение счётчика задержки героя        (FTick.Hero)
+                ; LD A, (HL)
+                ; SUB C
+                ; ADC A, B
+                ; LD (HL), A
 
                 INC L
 
@@ -108,10 +97,6 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 ADC A, B
                 LD (HL), A
                 ; -----------------------------------------
-
-                SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
-                CHECK_INTERRUPT_FLAG INT_DISABLE_GLOBAL_TICK_BIT                ; проверка разрешения глобального тика
-                CALL Z, Tick.Global                                             ; обработчик глобального тика
 
                 ifdef SHOW_FPS | _DEBUG
 .Debug_FPS      ; ************** Draw FPS **************

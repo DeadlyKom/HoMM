@@ -17,6 +17,7 @@
                 include "Convert.inc"
                 include "Interrupt.inc"
                 include "Functions.inc"
+                include "WorldTime.inc"
                 include "MemoryPages.inc"
                 include "Decompressor.inc"
                 include "AssetsManager.inc"

@@ -10,9 +10,9 @@
 ;   Carry установлен, если во время обхода начался новый кадр;
 ;   Carry сброшен, если объекты в чанке закончились или отсутствовали
 ; Corrupt:
-;   HL, DE, BC, AF, AF', IX
+;   все регистры
 ; Note:
-;   необходимо включить страницу с массивом событий (страница 0)
+;   необходимо включить страницу работы с объектами (страница 0)
 ; ----------------------------------------
 TickObjectChunk:; получение объектов в чанке
 
@@ -36,7 +36,7 @@ TickObjectChunk:; получение объектов в чанке
                 RET Z                                                           ; выход, если отсутствуют объекты в чанке
 
                 LD C, A                                                         ; количество объектов в чанке
-                LD B, E                                                         ; переинициализация переменной текущего CadencePassId
+                LD B, E                                                         ; сохранение текущего CadencePassId в B
                 EX AF, AF'
                 LD L, A
                 INC H                                                           ; переход на страницу значений чанка
@@ -52,9 +52,14 @@ TickObjectChunk:; получение объектов в чанке
                 CP (IX + FObject.CadencePassID)
                 JR Z, .SkipObject
 
-                ; помечаем объект до тика, чтобы не словить повторную обработку
+                ; помечаем объект до тика, чтобы исключить повторную обработку
                 ; при переносе в другой чанк/диапазон во время тика
                 LD (IX + FObject.CadencePassID), B
+
+                ; установить Carry согласно активной фазе "мирового тика" текущего cadence-прохода
+.WorldDeltaTime EQU $
+                DB #00                                                          ; код команды OR A или SCF
+                EX AF, AF'                                                      ; сохранить Carry в альтернативном регистре флагов
 
                 ; тик объекта в чанке
                 LD A, (IX + FObject.Class)
@@ -66,7 +71,13 @@ TickObjectChunk:; получение объектов в чанке
                 endif
 
                 LD HL, TickObjectJumpTable
+                PUSH BC                                                         ; сохранение CadencePassId и количества оставшихся объектов
+                PUSH DE                                                         ; сохранение указателя на текущий объект в массиве чанка
+.RelativeDeltaTime EQU $+1
+                LD C, #00                                                       ; относительный временной шаг: 0 - x1, 1 - x2, 2 - x4
                 CALL Func.JumpTable
+                POP DE
+                POP BC
 
 .SkipObject     OR A                                                            ; текущий кадр не завершён
                 DEC C
@@ -83,10 +94,18 @@ TickObjectChunk:; получение объектов в чанке
 
 ; -----------------------------------------
 ; диспетчер тика объекта
+; In:
+;   IX - адрес структуры объекта (FObject)
+;   C  - относительный временной шаг: 0 - x1, 1 - x2, 2 - x4
+;   F' - Carry установлен при активной фазе "мирового тика" в текущем cadence-проходе
+; Out:
+;   IX - сохраняет исходное значение
+; Corrupt:
+;   все регистры, кроме IX
 ; ----------------------------------------
 TickObjectJumpTable:
                 DW Page0.Tick.Object.Character                                  ; OBJECT_CLASS_CHARACTER
-                DW Page0.Tick.Object.Character                                  ; OBJECT_CLASS_CHARACTER_AI
+                DW Page0.Tick.Object.CharacterAI                                ; OBJECT_CLASS_CHARACTER_AI
                 DW TickObject_NoTick                                            ; OBJECT_CLASS_CONSTRUCTION
                 DW TickObject_NoTick                                            ; OBJECT_CLASS_PROPS
                 DW TickObject_NoTick                                            ; OBJECT_CLASS_INTERACTION

@@ -87,5 +87,7 @@ GameWindow:     ; проверка бездействия игрока
                 LD A, Page.Page0
                 LD HL, Character.PathInitialize.Wrap
                 JP Func.CallAnotherPage
+                ; первый пакет "мировых тиков" запросит персонаж после завершения поворота
+                ; RET
 
                 endif ; ~_MODULE_WORLD_UI_HANDLER_GAME_WINDOW_

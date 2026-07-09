@@ -68,12 +68,15 @@ Draw:           ; инициализация
                 DJNZ .Loop
 .RET            RET
 
-.ForcedVisibility; проверка принудительной видимости
+.ForcedVisibility; проверка флага принудительного обновления кадра
                 CHECK_VIEW_FLAG FORCED_FRAME_UPDATE_BIT
                 JR NZ, .NeedRefresh                                             ; переход, если требуется принудительное обновление
 
                 ; проверка обновления screen block'а
-                ; JR .NeedRefresh                                                 ; переход, если screen block обновляется, необходимо обновить и объект
+                PUSH DE
+                CALL BoundScreenBlock.Intersects
+                POP DE
+                JR C, .NeedRefresh                                              ; переход, если screen block обновляется, необходимо обновить и объект
                 JR .NextObject                                                  ; переход, если screen block не обновляется
 
 .JumpTable      DW Character.Draw                                               ; OBJECT_CLASS_CHARACTER

@@ -5,24 +5,24 @@
 ; добавить событие
 ; In:
 ; Out:
-;   A' - текущий ID события
-;   IY - адрес свободного элемента
-;   флаг переполнения Carry установлен, если нет свободного места в массиве
 ; Corrupt:
 ;   DE, BC, AF, AF'
 ; Note:
+; Note:
+;   добавляемая структура FEvent должна быть сформирована в Adr.EventBuffer
 ; -----------------------------------------
-Add:            PUSH_PAGE
+Add:            PUSH_PAGE                                                       ; сохранение номера страницы в стеке
                 PUSH HL
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 CALL Event.PlacemantNew
-                ; размещение нового события
                 ; Out:
                 ;   A' - текущий ID события
                 ;   DE - адрес свободного элемента
                 ;   флаг переполнения Carry установлен, если нет свободного места в массиве
-                PUSH IY
-                POP HL
+                JR C, .RET                                                      ; переход, если ошибка - нет места для размещения события
+                
+                ; размещение нового события
+                LD HL, Adr.EventBuffer
                 ifdef _OPTIMIZE
                 rept EVENT_SIZE
                 LDI
@@ -31,7 +31,8 @@ Add:            PUSH_PAGE
                 LD BC, EVENT_SIZE
                 CALL Memcpy.FastLDIR
                 endif
-                POP HL
+
+.RET            POP HL
                 JP_POP_PAGE
 
                 display " - Add event:\t\t\t\t\t\t", /A, Add, "\t= busy [ ", /D, $-Add, " byte(s)  ]"

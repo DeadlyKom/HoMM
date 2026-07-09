@@ -14,8 +14,10 @@
                 include "Gameplay.inc"
                 include "Particle.inc"
                 include "SaveSlot.inc"
+                include "WorldTime.inc"
                 include "Interrupt.inc"
                 include "StateTree.inc"
+                include "TickScheduler.inc"
                 include "SpriteClipping.inc"
                 include "SpriteNotClipping.inc"
 
@@ -25,5 +27,6 @@
                 include "Input/Include.inc"
                 include "Object/Include.inc"
                 include "Player/Include.inc"
+                include "Character/Include.inc"
 
                 endif ; ~_CONST_INCLUDE_

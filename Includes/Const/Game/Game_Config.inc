@@ -12,5 +12,6 @@ CONFIG_LANGUAGE_MASK    EQU %00000100                                           
 
 ; флаги игровых настроек
 O_AUTOSAVE_BIT          EQU 0x03                                                ; бит вкл/выкл автосейва
+PLAYBACK_SPEED_DEFAULT  EQU 0x02                                                ; масштаб проигрывания мирового времени по умолчанию
 
                 endif ; ~_CONST_GAME_CONFIG_FLAGS_

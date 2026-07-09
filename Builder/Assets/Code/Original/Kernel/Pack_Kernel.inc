@@ -36,6 +36,7 @@ Begin:          EQU $
                 include "Source/Math/Sqrt/DistSquared.asm"
 
                 ; utilities
+                include "Source/Utilities/BinaryToDecimal.asm"
                 include "Source/Draw/Utilities/SpriteBound.asm"
                 include "Source/Draw/Utilities/TransformPositionObjectToScreen.asm"
                 include "Source/Draw/Utilities/ConvertMapPositionToSpriteFormat.asm"
@@ -56,6 +57,9 @@ Begin:          EQU $
                 
                 ; event
                 include "Source/Event/Include.inc"
+
+                ; time
+                include "Source/WorldTime/Include.inc"
 
                 ifdef SHOW_FPS | _DEBUG
                 include "Source/Utilities/Debug/Console.asm"

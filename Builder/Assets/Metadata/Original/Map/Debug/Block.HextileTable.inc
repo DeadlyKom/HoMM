@@ -19,14 +19,14 @@
                 ;   I6-I0   [14..8]     - ндекс в массиве FMapHeader.GraphicPack
                 ;   O2-O0   [7..5]      - смещение внутри текущего графического пакета (0-7)
 
-                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #00              ; 0 
-                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #01              ; 1 
-                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #02              ; 2
-                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #03              ; 3
-                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #04              ; 4
-                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #05              ; 5
-                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #06              ; 6
-                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #07              ; 7
+                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #00              ; HextileID 0: трава,               sprite_1,  Tiled GID 23
+                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #01              ; HextileID 1: гора,                sprite_4,  Tiled GID 160
+                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #02              ; HextileID 2: болото,              sprite_6,  Tiled GID 137
+                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #03              ; HextileID 3: маленькое поселение, sprite_10, Tiled GID 133
+                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #04              ; HextileID 4: лес в центре гекса,  sprite_8,  Tiled GID 46
+                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #05              ; HextileID 5: плотный лес,         sprite_2,  Tiled GID 48
+                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #06              ; HextileID 6: укрепление,          sprite_3,  Tiled GID 111
+                MAKE_HEXTILE_BIND GRAPHICS_PACKAGE_GRASSLANDS, #07              ; HextileID 7: пустой гекс/контур,  outline,   Tiled GID 0
                 ; HEXTILE_NOT_USABLE                                              ; 8 - не используется
 
                 endif ; ~ _METADATA_MAP_DEBUG_HEXAGON_GRAPHICS_PACKAGE_TABLE_

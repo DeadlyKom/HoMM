@@ -38,15 +38,14 @@ Draw:           ; -----------------------------------------
                 LD HL, Adr.Hextile
                 LD (GameSession.WorldInfo + FWorldInfo.Tilemap), HL
 
+                ; первичная рекогносцировка
+                SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
+                LD A, PLAYER_GROUP_0
+                LD DE, #0302
+                CALL Tick.Utils.Reconnaissance.Request.Group                    ; создать событие разведки для группы владельца персонажа
+
                 ; принудительное обновление Tilemap- и Render-буферов
                 SET_PAGE_MAP                                                    ; включить страницу работы с картой
-                ;   A  - радиус обзора в тайлах
-                ;   C  - номер бита туман отвечающий за игрока
-                ;   DE - координаты в тайлах (D - y, E - x)
-                LD A, 1
-                LD C, MAP_META_FOG_PLAYER_1_BIT
-                LD DE, #0302
-                CALL BufferUtilities.Reconnaissance                             ; рекогносцировка
                 CALL World.Base.Tilemap.Update.RenderBuffer
                 CALL World.Base.Tilemap.Update.TileBuffer
                 CALL Draw.HexDLGeneration
@@ -134,112 +133,16 @@ Draw:           ; -----------------------------------------
                 ; -----------------------------------------
                 CALL Event.Handler.After                                        ; обработчик событий (AFTER_RENDER)
                 ; -----------------------------------------
+                
                 ifdef _DEBUG
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 CALL Convert.SetBaseScreen                                      ; установка работы с основным экраном
-                ; ; -----------------------------------------
-                ; ; отображение screen block'ов
-                ; LD DE, #031A
-                ; CALL Console.SetCursor
-                ; LD HL, Adr.ScreenBlock + 0
-                ; CALL DrawScreenBlock
-                ; LD DE, #041A
-                ; CALL Console.SetCursor
-                ; LD HL, Adr.ScreenBlock + 1
-                ; CALL DrawScreenBlock
-                ; LD DE, #051A
-                ; CALL Console.SetCursor
-                ; LD HL, Adr.ScreenBlock + 2
-                ; CALL DrawScreenBlock
-                ; LD DE, #061A
-                ; CALL Console.SetCursor
-                ; LD HL, Adr.ScreenBlock + 3
-                ; CALL DrawScreenBlock
-                ; ; -----------------------------------------
-
-                ; ; -----------------------------------------
-                ; ; отображение позиции мыши на экране
-                ; LD DE, #1700
-                ; CALL Console.SetCursor
-                ; LD A, (Mouse.PositionX)
-                ; CALL Console.DrawByte
-                ; LD A, ','
-                ; CALL Console.DrawChar
-                ; LD A, (Mouse.PositionY)
-                ; CALL Console.DrawByte
-                ; ; -----------------------------------------
-
-                ; -----------------------------------------
-                ; отображение позиции карты (горизонталь)
-                LD DE, #0919
-                CALL Console.SetCursor
-                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
-                CALL Console.DrawByte
-                LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.X)
-                CALL Console.DrawHalfByte
-                ; отображение позиции карты (вертикаль)
-                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
-                CALL Console.DrawByte
-                LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.Y)
-                CALL Console.DrawHalfByte
-                ; -----------------------------------------
-
-                ; -----------------------------------------
-                ; отображение позиции гексагона под курсором
-                LD DE, #0A1A
-                CALL Console.SetCursor
-                LD A, (GameSession + FGameSession.WorldInfo.Cursor.X)
-                CALL Console.DrawByte       ; горизонталь
-                LD A, (GameSession + FGameSession.WorldInfo.Cursor.Y)
-                CALL Console.DrawByte       ; вертикаль
-                ; -----------------------------------------
-                
-                ; ; ; -----------------------------------------
-                ; ; ; отображение размера видимой области в чанках
-                ; ; LD DE, #170C
-                ; ; CALL Console.SetCursor
-                ; ; LD A, (World.Base.Tilemap.VisibleObjects.VisibleSize + 0)
-                ; ; CALL Console.DrawByte
-                ; ; LD A, ','
-                ; ; CALL Console.DrawChar
-                ; ; LD A, (World.Base.Tilemap.VisibleObjects.VisibleSize + 1)
-                ; ; CALL Console.DrawByte
-                ; ; ; -----------------------------------------
-
-                ; ; ; -----------------------------------------
-                ; ; ; отображение количество видимых объектов
-                ; ; LD DE, #1712
-                ; ; CALL Console.SetCursor
-                ; ; LD A, (World.Base.Tilemap.VisibleObjects.Num)
-                ; ; CALL Console.DrawByte
-                ; ; ; -----------------------------------------
-
+                CALL WorldTime.DebugRender                                      ; отображение игрового календаря
+                CALL DebugInfo                                                  ; отображение отладочной информации о мире
                 endif
 
                 RES_ALL_MAIN_FLAGS                                              ; сброс всех флагов
                 RET
-
-; DrawScreenBlock:
-;                 CALL .Cell
-;                 LD A, L
-;                 ADD A, #04
-;                 LD L, A
-;                 CALL .Cell
-;                 LD A, L
-;                 ADD A, #04
-;                 LD L, A
-;                 CALL .Cell
-;                 LD A, L
-;                 ADD A, #04
-;                 LD L, A
-; .Cell           PUSH HL
-;                 LD A, (HL)
-;                 CP #10
-;                 JR C, $+4
-;                 LD A, #0F
-;                 CALL Console.DrawHalfByte
-;                 POP HL
-;                 RET
 Fog.Make:       LD HL, MakeCounter
                 DEC (HL)
                 RET NZ

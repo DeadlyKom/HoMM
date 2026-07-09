@@ -4,6 +4,7 @@
 ; -----------------------------------------
 ; формирование принудительного обновления вокруг объект-спрайта
 ; In:
+;   A - количество видимых объектов в Adr.SortBuffer
 ; Out:
 ; Corrupt:
 ; Note:
@@ -12,8 +13,6 @@
 DirtyEnvir:     ; инициализация
                 LD DE, Adr.SortBuffer
                 LD B, A
-                LD A, #FF
-                LD (.Bound), A
 
 .Loop           ; чтение адреса объекта
                 LD A, (DE)
@@ -36,19 +35,14 @@ DirtyEnvir:     ; инициализация
                 LD DE, (IY + FObject.Bound + FSpriteBound.Location)
                 LD BC, (IY + FObject.Bound + FSpriteBound.Size)
 
-                ; сохранени значени, для обсчёта на стадии рисования спрайтов
-.Bound          EQU $+1
-                LD HL, Adr.SortBuffer + 0xFF
-                LD (HL), E
-                DEC L
-                LD (HL), D
-                DEC L
-                LD (HL), C
-                DEC L
-                LD (HL), B
-                DEC L
-                LD A, L
-                LD (.Bound), A
+                ; проверка наличия bound спрайта
+                LD A, C
+                OR A
+                JR Z, .Failed                                                   ; переход, если ширина bound нулевая
+                LD A, B
+                OR A
+                JR Z, .Failed                                                   ; переход, если высота bound нулевая
+
                 PUSH BC
                 SET_PAGE_MAP                                                    ; включить страницу работы с картой
                 POP BC

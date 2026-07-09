@@ -11,6 +11,7 @@
                 include "Cursor.inc"
                 include "Function.inc"
                 
+                include "DDA.inc"
                 include "Path.inc"
                 include "Tick.inc"
                 include "Size.inc"
@@ -18,6 +19,7 @@
                 include "Frame.inc"
                 include "Item_ID.inc"
                 include "WorldInfo.inc"
+                include "WorldTime.inc"
                 include "TickScheduler.inc"
                 include "SpriteBound.inc"
                 include "SpriteClipping.inc"

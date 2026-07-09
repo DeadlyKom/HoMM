@@ -2,35 +2,35 @@
                 ifndef _WORLD_TILEMAP_UPDATE_MOVEMENT_
                 define _WORLD_TILEMAP_UPDATE_MOVEMENT_
 ; -----------------------------------------
-; обновление движения
+; обновление положения карты
 ; In:
 ; Out:
 ; Corrupt:
 ; Note:
-;   находится в страницы "мир"
+;   находится на странице "мир"
 ; -----------------------------------------
-UpdateMovement: RES_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             ; усброс новка флага разрешения обновления скрола карты
+UpdateMovement: RES_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             ; сброс флага разрешения обновления скролла карты
 
-                ; проверить флаг установки положения карты по мини-карте
+                ; проверка установки положения карты по мини-карте
                 CHECK_VIEW_FLAG SET_MAP_POSITION_ON_MINIMAP_BIT
                 JR NZ, SetMapPosition                                           ; переход, если требуется установка положения карты по мини-карте
 
-                ; установка задержки опроса скрола
+                ; проверка периода обновления скролла карты
                 LD HL, GameSession.PeriodTick + FTick.Scroll
                 LD A, (HL)
                 OR A
-                RET NZ                                                          ; выход, если задержка незакончилась
-                LD (HL), DURATION.MAP_SCROLL+1                                  ; обновление задежки скрола
+                RET NZ                                                          ; выход, если период ещё не завершён
+                LD (HL), DURATION.MAP_SCROLL+1                                  ; перезапуск периода обновления скролла
                 ; -----------------------------------------
                 ; определение вектора перемещения
                 ; -----------------------------------------
 
-                ; расчёт адреса хранения вектора
+                ; чтение направления перемещения
                 LD A, (GameState.Input.Value)
                 AND MOVEMENT_MASK
                 RET Z
 
-                ; расчёт адреса смещений
+                ; расчёт адреса вектора в таблице направлений
                 LD HL, DirectionTable
                 ADD A, A    ; x2
                 ADD A, L
@@ -39,14 +39,15 @@ UpdateMovement: RES_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             
                 SUB L
                 LD H, A
 
-                ; сохранение значения смещения
+                ; сохранение текущих смещений карты внутри гексагона
+                ; для последующей проверки фактического перемещения по каждой оси
                 LD A, (World.Shift_X)
                 LD C, A
                 LD A, (World.Shift_Y)
                 LD B, A
                 PUSH BC
 
-                ; применение данных таблицы для осей
+                ; применение вектора перемещения независимо для каждой оси
                 LD A, (HL)
                 OR A
                 JR Z, .OnlyVertical
@@ -56,37 +57,44 @@ UpdateMovement: RES_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             
 .OnlyVertical   INC HL
                 CALL ApplyToY_Axis_
 
-                ; сброс флагов ввода перемещения
+                ; сброс обработанных битов направления перемещения
                 LD A, (GameState.Input.Value)
                 AND ~MOVEMENT_MASK
                 LD (GameState.Input.Value), A
 
                 POP BC
-                LD A, C
-                OR B
-                LD C, A
+
+                ; проверка фактического перемещения карты по каждой оси
+                ; обновление требуется при изменении хотя бы одного смещения
                 LD A, (World.Shift_X)
-                LD B, A
-                LD A, (World.Shift_Y)
-                OR B
                 CP C
+                JR NZ, .Changed
+
+                LD A, (World.Shift_Y)
+                CP B
                 RET Z
 
-                SET_VIEW_FLAG_A UPDATE_RENDER_BUF_BIT                           ; установка флага обновления Render буфера
+.Changed        ifdef _DEBUG
+                SET_FLAG_MODIFY World.Base.Render.DebugInfo.Coordinates.Flag    ; установка флага, изменения координат мира
+                endif
+                SET_VIEW_FLAG_A UPDATE_RENDER_BUF_BIT                           ; установка флага обновления буфера рендера
 
-.Genaration     ; инициализация 22 * 8 стобов гексагона
+.Generation     ; установка признаков обновления для 22 * 8 столбцов гексагонов
                 LD HL, Adr.RenderBuffer + 80 + 176
                 LD DE, #0101
                 CALL SafeFill.b176
                 JP Draw.HexDLGeneration
-SetMapPosition  RES_VIEW_FLAG SET_MAP_POSITION_ON_MINIMAP_BIT                   ; сброс флага установления положения карты по мини-карте
+SetMapPosition  RES_VIEW_FLAG SET_MAP_POSITION_ON_MINIMAP_BIT                   ; сброс флага установки положения карты по мини-карте
+                ifdef _DEBUG
+                SET_FLAG_MODIFY World.Base.Render.DebugInfo.Coordinates.Flag    ; установка флага, изменения координат мира
+                endif
                 VIEW_FLAGS
-                SET_FLAG UPDATE_TILEMAP_BUF_BIT                                 ; установка флага обновления Tilemap буфера
-                SET_FLAG UPDATE_RENDER_BUF_BIT                                  ; установка флага обновления Render буфера
-                JR UpdateMovement.Genaration
+                SET_FLAG UPDATE_TILEMAP_BUF_BIT                                 ; установка флага обновления буфера тайлов
+                SET_FLAG UPDATE_RENDER_BUF_BIT                                  ; установка флага обновления буфера рендера
+                JR UpdateMovement.Generation
 ApplyToX_Axis_  ; #000 - #2B5
                 ; -----------------------------------------
-                ; расчёт позиции карты по горизонтали в знакоместах (MapPosition * 6 + MapOffset)
+                ; расчёт положения карты по горизонтали в знакоместах (MapPosition * 6 + MapOffset)
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
                 LD D, A
                 ADD A, A    ; x2
@@ -102,7 +110,7 @@ ApplyToX_Axis_  ; #000 - #2B5
                 JR NC, $+3
                 INC B
 
-                ; приведение к 16-битному значению
+                ; знаковое расширение шага перемещения до 16 бит
                 LD L, (HL)  ; значение смещения
                 LD A, L
                 EX AF, AF'  ; сохранение смещения
@@ -111,20 +119,20 @@ ApplyToX_Axis_  ; #000 - #2B5
                 SBC A, A
                 LD H, A
 
-                ; добавить направление
+                ; применение шага к положению карты
                 OR A
                 ADC HL, BC
 
-                ; проверка достижения границ
-                RET M       ; выход, если достигли левой границы
-                JR Z, .Cal  ; пропуск проверкаи на правую границу, т.к. дточно на левой!
+                ; проверка границ перемещения карты
+                RET M                                                           ; выход при достижении левой границы
+                JR Z, .Cal                                                      ; нулевое положение заведомо не достигает правой границы
                 LD BC, -((MAX_WORLD_HEX_X - 5) * 6 + 6)
                 OR A
                 ADC HL, BC
-                RET Z       ; выход, если достигли правой границы
+                RET Z       ; выход при достижении правой границы
                 SBC HL, BC
 
-.Cal            ; деление на 6
+.Cal            ; разделение положения на номер гексагона и смещение внутри него
                 LD BC, HEXTILE_SIZE_X << 5
                 LD E, #00
                 OR A
@@ -157,16 +165,16 @@ ApplyToX_Axis_  ; #000 - #2B5
                 RET Z
                 LD (GameSession.WorldInfo + FWorldInfo.MapPosition.X), A
 
-                ; направление смещения
+                ; выбор шага указателя тайловой карты по горизонтали
                 EX AF, AF'  ; восстановление смещения
                 OR A
-                LD DE, 1                ; шаг смещения
+                LD DE, 1                ; переход к следующему гексагону
                 JP P, UpdateTilemap
-                LD DE, -1               ; шаг смещения
+                LD DE, -1               ; переход к предыдущему гексагону
                 JR UpdateTilemap
 ApplyToY_Axis_  ; #000 - #2A1
                 ; -----------------------------------------
-                ; расчёт позиции карты по вертикали в знакоместах (MapPosition * 4 + MapOffset)
+                ; расчёт положения карты по вертикали в знакоместах (MapPosition * 4 + MapOffset)
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
                 LD B, A
                 ADD A, A    ; x2
@@ -176,9 +184,9 @@ ApplyToY_Axis_  ; #000 - #2A1
                 ADD A, C
                 ADD A, (HL) ; добавить направление
                 CP #FF
-                RET Z       ; выход, если достигли верхней границы
+                RET Z                                                           ; выход при достижении верхней границы
                 CP ((MAX_WORLD_HEX_Y - 6) << 2) + 2
-                RET NC      ; выход, если достигли низжнюю границу
+                RET NC                                                          ; выход при достижении нижней границы
 
                 LD C, A
                 AND %00000011
@@ -193,28 +201,28 @@ ApplyToY_Axis_  ; #000 - #2A1
                 RET Z
                 LD (GameSession.WorldInfo + FWorldInfo.MapPosition.Y), A
 
-                ; шаг смещения
-                LD A, (GameSession.MapSize.Width)                               ; размер какрты по горизонтали
+                ; шаг указателя тайловой карты по вертикали равен ширине карты
+                LD A, (GameSession.MapSize.Width)                               ; размер карты по горизонтали
                 LD E, A
                 LD D, #00
                 
-                ; направление смещения
+                ; выбор направления перехода по тайловой карте
                 LD A, (HL)
                 OR A
                 JP P, UpdateTilemap
                 
-                ; смена знака смещения 
+                ; смена знака шага для перехода к предыдущей строке
                 XOR A
                 SUB E
                 LD E, A
                 DEC D
-UpdateTilemap   ; -----------------------------------------
+UpdateTilemap   ; обновление адреса левого верхнего гексагона видимой области
                 LD HL, (GameSession.WorldInfo + FWorldInfo.Tilemap)
                 ADD HL, DE
                 LD (GameSession.WorldInfo + FWorldInfo.Tilemap), HL
-                SET_VIEW_FLAG UPDATE_TILEMAP_BUF_BIT                            ; установка флага обновления Tilemap буфера
+                SET_VIEW_FLAG UPDATE_TILEMAP_BUF_BIT                            ; установка флага обновления буфера тайлов
                 RET
-DirectionTable  ; -----------------------------------------
+DirectionTable  ; таблица единичных векторов для сочетаний битов направления
                 lua allpass
                 for i = 0, 15 do
                     local x = (((i >> 3) & 1) * -1.0) + (((i >> 2) & 1) * 1.0)

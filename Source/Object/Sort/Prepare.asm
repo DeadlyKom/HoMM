@@ -74,7 +74,7 @@ Prepare:        ; -----------------------------------------
                 INC A
 
                 ;
-                LD HL, Quicksort.Offset
+                LD HL, GnomeSort.Offset
                 INC (HL)
                 INC (HL)
 

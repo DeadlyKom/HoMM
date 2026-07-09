@@ -1,6 +1,6 @@
 
-                ifndef _OBJECT_SORT_QUICKSORT_
-                define _OBJECT_SORT_QUICKSORT_
+                ifndef _OBJECT_SORT_GNOME_SORT_
+                define _OBJECT_SORT_GNOME_SORT_
 ; -----------------------------------------
 ; сортировка
 ; In:
@@ -10,7 +10,7 @@
 ; Note:
 ;   устойчив к прерыванию
 ; -----------------------------------------
-Quicksort:      LD A, C
+GnomeSort:      LD A, C
                 DEC A
                 JR Z, .Exit
 
@@ -142,4 +142,4 @@ Quicksort:      LD A, C
 
                 RET
 
-                endif ; ~_OBJECT_SORT_QUICKSORT_
+                endif ; ~_OBJECT_SORT_GNOME_SORT_

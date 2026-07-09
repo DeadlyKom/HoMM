@@ -4,8 +4,8 @@
 
                 module Object
 Begin           EQU $
-                include "Tick_.asm"
                 include "Tick_Character.asm"
+                include "Tick_CharacterAI.asm"
 
                 display " - Tick object:\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $-Begin, " byte(s)  ]"
                 endmodule
