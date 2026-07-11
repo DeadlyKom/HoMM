@@ -4,8 +4,10 @@
 
                 module Utilities
                 include "AddressObject.asm"
-                include "GetCadencePassIdByChunk.asm"
+                include "GetObjectIDByAddress.asm"
+                include "UpdateChunkByPosition.asm"
                 include "IncrementCadencePassIDs.asm"
+                include "GetCadencePassIdByChunk.asm"
                 endmodule
 
                 endif ; ~ _OBJECT_UTILITIES_INCLUDE_

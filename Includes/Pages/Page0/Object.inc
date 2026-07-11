@@ -23,6 +23,10 @@ Object.Utilities:
 .GetAdr.HL              EQU Page0.Object.Utilities.Adr.HL                       ; получить адрес объекта
 .GetAdr.IX              EQU Page0.Object.Utilities.Adr.IX                       ; получить адрес объекта
 .GetAdr.IY              EQU Page0.Object.Utilities.Adr.IY                       ; получить адрес объекта
+.GetObjectID.HL         EQU Page0.Object.Utilities.ObjectID.HL                  ; получить ID объекта
+.GetObjectID.IX         EQU Page0.Object.Utilities.ObjectID.IX                  ; получить ID объекта
+.GetObjectID.IY         EQU Page0.Object.Utilities.ObjectID.IY                  ; получить ID объекта
 .CadencePassIdByChunk   EQU Page0.Object.Utilities.GetCadencePassIdByChunk      ; получить CadencePassId по номеру чанка
 .IncCadencePassIDs      EQU Page0.Object.Utilities.IncCadencePassIDs            ; увеличение CadencePass'ы ID
+.UpdateChunkByPosition  EQU Page0.Object.Utilities.UpdateChunkByPosition        ; обновить принадлежность объекта к чанку по текущей позиции
                 endif ; ~_PAGE_0_OBJECT_

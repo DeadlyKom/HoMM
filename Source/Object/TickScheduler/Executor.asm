@@ -128,13 +128,23 @@ CheckEpochBarrier:
                 LD A, #01
                 LD (TickScheduler.Variables + FTickScheduler.CadenceStep), A
 
-                ; получение номера центрального чанка видимой области
+                ; получение номера центрального чанка видимой области.
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
-                ADD A, SCR_WORLD_SIZE_X >> 1
+                ADD A, SCR_WORLD_SIZE_X >> 1                                    ; добавляем половину размера окна
                 LD E, A
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
-                ADD A, SCR_WORLD_SIZE_Y >> 1
+                ADD A, SCR_WORLD_SIZE_Y >> 1                                    ; добавляем половину размера окна
                 LD D, A
+                ; -----------------------------------------
+                ; получение номера чанка
+                ; In:
+                ;   DE - координаты в тайлах (D - y, E - x)
+                ; Out:
+                ;   A  - порядковый номер чанка
+                ; Corrupt:
+                ;   HL, AF
+                ; Note:
+                ; -----------------------------------------
                 CALL ChunkArray.GetChunkIndex
                 LD C, A                                                         ; текущий центральный чанк
 

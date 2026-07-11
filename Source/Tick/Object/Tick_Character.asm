@@ -88,11 +88,9 @@ Move            ; --------------------------------------------------------------
                 JR C, .Animation                                                ; точка назначения достигнута
                 JR .StepLoop                                                    ; стоимость могла измениться после перехода в новый гекс
 
-                ; ToDo: после перемещения пересчитать номер чанка объекта;
-                ;       при смене чанка перенести объект через ChunkArray.Move,
-                ;       затем установить CadencePassID диапазона нового чанка (смотри спавн объекта)
-
 .Animation      ; --------------------------------------------------------------
+                CALL Object.Utilities.UpdateChunkByPosition                     ; синхронизация чанка объекта после фактического движения
+
                 LD A, (IX + FObject.Position.X.High)
 .PreviousHexX   EQU $+1
                 CP #00
@@ -138,6 +136,8 @@ Move            ; --------------------------------------------------------------
                 LD A, (DE) ; FPath.HexCoord.Y
                 LD (IX + FObject.Position.Y.High), A
                 LD (IX + FObject.Position.Y.Low), HEXTILE_SIZE_Y << 4           ; середина гексагона
+
+                CALL Object.Utilities.UpdateChunkByPosition                     ; синхронизация чанка после фиксации в конечной точке сегмента
 
                 ; следующая точка пути
                 DEC (IX + FObjectCharacter.PathID)
