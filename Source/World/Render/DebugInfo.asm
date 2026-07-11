@@ -201,8 +201,7 @@ DebugInfo:      CALL .Coordinates
 ; отображение количества видимых объектов
 ; ----------------------------------------
                 ifdef DEBUG_INFO_VISIBLE_OBJECTS
-.VisibleObjects:
-                LD A, (World.Base.Render.Object.InView.Num)
+.VisibleObjects LD A, (World.Base.Render.Object.InView.Num)
 .VisibleObjects.Value EQU $+1
                 CP #FF                                                          ; последнее отображённое количество видимых объектов
                 JR Z, .VisibleObjects.CheckFlag
