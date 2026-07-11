@@ -26,34 +26,20 @@ InView:         ; инициализация
                 INC L
                 LD D, (HL)                                                      ; Y
 
-                ; приведение положение окна к тайлам (есть проблемы с этим)
-                SRL D
-                SRL E
-
                 ; корректировка ширины захвата чанков, если не выровнено
                 LD A, E
+                CP MAX_WORLD_HEX_X - Page0.ChunkArray.CHUNK_SIZE
+                JR NC, $+7                                                      ; пропуск, если достигнут правый край массива чанков
                 AND Page0.ChunkArray.CHUNK_SIZE_MASK
                 JR Z, $+3
-                INC C
-
-                ; корректировка центрирования захвата видимого окна
-                LD A, E
-                SUB Page0.ChunkArray.CHUNK_SIZE
-                JR C, $+4
-                LD E, A
                 INC C
 
                 ; корректировка высоты захвата чанков, если не выровнено
                 LD A, D
+                CP MAX_WORLD_HEX_Y - Page0.ChunkArray.CHUNK_SIZE
+                JR NC, $+7                                                      ; пропуск, если достигнут нижний край массива чанков
                 AND Page0.ChunkArray.CHUNK_SIZE_MASK
                 JR Z, $+3
-                INC B
-
-                ; корректировка центрирования захвата видимого окна
-                LD A, D
-                SUB Page0.ChunkArray.CHUNK_SIZE
-                JR C, $+4
-                LD D, A
                 INC B
 
                 ifdef _DEBUG

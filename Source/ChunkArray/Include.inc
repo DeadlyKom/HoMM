@@ -15,6 +15,7 @@ CHUNK_SHIFT     EQU 3                                                           
                                                                                 ; 80x80 - (80 >> CHUNK_SHIFT) => 10x10 = 100 чанков
 CHUNK_SIZE      EQU 1 << CHUNK_SHIFT
 CHUNK_SIZE_MASK EQU (CHUNK_SIZE - 1) & 0xFF
+ROW_CAPACITY    EQU #10                                                         ; максимальная ширина квадратного массива чанков (16 * 16)
 
                 ; структура хранения данных, состоит из 2х половинок
                 ; буфер ChunkArrayCounters хранит счётчики объектов в данном чанке,

@@ -26,6 +26,20 @@ Initialize:     LD DE, #0000
                 DEBUG_BREAK_POINT_NZ                                            ; произошла ошибка!
                                                                                 ; размеры ширины и высоты карты различаются
 
+                ; расчёт базового смещения перехода между строками массива чанков
+                PUSH AF
+                LD A, C                                                         ; ширина карты в гексагонах
+                rept CHUNK_SHIFT
+                SRL A
+                endr
+                LD B, A                                                         ; ширина карты в чанках
+                LD A, ROW_CAPACITY
+                SUB B
+                DEBUG_BREAK_POINT_C                                             ; ширина карты превышает ёмкость строки массива чанков
+                ADD A, A    ; x2
+                LD (Area.JumpBase), A
+                POP AF
+
                 ; определение индекса в таблице адресов функций
                 RRA             ; %0HHHHHHH : H
                 RRA             ; %H0HHHHHH : H
