@@ -39,7 +39,7 @@ Move:           PUSH DE                                                         
 
                 CPIR
                 DEBUG_BREAK_POINT_NZ                                            ; произошла ошибка!
-                DEC L
+                DEC L                                                           ; переход на -1, т.к. CPIR всегда ворачивает +1
 .Memmove        LD E, L
 
                 ; -----------------------------------------
