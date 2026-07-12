@@ -1,11 +1,6 @@
 
                 ifndef _WORLD_RENDER_DEBUG_INFO_
                 define _WORLD_RENDER_DEBUG_INFO_
-
-                ; define DEBUG_INFO_SCREEN_BLOCKS                                 ; содержимое ScreenBlock
-                ; define DEBUG_INFO_MOUSE_POSITION                                ; позиция мыши
-                ; define DEBUG_INFO_VISIBLE_AREA                                  ; размер видимой области
-                ; define DEBUG_INFO_VISIBLE_OBJECTS                               ; количество видимых объектов
 ; -----------------------------------------
 ; отладочное отображение информации о мире
 ; In:
