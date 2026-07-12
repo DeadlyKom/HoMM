@@ -28,7 +28,7 @@ BuilderTwoPass: ; -----------------------------------------
                 ; преобразование тайловых координат (центра экрана) в координаты чанка
                 ; определение центрального чанка видимой области
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
-                ADD A, SCR_WORLD_SIZE_X >> 1
+                ADD A, TILEMAP_WIDTH_DATA >> 1
                                 ; %0XXXXXXX : 0
                 RRA             ; %00XXXXXX : X
                 RRA             ; %X00XXXXX : X
@@ -38,7 +38,7 @@ BuilderTwoPass: ; -----------------------------------------
 
                 ; дополнительное смещение центра экрана
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
-                ADD A, SCR_WORLD_SIZE_Y >> 1
+                ADD A, TILEMAP_HEIGHT_DATA >> 1
                                 ; %0YYYYYYY : 0
                 RRA             ; %00YYYYYY : Y
                 RRA             ; %Y00YYYYY : Y

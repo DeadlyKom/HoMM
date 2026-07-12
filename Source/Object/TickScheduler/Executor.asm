@@ -130,10 +130,10 @@ CheckEpochBarrier:
 
                 ; получение номера центрального чанка видимой области.
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
-                ADD A, SCR_WORLD_SIZE_X >> 1                                    ; добавляем половину размера окна
+                ADD A, TILEMAP_WIDTH_DATA >> 1                                  ; добавляем половину ширины тайлового окна
                 LD E, A
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
-                ADD A, SCR_WORLD_SIZE_Y >> 1                                    ; добавляем половину размера окна
+                ADD A, TILEMAP_HEIGHT_DATA >> 1                                 ; добавляем половину высоты тайлового окна
                 LD D, A
                 ; -----------------------------------------
                 ; получение номера чанка
