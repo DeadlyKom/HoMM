@@ -21,17 +21,17 @@ Flags           DB #00                                                          
                 struct FParticipantSettings                                     ; настройки участника игры                                      [байт]
                                                                                 ; необходим для инициализации участника,
                                                                                 ; настраивается пользователем в главном меню
-Faction         FParticipantFaction                                             ; флаги принадлежности участника                                [байт]
+Faction         FParticipantFaction                                             ; флаги принадлежности участника                                [1 байт]
 CastleID        DB #00                                                          ; идентификатор стартового замка                                [1 байт]
 HeroLocation    FVector8                                                        ; стартовая позиция игрока                                      [2 байта]
-Character       FCharacterSettings                                              ; настройки стартового персонажа участника                          [байт]
+Character       FCharacterSettings                                              ; настройки стартового персонажа участника                      [байт]
                 ends
 ;-------------------------------------------------------------------------------
                 struct FParticipant                                             ; участник игры человек или ИИ                                  [32 байта]
 Faction         FParticipantFaction                                             ; флаги принадлежности участника                                [байт]
 CastleID        DB #00                                                          ; идентификатор стартового замка
-CharactersNum   DB #00                                                          ; количество персонажей                                             [1 байт]
-Characters      DS MAX_PARTICIPANT_CHARACTERS                                   ; массив идентификаторов ID персонажей данного участника            [8 байт]
+CharactersNum   DB #00                                                          ; количество персонажей                                         [1 байт]
+Characters      DS MAX_PARTICIPANT_CHARACTERS                                   ; массив идентификаторов ID персонажей данного участника        [8 байт]
                                                                                 ; Note: 
                                                                                 ;   при перемещении структуры FCharacter в массиве, необходимо
                                                                                 ;   обновлять идентификатор объекта

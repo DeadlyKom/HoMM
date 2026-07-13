@@ -38,7 +38,7 @@ Add_Player:     ; инициализация FParticipant
 
                 ; стартовая позиция игрока
                 LD HL, (IX + FParticipantSettings.HeroLocation)
-                ; JP Add_Hero
+                ; JP Add_Character
 
                 display " - Add player:\t\t\t\t\t", /A, Add_Player, "\t= busy [ ", /D, $-Add_Player, " byte(s)  ]"
 

@@ -32,11 +32,11 @@
                 define _OPTIMIZE                                                ; включить оптимизацию (ускорение)
 
                 ; препроцессоры вкл/откл
-                define ENABLE_DEBUG_AI_MOVEMENT
                 define ENABLE_MUSIC                                             ; разрешить музыку
                 ; define ENABLE_MAIN_MENU                                         ; разрешить главное меню
                 define ENABLE_MOUSE                                             ; разрешить мышь
                 define ENABLE_KEMSTON_JOYSTICK_SEGA                             ; разрешить использовать расширенный Кемстон Джойстик (SEGA 8 bits)
+                define ENABLE_DEBUG_AI_MOVEMENT                                 ; разрешить использовать отладочных AI агентов
 
                 ; отладочное отображение
                 ; define DEBUG_INFO_SCREEN_BLOCKS                                 ; содержимое ScreenBlock

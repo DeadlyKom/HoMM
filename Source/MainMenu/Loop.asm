@@ -44,16 +44,16 @@ Loop:
                 ; пользователь должен настроить кто за кого играет компьютер/человек и в каких группах
                 ; заполенняя массив участников структур FParticipantSettings,
                 ; размер массива храниться в GameSession.SaveSlot + FSaveSlot.MapInfo.Participants
-                ifdef ENABLE_DEBUG_AI_MOVEMENT
-                LD A, #02                                                      ; игрок и тестовый компьютерный противник
-                else
+
                 LD A, #01
-                endif
                 LD (GameSession.SaveSlot + FSaveSlot.MapInfo.Participants), A
                 SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
                 LD IX, .TmpParticipant; Adr.ExtraBuffer                                          ; адрес расположения массива FParticipantSettings
                 CALL Participant.Append                                         ; добавить участников
 
+                ifdef ENABLE_DEBUG_AI_MOVEMENT
+                CALL SpawnUnits                                                 ; спавн тестовых AI-агенты по карте
+                endif
                 ;---------------------------------------------------------------
                 JP ExecuteModule.World                                          ; запуск "мира"
 
@@ -87,10 +87,36 @@ Loop:
                 }
 
                 ifdef ENABLE_DEBUG_AI_MOVEMENT
-.TmpOpponent    FParticipantSettings {
+AI_UNIT_COUNT   EQU 1
+SpawnUnits:     LD IX, .AIAgent
+                LD HL, .ChunkPositions
+                LD B, AI_UNIT_COUNT
+
+.SpawnLoop      ; установка координат спавна
+                LD A, (HL)
+                LD (IX + FParticipantSettings.HeroLocation.X), A
+                INC HL
+                LD A, (HL)
+                LD (IX + FParticipantSettings.HeroLocation.Y), A
+                INC HL
+                
+                LD A, #01
+                PUSH BC
+                PUSH HL
+                CALL Participant.Append                                         ; добавить учасника
+                POP HL
+                POP BC
+                DJNZ .SpawnLoop
+                RET
+
+                
+.ChunkPositions ; позиции
+                DB 3, 3
+
+.AIAgent        FParticipantSettings {
                     { COMPUTER | PLAYER_GROUP_1 },                              ; компьютерный противник из другой группы
                     CASTLE_ID_NONE,
-                    { 3, 3 },                                                   ; первая точка демонстрационного маршрута
+                    { 0, 0 },                                                   ; первая точка демонстрационного маршрута
 
                     {
                         Character.Class.Druid,
