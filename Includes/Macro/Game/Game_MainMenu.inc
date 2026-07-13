@@ -1,6 +1,6 @@
 
-                ifndef _MACRO_MAIN_MENU_
-                define _MACRO_MAIN_MENU_
+                ifndef _MACRO_GAME_MAIN_MENU_
+                define _MACRO_GAME_MAIN_MENU_
 ; -----------------------------------------
 ; инициализаци главного рендера "мира"
 ; In:
@@ -12,4 +12,4 @@ SET_MAIN_MENU_RENDER macro Func?
                 LD (MainMenu.Base.Loop.FuncDraw), BC
                 endm
 
-                endif ; ~_MACRO_MAIN_MENU_
+                endif ; ~_MACRO_GAME_MAIN_MENU_

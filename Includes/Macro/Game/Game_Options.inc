@@ -1,5 +1,5 @@
-                ifndef _MACRO_CONFIG_OPTIONS_
-                define _MACRO_CONFIG_OPTIONS_
+                ifndef _MACRO_GAME_CONFIG_OPTIONS_
+                define _MACRO_GAME_CONFIG_OPTIONS_
 ; -----------------------------------------
 ; установка HL на Config.Options флаги
 ; In:
@@ -69,4 +69,4 @@ SWAP_CONFIG_OPTIONS_FLAG macro FlagBit?
                 SWAP_FLAG (FlagBit?)
                 endm
 
-                endif ; ~_MACRO_CONFIG_OPTIONS_
+                endif ; ~_MACRO_GAME_CONFIG_OPTIONS_

@@ -8,7 +8,6 @@
                 include "Memory/Include.inc"
                 include "Assets/Include.inc"
 
-                include "UI.inc"
                 include "Setup.inc"
                 include "Cursor.inc"
                 include "Gameplay.inc"
@@ -21,6 +20,7 @@
                 include "SpriteClipping.inc"
                 include "SpriteNotClipping.inc"
 
+                include "UI/Include.inc"
                 include "Map/Include.inc"
                 include "Game/Include.inc"
                 include "Event/Include.inc"

@@ -2,8 +2,9 @@
                 ifndef _STRUCTS_GAME_CONFIG_
                 define _STRUCTS_GAME_CONFIG_
 
-                struct FGameConfig                                              ; переменные конфигурации игры                                  [13 байт]
-Keys            FKeys                                                           ; клавиши                                                       [8 байт]
+                struct FGameConfig                                              ; переменные конфигурации игры                                  [14 байт]
+Keys            FKeys                                                           ; основные клавиши                                              [8 байт]
+HotKeys         FHotKeys                                                        ; горячие клавиши                                               [1 байт]
 ; -----------------------------------------
 ;      7    6    5    4    3    2    1    0
 ;   +----+----+----+----+----+----+----+----+

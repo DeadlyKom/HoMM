@@ -1,6 +1,6 @@
 
-                ifndef _MACRO_INPUT_
-                define _MACRO_INPUT_
+                ifndef _MACRO_GAME_INPUT_
+                define _MACRO_GAME_INPUT_
 ; -----------------------------------------
 ; установка HL на Input флаги
 ; In:
@@ -100,4 +100,4 @@ RES_ALL_INPUT_FLAGS macro
                 RES_ALL
                 endm
 
-                endif ; ~_MACRO_INPUT_
+                endif ; ~_MACRO_GAME_INPUT_

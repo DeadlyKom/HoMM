@@ -2,6 +2,7 @@
                 ifndef _MACRO_GAME_INCLUDE_
                 define _MACRO_GAME_INCLUDE_
 
+                include "Game_UI.inc"
                 include "Game_View.inc"
                 include "Game_Input.inc"
                 include "Game_Music.inc"

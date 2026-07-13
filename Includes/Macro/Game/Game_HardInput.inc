@@ -1,5 +1,5 @@
-                ifndef _MACRO_CONFIG_HARD_INPUT_
-                define _MACRO_CONFIG_HARD_INPUT_
+                ifndef _MACRO_GAME_CONFIG_HARD_INPUT_
+                define _MACRO_GAME_CONFIG_HARD_INPUT_
 ; -----------------------------------------
 ; установка HL на HardConfig.Input флаги
 ; In:
@@ -69,4 +69,4 @@ RES_HARD_INPUT_FLAG macro FlagBit?
                 RES_FLAG (FlagBit?)
                 endm
 
-                endif ; ~_MACRO_CONFIG_HARD_INPUT_
+                endif ; ~_MACRO_GAME_CONFIG_HARD_INPUT_

@@ -1,6 +1,6 @@
 
-                ifndef _STRUCTS_UI_
-                define _STRUCTS_UI_
+                ifndef _STRUCTS_UI_LAYER_
+                define _STRUCTS_UI_LAYER_
 
                 struct FUILayer
 ; -----------------------------------------
@@ -38,4 +38,4 @@ Location        FVector8                                                        
 Size            FSize                                                           ; размер элемента в знакоместах
                 ends
 
-                endif ; ~_STRUCTS_UI_
+                endif ; ~_STRUCTS_UI_LAYER_

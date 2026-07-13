@@ -6,7 +6,7 @@
 ML_TRANSITION_BIT   EQU 0x00                                                    ; флаг, переход между циклами
 ML_ENTER_BIT        EQU 0x01                                                    ; флаг, первичного запуска (необходимо для инициализации)
 ML_EXIT_BIT         EQU 0x02                                                    ; флаг, завершения цикла
-ML_UPDATE_BIT       EQU 0x03                                                    ; флаг, бновления
+ML_UPDATE_BIT       EQU 0x03                                                    ; флаг, обновления
 
 ML_TRANSITION       EQU 1 << ML_TRANSITION_BIT
 ML_ENTER            EQU 1 << ML_ENTER_BIT
@@ -27,9 +27,6 @@ FPS_DISABLE_BIT     EQU 0x07                                                    
 SWAP_TARGET_MASK    EQU %00011000
 SWAP_PENDING        EQU 1 << SWAP_PENDING_BIT
 SWAPPED_PENDING     EQU 1 << SWAPPED_PENDING_BIT
-
-; флаги работы с прерыванием
-INT_DISABLE_GLOBAL_TICK_BIT EQU 0x00                                            ; флаг, отключения глобального тика
 
 ; флаги работы с музыкой
 MUSIC_ENABLE_BIT    EQU 0x00                                                    ; флаг разрешения проигрывания музыки

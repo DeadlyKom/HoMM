@@ -1,5 +1,5 @@
-                ifndef _MACRO_INPUT_TIMER_
-                define _MACRO_INPUT_TIMER_
+                ifndef _MACRO_GAME_INPUT_TIMER_
+                define _MACRO_GAME_INPUT_TIMER_
 ; -----------------------------------------
 ; установка HL на Input.Timer флаги
 ; In:
@@ -69,4 +69,4 @@ RES_INPUT_TIMER_FLAG macro FlagBit?
                 RES_FLAG (FlagBit?)
                 endm
 
-                endif ; ~_MACRO_INPUT_TIMER_
+                endif ; ~_MACRO_GAME_INPUT_TIMER_

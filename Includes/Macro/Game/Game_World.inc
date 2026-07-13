@@ -1,6 +1,6 @@
 
-                ifndef _MACRO_WORLD_
-                define _MACRO_WORLD_
+                ifndef _MACRO_GAME_WORLD_
+                define _MACRO_GAME_WORLD_
 ; -----------------------------------------
 ; инициализаци главного рендера "мира"
 ; In:
@@ -12,4 +12,4 @@ SET_WORLD_RENDER macro Func?
                 LD (World.Base.Loop.FuncDraw), BC
                 endm
 
-                endif ; ~_MACRO_WORLD_
+                endif ; ~_MACRO_GAME_WORLD_

@@ -129,7 +129,7 @@ PipelineHexagons:
                 LD HL, (Kernel.Sprite.Restore.BufferAdr)
                 LD A, (HL)
                 OR A
-                JR Z, .SkipCursorRestore
+                JR Z, .SkipCurRestore                                           ; переход, если адрес буфера неуказан (затёрт)
                 INC L
                 LD E, (HL)
                 INC L
@@ -140,9 +140,15 @@ PipelineHexagons:
                 ; ToDo: см Interrupt.Memcpy описание ошибки
                 ; RESTORE_SCR_
 
-.SkipCursorRestore
-                RES_FLAG_MODIFY CursorMemcpyGate.Flag                           ; разрешение работы с буфером курсора
+.SkipCurRestore ; экранный цикл уже завершён независимо от наличия UI-запроса
                 RES_RENDER_FLAGS SWAPPED_PENDING | SWAP_PENDING                 ; сброс флага переключения экранов
+
+                ; проверка возможности начать обработку запроса смены UI режима
+                CALL UI.Runtime.Process
+                JP C, UI.Runtime.StartTransition                                ; начать перехода запроса смены UI режима
+
+                ; сброс флагов, позволяющий новый цикл подготовки кадра
+                RES_FLAG_MODIFY CursorMemcpyGate.Flag                           ; разрешение работы с буфером курсора
                 RET
 
                 ; вентель, блокирующий восстановление курсора из буфера вовремя 

@@ -1,6 +1,6 @@
 
-                ifndef _MACRO_MAIN_LOOP_CORE_
-                define _MACRO_MAIN_LOOP_CORE_
+                ifndef _MACRO_GAME_MAIN_LOOP_CORE_
+                define _MACRO_GAME_MAIN_LOOP_CORE_
 ; -----------------------------------------
 ; установка обработчика главного цикла
 ; In:
@@ -22,4 +22,4 @@ RES_MAIN_LOOP   macro
                 LD (Bootloader.EntryPoint.MainLoop.Address), BC
                 endm
 
-                endif ; ~_MACRO_MAIN_LOOP_CORE_
+                endif ; ~_MACRO_GAME_MAIN_LOOP_CORE_

@@ -1,5 +1,5 @@
-                ifndef _MACRO_VIEW_
-                define _MACRO_VIEW_
+                ifndef _MACRO_GAME_VIEW_
+                define _MACRO_GAME_VIEW_
 ; -----------------------------------------
 ; установка HL на View флаги
 ; In:
@@ -77,4 +77,4 @@ RES_VIEW_FLAG   macro FlagBit?
                 RES_FLAG (FlagBit?)
                 endm
 
-                endif ; ~_MACRO_VIEW_
+                endif ; ~_MACRO_GAME_VIEW_

@@ -2,6 +2,7 @@
                 ifndef _MACRO_INCLUDE_
                 define _MACRO_INCLUDE_
 
+                include "UI.inc"
                 include "Debug.inc"
                 include "Flags.inc"
                 include "Mouse.inc"

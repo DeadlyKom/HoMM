@@ -45,7 +45,8 @@ Launch:         ; -----------------------------------------
                 ; -----------------------------------------
                 CALL Display.GameWindow                                         ; отображение рамки игрового мира
                 ; -----------------------------------------
-                ; инициализация мира 
+                ; инициализация мира
+                SET_UI_MODE UI_MODE_WORLD                                       ; установить UI режим "мир"
                 SET_MAIN_LOOP World.Base.Loop                                   ; установка главного цикла
                 SET_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE             ; установка флагов
                 SET_MAIN_SWAP World.Base.Render.PipelineHexagons.Swap           ; установить функцию долгого переключения экранов

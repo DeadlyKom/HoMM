@@ -2,7 +2,7 @@
                 ifndef _STRUCTS_KEYS_
                 define _STRUCTS_KEYS_
 
-                struct FKeys
+                struct FKeys                                                    ; основные клавиши
 .Menu           DB #00                                                          ; клавиша "меню/пауза"
 .Acceleration   DB #00                                                          ; клавиша "ускорить"
 .ESC            DB #00                                                          ; клавиша "выход"
@@ -11,6 +11,10 @@
 .Left           DB #00                                                          ; клавиша "влево"
 .Down           DB #00                                                          ; клавиша "вниз"
 .Up             DB #00                                                          ; клавиша "вверх"
+                ends
+                
+                struct FHotKeys                                                 ; горячие клавиши
+.SpellBook      DB #00                                                          ; клавиша "книга заклинаний"
                 ends
 
                 endif ; ~_STRUCTS_KEYS_

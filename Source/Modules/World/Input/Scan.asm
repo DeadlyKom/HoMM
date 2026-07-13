@@ -39,6 +39,13 @@ Scan:           ; проверка HardWare ограничения мыши
                 AND ~KEY_MASK
                 LD (GameState.Input.Value), A
                 ; --------------------------------------------------------------
+                
+                ; запрос открытия "книги заклинаний"
+                LD A, (GameConfig.KeySpellBook)
+                CALL Input.CheckKeyState
+                LD C, UI_MODE_SPELLBOOK
+                CALL Z, UI.Runtime.Request
+
                 ; проверка клавиши "выбор"
                 LD A, (GameConfig.KeySelect)
                 CALL Input.CheckKeyState
