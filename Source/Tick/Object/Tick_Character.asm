@@ -222,18 +222,9 @@ RequestEvent    ; запрос на создание ивента
                 RET C                                                           ; выход, если ивент активирован
                 SET_FLAG_MODIFY RequestEvent.Flag                               ; установка флага создания ивента
 
-                ; расчёт адреса текущей FPath
-                LD A, (IX + FObjectCharacter.PathID)
-                ADD A, A    ; x2
-                ADD A, A    ; x4
-                LD C, A
-                SET 7, C    ; Adr.HeroPath начинается с 0x80
-                LD B, HIGH Adr.HeroPath
-                LD A, (BC)
-                LD E, A
-                INC C
-                LD A, (BC)
-                LD D, A
+                ; текущая позиция героя в гексагонах
+                LD E, (IX + FObject.Position.X.High)
+                LD D, (IX + FObject.Position.Y.High)
                 JP Tick.Utils.Reconnaissance.Request
 
                 endif ; ~_TICK_OBJECT_HERO_

@@ -53,6 +53,11 @@ Handler.After:  LD A, #30       ; JR NC, $
                 LD HL, (IX + FEvent.Function)
                 EXX
                 EX AF, AF'
+
+                ; обработчику времени жизни нужен адрес события в Adr.EventArray,
+                ; а не адрес его копии в Adr.ExtraBuffer
+                PUSH IX
+                POP IY
                 
                 ; обработка события
                 AND %00000110
@@ -60,6 +65,7 @@ Handler.After:  LD A, #30       ; JR NC, $
                 CALL Func.JumpTable.NoShift
 
                 ; вызов функции
+                LD IY, Adr.ExtraBuffer - FEvent                                ; копия тела события для вызываемой функции
                 EXX
                 EX AF, AF'
                 CALL SetPage                                                    ; установка страницы функции

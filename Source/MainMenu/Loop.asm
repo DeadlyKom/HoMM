@@ -91,6 +91,10 @@ AI_UNIT_COUNT   EQU 1
 SpawnUnits:     LD IX, .AIAgent
                 LD HL, .ChunkPositions
                 LD B, AI_UNIT_COUNT
+                LD C, #01                                                      ; участник 0 уже занят игроком
+
+                LD A, AI_UNIT_COUNT + 1
+                LD (GameSession.SaveSlot + FSaveSlot.MapInfo.Participants), A
 
 .SpawnLoop      ; установка координат спавна
                 LD A, (HL)
@@ -100,12 +104,12 @@ SpawnUnits:     LD IX, .AIAgent
                 LD (IX + FParticipantSettings.HeroLocation.Y), A
                 INC HL
                 
-                LD A, #01
                 PUSH BC
                 PUSH HL
-                CALL Participant.Append                                         ; добавить учасника
+                CALL Participant.Add_Player                                     ; добавить тестового AI-участника
                 POP HL
                 POP BC
+                INC C
                 DJNZ .SpawnLoop
                 RET
 
