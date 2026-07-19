@@ -57,6 +57,6 @@ GraphicPack:    EX DE, HL                                                       
                 CALL Session.SharedCode.Initialize.GraphicsPackages             ; инициализация графических пакетов
                 RET
 
-                display " - Parsing FMapDataBlockInfo for GraphicPack:\t\t", /A, GraphicPack, "\t= busy [ ", /D, $-GraphicPack, " byte(s)  ]"
+                display " - Parsing FMapDataBlockInfo for 'graphic pack':\t", /A, GraphicPack, "\t= busy [ ", /D, $-GraphicPack, " byte(s)  ]"
 
                 endif ; ~_MODULE_SESSION_MAP_DATA_BLOCK_GRAPHIC_PACK_

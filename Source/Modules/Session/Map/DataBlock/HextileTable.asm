@@ -16,6 +16,6 @@ HextileTable:   EX DE, HL                                                       
                 ; BC' - размер блока данных таблицы сопоставления гексагонального тайла и графического пакета
                 RET
 
-                display " - Parsing FMapDataBlockInfo for Hextile table:\t", /A, HextileTable, "\t= busy [ ", /D, $-HextileTable, " byte(s)  ]"
+                display " - Parsing FMapDataBlockInfo for 'hextile table':\t", /A, HextileTable, "\t= busy [ ", /D, $-HextileTable, " byte(s)  ]"
 
                 endif ; ~_MODULE_SESSION_MAP_DATA_BLOCK_HEXTILE_TABLE_

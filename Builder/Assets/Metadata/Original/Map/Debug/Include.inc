@@ -14,11 +14,15 @@ Begin:          EQU $
                 endlua
                 DB #00                                                          ; FMapHeader.Info.Participants (доступное количество участников на карте)
 
-                FMapDataBlockInfo { Hextile.Size, Hextile-$-2 }                 ; блока данных гексагоных тайлов
-                FMapDataBlockInfo { HextileTable.Size, HextileTable-$-2}        ; блок данных таблицы сопоставления гексагональных тайлов и графического пакетов
-                FMapDataBlockInfo { GraphPackage.Size, GraphPackage-$-2}        ; блок данных необходимого графического пакета для текущей карты
-                FMapDataBlockInfo { Objects.Size, Objects-$-2}                  ; блок данных об объектах
-                FMapDataBlockInfo {}                                            ; блок данных об правилах (ToDo)
+                FMapDataBlockInfo {}                                            ; блок данных - список "точек спавна",
+                                                                                ; если отсутствует, автоматическое формирование 
+                FMapDataBlockInfo { Hextile.Size, Hextile-$-2 }                 ; блок данных - гексагоных тайлов
+                FMapDataBlockInfo {}                                            ; блок данных - метаданные карты
+                FMapDataBlockInfo {}                                            ; блок данных - свойство гексагоных тайлов
+                FMapDataBlockInfo { HextileTable.Size, HextileTable-$-2}        ; блок данных - таблицы сопоставления гексагональных тайлов и графического пакетов
+                FMapDataBlockInfo { GraphPackage.Size, GraphPackage-$-2}        ; блок данных - необходимого графического пакета для текущей карты
+                FMapDataBlockInfo { Objects.Size, Objects-$-2}                  ; блок данных - об объектах
+                FMapDataBlockInfo {}                                            ; блок данных - об правилах (ToDo)
 
                 ; массив индексов гексагональных тайлов (карта)
 Hextile         incbin "Block.Hextile.bin"

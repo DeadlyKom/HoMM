@@ -72,7 +72,10 @@ Load.Map:       ; сохранение идентификатора загруж
                 JP_SET_PAGE_A
 
 .ProcessedBlocks; последовательность обрабатываемых блоков (FMapDataBlockInfo) в FMapHeader
+                DW DataBlock.SpawnPoint
                 DW DataBlock.Hextile
+                DW DataBlock.Metadata
+                DW DataBlock.HextileProperty
                 DW DataBlock.HextileTable
                 DW DataBlock.GraphicPack
                 DW DataBlock.Objects

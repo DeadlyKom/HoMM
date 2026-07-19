@@ -9,6 +9,10 @@
                 include "Map/Include.inc"
                 include "Core/Include.inc"
                 include "SaveSlot/Include.inc"
+
+                ; cистема управления популяцией ИИ
+                include "Source/Director/Include.inc"
+                include "Source/Director/Initial/Include.inc"
 Size            EQU $-Adr.World
 
                 ENT

@@ -14,11 +14,14 @@ Offset          DW #0000                                                        
 
                 struct FMapHeader                                               ; заголовок карты
 Info            FMapInfo                                                        ; базовая информация о карте
-Hextile         FMapDataBlockInfo                                               ; блока данных гексагоных тайлов
-HextileTable    FMapDataBlockInfo                                               ; блок данных таблицы сопоставления гексагонального тайла и графического пакета
-GraphicPack     FMapDataBlockInfo                                               ; блок данных необходимых графических пакетов для текущей карты
-Objects         FMapDataBlockInfo                                               ; блок данных об объектах
-Rules           FMapDataBlockInfo                                               ; блок данных об правилах (ToDo)
+SpawnPoint      FMapDataBlockInfo                                               ; блок данных - список "точек спавна"
+Hextile         FMapDataBlockInfo                                               ; блок данных - гексагоных тайлов
+Metadata        FMapDataBlockInfo                                               ; блок данных - метаданные карты
+HextileProperty FMapDataBlockInfo                                               ; блок данных - свойство гексагоных тайлов
+HextileTable    FMapDataBlockInfo                                               ; блок данных - таблицы сопоставления гексагонального тайла и графического пакета
+GraphicPack     FMapDataBlockInfo                                               ; блок данных - необходимых графических пакетов для текущей карты
+Objects         FMapDataBlockInfo                                               ; блок данных - об объектах
+Rules           FMapDataBlockInfo                                               ; блок данных - об правилах (ToDo)
 
                 ends
 

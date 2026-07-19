@@ -193,6 +193,6 @@ BoundScreenBlock:
                 DB 2, 2, 2, 2, 2, 2
                 DB 3, 3, 3, 3
 
-                display " - Object bound screen block:\t\t\t", /A, BoundScreenBlock, "\t= busy [ ", /D, $-BoundScreenBlock, " byte(s)  ]"
+                display " - Object bound screen block:\t\t\t\t", /A, BoundScreenBlock, "\t= busy [ ", /D, $-BoundScreenBlock, " byte(s)  ]"
 
                 endif ; ~_WORLD_RENDER_OBJECT_BOUND_SCREEN_BLOCK_
