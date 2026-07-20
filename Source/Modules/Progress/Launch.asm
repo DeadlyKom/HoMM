@@ -1,10 +1,10 @@
 
-                ifndef _MODULE_SESSION_LAUNCH_
-                define _MODULE_SESSION_LAUNCH_
+                ifndef _MODULE_PROGRESS_LAUNCH_
+                define _MODULE_PROGRESS_LAUNCH_
 ; -----------------------------------------
-; запуск "сессии"
+; запуск "прогресса"
 ; In:
-;   SP+0 - идентификатор фактически запрошенной функции (Make/Load)
+;   SP+0 - идентификатор фактически запрошенной функции
 ; Out:
 ; Corrupt:
 ; Note:
@@ -15,13 +15,13 @@ Launch:         ; первичная инициализация загружен
 
                 ; сохранение страницы
                 LD A, (GameState.Assets + FAssets.Address.Page)
-                LD (Kernel.Modules.Session.Page), A
+                LD (Kernel.Modules.Progress.Page), A
 
                 ; повторный вход в диспетчер уже инициализированного ассета;
-                ; исходный FunctionID (Make/Load) сохранён в стеке
+                ; исходный FunctionID сохранён в стеке
                 LD HL, (GameState.Assets + FAssets.Address.Adr)
                 JP (HL)
 
                 display " - Launch:\t\t\t\t\t\t\t     \t= busy [ ", /D, $-Launch, " byte(s) ]"
 
-                endif ; ~_MODULE_SESSION_LAUNCH_
+                endif ; ~_MODULE_PROGRESS_LAUNCH_

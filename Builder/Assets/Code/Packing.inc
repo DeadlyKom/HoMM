@@ -8,6 +8,7 @@
                 include "Original/Pages/Pack_Page1.inc"                         ; ASSETS_ID_PAGE_1
                 include "Original/Pages/Pack_Page3.inc"                         ; ASSETS_ID_PAGE_3
                 include "Original/Pages/Pack_Page4.inc"                         ; ASSETS_ID_PAGE_4
+                include "Original/Progress/Pack.inc"                            ; ASSETS_ID_PROGRESS
                 include "Original/MainMenu/Pack.inc"                            ; ASSETS_ID_MAIN_MENU
                 include "Original/Session/Pack.inc"                             ; ASSETS_ID_SESSION
                 include "Original/World/Pack.inc"                               ; ASSETS_ID_WORLD

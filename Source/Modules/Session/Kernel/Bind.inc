@@ -3,8 +3,11 @@
                 define _MODULE_SESSION_KERNEL_BIND_
 KERNEL_ID_COUNTER   defl 0                                                      ; счётчик идентификаторов
 
-; индентификаторы функциё
+; индентификаторы функции
+                ; ⚠️ ВАЖНО ⚠️ функция с ID 0 автоматически вызывается после релокации ассета
                 BIND_ID_KERNEL Session.Initialize, Launch                       ; функция запуска (0)
+
+                ; функции, запрошенные вызывающим кодом
                 BIND_ID_KERNEL Session.Make, Make_Session
                 BIND_ID_KERNEL Session.Load, Load_Session
 

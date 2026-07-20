@@ -287,6 +287,7 @@ LOAD_EXE_ASSETS macro ID?
 ; загрузка ресурса и запуск
 ; In:
 ;   AssetID? - идентификатор ресурса
+;   Func?    - имя бинд функции
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
@@ -318,7 +319,7 @@ JP_EXE_ASSETS_NOT_PARAM macro AssetID?, Func?
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-EXE_ASSET_FUNCTION macro AssetID?
+EXE_ASSET_FUNCTION_ONE_PARAM macro AssetID?
                 LD HL, .Continue+3
                 EX (SP), HL
                 PUSH_PAGE                                                       ; сохранение номера страницы в стеке
@@ -329,7 +330,7 @@ EXE_ASSET_FUNCTION macro AssetID?
                 LD A, AssetID?
 .Continue       JP Func.ExeAssetCode
                 endm
-JP_EXE_ASSET_FUNCTION macro AssetID?
+JP_EXE_ASSET_FUNCTION_ONE_PARAM macro AssetID?
                 CALL GetPage                                                    ; получение текущей страницы исходника
                 LD H, A
                 EX (SP), HL
@@ -337,6 +338,52 @@ JP_EXE_ASSET_FUNCTION macro AssetID?
                 LD HL, Func.PopPage
                 EX (SP), HL
                 PUSH HL
+                LD A, AssetID?
+                JP Func.ExeAssetCode
+                endm
+; -----------------------------------------
+; запуск функции ассет
+; In:
+;   SP+0     - FunctionID, снимается диспетчером ассета
+;   SP+2     - параметр вызываемой функции
+;   AssetID? - идентификатор ресурса
+; Out:
+; Corrupt:
+;   HL, DE, BC, AF
+; Note:
+;   после диспетчеризации SP+0 указывает на второй параметр;
+;   вызываемая функция должна снять его со стека перед RET
+; -----------------------------------------
+EXE_ASSETS_FUNCTION_TWO_PARAMS macro AssetID?, Func?
+                POP DE                                                          ; первый параметр (FunctionID)
+                POP BC                                                          ; второй параметр
+                LD HL, .Continue+3
+                PUSH HL                                                         ; адрес продолжения после возврата из ассета
+                PUSH_PAGE                                                       ; сохранение номера страницы в стеке
+                LD HL, Func.PopPage
+                PUSH HL                                                         ; адрес восстановления страницы
+                PUSH BC                                                         ; второй параметр функции
+                PUSH DE                                                         ; FunctionID для диспетчера ассета
+                LD A, AssetID?
+.Continue       JP Func.ExeAssetCode
+                endm
+; -----------------------------------------
+; переход к функции ассета с двумя параметрами в стеке
+; In:
+;   SP+0 - FunctionID, снимается диспетчером ассета
+;   SP+2 - параметр вызываемой функции
+; Corrupt:
+;   HL, DE, BC, AF
+; Note:
+; -----------------------------------------
+JP_EXE_ASSET_FUNCTION_TWO_PARAMS macro AssetID?
+                POP DE                                                          ; первый параметр (FunctionID)
+                POP HL                                                          ; второй параметр
+                PUSH_PAGE                                                       ; сохранение номера страницы исходника
+                LD BC, Func.PopPage
+                PUSH BC                                                         ; адрес восстановления страницы
+                PUSH HL                                                         ; второй параметр функции
+                PUSH DE                                                         ; FunctionID для диспетчера ассета
                 LD A, AssetID?
                 JP Func.ExeAssetCode
                 endm

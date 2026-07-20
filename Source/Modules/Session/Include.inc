@@ -4,8 +4,8 @@
 
                 include "Kernel/Bind.inc"
                 include "Launch.asm"
-                include "Utilities/Include.inc"
                 include "Kernel/Include.inc"
+                include "Utilities/Include.inc"
                 include "Map/HextileShading.inc"
                 include "Map/HextileShadingTable.inc"
                 

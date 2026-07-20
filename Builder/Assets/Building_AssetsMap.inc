@@ -65,6 +65,11 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     Page4.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Page 4\t\t\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_PROGRESS, \
+                                    Progress.Size, \
+                                    Progress.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Progress window\t\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_MAIN_MENU, \
                                     MainMenu.Size, \
                                     MainMenu.Size.Sector.ar, \

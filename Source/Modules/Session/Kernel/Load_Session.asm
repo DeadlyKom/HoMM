@@ -21,6 +21,10 @@ Load_Session:   ; копирование блока
                 ; ToDo: в будущем предоставить пользователю сообщение об ошибке
                 DEBUG_BREAK_POINT_NC                                            ; ошибка, слот сохранения не прошёл валидацию
 
+                ; первичная инициализация
+                LD B, #00   ; идентификатор картинки (временно)
+                LAUNCH_ASSET_FUNCTION Progress.Initialize, ExecuteModule.Progress
+
                 ; копирование календарного времени из слота в состояние сессии
                 ; ToDo: необходимо пересмотреть инициализацию
                 LD HL, GameSession.SaveSlot + FSaveSlot.WorldTime
