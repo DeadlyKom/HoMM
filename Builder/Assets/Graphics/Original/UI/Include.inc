@@ -5,6 +5,7 @@
                 module UI
                 
                 ; include "ArrowPath/Include.inc"
+                include "Progress/Include.inc"
                 include "Game/World/Include.inc"
                 include "MainMenu/Include.inc"
 

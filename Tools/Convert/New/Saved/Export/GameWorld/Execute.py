@@ -16,13 +16,18 @@ def reverse_byte(b: int) -> int:
 
 def get_metadata_sprite(sprite: Dict[str, Any], name: str) -> List[Dict[str, Any]]:
     """
-    Возвращает список метаданных спрайта указанного имени.
+    Возвращает метаданные всего спрайта с указанным именем.
+    В текущем формате они хранятся в Regions без RegionRect.
     """
     result = []
-    if "Metadata" in sprite:    
-        for meta in sprite.get("Metadata", []):
-            if meta["Type"] == name:
+    for region in sprite.get("Regions", []):
+        if "RegionRect" in region:
+            continue
+
+        for meta in region.get("Metadata", []):
+            if meta.get("Type") == name:
                 result.append(meta)
+
     return result
 
 def sprite_type_from_metadata(sprite: dict) -> Optional[ESpriteType]:
@@ -171,7 +176,11 @@ def main():
 
         sprite_data = bytearray()
         sprite_type = sprite_type_from_metadata(sprite)
-        if SWITCH_BEHAVIOR[sprite_type] (sprite, sprite_width, sprite_height, ink_data, attribute_data, mask_data, sprite_data):
+        if sprite_type is None:
+            raise ValueError(f"Sprite '{sprite_name}' has no SpriteType metadata")
+
+        behavior = SWITCH_BEHAVIOR[sprite_type]
+        if behavior(sprite, sprite_width, sprite_height, ink_data, attribute_data, mask_data, sprite_data):
             # сохранение спрайта в отдельный файл
             file_name = os.path.join(BASE_DIR, filename_from_sprite(sprite_name))
             with open(file_name, "wb") as f:

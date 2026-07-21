@@ -13,7 +13,6 @@ GameWindow:     ; подготовка основного экрана
                 ATTR_IPB SCR_ADR_BASE, BLACK, WHITE, 0                          ; очистка атрибутов основного экрана
 
                 ; отображение рамки игрового окна
-                RESTORE_BC                                                      ; защитная от порчи данных с разрешённым прерыванием
                 LD HL, Frame
                 CALL Draw.SpriteNotBound
 
