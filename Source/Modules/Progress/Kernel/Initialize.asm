@@ -8,15 +8,16 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Initialize:     HALT                                                            ; синхронизация
+Initialize:     ifdef ENABLE_LOADING_PROCESS
+                HALT                                                            ; синхронизация
                 BORDER BLACK                                                    ; установка бордюра
 
                 ; -----------------------------------------
                 ; очистка экранов
                 ; -----------------------------------------
-                ATTR_IPB SCR_ADR_BASE, BLACK, WHITE, 0                          ; очистка атрибутов основного экрана
+                ATTR_IPB SCR_ADR_BASE, BLACK, WHITE, 1                          ; очистка атрибутов основного экрана
                 CLS SCR_ADR_BASE, 0xFF                                          ; очистка основного экрана
-                CLS_SCR_SHADOW_IN_PAGE 0xFF, BLACK, WHITE, 0                    ; очистка теневого экрана (находясь в странице)
+                CLS_SCR_SHADOW_IN_PAGE 0xFF, BLACK, WHITE, 1                    ; очистка теневого экрана (находясь в странице)
                 SHOW_SHADOW_SCREEN                                              ; отобразить теневой экран
                 
                 ; загрузка ассета, с копированием блока ассета в буфер (находясь в странице)
@@ -79,6 +80,10 @@ Initialize:     HALT                                                            
                 RELEASE_ASSETS_IN_PAGE ASSETS_ID_PROGRESS_STAGES                ; освобождение ассета (находясь в странице)
 
                 DELAY 2                                                         ; ToDo: временно
+
+                else
+                POP AF                                                          ; удаление со стека значение
+                endif
                 RET
 
 .Line           LD D, H

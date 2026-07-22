@@ -325,6 +325,10 @@ RELEASE_ASSETS_IN_PAGE macro ID?
                 LD A, ID?
                 CALL Func.ReleaseAssetInPage
                 endm
+JP_RELEASE_ASSETS_IN_PAGE macro ID?
+                LD A, ID?
+                JP Func.ReleaseAssetInPage
+                endm
 ; -----------------------------------------
 ; загрузка ресурса и запуск
 ; In:
