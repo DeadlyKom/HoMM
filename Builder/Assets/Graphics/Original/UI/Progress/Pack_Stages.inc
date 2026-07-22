@@ -1,6 +1,6 @@
 
-                ifndef _GRAPHICS_UI_PROGRESS_STAGES_PACK_FRAME_
-                define _GRAPHICS_UI_PROGRESS_STAGES_PACK_FRAME_
+                ifndef _GRAPHICS_UI_PROGRESS_STAGES_PACK_
+                define _GRAPHICS_UI_PROGRESS_STAGES_PACK_
 
                 module Stages
                 ORG #0000
@@ -14,7 +14,7 @@ HeaderSize:     EQU $-Begin
                 ; ----------------------------------------
 Prologue:       DB Prologue.Num
 Prologue.Block: EQU $
-                SPRITE_BLOCK 256, 104,   0,   0, SPRITE_NOT_CLIPPING_POSITION | SPRITE_NOT_CLIPPING_DRAWING_LD_ATTR, Stage.Prologue
+                SPRITE_BLOCK 256, 104,   0,   8, SPRITE_NOT_CLIPPING_POSITION | SPRITE_NOT_CLIPPING_DRAWING_LD_ATTR, Stage.Prologue
 Prologue.Num:   EQU ($-Prologue.Block) / FSpriteBlock
 
                 ; ----------------------------------------
@@ -30,10 +30,9 @@ Stage:
 .Act_I          incbin "prologue.bin"                                           ; ToDo: временно
 .Num:           EQU 2   ; устанавливать вручную
                 ; ----------------------------------------
-Size            EQU $-Begin
                 COMPRESSED_ASSET \
                 "Builder/Assets/Graphics/Compressed/Progress/Stages.pack", \
                 "Builder/Assets/Graphics/Compressed/Progress/Stages.pack.ar"
                 endmodule
 
-                endif ; ~ _GRAPHICS_UI_PROGRESS_STAGES_PACK_FRAME_
+                endif ; ~ _GRAPHICS_UI_PROGRESS_STAGES_PACK_

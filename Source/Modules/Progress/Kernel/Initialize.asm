@@ -8,15 +8,17 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Initialize:     BORDER BLACK                                                    ; установка бордюра
+Initialize:     HALT                                                            ; синхронизация
+                BORDER BLACK                                                    ; установка бордюра
 
                 ; -----------------------------------------
                 ; очистка экранов
                 ; -----------------------------------------
-                CLS SCR_ADR_BASE, 0xFF                                          ; очистка основного экрана
                 ATTR_IPB SCR_ADR_BASE, BLACK, WHITE, 0                          ; очистка атрибутов основного экрана
+                CLS SCR_ADR_BASE, 0xFF                                          ; очистка основного экрана
                 CLS_SCR_SHADOW_IN_PAGE 0xFF, BLACK, WHITE, 0                    ; очистка теневого экрана (находясь в странице)
-
+                SHOW_SHADOW_SCREEN                                              ; отобразить теневой экран
+                
                 ; загрузка ассета, с копированием блока ассета в буфер (находясь в странице)
                 LOAD_ASSET_BLOCK_IN_PAGE \
                     ASSETS_ID_PROGRESS_STAGES, \
@@ -58,7 +60,36 @@ Initialize:     BORDER BLACK                                                    
                 LD A, (GameState.Assets + FAssets.Address.Page)                 ; чтение страницы расположения графики
                 CALL Func.CallAnotherPage
 
+                ; отображение орнамента прогресса
+                LD HL, .Ornament
+                CALL Draw.SpriteNotBound
+
+                ; отображение верхней полоски
+                SCREEN_ADR_REG HL, SCR_ADR_BASE, 24, 172
+                LD (HL), #00
+                CALL .Line
+
+                ; отображение нижней полоски
+                SCREEN_ADR_REG HL, SCR_ADR_BASE, 24, 186
+                LD (HL), #00
+                CALL .Line
+                
+                HALT                                                            ; синхронизация
+                SHOW_BASE_SCREEN                                                ; отображение базового экрана
                 RELEASE_ASSETS_IN_PAGE ASSETS_ID_PROGRESS_STAGES                ; освобождение ассета (находясь в странице)
+
+                DELAY 2                                                         ; ToDo: временно
                 RET
+
+.Line           LD D, H
+                LD E, L
+                INC DE
+
+                rept 25
+                LDI
+                endr
+                RET
+
+.Ornament       incbin "Builder/Assets/Graphics/Compressed/Progress/Ornament.pack"
 
                 endif ; ~_MODULE_PROGRESS_INITIALIZE_

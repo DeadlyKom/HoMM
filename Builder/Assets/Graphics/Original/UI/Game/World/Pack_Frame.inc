@@ -4,7 +4,7 @@
 
                 module Frame
                 ORG #0000
-
+Begin:          EQU $
                 DB Graph.Num
 Graph:          EQU $
                 SPRITE_BLOCK 192,   8,   0,   0, SPRITE_NOT_CLIPPING_POSITION | SPRITE_NOT_CLIPPING_DRAWING_LD_ATTR, Sprite.Edge_up_down
@@ -22,8 +22,7 @@ Sprite:
 .Edge_left_right    incbin "ornament_edge_left_right.bin"
 .Minimap_up_down    incbin "ornament_minimap_up_down.bin"
 .Minimap_left_right incbin "ornament_minimap_left_right.bin"
-
-                savebin "Builder/Assets/Graphics/Original/UI/GameWorld_Frame.pack", 0, $
+                SAVE_PACK "Builder/Assets/Graphics/Compressed/UI/GameWorld_Frame.pack"
                 endmodule
 
                 endif ; ~ _GRAPHICS_UI_GAME_WORLD_PACK_FRAME_

@@ -14,6 +14,7 @@ Launch:         ; -----------------------------------------
                 LD A, (GameState.Assets + FAssets.Address.Page)
                 LD (Kernel.Modules.World.Page), A
                 ; -----------------------------------------
+                HALT                                                            ; синхронизация
                 ATTR_IPB SCR_ADR_BASE, BLACK, BLACK, 0                          ; скрытие атрибутами основного экрана
                 MEMCPY Adr.Deploy.World, Adr.World, Size.Deploy.World           ; копирование блока
                 MEMCPY_PAGE Adr.Deploy.SharedScreen, Adr.SharedScreen, \

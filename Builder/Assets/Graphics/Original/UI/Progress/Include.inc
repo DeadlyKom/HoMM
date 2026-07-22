@@ -6,7 +6,7 @@
                 module Progress
 
                 include "Pack_Stages.inc"
-                ; include "Pack_Progress.inc"
+                include "Pack_Progress.inc"
 
                 endmodule
                 endmodule

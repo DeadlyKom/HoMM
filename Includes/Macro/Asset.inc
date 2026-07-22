@@ -119,6 +119,10 @@ COMPRESS_FILE   macro SrcFile?, DstFile?
 ; ------------------------------------------------------------
 COMPRESSED_ASSET macro RawFile?, PackedFile?
 
+                if !(exist Size)
+Size            EQU $-Begin
+                endif
+ 
                 if Size >= BankSize
                 error "размер несжатого ассета должен быть меньше 16 КБ"
                 endif
@@ -128,6 +132,19 @@ COMPRESSED_ASSET macro RawFile?, PackedFile?
                 COMPRESS_FILE RawFile?, PackedFile?
                 endif
                 ASSETS_SIZE PackedFile?
+                endm
+SAVE_PACK       macro RawFile?
+
+                if !(exist Size)
+Size            EQU $-Begin
+                endif
+
+                if Size >= BankSize
+                error "размер несжатого ассета должен быть меньше 16 КБ"
+                endif
+
+                savebin RawFile?, Begin, Size
+
                 endm
 
                 endif ; ~_MACRO_ASSETS_

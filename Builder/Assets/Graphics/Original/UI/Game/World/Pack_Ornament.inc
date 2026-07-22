@@ -4,7 +4,7 @@
 
                 module Ornament
                 ORG #0000
-
+Begin:          EQU $
                 DB Graph.Num
 Graph:          EQU $
                 SPRITE_BLOCK  8,  8,   8,   8, SPRITE_NOT_CLIPPING_POSITION | SPRITE_NOT_CLIPPING_DRAWING_LD_ATTR, Sprite.Gem_up
@@ -27,8 +27,7 @@ Sprite:
 .Gem_down       incbin "gem_down.bin"
 .Ornament_horz  incbin "ornament_horz.bin"
 .Ornament_vert  incbin "ornament_vert.bin"
-
-                savebin "Builder/Assets/Graphics/Original/UI/GameWorld_Ornament.pack", 0, $
+                SAVE_PACK "Builder/Assets/Graphics/Compressed/UI/GameWorld_Ornament.pack"
                 endmodule
 
                 endif ; ~ _GRAPHICS_UI_GAME_WORLD_PACK_ORNAMENT_
