@@ -267,6 +267,26 @@ LOAD_ASSETS_IN_PAGE macro ID?
                 CALL Func.LoadAssetInPage
                 endm
 ; -----------------------------------------
+; загрузка ассета, с копированием блока ассета в буфер (находясь в странице)
+; In:
+;   ID?     - идентификатор ресурса
+;   Offset? - смещение блока от начала ассета
+;   Buffer? - адрес буфера (ниже #C000)
+;   Size?   - размер блока
+; Out:
+;   HL - адрес блока в ассете
+;   DE - адрес буфера
+; Corrupt:
+;   HL, DE, BC, AF, AF'
+; -----------------------------------------
+LOAD_ASSET_BLOCK_IN_PAGE macro ID?, Offset?, Buffer?, Size?
+                LD A, ID?
+                LD HL, Offset?
+                LD DE, Buffer?
+                LD BC, Size?
+                CALL Func.LoadAssetBlockInPage
+                endm
+; -----------------------------------------
 ; освобождение ресурса
 ; In:
 ;   A - идентификатор ресурса

@@ -5,12 +5,13 @@
                 module Functions
 Begin           EQU $
                 include "Delay.asm"
+                include "Memcpy.asm"
                 include "JumpTable.asm"
+                include "CallUtils.asm"
                 include "AssetUtils.asm"
                 include "CopyScreen.asm"
                 include "ClearScreen.asm"
                 include "JumpPopPage.asm"
-                include "CallAnotherPage.asm"
 
                 display " - Functions:\t\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
                 endmodule

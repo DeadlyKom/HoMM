@@ -85,8 +85,8 @@ def Load(sprite: Dict[str, Any],
     boundary_width = sprite_width >> 3
     boundary_height = sprite_height >> 3
 
-    for by in range(0, boundary_height, 1):
-        for bx in range(0, boundary_width, 1):
+    for bx in range(0, boundary_width, 1):
+        for by in range(0, boundary_height, 1):
             for dy in range(8):
                 ink = ink_data[get_index(boundary_width, bx, by, dy)]
                 # каждый второй dy (например, 1,3,5,7) разворачиваем байт

@@ -8,6 +8,9 @@ Draw:
 .SpriteClipping.HL  EQU Kernel.Sprite.DrawClipping.FSprite                      ; отображение спрайта (HL - адрес структуры FSprite)
 .SpriteNotClipping  EQU Kernel.Boundary.DrawNotClipping.Bound                   ; отображение спрайта без поддержки обрезки
 .SpriteNotBound     EQU Kernel.Boundary.DrawNotClipping.NotBound                ; отображение спрайта без поддержки обрезки (без ограничений)
+.SpriteNotBoundSet  EQU Kernel.Boundary.DrawNotClipping.NotBoundSet             ; отображение спрайта без поддержки обрезки (без ограничений)
+.NotBoundSpriteAdr  EQU Kernel.Boundary.DrawNotClipping.NotBoundSet.SpriteAdr   ; адрес спрайта для функции отображение спрайта без поддержки обрезки (без ограничений)
+.NotBoundCoord      EQU Kernel.Boundary.DrawNotClipping.NotBoundSet.Coord       ; координаты для функции отображение спрайта без поддержки обрезки (без ограничений)
 .Composite          EQU Kernel.Sprite.DrawComposite                             ; отображение композитного спрайта
 .Restore            EQU Kernel.Sprite.Restore                                   ; восстановление фона под спрайтом (только для OR_XOR_SAVE)
 .RestoreByScrAdr    EQU Kernel.Sprite.Restore.ByScrAdr                          ; восстановление фона под спрайтом в указанном адресе экрана (только для OR_XOR_SAVE)

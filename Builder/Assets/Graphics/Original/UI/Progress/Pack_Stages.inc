@@ -6,8 +6,9 @@
                 ORG #0000
 Begin:          EQU $
                 DB Stage.Num
-                DW Prologue
+                DW Prologue                                                     ; нулевой идентификатор всегда общий
                 DW Act_I
+HeaderSize:     EQU $-Begin
                 ; ----------------------------------------
                 ; пролог
                 ; ----------------------------------------
