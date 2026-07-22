@@ -11,7 +11,7 @@
 Draw_Flash:     ;
 .Show           ; показать
                 BORDER WHITE                                                    ; установка бордюра
-                MEMCPY SCR_ATTR_BASE+32, #E900, ATTR_SIZE-32                    ; копирование блока атрибутов
+                MEMCPY SCR_ATTR_BASE+32, #E900, SCR_ATTR_SIZE - 32              ; копирование блока атрибутов
                 ATTR_IPB SCR_ADR_BASE, WHITE, WHITE, 0                          ; очистка атрибутов основного экрана
                 SET_REG_PAIR_ATTR_IPB HL, WHITE, BLUE, 0
                 SET_TO_ATTR_ADR_REG HL, SCR_ADR_BASE, \
@@ -35,7 +35,7 @@ Draw_Flash:     ;
                 SET_DE_ATTR_IPB BLACK, BLUE, 1
                 LD HL, SCR_ATTR_BASE+32
                 CALL SafeFill.b32
-                MEMCPY #E900, SCR_ATTR_BASE+32, ATTR_SIZE-32                    ; копирование блока атрибутов
+                MEMCPY #E900, SCR_ATTR_BASE + 32, SCR_ATTR_SIZE - 32            ; копирование блока атрибутов
                 ; спрятать символ "Чур" за атрибутами
                 SET_REG_PAIR_ATTR_IPB HL, BLACK, BLACK, 0
                 SET_TO_ATTR_ADR_REG HL, SCR_ADR_BASE, \

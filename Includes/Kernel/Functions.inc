@@ -16,6 +16,7 @@ Func
 .BaseFillATTR       EQU Kernel.Functions.BaseFillATTR                           ; заполнение атрибутов базового экрана
 .BaseScrcpy         EQU Kernel.Functions.BaseScrcpy                             ; копирование в базовый экран
 .ShadowClear        EQU Kernel.Functions.ShadowClear                            ; очистка теневого экрана
+.ShadowClearInPage  EQU Kernel.Functions.ShadowClear.InPage                     ; очистка теневого экрана (находясь в странице)
 .ShadowFillATTR     EQU Kernel.Functions.ShadowFillATTR                         ; заполнение атрибутов теневого экрана
 .ShadowScrcpy       EQU Kernel.Functions.ShadowScrcpy                           ; копирование в теневой экран
 .ShadowScrcpyInPage EQU Kernel.Functions.ShadowScrcpyInPage                     ; функция копирования в теневой экран (находясь в странице)

@@ -20,6 +20,7 @@ SCR_ADR_SHADOW          EQU MemBank_03_SCR
 SCR_ATTR_SHADOW         EQU MemBank_03_SCR + ImageSize
 SCR_STACK_ADR_SHADOW    EQU MemBank_03_SCR + ImageSize
 SCR_SIZE                EQU ScreenSize
-ATTR_SIZE               EQU AttributeSize
+SCR_PIXEL_SIZE          EQU ImageSize
+SCR_ATTR_SIZE           EQU AttributeSize
 
                 endif ; ~_CONFIG_ZX_SPECTRUM_

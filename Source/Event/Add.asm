@@ -33,7 +33,7 @@ Add:            PUSH_PAGE                                                       
                 endif
 
 .RET            POP HL
-                JP_POP_PAGE
+                JP_POP_PAGE                                                     ; восстановление номера страницы из стека
 
                 display " - Add event:\t\t\t\t\t\t", /A, Add, "\t= busy [ ", /D, $-Add, " byte(s)  ]"
 
