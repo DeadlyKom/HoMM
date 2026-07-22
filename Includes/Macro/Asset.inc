@@ -118,6 +118,11 @@ COMPRESS_FILE   macro SrcFile?, DstFile?
 ; PackedFile?  - итоговый сжатый файл
 ; ------------------------------------------------------------
 COMPRESSED_ASSET macro RawFile?, PackedFile?
+
+                if Size >= BankSize
+                error "размер несжатого ассета должен быть меньше 16 КБ"
+                endif
+
                 ifdef _COMPRESSED_ASSET
                 savebin RawFile?, Begin, Size
                 COMPRESS_FILE RawFile?, PackedFile?

@@ -35,6 +35,8 @@ ADD_ASSETS_DEBUG macro Bank?, Page?, ORG?, Include?
                 ADD_ASSETS 3, Page.Page4, Adr.Code.Page4, "Builder/Assets/Code/Compressed/Page4.pack.ar"
                 ; ASSETS_ID_PROGRESS
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/Progress.pack.ar"
+                ; ASSETS_ID_PROGRESS_STAGES
+                ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/Progress/Stages.pack.ar"
                 ; ASSETS_ID_MAIN_MENU
                 ADD_ASSETS 1, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/MainMenu.pack.ar"
                 ; ASSETS_ID_MAIN_MENU_GRAPH_PACK_0

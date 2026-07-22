@@ -9,8 +9,7 @@
 ; Note:
 ; -----------------------------------------
 ReleaseAsset:   SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
-                LD A, ASSETS_ID_SESSION                                         ; идентификатора текущего ассета
-                JP_RELEASE_ASSET_A
+                JP_RELEASE_ASSET ASSETS_ID_SESSION                              ; освобождение ассета
 
                 display " - Utilities release asset:\t\t\t\t", /A, ReleaseAsset, "\t= busy [ ", /D, $-ReleaseAsset, " byte(s)  ]"
 

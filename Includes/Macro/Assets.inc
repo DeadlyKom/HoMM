@@ -198,7 +198,7 @@ LOAD_ASSETS     macro ID?
                 ;   необходимо включить страницу с данными о доступной ОЗУ
                 ; -----------------------------------------
                 CALL AssetsManager.Load                                         ; загрузка ресурса
-                CALL C, AssetsManager.TryToFree                                 ; попытка освободить память под ресурса, в случае ошибочной загрузки
+                CALL C, AssetsManager.TryToFree                                 ; попытка освободить память под ресурс в случае ошибочной загрузки
                 DEBUG_BREAK_POINT_C                                             ; ошибка загрузки ресурса
                 endm
 ; -----------------------------------------
@@ -223,7 +223,7 @@ LOAD_ASSETS_A   macro
                 ;   необходимо включить страницу с данными о доступной ОЗУ
                 ; -----------------------------------------
                 CALL AssetsManager.Load                                         ; загрузка ресурса
-                CALL C, AssetsManager.TryToFree                                 ; попытка освободить память под ресурса, в случае ошибочной загрузки
+                CALL C, AssetsManager.TryToFree                                 ; попытка освободить память под ресурс в случае ошибочной загрузки
                 DEBUG_BREAK_POINT_C                                             ; ошибка загрузки ресурса
                 endm
 ; -----------------------------------------
@@ -252,8 +252,19 @@ LOAD_ASSETS_REG macro Reg?
                 ;   необходимо включить страницу с данными о доступной ОЗУ
                 ; -----------------------------------------
                 CALL AssetsManager.Load                                         ; загрузка ресурса
-                CALL C, AssetsManager.TryToFree                                 ; попытка освободить память под ресурса, в случае ошибочной загрузки
+                CALL C, AssetsManager.TryToFree                                 ; попытка освободить память под ресурс в случае ошибочной загрузки
                 DEBUG_BREAK_POINT_C                                             ; ошибка загрузки ресурса
+                endm
+; -----------------------------------------
+; загрузка ассета (находясь в странице)
+; In:
+;   ID? - идентификатор ресурса
+; Out:
+; Corrupt:
+; -----------------------------------------
+LOAD_ASSETS_IN_PAGE macro ID?
+                LD A, ID?
+                CALL Func.LoadAssetInPage
                 endm
 ; -----------------------------------------
 ; освобождение ресурса
@@ -269,6 +280,32 @@ JP_RELEASE_ASSET_A macro
                 JP AssetsManager.ReleaseAsset
                 endm
 ; -----------------------------------------
+; освобождение ресурса
+; In:
+;   ID? - идентификатор ресурса
+; Out:
+; Corrupt:
+; -----------------------------------------
+RELEASE_ASSET   macro ID?
+                LD A, ID?
+                RELEASE_ASSET_A
+                endm
+JP_RELEASE_ASSET macro ID?
+                LD A, ID?
+                JP_RELEASE_ASSET_A
+                endm
+; -----------------------------------------
+; освобождение ассета (находясь в странице)
+; In:
+;   ID? - идентификатор ресурса
+; Out:
+; Corrupt:
+; -----------------------------------------
+RELEASE_ASSETS_IN_PAGE macro ID?
+                LD A, ID?
+                CALL Func.ReleaseAssetInPage
+                endm
+; -----------------------------------------
 ; загрузка ресурса и запуск
 ; In:
 ;   ID? - идентификатор ресурса
@@ -279,7 +316,7 @@ JP_RELEASE_ASSET_A macro
 LOAD_EXE_ASSETS macro ID?
                 LD A, ID?
                 CALL AssetsManager.Load                                         ; загрузка ресурса
-                CALL C, AssetsManager.TryToFree                                 ; попытка освободить память под ресурса, в случае ошибочной загрузки
+                CALL C, AssetsManager.TryToFree                                 ; попытка освободить память под ресурс в случае ошибочной загрузки
                 DEBUG_BREAK_POINT_C                                             ; ошибка загрузки ресурса
                 JP (HL)                                                         ; запуск загруженного блока
                 endm

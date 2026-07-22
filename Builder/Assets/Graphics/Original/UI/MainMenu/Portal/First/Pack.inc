@@ -36,7 +36,7 @@ Frame:
 ._5             incbin "Builder/Assets/Graphics/Original/UI/MainMenu/Portal/First/Frame_5.bin"
 ._6             incbin "Builder/Assets/Graphics/Original/UI/MainMenu/Portal/First/Frame_6.bin"
 ._7             incbin "Builder/Assets/Graphics/Original/UI/MainMenu/Portal/First/Frame_7.bin"
-.Num:           EQU 6   // устанавливать вручную
+.Num:           EQU 6   ; устанавливать вручную
 Size            EQU $-Begin
                 COMPRESSED_ASSET \
                 "Builder/Assets/Graphics/Compressed/MainMenu/First/0_7.pack", \
