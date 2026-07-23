@@ -4,9 +4,18 @@
 
                 module Strip
                 ORG #0000
+                ; таблица этапов: смещения до графики каждого шага прогресса
 Begin:          EQU $
-                DW Progress.x1 -$-1
-                DW Progress.x2 -$-1
+                lua allpass
+                    for index = 1, 26 do
+                        _pc(
+                            "DW TableEnd + " .. (index - 1) ..
+                            " * (1 + 3 * FSpriteBlock) -$-1"
+                        )
+                    end
+                endlua
+TableEnd:       EQU $
+Num:            EQU (TableEnd-Begin) / 2
 
                 ; ----------------------------------------
 Progress.x1     DB Progress.N.x1                                                ; 3.8%
@@ -23,6 +32,37 @@ Progress.B.x2:  EQU $
                 SPRITE_BLOCK   8,  24,  32, 168, SPRITE_NOT_CLIPPING_POSITION | SPRITE_NOT_CLIPPING_DRAWING_OR_XOR_ATTR, Sprite.progress_4
                 SPRITE_BLOCK   8,  24,  40, 168, SPRITE_NOT_CLIPPING_POSITION | SPRITE_NOT_CLIPPING_DRAWING_OR_XOR_ATTR | SPRITE_NOT_CLIPPING_MIRROR_HORIZONTAL, Sprite.progress_be
 Progress.N.x2:  EQU ($-Progress.B.x2) / FSpriteBlock
+                ; ----------------------------------------
+                lua allpass
+                    for index = 3, 26 do
+                        local x = (index + 1) * 8
+
+                        _pc("DB 3")
+                        _pc(string.format(
+                            "SPRITE_BLOCK 8, 24, %d, 168, " ..
+                            "SPRITE_NOT_CLIPPING_POSITION | " ..
+                            "SPRITE_NOT_CLIPPING_DRAWING_OR_XOR_ATTR, " ..
+                            "Sprite.progress_3",
+                            x
+                        ))
+                        _pc(string.format(
+                            "SPRITE_BLOCK 8, 24, %d, 168, " ..
+                            "SPRITE_NOT_CLIPPING_POSITION | " ..
+                            "SPRITE_NOT_CLIPPING_DRAWING_OR_XOR_ATTR, " ..
+                            "Sprite.progress_4",
+                            x + 8
+                        ))
+                        _pc(string.format(
+                            "SPRITE_BLOCK 8, 24, %d, 168, " ..
+                            "SPRITE_NOT_CLIPPING_POSITION | " ..
+                            "SPRITE_NOT_CLIPPING_DRAWING_OR_XOR_ATTR | " ..
+                            "SPRITE_NOT_CLIPPING_MIRROR_HORIZONTAL, " ..
+                            "Sprite.progress_be",
+                            x + 16
+                        ))
+                        _pc("; ----------------------------------------")
+                    end
+                endlua
 Sprite:
 .progress_be    incbin "progress_be.bin"
 .progress_1     incbin "progress_1.bin"

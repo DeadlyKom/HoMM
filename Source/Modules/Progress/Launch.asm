@@ -9,6 +9,14 @@
 ; Corrupt:
 ; Note:
 ;    адрес исполнения неизвестен
+;
+;    пример продвижения на указанный шаг:
+;       PROGRESS_PERCENT_FIXED 3.8
+;       LAUNCH_ASSET_FUNCTION Progress.EnterProgress, ExecuteModule.Progress
+;
+;    пример продвижения до фиксированного процента:
+;       PROGRESS_PERCENT_FIXED 50.0
+;       LAUNCH_ASSET_FUNCTION Progress.ToPercent, ExecuteModule.Progress
 ; -----------------------------------------
 Launch:         ; первичная инициализация загруженного ассета "сессии"
                 ; на вершине стека лежит исходный FunctionID (Make/Load)

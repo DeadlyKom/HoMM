@@ -79,24 +79,7 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
                 SHOW_BASE_SCREEN                                                ; отображение базового экрана
                 RELEASE_ASSETS_IN_PAGE ASSETS_ID_PROGRESS_STAGES                ; освобождение ассета (находясь в странице)
 
-                ; отображение орнамента прогресса
-                LD HL, .Strip
-                LD E, (HL)
-                INC HL
-                PUSH HL
-                LD D, (HL)
-                ADD HL, DE
-                CALL Draw.SpriteNotBound
-
-                POP HL
-                INC HL
-                LD E, (HL)
-                INC HL
-                LD D, (HL)
-                ADD HL, DE
-                CALL Draw.SpriteNotBound
-
-                DELAY 2                                                         ; ToDo: временно
+                CALL EnterProgress.Reset                                        ; сброс состояния прогресса
 
                 else
                 POP AF                                                          ; удаление со стека значение

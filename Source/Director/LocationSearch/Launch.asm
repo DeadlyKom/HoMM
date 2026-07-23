@@ -19,6 +19,15 @@
                 ;   - проверить условия каждого SpawnPattern
                 ;   - сохранить подходящие гексы и найденные паттерны
                 ;     для SpawnPointFormation
-Launch:         RET
+
+Launch:         ; пример продвижения на указанный шаг
+                PROGRESS_PERCENT_FIXED 3.8
+                LAUNCH_ASSET_FUNCTION Progress.EnterProgress, ExecuteModule.Progress
+
+                ; пример продвижения до фиксированного процента
+                PROGRESS_PERCENT_FIXED 100.0
+                LAUNCH_ASSET_FUNCTION Progress.ToPercent, ExecuteModule.Progress
+
+                RET
 
                 endif ; ~_AI_DIRECTOR_LOCATION_SEARCH_LAUNCH_
