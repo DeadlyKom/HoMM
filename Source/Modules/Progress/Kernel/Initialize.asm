@@ -79,6 +79,23 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
                 SHOW_BASE_SCREEN                                                ; отображение базового экрана
                 RELEASE_ASSETS_IN_PAGE ASSETS_ID_PROGRESS_STAGES                ; освобождение ассета (находясь в странице)
 
+                ; отображение орнамента прогресса
+                LD HL, .Strip
+                LD E, (HL)
+                INC HL
+                PUSH HL
+                LD D, (HL)
+                ADD HL, DE
+                CALL Draw.SpriteNotBound
+
+                POP HL
+                INC HL
+                LD E, (HL)
+                INC HL
+                LD D, (HL)
+                ADD HL, DE
+                CALL Draw.SpriteNotBound
+
                 DELAY 2                                                         ; ToDo: временно
 
                 else
@@ -96,5 +113,6 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
                 RET
 
 .Ornament       incbin "Builder/Assets/Graphics/Compressed/Progress/Ornament.pack"
+.Strip          incbin "Builder/Assets/Graphics/Compressed/Progress/Strip.pack"
 
                 endif ; ~_MODULE_PROGRESS_INITIALIZE_

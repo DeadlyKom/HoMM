@@ -5,6 +5,7 @@
                 module Graphics
                 module Progress
 
+                include "Pack_Strip.inc"
                 include "Pack_Stages.inc"
                 include "Pack_Progress.inc"
 
