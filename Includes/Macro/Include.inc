@@ -3,6 +3,7 @@
                 define _MACRO_INCLUDE_
 
                 include "UI.inc"
+                include "Font.inc"
                 include "Debug.inc"
                 include "Flags.inc"
                 include "Mouse.inc"

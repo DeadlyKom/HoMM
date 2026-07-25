@@ -37,13 +37,13 @@ EnterProgress:  POP BC                                                          
 
                 ; прибавление шага с ограничением по концу таблицы
                 ADD HL, BC
-                LD DE, UI.Graphics.Progress.Strip.Num << 8
+                LD DE, Graphics.UI.Progress.Strip.Num << 8
                 OR A
                 SBC HL, DE
                 JR NC, .SetMaximum                                              ; переход, если достигнут конец таблицы
                 ADD HL, DE                                                      ; восстановление конечного значения
                 JR .SaveCurrent
-.SetMaximum     LD HL, UI.Graphics.Progress.Strip.Num << 8
+.SetMaximum     LD HL, Graphics.UI.Progress.Strip.Num << 8
 
 .SaveCurrent    ; расчёт количества выполняемых проходов
                 ;   A - текущий индекс

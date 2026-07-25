@@ -25,7 +25,7 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
                     ASSETS_ID_PROGRESS_STAGES, \
                     0, \
                     Adr.TilemapBuffer, \
-                    UI.Graphics.Progress.Stages.HeaderSize
+                    Graphics.UI.Progress.Stages.HeaderSize
 
                 ; -----------------------------------------
                 ; Out:

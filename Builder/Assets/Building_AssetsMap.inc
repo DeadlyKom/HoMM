@@ -71,8 +71,8 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     ASSETS_ARCHIVE, \
                                     "  - Progress window\t\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_PROGRESS_STAGES, \
-                                    UI.Graphics.Progress.Stages.Size, \
-                                    UI.Graphics.Progress.Stages.Size.Sector.ar, \
+                                    Graphics.UI.Progress.Stages.Size, \
+                                    Graphics.UI.Progress.Stages.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Progress stages graphics\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_MAIN_MENU, \
@@ -81,23 +81,28 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     ASSETS_ARCHIVE, \
                                     "  - Main menu\t\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_MAIN_MENU_GRAPH_PACK_0, \
-                                    UI.Graphics.MainMenu.Portal.Pack.Frame0_7.Size, \
-                                    UI.Graphics.MainMenu.Portal.Pack.Frame0_7.Size.Sector.ar, \
+                                    Graphics.UI.MainMenu.Portal.Pack.Frame0_7.Size, \
+                                    Graphics.UI.MainMenu.Portal.Pack.Frame0_7.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Main menu (content #01)\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_MAIN_MENU_GRAPH_PACK_1, \
-                                    UI.Graphics.MainMenu.Portal.Pack.Frame8_11.Size, \
-                                    UI.Graphics.MainMenu.Portal.Pack.Frame8_11.Size.Sector.ar, \
+                                    Graphics.UI.MainMenu.Portal.Pack.Frame8_11.Size, \
+                                    Graphics.UI.MainMenu.Portal.Pack.Frame8_11.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Main menu (content #02)\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_MAIN_MENU_GRAPH_PACK_2, \
-                                    UI.Graphics.MainMenu.Portal.Pack.Frame12_16.Size, \
-                                    UI.Graphics.MainMenu.Portal.Pack.Frame12_16.Size.Sector.ar, \
+                                    Graphics.UI.MainMenu.Portal.Pack.Frame12_16.Size, \
+                                    Graphics.UI.MainMenu.Portal.Pack.Frame12_16.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Main menu (content #03)\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_FONT_RU_8, \
+                                    Graphics.Font.Pack.Ru.Size, \
+                                    Graphics.Font.Pack.Ru.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Russian font 8\t\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_FONT_RU_8_PARTICLE, \
-                                    Font.Pack.Size, \
-                                    Font.Pack.Size.Sector.ar, \
+                                    Metadata.Font.Pack.Size, \
+                                    Metadata.Font.Pack.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Russian font 8 (for particle)\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_SESSION, \
@@ -111,8 +116,8 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     ASSETS_ARCHIVE, \
                                     "  - World\t\t\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_DEFAULT_SETTINGS, \
-                                    Default.Size, \
-                                    Default.Size.Sector.ar, \
+                                    Metadata.Default.Size, \
+                                    Metadata.Default.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Object default settings\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_CURSOR_PACK, \
@@ -131,18 +136,18 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     ASSETS_ARCHIVE, \
                                     "  - Graphic Hero\t\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_HEX_FOG, \
-                                    Hexagon.Fog.Size, \
-                                    Hexagon.Fog.Size.Sector.ar, \
+                                    Graphics.Hexagon.Fog.Size, \
+                                    Graphics.Hexagon.Fog.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Hexagon Fog: 'base'\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_HEX_GRASSLANDS, \
-                                    Hexagon.NaturalLandscapes.Grasslands.Size, \
-                                    Hexagon.NaturalLandscapes.Grasslands.Size.Sector.ar, \
+                                    Graphics.Hexagon.NaturalLandscapes.Grasslands.Size, \
+                                    Graphics.Hexagon.NaturalLandscapes.Grasslands.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Hexagon NaturalLandscapes: 'Grasslands'\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_MAP_DEBUG, \
-                                    Map.Debug.Size, \
-                                    Map.Debug.Size.Sector.ar, \
+                                    Metadata.Map.Debug.Size, \
+                                    Metadata.Map.Debug.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Map 'Debug'\t\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_MUSIC_01, \

@@ -70,7 +70,6 @@ Frame:
 ._11            incbin "Builder/Assets/Graphics/Original/UI/MainMenu/Portal/First/Frame_11.bin"
 .Num:           EQU 4   // устанавливать вручную
 Size            EQU $-Begin
-                
                 COMPRESSED_ASSET \
                 "Builder/Assets/Graphics/Compressed/MainMenu/First/8_11.pack", \
                 "Builder/Assets/Graphics/Compressed/MainMenu/First/8_11.pack.ar"

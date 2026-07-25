@@ -1,6 +1,6 @@
 
-                ifndef _GRAPHICS_PACK_INCLUDE_
-                define _GRAPHICS_PACK_INCLUDE_
+                ifndef _GRAPHICS_GRAPH_PACK_INCLUDE_
+                define _GRAPHICS_GRAPH_PACK_INCLUDE_
 
                 module Graph
                 
@@ -8,4 +8,4 @@
 
                 endmodule
 
-                endif ; ~ _GRAPHICS_PACK_INCLUDE_
+                endif ; ~ _GRAPHICS_GRAPH_PACK_INCLUDE_
