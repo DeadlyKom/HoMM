@@ -8,8 +8,8 @@
 ;   IX  - адрес структуры FAssets
 ; Corrupt:
 ; -----------------------------------------
-ASSETS_ADR      macro ID?
-                LD IX, Adr.AssetsTable | (ID? << 3)
+ASSETS_ADR      macro Reg?, ID?
+                LD Reg?, Adr.AssetsTable | (ID? << 3)
                 endm
 ; -----------------------------------------
 ; расчёт адреса расположения ресурса
@@ -82,7 +82,7 @@ SET_PAGE_ASSETS macro
 ; -----------------------------------------
 SET_LOAD_ASSETS macro ID?, Page?, Address?
                 ; подготовка к загрузке
-                ASSETS_ADR ID?
+                ASSETS_ADR IX, ID?
 
                 ; Page?
                 ;
@@ -258,13 +258,26 @@ LOAD_ASSETS_REG macro Reg?
 ; -----------------------------------------
 ; загрузка ассета (находясь в странице)
 ; In:
+;   A - идентификатор ресурса
+; Out:
+; Corrupt:
+; -----------------------------------------
+LOAD_ASSETS_IN_PAGE_A macro
+                CALL Func.LoadAssetInPage
+                endm
+JP_LOAD_ASSETS_IN_PAGE_A macro
+                JP Func.LoadAssetInPage
+                endm
+; -----------------------------------------
+; загрузка ассета (находясь в странице)
+; In:
 ;   ID? - идентификатор ресурса
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
 LOAD_ASSETS_IN_PAGE macro ID?
                 LD A, ID?
-                CALL Func.LoadAssetInPage
+                LOAD_ASSETS_IN_PAGE_A
                 endm
 ; -----------------------------------------
 ; загрузка ассета, с копированием блока ассета в буфер (находясь в странице)

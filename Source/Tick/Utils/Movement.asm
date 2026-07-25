@@ -287,10 +287,10 @@ UpdateEffectiveStepCost:
                 LD E, (IX + FObject.Position.X.High)
                 LD D, (IX + FObject.Position.Y.High)
                 EXX
-                LD A, Page.Page1
-                LD HL, BufferUtilities.GetSurfaceStepCostByCoord.Wrap
                 ; получить базовую стоимость поверхности по координатам объекта
-                CALL Func.CallAnotherPage
+                CALL_IN_PAGE \
+                    Page.Page1, \
+                    BufferUtilities.GetSurfaceStepCostByCoord.Wrap              ; вызов функции - получение стоимости поверхности по координатам
                 EX AF, AF'
 
                 PUSH IX                                                         ; сохранить адрес объекта

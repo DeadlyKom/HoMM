@@ -19,6 +19,10 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
                 CLS SCR_ADR_BASE, 0xFF                                          ; очистка основного экрана
                 CLS_SCR_SHADOW_IN_PAGE 0xFF, BLACK, WHITE, 1                    ; очистка теневого экрана (находясь в странице)
                 SHOW_SHADOW_SCREEN                                              ; отобразить теневой экран
+
+                ; загрузка шрифта
+                LD E, FONT_ID_DEFAULT_8                                         ; ToDo: брать данные из конфигурации
+                CALL_IN_PAGE Page.Font, Font.Load
                 
                 ; загрузка ассета, с копированием блока ассета в буфер (находясь в странице)
                 LOAD_ASSET_BLOCK_IN_PAGE \
@@ -57,9 +61,8 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
                 LD (Draw.NotBoundSpriteAdr), HL                                 ; сохранение адреса спрайта
 
                 ; отображение стадий прогресса
-                LD HL, Draw.SpriteNotBoundSet
                 LD A, (GameState.Assets + FAssets.Address.Page)                 ; чтение страницы расположения графики
-                CALL Func.CallAnotherPage
+                CALL_IN_PAGE_A Draw.SpriteNotBoundSet                           ; вызов функции рисования линии прогресса (находясь в странице)
 
                 ; отображение орнамента прогресса
                 LD HL, .Ornament

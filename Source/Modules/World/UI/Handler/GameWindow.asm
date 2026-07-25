@@ -27,9 +27,8 @@ GameWindow:     ; проверка бездействия игрока
                 LD E, A
                 LD DE, Adr.ExtraBuffer
                 EXX
-                LD A, Page.Object
-                LD HL, Character.Utilities.MemcpyObject
-                CALL Func.CallAnotherPage
+                CALL_IN_PAGE Page.Object, Character.Utilities.MemcpyObject      ; вызов функции - копирование объекта "персонаж"
+
                 ;   IX - адрес героя            (FCharacter)
                 ;   IY - адрес объекта героя    (FObjectCharacter)
 
@@ -62,9 +61,9 @@ GameWindow:     ; проверка бездействия игрока
                 LD D, B
                 LD E, C
                 EXX
-                LD A, Page.Page1
-                LD HL, BufferUtilities.GetHextileIDByCoord.Wrap
-                CALL Func.CallAnotherPage
+                CALL_IN_PAGE \
+                    Page.Page1, \
+                    BufferUtilities.GetHextileIDByCoord.Wrap                    ; вызов функции - получение ID гексагона по координатам
                 ; ToDo построеть очередь для перемещения от текущего WayPoint'а
                 ;      к указанному, на основе координат назначения
 
@@ -84,9 +83,7 @@ GameWindow:     ; проверка бездействия игрока
                 ; инициализация пути героя
                 LD C, #01       ; длина пути в массиве
                 EXX
-                LD A, Page.Page0
-                LD HL, Character.PathInitialize.Wrap
-                JP Func.CallAnotherPage
+                JP_IN_PAGE Page.Page0, Character.PathInitialize.Wrap            ; вызов функции - инициализация пути
                 ; первый пакет "мировых тиков" запросит персонаж после завершения поворота
                 ; RET
 

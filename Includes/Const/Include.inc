@@ -8,6 +8,7 @@
                 include "Memory/Include.inc"
                 include "Assets/Include.inc"
 
+                include "Font.inc"
                 include "Setup.inc"
                 include "Cursor.inc"
                 include "Gameplay.inc"

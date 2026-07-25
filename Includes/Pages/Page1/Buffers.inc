@@ -13,7 +13,7 @@ BufferUtilities:
 .GetMetaArrayAdr                EQU Page1.Buffer.Utilities.GetMetaArrayAdr                  ; получение адреса массива метаданных карты по координатам
 .GetHextileIDByCoord            EQU Page1.Buffer.Utilities.GetHextileIDByCoord              ; получение ID гексагона по координатам
 .GetHextileIDByCoord.Wrap       EQU Page1.Buffer.Utilities.GetHextileIDByCoord.Wrap         ; получение ID гексагона по координатам                         (обёртка)
-.GetSurfaceStepCostByCoord.Wrap EQU Page1.Buffer.Utilities.GetSurfaceStepCostByCoord.Wrap   ; получение стоимости поверхности по координатам       (обёртка)
+.GetSurfaceStepCostByCoord.Wrap EQU Page1.Buffer.Utilities.GetSurfaceStepCostByCoord.Wrap   ; получение стоимости поверхности по координатам                (обёртка)
 .UpdateHextile                  EQU Page1.Buffer.Hextile                                    ; обновление Render-буфера указанного гексогонального тайла
 .AdjRenderBufCol                EQU Page1.Buffer.AdjRenderBufCol                            ; корректировка столбцов рендер буфера
 .SpriteBound                    EQU Page1.Buffer.SpriteBound                                ; обновление Render-буфера указанного bound спрайта

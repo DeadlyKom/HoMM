@@ -11,7 +11,7 @@ Func
 
 .JumpTable              EQU Kernel.Functions.JumpTable                          ; переход по таблице переходов
 .JumpTable.NoShift      EQU Kernel.Functions.JumpTable.NoShift                  ; переход по таблице переходов
-.CallAnotherPage        EQU Kernel.Functions.Call.AnotherPage                   ; вызов функции с включением страницы (находясь в странице)
+.CallInPage             EQU Kernel.Functions.Call.InPage                        ; вызов функции с включением страницы (находясь в странице)
 .Delay                  EQU Kernel.Functions.Delay                              ; задержка 4 фрейма
 .CustomDelay            EQU Kernel.Functions.Delay.DelayLoop                    ; кастомная задержка
 

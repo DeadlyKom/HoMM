@@ -11,7 +11,11 @@
                 display "'Page 3':\t\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.Code.Page3, " byte(s) / free ", /D, Size.Code.Page3 - Size, "]\t[", /D, Page.Page3, "]\t ------------------------"
 Begin:          EQU $
 
-                DW #0000
+                ; font
+                include "Source/Font/Include.inc"
+
+                ; draw font
+                include "Source/Draw/Font/Include.inc"
 Size:           EQU $-Begin                                                     ; размер кода
                 if (Size.Code.Page3 - Size) < 0
                     error "allocated memory ran out!"
