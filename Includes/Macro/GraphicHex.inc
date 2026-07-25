@@ -66,7 +66,7 @@ COUNT_HEX_SPRITE macro                                                          
 INCBIN_HEX_SIZE_SPRITE macro Include?                                           ; формирует 2 байта длины блока, после идут данные
                 DW .Size
 .Begin          EQU $
-                Include?
+                incbin Include?
 .Size           EQU $-.Begin
                 endm
 CREATE_HEX_SPRITE macro SpriteName?, SpriteOffset?, Include_0?, Include_1?, Include_2?, Include_3?, Include_4?, Include_5?                                           ; формирует 2 байта длины блока, после идут данные

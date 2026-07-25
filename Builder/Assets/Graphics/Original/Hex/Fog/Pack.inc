@@ -41,15 +41,15 @@ Sprites:        ; таблицы смещений гексагонов
                 ; INCBIN_HEX_SIZE_SPRITE формирует 2 байта длины блока, после идут данные
 
                 ; графика спрайтов (флаг 0)
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_0.bin"
+                INCBIN_HEX_SIZE_SPRITE "sprite_0.bin"
                 ; графика спрайтов (флаг 1)
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_8.bin"
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_7.bin"
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_6.bin"
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_5.bin"
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_4.bin"
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_3.bin"
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_2.bin"
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_1.bin"
+                INCBIN_HEX_SIZE_SPRITE "sprite_8.bin"
+                INCBIN_HEX_SIZE_SPRITE "sprite_7.bin"
+                INCBIN_HEX_SIZE_SPRITE "sprite_6.bin"
+                INCBIN_HEX_SIZE_SPRITE "sprite_5.bin"
+                INCBIN_HEX_SIZE_SPRITE "sprite_4.bin"
+                INCBIN_HEX_SIZE_SPRITE "sprite_3.bin"
+                INCBIN_HEX_SIZE_SPRITE "sprite_2.bin"
+                INCBIN_HEX_SIZE_SPRITE "sprite_1.bin"
 
                 endif ; ~ _GRAPHICS_HEXAGON_FOG_PACK_

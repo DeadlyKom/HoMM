@@ -2,7 +2,7 @@
                 ifndef _DRAW_FONT_SPRITE_NOT_CLIPPING_
                 define _DRAW_FONT_SPRITE_NOT_CLIPPING_
 ; -----------------------------------------
-; отображение символа (без ограничений)
+; отображение символа (без поддержки обрезки)
 ; In:
 ;   DE - координаты в пикселях (D - y, E - x)
 ;   GameState.FontSize.Height - высота спрайта в пикселях
@@ -21,43 +21,7 @@
 ;
 ;   ℹ️ структура шрифта, см FFont
 ; -----------------------------------------
-DrawNotClipping:
-
-                LD A, #60   ; символ А
-
-                ; расчёт адреса в таблице
-                ADD A, LOW (Adr.Font >> 1)
-                LD L, A
-                ADC A, HIGH (Adr.Font >> 1)
-                SUB L
-                LD H, A
-                ADD HL, HL  ; x2
-
-                ; чтение смещения
-                LD C, (HL)
-                INC HL
-                LD B, (HL)
-
-                ; расчёт адреса символа
-                LD HL, Adr.Font
-                ADD HL, BC
-
-                ; проверка наличия высоты
-                LD A, (HL)
-                OR A
-                RET Z
-
-                INC HL
-                INC HL
-                INC HL
-                INC HL
-                LD (Kernel.Sprite.DrawOR_XOR.SpriteAddress), HL
-
-                ; сохранение высоты спрайта
-                LD BC, (GameState.FontSize)
-                PUSH BC
-
-                ; определение адреса экрана
+Draw:           ; определение адреса экрана
                 LD H, HIGH Adr.ScrAdrTable
                 LD L, D                                                         ; координата Y (в пикселях)
                 LD A, (HL)                                                      ; младший
@@ -70,36 +34,39 @@ DrawNotClipping:
                 LD B, E                                                         ; координата X (в пикселях)
                 LD L, B
                 OR (HL)                                                         ; номер знакоместа
-                INC H                                                           ; переход к байтам с включеным пикселем (преобразован номера бита в пиксель)
                 LD E, A
-                PUSH DE                                                         ; сохраним адрес экрана
+                INC H                                                           ; переход к байтам с включеным пикселем (преобразован номера бита в пиксель)
 
                 ; подготовка данных
+                PUSH DE                                                         ; сохраним адрес экрана
                 EXX
                 POP DE                                                          ; восстановить адрес экрана
-                POP BC                                                          ; новая высота видимой части спрайта в пикселях
+                LD A, (GameState.FontSize + FSize.Height)                       ; новая высота видимой части спрайта в пикселях
+                LD B, A
                 LD C, #00                                                       ; обнуление - ширина невидимой части
                 EXX
 
                 ; округление до знакоместа (положительное число)
-                LD A, C         ; %000wwwww : x
+                LD A, (GameState.FontSize + FSize.Width)    ; %000wwwww : x
                 LD C, #00
-                SRL A           ; %0000wwww : w
+                SRL A                                       ; %0000wwww : w
                 ADC A, C
-                RRA             ; %00000www : w
+                RRA                                         ; %00000www : w
                 ADC A, C
-                RRA             ; %000000ww : w
+                RRA                                         ; %000000ww : w
                 ADC A, C
-                DEC A           ; началос с 1
-                ADD A, A        ; %00000ww0 : 0
-                ADD A, A        ; %0000ww00 : 0
+                DEC A                                       ; началос с 1
+                ADD A, A                                    ; %00000ww0 : 0
+                ADD A, A                                    ; %0000ww00 : 0
+                ADD A, A                                    ; %000ww000 : 0
 
                 ; определение флага смещения, если 7ой бит вкл, смещения нет
-                XOR (HL)        ; %Sxxxxxxx : 0
-                AND %01111111   ; %Sxxxxxxx : 0
-                XOR (HL)        ; %S000ww00 : 0
-                SET 5, A        ; %S010ww00 : 0
-                RRA             ; %0S010ww0 : 0
+                LD C, (HL)                                  ; %sxxxxxxx : 0     (C)
+                RL C                                        ; %xxxxxxx0 : s     (C)
+                CCF                                         ; %000ww000 : S     (A)
+                RRA                                         ; %S000ww00 : 0     (A)
+                SET 5, A                                    ; %S010ww00 : 0     (A)
+                RRA                                         ; %0S010ww0 : 0     (A)
 
                 ; -----------------------------------------
                 ; функция ручного вывода (без копированяи спрайта)
@@ -117,6 +84,6 @@ DrawNotClipping:
                 ; -----------------------------------------
                 JP Kernel.Sprite.DrawOR_XOR.Custom
 
-                display " - Draw font not clipping:\t\t\t\t", /A, DrawNotClipping, "\t= busy [ ", /D, $-DrawNotClipping, " byte(s)  ]"
+                display " - Draw font not clipping:\t\t\t\t", /A, Draw, "\t= busy [ ", /D, $-Draw, " byte(s)  ]"
 
                 endif ; ~ _DRAW_FONT_SPRITE_NOT_CLIPPING_

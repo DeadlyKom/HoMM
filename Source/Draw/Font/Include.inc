@@ -4,7 +4,8 @@
 
                 module Font
 
-                include "DrawNotClipping.asm"
+                include "Draw.asm"
+                include "DrawString.asm"
 
                 endmodule
 

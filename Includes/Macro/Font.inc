@@ -1,11 +1,14 @@
 
                 ifndef _MACRO_FONT_
                 define _MACRO_FONT_
+FONT_OFFSET     macro Offset?
+                DW Offset? - $-1
+                endm
 FONT_PROFILE    macro Height?, Profile?, Advance?, Baseline?
                 FFont {
                     Height?, \
-                    Profile?, \
                     Advance?, \
+                    Profile?, \
                     Baseline?
                 }
                 endm

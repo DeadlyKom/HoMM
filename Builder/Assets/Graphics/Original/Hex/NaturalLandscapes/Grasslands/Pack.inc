@@ -21,26 +21,26 @@ Sprites:        ; таблицы смещений гексагонов
                 ; номер анимации (максимум 8) * 12 байт + горизонтальное смещение (0-5 номер столбца) * 2
 ._0             ; 23  - трава
                 incbin "sprite_1_offsets.bin"                                   ; таблица смещений столбцов гексагона (6 столбцов по 2 байта)
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_1.bin"
+                INCBIN_HEX_SIZE_SPRITE "sprite_1.bin"
 ._1             ; 160 - гора
                 incbin "sprite_4_offsets.bin"                                   ; таблица смещений столбцов гексагона (6 столбцов по 2 байта)
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_4.bin"
+                INCBIN_HEX_SIZE_SPRITE "sprite_4.bin"
 ._2             ; 137 - болото
                 incbin "sprite_6_offsets.bin"                                   ; таблица смещений столбцов гексагона (6 столбцов по 2 байта)
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_6.bin"
+                INCBIN_HEX_SIZE_SPRITE "sprite_6.bin"
 ._3             ; 133 - маленькое поселение
                 incbin "sprite_10_offsets.bin"                                  ; таблица смещений столбцов гексагона (6 столбцов по 2 байта)
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_10.bin"
+                INCBIN_HEX_SIZE_SPRITE "sprite_10.bin"
 ._4             ; 46  - лес в середине гекса
                 incbin "sprite_8_offsets.bin"                                   ; таблица смещений столбцов гексагона (6 столбцов по 2 байта)
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_8.bin"
+                INCBIN_HEX_SIZE_SPRITE "sprite_8.bin"
 ._5             ; 48  - плотный лес
                 incbin "sprite_2_offsets.bin"                                   ; таблица смещений столбцов гексагона (6 столбцов по 2 байта)
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_2.bin"
+                INCBIN_HEX_SIZE_SPRITE "sprite_2.bin"
 ._6             ; 111 - укрепление
                 incbin "sprite_3_offsets.bin"                                   ; таблица смещений столбцов гексагона (6 столбцов по 2 байта)
-                INCBIN_HEX_SIZE_SPRITE incbin "sprite_3.bin"
+                INCBIN_HEX_SIZE_SPRITE "sprite_3.bin"
 ._7             incbin "outline_offsets.bin"                                    ; таблица смещений столбцов гексагона (6 столбцов по 2 байта)
-                INCBIN_HEX_SIZE_SPRITE incbin "outline.bin"
+                INCBIN_HEX_SIZE_SPRITE "outline.bin"
 
                 endif ; ~ _GRAPHICS_HEXAGON_GRASSLANDS_PACK_
