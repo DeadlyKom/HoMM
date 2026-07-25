@@ -1,23 +1,25 @@
 
                 ifndef _MACRO_FONT_
                 define _MACRO_FONT_
-FONT_PROFILE    macro Profile?, Advance?, Baseline?
+FONT_PROFILE    macro Height?, Profile?, Advance?, Baseline?
                 FFont {
+                    Height?, \
                     Profile?, \
                     Advance?, \
                     Baseline?
                 }
                 endm
-FONT_NOT_SPRITE macro Profile?, Advance?, Baseline?
+FONT_NOT_SPRITE macro Advance?
+                ; OR+XOR не могут быть нулевыми, по этому высота равна 0
                 FONT_PROFILE \
-                    Profile?, \
+                    0, \
+                    0, \
                     Advance?, \
-                    Baseline?
-                DW #0000                                                        ; OR+XOR не могут быть нулевыми,
-                                                                                ; что говорит об отсутствии данных спрайта
+                    0
                 endm
-FONT            macro LU?, LL?, RU?, RL?, Advance?, Baseline?, Sprite?
+FONT            macro Height?, LU?, LL?, RU?, RL?, Advance?, Baseline?, Sprite?
                 FONT_PROFILE \
+                    Height?, \
                     ((LU? & 0x03) << 6) | \
                     ((LL? & 0x03) << 4) | \
                     ((RU? & 0x03) << 2) | \

@@ -185,8 +185,8 @@ Begin:          EQU $
                 DW Font.empty                                                   ; -- ї
                 DW Font.empty                                                   ; -- ѥ
 Font:
-.empty          FONT_NOT_SPRITE 0, 1, 0                                         ; нет символа
-.space          FONT_NOT_SPRITE 0, 4, 0                                         ; пробел
+.empty          FONT_NOT_SPRITE 1                                               ; нет символа
+.space          FONT_NOT_SPRITE 4                                               ; пробел
 ; .exclamation    incbin "Font sym_0.bin"                                         ; !
 ; .question       incbin "Font sym_1.bin"                                         ; ? 
 ; .colon          incbin "Font sym_2.bin"                                         ; :
@@ -206,7 +206,7 @@ Font:
 ; .eight          incbin "Font num_8.bin"                                         ; 8
 ; .nine           incbin "Font num_9.bin"                                         ; 9
 
-.ru_0           FONT 0, 0, 0, 0, 11, 9, "Ru/font_0.bin"                         ; А
+.ru_0           FONT 10, 0, 0, 0, 0, 11, 9, "Ru/font_0.bin"                     ; А
 ; .ru_1           incbin "Font ru_1.bin"                                          ; Б
 ; .ru_2           incbin "Font ru_2.bin"                                          ; В
 ; .ru_3           incbin "Font ru_3.bin"                                          ; Г

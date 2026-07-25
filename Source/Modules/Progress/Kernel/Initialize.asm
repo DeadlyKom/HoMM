@@ -84,6 +84,16 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
 
                 CALL EnterProgress.Reset                                        ; сброс состояния прогресса
 
+                ; ToDo: тестовое отображение
+                ;   DE - координаты в пикселях (D - y, E - x)
+                ;   GameState.FontSize.Height - высота спрайта в пикселях
+                ;   GameState.FontSize.Width  - ширина спрайта в пикселях (FFont.Advance - 1)
+                ;        максимальная ширина 32 пикселя
+                LD HL, #0A0A
+                LD (GameState.FontSize), HL
+                LD DE, #8737
+                CALL_IN_PAGE Page.Font, Font.DrawNotClipping
+
                 else
                 POP AF                                                          ; удаление со стека значение
                 endif
