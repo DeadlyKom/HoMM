@@ -112,7 +112,7 @@ Begin:          EQU $
                 DW Font.empty                                                   ; -- нет символа ¿
 
                 DW Font.ru_0                                                    ; -- А
-                DW Font.empty                                                   ; -- Б
+                DW Font.ru_1                                                    ; -- Б
                 DW Font.empty                                                   ; -- В
                 DW Font.empty                                                   ; -- Г
                 DW Font.empty                                                   ; -- Д
@@ -207,7 +207,7 @@ Font:
 ; .nine           incbin "Font num_9.bin"                                         ; 9
 
 .ru_0           FONT 10, 0, 0, 0, 0, 11, 9, "Ru/font_0.bin"                     ; А
-; .ru_1           incbin "Font ru_1.bin"                                          ; Б
+.ru_1           FONT 10, 0, 0, 0, 0,  9, 9, "Ru/font_1.bin"                     ; Б
 ; .ru_2           incbin "Font ru_2.bin"                                          ; В
 ; .ru_3           incbin "Font ru_3.bin"                                          ; Г
 ; .ru_4           incbin "Font ru_4.bin"                                          ; Д

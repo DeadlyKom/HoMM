@@ -262,22 +262,22 @@ def main():
                 f.write(sprite_data)
 
             # выгрузка информации о спрайте
-            width_pixels  = info["width"]           # ширина bounding box
-            height_pixels = info["height"]          # высота bounding box
-            shift_x       = info["shift_pixels"]    # смещение по X (левый край)
-            shift_y       = info["min_y"]           # смещение по Y (верхний край)
+            # width_pixels  = info["width"]           # ширина bounding box
+            # height_pixels = info["height"]          # высота bounding box
+            # shift_x       = info["shift_pixels"]    # смещение по X (левый край)
+            # shift_y       = info["min_y"]           # смещение по Y (верхний край)
 
             # берем только 5 младших бит
-            width_byte  = width_pixels  & 0b00011111
-            height_byte = height_pixels & 0b00011111
+            # width_byte  = width_pixels  & 0b00011111
+            # height_byte = height_pixels & 0b00011111
 
             # см структуру FSpriteInfo
-            file_info_name = os.path.join(BASE_DIR, filename_from_sprite(sprite_name, ".sprinfo"))
-            with open(file_info_name, "w") as f:
-                f.write(f"Width: {width_byte}\n")
-                f.write(f"Height: {height_byte}\n")
-                f.write(f"SOx: {shift_x}\n")
-                f.write(f"SOy: {shift_y}\n")
+            # file_info_name = os.path.join(BASE_DIR, filename_from_sprite(sprite_name, ".sprinfo"))
+            # with open(file_info_name, "w") as f:
+            #     f.write(f"Width: {width_byte}\n")
+            #     f.write(f"Height: {height_byte}\n")
+            #     f.write(f"SOx: {shift_x}\n")
+            #     f.write(f"SOy: {shift_y}\n")
 
 if __name__ == "__main__":
     main()
