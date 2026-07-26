@@ -24,7 +24,7 @@ Core:           EI
                 ; отображение версии сборки
                 ; -----------------------------------------
                 CALL Console.SetDrawToOne
-                CALL Convert.SetBaseScreen                                      ; установка работы с основным экраном
+                SET_RENDER_TO_BASE_SCREEN                                       ; установка работы с основным экраном
                 SET_REG_ATTR_IPB A, CYAN, BLACK, 0
                 CALL Console.SetAttribute
                 LD BC, VersionText
@@ -79,7 +79,7 @@ Core:           EI
                 CALL Core.Tables.TG_ShiftTable                                  ; генерация таблицы сдвигов
                 CALL Core.Tables.TG_ByteMirror                                  ; генерация таблицы зеркальных байт
                 CALL Core.Tables.TG_MulSprTable                                 ; генерация таблицы умножения для спрайтов
-                CALL Convert.SetShadowScreen                                    ; установка работы с теневым экраном
+                SET_RENDER_TO_SHADOW_SCREEN                                     ; установка работы с теневым экраном
                 
                 ; инициализация работы с объектами
                 SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами

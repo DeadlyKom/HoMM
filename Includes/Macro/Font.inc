@@ -4,30 +4,30 @@
 FONT_OFFSET     macro Offset?
                 DW Offset? - $-1
                 endm
-FONT_PROFILE    macro Height?, Profile?, Advance?, Baseline?
-                FFont {
+FONT_PROFILE    macro Height?, Width?, SpacingProfile?, Baseline?
+                FFontGlyph {
                     Height?, \
-                    Advance?, \
-                    Profile?, \
+                    Width?, \
+                    SpacingProfile?, \
                     Baseline?
                 }
                 endm
-FONT_NOT_SPRITE macro Advance?
+FONT_NOT_SPRITE macro Width?
                 ; OR+XOR не могут быть нулевыми, по этому высота равна 0
                 FONT_PROFILE \
                     0, \
+                    Width?, \
                     0, \
-                    Advance?, \
                     0
                 endm
-FONT            macro Height?, LU?, LL?, RU?, RL?, Advance?, Baseline?, Sprite?
+FONT            macro Height?, Width?, LU?, LL?, RU?, RL?, Baseline?, Sprite?
                 FONT_PROFILE \
                     Height?, \
+                    Width?, \
                     ((LU? & 0x03) << 6) | \
                     ((LL? & 0x03) << 4) | \
                     ((RU? & 0x03) << 2) | \
                     ((RL? & 0x03) << 0), \
-                    Advance?, \
                     Baseline?
                 incbin Sprite?
                 endm

@@ -59,7 +59,7 @@ RefillPointQueue:
                 SUB L
                 LD H, A
 
-                ; чтение адреса структуры FGlyphHeader
+                ; чтение адреса структуры FPointGlyph
                 LD E, (HL)
                 INC HL
                 LD D, (HL)
@@ -77,10 +77,10 @@ RefillPointQueue:
                 INC BC
                 LD (.Cursor), BC
 
-                ; чтение FGlyphHeader
+                ; чтение FPointGlyph
                 LD A, (HL)                                                      ; количество точек в глифе
                 INC HL
-                LD C, (HL)                                                      ; насколько сдвинуть курсор после буквы (шиирина буквы + пробел)
+                LD C, (HL)                                                      ; насколько сдвинуть курсор после глифа (ширина глифа + пробел)
                 
                 ; проверка наличие точек
                 OR A

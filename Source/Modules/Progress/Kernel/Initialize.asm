@@ -19,6 +19,7 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
                 CLS SCR_ADR_BASE, 0xFF                                          ; очистка основного экрана
                 CLS_SCR_SHADOW_IN_PAGE 0xFF, BLACK, WHITE, 1                    ; очистка теневого экрана (находясь в странице)
                 SHOW_SHADOW_SCREEN                                              ; отобразить теневой экран
+                SET_RENDER_TO_BASE_SCREEN                                       ; установка работы с основным экраном
 
                 ; загрузка шрифта
                 LD E, FONT_ID_DEFAULT_8                                         ; ToDo: брать данные из конфигурации
@@ -77,29 +78,13 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
                 SCREEN_ADR_REG HL, SCR_ADR_BASE, 24, 186
                 LD (HL), #00
                 CALL .Line
+
+                CALL .DrawHint                                                  ; отобразить подсказку
                 
                 HALT                                                            ; синхронизация
                 SHOW_BASE_SCREEN                                                ; отображение базового экрана
                 RELEASE_ASSETS_IN_PAGE ASSETS_ID_PROGRESS_STAGES                ; освобождение ассета (находясь в странице)
-
                 CALL EnterProgress.Reset                                        ; сброс состояния прогресса
-
-                ; ToDo: тестовое отображение
-                ; копирование строки в буфер
-                LD HL, .Text_1
-                LD DE, Adr.TilemapBuffer
-                LD BC, .Text_1.Size
-                CALL Memcpy.FastLDIR
-                ;   DE - координаты в пикселях (D - y, E - x)
-                LD DE, #8F37
-                CALL_IN_PAGE Page.Font, Font.DrawString
-                LD HL, .Text_2
-                LD DE, Adr.TilemapBuffer
-                LD BC, .Text_2.Size
-                CALL Memcpy.FastLDIR
-                ;   DE - координаты в пикселях (D - y, E - x)
-                LD DE, #9F4A
-                CALL_IN_PAGE Page.Font, Font.DrawString
 
                 else
                 POP AF                                                          ; удаление со стека значение
@@ -117,6 +102,25 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
 
 .Ornament       incbin "Builder/Assets/Graphics/Compressed/Progress/Ornament.pack"
 .Strip          incbin "Builder/Assets/Graphics/Compressed/Progress/Strip.pack"
+
+.DrawHint       ; ToDo: тестовое отображение
+                ; копирование строки в буфер
+                LD HL, .Text_1
+                LD DE, Adr.TilemapBuffer
+                LD BC, .Text_1.Size
+                CALL Memcpy.FastLDIR
+                ;   DE - координаты в пикселях (D - y, E - x)
+                LD DE, #8F37
+                CALL_IN_PAGE Page.Font, Font.DrawString
+                LD HL, .Text_2
+                LD DE, Adr.TilemapBuffer
+                LD BC, .Text_2.Size
+                CALL Memcpy.FastLDIR
+                ;   DE - координаты в пикселях (D - y, E - x)
+                LD DE, #9F4A
+                CALL_IN_PAGE Page.Font, Font.DrawString
+                RET
+
 .Text_1         lua allpass
                 Convert ("Мꙋдрый ратникъ знаѥтъ, когда")
                 endlua

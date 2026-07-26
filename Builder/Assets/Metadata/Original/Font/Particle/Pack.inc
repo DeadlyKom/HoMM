@@ -187,8 +187,8 @@ Begin:          EQU $
 
 Glyphs.Num      EQU ($-Begin-1) / 2
 Glyphs:         ; глифы
-.empty          FGlyphHeader { 0, 1, 0 }                                        ; нет символа
-.space          FGlyphHeader { 0, 4, 0 }                                        ; пробел
+.empty          FPointGlyph { 0, 1, 0 }                                         ; нет символа
+.space          FPointGlyph { 0, 4, 0 }                                         ; пробел
 .exclamation    incbin "Glyph sym_0.bin"                                        ; !
 .question       incbin "Glyph sym_1.bin"                                        ; ? 
 .colon          incbin "Glyph sym_2.bin"                                        ; :

@@ -39,6 +39,18 @@ ADJUST_HIDDEN_SCR_ADR macro Reg?
                 RES 7, Reg?
                 endm
 ; -----------------------------------------
+; установка работы с основным экраном
+; -----------------------------------------
+SET_RENDER_TO_BASE_SCREEN macro
+                CALL Convert.SetBaseScreen
+                endm
+; -----------------------------------------
+; установка работы с основным экраном
+; -----------------------------------------
+SET_RENDER_TO_SHADOW_SCREEN macro
+                CALL Convert.SetShadowScreen
+                endm
+; -----------------------------------------
 ; расчёт адреса экрана в пикселях (x, y)
 ; и назначение еого рег. паре (Register)
 ; смещение ScreenAddress (#4000/#C000)
