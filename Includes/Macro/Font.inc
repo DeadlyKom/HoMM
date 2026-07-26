@@ -13,7 +13,7 @@ FONT_PROFILE    macro Height?, Width?, SpacingProfile?, Baseline?
                 }
                 endm
 FONT_NOT_SPRITE macro Width?
-                ; OR+XOR не могут быть нулевыми, по этому высота равна 0
+                ; у глифа отсутствуют данные OR/XOR, поэтому высота равна 0
                 FONT_PROFILE \
                     0, \
                     Width?, \

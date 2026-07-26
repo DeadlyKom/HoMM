@@ -91,7 +91,6 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
                 POP AF                                                          ; удаление со стека значение
                 endif
                 RET
-
 Line            LD D, H
                 LD E, L
                 INC DE

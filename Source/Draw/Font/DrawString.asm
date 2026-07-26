@@ -16,13 +16,17 @@
 ;
 ;   ℹ️ структура глифа шрифта, см FFontGlyph
 ; -----------------------------------------
-Draw.String:    LD HL, Adr.TilemapBuffer
+Draw.String:    ; инициализация
+                XOR A
+                LD (.PreviousRight), A                                          ; сброс профиля предыдущего глифа
+                LD HL, Adr.TilemapBuffer
+
 .Loop           ; проверка на завершающий ноль
                 LD A, (HL)
                 OR A
                 RET Z                                                           ; выход, если строка закончилась
 
-                SUB #20                                                         ; дополнительное смещение
+                SUB #20                                                         ; преобразование к индексу глифа
                 INC HL
                 PUSH HL     ; сохранение адреса строки
 
@@ -34,27 +38,76 @@ Draw.String:    LD HL, Adr.TilemapBuffer
                 LD H, A
                 ADD HL, HL  ; x2
 
-                ; чтение смещения
+                ; чтение относительного смещения глифа
                 LD C, (HL)
                 INC HL
                 LD B, (HL)
-                ADD HL, BC                                                      ; расчёт адреса символа
+                ADD HL, BC                                                      ; расчёт адреса глифа
 
-                ; проверка наличия высоты
-                LD A, (HL)
+                ; чтение параметров глифа
+                LD A, (HL)                                                      ; FFontGlyph.Height
                 INC HL
-                LD C, (HL)                                                      ; чтение ширины спрайта
+                LD C, (HL)                                                      ; FFontGlyph.Width
+                
+                ; проверка наличия высоты
                 OR A
-                JR Z, .CursorOffset                                             ; переход, если нет тела спрайта
+                JR Z, .CursorOffset                                             ; переход, если отсутствуют данные спрайта,
+                                                                                ; и сброс профиля предыдущего глифа
 
-                ; сохранение высоты и ширины спрайта
                 INC HL
                 LD B, A
                 LD (GameState.FontSize), BC
 
-                INC HL          ; пропуск SpacingProfile
-                PUSH DE
-                
+                ; чтение профиля перекрытия
+                LD B, (HL)                                                      ; FFontGlyph.SpacingProfile
+                INC HL
+                PUSH HL                                                         ; сохранение адреса глифа
+
+                ; расчёт допустимого перекрытия текущего глифа с предыдущим
+.PreviousRight  EQU $+1
+                LD H, #00                                                       ; профиль предыдущего глифа
+
+                ; Upper = Previous.RU + Current.LU
+                LD A, H
+                RRCA
+                RRCA
+                AND %00000011
+                LD L, A                                                         ; Previous.RU
+
+                LD A, B
+                RLCA
+                RLCA
+                AND %00000011                                                   ; Current.LU
+                ADD A, L
+                LD L, A                                                         ; L = Upper
+
+                ; Lower = Previous.RL + Current.LL
+                LD A, H
+                AND %00000011
+                LD H, A                                                         ; Previous.RL
+
+                LD A, B
+                RRCA
+                RRCA
+                RRCA
+                RRCA
+                AND %00000011                                                   ; Current.LL
+                ADD A, H                                                        ; A = Lower
+
+                ; Overlap = min(Upper, Lower)
+                CP L
+                JR C, $+3
+                LD A, L
+
+                ; смещение символа влево
+                NEG                                                             ; A = -Overlap
+                ADD A, E
+                LD E, A                                                         ; смещение текущего символа влево
+
+                POP HL                                                          ; восстановление адреса глифа
+                PUSH BC                                                         ; сохранение ширины (C) и профиля перекрытия (B)
+                PUSH DE                                                         ; сохранение позиции символа
+
                 ; расчёт верхней границы шрифта
                 LD A, D         ; позиция базовой линии шрифта
                 SUB (HL)        ; FFontGlyph.Baseline
@@ -65,14 +118,16 @@ Draw.String:    LD HL, Adr.TilemapBuffer
 
                 ; отображение символа
                 CALL Font.Draw
-                POP DE
-                LD A, (GameState.FontSize + FSize.Width)
-                LD C, A
+                POP DE                                                          ; восстановление позиции символа
+                POP BC                                                          ; восстановление ширины (C) и профиля перекрытия (B)
 
-.CursorOffset   ; смещение курсора вывода
+                LD A, B                                                         ; профиль текущего глифа
+.CursorOffset   LD (.PreviousRight), A                                          ; сохранение профиля текущего глифа
+
+                ; смещение курсора вывода
                 LD A, C
                 ADD A, E
-                DEC A                                                           ; временно смещение на пиксель назад
+                DEC A
                 LD E, A
 
                 ; переход к следующему символу
