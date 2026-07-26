@@ -184,6 +184,7 @@ Begin:          EQU $
                 FONT_OFFSET Font.ru_low_33                                      ; -- ѣ
                 FONT_OFFSET Font.ru_low_34                                      ; -- ї
                 FONT_OFFSET Font.ru_low_35                                      ; -- ѥ
+                FONT_OFFSET Font.ru_low_36                                      ; -- ѧ
 Font:
 .empty          FONT_NOT_SPRITE 1                                               ; нет символа
 .space          FONT_NOT_SPRITE 4                                               ; пробел
@@ -279,6 +280,7 @@ Font:
 .ru_low_33      FONT 12,  9, 0, 0, 0, 0, 10, "Ru/font_low_33.bin"               ; ѣ
 .ru_low_34      FONT 11,  6, 0, 0, 0, 0,  9, "Ru/font_low_34.bin"               ; ї
 .ru_low_35      FONT  8, 10, 0, 0, 0, 0,  6, "Ru/font_low_35.bin"               ; ѥ
+.ru_low_36      FONT 11,  9, 0, 0, 0, 0,  6, "Ru/font_low_36.bin"               ; ѧ
 Size            EQU $
                 COMPRESSED_ASSET \
                 "Builder/Assets/Graphics/Compressed/Font/Ru.pack", \

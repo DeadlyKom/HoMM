@@ -190,10 +190,13 @@
         [0xD1A3] = 0xA2,  -- ѣ
         [0xD197] = 0xA3,  -- ї
         [0xD1A5] = 0xA4,  -- ѥ
+        [0xD1A7] = 0xA5,  -- ѧ
 
         -- дублирующие
+        [0xD1BB]   = 0x90,  -- ѻ (о)
         [0xEA998A] = 0x74,  -- Ꙋ (У)
         [0xEA998B] = 0x95,  -- ꙋ (у)
+        [0xEA9997] = 0xA1,  -- ꙗ (я)
     };
 
     -- Get a value by ID
@@ -220,7 +223,14 @@
                 bytesLeft = bytesLeft - 1
 
                 if bytesLeft == 0 then
-                    _pc("DB " .. get(word) + 32)
+                    if word == 0xE2808B then
+                        print(string.format(
+                            "ошибка: обнаружен невидимый пробел U+200B в позиции %i",
+                            i - 2
+                        ))
+                    else
+                        _pc("DB " .. get(word) + 32)
+                    end
                     word = 0
                 end
             elseif byte >= 0xF0 then

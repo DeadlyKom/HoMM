@@ -116,6 +116,7 @@ DrawHint        ; A = rand() % Hint.Num
                 LD D, A
                 LD E, Hint.Num
                 CALL Math.Div8x8                                                ; mod
+                ADD A, A    ; x2
 
                 ; расчёт адреса выбранно подсказки
                 LD HL, Hint                                                     ; только такая запись, т.к. адрес неопределён
