@@ -7,6 +7,7 @@
 ; Out:
 ; Corrupt:
 ; Note:
+;    адрес исполнения неизвестен
 ; -----------------------------------------
 Release:        POP AF                                                          ; удаление со стека значение
                 JP_RELEASE_ASSETS_IN_PAGE ASSETS_ID_PROGRESS_STAGES             ; освобождение ассета (находясь в странице)

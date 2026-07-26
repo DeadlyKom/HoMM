@@ -7,6 +7,7 @@
 ; Out:
 ; Corrupt:
 ; Note:
+;    адрес исполнения неизвестен
 ; -----------------------------------------
 Initialize:     ifdef ENABLE_LOADING_PROCESS
                 HALT                                                            ; синхронизация
@@ -66,20 +67,20 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
                 CALL_IN_PAGE_A Draw.SpriteNotBoundSet                           ; вызов функции рисования линии прогресса (находясь в странице)
 
                 ; отображение орнамента прогресса
-                LD HL, .Ornament
+                LD HL, Ornament
                 CALL Draw.SpriteNotBound
 
                 ; отображение верхней полоски
                 SCREEN_ADR_REG HL, SCR_ADR_BASE, 24, 172
                 LD (HL), #00
-                CALL .Line
+                CALL Line
 
                 ; отображение нижней полоски
                 SCREEN_ADR_REG HL, SCR_ADR_BASE, 24, 186
                 LD (HL), #00
-                CALL .Line
+                CALL Line
 
-                CALL .DrawHint                                                  ; отобразить подсказку
+                CALL DrawHint                                                  ; отобразить подсказку
                 
                 HALT                                                            ; синхронизация
                 SHOW_BASE_SCREEN                                                ; отображение базового экрана
@@ -91,7 +92,7 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
                 endif
                 RET
 
-.Line           LD D, H
+Line            LD D, H
                 LD E, L
                 INC DE
 
@@ -99,35 +100,61 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
                 LDI
                 endr
                 RET
+DrawHint        ; A = rand() % Hint.Num
+                CALL Math.Rand8
+                ; -----------------------------------------
+                ; деление D на E
+                ; In:
+                ;   D - делимое
+                ;   E - делитель
+                ; Out:
+                ;   D - результат деления (D / E)
+                ;   A - остаток (D % E)
+                ; Corrupt:
+                ;   D, AF
+                ; -----------------------------------------
+                LD D, A
+                LD E, Hint.Num
+                CALL Math.Div8x8                                                ; mod
 
-.Ornament       incbin "Builder/Assets/Graphics/Compressed/Progress/Ornament.pack"
-.Strip          incbin "Builder/Assets/Graphics/Compressed/Progress/Strip.pack"
+                ; расчёт адреса выбранно подсказки
+                LD HL, Hint                                                     ; только такая запись, т.к. адрес неопределён
+                ADD A, L
+                LD L, A
+                ADC A, H
+                SUB L
+                LD H, A
 
-.DrawHint       ; ToDo: тестовое отображение
-                ; копирование строки в буфер
-                LD HL, .Text_1
+                ; чтение адреса расположения подсказки
+                LD E, (HL)
+                INC HL
+                LD D, (HL)
+                EX DE, HL
+
+                ; инициализация
+                LD B, (HL)                                                      ; количество строк в подсказке
+                INC HL
+
+.Loop           PUSH BC
+
+                ; копирование строки в буффер
+                CALL String.Length
                 LD DE, Adr.TilemapBuffer
-                LD BC, .Text_1.Size
                 CALL Memcpy.FastLDIR
-                ;   DE - координаты в пикселях (D - y, E - x)
-                LD DE, #8F37
+
+                ; чтение позиции строки
+                LD E, (HL)
+                INC HL
+                LD D, (HL)
+                INC HL
+
+                ; отображение строки
+                PUSH HL
                 CALL_IN_PAGE Page.Font, Font.DrawString
-                LD HL, .Text_2
-                LD DE, Adr.TilemapBuffer
-                LD BC, .Text_2.Size
-                CALL Memcpy.FastLDIR
-                ;   DE - координаты в пикселях (D - y, E - x)
-                LD DE, #9F4A
-                CALL_IN_PAGE Page.Font, Font.DrawString
+                POP HL
+
+                POP BC
+                DJNZ .Loop
                 RET
-
-.Text_1         lua allpass
-                Convert ("Мꙋдрый ратникъ знаѥтъ, когда")
-                endlua
-.Text_1.Size    EQU $-.Text_1
-.Text_2         lua allpass
-                Convert ("вложить мечь въ ножны.")
-                endlua
-.Text_2.Size    EQU $-.Text_2
 
                 endif ; ~_MODULE_PROGRESS_INITIALIZE_
