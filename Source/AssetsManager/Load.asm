@@ -17,9 +17,7 @@
 ;   - портит данные буферов начиная с Adr.ExtraBuffer (TR-DOS)
 ; -----------------------------------------
 Load:           LD (GameState.AssetID), A                                       ; сохранение идентификатора загружаемого ассета
-
                 ASSETS_ADR_A                                                    ; расчёт адреса информации о ресурсе
-                ASSETS_TRDOS                                                    ; перенос драйвера TR-DOS во временный буффер
 
                 LD HL, (IX + FAssets.Address.Adr)                               ; получения адреса в HL, если ресурс в памяти
                 RES ASSETS_MARKED_BIT, (IX + FAssets.Address.Page)              ; сброс флага невостребованный
@@ -27,6 +25,10 @@ Load:           LD (GameState.AssetID), A                                       
                 ; проверить необходимость загрузки ресурса
                 BIT ASSETS_LOAD_BIT, (IX + FAssets.Flags)
                 JR NZ, .IsLoaded                                                ; переход, если ресурс загружен
+
+                PUSH HL
+                ASSETS_TRDOS                                                    ; перенос драйвера TR-DOS во временный буффер
+                POP HL
 
                 ; проверка наличия, жёсткой аллокации
                 BIT ASSETS_ALLOCATION_BIT, (IX + FAssets.Address.Page)

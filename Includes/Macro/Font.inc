@@ -2,7 +2,7 @@
                 ifndef _MACRO_FONT_
                 define _MACRO_FONT_
 FONT_OFFSET     macro Offset?
-                DW Offset? - $-1
+                OFFSET Offset?
                 endm
 FONT_PROFILE    macro Height?, Width?, SpacingProfile?, Baseline?
                 FFontGlyph {

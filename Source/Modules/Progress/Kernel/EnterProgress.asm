@@ -85,7 +85,6 @@ EnterProgress:  POP BC                                                          
                 INC HL
                 DJNZ .DrawLoop
 
-                DELAY 2                                                         ; ToDo: временно
                 RET
 ; -----------------------------------------
 ; сброс состояния прогресса

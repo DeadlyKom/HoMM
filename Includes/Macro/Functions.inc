@@ -22,11 +22,30 @@ JP_IN_PAGE      macro Page?, Function?
                 JP Func.CallInPage
                 endm
 ; -----------------------------------------
-; кастомная задержка
-;   Sec? - в секундах
+; задержка на заданное количество секунд
+;   Sec? - длительность в секундах, включая дробные значения
+; Note:
+;   длительность округляется до ближайшего кадра при частоте 50 Гц;
+;   допустимый диапазон результата: 1-255 кадров
 ; -----------------------------------------
 DELAY           macro Sec?
-                LD B, Sec? * 50
+                define __DELAY_SECONDS__ Sec?
+                lua allpass
+                    local seconds = tonumber(sj.get_define("__DELAY_SECONDS__"))
+                    if seconds == nil or seconds <= 0.0 then
+                        error("длительность задержки должна быть положительным числом")
+                    end
+
+                    local frames = math.floor(seconds * 50.0 + 0.5)
+                    if frames < 1 then
+                        frames = 1
+                    elseif frames > 255 then
+                        error("длительность задержки не должна превышать 255 кадров (5.1 секунды)")
+                    end
+
+                    _pc("LD B, " .. frames)
+                endlua
+                undefine __DELAY_SECONDS__
                 CALL Func.CustomDelay
                 endm
 

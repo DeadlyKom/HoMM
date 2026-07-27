@@ -24,6 +24,8 @@ Load_Session:   ; копирование блока
                 ; первичная инициализация
                 LD B, #00   ; идентификатор картинки (временно)
                 LAUNCH_ASSET_FUNCTION Progress.Initialize, ExecuteModule.Progress
+                PUSH_USER_HANDLER                                               ; сохранить обработчик прерываний
+                SET_USER_HANDLER SharedCode.Interrupt                           ; установить обработчик на время загрузки
 
                 ; копирование календарного времени из слота в состояние сессии
                 ; ToDo: необходимо пересмотреть инициализацию
@@ -37,7 +39,13 @@ Load_Session:   ; копирование блока
                 CALL SharedCode.Load.Map
                 CALL SharedCode.PostLoad.Launch                                 ; подготовка карты к использованию
 
-                LAUNCH_ASSET_FUNCTION Progress.Release, ExecuteModule.Progress  ; освобождение "окно прогресса" 
+                ; принудительная установка максимального процента
+                PROGRESS_PERCENT_FIXED 100.0
+                LAUNCH_ASSET_FUNCTION Progress.ToPercent, ExecuteModule.Progress
+                DELAY 1                                                         ; набольшая задержка
+
+                POP_USER_HANDLER                                                ; восстановить обработчик прерываний
+                LAUNCH_ASSET_FUNCTION Progress.Release, ExecuteModule.Progress  ; освобождение окна прогресса
                 JP SharedCode.Core.ReleaseAsset                                 ; освобождение текущего ресурса ("сессии")
 
                 display " - Load 'Session':\t\t\t\t\t\t     \t= busy [ ", /D, $-Load_Session, " byte(s) ]"

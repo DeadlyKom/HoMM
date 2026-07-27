@@ -13,6 +13,13 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
                 HALT                                                            ; синхронизация
                 BORDER BLACK                                                    ; установка бордюра
 
+                ; инициализация тика
+                LD HL, WorldTreeSymbol
+                LD A, (HL)
+                DEC A
+                LD (Tick.FrameNum), A
+                LD (Tick.FrameCounter), A
+
                 ; -----------------------------------------
                 ; очистка экранов
                 ; -----------------------------------------
@@ -40,17 +47,17 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
                 ; -----------------------------------------
 
                 ; проверка наличия требуемой стадии
-                EX DE, HL                                                       ; адрес копированого блока
+                EX DE, HL                                                       ; адрес скопированного блока
                 LD B, (HL)                                                      ; первый байт указывает на количество доступных стадий
                 POP AF                                                          ; чтение идентификатора картинки
                 CP B
                 JR C, $+3                                                       ; переход, если имеется требуемый идентификатор
-                XOR A                                                           ; сброс идентификатора картинки, 
+                XOR A                                                           ; сброс идентификатора картинки;
                                                                                 ; нулевой идентификатор всегда общий
-                ; рассчёт адреса смещения до требуемого изображения
+                ; расчёт адреса смещения до требуемого изображения
                 ADD A, A    ; x2
                 LD L, A                                                         ; начальный адрес загрузки ассета всегда выровнен
-                INC L                                                           ; пропуск количество стадий в ассете
+                INC L                                                           ; пропуск байта с количеством стадий
 
                 ; чтение смещения и расчёт адреса требуемого изображения
                 LD C, (HL)
@@ -79,16 +86,14 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
                 SCREEN_ADR_REG HL, SCR_ADR_BASE, 24, 186
                 LD (HL), #00
                 CALL Line
-
-                CALL DrawHint                                                  ; отобразить подсказку
-                
+                CALL DrawHint                                                   ; отобразить подсказку
                 HALT                                                            ; синхронизация
                 SHOW_BASE_SCREEN                                                ; отображение базового экрана
                 RELEASE_ASSETS_IN_PAGE ASSETS_ID_PROGRESS_STAGES                ; освобождение ассета (находясь в странице)
                 CALL EnterProgress.Reset                                        ; сброс состояния прогресса
 
                 else
-                POP AF                                                          ; удаление со стека значение
+                POP AF                                                          ; удаление значения со стека
                 endif
                 RET
 Line            LD D, H
@@ -117,7 +122,7 @@ DrawHint        ; A = rand() % Hint.Num
                 CALL Math.Div8x8                                                ; mod
                 ADD A, A    ; x2
 
-                ; расчёт адреса выбранно подсказки
+                ; расчёт адреса выбранной подсказки
                 LD HL, Hint                                                     ; только такая запись, т.к. адрес неопределён
                 ADD A, L
                 LD L, A
@@ -137,7 +142,7 @@ DrawHint        ; A = rand() % Hint.Num
 
 .Loop           PUSH BC
 
-                ; копирование строки в буффер
+                ; копирование строки в буфер
                 CALL String.Length
                 LD DE, Adr.TilemapBuffer
                 CALL Memcpy.FastLDIR

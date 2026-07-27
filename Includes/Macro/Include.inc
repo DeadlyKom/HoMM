@@ -9,6 +9,7 @@
                 include "Mouse.inc"
                 include "Asset.inc"
                 include "Assets.inc"
+                include "Offset.inc"
                 include "Memory.inc"
                 include "Memset.inc"
                 include "TR-DOS.inc"

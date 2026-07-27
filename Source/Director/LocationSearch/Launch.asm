@@ -20,13 +20,15 @@
                 ;   - сохранить подходящие гексы и найденные паттерны
                 ;     для SpawnPointFormation
 
-Launch:         ; пример продвижения на указанный шаг
+Launch:         
+                LD B, 20
+.L1             PUSH BC
+                ; пример продвижения на указанный шаг
                 PROGRESS_PERCENT_FIXED 3.8
                 LAUNCH_ASSET_FUNCTION Progress.EnterProgress, ExecuteModule.Progress
-
-                ; пример продвижения до фиксированного процента
-                PROGRESS_PERCENT_FIXED 100.0
-                LAUNCH_ASSET_FUNCTION Progress.ToPercent, ExecuteModule.Progress
+                DELAY 0.3                                                         ; набольшая задержка        
+                POP BC
+                DJNZ .L1
 
                 RET
 

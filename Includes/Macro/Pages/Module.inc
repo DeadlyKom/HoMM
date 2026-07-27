@@ -12,6 +12,17 @@ SET_MODULE_PAGE_MainMenu macro
                 SET_PAGE_A
                 endm
 ; -----------------------------------------
+; включить страницу модуля "Progress"
+; In:
+; Out:
+; Corrupt:
+;   BC, AF
+; -----------------------------------------
+SET_MODULE_PAGE_Progress macro
+                LD A, (Kernel.Modules.Progress.Page)
+                SET_PAGE_A
+                endm
+; -----------------------------------------
 ; включить страницу модуля "World"
 ; In:
 ; Out:

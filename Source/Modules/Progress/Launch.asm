@@ -18,16 +18,18 @@
 ;       PROGRESS_PERCENT_FIXED 50.0
 ;       LAUNCH_ASSET_FUNCTION Progress.ToPercent, ExecuteModule.Progress
 ; -----------------------------------------
-Launch:         ; первичная инициализация загруженного ассета "сессии"
-                ; на вершине стека лежит исходный FunctionID (Make/Load)
+Launch:         ; первичная инициализация загруженного ассета Progress
+                ; на вершине стека лежит идентификатор запрошенной функции
 
-                ; сохранение страницы
+                ; сохранение страницы и адреса загруженного модуля
                 LD A, (GameState.Assets + FAssets.Address.Page)
                 LD (Kernel.Modules.Progress.Page), A
 
-                ; повторный вход в диспетчер уже инициализированного ассета;
-                ; исходный FunctionID сохранён в стеке
                 LD HL, (GameState.Assets + FAssets.Address.Adr)
+                LD (Kernel.Modules.Progress.Address), HL
+
+                ; повторный вход в диспетчер уже инициализированного ассета
+                ; HL содержит адрес диспетчера, а идентификатор функции сохранён в стеке
                 JP (HL)
 
                 display " - Launch:\t\t\t\t\t\t\t     \t= busy [ ", /D, $-Launch, " byte(s) ]"
