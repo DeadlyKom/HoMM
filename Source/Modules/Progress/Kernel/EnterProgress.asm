@@ -59,13 +59,22 @@ EnterProgress:  POP BC                                                          
 
                 LD B, A
 
+                ; копирование Strip в фиксированный буфер
+                PUSH BC                                                         ; сохранение счётчика проходов
+                LD HL, Strip
+                LD DE, ProgressBuffer
+                LD BC, Graphics.UI.Progress.Strip.Size
+                CALL Memcpy.FastLDIR
+                POP BC
+
                 ; расчёт адреса текущей записи таблицы
                 LD A, C
                 ADD A, A    ; х2
                 LD L, A
                 LD H, #00
-                LD DE, Strip
+                LD DE, ProgressBuffer
                 ADD HL, DE
+                SET_RENDER_TO_SHADOW_SCREEN                                     ; установка работы с теневым экраном
 
 .DrawLoop       HALT                                                            ; синхронизация перед выводом
 
@@ -76,8 +85,9 @@ EnterProgress:  POP BC                                                          
 
                 PUSH HL                                                         ; сохранение адреса старшего байта смещения
                 ADD HL, DE                                                      ; получение адреса графики этапа
+                LD (Draw.NotBoundSpriteAdr), HL
                 PUSH BC                                                         ; сохранение счётчика проходов
-                CALL Draw.SpriteNotBound                                        ; отображение достигнутого этапа
+                CALL_IN_PAGE PAGE_7, Draw.SpriteNotBoundSet                     ; отображение достигнутого этапа в теневом экране
                 POP BC                                                          ; восстановление счётчика проходов
 
                 ; переход к следующей записи таблицы

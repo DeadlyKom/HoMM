@@ -14,6 +14,7 @@ Initialize:     ; проверка наличия списка "точек сп�
                 OR A
                 RET NZ                                                          ; выход, т.к. список "точек спавна" уже существует
 
+                CALL DistanceMap.Launch                                         ; формирование карты расстояний
                 CALL LocationSearch.Launch
                 JP SpawnPointFormation.Launch
 

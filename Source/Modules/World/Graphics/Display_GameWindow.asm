@@ -13,6 +13,7 @@ GameWindow:     ; подготовка основного экрана
                 ATTR_IPB SCR_ADR_BASE, BLACK, WHITE, 0                          ; очистка атрибутов основного экрана
 
                 ; отображение рамки игрового окна
+                SET_RENDER_TO_BASE_SCREEN                                       ; установка работы с основным экраном
                 LD HL, Frame
                 CALL Draw.SpriteNotBound
 

@@ -30,11 +30,17 @@ Draw:           ; инициализация
                 LD A, (HL)
                 INC H
                 LD D, (HL)
-                RES 7, D                                                        ; сброс бита, переход на основной экран
                 INC H
                 LD L, E
                 OR (HL)
                 LD E, A
+
+                ; корректировка адреса вывода
+                LD A, (GameState.Screen)
+                XOR D
+                AND %10000000
+                XOR D
+                LD D, A
                 LD (.ScreenAdr), DE
                 
                 ;

@@ -4,8 +4,9 @@
 
                 ; начальное заселение
                 module Director
-                include "Source/Director/LocationSearch/Include.inc"
-                include "Source/Director/SpawnPointFormation/Include.inc"
+                include "DistanceMap/Include.inc"
+                include "LocationSearch/Include.inc"
+                include "SpawnPointFormation/Include.inc"
                 include "Initialize.asm"
 AIDirector      FAIDirector                                                     ; структура управления популяцией ИИ (временная)
                 endmodule

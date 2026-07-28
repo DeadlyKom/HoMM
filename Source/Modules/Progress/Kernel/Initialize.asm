@@ -89,6 +89,9 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
                 CALL DrawHint                                                   ; отобразить подсказку
                 HALT                                                            ; синхронизация
                 SHOW_BASE_SCREEN                                                ; отображение базового экрана
+                CALL Func.ShadowScrcpyInPage                                    ; копирование основного экрана в теневой
+                SHOW_SHADOW_SCREEN                                              ; отобразить теневой экран
+                SET_RENDER_TO_SHADOW_SCREEN                                     ; установка работы с теневым экраном
                 RELEASE_ASSETS_IN_PAGE ASSETS_ID_PROGRESS_STAGES                ; освобождение ассета (находясь в странице)
                 CALL EnterProgress.Reset                                        ; сброс состояния прогресса
 

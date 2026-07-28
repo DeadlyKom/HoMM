@@ -8,6 +8,26 @@
 ; Corrupt:
 ; Note:
 ;   код расположен в общей
+;
+;   последовательность подготовки карты:
+;
+;   загрузка блоков карты
+;   ├─ подготовка свойств карты
+;   └─ Director.Initialize
+;       └─ проверка SpawnPointList
+;           │
+;           ├─ список существует ───────────────────────┐
+;           │                                           │
+;           └─ списка нет                               │
+;               ├─ формирование карты расстояний        │
+;               ├─ LocationSearch                       │
+;               └─ SpawnPointFormation ─────────────────┤
+;                                                       ↓
+;                                                 Initial.Spawn
+;                                                       ↓
+;                                                  Cartography
+;                                                       ↓
+;                                                   завершение
 ; -----------------------------------------
 Launch:         CALL Session.SharedCode.Director.Initialize                     ; инициализация директора управления популяцией ИИ
                 CALL Session.SharedCode.Director.Initial.Spawn                  ; запуск начального заселения
