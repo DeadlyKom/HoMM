@@ -4,6 +4,7 @@
 
                 include "Map.inc"
                 include "Object.inc"
+                include "Surface.inc"
                 include "Metadata.inc"
 
                 endif ; ~_STRUCTS_MAP_INCLUDE_

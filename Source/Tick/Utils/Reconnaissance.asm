@@ -13,7 +13,11 @@
 ; Note:
 ;   код расположен в странице 0
 ; -----------------------------------------
-Request:        ; получить ParticipantID владельца объекта
+Request:        ; ToDo: учесть модификатор разведки гексагонального тайла
+                ;       из Adr.SurfProperty и дополнительные корректировки
+                ;       от навыков персонажа; их состав и порядок пока неизвестны
+
+                ; получить ParticipantID владельца объекта
                 LD A, (IX + FObjectCharacter.CharacterID)
                 CALL Character.Utilities.GetAdr.HL                              ; получить адрес персонажа
                 INC HL

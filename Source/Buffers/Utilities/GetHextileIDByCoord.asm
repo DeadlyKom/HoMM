@@ -42,7 +42,7 @@ GetHextileIDByCoord:
 ;   HL, AF
 ; Note:
 ;   код расположен рядом с картой и таблицей проходимости (страница 1)
-;   HextileID используется только как временный индекс таблицы SurfPass
+;   HextileID используется только как временный индекс таблицы Adr.SurfPassability
 ; -----------------------------------------
 GetSurfaceStepCostByCoord.Wrap:
                 EXX
@@ -58,15 +58,16 @@ GetSurfaceStepCostByCoord.Wrap:
 ; Corrupt:
 ;   HL, AF
 ; Note:
-;   HextileID используется только как временный индекс таблицы SurfPass
+;   HextileID используется только как временный индекс таблицы Adr.SurfPassability
 ; -----------------------------------------
 GetSurfaceStepCostByCoord:
                 CALL GetHextileIDByCoord
                 LD L, A
-                LD H, HIGH Adr.SurfPass
+                LD H, HIGH Adr.SurfPassability
                 LD A, (HL)
+                AND SURFACE_STEP_COST_MASK
                 RET
 
-                display " - Get hextile ID by coodinates:\t\t\t", /A, GetHextileIDByCoord, "\t= busy [ ", /D, $-GetHextileIDByCoord, " byte(s)  ]"
+                display " - Get hextile ID by coodinates:\t\t\t", /A, GetHextileIDByCoord.Wrap, "\t= busy [ ", /D, $-GetHextileIDByCoord.Wrap, " byte(s)  ]"
 
                 endif ; ~_BUFFERS_GET_HEXTILE_ID_BY_COORDINATES_
