@@ -10,6 +10,7 @@
                 include "MemoryMap_Page_3.inc"
                 include "MemoryMap_Page_4.inc"
                 include "MemoryMap_Page_5.inc"
+                include "MemoryMap_Page_5 (progress).inc"
                 include "MemoryMap_Page_6.inc"
                 include "MemoryMap_Page_7.inc"
                 include "MemoryMap_Page_7 (main menu).inc"

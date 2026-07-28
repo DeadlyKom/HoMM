@@ -62,7 +62,7 @@ EnterProgress:  POP BC                                                          
                 ; копирование Strip в фиксированный буфер
                 PUSH BC                                                         ; сохранение счётчика проходов
                 LD HL, Strip
-                LD DE, ProgressBuffer
+                LD DE, Adr.ProgressBuffer
                 LD BC, Graphics.UI.Progress.Strip.Size
                 CALL Memcpy.FastLDIR
                 POP BC
@@ -72,7 +72,7 @@ EnterProgress:  POP BC                                                          
                 ADD A, A    ; х2
                 LD L, A
                 LD H, #00
-                LD DE, ProgressBuffer
+                LD DE, Adr.ProgressBuffer
                 ADD HL, DE
                 SET_RENDER_TO_SHADOW_SCREEN                                     ; установка работы с теневым экраном
 

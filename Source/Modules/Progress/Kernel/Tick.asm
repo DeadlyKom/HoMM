@@ -65,12 +65,12 @@ Tick:           ifdef ENABLE_LOADING_PROCESS
 
                 ; копирование кода кадра в фиксированный буфер
                 EX DE, HL                                                       ; адрес кода текущего кадра
-                LD DE, TickBuffer
+                LD DE, Adr.TickBuffer
                 CALL Memcpy.FastLDIR
 
                 ; запуск копии при включённой странице теневого экрана;
                 ; после RET страница модуля Progress будет восстановлена
-                CALL_IN_PAGE PAGE_7, TickBuffer
+                CALL_IN_PAGE PAGE_7, Adr.TickBuffer
 
                 ; переход к следующему кадру анимации
                 LD HL, .FrameCounter
