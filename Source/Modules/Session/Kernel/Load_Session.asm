@@ -39,13 +39,12 @@ Load_Session:   ; копирование блока
                 CALL SharedCode.Load.Map
                 CALL SharedCode.PostLoad.Launch                                 ; подготовка карты к использованию
 
-                ; принудительная установка максимального процента
-                PROGRESS_PERCENT_FIXED 100.0
+                ; установка порога завершения подготовки сессии
+                PROGRESS_PERCENT_FIXED 82.0
                 LAUNCH_ASSET_FUNCTION Progress.ToPercent, ExecuteModule.Progress
-                DELAY 1                                                         ; набольшая задержка
 
+                LAUNCH_ASSET_FUNCTION Progress.WaitAnimationCycle, ExecuteModule.Progress
                 POP_USER_HANDLER                                                ; восстановить обработчик прерываний
-                LAUNCH_ASSET_FUNCTION Progress.Release, ExecuteModule.Progress  ; освобождение окна прогресса
                 JP SharedCode.Core.ReleaseAsset                                 ; освобождение текущего ресурса ("сессии")
 
                 display " - Load 'Session':\t\t\t\t\t\t     \t= busy [ ", /D, $-Load_Session, " byte(s) ]"

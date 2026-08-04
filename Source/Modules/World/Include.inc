@@ -2,6 +2,7 @@
                 ifndef _MODULE_WORLD_INCLUDE_
                 define _MODULE_WORLD_INCLUDE_
 
+                include "ProgressTimeline.inc"                                  ; (0)
                 include "Kernel_Bind.inc"
                 include "Launch.asm"
                 include "UI/Include.inc"

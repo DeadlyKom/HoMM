@@ -13,12 +13,19 @@ Launch:         ; -----------------------------------------
                 ; сохранение страницы
                 LD A, (GameState.Assets + FAssets.Address.Page)
                 LD (Kernel.Modules.World.Page), A
+
+                ; отключение обработчика прогресса перед заменой SharedCode
+                RES_USER_HANDLER
                 ; -----------------------------------------
                 HALT                                                            ; синхронизация
                 ATTR_IPB SCR_ADR_BASE, BLACK, BLACK, 0                          ; скрытие атрибутами основного экрана
                 MEMCPY Adr.Deploy.World, Adr.World, Size.Deploy.World           ; копирование блока
                 MEMCPY_PAGE Adr.Deploy.SharedScreen, Adr.SharedScreen, \
                             Page.SharedScreen, Size.Deploy.SharedScreen         ; копирование блока между страницами
+
+                ; установка порога завершения развёртывания кода мира
+                PROGRESS_PERCENT_FIXED WORLD_PROGRESS_DEPLOY_END
+                LAUNCH_ASSET_FUNCTION Progress.ToPercent, ExecuteModule.Progress
                 ; -----------------------------------------
                 ; генерация таблица для поиска первого установленного бита
                 LD HL, Adr.CodeToScr
@@ -37,12 +44,26 @@ Launch:         ; -----------------------------------------
                 CALL Tables.TG_ScrBlockTable
                 MEMCPY_PAGE Adr.CodeToScr + 80, Adr.ScrBlockTable, \
                             Page.ScrBlockTable, Size.ScrBlockTable              ; копирование блока cгенерированной таблицы номера экранного блока (с 1 по 22 строку включительно) с высотой гексагона
+
+                ; установка порога завершения формирования таблиц мира
+                PROGRESS_PERCENT_FIXED WORLD_PROGRESS_TABLES_END
+                LAUNCH_ASSET_FUNCTION Progress.ToPercent, ExecuteModule.Progress
                 ; -----------------------------------------
                 ; инициализация спрайтов
                 MEMCPY Adr.Deploy.Sprite, Adr.CodeToScr, Size.Deploy.Sprite     ; копирование блока
                 CALL World.Sprite.Character.Load                                ; загрузка и инициализация спрайтов персонажа
                 CALL World.Sprite.Cursor.Load                                   ; загрузка и инициализация спрайтов курсора
                 ; CALL World.Sprite.UI.Load                                       ; загрузка и инициализация спрайтов UI
+
+                ; установка порога завершения инициализации спрайтов
+                PROGRESS_PERCENT_FIXED WORLD_PROGRESS_SPRITES_END
+                LAUNCH_ASSET_FUNCTION Progress.ToPercent, ExecuteModule.Progress
+
+                ; установка порога завершения загрузки мира
+                PROGRESS_PERCENT_FIXED WORLD_PROGRESS_END
+                LAUNCH_ASSET_FUNCTION Progress.ToPercent, ExecuteModule.Progress
+                DELAY 1                                                         ; небольшая задержка перед отображением мира
+                LAUNCH_ASSET_FUNCTION Progress.Release, ExecuteModule.Progress  ; освобождение окна прогресса
                 ; -----------------------------------------
                 CALL Display.GameWindow                                         ; отображение рамки игрового мира
                 ; -----------------------------------------

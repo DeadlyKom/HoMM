@@ -8,6 +8,7 @@
                 include "HintText.inc"
                 include "Initialize.asm"
                 include "EnterProgress.asm"
+                include "WaitAnimationCycle.asm"
 Ornament        incbin "Builder/Assets/Graphics/Compressed/Progress/Ornament.pack"
 Strip           incbin "Builder/Assets/Graphics/Compressed/Progress/Strip.pack"
 WorldTreeSymbol incbin "Builder/Assets/Graphics/Compressed/Progress/WorldTreeSymbol.pack"
