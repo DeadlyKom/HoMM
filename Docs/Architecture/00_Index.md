@@ -115,8 +115,9 @@
 1. [Модель данных](05_Data_Model.md)
 2. [AI и StateTree](07_AI_and_StateTree.md)
 3. [FObjectCharacterAI и FAIContext](14_FObjectCharacterAI_and_FAIContext.md)
-4. [Поток рантайма и управление](06_Runtime_Flow_and_Control.md)
-5. [Модуль World](25_World_Module.md)
+4. [AI Population Director](27_AI_Population_Director.md)
+5. [Поток рантайма и управление](06_Runtime_Flow_and_Control.md)
+6. [Модуль World](25_World_Module.md)
 
 ## Как устроена книга по слоям
 
@@ -162,6 +163,7 @@
 - [Модуль Session](24_Session_Module.md)
 - [Модуль World](25_World_Module.md)
 - [AssetsManager и исполнение assets](26_AssetsManager_and_Asset_Execution.md)
+- [AI Population Director](27_AI_Population_Director.md)
 
 ### Этаж 5. Инженерные выводы и риски
 

@@ -11,6 +11,7 @@
 - [24_Session_Module.md](24_Session_Module.md)
 - [25_World_Module.md](25_World_Module.md)
 - [26_AssetsManager_and_Asset_Execution.md](26_AssetsManager_and_Asset_Execution.md)
+- [27_AI_Population_Director.md](27_AI_Population_Director.md)
 
 ## Что такое “модуль” в контексте проекта
 
