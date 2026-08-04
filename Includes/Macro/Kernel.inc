@@ -13,6 +13,10 @@ LAUNCH_ASSET_FUNCTION macro FuncID?, Module?
                 LD A, FuncID?
                 CALL Module?
                 endm
+JP_LAUNCH_ASSET_FUNCTION macro FuncID?, Module?
+                LD A, FuncID?
+                JP Module?
+                endm
 ; -----------------------------------------
 ; запуск функции ассет
 ; In:

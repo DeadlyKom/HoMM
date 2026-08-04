@@ -74,9 +74,16 @@ Build:          ; инициализация
                 DEC IYH
                 JR NZ, .VerticalLoop                                            ; переход, если счётчик не обнулён
 
+                ; продвижение прогресса после полного волнового прохода
+                PROGRESS_PERCENT_FIXED DIRECTOR_PROGRESS_DISTANCE_BUILD_STEP
+                CALL Session.SharedCode.Director.ProgressIncrement
+
 .ChangedFlag    FLAG_MODIFY 0                                                   ; флаг обновления расстояния
                 JR C, Build                                                     ; переход, если было зафиксировано изменение расстояния
-                RET
+
+                ; установка точного порога завершения карты расстояний
+                PROGRESS_PERCENT_FIXED DIRECTOR_PROGRESS_DISTANCE_BUILD_END
+                JP Session.SharedCode.Director.ProgressToPercent
 ; -----------------------------------------
 ; проверка двух соседей в верхней строке
 ; In:

@@ -14,22 +14,11 @@
 ;   сохраняются в рабочем буфере директора
 ; -----------------------------------------
                 ; ToDo:
-                ;   - сформировать карту расстояний
                 ;   - обойти все гексы карты
                 ;   - проверить условия каждого SpawnPattern
                 ;   - сохранить подходящие гексы и найденные паттерны
                 ;     для SpawnPointFormation
 
-Launch:         
-                LD B, 20
-.L1             PUSH BC
-                ; пример продвижения на указанный шаг
-                PROGRESS_PERCENT_FIXED 3.8
-                LAUNCH_ASSET_FUNCTION Progress.EnterProgress, ExecuteModule.Progress
-                DELAY 0.3                                                         ; набольшая задержка        
-                POP BC
-                DJNZ .L1
-
-                RET
+Launch:         RET
 
                 endif ; ~_AI_DIRECTOR_LOCATION_SEARCH_LAUNCH_
