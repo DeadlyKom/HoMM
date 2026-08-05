@@ -10,9 +10,11 @@ OBJECT_EMPTY_ELEMENT                EQU #FF                                     
 ; значения для поля FObject.Flags
 OBJECT_DIRTY_BIT                    EQU 0x05                                    ; флаг, объект необходимо обновить
 OBJECT_TICK_ENABLED_BIT             EQU 0x04                                    ; флаг, разрешающий тик объекта
+OBJECT_WEAKLY_REFERENCED_BIT        EQU 0x03                                    ; флаг, на объект существует слабая ссылка
 
 OBJECT_DIRTY                        EQU 1 << OBJECT_DIRTY_BIT
 OBJECT_TICK_ENABLED                 EQU 1 << OBJECT_TICK_ENABLED_BIT
+OBJECT_WEAKLY_REFERENCED            EQU 1 << OBJECT_WEAKLY_REFERENCED_BIT
 
 
                 endif ; ~_CONST_OBJECT_INCLUDE_

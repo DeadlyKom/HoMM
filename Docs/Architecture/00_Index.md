@@ -90,10 +90,11 @@
 
 Читай в таком порядке:
 1. [FObject](12_FObject.md)
-2. [Поток рантайма и управление](06_Runtime_Flow_and_Control.md)
-3. [TickScheduler и cadence-обновление объектов](19_TickScheduler_and_Object_Cadence.md)
-4. [Модуль Session](24_Session_Module.md)
-5. [Модуль World](25_World_Module.md)
+2. [RemoveAtSwap: удаление с заменой последним элементом](28_RemoveAtSwap.md)
+3. [Поток рантайма и управление](06_Runtime_Flow_and_Control.md)
+4. [TickScheduler и cadence-обновление объектов](19_TickScheduler_and_Object_Cadence.md)
+5. [Модуль Session](24_Session_Module.md)
+6. [Модуль World](25_World_Module.md)
 
 Этот маршрут нужен для задач, где важно понять:
 - как `FObject` связывается с chunk-моделью мира;
@@ -141,6 +142,7 @@
 - [Макро-система и флаги](17_Macro_System_and_Flag_Orchestration.md)
 - [Rendering pipeline](18_Rendering_Pipeline.md)
 - [TickScheduler и cadence-обновление объектов](19_TickScheduler_and_Object_Cadence.md)
+- [RemoveAtSwap: удаление с заменой последним элементом](28_RemoveAtSwap.md)
 
 ### Этаж 3. Детальные разборы структур
 
@@ -251,6 +253,7 @@ flowchart TD
 - макро-система или флаговые контракты — обновлять главы 03 и 17;
 - экранный цикл мира — обновлять главы 18 и 25;
 - объектный tick, cadence или `TickScheduler` — обновлять главу 19;
+- хранение, удаление объектов или правила коррекции ссылок — обновлять главы 12 и 28;
 - модель данных — обновлять главы 05 и 09-15;
 - AI-слой — обновлять главы 07 и 14;
 - модульная структура runtime — обновлять главы 04 и 20-26.
