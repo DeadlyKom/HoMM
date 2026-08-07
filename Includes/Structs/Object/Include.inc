@@ -3,7 +3,9 @@
                 define _STRUCT_OBJECT_INCLUDE_
 
                 include "Object_.inc"
+                include "Object_Layer.inc"
                 include "Object_UI.inc"
+                include "Object_Decal.inc"
                 include "Object_Character.inc"
                 include "Object_CharacterAI.inc"
                 include "Object_Construction.inc"

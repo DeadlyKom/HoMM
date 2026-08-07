@@ -6,6 +6,7 @@
                 include "Class.inc"
                 include "Object_.inc"
                 include "Object_UI.inc"
+                include "LayerObject.inc"
                 include "Object_Character.inc"
                 include "ObjectDefaultSettings.inc"
 
