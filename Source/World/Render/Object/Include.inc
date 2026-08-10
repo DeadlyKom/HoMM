@@ -6,9 +6,11 @@
                 include "BoundScreenBlock.asm"
                 include "Draw.asm"
                 include "UI/Include.inc"
-                include "Character/Include.inc"
-                include "ObjectsInView.asm"
+                include "Decal/Include.inc"
                 include "Simple/Include.inc"
+                include "Character/Include.inc"
+                include "LayerObject/Include.inc"
+                include "ObjectsInView.asm"
                 include "ObjectDirtyEnvironment.asm"
                 endmodule
 

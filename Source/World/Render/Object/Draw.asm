@@ -71,9 +71,6 @@ Draw:           ; инициализация
 .NeedRefresh    PUSH DE
                 ; расчёт положения объекта относительно верхнего левого видимого края
                 CALL Utilities.TransformToScr                     
-
-                ; ToDo: для объектов Decal и UI с флагом LAYER_OBJECT_ATTR_ALIGN
-                ;       выровнять экранное положение по знакоместу
                 LD (Kernel.Sprite.DrawClipping.PositionX), DE
                 LD (Kernel.Sprite.DrawClipping.PositionY), HL
 
@@ -126,7 +123,7 @@ Draw:           ; инициализация
                 DW .RET                                                         ; OBJECT_CLASS_PROPS
                 DW .RET                                                         ; OBJECT_CLASS_INTERACTION
                 DW .RET                                                         ; OBJECT_CLASS_PARTICLE
-                DW .RET                                                         ; OBJECT_CLASS_DECAL
+                DW Decal.Draw                                                   ; OBJECT_CLASS_DECAL
                 DW UI.Draw                                                      ; OBJECT_CLASS_UI
 
                 endif ; ~_WORLD_RENDER_OBJECT_DRAW_
