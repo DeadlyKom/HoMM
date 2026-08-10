@@ -69,8 +69,11 @@ Draw:           ; инициализация
                 RES OBJECT_DIRTY_BIT, (IY + FObject.Flags)                      ; сброс флага
 
 .NeedRefresh    PUSH DE
-                ; расчёт положения объекта относительно верхнего-левого видимойго края
+                ; расчёт положения объекта относительно верхнего левого видимого края
                 CALL Utilities.TransformToScr                     
+
+                ; ToDo: для объектов Decal и UI с флагом LAYER_OBJECT_ATTR_ALIGN
+                ;       выровнять экранное положение по знакоместу
                 LD (Kernel.Sprite.DrawClipping.PositionX), DE
                 LD (Kernel.Sprite.DrawClipping.PositionY), HL
 

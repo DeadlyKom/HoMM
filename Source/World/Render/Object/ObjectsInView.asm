@@ -18,7 +18,6 @@ InView:         ; инициализация
                 LD (AddObjects.OffsetUI), A
                 LD (AddObjects.OffsetDecal), A
                 LD IX, AddObjects
-                LD D, HIGH Adr.SortBuffer
                 EXX
 
                 ; формирование рамки захвата
@@ -80,7 +79,6 @@ InView:         ; инициализация
 ;   A  - количество добавляемых элементов
 ;   H  - старший адрес текущего массива чанков
 ;   E  - смещение в массиве чанков первого элемента
-;   D' - старший байт адреса Adr.SortBuffer
 ; Out:
 ;   Adr.SortBuffer - адреса объектов в порядке Decal, World, UI
 ;   InView.Num     - количество объектов в SortBuffer
@@ -114,6 +112,7 @@ AddObjects:     ; инициализация
                 PUSH HL
                 PUSH BC
 
+                LD D, HIGH Adr.SortBuffer                                       ; старший байт адреса SortBuffer
 .Offset         EQU $+1                                                         ; количество объектов в областях World и UI
                 LD E, #00
                 SLA E   ; x2
