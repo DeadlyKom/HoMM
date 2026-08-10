@@ -8,10 +8,15 @@
 ; Out:
 ; Corrupt:
 ; Note:
+;   обход SortBuffer начинается с области Decal
+;   при переполнении младшего байта адреса обход автоматически продолжается с начала SortBuffer,
+;   что позволяет добавлять Decal с конца, а World и UI с начала буфера без перемещения области Decal
 ; -----------------------------------------
 Draw:           ; инициализация
-                LD DE, Adr.SortBuffer
                 LD B, A
+                LD D, HIGH Adr.SortBuffer                                       ; старший байт адреса SortBuffer
+                LD A, (AddObjects.OffsetDecal)                                  ; смещение начала области Decal
+                LD E, A                                                         ; адрес первого элемента списка
 
 .Loop           ; чтение адреса объекта
                 LD A, (DE)
