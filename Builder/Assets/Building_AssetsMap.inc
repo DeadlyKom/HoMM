@@ -124,17 +124,17 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     Graphics.Cursor.Size, \
                                     Graphics.Cursor.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
-                                    "  - Graphic Cursor\t\t\t\t\t"
-                ; REG_BUILD_ASSETS_ID ASSETS_ID_UI_ARROW_PATH_PACK, \
-                ;                     UI.Graphics.ArrowPath.Size, \
-                ;                     UI.Graphics.ArrowPath.Size.Sector.ar, \
-                ;                     ASSETS_ARCHIVE, \
-                ;                     "  - UI Graphic 'Arrow Path'\t\t\t\t"
+                                    "  - Graphics: Cursor\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_HERO_PACK, \
                                     Graphics.Hero.Size, \
                                     Graphics.Hero.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
-                                    "  - Graphic Hero\t\t\t\t\t"
+                                    "  - Graphics: Hero\t\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_UI_GAMEPLAY_COMMON_PACK, \
+                                    Graphics.UI.Gameplay.Common.Size, \
+                                    Graphics.UI.Gameplay.Common.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Graphics: Gameplay Common\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_HEX_FOG, \
                                     Graphics.Hexagon.Fog.Size, \
                                     Graphics.Hexagon.Fog.Size.Sector.ar, \

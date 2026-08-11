@@ -57,10 +57,10 @@ ADD_ASSETS_DEBUG macro Bank?, Page?, ORG?, Include?
                 ADD_ASSETS 3, Page.ObjectDefaultSettings, Adr.ObjectDefaultSettings, "Builder/Assets/Metadata/Compressed/Default/DefaultSettings.meta.ar"
                 ; ASSETS_ID_CURSOR_PACK
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/Cursor.pack.ar"
-                ; ; ASSETS_ID_UI_ARROW_PATH_PACK
-                ; ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/UI_ArrowPath.pack.ar"
                 ; ASSETS_ID_HERO_PACK
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/Hero.pack.ar"
+                ; ASSETS_ID_UI_GAMEPLAY_COMMON_PACK
+                ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/UI/Common.pack.ar"
                 ; ASSETS_ID_HEX_FOG
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/Hex/Fog.pack.ar"
                 ; ASSETS_ID_HEX_GRASSLANDS

@@ -3,12 +3,9 @@
                 define _GRAPHICS_UI_INCLUDE_
 
                 module UI
-                
-                ; include "ArrowPath/Include.inc"
+                include "Gameplay/Include.inc"
                 include "Progress/Include.inc"
-                include "Game/World/Include.inc"
                 include "MainMenu/Include.inc"
-
                 endmodule
 
                 endif ; ~ _GRAPHICS_UI_INCLUDE_

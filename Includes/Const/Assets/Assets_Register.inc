@@ -31,11 +31,11 @@ REG_ASSETS_ID_DEBUG macro Label?
                     REG_ASSETS_ID       ASSETS_ID_SESSION                       ; сессия
                     REG_ASSETS_ID       ASSETS_ID_WORLD                         ; мир
                     REG_ASSETS_ID       ASSETS_ID_DEFAULT_SETTINGS              ; дефолтные настройки объектов
-                    REG_ASSETS_ID       ASSETS_ID_CURSOR_PACK                   ; графика курсора
-                    ; REG_ASSETS_ID       ASSETS_ID_UI_ARROW_PATH_PACK            ; графика UI стрелок пути
-                    REG_ASSETS_ID       ASSETS_ID_HERO_PACK                     ; графика героев
-                    REG_ASSETS_ID       ASSETS_ID_HEX_FOG                       ; графика гексагонная, туман
-                    REG_ASSETS_ID       ASSETS_ID_HEX_GRASSLANDS                ; графика гексагонная, природные ландшафты - луга
+                    REG_ASSETS_ID       ASSETS_ID_CURSOR_PACK                   ; графика: курсора
+                    REG_ASSETS_ID       ASSETS_ID_HERO_PACK                     ; графика: героев
+                    REG_ASSETS_ID       ASSETS_ID_UI_GAMEPLAY_COMMON_PACK       ; графика: общая для Gameplay
+                    REG_ASSETS_ID       ASSETS_ID_HEX_FOG                       ; графика: гексагонная, туман
+                    REG_ASSETS_ID       ASSETS_ID_HEX_GRASSLANDS                ; графика: гексагонная, природные ландшафты - луга
                     REG_ASSETS_ID       ASSETS_ID_MAP_DEBUG                     ; карта "отладочная"
                     REG_ASSETS_ID       ASSETS_ID_MUSIC_01                      ; музыка №01
 
