@@ -53,7 +53,7 @@ Launch:         ; -----------------------------------------
                 MEMCPY Adr.Deploy.Sprite, Adr.CodeToScr, Size.Deploy.Sprite     ; копирование блока
                 CALL World.Sprite.Character.Load                                ; загрузка и инициализация спрайтов персонажа
                 CALL World.Sprite.Cursor.Load                                   ; загрузка и инициализация спрайтов курсора
-                ; CALL World.Sprite.UI.Load                                       ; загрузка и инициализация спрайтов UI
+                CALL World.Sprite.UI.Load                                       ; загрузка и инициализация спрайтов UI
 
                 ; установка порога завершения инициализации спрайтов
                 PROGRESS_PERCENT_FIXED WORLD_PROGRESS_SPRITES_END

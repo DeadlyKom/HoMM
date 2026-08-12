@@ -7,8 +7,7 @@ Begin           EQU $
                 include "Draw.asm"
 Indexes         ; индексы спрайтов в буфере спрайтов (Adr.SpriteInfoBuffer)
 
-                DB #00                                                          ; "Idle"
-                DB #00                                                          ; "Up"
+                DB #00                                                          ; "Pointer"
 
                 display " - Draw UI element:\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $-Begin, " byte(s)  ]"
                 endmodule

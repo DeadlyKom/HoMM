@@ -15,6 +15,8 @@ Draw:           ; --------------------------------------------------------------
                 BIT LAYER_OBJECT_ATTR_ALIGN_BIT, (IY + FObjectUI.Layer.Flags)
                 CALL NZ, World.Base.Render.Object.LayerObject.AlignToAttr
 
+                ; ToDo: нижнюю часть переработать!
+
                 LD HL, Indexes
                 ; -----------------------------------------
                 ; Note:
