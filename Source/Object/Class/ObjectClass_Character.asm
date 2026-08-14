@@ -13,7 +13,7 @@
 ; -----------------------------------------
 Character:      ; -----------------------------------------
                 ; инициализация базового состояния объекта
-                LD (IY + FObject.Flags),  OBJECT_DIRTY | OBJECT_TICK_ENABLED
+                LD (IY + FObject.Flags), OBJECT_DIRTY | OBJECT_TICK_ENABLED | OBJECT_CURSOR_HIT_TEST
                 LD (IY + FObject.Sprite), ANIM_STATE_IDLE | (DIR_DOWN_LEFT << SPRITE_DIR_BIT)
                 ; -----------------------------------------
 

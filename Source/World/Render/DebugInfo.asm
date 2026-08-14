@@ -24,6 +24,9 @@ DebugInfo:      CALL .Coordinates
                 ifdef DEBUG_INFO_VISIBLE_OBJECTS
                 CALL .VisibleObjects
                 endif
+                ifdef DEBUG_INFO_CURSOR_HIT_TEST
+                CALL .CursorHitTest
+                endif
                 RET
 ; -----------------------------------------
 ; отображение координат карты и гексагона под курсором
@@ -212,6 +215,38 @@ DebugInfo:      CALL .Coordinates
                 RES_FLAG_MODIFY DebugInfo.VisibleObjects.Flag                   ; сброс флага, после завершения отрисовки
                 LD A, (World.Base.Render.Object.InView.Num)
                 JP Console.DrawByte
+                endif
+; -----------------------------------------
+; отображение результата Cursor HitTest объекта 0
+; -----------------------------------------
+                ifdef DEBUG_INFO_CURSOR_HIT_TEST
+.CursorHitTest: PUSH_PAGE                                                       ; сохранить текущую страницу памяти
+                SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
+                LD A, (Adr.ObjectsArray + FObject.Flags)
+                AND OBJECT_CURSOR_HIT_STATE
+                LD E, A                                                         ; сохранить результат Cursor HitTest
+                POP_PAGE                                                        ; восстановить страницу памяти
+
+                LD A, E
+                OR A
+                JR Z, .CursorHitTest.Miss
+
+                SET_REG_ATTR_IPB A, GREEN, BLACK, 0
+                JR .CursorHitTest.Draw
+
+.CursorHitTest.Miss:
+                SET_REG_ATTR_IPB A, RED, BLACK, 0
+
+.CursorHitTest.Draw:
+                CALL Console.SetAttribute
+                LD DE, #1718
+                CALL Console.SetCursor
+                LD A, 'H'
+                CALL Console.DrawChar
+                LD A, 'T'
+                CALL Console.DrawChar
+                LD A, '0'
+                JP Console.DrawChar
                 endif
 
                 endif ; ~_WORLD_RENDER_DEBUG_INFO_

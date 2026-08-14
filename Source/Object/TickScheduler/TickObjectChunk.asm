@@ -46,6 +46,7 @@ TickObjectChunk:; получение объектов в чанке
 .Loop           LD A, (DE)                                                      ; чтение ID объекта
                 CALL Object.Utilities.GetAdr.IX
 
+                ; проверка флага, разрешающего тик объекта
                 BIT OBJECT_TICK_ENABLED_BIT, (IX + FObject.Flags)
                 JR Z, .SkipObject
 
@@ -61,6 +62,10 @@ TickObjectChunk:; получение объектов в чанке
 .WorldDeltaTime EQU $
                 DB #00                                                          ; код команды OR A или SCF
                 EX AF, AF'                                                      ; сохранить Carry в альтернативном регистре флагов
+
+                ; проверка флага, разрешающего проверку попадания курсора в bound объекта
+                BIT OBJECT_CURSOR_HIT_TEST_BIT, (IX + FObject.Flags)
+                CALL NZ, .CursorHitTest
 
                 ; тик объекта в чанке
                 LD A, (IX + FObject.Class)
@@ -102,6 +107,30 @@ TickObjectChunk:; получение объектов в чанке
                 DEC E                                                           ; при переносе вперёд следующий объект сместился на текущий адрес
                 JR .Loop
 
+.CursorHitTest  ; проверка нахождения объекта в диапазоне Range_0
+                LD A, (.RelativeDeltaTime)
+                OR A
+                JR NZ, .CursorMiss                                              ; переход, если диапазон не нулевой
+
+                ; проверка по горизонтали
+                LD A, (Mouse.PositionX)
+                SUB (IX + FObject.Bound + FSpriteBound.Location.X)
+                JR C, .CursorMiss                                               ; переход, если курсор находится левее bound объекта
+                CP (IX + FObject.Bound + FSpriteBound.Size.Width)
+                JR NC, .CursorMiss                                              ; переход, если курсор находится правее bound объекта
+
+                ; проверка по вертикали
+                LD A, (Mouse.PositionY)
+                SUB (IX + FObject.Bound + FSpriteBound.Location.Y)
+                JR C, .CursorMiss                                               ; переход, если курсор находится выше bound объекта
+                CP (IX + FObject.Bound + FSpriteBound.Size.Height)
+                JR NC, .CursorMiss                                              ; переход, если курсор находится ниже bound объекта
+
+                SET OBJECT_CURSOR_HIT_STATE_BIT, (IX + FObject.Flags)
+                RET
+
+.CursorMiss     RES OBJECT_CURSOR_HIT_STATE_BIT, (IX + FObject.Flags)
+                RET
 ; -----------------------------------------
 ; диспетчер тика объекта
 ; In:
