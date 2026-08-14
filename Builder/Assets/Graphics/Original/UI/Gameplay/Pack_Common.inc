@@ -4,7 +4,9 @@
 
                 DB Graph.Num                                                    ; количество заголовков графики
 Graph:          EQU $
-                GRAPH_HEADER "Pointer",     Overlay.Pointer.SpriteInfo,     4
+                GRAPH_HEADER "Pointer",     Overlay.Pointer.SpriteInfo,             4
+                GRAPH_HEADER "FrameHero",   Overlay.FaceOfHeroes.Frame.SpriteInfo,  1
+                GRAPH_HEADER "SmallHero",   Overlay.FaceOfHeroes.Small.SpriteInfo,  8
 Graph.Num:      EQU ($-Graph) / FGraphicHeader
 
                 include "Overlay/Include.inc"

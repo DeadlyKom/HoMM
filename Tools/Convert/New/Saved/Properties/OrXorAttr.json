@@ -1,0 +1,15 @@
+{
+    "Name": "OrXorAttr",
+    "Properties": [
+        {
+            "Name": "SpriteType",
+            "Type": "int",
+            "Value": 0
+        },
+        {
+            "Name": "OverrideAttr",
+            "Type": "bool",
+            "Value": true
+        }
+    ]
+}
