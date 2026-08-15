@@ -16,7 +16,7 @@ Super           FObjectDefaultSettings                                          
 ; -----------------------------------------
 Flags           DB #00                                                          ; флаги                                                     [1 байт]
 
-Dummy           DS 3, 0                                                         ; резерв                                                    [3 байт]
+Dummy           DS 3, 0                                                         ; резерв                                                    [3 байта]
                 ends
 
                 endif ; ~_STRUCT_OBJECT_DEFAULT_SETTINGS_UI_

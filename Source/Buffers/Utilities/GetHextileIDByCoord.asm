@@ -10,7 +10,7 @@
 ; Corrupt:
 ;   HL, AF
 ; Note:
-;   код расположен рядом с картой (страница 1)
+;   ℹ️ код расположен в странице 1
 ; -----------------------------------------
 GetHextileIDByCoord.Wrap:
                 EXX
@@ -26,7 +26,7 @@ GetHextileIDByCoord.Wrap:
 ; Corrupt:
 ;   HL, AF
 ; Note:
-;   код расположен рядом с картой (страница 1)
+;   ℹ️ код расположен в странице 1
 ; -----------------------------------------
 GetHextileIDByCoord:
                 CALL GetMapArrayAdr                                             ; определение адреса карты по координатам
@@ -41,8 +41,9 @@ GetHextileIDByCoord:
 ; Corrupt:
 ;   HL, AF
 ; Note:
-;   код расположен рядом с картой и таблицей проходимости (страница 1)
-;   HextileID используется только как временный индекс таблицы Adr.SurfPassability
+;   ℹ️ код расположен в странице 1
+;       HextileID используется только как временный индекс 
+;       таблицы Adr.SurfPassability
 ; -----------------------------------------
 GetSurfaceStepCostByCoord.Wrap:
                 EXX

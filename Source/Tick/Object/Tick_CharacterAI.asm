@@ -27,6 +27,9 @@ CharacterAI:    ; сохранение параметров текущего cad
                 ADC A, A
                 LD (AI.Move.WorldTickFlag), A
 
+                ; проверка необходимости создания UI объекта
+                CALL Tick.Utils.TrySpawnUI
+
                 ; проверка активного движения AI-персонажа
                 LD C, (IX + FObjectCharacter.Super.Sprite)
                 BIT ANIM_STATE_BIT, C

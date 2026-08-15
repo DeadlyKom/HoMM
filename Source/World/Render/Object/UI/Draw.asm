@@ -16,6 +16,7 @@ Draw:           ; --------------------------------------------------------------
                 CALL NZ, World.Base.Render.Object.LayerObject.AlignToAttr
 
                 ; ToDo: нижнюю часть переработать!
+                RET
 
                 LD HL, Indexes
                 ; -----------------------------------------

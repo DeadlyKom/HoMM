@@ -99,7 +99,7 @@ TickObjectChunk:; получение объектов в чанке
                 BIT OBJECT_PENDING_KILL_STATE_BIT, (IX + FObject.Flags)
                 JR NZ, .RemoveObject
 
-.SkipObject     OR A                                                            ; сброс флага Carry, текущий кадр не завершён
+.SkipObject     OR A                                                            ; сброс флага переполнения, текущий кадр не завершён
                 DEC C
                 RET Z                                                           ; выход, если объекты в чанке закончились
 
@@ -130,7 +130,7 @@ TickObjectChunk:; получение объектов в чанке
                 POP DE
                 POP BC
 
-                OR A                                                            ; сброс флага Carry, текущий кадр не завершён
+                OR A                                                            ; сброс флага переполнения, текущий кадр не завершён
                 DEC C
                 RET Z                                                           ; выход, если объекты в чанке закончились
 
@@ -202,7 +202,7 @@ SpawnOffset     PUSH BC
 ;   AF
 ; Note:
 ;   проверка попадания выполняется только в диапазоне Range_0
-;   код расположен в странице 0
+;   ℹ️ код расположен в странице 0
 ; -----------------------------------------
 CursorHitTest   ; проверка диапозона
                 LD A, (TickObjectChunk.RelativeDeltaTime)

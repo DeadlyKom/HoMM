@@ -2,6 +2,9 @@
                 ifndef _PAGE_0_TICK_
                 define _PAGE_0_TICK_
 
+Tick.Utils:
+.TrySpawnUI                 EQU Page0.Tick.Utils.TrySpawnUI                             ; проверить необходимость создания UI объекта
+
 Tick.Utils.Movement:
 .SetLine                    EQU Page0.Tick.Utils.Movement.SetLine                       ; подготовить DDA для движения к заданной точке
 .FacePath                   EQU Page0.Tick.Utils.Movement.FacePath                      ; повернуть персонажа в направлении точки пути

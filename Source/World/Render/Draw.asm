@@ -107,7 +107,7 @@ Draw:           ; -----------------------------------------
 ;                 ; Corrupt:
 ;                 ;   IX, HL', D', BC', AF, AF'
 ;                 ; Note:
-;                 ;   код расположен рядом с картой (страница 1)
+;   ℹ️ код расположен в странице 1
 ;                 ; -----------------------------------------
 ;                 CALL BufferUtilities.UpdateHextile
 ;                 RET
@@ -213,7 +213,7 @@ Fog.Make:       LD HL, MakeCounter
                 ; Corrupt:
                 ;   IX, HL', D', BC', AF, AF'
                 ; Note:
-                ;   код расположен рядом с картой (страница 1)
+                ;   ℹ️ код расположен в странице 1
                 ; -----------------------------------------
                 CALL BufferUtilities.UpdateHextile
                 RET C
@@ -274,7 +274,7 @@ Fog.Tick:       LD HL, TickCounter
                 ; Corrupt:
                 ;   IX, HL', D', BC', AF, AF'
                 ; Note:
-                ;   код расположен рядом с картой (страница 1)
+                ;   ℹ️ код расположен в странице 1
                 ; -----------------------------------------
                 CALL BufferUtilities.UpdateHextile
                 DJNZ .Loop

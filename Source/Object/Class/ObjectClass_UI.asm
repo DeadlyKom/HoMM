@@ -11,10 +11,19 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-UI:             ; -----------------------------------------
-                ; специальная инициализация UI-объекта отсутствует,
-                ; runtime-состояние очищено на этапе Spawn
-                ; -----------------------------------------
+UI:             ; инициализация базового состояния объекта
+                LD (IY + FObject.Flags), OBJECT_DIRTY | OBJECT_TICK_ENABLED
+
+                ; инициализация объекта привязки
+                LD (IY + FObjectUI.Anchor), UI_ANCHOR_NONE
+
+                ; инициализация времени жизни UI объекта
+                LD A, (IX + FODS_UI.Super.Variable_A)
+                LD (IY + FObjectUI.Lifetime), A
+
+                ; инициализация порядка отображения UI объекта
+                LD A, (IX + FODS_UI.Super.Variable_B)
+                LD (IY + FObjectUI.ZOrder), A
 
                 OR A                                                            ; сброс флага переполнения, успешная инициализация
                 RET

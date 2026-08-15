@@ -23,6 +23,8 @@ Object.Utilities:
 .GetAdr.HL              EQU Page0.Object.Utilities.Adr.HL                       ; получить адрес объекта
 .GetAdr.IX              EQU Page0.Object.Utilities.Adr.IX                       ; получить адрес объекта
 .GetAdr.IY              EQU Page0.Object.Utilities.Adr.IY                       ; получить адрес объекта
+.GetSettingsAdr.HL      EQU Page0.Object.Utilities.SettingsAdr.HL               ; получить адрес настроек объекта по умолчанию
+.GetSettingsAdr.IX      EQU Page0.Object.Utilities.SettingsAdr.IX               ; получить адрес настроек объекта по умолчанию
 .GetObjectID.HL         EQU Page0.Object.Utilities.ObjectID.HL                  ; получить ID объекта
 .GetObjectID.IX         EQU Page0.Object.Utilities.ObjectID.IX                  ; получить ID объекта
 .GetObjectID.IY         EQU Page0.Object.Utilities.ObjectID.IY                  ; получить ID объекта

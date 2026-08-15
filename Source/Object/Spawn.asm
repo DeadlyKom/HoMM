@@ -10,7 +10,7 @@
 ;   A' - идентификатор объекта
 ;   IX - адрес структуры FObjectDefaultSettings
 ;   IY - адрес структуры FObject
-;   флаг переполнения Carry установлен, если нет свободного места в массиве
+;   флаг переполнения установлен, если нет свободного места в массиве
 ; Corrupt:
 ;   HL, DE, BC, AF, AF'
 ; Note:
@@ -23,7 +23,7 @@ Spawn:          ; -----------------------------------------
                 ; Out:
                 ;   A' - текущий ID объекта
                 ;   IY - адрес свободного элемента
-                ;   флаг переполнения Carry установлен, если нет свободного места в массиве
+                ;   флаг переполнения установлен, если нет свободного места в массиве
                 ; Corrupt:
                 ;   HL, AF, AF'
                 ; Note:
@@ -123,16 +123,7 @@ Spawn:          ; -----------------------------------------
                 EX AF, AF'
                 LD A, B
                 LD (IY + FObject.Settings), A                                   ; настройки объекта по умолчанию
-                ADD A, A    ; x2
-                LD L, A
-                LD H, #00
-                ADD HL, HL  ; x4
-                ADD HL, HL  ; x8
-                LD A, H
-                ADD A, HIGH Adr.ObjectDefaultSettings
-                LD IXH, A
-                LD A, L
-                LD IXL, A
+                CALL Object.Utilities.GetSettingsAdr.IX
 
                 LD A, (IX + FObjectDefaultSettings.Class)
                 AND OBJECT_CLASS_MASK

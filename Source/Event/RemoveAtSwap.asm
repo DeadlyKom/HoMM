@@ -11,7 +11,7 @@
 ; Corrupt:
 ;   HL, DE, BC, AF
 ; Note:
-;   необходимо включить страницу с массивом событий (страница 7)
+;   ℹ️ необходимо включить страницу 7
 ; -----------------------------------------
 RemoveAtSwap:   ; инициализация
                 LD HL, GameSession.WorldInfo + FWorldInfo.EventNum

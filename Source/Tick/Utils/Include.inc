@@ -3,6 +3,8 @@
                 define _TICK_UTILS_INCLUDE_
 
                 module Utils
+                include "TrySpawnUI.asm"
+
                 module Movement
 
                 include "Movement.asm"

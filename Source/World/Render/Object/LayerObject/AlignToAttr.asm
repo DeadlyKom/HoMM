@@ -23,6 +23,6 @@ AlignToAttr:    LD A, (Kernel.Sprite.DrawClipping.PositionX)
                 LD (Kernel.Sprite.DrawClipping.PositionY), A
                 RET
 
-                display " - Align layer object to attribute:\t\t", /A, AlignToAttr, "\t= busy [ ", /D, $-AlignToAttr, " byte(s)  ]"
+                display " - Align layer object to attribute:\t\t\t", /A, AlignToAttr, "\t= busy [ ", /D, $-AlignToAttr, " byte(s)  ]"
 
                 endif ; ~_WORLD_RENDER_LAYER_OBJECT_ALIGN_TO_ATTR_

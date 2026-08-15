@@ -6,7 +6,7 @@
 Begin           EQU $
                 include "Draw.asm"
 
-                display " - Draw Decal object:\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $-Begin, " byte(s)  ]"
+                display " - Draw Decal object:\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $-Begin, " byte(s)  ]"
                 endmodule
 
                 endif ; ~_WORLD_RENDER_OBJECT_DECAL_INCLUDE_

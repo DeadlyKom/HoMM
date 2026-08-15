@@ -47,6 +47,6 @@ Load:           ; проверка наличия шрифта
                 DB ASSETS_ID_FONT_RU_8                                          ; FONT_ID_DEFAULT_8
 .Max            EQU $-.FontAssetTable
 
-                display " - Load font:\t\t\t\t", /A, Load, "\t= busy [ ", /D, $-Load, " byte(s)  ]"
+                display " - Load font:\t\t\t\t\t\t", /A, Load, "\t= busy [ ", /D, $-Load, " byte(s)  ]"
 
                 endif ; ~ _FONT_LOAD_
