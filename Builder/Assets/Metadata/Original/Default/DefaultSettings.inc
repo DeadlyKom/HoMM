@@ -53,7 +53,11 @@ ODS_ID_COUNTER = ODS_ID_COUNTER + 1
                         /*Super.Variable_A*/ #08,
                         /*Super.Variable_B*/ 0
                     },
-                    /*Flags*/                OBJECT_UI_HOVER
+                    /*Flags*/                OBJECT_UI_HOVER | OBJECT_UI_ATTR_ALIGN,
+                    {
+                        /*Offset.X*/           16,
+                        /*Offset.Y*/          -24
+                    }
                 }
 
                 endif ; ~ _METADATA_MAP_OBJECT_DEFAULT_SETTINGS_

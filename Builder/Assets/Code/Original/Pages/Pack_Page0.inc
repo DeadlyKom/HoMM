@@ -17,6 +17,7 @@ Begin:          EQU $
                 include "Source/Character/Include.inc"
                 include "Source/ChunkArray/Include.inc"
                 include "Source/Participant/Include.inc"
+                include "Builder/Assets/Metadata/Original/Representation/Characters.inc"
 Size:           EQU $-Begin                                                     ; размер кода
                 if (Size.Code.Page0 - Size) < 0
                     error "allocated memory ran out!"

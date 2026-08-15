@@ -29,40 +29,13 @@ Draw:           ; инициализация
                 PUSH BC
                 SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
 
-                ; -----------------------------------------
-                ; проверка нахождения объекта на невидимом гексе
-                ; -----------------------------------------
+                ; проверка видимости объекта по положению в гексагонах
+                OR A                                                            ; сброс флага переполнения перед условной проверкой
+                BIT OBJECT_SELF_CALCULATED_POSITION_BIT, (IY + FObject.Flags)
+                CALL Z, IsVisible                                               ; проверка видимости объекта
+                JR C, .NextObject                                               ; переход, если объект не виден
 
-                ; получение индекса гекса в RenderBuffer
-                LD C, (IY + FObject.Position.X.High)
-                LD B, (IY + FObject.Position.Y.High)
-                PUSH BC
-                SET_PAGE_MAP
-                POP BC
-                ; -----------------------------------------
-                ; определение индекса Render-буфера по координатам гексагона
-                ; In:
-                ;   BC - координаты гексагона под курсором (B - y, C - x)
-                ; Out:
-                ;   A - индекс в рендер буфере (0-39)
-                ;   флаг переполнения сброшен, если получилось определить индекс
-                ; Corrupt:
-                ;   HL, AF
-                ; Note:
-                ;   ℹ️ код расположен в странице 1
-                ; -----------------------------------------
-                CALL BufferUtilities.GetIndexRender
-                JR C, .NextObject                                               ; переход, если гекс не попал в RenderBuffer
-
-                ; проверка флага видимости гекса
-                LD H, HIGH Adr.RenderBuffer
-                LD L, A
-                BIT RENDER_FLAG_HEX_FOG_BIT, (HL)
-                JR Z, .NextObject                                               ; переход, если гекс закрыт туманом
-
-                SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
-
-                ; проверка флага обновления объекта
+.CheckRefresh   ; проверка флага обновления объекта
                 BIT OBJECT_DIRTY_BIT, (IY + FObject.Flags)
                 JR Z, .ForcedVisibility                                         ; переход, если флаг не установлен,
                                                                                 ; но необходимо проверить обновление screen block'а или принудительное обновление
@@ -70,9 +43,8 @@ Draw:           ; инициализация
 
 .NeedRefresh    PUSH DE
                 ; расчёт положения объекта относительно верхнего левого видимого края
-                CALL Utilities.TransformToScr                     
-                LD (Kernel.Sprite.DrawClipping.PositionX), DE
-                LD (Kernel.Sprite.DrawClipping.PositionY), HL
+                BIT OBJECT_SELF_CALCULATED_POSITION_BIT, (IY + FObject.Flags)
+                CALL Z, Utilities.TransformToScr.Store
 
                 ; определение способа отображения объекта
                 LD A, (IY + FObjectDefaultSettings.Class)
@@ -84,23 +56,18 @@ Draw:           ; инициализация
                 DEBUG_BREAK_POINT_NC                                            ; ошибка, нет такого объекта
                 endif
 
-                PUSH IY
+                PUSH IY                                                         ; сохранение адреса обрабатываемого объекта
                 LD HL, .JumpTable
                 LD IX, Draw.SpriteClipping
                 CALL Func.JumpTable
-
                 SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
-                ; копирование bound спрайта
-                POP HL
-                LD DE, FObject.Bound
-                ADD HL, DE
-                LD DE, GameState.SpriteBound
-                EX DE, HL
-                LDI
-                LDI
-                LDI
-                LDI
+                POP IY                                                          ; восстановление адреса обрабатываемого объекта
 
+                ; bound самостоятельно рассчитываемого объекта обновляется внутри его Draw
+                BIT OBJECT_SELF_CALCULATED_POSITION_BIT, (IY + FObject.Flags)
+                CALL Z, .StoreBound
+
+                ; восстановление адреса обхода SortBuffer
                 POP DE
 .NextObject     POP BC
                 DJNZ .Loop
@@ -116,6 +83,27 @@ Draw:           ; инициализация
                 POP DE
                 JR C, .NeedRefresh                                              ; переход, если screen block обновляется, необходимо обновить и объект
                 JR .NextObject                                                  ; переход, если screen block не обновляется
+; -----------------------------------------
+; сохранение рассчитанного bound спрайта в объекте
+; In:
+;   IY - адрес структуры объекта (FObject)
+; Out:
+; Corrupt:
+;   HL, DE, BC, AF
+; Note:
+;   необходимо включить страницу работы с объектами (страница 0)
+; -----------------------------------------
+.StoreBound:    LD HL, FObject.Bound
+                PUSH IY
+                POP DE
+                ADD HL, DE
+                EX DE, HL                                                       ; DE - адрес FObject.Bound
+                LD HL, GameState.SpriteBound                                    ; HL - адрес временного bound
+                LDI
+                LDI
+                LDI
+                LDI
+                RET
 
 .JumpTable      DW Character.Draw                                               ; OBJECT_CLASS_CHARACTER
                 DW Character.Draw                                               ; OBJECT_CLASS_CHARACTER_AI

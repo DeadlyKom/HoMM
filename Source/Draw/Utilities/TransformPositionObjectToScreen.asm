@@ -62,6 +62,21 @@ TransformToScr: ; расчёт положения объекта относит�
                 SBC HL, BC
 
                 RET
+; -----------------------------------------
+; преобразование положения объекта относительно экрана
+; и сохранение результата для отображения спрайта
+; In:
+;   IY - адрес структуры объекта (FObject)
+; Out:
+; Corrupt:
+;   HL, DE, BC, AF
+; Note:
+; -----------------------------------------
+TransformToScr.Store:
+                CALL TransformToScr
+                LD (Kernel.Sprite.DrawClipping.PositionX), DE
+                LD (Kernel.Sprite.DrawClipping.PositionY), HL
+                RET
 
                 display " - Transform position object to screen:\t\t", /A, TransformToScr, "\t= busy [ ", /D, $ - TransformToScr, " byte(s)  ]"
                 endmodule

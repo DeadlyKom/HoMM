@@ -6,6 +6,7 @@
                 include "Character_CombatStates.inc"
                 include "Character_PrimarySkill.inc"
                 include "Character_SecondarySkill.inc"
+                include "Character_Representation.inc"
                 include "Character.inc"
 
                 endif ; ~_STRUCTS_CHARACTER_INCLUDE_

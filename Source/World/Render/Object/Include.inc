@@ -3,14 +3,16 @@
                 define _WORLD_RENDER_OBJECT_INCLUDE_
 
                 module Object
-                include "BoundScreenBlock.asm"
-                include "Draw.asm"
                 include "UI/Include.inc"
                 include "Decal/Include.inc"
                 include "Simple/Include.inc"
                 include "Character/Include.inc"
                 include "LayerObject/Include.inc"
+                
+                include "Draw.asm"
+                include "IsVisible.asm"
                 include "ObjectsInView.asm"
+                include "BoundScreenBlock.asm"
                 include "ObjectDirtyEnvironment.asm"
                 endmodule
 

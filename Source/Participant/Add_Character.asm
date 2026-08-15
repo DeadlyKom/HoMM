@@ -44,12 +44,14 @@ Add_Character:  ; проверка достижения максимальног
                 ;---------------------------------------------------------------
                 LD A, B
                 CALL Character.Utilities.GetAdr.HL                              ; получить адрес персонажа
+
                 ; инициализация FCharacter
-                LD A, (DE)
-                INC DE
-                LD (HL), A                                                      ; FCharacter.Class
-                INC L
-                LD (HL), C                                                      ; FCharacter.ParticipantID
+                LD A, C                                                         ; сохранение ParticipantID
+                EX DE, HL                                                       ; HL - FCharacterSettings, DE - FCharacter
+                LDI                                                             ; FCharacter.Class
+                LDI                                                             ; FCharacter.RepresentID
+                EX DE, HL                                                       ; HL - FCharacter, DE - FCharacterSettings
+                LD (HL), A                                                      ; FCharacter.ParticipantID
                 INC L
                 EX DE, HL
                 LD BC, FCharacterSkills

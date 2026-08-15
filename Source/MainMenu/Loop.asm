@@ -63,6 +63,7 @@ Loop:
                     ; FCharacterSettings
                     {
                         Character.Class.Druid,                                  ; класс героя
+                        REPRESENT_ID_DRUID,                                     ; представление героя
                         ; навыки героя
                         ; FCharacterSkills
                         {
@@ -120,7 +121,8 @@ SpawnUnits:     LD IX, .AIAgent
                     { 0, 0 },                                                   ; первая точка демонстрационного маршрута
 
                     {
-                        Character.Class.Druid,
+                        Character.Class.Wizard,
+                        REPRESENT_ID_WIZARD,                                    ; представление героя
                         {
                             {
                                 3,

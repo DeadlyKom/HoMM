@@ -11,49 +11,67 @@
 ; Note:
 ; -----------------------------------------
 Draw:           ; --------------------------------------------------------------
+                ; расчёт экранного положения объекта привязки
+                PUSH IY                                                         ; сохранение адреса UI объекта
+                LD A, (IY + FObjectUI.Anchor)
+                CALL Object.Utilities.GetAdr.IY
+                CALL World.Base.Render.Object.IsVisible
+                JR C, .NotVisible                                               ; переход, если объект привязки не виден
+
+                ; получение номера маленького лица персонажа
+                LD A, (IY + FObjectCharacter.CharacterID)
+                CALL Character.Utilities.GetAdr.HL
+                INC L                                                           ; пропуск FCharacter.Class
+                LD A, (HL)                                                      ; FCharacter.RepresentID
+                LD L, A
+                LD H, #00
+                ADD HL, HL  ; x2
+                ADD HL, HL  ; x4
+                ADD HL, HL  ; x8
+                ADD HL, HL  ; x16                                               ; размер структуры FRepresentation
+                LD DE, Page0.Characters + FRepresentation.HeroID
+                ADD HL, DE
+                LD A, (HL)                                                      ; FRepresentation.HeroID
+                EX AF, AF'                                                      ; сохранение индекса лица персонажа
+                CALL Utilities.TransformToScr                                   ; DE - положение X, HL - положение Y
+                POP IY                                                          ; восстановление адреса UI объекта
+
+                ; прибавление смещения UI объекта по вертикали
+                LD BC, (IY + FObject.Position.Y)
+                ADD HL, BC
+                LD (Kernel.Sprite.DrawClipping.PositionY), HL
+
+                ; прибавление смещения UI объекта по горизонтали
+                EX DE, HL
+                LD BC, (IY + FObject.Position.X)
+                ADD HL, BC
+                LD (Kernel.Sprite.DrawClipping.PositionX), HL
+
                 ; выравнивание экранного положения по знакоместу
                 BIT LAYER_OBJECT_ATTR_ALIGN_BIT, (IY + FObjectUI.Layer.Flags)
                 CALL NZ, World.Base.Render.Object.LayerObject.AlignToAttr
 
-                ; ToDo: нижнюю часть переработать!
-                RET
+                ; получение индекса спрайта объекта UI
+                LD A, (IY + FObject.Sprite)
 
-                LD HL, Indexes
-                ; -----------------------------------------
-                ; Note:
-                ;   для ассета ASSETS_ID_UI_ARROW_PATH_PACK,
-                ;   поле FObjectUI.Layer.Super.Sprite имеет слудующие значения:
-                ;
-                ;      7    6    5    4    3    2    1    0
-                ;   +----+----+----+----+----+----+----+----+
-                ;   | .. | .. | A4 | A3 | A2 | A1 | A0 | PI |
-                ;   +----+----+----+----+----+----+----+----+
-                ;
-                ;   A4-A0   [5..1]  - индекс спрайта стрелки
-                ;   PI      [0]     - флаг типа спрайта
-                ;                       0 - проходимый
-                ;                       1 - непроходимый
-                ; -----------------------------------------
-
-                ; определение индекса хранения проходимый/непроходимый
-                LD B, (IY + FObjectUI.Layer.Super.Sprite)
-                SRL B
-                JR NC, .Draw                                                    ; переход, если спрайт проходимый
-                INC HL
-
-.Draw           ; --------------------------------------------------------------
-                ; отображение спрайта
-
-                ; расчёт адреса структуры FSpritesRef
-                LD A, (HL)
-                ADD A, A    ; x2                                                ; старщий флаг игнорируем, т.к. ставим его самостоятельно
+                ; расчёт адреса структуры FSpritesRef в Adr.SpriteInfoBuffer
+                ADD A, A    ; x2                                                ; старший флаг игнорируем, т.к. ставим его самостоятельно
                 LD L, A
                 LD H, HIGH Adr.SpriteInfoBuffer >> 2
                 ADD HL, HL  ; x4
                 ADD HL, HL  ; x8
 
-                LD A, B                                                         ; номер анимации
+                ; выбор маленького лица персонажа
+                EX AF, AF'                                                      ; восстановление индекса лица персонажа
                 SCF                                                             ; указываем на структуру FSpritesRef
-                JP (IX)
+                PUSH IY                                                         ; сохранение адреса UI объекта
+                CALL .JP_IX                                                     ; отображение спрайта
+                SET_PAGE_OBJECT                                                 ; восстановление страницы работы с объектами
+                POP IY                                                          ; восстановление адреса UI объекта
+                JP World.Base.Render.Object.Draw.StoreBound                     ; сохранение рассчитанного bound в UI объекте
+.JP_IX          JP (IX)
+
+.NotVisible     POP IY                                                          ; восстановление адреса UI объекта
+                RET
 
                 endif ; ~_WORLD_RENDER_OBJECT_UI_DRAW_

@@ -4,6 +4,7 @@
 
                 include "Character_.inc"
                 include "Character_Classes.inc"
+                include "Character_Representation.inc"
                 include "Character_SecondarySkill.inc"
 
                 endif ; ~_CONST_CHARACTER_INCLUDE_

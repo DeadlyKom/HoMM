@@ -20,7 +20,8 @@ Request:        ; ToDo: учесть модификатор разведки г�
                 ; получить ParticipantID владельца объекта
                 LD A, (IX + FObjectCharacter.CharacterID)
                 CALL Character.Utilities.GetAdr.HL                              ; получить адрес персонажа
-                INC HL
+                INC L                                                           ; пропуск FCharacter.Class
+                INC L                                                           ; пропуск FCharacter.RepresentID
                 LD A, (HL)                                                      ; FCharacter.ParticipantID
 
                 ; получить группу владельца

@@ -18,5 +18,6 @@ Convert:
 Utilities:
 .SpriteBound            EQU Kernel.Utilities.SpriteBound                            ; получить ограничивающий прямоугольник спрайта
 .TransformToScr         EQU Kernel.Utilities.TransformToScr                         ; преобразование положения объекта относительно экрана
+.TransformToScr.Store   EQU Kernel.Utilities.TransformToScr.Store                   ; преобразование положения объекта относительно экрана и сохранение результата
 
                 endif ; ~_KERNEL_CONVERT_

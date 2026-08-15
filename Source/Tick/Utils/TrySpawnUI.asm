@@ -56,6 +56,34 @@ TrySpawnUI:     ; проверка попадания курсора в bound о
                 CALL Object.Spawn
                 JR C, .Failed                                                   ; переход, если отсутствует свободное место
 
+                ; установка спрайта UI объекта
+                LD A, (World.Base.Render.Object.UI.Indexes.SmallHero)
+                LD (IY + FObject.Sprite), A
+
+                ; преобразование смещения по горизонтали в формат 12.4
+                LD A, (IX + FODS_UI.Offset.X)
+                LD L, A
+                ADD A, A    ; << 1
+                SBC A, A
+                LD H, A                                                         ; знаковое расширение смещения
+                ADD HL, HL  ; x2
+                ADD HL, HL  ; x4
+                ADD HL, HL  ; x8
+                ADD HL, HL  ; x16                                               ; пропуск 4 бит сабпикселей, преобразование из пикселей в формат 12.4
+                LD (IY + FObject.Position.X), HL
+
+                ; преобразование смещения по вертикали в формат 12.4
+                LD A, (IX + FODS_UI.Offset.Y)
+                LD L, A
+                ADD A, A    ; << 1
+                SBC A, A
+                LD H, A                                                         ; знаковое расширение смещения
+                ADD HL, HL  ; x2
+                ADD HL, HL  ; x4
+                ADD HL, HL  ; x8
+                ADD HL, HL  ; x16                                               ; пропуск 4 бит сабпикселей, преобразование из пикселей в формат 12.4
+                LD (IY + FObject.Position.Y), HL
+
                 ; установка объекта привязки UI
                 LD A, (FindUI.AnchorID)
                 LD (IY + FObjectUI.Anchor), A
