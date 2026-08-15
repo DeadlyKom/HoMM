@@ -7,7 +7,7 @@
 ; Out:
 ; Corrupt:
 ; Note:
-;   необходимо включить страницу с массивом событий (страница 0)
+;   ℹ️ код расположен в странице 0
 ; -----------------------------------------
 Possess:        RET
                 display " - Possess AI-context:\t\t\t\t", /A, Possess, "\t= busy [ ", /D, $-Possess, " byte(s)  ]"

@@ -11,7 +11,7 @@
 ; Corrupt:
 ;   HL, DE, BC, AF
 ; Note:
-;   необходимо включить страницу с массивом событий (страница 0)
+;   ℹ️ код расположен в странице 0
 ; -----------------------------------------
 RemoveAtSwapByIndex:; инициализация
                 LD HL, GameSession.WorldInfo + FWorldInfo.AIContextNum

@@ -8,6 +8,6 @@
                 include "Object_UI.inc"
                 include "LayerObject.inc"
                 include "Object_Character.inc"
-                include "ObjectDefaultSettings.inc"
+                include "ODS/Include.inc"
 
                 endif ; ~_CONST_OBJECT_INCLUDE_

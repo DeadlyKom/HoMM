@@ -20,7 +20,7 @@ Character:      ; сохранить параметры текущего cadence
                 LD (Move.RelativeCadence), A
                 EX AF, AF'
                 LD A, #00
-                ADC A, A                                                       ; 0 - обычный cadence-проход, 1 - доставлен "мировой тик"
+                ADC A, A                                                        ; 0 - обычный cadence-проход, 1 - доставлен "мировой тик"
                 LD (Move.WorldTickFlag), A
 
                 ; проверка перемещения героя

@@ -37,7 +37,7 @@ CALC_OBJECT_ADD macro RegH?
 ; Out:
 ;   HL - адрес объекта
 ; Corrupt:
-;   HL, AF, IX
+;   HL, AF
 ; Note:
 ; -----------------------------------------
 Adr.HL:         CALC_OBJECT_ADD H                                               ; расчёт адрес объекта

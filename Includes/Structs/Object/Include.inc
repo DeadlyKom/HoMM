@@ -9,6 +9,6 @@
                 include "Object_Character.inc"
                 include "Object_CharacterAI.inc"
                 include "Object_Construction.inc"
-                include "ObjectDefaultSettings.inc"
+                include "ODS/Include.inc"
 
                 endif ; ~_STRUCT_OBJECT_INCLUDE_

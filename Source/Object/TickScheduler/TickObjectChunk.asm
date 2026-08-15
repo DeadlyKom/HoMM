@@ -12,7 +12,7 @@
 ; Corrupt:
 ;   все регистры
 ; Note:
-;   необходимо включить страницу работы с объектами (страница 0)
+;   ℹ️ код расположен в странице 0
 ; ----------------------------------------
 TickObjectChunk:; получение объектов в чанке
 
@@ -65,7 +65,11 @@ TickObjectChunk:; получение объектов в чанке
 
                 ; проверка флага, разрешающего проверку попадания курсора в bound объекта
                 BIT OBJECT_CURSOR_HIT_TEST_BIT, (IX + FObject.Flags)
-                CALL NZ, .CursorHitTest
+                CALL NZ, CursorHitTest
+
+                ; сохранение количества объектов до тика
+                LD A, (GameSession.WorldInfo + FWorldInfo.ObjectNum)
+                LD (SpawnOffset.OldObjectNum), A
 
                 ; тик объекта в чанке
                 LD A, (IX + FObject.Class)
@@ -85,7 +89,17 @@ TickObjectChunk:; получение объектов в чанке
                 POP DE
                 POP BC
 
-.SkipObject     OR A                                                            ; текущий кадр не завершён
+                ; проверка количества созданных объектов
+                LD A, (GameSession.WorldInfo + FWorldInfo.ObjectNum)
+                LD HL, SpawnOffset.OldObjectNum
+                SUB (HL)
+                CALL NZ, SpawnOffset                                            ; корректировка указателя, если созданы новые объекты
+
+                ; проверка необходимости удаления объекта
+                BIT OBJECT_PENDING_KILL_STATE_BIT, (IX + FObject.Flags)
+                JR NZ, .RemoveObject
+
+.SkipObject     OR A                                                            ; сброс флага Carry, текущий кадр не завершён
                 DEC C
                 RET Z                                                           ; выход, если объекты в чанке закончились
 
@@ -107,8 +121,91 @@ TickObjectChunk:; получение объектов в чанке
                 DEC E                                                           ; при переносе вперёд следующий объект сместился на текущий адрес
                 JR .Loop
 
-.CursorHitTest  ; проверка нахождения объекта в диапазоне Range_0
-                LD A, (.RelativeDeltaTime)
+.RemoveObject   ; удаление текущего объекта
+                PUSH BC
+                PUSH DE
+                PUSH IX
+                POP IY
+                CALL Object.SmartRemove
+                POP DE
+                POP BC
+
+                OR A                                                            ; сброс флага Carry, текущий кадр не завершён
+                DEC C
+                RET Z                                                           ; выход, если объекты в чанке закончились
+
+                ; проверка смены фрейма
+                LD A, (TickCounterRef)
+                LD HL, .LastFrame
+                CP (HL)
+                SCF                                                             ; текущий кадр завершён
+                RET NZ                                                          ; выход, если фрейм сменился
+
+                JR .Loop                                                        ; следующий ID сместился на текущий адрес
+; -----------------------------------------
+; корректировка указателя текущего объекта после создания объектов
+; In:
+;   A  - количество созданных объектов
+;   DE - адрес текущего объекта в Adr.ChunkArrayValues
+; Out:
+;   DE - скорректированный адрес текущего объекта в Adr.ChunkArrayValues
+; Corrupt:
+;   HL, AF
+; Note:
+; -----------------------------------------
+SpawnOffset     PUSH BC
+                PUSH DE
+                LD B, A                                                         ; количество созданных объектов
+                LD C, #00                                                       ; смещение адреса текущего объекта
+
+                ; получение адреса первого созданного объекта
+.OldObjectNum   EQU $+1
+                LD A, #00                                                       ; ID первого созданного объекта
+                CALL Object.Utilities.GetAdr.HL
+
+                ; переход к номеру чанка первого созданного объекта
+                LD DE, FObject.Chunk
+                ADD HL, DE
+                LD A, (TickObjectChunk.CurrentChunk)
+                LD D, A                                                         ; номер обрабатываемого чанка
+
+.Loop           ; проверка чанка созданного объекта
+                LD A, D                                                         ; номер обрабатываемого чанка
+                CP (HL)                                                         ; сравнение с чанком созданного объекта
+                JR C, .Next                                                     ; объект создан после обрабатываемого чанка
+                INC C                                                           ; увеличение смещения текущего объекта
+
+.Next           ; переход к следующему созданному объекту
+                LD A, L
+                ADD A, OBJECT_SIZE
+                LD L, A
+                JR NC, $+3
+                INC H
+
+                DJNZ .Loop
+
+                ; применение накопленного смещения
+                LD A, C
+                POP DE
+                POP BC
+                ADD A, E
+                LD E, A                                                         ; корректировка указателя текущего объекта
+                RET
+; -----------------------------------------
+; проверка попадания курсора в bound объекта
+; In:
+;   IX - адрес структуры объекта (FObject)
+; Out:
+;   OBJECT_CURSOR_HIT_STATE установлен, если курсор находится в bound объекта;
+;   OBJECT_CURSOR_HIT_STATE сброшен, если курсор находится вне bound объекта
+; Corrupt:
+;   AF
+; Note:
+;   проверка попадания выполняется только в диапазоне Range_0
+;   код расположен в странице 0
+; -----------------------------------------
+CursorHitTest   ; проверка диапозона
+                LD A, (TickObjectChunk.RelativeDeltaTime)
                 OR A
                 JR NZ, .CursorMiss                                              ; переход, если диапазон не нулевой
 
@@ -126,10 +223,10 @@ TickObjectChunk:; получение объектов в чанке
                 CP (IX + FObject.Bound + FSpriteBound.Size.Height)
                 JR NC, .CursorMiss                                              ; переход, если курсор находится ниже bound объекта
 
-                SET OBJECT_CURSOR_HIT_STATE_BIT, (IX + FObject.Flags)
+                SET OBJECT_CURSOR_HIT_STATE_BIT, (IX + FObject.Flags)           ; установка флага нахождения курсор в bound объекте
                 RET
 
-.CursorMiss     RES OBJECT_CURSOR_HIT_STATE_BIT, (IX + FObject.Flags)
+.CursorMiss     RES OBJECT_CURSOR_HIT_STATE_BIT, (IX + FObject.Flags)           ; сброс флага нахождения курсор в bound объекте
                 RET
 ; -----------------------------------------
 ; диспетчер тика объекта
@@ -150,7 +247,7 @@ TickObjectJumpTable:
                 DW TickObject_NoTick                                            ; OBJECT_CLASS_INTERACTION
                 DW TickObject_NoTick                                            ; OBJECT_CLASS_PARTICLE
                 DW TickObject_NoTick                                            ; OBJECT_CLASS_DECAL
-                DW TickObject_NoTick                                            ; OBJECT_CLASS_UI
+                DW Page0.Tick.Object.UI                                         ; OBJECT_CLASS_UI
 TickObject_NoTick:
                 RET
 

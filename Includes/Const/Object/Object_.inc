@@ -12,6 +12,7 @@ OBJECT_EMPTY_ELEMENT                EQU #FF                                     
 OBJECT_DIRTY_BIT                    EQU 0x07                                    ; флаг, объект необходимо обновить
 OBJECT_WEAKLY_REFERENCED_BIT        EQU 0x06                                    ; флаг, на объект существует слабая ссылка
 OBJECT_CURSOR_HIT_STATE_BIT         EQU 0x05                                    ; флаг, курсор находится в bound объекта
+OBJECT_PENDING_KILL_STATE_BIT       EQU 0x04                                    ; флаг, объект помечен на удаление
 
 ; статические флаги
 OBJECT_TICK_ENABLED_BIT             EQU 0x03                                    ; флаг, разрешающий тик объекта
@@ -20,6 +21,7 @@ OBJECT_CURSOR_HIT_TEST_BIT          EQU 0x02                                    
 OBJECT_DIRTY                        EQU 1 << OBJECT_DIRTY_BIT
 OBJECT_WEAKLY_REFERENCED            EQU 1 << OBJECT_WEAKLY_REFERENCED_BIT
 OBJECT_CURSOR_HIT_STATE             EQU 1 << OBJECT_CURSOR_HIT_STATE_BIT
+OBJECT_PENDING_KILL_STATE           EQU 1 << OBJECT_PENDING_KILL_STATE_BIT
 OBJECT_TICK_ENABLED                 EQU 1 << OBJECT_TICK_ENABLED_BIT
 OBJECT_CURSOR_HIT_TEST              EQU 1 << OBJECT_CURSOR_HIT_TEST_BIT
 
