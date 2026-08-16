@@ -67,6 +67,9 @@ Draw:           ; инициализация
                 BIT OBJECT_SELF_CALCULATED_POSITION_BIT, (IY + FObject.Flags)
                 CALL Z, .StoreBound
 
+                ; отметка screen block'ов фактически отображённого объекта
+                CALL BoundScreenBlock.Mark
+
                 ; восстановление адреса обхода SortBuffer
                 POP DE
 .NextObject     POP BC

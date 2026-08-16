@@ -3,7 +3,7 @@
                 define _CONST_CHARACTER_REPRESENTATION_
 
 ; общие индексы изображений персонажей
-Character.Name:
+Character.Face:
 .Druid          EQU #00                                                         ; друид
 .Wizard         EQU #01                                                         ; волшебник
 

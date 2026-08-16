@@ -24,13 +24,13 @@ Characters:
                 MAKE_REPRESENT                                                 \
                 /*RepresentID*/     REPRESENT_ID_DRUID,                        \
                 /*Name*/            "Дрꙋидъ",                                  \
-                /*HeroID*/          Character.Name.Druid,                      \
+                /*HeroID*/          Character.Face.Druid,                      \
                 /*AppearanceID*/    Character.Appearance.Druid
 
                 MAKE_REPRESENT                                                 \
                 /*RepresentID*/     REPRESENT_ID_WIZARD,                       \
                 /*Name*/            "Волхвъ",                                  \
-                /*HeroID*/          Character.Name.Wizard,                     \
+                /*HeroID*/          Character.Face.Wizard,                     \
                 /*AppearanceID*/    Character.Appearance.Wizard
 
                 endif ; ~ _METADATA_REPRESENTATION_CHARACTERS_

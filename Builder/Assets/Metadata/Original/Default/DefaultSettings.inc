@@ -50,7 +50,7 @@ ODS_ID_COUNTER = ODS_ID_COUNTER + 1
                     {
                         /*Super.Class*/      OBJECT_CLASS_UI,
                         /*Super.Flags*/      OBJECT_NEUTRAL,
-                        /*Super.Variable_A*/ #08,
+                        /*Super.Variable_A*/ #01,
                         /*Super.Variable_B*/ 0
                     },
                     /*Flags*/                OBJECT_UI_HOVER | OBJECT_UI_ATTR_ALIGN,
