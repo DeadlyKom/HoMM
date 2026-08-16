@@ -32,4 +32,5 @@ Object.Utilities:
 .IncCadencePassIDs      EQU Page0.Object.Utilities.IncCadencePassIDs            ; увеличение CadencePass'ы ID
 .UpdateChunkByPosition  EQU Page0.Object.Utilities.UpdateChunkByPosition        ; обновить принадлежность объекта к чанку по текущей позиции
 .UpdateChunk            EQU Page0.Object.Utilities.UpdateChunk                  ; обновить принадлежность объекта к указанному чанку
+.InvalidateBound        EQU Page0.Object.Utilities.InvalidateBound              ; обновить область последнего bound объекта перед удалением
                 endif ; ~_PAGE_0_OBJECT_

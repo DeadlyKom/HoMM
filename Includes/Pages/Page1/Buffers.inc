@@ -17,6 +17,7 @@ BufferUtilities:
 .UpdateHextile                  EQU Page1.Buffer.Hextile                                    ; обновление Render-буфера указанного гексогонального тайла
 .AdjRenderBufCol                EQU Page1.Buffer.AdjRenderBufCol                            ; корректировка столбцов рендер буфера
 .SpriteBound                    EQU Page1.Buffer.SpriteBound                                ; обновление Render-буфера указанного bound спрайта
+.SpriteBound.Wrap               EQU Page1.Buffer.SpriteBound.Wrap                           ; обновление Render-буфера указанного bound спрайта              (обёртка)
 .Reconnaissance                 EQU Page1.Buffer.Reconnaissance                             ; рекогносцировка
 .Reconnaissance.Event           EQU Page1.Buffer.Reconnaissance.Event                       ; рекогносцировка                                               (обёртка)
                 endif ; ~_PAGE_1_BUFFERS_

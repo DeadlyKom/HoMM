@@ -5,6 +5,7 @@
                 module Utilities
                 include "AddressObject.asm"
                 include "AddressSettings.asm"
+                include "InvalidateBound.asm"
                 include "GetObjectIDByAddress.asm"
                 include "UpdateChunkByPosition.asm"
                 include "IncrementCadencePassIDs.asm"

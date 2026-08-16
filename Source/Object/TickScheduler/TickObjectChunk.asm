@@ -124,6 +124,7 @@ TickObjectChunk:; получение объектов в чанке
 .RemoveObject   ; удаление текущего объекта
                 PUSH BC
                 PUSH DE
+                CALL Object.Utilities.InvalidateBound                           ; обновление области последнего bound объекта
                 PUSH IX
                 POP IY
                 CALL Object.SmartRemove
