@@ -31,4 +31,5 @@ Object.Utilities:
 .CadencePassIdByChunk   EQU Page0.Object.Utilities.GetCadencePassIdByChunk      ; получить CadencePassId по номеру чанка
 .IncCadencePassIDs      EQU Page0.Object.Utilities.IncCadencePassIDs            ; увеличение CadencePass'ы ID
 .UpdateChunkByPosition  EQU Page0.Object.Utilities.UpdateChunkByPosition        ; обновить принадлежность объекта к чанку по текущей позиции
+.UpdateChunk            EQU Page0.Object.Utilities.UpdateChunk                  ; обновить принадлежность объекта к указанному чанку
                 endif ; ~_PAGE_0_OBJECT_
