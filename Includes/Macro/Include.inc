@@ -8,6 +8,7 @@
                 include "Flags.inc"
                 include "Mouse.inc"
                 include "Asset.inc"
+                include "Object.inc"
                 include "Assets.inc"
                 include "Offset.inc"
                 include "Memory.inc"

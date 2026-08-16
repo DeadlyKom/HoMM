@@ -11,13 +11,8 @@
 ; -----------------------------------------
 SmartRemove:    ; --------------------------------------------------------------
                 ; преобразование адреса объекта к индексу
-                PUSH IY
-                POP HL
-                ADD HL, HL  ; x2
-                ADD HL, HL  ; x4
-                ADD HL, HL  ; x8
-                ADD HL, HL  ; x16
-                LD D, H                                                         ; индекс объекта
+                CALL Object.Utilities.GetObjectID.IY
+                LD D, A                                                         ; индекс объекта
                 
                 ; количество элементов в массиве
                 LD A, (GameSession.WorldInfo + FWorldInfo.ObjectNum)
