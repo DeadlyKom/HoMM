@@ -14,6 +14,8 @@
 ; -----------------------------------------
 Append:         ; инициализация
                 LD A, (GameSession.SaveSlot + FSaveSlot.MapInfo.Participants)
+                OR A
+                RET Z                                                           ; выход, если участники отсутствуют
                 LD B, A
                 LD C, #00
 .Loop           ; -----------------------------------------

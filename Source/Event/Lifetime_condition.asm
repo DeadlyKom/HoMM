@@ -10,7 +10,9 @@
 ; Note:
 ;   ℹ️ необходимо включить страницу 7
 ; -----------------------------------------
-Lifetime.Cond:  JP RemoveAtSwap
+Lifetime.Cond:  ; ToDo: реализовать проверку условия и удалять событие только
+                ;       после прекращения его выполнения или явного запроса
+                JP RemoveAtSwap
 
                 display " - Lifetime event 'condition':\t\t\t", /A, Lifetime.Cond, "\t= busy [ ", /D, $-Lifetime.Cond, " byte(s)  ]"
 

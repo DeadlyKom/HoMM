@@ -10,6 +10,7 @@
 ;   ℹ️ код расположен в странице 0
 ; -----------------------------------------
 Remove_Character:
+                ; ToDo: реализовать удаление персонажа и связанных с ним данных
                 RET
 
                 display " - Remove hero:\t\t\t\t\t", /A, Remove_Character, "\t= busy [ ", /D, $-Remove_Character, " byte(s)  ]"

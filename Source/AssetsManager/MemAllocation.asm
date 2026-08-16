@@ -9,6 +9,7 @@
 ; Note:
 ;   ℹ️ необходимо включить страницу с данными о доступной ОЗУ
 ; -----------------------------------------
-MemAllocation:  RET
+MemAllocation:  ; ToDo: реализовать выделение области памяти
+                RET
 
                 endif ; ~ _ASSETS_MANAGER_MEMORY_ALLOCATION_

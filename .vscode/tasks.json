@@ -27,7 +27,6 @@
                     "regexp": "^(.*)\\((\\d+)\\):\\s+(warning|error):\\s+(.*)$",
                     "file": 1,
                     "line": 2,
-                    "column": 3,
                     "severity": 3,
                     "message": 4
                 }
@@ -60,7 +59,6 @@
                     "regexp": "^(.*)\\((\\d+)\\):\\s+(warning|error):\\s+(.*)$",
                     "file": 1,
                     "line": 2,
-                    "column": 3,
                     "severity": 3,
                     "message": 4
                 }
@@ -93,7 +91,6 @@
                     "regexp": "^(.*)\\((\\d+)\\):\\s+(warning|error):\\s+(.*)$",
                     "file": 1,
                     "line": 2,
-                    "column": 3,
                     "severity": 3,
                     "message": 4
                 }

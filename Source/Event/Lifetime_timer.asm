@@ -10,7 +10,9 @@
 ; Note:
 ;   ℹ️ необходимо включить страницу 7
 ; -----------------------------------------
-Lifetime.Timer: JP RemoveAtSwap
+Lifetime.Timer: ; ToDo: реализовать отсчёт времени жизни и удалять событие
+                ;       только после истечения заданного интервала
+                JP RemoveAtSwap
 
                 display " - Lifetime event 'timer':\t\t\t\t", /A, Lifetime.Timer, "\t= busy [ ", /D, $-Lifetime.Timer, " byte(s)  ]"
 
