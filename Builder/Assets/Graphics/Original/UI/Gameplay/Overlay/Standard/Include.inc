@@ -6,10 +6,10 @@
 SpriteInfo      ; -----------------------------------------
 .Ox             EQU -8
 .Oy             EQU 0
-                SPRITE 19, 31,  6+SpriteInfo.Ox,  2+SpriteInfo.Oy, OR_XOR,  0, Sprite._0
-                SPRITE 19, 31,  6+SpriteInfo.Ox,  2+SpriteInfo.Oy, OR_XOR,  0, Sprite._1
-                SPRITE 19, 31,  6+SpriteInfo.Ox,  2+SpriteInfo.Oy, OR_XOR,  0, Sprite._2
-                SPRITE 19, 31,  6+SpriteInfo.Ox,  2+SpriteInfo.Oy, OR_XOR,  0, Sprite._3
+                SPRITE 19, 31,  6+SpriteInfo.Ox,  0+SpriteInfo.Oy, OR_XOR,  0, Sprite._0
+                SPRITE 19, 31,  6+SpriteInfo.Ox,  0+SpriteInfo.Oy, OR_XOR,  0, Sprite._1
+                SPRITE 19, 31,  6+SpriteInfo.Ox,  0+SpriteInfo.Oy, OR_XOR,  0, Sprite._2
+                SPRITE 19, 31,  6+SpriteInfo.Ox,  0+SpriteInfo.Oy, OR_XOR,  0, Sprite._3
                 ; -----------------------------------------
 Sprite:
 ._0             incbin "standard_0.bin"
