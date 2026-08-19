@@ -21,6 +21,7 @@ Load:           LD A, ASSETS_ID_UI_GAMEPLAY_COMMON_PACK
                 Hash16("Pointer")
                 Hash16("FrameHero")
                 Hash16("SmallHero")
+                Hash16("Standard")
                 endlua
 
                 display " - Sprite initialize UI:\t\t\t\t", /A, Load, "\t= busy [ ", /D, $-Load, " byte(s)  ]"

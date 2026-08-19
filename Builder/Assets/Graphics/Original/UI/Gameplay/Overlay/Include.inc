@@ -5,6 +5,7 @@
                 module Overlay
                 include "Pointers/Include.inc"
                 include "FaceOfHeroes/Include.inc"
+                include "Standard/Include.inc"
                 endmodule
 
                 endif ; ~ _GRAPHICS_UI_GAMEPLAY_OVERLAY_INCLUDE_

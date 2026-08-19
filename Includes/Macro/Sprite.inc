@@ -11,6 +11,9 @@ SPRITE_DW       macro Index?
                 DW Adr.SpriteInfoBuffer + Index? * FSprite
                 endm
 SPRITE          macro Width?, Height?, SOx?, SOy?, Flags?, ExtraFlags?, Offset?
+                if (Width?) > 32 || (Height?) > 32
+                    error "Sprite size must be less than or equal to 32x32"
+                endif
                 FSprite {{Width?, Height?, SOx?, SOy?}, ExtraFlags?, Flags?, Offset?}
                 endm
 SPRITE_LINKER   macro SpriteNum?, Offset?

@@ -9,6 +9,7 @@ Indexes         ; индексы спрайтов в буфере спрайто
                 DB #00                                                          ; "Pointer"
                 DB #00                                                          ; "FrameHero"
 .SmallHero      DB #00                                                          ; "SmallHero"
+.Standard       DB #00                                                          ; "Standard"
 
                 display " - Draw UI element:\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $-Begin, " byte(s)  ]"
                 endmodule
