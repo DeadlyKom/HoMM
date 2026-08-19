@@ -21,6 +21,12 @@ JP_IN_PAGE      macro Page?, Function?
                 LD HL, Function?
                 JP Func.CallInPage
                 endm
+CALL_IX         macro
+                CALL Func.JP_IX
+                endm
+CALL_IY         macro
+                CALL Func.JP_IY
+                endm
 ; -----------------------------------------
 ; задержка на заданное количество секунд
 ;   Sec? - длительность в секундах, включая дробные значения

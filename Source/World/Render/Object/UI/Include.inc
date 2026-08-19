@@ -5,6 +5,7 @@
                 module UI
 Begin           EQU $
                 include "Draw.asm"
+                include "Draw_IconCharacter.asm"
 Indexes         ; индексы спрайтов в буфере спрайтов (Adr.SpriteInfoBuffer)
                 DB #00                                                          ; "Pointer"
                 DB #00                                                          ; "FrameHero"

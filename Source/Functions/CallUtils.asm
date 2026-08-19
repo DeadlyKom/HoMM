@@ -20,4 +20,8 @@ Call:
                 EX AF, AF'                                                      ; восстановить номер страницы
                 JP_SET_PAGE_A                                                   ; включение страниц
 
+.RET            RET
+.JP_IX:         JP (IX)
+.JP_IY:         JP (IY)
+
                 endif ; ~_FUNCTIONS_CALL_UTILS_
