@@ -5,6 +5,7 @@
                 module Object
 Begin           EQU $
                 include "Tick_UI.asm"
+                include "UI/Include.inc"
                 include "Tick_Character.asm"
                 include "Tick_CharacterAI.asm"
 

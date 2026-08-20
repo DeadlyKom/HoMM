@@ -57,7 +57,8 @@ ODS_ID_COUNTER = ODS_ID_COUNTER + 1
                     {
                         /*Offset.X*/           16,
                         /*Offset.Y*/          -24
-                    }
+                    },
+                    /*Behavior*/             OBJECT_UI_BEHAVIOR_DEFAULT
                 }
 
                 endif ; ~ _METADATA_MAP_OBJECT_DEFAULT_SETTINGS_

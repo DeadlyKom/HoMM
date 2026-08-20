@@ -120,6 +120,8 @@ SpawnUnits:     LD IX, .AIAgent
                     CASTLE_ID_NONE,
                     { 0, 0 },                                                   ; первая точка демонстрационного маршрута
 
+                    ; настройки компьютерного героя участника
+                    ; FCharacterSettings
                     {
                         Character.Class.Wizard,
                         REPRESENT_ID_WIZARD,                                    ; представление героя
