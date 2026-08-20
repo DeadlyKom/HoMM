@@ -18,27 +18,48 @@ Draw.NotAnchor: ; расчёт экранного положения объек�
                 ;   HL - позиция по вертикали
                 ;   DE - позиция по горизонтали
 
-                ; прибавление смещения UI объекта по вертикали
-                LD A, (IY + FObjectUI.AxisOffset.Y)
+                ; применение смещения объекта слоя по вертикали
+                LD C, (IY + FObjectUI.Layer.AxisOffset.Y)
+                XOR A
+
+                BIT LAYER_OBJECT_AXIS_Y_OFFSET_BIT, (IY + FObjectUI.Layer.Flags)
+                JR Z, $+7
+
+                LD A, C
+                NEG
+                LD C, A
+                SBC A, A    ; расширение знака до 16 бит
+
                 ; приведение к фиксированной точки 14.2
-                LD B, #00
-                ADD A, A  ; << 1
-                RL B
-                ADD A, A  ; << 2
-                RL B
+                SLA C
+                RLA         ; << 1
+                SLA C
+                RLA         ; << 1
+                LD B, A
                 ADD HL, BC
                 LD (Kernel.Sprite.DrawClipping.PositionY), HL
 
-                ; прибавление смещения UI объекта по горизонтали
+                ; применение смещения объекта слоя по горизонтали
                 EX DE, HL
-                LD A, (IY + FObjectUI.AxisOffset.X)
+                LD C, (IY + FObjectUI.Layer.AxisOffset.X)
+                XOR A
+
+                BIT LAYER_OBJECT_AXIS_X_OFFSET_BIT, (IY + FObjectUI.Layer.Flags)
+                JR Z, $+7
+
+                LD A, C
+                NEG
+                LD C, A
+                SBC A, A    ; расширение знака до 16 бит
+
                 ; приведение к фиксированной точки 14.2
-                LD B, #00
-                ADD A, A  ; << 1
-                RL B
-                ADD A, A  ; << 2
-                RL B
+                SLA C
+                RLA         ; << 1
+                SLA C
+                RLA         ; << 1
+                LD B, A
                 ADD HL, BC
+
                 LD (Kernel.Sprite.DrawClipping.PositionX), HL
 
                 JR Draw.UI

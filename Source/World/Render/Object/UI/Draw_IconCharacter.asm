@@ -25,6 +25,6 @@ Draw.IconChar:  ; расчёт экранного положения объек�
                 ADD HL, BC
                 LD (Kernel.Sprite.DrawClipping.PositionX), HL
 
-                JR Draw.UI
+                JP Draw.UI
 
                 endif ; ~_WORLD_RENDER_OBJECT_UI_DRAW_ICON_CHARACTER_

@@ -4,5 +4,6 @@
 
                 include "Layer.inc"
                 include "Runtime.inc"
+                include "Behavior.inc"
 
                 endif ; ~_CONST_UI_INCLUDE_
