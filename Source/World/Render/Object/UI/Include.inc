@@ -5,12 +5,13 @@
                 module UI
 Begin           EQU $
                 include "Draw.asm"
+                include "Draw_NotAnchor.asm"
                 include "Draw_IconCharacter.asm"
 Indexes         ; индексы спрайтов в буфере спрайтов (Adr.SpriteInfoBuffer)
                 DB #00                                                          ; "Pointer"
                 DB #00                                                          ; "FrameHero"
-.SmallHero      DB #00                                                          ; "SmallHero"
-.Standard       DB #00                                                          ; "Standard"
+                DB #00                                                          ; "SmallHero"
+                DB #00                                                          ; "Standard"
 
                 display " - Draw UI element:\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $-Begin, " byte(s)  ]"
                 endmodule

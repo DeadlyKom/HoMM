@@ -53,12 +53,28 @@ TrySpawnUI:     ; проверка попадания курсора в bound о
                 LD D, (IX + FObject.Position.Y.High)
 
                 PUSH IX                                                         ; сохранение адреса объекта привязки
+                
+                ; чтение ID персонажа
+                LD A, (IX + FObjectCharacter.CharacterID)
+                PUSH AF                                                         ; сохранение ID персонажа
                 CALL Object.Spawn
+                POP BC                                                          ; восстановление ID персонажа
                 JR C, .Failed                                                   ; переход, если отсутствует свободное место
 
-                ; установка спрайта UI объекта
-                LD A, (World.Base.Render.Object.UI.Indexes.SmallHero)
-                LD (IY + FObject.Sprite), A
+                ; получение индекса иконки персонажа
+                LD A, B                                                         ; ID персонажа
+                CALL Character.Utilities.GetAdr.HL
+                INC L                                                           ; пропуск FCharacter.Class
+                LD L, (HL)                                                      ; FCharacter.RepresentID
+                LD H, #00
+                ADD HL, HL  ; x2
+                ADD HL, HL  ; x4
+                ADD HL, HL  ; x8
+                ADD HL, HL  ; x16                                               ; размер структуры FRepresentation
+                LD DE, Page0.Characters + FRepresentation.HeroID
+                ADD HL, DE
+                LD A, (HL)                                                      ; FRepresentation.HeroID
+                LD (IY + FObject.Sprite), A                                     ; установка спрайта UI объекта
 
                 ; преобразование смещения по горизонтали в формат 12.4
                 LD A, (IX + FODS_UI.Offset.X)

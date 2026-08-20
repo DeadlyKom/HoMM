@@ -17,8 +17,8 @@ Super           FObjectDefaultSettings                                          
 ; -----------------------------------------
 Flags           DB #00                                                          ; флаги                                                     [1 байт]
 
-Offset          FVector8                                                        ; смещение UI объекта относительно объекта привязки          [2 байта]
-Dummy           DS 1, 0                                                         ; резерв                                                     [1 байт]
+Offset          FVector8                                                        ; смещение UI объекта относительно объекта привязки         [2 байта]
+Dummy           DS 1, 0                                                         ; резерв                                                    [1 байт]
                 ends
 
                 endif ; ~_STRUCT_OBJECT_DEFAULT_SETTINGS_UI_

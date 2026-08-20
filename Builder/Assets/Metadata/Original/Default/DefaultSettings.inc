@@ -48,7 +48,7 @@ ODS_ID_COUNTER = ODS_ID_COUNTER + 1
                 MAKE_ODS ODS_ID_UI
                 FODS_UI {
                     {
-                        /*Super.Class*/      OBJECT_CLASS_UI,
+                        /*Super.Class*/      (OBJECT_UI_COMMON_SMALL_HERO << 4) | OBJECT_CLASS_UI,
                         /*Super.Flags*/      OBJECT_NEUTRAL,
                         /*Super.Variable_A*/ #01,
                         /*Super.Variable_B*/ 0
