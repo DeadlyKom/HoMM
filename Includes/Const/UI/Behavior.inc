@@ -51,10 +51,26 @@ UI_AXIS_FUNCTION_X_EASE_IN                      EQU UI_AXIS_FUNCTION_EASE_IN    
 UI_AXIS_FUNCTION_X_EASE_OUT                     EQU UI_AXIS_FUNCTION_EASE_OUT       << UI_AXIS_FUNCTIONS_X_BIT
 UI_AXIS_FUNCTION_X_EASE_IN_OUT                  EQU UI_AXIS_FUNCTION_EASE_IN_OUT    << UI_AXIS_FUNCTIONS_X_BIT
 
+UI_STANDARD_DROP_HEIGHT                         EQU #FF                                     ; начальная высота падения штандарта над гексом
+
 ; значения для поля FUIAnimation.Range и FUISettings_AnimationRange.Range
 UI_ANIMATION_RANGE_FRAME_MAX_BIT                EQU 0x00                                    ; начальный бит - максимального локального номера кадра диапазона
 UI_ANIMATION_RANGE_FIRST_BIT                    EQU 0x04                                    ; начальный бит - первого кадра диапазона
 UI_ANIMATION_RANGE_FRAME_MAX_MASK               EQU #0F                                     ; маска - максимального локального номера кадра диапазона
 UI_ANIMATION_RANGE_FIRST_MASK                   EQU #F0                                     ; маска - первого кадра диапазона
+
+; значения для поля FUISettings_AnimationRange.Mode и FObjectUI.Layer.Flags
+UI_ANIMATION_MODE_REVERSE_BIT                   EQU 0x04                                    ; флаг, направления проигрывания анимации
+                                                                                             ;   0 - прямое
+                                                                                             ;   1 - обратное
+UI_ANIMATION_MODE_PING_PONG_BIT                 EQU 0x05                                    ; флаг, пинг-понга
+                                                                                             ;   0 - выключен
+                                                                                             ;   1 - включён
+
+UI_ANIMATION_MODE_FORWARD                       EQU 0 << UI_ANIMATION_MODE_REVERSE_BIT       ; прямое проигрывание анимации
+UI_ANIMATION_MODE_REVERSE                       EQU 1 << UI_ANIMATION_MODE_REVERSE_BIT       ; обратное проигрывание анимации
+UI_ANIMATION_MODE_PING_PONG                     EQU 2 << UI_ANIMATION_MODE_REVERSE_BIT       ; прямое проигрывание анимации с пинг-понгом
+UI_ANIMATION_MODE_PING_PONG_REVERSE             EQU 3 << UI_ANIMATION_MODE_REVERSE_BIT       ; обратное проигрывание анимации с пинг-понгом
+UI_ANIMATION_MODE_MASK                          EQU 3 << UI_ANIMATION_MODE_REVERSE_BIT       ; маска режима проигрывания анимации
 
                 endif ; ~_CONST_UI_BEHAVIOR_

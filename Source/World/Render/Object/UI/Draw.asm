@@ -73,56 +73,9 @@ Draw:           ; опредение объекта привязки
                 ADD HL, HL  ; x4
                 ADD HL, HL  ; x8
 
-                LD A, (IY + FObject.Sprite)                                     ; чтение номер кадра или индекс
+                LD A, (IY + FObject.Sprite)                                     ; номер кадра внутри выбранного пакета спрайтов
 
-                ; проверка разрешения анимировать UI объект
-                BIT LAYER_OBJECT_ANIMATION_ENABLED_BIT, (IY + FObjectUI.Layer.Flags)
-                JR Z, .DrawSprite                                               ; переход, если анимация выключена
-
-                ; получение количества кадров и первого кадра диапазона
-                LD A, (IY + FObjectUI.Animation.Range)
-                LD B, A
-                AND UI_ANIMATION_RANGE_FRAME_MAX_MASK
-                INC A                                                           ; FrameNum = FrameMax + 1
-                LD E, A                                                         ; делитель, количество кадров диапазона
-
-                ; получение локального кадра диапазона
-                LD A, (GameState.TickCounter + FTick.Objects)
-                ADD A, (IY + FObjectUI.Animation.Offset)
-                LD D, A                                                         ; делимое, тик объектов со смещением анимации
-                ; -----------------------------------------
-                ; деление D на E
-                ; In:
-                ;   D - делимое
-                ;   E - делитель
-                ; Out:
-                ;   D - результат деления   (D / E)
-                ;   A - остаток             (D % E)
-                ; Corrupt:
-                ;   D, AF
-                ; Note:
-                ;   https://www.smspower.org/Development/DivMod
-                ;   количество кадров анимации желательно задавать степенью двойки,
-                ;   иначе при переполнении FTick.Objects может нарушиться последовательность кадров
-                ;
-                ;   ограничение не является блокирующим: переполнение происходит один раз в 256 тиков объектов
-                ;   период = 256 * (DURATION.OBJECT_TICK + 1) / 50 секунд
-                ;   при текущем DURATION.OBJECT_TICK = #08 - примерно раз в 46 секунд
-                ; -----------------------------------------
-                CALL Math.Div8x8                                                ; mod
-                ; A = (FTick.Objects + Offset) % FrameNum
-                LD E, A                                                         ; локальный номер кадра диапазона
-
-                ; применение индекса первого кадра диапазона
-                LD A, B
-                AND UI_ANIMATION_RANGE_FIRST_MASK
-                RRCA
-                RRCA
-                RRCA
-                RRCA                                                            ; A = First
-                ADD A, E                                                        ; A = First + LocalFrame
-
-.DrawSprite     ; отображение спрайта
+                ; отображение спрайта
                 SCF                                                             ; указываем на структуру FSpritesRef
                 PUSH IY                                                         ; сохранение адреса UI объекта
                 CALL_IX                                                         ; отображение спрайта

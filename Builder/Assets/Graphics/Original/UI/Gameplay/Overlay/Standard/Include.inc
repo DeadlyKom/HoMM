@@ -4,8 +4,8 @@
 
                 module Standard
 SpriteInfo      ; -----------------------------------------
-.Ox             EQU -8
-.Oy             EQU 0
+.Ox             EQU -7
+.Oy             EQU -24
                 SPRITE 19, 31,  6+SpriteInfo.Ox,  0+SpriteInfo.Oy, OR_XOR,  0, Sprite._0
                 SPRITE 19, 31,  6+SpriteInfo.Ox,  0+SpriteInfo.Oy, OR_XOR,  0, Sprite._1
                 SPRITE 19, 31,  6+SpriteInfo.Ox,  0+SpriteInfo.Oy, OR_XOR,  0, Sprite._2

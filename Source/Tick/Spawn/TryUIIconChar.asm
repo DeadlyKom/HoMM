@@ -1,8 +1,8 @@
 
-                ifndef _TICK_UTILS_TRY_SPAWN_UI_
-                define _TICK_UTILS_TRY_SPAWN_UI_
+                ifndef _TICK_SPAWN_TRY_UI_ICON_CHAR_
+                define _TICK_SPAWN_TRY_UI_ICON_CHAR_
 ; -----------------------------------------
-; проверка необходимости создания UI объекта
+; проверка необходимости создания UI IconChar
 ; In:
 ;   IX - адрес структуры объекта (FObjectCharacter)
 ; Out:
@@ -12,7 +12,7 @@
 ; Note:
 ;   ℹ️ код расположен в странице 0
 ; -----------------------------------------
-TrySpawnUI:     ; проверка попадания курсора в bound объекта
+TryUIIconChar:  ; проверка попадания курсора в bound объекта
                 BIT OBJECT_CURSOR_HIT_STATE_BIT, (IX + FObject.Flags)
                 RET Z                                                           ; выход, если курсор находится вне bound объекта
 
@@ -20,32 +20,32 @@ TrySpawnUI:     ; проверка попадания курсора в bound о
                 LD A, (IX + FObject.Settings)
                 CALL Object.Utilities.GetSettingsAdr.HL
 
-                ; получение типа создаваемого UI объекта
+                ; получение типа создаваемого UI IconChar
                 INC L                                                           ; пропуск FObjectDefaultSettings.Class
                 INC L                                                           ; пропуск FObjectDefaultSettings.Flags
                 LD A, (HL)                                                      ; FObjectDefaultSettings.Variable_A
-                LD (FindUI.SettingsID), A                                       ; сохранение типа создаваемого UI объекта
+                LD (FindUIIconChar.SettingsID), A                               ; сохранение типа создаваемого UI IconChar
 
                 ; проверка поведения персонажа при наведении курсора
                 INC L                                                           ; пропуск FObjectDefaultSettings.Variable_A
                 INC L                                                           ; пропуск FObjectDefaultSettings.Variable_B
                 BIT OBJECT_CHARACTER_SPAWN_UI_ON_HOVER_BIT, (HL)                ; FODS_Character.Flags
-                RET Z                                                           ; выход, если создание UI объекта не разрешено
+                RET Z                                                           ; выход, если создание UI IconChar не разрешено
 
                 ; получение ID объекта привязки
                 CALL Object.Utilities.GetObjectID.IX
-                LD (FindUI.AnchorID), A
+                LD (FindUIIconChar.AnchorID), A
 
                 ; поиск ранее созданного UI объекта
                 PUSH IX                                                         ; сохранение адреса объекта привязки
-                LD IX, FindUI                                                   ; установка адреса функции предиката
+                LD IX, FindUIIconChar                                           ; установка адреса функции предиката
                 CALL Object.FindLastByPredicate
                 POP IX                                                          ; восстановление адреса объекта привязки
-                RET NC                                                          ; выход, если UI объект уже существует
+                RET NC                                                          ; выход, если UI IconChar уже существует
 
-                ; создание UI объекта в гексагоне объекта привязки
-                ; тип настроек UI объекта
-                LD A, (FindUI.SettingsID)
+                ; создание UI IconChar в гексагоне объекта привязки
+                ; тип настроек UI IconChar
+                LD A, (FindUIIconChar.SettingsID)
                 LD B, A
 
                 ; положение объекта привязки в гексагонах
@@ -101,7 +101,7 @@ TrySpawnUI:     ; проверка попадания курсора в bound о
                 LD (IY + FObject.Position.Y), HL
 
                 ; установка объекта привязки UI
-                LD A, (FindUI.AnchorID)
+                LD A, (FindUIIconChar.AnchorID)
                 LD (IY + FObjectUI.Anchor), A
 
 .Failed         POP IX                                                          ; восстановление адреса объекта привязки
@@ -116,7 +116,7 @@ TrySpawnUI:     ; проверка попадания курсора в bound о
 ;   AF
 ; Note:
 ; -----------------------------------------
-FindUI:         ; проверка на соответствие объекта UI
+FindUIIconChar: ; проверка на соответствие UI IconChar
                 LD A, (IY + FObject.Class)
                 AND OBJECT_CLASS_MASK
                 CP OBJECT_CLASS_UI
@@ -132,12 +132,10 @@ FindUI:         ; проверка на соответствие объекта 
                 LD A, (IY + FObject.Settings)
 .SettingsID     EQU $+1
                 CP #00
-                JR NZ, .Failed                                                  ; переход, если тип UI объекта не соответствует
-
-                OR A                                                            ; сброс флага переполнения, UI объект найден
-                RET
-
 .Failed         SCF                                                             ; установка флага переполнения, объект не соответствует
+                RET NZ                                                          ; выход, если тип UI объекта не соответствует
+
+                OR A                                                            ; сброс флага переполнения, UI IconChar найден
                 RET
 
-                endif ; ~_TICK_UTILS_TRY_SPAWN_UI_
+                endif ; ~_TICK_SPAWN_TRY_UI_ICON_CHAR_

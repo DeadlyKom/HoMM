@@ -7,7 +7,6 @@
                 include "None.asm"
                 include "Default.asm"
                 include "SetFlags.asm"
-                include "MarkDirty.asm"
                 include "ResetFlags.asm"
                 include "UpdateHover.asm"
                 include "UpdateAnchor.asm"

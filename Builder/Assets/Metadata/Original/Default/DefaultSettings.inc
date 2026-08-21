@@ -61,4 +61,21 @@ ODS_ID_COUNTER = ODS_ID_COUNTER + 1
                     /*Behavior*/             OBJECT_UI_BEHAVIOR_DEFAULT
                 }
 
+                ; падающий штандарт
+                MAKE_ODS ODS_ID_UI_STANDARD
+                FODS_UI {
+                    {
+                        /*Super.Class*/      (OBJECT_UI_COMMON_STANDARD << 4) | OBJECT_CLASS_UI,
+                        /*Super.Flags*/      OBJECT_NEUTRAL,
+                        /*Super.Variable_A*/ UI_LIFETIME_INFINITE,
+                        /*Super.Variable_B*/ 0
+                    },
+                    /*Flags*/                0,
+                    {
+                        /*Offset.X*/          0,
+                        /*Offset.Y*/          0
+                    },
+                    /*Behavior*/             OBJECT_UI_BEHAVIOR_STANDARD
+                }
+
                 endif ; ~ _METADATA_MAP_OBJECT_DEFAULT_SETTINGS_

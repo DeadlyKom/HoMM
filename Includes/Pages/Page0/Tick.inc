@@ -2,8 +2,9 @@
                 ifndef _PAGE_0_TICK_
                 define _PAGE_0_TICK_
 
-Tick.Utils:
-.TrySpawnUI                 EQU Page0.Tick.Utils.TrySpawnUI                             ; проверить необходимость создания UI объекта
+Tick.Spawn:
+.TryUIIconChar              EQU Page0.Tick.Spawn.TryUIIconChar                           ; проверить необходимость создания UI IconChar
+.Standard                   EQU Page0.Tick.Spawn.Standard                                ; создать падающий штандарт в указанном гексе
 
 Tick.Utils.Movement:
 .SetLine                    EQU Page0.Tick.Utils.Movement.SetLine                       ; подготовить DDA для движения к заданной точке

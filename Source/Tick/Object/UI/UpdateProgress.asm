@@ -14,8 +14,8 @@
 ;   HL, DE, BC, AF
 ; Note:
 ;   Progress увеличивается с насыщением до #FF
-;   результат функции преобразования напрямую записывается в разрешённые AxisOffset
-;   ToDo: масштабирование результата функции диапазоном смещения через Lerp8
+;   результат функции преобразования масштабируется через Lerp8 диапазоном
+;   соответствующей оси и записывается в разрешённые AxisOffset
 ;
 ;   ℹ️ код расположен в странице 0
 ; ----------------------------------------
@@ -104,10 +104,23 @@ UI.UpdateProgress:; получение шага прогресса
                 LD A, D
                 AND UI_AXIS_FUNCTION_MASK
 
-                ; применение функции
-                PUSH DE
+                ; применение функции преобразования Progress
+                PUSH BC                                                         ; Progress и флаги обновляемых осей
+                PUSH DE                                                         ; функции преобразования осей
+                PUSH HL                                                         ; адрес FUISettings_Progress.AxisFunctions
                 CALL .ApplyAxisFunc
+                POP HL
+
+                ; масштабирование результата диапазоном оси Y
+                PUSH HL
+                INC HL                                                          ; переход к FUISettings_Progress.AxisY.A
+                LD D, (HL)                                                      ; значение A для AxisOffset.Y
+                INC HL                                                          ; переход к FUISettings_Progress.AxisY.B
+                LD E, (HL)                                                      ; значение B для AxisOffset.Y
+                CALL Math.Lerp8
+                POP HL
                 POP DE
+                POP BC
 
                 ; сохранение результата
                 LD (IX + FObjectUI.Layer.AxisOffset.Y), A
@@ -128,8 +141,19 @@ UI.UpdateProgress:; получение шага прогресса
                 RRCA                                                            ; функция преобразования для AxisOffset.X
                 AND UI_AXIS_FUNCTION_MASK
 
-                ; применение функции
+                ; применение функции преобразования Progress
+                PUSH HL
                 CALL .ApplyAxisFunc
+                POP HL
+
+                ; масштабирование результата диапазоном оси X
+                INC HL                                                          ; пропуск FUISettings_Progress.AxisY.A
+                INC HL                                                          ; пропуск FUISettings_Progress.AxisY.B
+                INC HL                                                          ; переход к FUISettings_Progress.AxisX.A
+                LD D, (HL)                                                      ; значение A для AxisOffset.X
+                INC HL                                                          ; переход к FUISettings_Progress.AxisX.B
+                LD E, (HL)                                                      ; значение B для AxisOffset.X
+                CALL Math.Lerp8
 
                 ; сохранение результата
                 LD (IX + FObjectUI.Layer.AxisOffset.X), A

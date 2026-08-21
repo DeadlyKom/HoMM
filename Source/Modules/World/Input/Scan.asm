@@ -13,6 +13,10 @@ Scan:           ; проверка HardWare ограничения мыши
                 JR Z, .KeyCheck                                                 ; переход, если мышь недоступна
                 CALL Mouse.UpdateCursor                                         ; обновить положение курсора
 
+                ifdef _DEBUG
+                CALL .DebugSpawnStandard                                        ; отладочный спавн штандарта по одиночному нажатию ПКМ
+                endif
+
                 LD BC, Mouse.Position
 
                 LD A, (BC)                                                      ; позиция корсора по горизонтали
@@ -89,5 +93,55 @@ Scan:           ; проверка HardWare ограничения мыши
 
                 SET_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             ; установка флага разрешения обновления скрола карты
                 RET
+
+                ifdef _DEBUG
+; -----------------------------------------
+; отладочный спавн штандарта в гексе под курсором по нажатию ПКМ
+; In:
+; Out:
+; Corrupt:
+;   HL, DE, BC, AF, AF'
+; Note:
+;   удержание кнопки не создаёт дополнительные объекты;
+;   новое событие формируется только после отпускания и следующего нажатия
+; -----------------------------------------
+.DebugSpawnStandard:
+                LD A, VK_RBUTTON
+                CALL Input.CheckKeyState
+                JR NZ, .RightButtonReleased                                    ; переход, если ПКМ отпущена
+
+                LD A, (.RightButtonState)
+                OR A
+                RET NZ                                                          ; выход, если нажатие уже обработано
+
+                INC A
+                LD (.RightButtonState), A                                      ; сохранение обработанного состояния нажатия
+
+                ; проверка нахождения курсора внутри области мира
+                LD A, (Mouse.PositionX)
+                SUB SCR_WORLD_POS_X << 3
+                CP SCR_WORLD_SIZE_X << 3
+                RET NC
+
+                LD A, (Mouse.PositionY)
+                SUB SCR_WORLD_POS_Y << 3
+                CP SCR_WORLD_SIZE_Y << 3
+                RET NC
+
+                ; получение гексагона под курсором
+                CALL World.Hexagon.GetPosByMouse                               ; BC: B - y, C - x
+                LD D, B
+                LD E, C
+
+                JP_IN_PAGE Page.Page0, Tick.Spawn.Standard                     ; вызов спавна штандарта в странице 0
+
+.RightButtonReleased:
+                XOR A
+                LD (.RightButtonState), A                                      ; разрешить обработку следующего нажатия
+                RET
+
+.RightButtonState
+                DB #00
+                endif
 
                 endif ; ~_MODULE_WORLD_INPUT_SCAN_

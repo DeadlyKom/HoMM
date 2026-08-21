@@ -32,7 +32,7 @@ UI.Behavior:
                 FUIBehaviorPhase {
                     /*Function*/ UI_BEHAVIOR_PHASE_FUNCTION_SET_FLAGS,
                     /*Flags*/    UI_BEHAVIOR_PHASE_NEXT | UI_BEHAVIOR_PHASE_CONTINUE,
-                    /*Settings*/ .EnableAnimation
+                    /*Settings*/ .StandardLayerFlags
                 }
                 FUIBehaviorPhase {
                     /*Function*/ UI_BEHAVIOR_PHASE_FUNCTION_UPDATE_PROGRESS,
@@ -53,25 +53,35 @@ UI.Behavior:
 .StandardAnimationDrop
                 FUISettings_AnimationRange {
                     /*Range*/ (#00 << UI_ANIMATION_RANGE_FIRST_BIT) | \
-                              (#03 << UI_ANIMATION_RANGE_FRAME_MAX_BIT)
+                              (#03 << UI_ANIMATION_RANGE_FRAME_MAX_BIT),
+                    /*Mode*/  UI_ANIMATION_MODE_PING_PONG
                 }
 
 .StandardProgress
                 FUISettings_Progress {
-                    /*Step*/          #01,
+                    /*Step*/          #18,
                     /*Flags*/         UI_PROGRESS_AXIS_Y,
-                    /*AxisFunctions*/ UI_AXIS_FUNCTION_Y_EASE_OUT
+                    /*AxisFunctions*/ UI_AXIS_FUNCTION_Y_EASE_OUT,
+                    {
+                        /*AxisY.A*/ UI_STANDARD_DROP_HEIGHT,
+                        /*AxisY.B*/ #00
+                    },
+                    {
+                        /*AxisX.A*/ #00,
+                        /*AxisX.B*/ #00
+                    }
                 }
 
 .StandardAnimationLanded
                 FUISettings_AnimationRange {
                     /*Range*/ (#00 << UI_ANIMATION_RANGE_FIRST_BIT) | \
-                              (#03 << UI_ANIMATION_RANGE_FRAME_MAX_BIT)
+                              (#03 << UI_ANIMATION_RANGE_FRAME_MAX_BIT),
+                    /*Mode*/  UI_ANIMATION_MODE_PING_PONG
                 }
 
-.EnableAnimation
+.StandardLayerFlags
                 FUISettings_Flags {
-                    /*Flags*/ LAYER_OBJECT_ANIMATION_ENABLED
+                    /*Flags*/ LAYER_OBJECT_ANIMATION_ENABLED | LAYER_OBJECT_AXIS_Y_OFFSET_SUBTRACT
                 }
 
                 endif ; ~_TICK_OBJECT_UI_BEHAVIOR_

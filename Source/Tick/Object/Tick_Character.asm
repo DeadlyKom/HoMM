@@ -25,7 +25,7 @@ Character:      ; сохранить параметры текущего cadence
                 APPLY_FLAG_MODIFY Move.WorldTickFlag_                           ; применить флаг
 
                 ; проверка необходимости создания UI объекта
-                CALL Tick.Utils.TrySpawnUI
+                CALL Tick.Spawn.TryUIIconChar
 
                 ; проверка перемещения героя
                 LD C, (IX + FObjectCharacter.Super.Sprite)

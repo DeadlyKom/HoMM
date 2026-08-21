@@ -5,7 +5,8 @@
                 module Assets
                 
                 include "Building_AssetsMap.inc"
-                include "Building_Data_0.inc"
+                include "Building_Data_Macros.inc"
+                include "Building_Data.inc"
                 
                 endmodule
 

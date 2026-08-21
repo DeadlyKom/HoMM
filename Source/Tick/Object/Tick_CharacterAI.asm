@@ -29,7 +29,7 @@ CharacterAI:    ; сохранение параметров текущего cad
                 LD (AI.Move.WorldTickFlag), A
 
                 ; проверка необходимости создания UI объекта
-                CALL Tick.Utils.TrySpawnUI
+                CALL Tick.Spawn.TryUIIconChar
 
                 ; проверка активного движения AI-персонажа
                 LD C, (IX + FObjectCharacter.Super.Sprite)

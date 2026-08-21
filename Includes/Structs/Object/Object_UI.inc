@@ -14,8 +14,8 @@
 ;
 ;   Animated    - в Layer.Flags установлен LAYER_OBJECT_ANIMATION_ENABLED
 ;                 Animation.Range хранит диапазон кадров
-;                 Animation.Offset синхронизирует диапазон с FTick.Objects
-;                 кадр анимации рассчитывается во время отрисовки
+;                 Animation.LastTick хранит последний обработанный FTick.Objects
+;                 кадр анимации рассчитывается во время тика UI объекта
 ;
 ;   Hover       - в FODS_UI.Flags установлен OBJECT_UI_HOVER и разрешён тик объекта
 ;                 Anchor содержит идентификатор объекта привязки

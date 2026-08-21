@@ -2,7 +2,12 @@
                 ifndef _STRUCTS_UI_SETTINGS_PROGRESS_
                 define _STRUCTS_UI_SETTINGS_PROGRESS_
 
-                struct FUISettings_Progress                                     ; настройки функции обновления прогресса                    [3 байта]
+                struct FUIAxisLerp                                             ; аргументы Lerp для одной оси                               [2 байта]
+A               DB #00                                                          ; значение A                                                [1 байт]
+B               DB #00                                                          ; значение B                                                [1 байт]
+                ends
+
+                struct FUISettings_Progress                                     ; настройки функции обновления прогресса                    [7 байт]
 Step            DB #00                                                          ; знаковый шаг прогресса (-64..63)                          [1 байт]
 ; -----------------------------------------
 ;      7    6    5    4    3    2    1    0
@@ -24,6 +29,8 @@ Flags           DB #00                                                          
 ;   Y3-Y0   [3..0]  - функция преобразования Progress для AxisOffset.Y
 ; -----------------------------------------
 AxisFunctions   DB #00                                                          ; функции преобразования для осей                           [1 байт]
+AxisY           FUIAxisLerp                                                     ; аргументы Lerp для AxisOffset.Y                            [2 байта]
+AxisX           FUIAxisLerp                                                     ; аргументы Lerp для AxisOffset.X                            [2 байта]
                 ends
 
                 endif ; ~_STRUCTS_UI_SETTINGS_PROGRESS_

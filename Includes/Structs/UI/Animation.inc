@@ -13,11 +13,9 @@
 ;   R3-R0   [3..0]  - количество кадров в диапазоне
 ; -----------------------------------------
 Range           DB #00                                                          ; диапазон кадров анимации                                  [1 байт]
-Offset          DB #00                                                          ; смещение относительно FTick.Objects                       [1 байт]
-                                                                                ; Offset = -FTick.Objects при установке диапазона
-                                                                                ; FrameNum = (Range & UI_ANIMATION_RANGE_FRAME_MAX_MASK) + 1
-                                                                                ; Frame = First + ((FTick.Objects + Offset) % FrameNum)
-                                                                                ; синхронизирует первый кадр при включении и смене диапазона
+LastTick        DB #00                                                          ; последний обработанный FTick.Objects                      [1 байт]
+                                                                                ; исключает повторную смену кадра в пределах одного тика объектов
+                                                                                ; режим и текущее направление проигрывания хранятся в Layer.Flags
                 ends
 
                 endif ; ~_STRUCTS_UI_ANIMATION_
