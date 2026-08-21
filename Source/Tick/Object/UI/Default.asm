@@ -30,10 +30,9 @@ UI.Default:     ; обновление объекта привязки и пол
 .Lifetime       ; обработка времени жизни UI объекта
                 CALL UI.UpdateLifetime
 
-.Dirty          ; ToDo: временное обновление UI каждый тик необходимо для обработки старого bound
-                CALL UI.MarkDirty
+.Dirty          SCF                                                             ; флаг переполнения установлен, фаза завершена
 
-                SCF                                                             ; флаг переполнения установлен, фаза завершена
-                RET
+                ; ToDo: временное обновление UI каждый тик необходимо для обработки старого bound
+                JP UI.MarkDirty
 
                 endif ; ~_TICK_OBJECT_UI_DEFAULT_
