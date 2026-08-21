@@ -59,9 +59,8 @@ Draw.NotAnchor: ; расчёт экранного положения объек�
                 RLA         ; << 1
                 LD B, A
                 ADD HL, BC
-
                 LD (Kernel.Sprite.DrawClipping.PositionX), HL
 
-                JR Draw.UI
+                JP Draw.UI
 
                 endif ; ~_WORLD_RENDER_OBJECT_UI_DRAW_NOT_ANCHOR_

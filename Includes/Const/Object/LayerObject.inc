@@ -9,11 +9,14 @@ LAYER_OBJECT_AXIS_Y_OFFSET_BIT      EQU 0x01                                    
 LAYER_OBJECT_AXIS_X_OFFSET_BIT      EQU 0x02                                    ; операция со смещением AxisOffset.X
                                                                                 ;   0 - прибавить к экранной позиции
                                                                                 ;   1 - вычесть из экранной позиции
+LAYER_OBJECT_ANIMATION_ENABLED_BIT  EQU 0x03                                    ; флаг, разрешающий анимацию объекта
 
 LAYER_OBJECT_ATTR_ALIGN             EQU 1 << LAYER_OBJECT_ATTR_ALIGN_BIT
 LAYER_OBJECT_AXIS_Y_OFFSET_ADD      EQU 0 << LAYER_OBJECT_AXIS_Y_OFFSET_BIT     ; прибавить AxisOffset.Y к экранной позиции
 LAYER_OBJECT_AXIS_Y_OFFSET_SUBTRACT EQU 1 << LAYER_OBJECT_AXIS_Y_OFFSET_BIT     ; вычесть AxisOffset.Y из экранной позиции
 LAYER_OBJECT_AXIS_X_OFFSET_ADD      EQU 0 << LAYER_OBJECT_AXIS_X_OFFSET_BIT     ; прибавить AxisOffset.X к экранной позиции
 LAYER_OBJECT_AXIS_X_OFFSET_SUBTRACT EQU 1 << LAYER_OBJECT_AXIS_X_OFFSET_BIT     ; вычесть AxisOffset.X из экранной позиции
+LAYER_OBJECT_ANIMATION_DISABLED     EQU 0 << LAYER_OBJECT_ANIMATION_ENABLED_BIT ; выключить анимацию объекта
+LAYER_OBJECT_ANIMATION_ENABLED      EQU 1 << LAYER_OBJECT_ANIMATION_ENABLED_BIT ; включить анимацию объекта
 
                 endif ; ~_CONST_LAYER_OBJECT_

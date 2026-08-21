@@ -5,7 +5,7 @@
 ; обновление прогресса UI объекта
 ; In:
 ;   IX - адрес структуры объекта (FObjectUI)
-;   DE - адрес структуры настроек (FUIProgressSettings)
+;   DE - адрес структуры настроек (FUISettings_Progress)
 ;   C  - относительный временной шаг: 0 - x1, 1 - x2, 2 - x4
 ;   F' - флаг переполнения установлен при активной фазе "мирового тика" в текущем cadence-проходе
 ; Out:
@@ -20,8 +20,8 @@
 ;   ℹ️ код расположен в странице 0
 ; ----------------------------------------
 UI.UpdateProgress:; получение шага прогресса
-                EX DE, HL                                                       ; HL - адрес структуры FUIProgressSettings
-                LD B, (HL)                                                      ; FUIProgressSettings.Step
+                EX DE, HL                                                       ; HL - адрес структуры FUISettings_Progress
+                LD B, (HL)                                                      ; FUISettings_Progress.Step
 
                 ; применение относительного временного шага: x1, x2 или x4
                 LD A, #02
@@ -79,7 +79,7 @@ UI.UpdateProgress:; получение шага прогресса
 ; обновление разрешённых смещений осей
 ; In:
 ;   A  - Progress (0..255)
-;   HL - адрес структуры FUIProgressSettings
+;   HL - адрес структуры FUISettings_Progress
 ; Out:
 ; Corrupt:
 ;   HL, DE, BC, AF
@@ -87,9 +87,9 @@ UI.UpdateProgress:; получение шага прогресса
 ; ----------------------------------------
 .UpdateAxisOffsets:
                 LD B, A                                                         ; сохранение Progress
-                INC HL                                                          ; переход к FUIProgressSettings.Flags
+                INC HL                                                          ; переход к FUISettings_Progress.Flags
                 LD C, (HL)
-                INC HL                                                          ; переход к FUIProgressSettings.AxisFunctions
+                INC HL                                                          ; переход к FUISettings_Progress.AxisFunctions
                 LD D, (HL)
 
                 ; ----------------------------------------

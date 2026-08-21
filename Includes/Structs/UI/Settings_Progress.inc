@@ -1,8 +1,8 @@
 
-                ifndef _STRUCTS_UI_PROGRESS_SETTINGS_
-                define _STRUCTS_UI_PROGRESS_SETTINGS_
+                ifndef _STRUCTS_UI_SETTINGS_PROGRESS_
+                define _STRUCTS_UI_SETTINGS_PROGRESS_
 
-                struct FUIProgressSettings                                      ; настройки функции обновления прогресса                    [3 байта]
+                struct FUISettings_Progress                                     ; настройки функции обновления прогресса                    [3 байта]
 Step            DB #00                                                          ; знаковый шаг прогресса (-64..63)                          [1 байт]
 ; -----------------------------------------
 ;      7    6    5    4    3    2    1    0
@@ -26,4 +26,4 @@ Flags           DB #00                                                          
 AxisFunctions   DB #00                                                          ; функции преобразования для осей                           [1 байт]
                 ends
 
-                endif ; ~_STRUCTS_UI_PROGRESS_SETTINGS_
+                endif ; ~_STRUCTS_UI_SETTINGS_PROGRESS_

@@ -115,8 +115,11 @@ UI:             ; получение адреса настроек текуще�
                 ADD IY, DE
                 JR .ExecutePhase
 
-.FunctionTable  DW UI.Default                                                   ; UI_BEHAVIOR_PHASE_FUNCTION_DEFAULT
+.FunctionTable  DW UI.None                                                      ; UI_BEHAVIOR_PHASE_FUNCTION_NONE
+                DW UI.Default                                                   ; UI_BEHAVIOR_PHASE_FUNCTION_DEFAULT
                 DW UI.UpdateProgress                                            ; UI_BEHAVIOR_PHASE_FUNCTION_UPDATE_PROGRESS
-                DW UI.UpdateAnimation                                           ; UI_BEHAVIOR_PHASE_FUNCTION_UPDATE_ANIMATION
+                DW UI.SetAnimRange                                              ; UI_BEHAVIOR_PHASE_FUNCTION_SET_ANIMATION_RANGE
+                DW UI.SetFlags                                                  ; UI_BEHAVIOR_PHASE_FUNCTION_SET_FLAGS
+                DW UI.ResetFlags                                                ; UI_BEHAVIOR_PHASE_FUNCTION_RESET_FLAGS
 
                 endif ; ~_TICK_OBJECT_UI_
