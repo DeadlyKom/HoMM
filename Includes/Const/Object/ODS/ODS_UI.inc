@@ -9,7 +9,8 @@ OBJECT_UI_COMMON_STANDARD   EQU 0x03                                            
 
 ; значения для поля FODS_UI.Behavior
 OBJECT_UI_BEHAVIOR_DEFAULT  EQU 0x00                                            ; поведение UI по умолчанию
-OBJECT_UI_BEHAVIOR_MAX      EQU 0x01                                            ; максимальное доступное значение поведения UI
+OBJECT_UI_BEHAVIOR_STANDARD EQU 0x01                                            ; поведение падающего штандарта
+OBJECT_UI_BEHAVIOR_MAX      EQU 0x02                                            ; максимальное доступное значение поведения UI
 
 ; значения для поля FODS_UI.Flags
 OBJECT_UI_HOVER_BIT         EQU 0x07                                            ; флаг, UI поддерживает hover-поведение на объект привязки

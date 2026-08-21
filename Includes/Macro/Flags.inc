@@ -16,7 +16,47 @@ FLAG_MODIFY     macro FlagValue?
                 error "FLAG_MODIFY: incorrect value!"
                 NOP
                 endif
-                endm   
+                endm
+FLAG_INV_MODIFY macro FlagValue?
+                if (FlagValue?) == 0
+                SCF
+                elseif (FlagValue?) == 1
+                OR A
+                else
+                error "FLAG_INV_MODIFY: incorrect value!"
+                NOP
+                endif
+                endm
+; -----------------------------------------
+; определить флаг (модификация кода)
+; In:
+; Out:
+; Corrupt:
+; -----------------------------------------
+CALC_FLAG_MODIFY macro
+                CCF
+                SBC A, A
+                AND #B7                                                         ; OR A/SCF #B7/#37
+                endm
+; -----------------------------------------
+; определить флаг - инвертированный (модификация кода)
+; In:
+; Out:
+; Corrupt:
+; -----------------------------------------
+CALC_INV_FLAG_MODIFY macro
+                SBC A, A
+                AND #B7                                                         ; OR A/SCF #B7/#37
+                endm
+; -----------------------------------------
+; применить флаг (модификация кода)
+; In:
+; Out:
+; Corrupt:
+; -----------------------------------------
+APPLY_FLAG_MODIFY macro LabelFlag?
+                LD (LabelFlag?), A
+                endm
 ; -----------------------------------------
 ; проверка флага
 ; In:

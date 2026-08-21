@@ -9,6 +9,7 @@
                 include "UpdateHover.asm"
                 include "UpdateAnchor.asm"
                 include "UpdateLifetime.asm"
+                include "UpdateProgress.asm"
                 include "UpdateAnimation.asm"
 
                 endif ; ~_TICK_OBJECT_UI_INCLUDE_

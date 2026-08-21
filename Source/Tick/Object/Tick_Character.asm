@@ -6,7 +6,7 @@
 ; In:
 ;   IX - адрес структуры объекта (FObjectCharacter)
 ;   C  - относительный временной шаг: 0 - x1, 1 - x2, 2 - x4
-;   F' - Carry установлен при активной фазе "мирового тика" в текущем cadence-проходе
+;   F' - флаг переполнения установлен при активной фазе "мирового тика" в текущем cadence-проходе
 ; Out:
 ;   IX - сохраняет исходное значение
 ; Corrupt:
@@ -19,9 +19,10 @@ Character:      ; сохранить параметры текущего cadence
                 LD A, C
                 LD (Move.RelativeCadence), A
                 EX AF, AF'
-                LD A, #00
-                ADC A, A                                                        ; 0 - обычный cadence-проход, 1 - доставлен "мировой тик"
-                LD (Move.WorldTickFlag), A
+                CALC_INV_FLAG_MODIFY                                            ; определение флага
+                                                                                ; 0 - активной фазе "мирового тика", 1 - обычный cadence-проход
+                APPLY_FLAG_MODIFY Character.WorldTickFlag                       ; применить флаг
+                APPLY_FLAG_MODIFY Move.WorldTickFlag_                           ; применить флаг
 
                 ; проверка необходимости создания UI объекта
                 CALL Tick.Utils.TrySpawnUI
@@ -50,9 +51,8 @@ Character:      ; сохранить параметры текущего cadence
                 RET NZ
 
                 ; после поворота выбранный игроком персонаж запрашивает первый пакет времени
-                LD A, (Move.WorldTickFlag)
-                OR A
-                JP NZ, Move.Init
+.WorldTickFlag  FLAG_INV_MODIFY 0
+                JP NC, Move.Init
                 JP RequestNextWorldTick
 Move.Init       CALL SetDistance
                 CALL Tick.Utils.Movement.UpdateEffectiveStepCost                ; рассчитать стоимость шага начального гекса
@@ -60,10 +60,8 @@ Move            ; --------------------------------------------------------------
                 ; перемещение
 
                 CALL Tick.Utils.Movement.GetCharacterMovementBudget             ; получить бюджет движения за один "мировой тик"
-.WorldTickFlag  EQU $+1
-                LD A, #00
-                OR A
-                CALL NZ, Tick.Utils.Movement.AddBudget                          ; временной бюджет начисляется один раз за cadence-эпоху
+.WorldTickFlag_ FLAG_INV_MODIFY 0
+                CALL NC, Tick.Utils.Movement.AddBudget                          ; временной бюджет начисляется один раз за cadence-эпоху
                 CALL Tick.Utils.Movement.GetCharacterMovementBudget             ; получить бюджет движения за один "мировой тик"
 .RelativeCadence EQU $+1
                 LD A, #00

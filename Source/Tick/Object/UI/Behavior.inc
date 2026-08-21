@@ -15,6 +15,9 @@
 ;     - анимация выполняется циклически
 ; -----------------------------------------
 UI.Behavior:
+.Table          DW .Default                                                     ; OBJECT_UI_BEHAVIOR_DEFAULT
+                DW .Standard                                                    ; OBJECT_UI_BEHAVIOR_STANDARD
+
 .Default        FUIBehaviorPhase {
                     /*Function*/ UI_BEHAVIOR_PHASE_FUNCTION_DEFAULT,
                     /*Flags*/    UI_BEHAVIOR_PHASE_LOOP | UI_BEHAVIOR_PHASE_STOP,

@@ -10,7 +10,7 @@ AI_DEMO_POINT_B_Y      EQU #02
 ; In:
 ;   IX - адрес структуры объекта (FObjectCharacterAI)
 ;   C  - относительный временной шаг: 0 - x1, 1 - x2, 2 - x4
-;   F' - Carry установлен при активной фазе "мирового тика" в текущем cadence-проходе
+;   F' - флаг переполнения установлен при активной фазе "мирового тика" в текущем cadence-проходе
 ; Out:
 ;   IX - сохраняет исходное значение
 ; Corrupt:
@@ -23,6 +23,7 @@ CharacterAI:    ; сохранение параметров текущего cad
                 LD A, C
                 LD (AI.Move.RelativeCadence), A
                 EX AF, AF'
+                ; ToDo: переделать на использование флага переполнения
                 LD A, #00
                 ADC A, A
                 LD (AI.Move.WorldTickFlag), A

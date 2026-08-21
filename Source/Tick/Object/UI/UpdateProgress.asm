@@ -1,21 +1,23 @@
 
-                ifndef _TICK_OBJECT_UI_UPDATE_ANIMATION_
-                define _TICK_OBJECT_UI_UPDATE_ANIMATION_
+                ifndef _TICK_OBJECT_UI_UPDATE_PROGRESS_
+                define _TICK_OBJECT_UI_UPDATE_PROGRESS_
 ; -----------------------------------------
-; обновление анимации UI объекта
+; обновление прогресса UI объекта
 ; In:
 ;   IX - адрес структуры объекта (FObjectUI)
+;   DE - адрес структуры настроек (FUIProgressSettings)
 ;   C  - относительный временной шаг: 0 - x1, 1 - x2, 2 - x4
 ;   F' - флаг переполнения установлен при активной фазе "мирового тика" в текущем cadence-проходе
 ; Out:
 ;   флаг переполнения установлен, если фаза завершена
 ; Corrupt:
+;   AF
 ; Note:
 ;   ℹ️ код расположен в странице 0
 ; ----------------------------------------
-UI.UpdateAnimation:
-                ; ToDo: обновить таймер и индекс кадра анимации
+UI.UpdateProgress:
+                ; ToDo: обновление прогресса не реализовано
                 OR A                                                            ; сброс флага переполнения
                 RET
 
-                endif ; ~_TICK_OBJECT_UI_UPDATE_ANIMATION_
+                endif ; ~_TICK_OBJECT_UI_UPDATE_PROGRESS_
