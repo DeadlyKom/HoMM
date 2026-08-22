@@ -28,7 +28,7 @@ Act_I.Num:      EQU ($-Act_I.Block) / FSpriteBlock
 Stage:
 .Prologue       incbin "prologue.bin"
 .Act_I          incbin "prologue.bin"                                           ; ToDo: временно
-.Num:           EQU 2   ; устанавливать вручную
+.Num            EQU 2   ; устанавливать вручную
                 ; ----------------------------------------
                 COMPRESSED_ASSET \
                 "Builder/Assets/Graphics/Compressed/Progress/Stages.pack", \

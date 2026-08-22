@@ -5,7 +5,7 @@
 ; обработчик тика объекта "UI"
 ; In:
 ;   IX - адрес структуры объекта (FObjectUI)
-;   C  - относительный временной шаг: 0 - x1, 1 - x2, 2 - x4
+;   C  - диапазон cadence: 0 - 1/2, 1 - 1/4, 2 - 1/8
 ;   F' - флаг переполнения установлен при активной фазе "мирового тика" в текущем cadence-проходе
 ; Out:
 ;   IX - сохраняет исходное значение
@@ -14,7 +14,8 @@
 ; Note:
 ;   ℹ️ код расположен в странице 0
 ; ----------------------------------------
-UI:             CALL .CheckAnimationFrame
+UI:             ; првоерка необходимости установки флага обновления
+                CALL .CheckAnimFrame
 
                 ; получение адреса настроек текущего UI объекта
                 LD A, (IX + FObject.Settings)                                   ; настройки объекта по умолчанию
@@ -91,7 +92,7 @@ UI:             CALL .CheckAnimationFrame
 
                 ; проверка завершения выполняемой фазы
                 JR NC, .CheckStop                                               ; переход, если фаза не завершена
-                
+
                 ; ----------------------------------------
                 ; завершена фаза
                 ; ----------------------------------------
@@ -123,7 +124,6 @@ UI:             CALL .CheckAnimationFrame
                 DW UI.SetAnimRange                                              ; UI_BEHAVIOR_PHASE_FUNCTION_SET_ANIMATION_RANGE
                 DW UI.SetFlags                                                  ; UI_BEHAVIOR_PHASE_FUNCTION_SET_FLAGS
                 DW UI.ResetFlags                                                ; UI_BEHAVIOR_PHASE_FUNCTION_RESET_FLAGS
-
 ; -----------------------------------------
 ; проверка смены кадра анимации UI объекта
 ; In:
@@ -133,7 +133,7 @@ UI:             CALL .CheckAnimationFrame
 ; Corrupt:
 ;   B, DE, AF
 ; -----------------------------------------
-.CheckAnimationFrame:; проверка разрешения анимировать UI объект
+.CheckAnimFrame ; проверка разрешения анимировать UI объект
                 BIT LAYER_OBJECT_ANIMATION_ENABLED_BIT, (IX + FObjectUI.Layer.Flags)
                 RET Z                                                           ; выход, если анимация выключена
 

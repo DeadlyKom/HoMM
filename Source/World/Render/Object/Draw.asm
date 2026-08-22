@@ -96,7 +96,7 @@ Draw:           ; инициализация
 ; Note:
 ;   ℹ️ необходимо включить страницу работы с объектами (страница 0)
 ; -----------------------------------------
-.StoreBound:    LD HL, FObject.Bound
+.StoreBound     LD HL, FObject.Bound
                 PUSH IY
                 POP DE
                 ADD HL, DE

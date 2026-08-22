@@ -59,7 +59,8 @@ UI.Behavior:
 
 .StandardProgress
                 FUISettings_Progress {
-                    /*Step*/          #18,
+                    /*Step*/          #20,
+                    /*Duration*/      #00,
                     /*Flags*/         UI_PROGRESS_AXIS_Y,
                     /*AxisFunctions*/ UI_AXIS_FUNCTION_Y_EASE_OUT,
                     {

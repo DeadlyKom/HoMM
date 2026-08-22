@@ -10,7 +10,8 @@ Math
 
 .Sqrt           EQU Kernel.Math.Sqrt
 .DistSquared    EQU Kernel.Math.DistSquared
-.Normalize      EQU Kernel.Math.Normalize
+.NormalizeVec   EQU Kernel.Math.NormalizeVec
+.NormalizeScal  EQU Kernel.Math.NormalizeScal
 
 .Rand8          EQU Kernel.Math.Rand8
 .PopSeed        EQU Kernel.Math.PopSeed

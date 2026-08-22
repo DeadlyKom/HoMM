@@ -1,10 +1,10 @@
 
-                ifndef _MATH_NORMALIZE_
-                define _MATH_NORMALIZE_
+                ifndef _MATH_NORMALIZE_VECTOR_
+                define _MATH_NORMALIZE_VECTOR_
 
                 module Math
 ; -----------------------------------------
-; нормализация ветора
+; нормализация вектора
 ; In:
 ;   DE - вектор (D - y [-128..127], E - x [-128..127])
 ; Out:
@@ -13,7 +13,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Normalize:      PUSH DE
+NormalizeVec:   PUSH DE
 
                 ; squared = x*x + y*y
                 ; -----------------------------------------
@@ -97,7 +97,7 @@ Normalize:      PUSH DE
 
                 RET
 
-                display " - Normalize:\t\t\t\t\t\t", /A, Normalize, "\t= busy [ ", /D, $-Normalize, " byte(s)  ]"
+                display " - Normalize vector:\t\t\t\t\t", /A, NormalizeVec, "\t= busy [ ", /D, $-NormalizeVec, " byte(s)  ]"
                 endmodule
 
-                endif ; ~_MATH_NORMALIZE_
+                endif ; ~_MATH_NORMALIZE_VECTOR_

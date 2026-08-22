@@ -31,7 +31,7 @@ DebugInfo:      CALL .Coordinates
 ; -----------------------------------------
 ; отображение координат карты и гексагона под курсором
 ; ----------------------------------------
-.Coordinates:
+.Coordinates
 .Coordinates.Flag FLAG_MODIFY 1                                                 ; флаг, необходимости обновления координат
                 RET NC                                                          ; выход, если координаты не изменились
                 RES_FLAG_MODIFY DebugInfo.Coordinates.Flag                      ; сброс флага, после завершения отрисовки
@@ -62,10 +62,10 @@ DebugInfo:      CALL .Coordinates
 ; отображение содержимого ScreenBlock
 ; ----------------------------------------
                 ifdef DEBUG_INFO_SCREEN_BLOCKS
-.ScreenBlocks:  LD HL, Adr.ScreenBlock
+.ScreenBlocks   LD HL, Adr.ScreenBlock
                 LD DE, .ScreenBlocks.Value
                 LD B, #10
-.ScreenBlocks.Compare:
+.ScreenBlocks.Compare
                 LD A, (DE)
                 CP (HL)
                 JR NZ, .ScreenBlocks.Changed
@@ -74,14 +74,14 @@ DebugInfo:      CALL .Coordinates
                 DJNZ .ScreenBlocks.Compare
                 JR .ScreenBlocks.CheckFlag
 
-.ScreenBlocks.Changed:
+.ScreenBlocks.Changed
                 LD HL, Adr.ScreenBlock
                 LD DE, .ScreenBlocks.Value
                 LD BC, #0010
                 LDIR
                 SET_FLAG_MODIFY DebugInfo.ScreenBlocks.Flag                    ; установка флага, изменения содержимого ScreenBlock
 
-.ScreenBlocks.CheckFlag:
+.ScreenBlocks.CheckFlag
 .ScreenBlocks.Flag FLAG_MODIFY 1                                               ; флаг, необходимости обновления содержимого ScreenBlock
                 RET NC                                                          ; выход, если содержимое ScreenBlock не изменилось
 
@@ -106,7 +106,7 @@ DebugInfo:      CALL .Coordinates
                 RES_FLAG_MODIFY DebugInfo.ScreenBlocks.Flag                    ; сброс флага, после завершения отрисовки
                 JP .DrawScreenBlock
 
-.DrawScreenBlock:
+.DrawScreenBlock
                 CALL .DrawScreenBlockCell
                 LD A, L
                 ADD A, #04
@@ -120,7 +120,7 @@ DebugInfo:      CALL .Coordinates
                 ADD A, #04
                 LD L, A
 
-.DrawScreenBlockCell:
+.DrawScreenBlockCell
                 PUSH HL
                 LD A, (HL)
                 CP #10
@@ -130,14 +130,14 @@ DebugInfo:      CALL .Coordinates
                 POP HL
                 RET
 
-.ScreenBlocks.Value:
+.ScreenBlocks.Value
                 DS #10, #FF                                                     ; последнее отображённое содержимое ScreenBlock
                 endif
 ; -----------------------------------------
 ; отображение позиции мыши на экране
 ; ----------------------------------------
                 ifdef DEBUG_INFO_MOUSE_POSITION
-.MousePosition: LD A, (Mouse.PositionX)
+.MousePosition  LD A, (Mouse.PositionX)
 .MousePosition.ValueX EQU $+1
                 CP #FF                                                          ; последняя отображённая позиция мыши по оси X
                 JR NZ, .MousePosition.Changed
@@ -146,14 +146,14 @@ DebugInfo:      CALL .Coordinates
                 CP #FF                                                          ; последняя отображённая позиция мыши по оси Y
                 JR Z, .MousePosition.CheckFlag
 
-.MousePosition.Changed:
+.MousePosition.Changed
                 LD A, (Mouse.PositionX)
                 LD (.MousePosition.ValueX), A
                 LD A, (Mouse.PositionY)
                 LD (.MousePosition.ValueY), A
                 SET_FLAG_MODIFY DebugInfo.MousePosition.Flag                    ; установка флага, изменения позиции мыши
 
-.MousePosition.CheckFlag:
+.MousePosition.CheckFlag
 .MousePosition.Flag FLAG_MODIFY 1                                              ; флаг, необходимости обновления позиции мыши
                 RET NC                                                          ; выход, если позиция мыши не изменилась
 
@@ -171,7 +171,7 @@ DebugInfo:      CALL .Coordinates
 ; отображение размера видимой области в чанках
 ; ----------------------------------------
                 ifdef DEBUG_INFO_VISIBLE_AREA
-.VisibleArea:   LD HL, (World.Base.Render.Object.InView.VisibleSize)
+.VisibleArea    LD HL, (World.Base.Render.Object.InView.VisibleSize)
 .VisibleArea.Value EQU $+1
                 LD DE, #FFFF                                                    ; последний отображённый размер видимой области
                 OR A
@@ -181,7 +181,7 @@ DebugInfo:      CALL .Coordinates
                 LD (.VisibleArea.Value), HL
                 SET_FLAG_MODIFY DebugInfo.VisibleArea.Flag                      ; установка флага, изменения размера видимой области
 
-.VisibleArea.CheckFlag:
+.VisibleArea.CheckFlag
 .VisibleArea.Flag FLAG_MODIFY 1                                                ; флаг, необходимости обновления размера видимой области
                 RET NC                                                          ; выход, если размер видимой области не изменился
 
@@ -206,7 +206,7 @@ DebugInfo:      CALL .Coordinates
                 LD (.VisibleObjects.Value), A
                 SET_FLAG_MODIFY DebugInfo.VisibleObjects.Flag                   ; установка флага, изменения количества видимых объектов
 
-.VisibleObjects.CheckFlag:
+.VisibleObjects.CheckFlag
 .VisibleObjects.Flag FLAG_MODIFY 1                                             ; флаг, необходимости обновления количества видимых объектов
                 RET NC                                                          ; выход, если количество видимых объектов не изменилось
 
@@ -220,7 +220,7 @@ DebugInfo:      CALL .Coordinates
 ; отображение результата Cursor HitTest объекта 0
 ; -----------------------------------------
                 ifdef DEBUG_INFO_CURSOR_HIT_TEST
-.CursorHitTest: PUSH_PAGE                                                       ; сохранить текущую страницу памяти
+.CursorHitTest  PUSH_PAGE                                                       ; сохранить текущую страницу памяти
                 SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
                 LD A, (Adr.ObjectsArray + FObject.Flags)
                 AND OBJECT_CURSOR_HIT_STATE
@@ -234,10 +234,10 @@ DebugInfo:      CALL .Coordinates
                 SET_REG_ATTR_IPB A, GREEN, BLACK, 0
                 JR .CursorHitTest.Draw
 
-.CursorHitTest.Miss:
+.CursorHitTest.Miss
                 SET_REG_ATTR_IPB A, RED, BLACK, 0
 
-.CursorHitTest.Draw:
+.CursorHitTest.Draw
                 CALL Console.SetAttribute
                 LD DE, #1718
                 CALL Console.SetCursor

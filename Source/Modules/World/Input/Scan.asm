@@ -105,7 +105,7 @@ Scan:           ; проверка HardWare ограничения мыши
 ;   удержание кнопки не создаёт дополнительные объекты;
 ;   новое событие формируется только после отпускания и следующего нажатия
 ; -----------------------------------------
-.DebugSpawnStandard:
+.DebugSpawnStandard
                 LD A, VK_RBUTTON
                 CALL Input.CheckKeyState
                 JR NZ, .RightButtonReleased                                    ; переход, если ПКМ отпущена
@@ -135,7 +135,7 @@ Scan:           ; проверка HardWare ограничения мыши
 
                 JP_IN_PAGE Page.Page0, Tick.Spawn.Standard                     ; вызов спавна штандарта в странице 0
 
-.RightButtonReleased:
+.RightButtonReleased
                 XOR A
                 LD (.RightButtonState), A                                      ; разрешить обработку следующего нажатия
                 RET

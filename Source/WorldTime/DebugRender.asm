@@ -74,7 +74,7 @@ DebugRender:
 ; Corrupt:
 ;   HL, DE, BC, AF
 ; ----------------------------------------
-.DrawDecimal:   CP C
+.DrawDecimal    CP C
                 JR NC, .Padding
 
                 ; отбросить старшие разряды, не помещающиеся в поле

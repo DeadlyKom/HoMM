@@ -31,7 +31,7 @@ Kernel:
                 ; -----------------------------------------
                 LD HL, .JumpTable
                 JP Func.JumpTable
-.JumpTable:     ; инициализация ядра                    (0)
+.JumpTable      ; инициализация ядра                    (0)
                 DW Initialize.Core
                 ; установка клавиатуры (WASD)
                 DW Initialize.SetKeyboard_WASD

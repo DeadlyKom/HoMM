@@ -60,14 +60,14 @@ RunCadence_1_2: ; инициализация
 ; -----------------------------------------
 ; выполнение cadence-прохода по диапазону объектов
 ; In:
-;   A  - относительный временной шаг: 0 - x1, 1 - x2, 2 - x4
+;   A  - диапазон cadence: 0 - 1/2, 1 - 1/4, 2 - 1/8
 ;   HL - адрес поля FCadenceRange.Pointer текущего диапазона
 ; Out:
 ; Corrupt:
 ; Note:
 ;   ℹ️ код расположен в странице 0
 ; ----------------------------------------
-RunCadence:     LD (TickObjectChunk.RelativeDeltaTime), A                       ; установка относительного временного шага: 0 - x1, 1 - x2, 2 - x4
+RunCadence:     LD (TickObjectChunk.RelativeDeltaTime), A                       ; установка диапазона cadence: 0 - 1/2, 1 - 1/4, 2 - 1/8
 
                 ; "мировой тик" не зависит от частоты cadence-диапазона
                 ; при активной фазе каждый диапазон получает "мировой тик" один раз за cadence-эпоху
@@ -157,7 +157,7 @@ CheckEpochBarrier:
                 BIT CHUNK_ORDER_NEED_REBUID_BIT, (HL)                           ; проверка принудительного запроса на перестроение ChunkOrder
                 RET Z                                                           ; выход, если порядок чанков остался актуальным
 
-.RebuildChunkOrder:
+.RebuildChunkOrder
                 LD A, C
                 LD (TickScheduler.Variables + FTickScheduler.LastCenterChunk), A
                 JP BuilderTwoPass

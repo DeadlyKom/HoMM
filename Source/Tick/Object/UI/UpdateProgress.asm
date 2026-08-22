@@ -6,16 +6,21 @@
 ; In:
 ;   IX - адрес структуры объекта (FObjectUI)
 ;   DE - адрес структуры настроек (FUISettings_Progress)
-;   C  - относительный временной шаг: 0 - x1, 1 - x2, 2 - x4
+;   C  - диапазон cadence: 0 - 1/2, 1 - 1/4, 2 - 1/8
 ;   F' - флаг переполнения установлен при активной фазе "мирового тика" в текущем cadence-проходе
 ; Out:
 ;   флаг переполнения установлен, если фаза завершена
 ; Corrupt:
 ;   HL, DE, BC, AF
 ; Note:
-;   Progress увеличивается с насыщением до #FF
-;   результат функции преобразования масштабируется через Lerp8 диапазоном
-;   соответствующей оси и записывается в разрешённые AxisOffset
+;   Progress изменяется с насыщением до границы диапазона и формирует
+;   целевое значение смещения разрешённых осей
+;
+;   при включённом ENABLE_UI_PROGRESS_DURATION:
+;     - AlphaCounter отражает прошедшее время интерполяции;
+;     - временной шаг рассчитывается с учётом диапазона cadence;
+;     - фактический AxisOffset интерполируется от значения A диапазона
+;       к целевому значению, рассчитанному из Progress
 ;
 ;   ℹ️ код расположен в странице 0
 ; ----------------------------------------
@@ -23,7 +28,7 @@ UI.UpdateProgress:; получение шага прогресса
                 EX DE, HL                                                       ; HL - адрес структуры FUISettings_Progress
                 LD B, (HL)                                                      ; FUISettings_Progress.Step
 
-                ; применение относительного временного шага: x1, x2 или x4
+                ; расчёт временного шага: x1, x2 или x4
                 LD A, #02
                 SUB C
                 LD (.Jump), A
@@ -43,50 +48,124 @@ UI.UpdateProgress:; получение шага прогресса
                 BIT 7, B
                 JR NZ, .Decrement                                               ; переход, если Step отрицательный
 
-.Increment      ; увеличение прогресса с насыщением до #FF
+.Increment      ; увеличение прогресса с ограничением до #FF
                 ADD A, B
-                JR C, .Saturate                                                 ; переход, если Progress превысил #FF
-                CP #FF
-                JR Z, .Complete                                                 ; переход, если Progress достиг #FF
-                JR .Store
+                JR NC, .StoreProgress                                           ; переход, если Progress не превысил #FF
+                SBC A, A                                                        ; #FF при превышении верхней границы
+                JR .StoreProgress
 
-.Decrement      ; уменьшение прогресса с насыщением до #00
+.Decrement      ; уменьшение прогресса с ограничением до #00
                 ADD A, B                                                        ; прибавление отрицательного Step
-                JR NC, .Saturate                                                ; переход, если Progress стал меньше #00
-                OR A
-                JR Z, .Complete                                                 ; переход, если Progress достиг #00
+                JR C, .StoreProgress                                            ; переход, если Progress не стал меньше #00
+                XOR A                                                           ; #00 при выходе ниже нижней границы
 
-.Store          ; сохранение прогресса
+.StoreProgress  ; сохранение целевого прогресса
                 LD (IX + FObjectUI.Progress), A
 
-                ; обновление осей
+                ifdef ENABLE_UI_PROGRESS_DURATION
+                ; ----------------------------------------
+                ; обновление счётчика времени интерполяции
+                ; ----------------------------------------
+                INC HL                                                          ; переход к FUISettings_Progress.Duration
+                LD E, (HL)                                                      ; длительность интерполяции
+                LD A, E
+
+                ; проверка дополнительной интерполяции
+                OR A
+                JR Z, .AlphaImmediate                                           ; переход, если дополнительная интерполяция выключена
+
+                ; расчёт временного шага: x1, x2 или x4
+                LD A, #02
+                SUB C
+                LD (.AlphaJump), A
+                LD A, #01
+.AlphaJump      EQU $+1
+                JR $
+                ADD A, A  ; x4
+                ADD A, A  ; x2
+                LD B, A                                                         ; относительный временной шаг AlphaCounter
+
+                ; увеличение AlphaCounter временным шагом
+                LD A, (IX + FObjectUI.AlphaCounter)
+                ADD A, B
+                JR C, .AlphaLimit                                               ; переход, если AlphaCounter превысил #FF
+
+                ; проверка достижения длительности интерполяции
+                CP E
+                JR C, .StoreAlpha                                               ; переход, если Duration ещё не достигнута
+
+.AlphaLimit     LD A, E                                                         ; ограничение AlphaCounter длительностью интерполяции
+.StoreAlpha     LD (IX + FObjectUI.AlphaCounter), A                             ; сохранение счётчика времени интерполяции
+
+                ; нормализация AlphaCounter из диапазона 0..Duration к 0..255
+                PUSH HL                                                         ; адрес FUISettings_Progress.Duration
+                CALL Math.NormalizeScal
+                EXX
+                LD B, A                                                         ; нормализованная Alpha
+                EXX
+                POP HL
+                JR .UpdateAxes
+
+.AlphaImmediate EXX
+                LD B, #FF                                                       ; нормализованная Alpha = 1, дополнительная интерполяция выключена
+                EXX
+                LD (IX + FObjectUI.AlphaCounter), #00                           ; сброс неиспользуемого счётчика
+
+.UpdateAxes     ; обновление разрешённых осей
+                DEC HL                                                          ; переход к FUISettings_Progress.Step
+                endif
+
+                ; обновление разрешённых осей
+                LD A, (IX + FObjectUI.Progress)
+                PUSH HL                                                         ; адрес FUISettings_Progress.Step
                 CALL .UpdateAxisOffsets
                 CALL UI.MarkDirty
-                OR A                                                            ; сброс флага переполнения, фаза не завершена
+                POP HL
+
+                ifdef ENABLE_UI_PROGRESS_DURATION
+                ; проверка завершения интерполяции
+                INC HL                                                          ; переход к FUISettings_Progress.Duration
+                LD A, (IX + FObjectUI.AlphaCounter)
+                CP (HL)
+                JR NZ, .NotComplete                                             ; переход, если AlphaCounter ещё не достиг Duration
+
+                ; проверка достижения Progress требуемой границы
+                DEC HL                                                          ; переход к FUISettings_Progress.Step
+                endif
+
+                ; проверка достижения Progress требуемой границы
+                BIT 7, (HL)
+                LD A, (IX + FObjectUI.Progress)
+                JR NZ, .CheckLowerBound                                         ; переход, если Progress уменьшается
+
+                CP #FF
+                JR NZ, .NotComplete                                             ; переход, если верхняя граница ещё не достигнута
+                SCF                                                             ; установка флага переполнения, фаза завершена
                 RET
 
-.Saturate       SBC A, A                                                        ; #FF при превышении верхней границы, #00 при выходе ниже нуля
+.CheckLowerBound; проверка достижения Progress нижней границы
+                OR A
+                RET NZ                                                          ; выход, если нижняя граница ещё не достигнута
 
-.Complete       ; сохранение прогресса
-                LD (IX + FObjectUI.Progress), A
-
-                ; обновление осей
-                CALL .UpdateAxisOffsets
-                CALL UI.MarkDirty
                 SCF                                                             ; установка флага переполнения, фаза завершена
+                RET
+
+.NotComplete    OR A                                                            ; сброс флага переполнения, фаза не завершена
                 RET
 ; -----------------------------------------
 ; обновление разрешённых смещений осей
 ; In:
 ;   A  - Progress (0..255)
 ;   HL - адрес структуры FUISettings_Progress
+;   B' - нормализованная Alpha (0..255), если включён ENABLE_UI_PROGRESS_DURATION
 ; Out:
 ; Corrupt:
 ;   HL, DE, BC, AF
 ; Note:
 ; ----------------------------------------
-.UpdateAxisOffsets:
+.UpdateAxisOffsets
                 LD B, A                                                         ; сохранение Progress
+                INC HL                                                          ; переход к FUISettings_Progress.Duration
                 INC HL                                                          ; переход к FUISettings_Progress.Flags
                 LD C, (HL)
                 INC HL                                                          ; переход к FUISettings_Progress.AxisFunctions
@@ -119,6 +198,19 @@ UI.UpdateProgress:; получение шага прогресса
                 LD E, (HL)                                                      ; значение B для AxisOffset.Y
                 CALL Math.Lerp8
                 POP HL
+
+                ifdef ENABLE_UI_PROGRESS_DURATION
+                ; интерполяция от начала диапазона к целевому смещению
+                LD E, A                                                         ; целевое значение AxisOffset.Y
+                PUSH HL
+                INC HL                                                          ; переход к FUISettings_Progress.AxisY.A
+                LD D, (HL)                                                      ; начальное значение AxisOffset.Y
+                EXX
+                LD A, B                                                         ; нормализованная Alpha
+                EXX
+                CALL Math.Lerp8
+                POP HL
+                endif
                 POP DE
                 POP BC
 
@@ -147,6 +239,7 @@ UI.UpdateProgress:; получение шага прогресса
                 POP HL
 
                 ; масштабирование результата диапазоном оси X
+                PUSH HL                                                         ; адрес FUISettings_Progress.AxisFunctions
                 INC HL                                                          ; пропуск FUISettings_Progress.AxisY.A
                 INC HL                                                          ; пропуск FUISettings_Progress.AxisY.B
                 INC HL                                                          ; переход к FUISettings_Progress.AxisX.A
@@ -154,6 +247,22 @@ UI.UpdateProgress:; получение шага прогресса
                 INC HL                                                          ; переход к FUISettings_Progress.AxisX.B
                 LD E, (HL)                                                      ; значение B для AxisOffset.X
                 CALL Math.Lerp8
+                POP HL                                                          ; адрес FUISettings_Progress.AxisFunctions
+
+                ifdef ENABLE_UI_PROGRESS_DURATION
+                ; интерполяция от начала диапазона к целевому смещению
+                LD E, A                                                         ; целевое значение AxisOffset.X
+                PUSH HL
+                INC HL                                                          ; пропуск FUISettings_Progress.AxisY.A
+                INC HL                                                          ; пропуск FUISettings_Progress.AxisY.B
+                INC HL                                                          ; переход к FUISettings_Progress.AxisX.A
+                LD D, (HL)                                                      ; начальное значение AxisOffset.X
+                EXX
+                LD A, B                                                         ; нормализованная Alpha
+                EXX
+                CALL Math.Lerp8
+                POP HL
+                endif
 
                 ; сохранение результата
                 LD (IX + FObjectUI.Layer.AxisOffset.X), A
@@ -169,7 +278,7 @@ UI.UpdateProgress:; получение шага прогресса
 ;   HL, DE, AF
 ; Note:
 ; ----------------------------------------
-.ApplyAxisFunc: ifdef _DEBUG
+.ApplyAxisFunc  ifdef _DEBUG
                 CP UI_AXIS_FUNCTION_MAX
                 DEBUG_BREAK_POINT_NC                                            ; ошибка, нет такой функции преобразования Progress
                 endif

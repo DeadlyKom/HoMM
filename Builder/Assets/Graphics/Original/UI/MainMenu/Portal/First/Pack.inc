@@ -36,7 +36,7 @@ Frame:
 ._5             incbin "Builder/Assets/Graphics/Original/UI/MainMenu/Portal/First/Frame_5.bin"
 ._6             incbin "Builder/Assets/Graphics/Original/UI/MainMenu/Portal/First/Frame_6.bin"
 ._7             incbin "Builder/Assets/Graphics/Original/UI/MainMenu/Portal/First/Frame_7.bin"
-.Num:           EQU 6   ; устанавливать вручную
+.Num            EQU 6   ; устанавливать вручную
 Size            EQU $-Begin
                 COMPRESSED_ASSET \
                 "Builder/Assets/Graphics/Compressed/MainMenu/First/0_7.pack", \
@@ -68,7 +68,7 @@ Frame:
 ._9             incbin "Builder/Assets/Graphics/Original/UI/MainMenu/Portal/First/Frame_9.bin"
 ._10            incbin "Builder/Assets/Graphics/Original/UI/MainMenu/Portal/First/Frame_10.bin"
 ._11            incbin "Builder/Assets/Graphics/Original/UI/MainMenu/Portal/First/Frame_11.bin"
-.Num:           EQU 4   // устанавливать вручную
+.Num            EQU 4   // устанавливать вручную
 Size            EQU $-Begin
                 COMPRESSED_ASSET \
                 "Builder/Assets/Graphics/Compressed/MainMenu/First/8_11.pack", \
@@ -104,7 +104,7 @@ Frame:
 ._14            incbin "Builder/Assets/Graphics/Original/UI/MainMenu/Portal/First/Frame_14.bin"
 ._15            incbin "Builder/Assets/Graphics/Original/UI/MainMenu/Portal/First/Frame_15.bin"
 ._16            incbin "Builder/Assets/Graphics/Original/UI/MainMenu/Portal/First/Frame_16.bin"
-.Num:           EQU 5   // устанавливать вручную
+.Num            EQU 5   // устанавливать вручную
 Size            EQU $-Begin
                 COMPRESSED_ASSET \
                 "Builder/Assets/Graphics/Compressed/MainMenu/First/12_16.pack", \

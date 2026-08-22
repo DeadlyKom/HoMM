@@ -156,7 +156,7 @@ Reconnaissance: ; расчёт адреса из таблицы
 
                 RET
 
-.RadiusTable:   DW .Radius_1
+.RadiusTable    DW .Radius_1
                 DW .Radius_2
                 DW .Radius_3
                 DW .Radius_4

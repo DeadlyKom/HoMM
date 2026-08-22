@@ -35,7 +35,7 @@ HextileProperty:; ToDo: тестовые свойства типов повер�
 
                 JP Session.SharedCode.SetPageLoadedMap                          ; установка страницы загруженной карты
 
-.SurfaceCostTable:
+.SurfaceCostTable
                 SURFACE_PASSABILITY SURFACE_TYPE_NORMAL, 1                      ; HextileID 0: трава
                 SURFACE_PASSABILITY SURFACE_TYPE_NORMAL, 6                      ; HextileID 1: гора
                 SURFACE_PASSABILITY SURFACE_TYPE_NORMAL, 4                      ; HextileID 2: болото
@@ -46,7 +46,7 @@ HextileProperty:; ToDo: тестовые свойства типов повер�
                 SURFACE_PASSABILITY SURFACE_TYPE_NORMAL, 0                      ; HextileID 7: пустой гексагон/контур
 .SurfaceCostTable.Size EQU $-.SurfaceCostTable
 
-.SurfacePropertyTable:
+.SurfacePropertyTable
                 SURFACE_PROPERTY 0                                              ; HextileID 0: трава
                 SURFACE_PROPERTY SURFACE_RECON_POS_MOD_2                        ; HextileID 1: гора                  (+2 к разведке)
                 SURFACE_PROPERTY 0                                              ; HextileID 2: болото
