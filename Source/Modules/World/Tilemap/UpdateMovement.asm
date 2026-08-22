@@ -83,7 +83,8 @@ UpdateMovement: RES_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             
                 LD HL, Adr.RenderBuffer + 80 + 176
                 LD DE, #0101
                 CALL SafeFill.b176
-                JP Draw.HexDLGeneration
+                CALL Draw.HexDLGeneration
+                JP World.Base.Render.Update.MinimapView                         ; обновление маркера положения на миникарте
 SetMapPosition  RES_VIEW_FLAG SET_MAP_POSITION_ON_MINIMAP_BIT                   ; сброс флага установки положения карты по мини-карте
                 ifdef _DEBUG
                 SET_FLAG_MODIFY World.Base.Render.DebugInfo.Coordinates.Flag    ; установка флага, изменения координат мира

@@ -29,7 +29,7 @@ Reconnaissance.Event
 
                 ; ToDo: вызывает принудительно FORCED_FRAME_UPDATE_BIT 
                 ;       и вызывает фриз!
-                JP World.Base.Render.UpdateMinimap                              ; обновление миникарты (теневого экрана)
+                JP World.Base.Render.Update.Minimap                              ; обновление миникарты (теневого экрана)
 ; -----------------------------------------
 ; рекогносцировка
 ; In:

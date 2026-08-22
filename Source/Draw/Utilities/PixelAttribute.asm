@@ -13,15 +13,16 @@
 ;   AF
 ; Note:
 ; -----------------------------------------
-AttributeAdr:   LD A, D
-                RRCA
-                RRCA
-                RRCA
+AttributeAdr:   LD A, D         ; %000yyyyy
+                RRCA            ; %y000yyyy
+                RRCA            ; %yy000yyy
+                RRCA            ; %yyy000yy
                 LD D, A
-                XOR E
-                AND %11100000
-                XOR E
+                XOR E           ; %???xxx??
+                AND %11100000   ; %???00000
+                XOR E           ; %yyyxxxxx
                 LD E, A
+                RES 7, D
                 LD A, (GameState.Screen)
                 OR D
                 AND %11000011

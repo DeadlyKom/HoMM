@@ -7,7 +7,7 @@
 ; Out:
 ; Corrupt:
 ; Note:
-;   код расположен в общей памяти
+;   ℹ️ код расположен в "общей памяти"
 ;
 ;   функция сохраняет регистры вызывающего кода
 ;   активная страница восстанавливается механизмом Progress
@@ -33,7 +33,7 @@ ProgressIncrement:
 ; Corrupt:
 ;   HL, DE, BC, AF
 ; Note:
-;   код расположен в общей памяти
+;   ℹ️ код расположен в "общей памяти"
 ; -----------------------------------------
 ProgressToPercent:
                 JP_LAUNCH_ASSET_FUNCTION Progress.ToPercent, ExecuteModule.Progress

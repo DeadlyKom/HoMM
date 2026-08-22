@@ -9,7 +9,7 @@
 ; Out:
 ; Corrupt:
 ; Note:
-;   в общей памяти
+;   ℹ️ код расположен в "общей памяти"
 ; -----------------------------------------
 Load:           LD A, ASSETS_ID_CURSOR_PACK
                 LD HL, Cursor.Indexes
