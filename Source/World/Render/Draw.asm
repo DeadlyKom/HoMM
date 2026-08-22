@@ -67,6 +67,7 @@ Draw:           ; -----------------------------------------
                 ; -----------------------------------------
                 ; проверка пересечения курсором UI элементов
                 SET_MODULE_PAGE_World                                           ; включить страницу модуля "World"
+                CALL World.UI.Handler.GameWindow                                ; принять зафиксированную команду независимо от текущего hover
                 LD HL, World.Base.Layers
                 LD B, World.Base.Layers.Num
                 CALL UI.Update

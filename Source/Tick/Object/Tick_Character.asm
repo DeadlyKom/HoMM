@@ -27,6 +27,97 @@ Character:      ; сохранить параметры текущего cadence
                 ; проверка необходимости создания UI объекта
                 CALL Tick.Spawn.TryUIIconChar
 
+                ; interrupt-ввод только ставит независимые события;
+                ; состояние маршрута меняет проход выбранного героя
+                LD A, (GameState.PlayerActions + FPlayerActions.SelectedHeroID)
+                CP (IX + FObjectCharacter.CharacterID)
+                JP NZ, .RouteControlComplete
+
+                LD HL, GameState.RouteControl
+                BIT ROUTE_CANCEL_REQUEST_BIT, (HL)                              ; удаление имеет высший приоритет
+                JR NZ, .RouteCancel
+
+                LD A, (GameState.PlayerActions + FPlayerActions.Action)
+                CP PLAYER_ACTION_HERO_MOVEMENT
+                JR Z, .RouteMovingControl
+                CP PLAYER_ACTION_HERO_MOVEMENT_PAUSED
+                JR Z, .RoutePausedControl
+                JR .RouteControlComplete
+
+.RouteMovingControl
+                BIT ROUTE_PAUSE_REQUEST_BIT, (HL)
+                JR Z, .RouteControlComplete
+
+.RoutePauseRequest
+                LD A, (IX + FObjectCharacter.PathID)
+                CP PATH_ID_NONE
+                JR Z, .RouteResetAction                                         ; маршрут успел закончиться до обработки события
+
+                CALL WorldTime.StopAdvance                                      ; выполняется в проходе героя, не в interrupt
+                LD A, PLAYER_ACTION_HERO_MOVEMENT_PAUSED
+                LD (GameState.PlayerActions + FPlayerActions.Action), A
+                LD HL, GameState.RouteControl
+                RES ROUTE_PAUSE_REQUEST_BIT, (HL)
+                BIT ROUTE_CANCEL_REQUEST_BIT, (HL)                              ; второй ПКМ мог прийти во время обработки
+                JR NZ, .RouteCancel
+                BIT ROUTE_RESUME_REQUEST_BIT, (HL)                              ; ЛКМ мог уже запросить продолжение
+                JR NZ, .RouteResume
+                RET
+
+.RouteCancel
+                ; второе нажатие отмены удаляет логический маршрут без привязки к центру гекса
+                CALL WorldTime.StopAdvance
+                LD A, PATH_ID_NONE
+                LD (IX + FObjectCharacter.PathID), A
+                XOR A
+                LD (IX + FObjectCharacter.Movement.RemainingSteps.Low), A
+                LD (IX + FObjectCharacter.Movement.RemainingSteps.High), A
+                LD (IX + FObjectCharacter.MovementBudget.Low), A
+                LD (IX + FObjectCharacter.MovementBudget.High), A
+                LD (IX + FObjectCharacter.MovementPending.Low), A
+                LD (IX + FObjectCharacter.MovementPending.High), A
+                LD (IX + FObjectCharacter.StepCost), A
+                RES ANIM_STATE_BIT, (IX + FObjectCharacter.Super.Sprite)
+                SET OBJECT_DIRTY_BIT, (IX + FObject.Flags)
+                JR .RouteClearAction
+
+.RoutePausedControl
+                BIT ROUTE_RESUME_REQUEST_BIT, (HL)
+                JR NZ, .RouteResume
+
+.RoutePaused
+                LD A, (IX + FObjectCharacter.PathID)
+                CP PATH_ID_NONE
+                RET NZ                                                          ; маршрут, DDA и бюджеты остаются нетронутыми
+
+.RouteResetAction
+                CALL WorldTime.StopAdvance                                      ; погасить уже заказанную эпоху и при завершившемся пути
+.RouteClearAction
+                XOR A
+                LD (GameState.PlayerActions + FPlayerActions.Action), A
+                LD HL, GameState.RouteControl
+                RES ROUTE_PAUSE_REQUEST_BIT, (HL)
+                RES ROUTE_RESUME_REQUEST_BIT, (HL)
+                RES ROUTE_CANCEL_REQUEST_BIT, (HL)
+                RET
+
+.RouteResume
+                LD A, (IX + FObjectCharacter.PathID)
+                CP PATH_ID_NONE
+                JR Z, .RouteResetAction
+
+                LD A, PLAYER_ACTION_HERO_MOVEMENT
+                LD (GameState.PlayerActions + FPlayerActions.Action), A
+                LD HL, GameState.RouteControl
+                RES ROUTE_RESUME_REQUEST_BIT, (HL)
+                BIT ROUTE_CANCEL_REQUEST_BIT, (HL)
+                JR NZ, .RouteCancel
+                BIT ROUTE_PAUSE_REQUEST_BIT, (HL)
+                JR NZ, .RoutePauseRequest
+                JR .RouteControlComplete                                        ; сначала доиграть сохранённые DDA и бюджет
+
+.RouteControlComplete
+
                 ; проверка перемещения героя
                 LD C, (IX + FObjectCharacter.Super.Sprite)
                 BIT ANIM_STATE_BIT, C
@@ -77,7 +168,11 @@ Move            ; --------------------------------------------------------------
                 LD D, #00
                 LD A, E
                 OR A
-                JR Z, .Animation                                                ; нулевая стоимость запрещает движение по поверхности
+                JR NZ, .StepAllowed
+                ; ToDo: при динамической блокировке запросить перестроение пути или событие отказа
+                JR .Animation                                                   ; нулевая стоимость запрещает движение по поверхности
+
+.StepAllowed
 
                 LD HL, (IX + FObjectCharacter.MovementBudget)
                 OR A
@@ -154,16 +249,7 @@ Move            ; --------------------------------------------------------------
                 CP (IX + FObjectCharacter.CharacterID)
                 RET NZ
 
-                LD A, (GameState.PlayerActions + FPlayerActions.Action)
-                CP PLAYER_ACTION_HERO_MOVEMENT
-                RET NZ
-
-                CALL WorldTime.StopAdvance                                      ; удалить следующий "мировой тик", заранее запрошенный во время движения
-
-                ; сброс действия игрока
-                XOR A                                                           ; PLAYER_ACTION_NONE
-                LD (GameState.PlayerActions + FPlayerActions.Action), A
-                RET
+                JP Character.RouteResetAction                                   ; погасить epoch и любой запоздавший route-event
 
 .NextPath       ; расчёт адреса текущей FPath
                 LD A, (IX + FObjectCharacter.PathID)
@@ -209,6 +295,12 @@ RequestNextWorldTick:
                 LD A, (GameState.PlayerActions + FPlayerActions.SelectedHeroID)
                 CP (IX + FObjectCharacter.CharacterID)
                 RET NZ                                                          ; выход, если это не выбранный игроком персонаж
+
+                LD HL, GameState.RouteControl
+                BIT ROUTE_CANCEL_REQUEST_BIT, (HL)
+                JP NZ, WorldTime.StopAdvance                                    ; погасить и ранее заказанный пакет текущей epoch
+                BIT ROUTE_PAUSE_REQUEST_BIT, (HL)
+                JP NZ, WorldTime.StopAdvance
 
                 LD A, (GameConfig.PlaybackSpeed)
                 ifdef _DEBUG

@@ -14,20 +14,58 @@
 ; -----------------------------------------
 GetPosByMouse:  ; сброс флага, необходимости дополнительной проверки
                 RES_FLAG_MODIFY GetPosByMouse.Flag
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
+                PUSH AF
+                LD A, (Mouse.PositionX)
+                PUSH AF
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.X)
+                PUSH AF
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
+                PUSH AF
+                LD A, (Mouse.PositionY)
+                PUSH AF
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.Y)
+                PUSH AF
+                JR .Calculate
+
+; -----------------------------------------
+; определить гексагон по атомарно опубликованному снимку команды маршрута
+; In:
+; Out:
+;   BC - координаты гексагона (B - y, C - x)
+; Corrupt:
+;   HL, DE, BC, AF, HL', BC', AF'
+; -----------------------------------------
+.ByRouteTarget
+                RES_FLAG_MODIFY GetPosByMouse.Flag
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
+                PUSH AF
+                LD A, (GameState.RouteTarget + FVector8.X)
+                PUSH AF
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.X)
+                PUSH AF
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
+                PUSH AF
+                LD A, (GameState.RouteTarget + FVector8.Y)
+                PUSH AF
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.Y)
+                PUSH AF
+
+.Calculate
                 
                 ; -----------------------------------------
                 ; расчёт вертикального положения мыши относительно центра гексагона (0,0)
                 ; -----------------------------------------
 
                 ; приведение смещение карты в пиксели
-                LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.Y)
+                POP AF                                                          ; MapOffset.Y снимка
                 ADD A, A    ; x2
                 ADD A, A    ; x4
                 ADD A, A    ; x8
                 EX AF, AF'
                 
                 ; расчёт положения курсора по вертикали относительно левого-верхнего "игрового мира"
-                LD A, (Mouse.PositionY)
+                POP AF                                                          ; экранная Y снимка
                 LD L, A
                 LD H, #00
                 LD B, #FF
@@ -55,7 +93,7 @@ GetPosByMouse:  ; сброс флага, необходимости дополн
                 AND %00011111
 .NegativeY      LD D, A         ; D - дельта Y от центрами гексагона
                                 ; B - Y (гексагон)
-                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
+                POP AF                                                          ; MapPosition.Y снимка
                 ADD A, B
                 LD B, A
 
@@ -90,14 +128,14 @@ GetPosByMouse:  ; сброс флага, необходимости дополн
                 ; -----------------------------------------
 
                 ; приведение смещение карты в пиксели
-                LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.X)
+                POP AF                                                          ; MapOffset.X снимка
                 ADD A, A    ; x2
                 ADD A, A    ; x4
                 ADD A, A    ; x8
                 EX AF, AF'
 
                 ; расчёт положения курсора по горизонтали относительно левого-верхнего "игрового мира"
-                LD A, (Mouse.PositionX)
+                POP AF                                                          ; экранная X снимка
                 ; проверка чётности строки, если чётная,
                 ; сместить на половину гексагона по горизонтали влево
                 BIT 0, B
@@ -139,7 +177,7 @@ GetPosByMouse:  ; сброс флага, необходимости дополн
                 SUB E
 .NegativeX      LD E, A         ; E - дельта X от центрами гексагона
                                 ; C - X (гексагон)
-                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
+                POP AF                                                          ; MapPosition.X снимка
                 ADD A, C
                 LD C, A
 
@@ -288,6 +326,8 @@ GetPosByMouse:  ; сброс флага, необходимости дополн
                     end
                 end
                 endlua
+
+GetPosByRouteTarget EQU GetPosByMouse.ByRouteTarget
 
                 endmodule
 

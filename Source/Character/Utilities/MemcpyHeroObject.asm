@@ -5,7 +5,7 @@
 ; копировать объект "персонаж"
 ; In:
 ;   DE' - адрес копирования объекта
-;   E'  - идентификатора персонажа
+;   C'  - идентификатор персонажа
 ; Out:
 ; Corrupt:
 ; Note:
@@ -23,7 +23,7 @@ Character.MemcpyObject;
                 ; Corrupt:
                 ; Note:
                 ; -----------------------------------------
-                LD A, E
+                LD A, C
                 CALL Character.Utilities.GetAdr
 
                 ; копирование FCharacter

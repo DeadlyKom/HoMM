@@ -13,6 +13,7 @@ Begin:          EQU $
 
                 include "Source/Minimap/Include.inc"
                 include "Source/Buffers/Include.inc"
+                include "Source/Pathfinding/Include.inc"
 Size:           EQU $-Begin                                                     ; размер кода
                 if (Size.Code.Page1 - Size) < 0
                     error "allocated memory ran out!"

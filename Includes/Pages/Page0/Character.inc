@@ -14,5 +14,6 @@ Character.Utilities:
 .GetAdr.HL              EQU Page0.Character.Utilities.Character.Address.HL      ; получить адрес персонажа
 .GetAdr.IX              EQU Page0.Character.Utilities.Character.Address.IX      ; получить адрес персонажа
 .GetAdr                 EQU Page0.Character.Utilities.Character.Addresses       ; получить адреса персонажа
+.GetRouteContext        EQU Page0.Character.Utilities.Character.RouteContext    ; получить адреса и позицию героя для поиска пути
 .MemcpyObject           EQU Page0.Character.Utilities.Character.MemcpyObject    ; копировать объект "персонаж"
                 endif ; ~_PAGE_0_CHARACTER_

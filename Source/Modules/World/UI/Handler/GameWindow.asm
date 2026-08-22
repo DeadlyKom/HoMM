@@ -9,82 +9,80 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-GameWindow:     ; проверка бездействия игрока
+GameWindow:     ; принять только фронт нового нажатия ЛКМ
+                LD HL, GameState.RouteControl
+                BIT ROUTE_SELECT_EDGE_BIT, (HL)
+                RET Z
+
+                ; новый маршрут разрешён только при бездействии игрока
                 LD A, (GameState.PlayerActions + FPlayerActions.Action)
                 OR A                                                            ; PLAYER_ACTION_NONE
-                RET NZ                                                          ; выход, если действие игрока незакончено
+                JR NZ, .DiscardRouteCommand                                     ; действие уже занято, удалить устаревший mailbox
 
-                ; проверка клавиши "выбор"
-                LD A, (GameConfig.KeySelect)
-                CALL Input.CheckKeyState
-                RET NZ                                                          ; выход, если не нажата клавиша "выбор"
+                ; захватить команду до чтения героя и расчёта гекса;
+                ; interrupt после этого не создаёт вторую команду и не входит в debug GetPos
+                LD A, PLAYER_ACTION_HERO_PATHFINDING
+                LD (GameState.PlayerActions + FPlayerActions.Action), A
 
                 ; ToDo: в зависимости от действий игрока GameState.PlayerActions
                 ;       меняем поведение, пока только одно выбор гексагона!
 
-                ; копировать объект "герой"
-                LD A, (GameState.PlayerActions + FPlayerActions.SelectedHeroID)
-                LD E, A
-                LD DE, Adr.ExtraBuffer
+                CALL World.Hexagon.GetPosByRouteTarget                          ; гекс из атомарно опубликованного снимка команды
+                LD HL, GameState.RouteControl
+                RES ROUTE_SELECT_EDGE_BIT, (HL)                                 ; освободить mailbox после полного чтения снимка
+
+                ; BC' = цель; DE' = старт; IX/IY сохраняют адреса конкретного героя
+                ; на всё время синхронного поиска
                 EXX
-                CALL_IN_PAGE Page.Object, Character.Utilities.MemcpyObject      ; вызов функции - копирование объекта "персонаж"
+                CALL_IN_PAGE Page.Object, Character.Utilities.GetRouteContext
 
-                ;   IX - адрес героя            (FCharacter)
-                ;   IY - адрес объекта героя    (FObjectCharacter)
-
-                CALL World.Hexagon.GetPosByMouse                                ; определение позиции гексагона под курсором мыши
-
-                ; координаты выбранного героя
-                LD L, (IY + FObject.Position.X.High)
-                LD H, (IY + FObject.Position.Y.High)
-
-                ; сравнение позиций
+                ; выход, если позиции совпадают
+                EXX
+                LD L, E
+                LD H, D
                 OR A
                 SBC HL, BC
-                RET Z                                                           ; выход, если позиции совпадают
-                ADD HL, BC
+                JR Z, .RouteCommandComplete                                     ; выход, если позиции совпадают
+                EXX
 
-                ; проверка длины шага
-                PUSH BC
-                EX DE, HL
-                CALL World.Hexagon.Distance                                     ; определение расстояния между гексагонами
-                DEC A
-                POP BC
-                RET NZ                                                          ; выход, если расстояние больше 1
+                ; запросить прямой шаг, точный bounded-путь либо 8-шаговый дальний префикс;
+                ; результат записывается в Adr.SortBuffer
+                CALL_IN_PAGE Page.Pathfinding, Pathfinding.Request.Wrap
+                EX AF, AF'
+                LD C, A                                                         ; длина найденного пути
 
-                ; установить действие игрока, перемещение героя
+                LD A, C
+                OR A
+                JR Z, .PathfindingFailed                                        ; путь отсутствует либо цель недостижима
+
+                ; точечно применить маршрут к тому же объекту; PathInitialize
+                ; повторно проверит CharacterID, ObjectID и оба адреса слотов
+                EXX
+                CALL_IN_PAGE Page.Page0, Character.PathInitialize.Wrap
+                EX AF, AF'
+                OR A
+                JR Z, .RouteContextChanged                                      ; защитная проверка отклонила устаревший контекст
+
+                ; установить действие только после успешного применения пути
                 LD A, PLAYER_ACTION_HERO_MOVEMENT
                 LD (GameState.PlayerActions + FPlayerActions.Action), A
-
-                ; определение индекса Render-буфера по координатам гексагона
-                PUSH BC
-                LD D, B
-                LD E, C
-                EXX
-                CALL_IN_PAGE \
-                    Page.Page1, \
-                    BufferUtilities.GetHextileIDByCoord.Wrap                    ; вызов функции - получение ID гексагона по координатам
-                ; ToDo построеть очередь для перемещения от текущего WayPoint'а
-                ;      к указанному, на основе координат назначения
-
-                POP BC
-                LD HL, Adr.SortBuffer                                           ; т.к. обновление UI и обработка событий,
-                                                                                ; происходит перед отрисовкой, данный буфер свободный
-                                                                                ; для временного хранения
-                LD (HL), C      ; FPath.HexCoord.X
-                INC L
-                LD (HL), B      ; FPath.HexCoord.Y
-                INC L
-                EX AF, AF'
-                LD (HL), A      ; FPath.HextileID
-                INC L
-                LD (HL), #00    ; FPath.WayPointIdx (пока нулевой)
-                
-                ; инициализация пути героя
-                LD C, #01       ; длина пути в массиве
-                EXX
-                JP_IN_PAGE Page.Page0, Character.PathInitialize.Wrap            ; вызов функции - инициализация пути
                 ; первый пакет "мировых тиков" запросит персонаж после завершения поворота
-                ; RET
+                RET
+
+.PathfindingFailed
+                ; ToDo: отправить UI/звуковое событие с причиной отказа построения пути
+                JR .RouteCommandComplete
+
+.RouteContextChanged
+                ; ToDo: диагностическое событие: во время синхронного BFS герой
+                ;       штатно не может быть удалён, перемещён в массиве или заменён
+.RouteCommandComplete
+                XOR A
+                LD (GameState.PlayerActions + FPlayerActions.Action), A         ; PLAYER_ACTION_NONE
+                RET
+
+.DiscardRouteCommand
+                RES ROUTE_SELECT_EDGE_BIT, (HL)
+                RET
 
                 endif ; ~_MODULE_WORLD_UI_HANDLER_GAME_WINDOW_

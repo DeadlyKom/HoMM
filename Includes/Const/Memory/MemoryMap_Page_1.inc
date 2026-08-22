@@ -12,7 +12,9 @@
                 ;   +-------+------------------------------------------+-------+
                 ;   | #D400 |                          SurfaceProperty | #0100 | ; таблица свойств поверхности по типам гексагональных тайлов
                 ;   +-------+------------------------------------------+-------+
-                ;   | #D500 |                                 свободно | #1800 |
+                ;   | #D500 |                      PathfindingParents | #0121 | ; локальная карта родителей 17x17
+                ;   | #D621 |                        PathfindingQueue | #028B | ; FIFO: 217 записей по 3 байта
+                ;   | #D8AC |                                 свободно | #1454 |
                 ;   +-------+------------------------------------------+-------+
                 ;   | #ED00 |                          HexShadingTable | #0100 | ; таблица соответствия ID гексагонального тайла и номера штриховки
                 ;   +-------+------------------------------------------+-------+
@@ -36,6 +38,7 @@
 Page1           EQU PAGE_1
 Hextile         EQU PAGE_1
 SurfPassability EQU PAGE_1
+Pathfinding     EQU PAGE_1
                 endmodule
 
                 module Size
@@ -45,6 +48,9 @@ MapMetadata     EQU #0900                                                       
 SurfPassability EQU #0100                                                       ; размер таблицы стоимости перемещения по типам гексагональных тайлов
 SurfProperty    EQU #0100                                                       ; размер таблицы свойств поверхности по типам гексагональных тайлов
 SurfaceTable    EQU #0200                                                       ; общий размер таблиц поверхности
+PathfindingParents EQU PATHFINDING_RANGE_CELL_COUNT                            ; карта посещения и направления к родителю
+PathfindingQueue   EQU PATHFINDING_MAX_CELLS * PATHFINDING_QUEUE_NODE_SIZE     ; очередь bounded BFS
+PathfindingWorkspace EQU PathfindingParents + PathfindingQueue
 Code.Page1      EQU #0A00                                                       ; размер блока кода
 MapShadingBuf   EQU #0120                                                       ; размер результирующего буфера штриховки карты
 FogShadingBuf   EQU #0120                                                       ; размер результирующего буфера тумана карты
@@ -56,6 +62,8 @@ HextileBorder   EQU #C900                                                       
 MapMetadata     EQU #CA00                                                       ; адрес метаданных карты, описание в структуре FMapMetadata
 SurfPassability EQU #D300                                                       ; адрес таблицы стоимости перемещения по типам поверхности
 SurfProperty    EQU #D400                                                       ; адрес таблицы свойств поверхности по типам гексагональных тайлов
+PathfindingParents EQU #D500                                                    ; локальная карта родителей bounded BFS
+PathfindingQueue   EQU PathfindingParents + Size.PathfindingParents             ; FIFO bounded BFS
 HexShadingTable EQU #ED00                                                       ; адрес таблицы соответствия ID гексагонального тайла и номера штриховки
 HexShading      EQU #EE00                                                       ; адрес текстуры штриховки тайла (8 байт на тайл)
 MapAdrTable     EQU #EF00                                                       ; адрес таблицы адресов карты/метаданных (начальные адреса по вертикали)
@@ -65,5 +73,7 @@ MapShadingBuf   EQU #FB00                                                       
 FogShadingBuf   EQU #FC20                                                       ; адрес результирующего буфера тумана карты
                                                                                 ; где нулевой элемент является последним
                 endmodule
+
+                assert Adr.PathfindingQueue + Size.PathfindingQueue <= Adr.HexShadingTable
 
                 endif ; ~_CONST_MEMORY_MAP_PAGE_1_

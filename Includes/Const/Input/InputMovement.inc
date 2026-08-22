@@ -14,4 +14,11 @@ KEY_MASK                EQU 1 << MENU_KEY_BIT      | 1 << ESC_KEY_BIT | \
 MOVEMENT_MASK           EQU 1 << MOVEMENT_LEFT_BIT | 1 << MOVEMENT_RIGHT_BIT | \
                             1 << MOVEMENT_UP_BIT   | 1 << MOVEMENT_DOWN_BIT
 
+ROUTE_SELECT_DOWN_BIT       EQU 0x00                                            ; ЛКМ уже удерживается
+ROUTE_SELECT_EDGE_BIT       EQU 0x01                                            ; новая команда движения по ЛКМ в текущем кадре
+ROUTE_CANCEL_DOWN_BIT       EQU 0x02                                            ; кнопка отмены уже удерживается
+ROUTE_PAUSE_REQUEST_BIT     EQU 0x03                                            ; запрос остановки маршрута для прохода выбранного героя
+ROUTE_RESUME_REQUEST_BIT    EQU 0x04                                            ; запрос продолжения сохранённого маршрута
+ROUTE_CANCEL_REQUEST_BIT    EQU 0x05                                            ; запрос удаления сохранённого маршрута
+
                 endif ; ~_CONST_INPUT_MOVEMENT_

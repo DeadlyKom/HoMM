@@ -53,10 +53,87 @@ Scan:           ; проверка HardWare ограничения мыши
                 ; проверка клавиши "выбор"
                 LD A, (GameConfig.KeySelect)
                 CALL Input.CheckKeyState
-                CALL Z, Input.Select                                            ; переход, если клавиша нажата
+                JR NZ, .SelectReleased                                          ; переход, если клавиша отпущена
+
+                CALL Input.Select                                               ; сохранить level-state для остальных UI элементов
+                LD HL, GameState.RouteControl
+                BIT ROUTE_SELECT_DOWN_BIT, (HL)
+                JR NZ, .SelectComplete                                          ; удержание не создаёт новую команду
+                SET ROUTE_SELECT_DOWN_BIT, (HL)
+                BIT ROUTE_SELECT_EDGE_BIT, (HL)
+                JR NZ, .SelectComplete                                          ; first-command-wins: непринятый mailbox не перезаписывается
+
+                LD A, (GameState.PlayerActions + FPlayerActions.Action)
+                OR A
+                JR Z, .SelectRouteCommand                                       ; бездействие: запросить новый маршрут
+                CP PLAYER_ACTION_HERO_MOVEMENT_PAUSED
+                JR NZ, .SelectComplete                                          ; остальные действия не принимают ЛКМ
+
+.SelectRouteCommand
+                ; команда маршрута создаётся только внутри игрового окна
+                LD A, (Mouse.PositionX)
+                SUB SCR_WORLD_POS_X << 3
+                CP SCR_WORLD_SIZE_X << 3
+                JR NC, .SelectComplete
+                LD A, (Mouse.PositionY)
+                SUB SCR_WORLD_POS_Y << 3
+                CP SCR_WORLD_SIZE_Y << 3
+                JR NC, .SelectComplete
+
+                LD A, (GameState.PlayerActions + FPlayerActions.Action)
+                CP PLAYER_ACTION_HERO_MOVEMENT_PAUSED
+                JR Z, .ResumeRoute
+
+                ; mailbox публикуется только после полного снимка экранной точки
+                ; ToDo: для клика во время скролла привязать снимок к committed/rendered view
+                LD A, (Mouse.PositionX)
+                LD (GameState.RouteTarget + FVector8.X), A
+                LD A, (Mouse.PositionY)
+                LD (GameState.RouteTarget + FVector8.Y), A
+                SET ROUTE_SELECT_EDGE_BIT, (HL)
+                JR .SelectComplete
+
+.ResumeRoute    SET ROUTE_RESUME_REQUEST_BIT, (HL)                              ; interrupt только ставит событие
+                JR .SelectComplete
+
+.SelectReleased LD HL, GameState.RouteControl
+                RES ROUTE_SELECT_DOWN_BIT, (HL)
+.SelectComplete
 
                 ; проверка клавиши "выход"
-                ; LD A, (GameConfig.KeyESC)
+                LD A, (GameConfig.KeyESC)
+                CALL Input.CheckKeyState
+                JR NZ, .CancelReleased                                          ; переход, если кнопка отмены отпущена
+
+                LD HL, GameState.RouteControl
+                BIT ROUTE_CANCEL_DOWN_BIT, (HL)
+                JR NZ, .CancelComplete                                          ; удержание обрабатывается только один раз
+                SET ROUTE_CANCEL_DOWN_BIT, (HL)
+
+                BIT ROUTE_CANCEL_REQUEST_BIT, (HL)
+                JR NZ, .CancelComplete                                          ; отмена имеет приоритет над следующими командами
+
+                LD A, (GameState.PlayerActions + FPlayerActions.Action)
+                CP PLAYER_ACTION_HERO_MOVEMENT
+                JR Z, .PauseRoute
+                CP PLAYER_ACTION_HERO_MOVEMENT_PAUSED
+                JR Z, .CancelRoute
+                JR .CancelComplete                                              ; построение пути и запросы уже приняты и не отменяются
+
+.CancelRoute
+                RES ROUTE_PAUSE_REQUEST_BIT, (HL)
+                RES ROUTE_RESUME_REQUEST_BIT, (HL)
+                SET ROUTE_CANCEL_REQUEST_BIT, (HL)                              ; второе нажатие сбросит маршрут в проходе героя
+                JR .CancelComplete
+
+.PauseRoute     BIT ROUTE_PAUSE_REQUEST_BIT, (HL)
+                JR NZ, .CancelRoute                                             ; второй фронт до прохода героя уже означает отмену
+                SET ROUTE_PAUSE_REQUEST_BIT, (HL)                               ; interrupt только формирует событие остановки
+                JR .CancelComplete
+
+.CancelReleased LD HL, GameState.RouteControl
+                RES ROUTE_CANCEL_DOWN_BIT, (HL)
+.CancelComplete
 
                 ; проверка клавиши "меню/пауза"
                 ; LD A, (GameConfig.KeyMenu)
@@ -116,6 +193,10 @@ Scan:           ; проверка HardWare ограничения мыши
 
                 INC A
                 LD (.RightButtonState), A                                      ; сохранение обработанного состояния нажатия
+
+                LD A, (GameState.PlayerActions + FPlayerActions.Action)
+                OR A
+                RET NZ                                                          ; ПКМ управления маршрутом не создаёт отладочный объект
 
                 ; проверка нахождения курсора внутри области мира
                 LD A, (Mouse.PositionX)
