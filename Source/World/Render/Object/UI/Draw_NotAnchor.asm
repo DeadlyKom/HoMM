@@ -34,11 +34,11 @@ Draw.NotAnchor: ; расчёт экранного положения объек�
                 SLA C
                 RLA         ; << 1
                 SLA C
-                RLA         ; << 1
+                RLA         ; << 2
                 SLA C
-                RLA         ; << 1
+                RLA         ; << 3
                 SLA C
-                RLA         ; << 1
+                RLA         ; << 4
                 LD B, A
                 ADD HL, BC
                 LD (Kernel.Sprite.DrawClipping.PositionY), HL
@@ -60,11 +60,11 @@ Draw.NotAnchor: ; расчёт экранного положения объек�
                 SLA C
                 RLA         ; << 1
                 SLA C
-                RLA         ; << 1
+                RLA         ; << 2
                 SLA C
-                RLA         ; << 1
+                RLA         ; << 3
                 SLA C
-                RLA         ; << 1
+                RLA         ; << 4
                 LD B, A
                 ADD HL, BC
                 LD (Kernel.Sprite.DrawClipping.PositionX), HL
