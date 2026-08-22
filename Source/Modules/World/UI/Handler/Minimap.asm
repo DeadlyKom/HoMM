@@ -18,6 +18,7 @@ Minimap:        ; проверка нажатия клавиши "выбор"
                 ; расчёт клика по миникарте (вертикаль)
                 ; -----------------------------------------
                 LD A, (Mouse.PositionY)
+                ADD A, SCR_MINIMAP_CLICK_OFS_Y                                  ; компенсация положения указателя при клике по миникарте
                 SUB SCR_MINIMAP_POS_Y << 3
                 CP MAX_WORLD_HEX_Y-HEXTILE_BASE_SIZE_Y-2-4                      ; учёт нижнего смещения
                 JR C, .SubOffsetY
@@ -62,6 +63,7 @@ Minimap:        ; проверка нажатия клавиши "выбор"
                 ; расчёт клика по миникарте (горизонталь)
                 ; -----------------------------------------
                 LD A, (Mouse.PositionX)
+                ADD A, SCR_MINIMAP_CLICK_OFS_X                                  ; компенсация положения указателя при клике по миникарте
                 SUB SCR_MINIMAP_POS_X << 3
                 CP MAX_WORLD_HEX_X-(HEXTILE_SIZE_X >> 1)-1-3                    ; учёт правого смещения
                 JR C, .SubOffsetX
