@@ -4,6 +4,8 @@
 Character:
 .DirectionPath          EQU Page0.Character.Path.Direction                      ; определение направления движения
 .DistancePath           EQU Page0.Character.Path.Distance                       ; определение расстояние пути
+.PathCancel             EQU Page0.Character.Path.PathCancel                     ; отменить путь персонажа
+.PathCancel.Wrap        EQU Page0.Character.Path.PathCancel.Wrap                ; отменить путь персонажа                                      (обёртка)
 .PathInitialize         EQU Page0.Character.Path.PathInitialize                 ; инициализация пути
 .PathInitialize.Wrap    EQU Page0.Character.Path.PathInitialize.Wrap            ; инициализация пути                                            (обёртка)
 ; .ReificationPath        EQU Page0.Character.Path.ReificationPath                ; овеществление пути персонажа                                      DEPRECATED

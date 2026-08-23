@@ -5,6 +5,7 @@
                 module Path
                 include "Distance.asm"
                 include "Direction.asm"
+                include "PathCancel.asm"
                 include "PathInitialize.asm"
                 ; include "ReificationHeroPath.asm"                               ; DEPRECATED
                 endmodule

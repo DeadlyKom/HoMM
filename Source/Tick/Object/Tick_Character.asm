@@ -49,10 +49,9 @@ Character:      ; сохранить параметры текущего cadence
                 POP DE
                 RET NZ
 
-                ; после поворота выбранный игроком персонаж запрашивает первый пакет времени
+                ; начать движение только в активной фазе "мирового тика"
 .WorldTickFlag  FLAG_INV_MODIFY 0
-                JP NC, Move.Init
-                JP RequestNextWorldTick
+                RET C                                                           ; выход, если активная фаза "мирового тика" отсутствует
 
 Move.Init       CALL SetDistance
                 CALL Tick.Utils.Movement.UpdateEffectiveStepCost                ; рассчитать стоимость шага начального гекса
@@ -126,7 +125,7 @@ Move            ; --------------------------------------------------------------
                 ; проверка достижения заданной точки
                 LD A, (IX + FObjectCharacter.Movement.RemainingSteps.Low)
                 OR (IX + FObjectCharacter.Movement.RemainingSteps.High)
-                JP NZ, RequestNextWorldTick                                     ; продолжить перемещение на следующем "мировом тике"
+                RET NZ                                                          ; выход, если продолжить перемещение в следующем cadence-проходе
 
                 ; герой достиг точки назначения,
                 ; принудительно назначить ему конечную точку пути
@@ -150,29 +149,20 @@ Move            ; --------------------------------------------------------------
 
                 CALL Object.Utilities.UpdateChunkByPosition                     ; синхронизация чанка после фиксации в конечной точке сегмента
 
-                ; следующая точка пути
-                DEC (IX + FObjectCharacter.PathID)
+                ; завершить текущую точку пути
                 RES ANIM_STATE_BIT, (IX + FObjectCharacter.Super.Sprite)
 
-                ; проверка завершения пути
+                ; локальный нулевой элемент является последним в каждом слоте
                 LD A, (IX + FObjectCharacter.PathID)
-                CP PATH_ID_NONE
-                JR NZ, .NextPath                                                ; переход, если путь не закончился
+                AND HERO_PATH_SLOT_INDEX_MASK
+                JR Z, .PathComplete                                             ; переход, если достигнут последний элемент текущего слота
 
-                ; завершить действие только для выбранного игроком персонажа
-                LD A, (GameState.PlayerActions + FPlayerActions.SelectedHeroID)
-                CP (IX + FObjectCharacter.CharacterID)
-                RET NZ
+                ; перейти к предыдущему элементу внутри текущего слота
+                DEC (IX + FObjectCharacter.PathID)
+                JR .NextPath                                                    ; перейти к следующей точке того же слота
 
-                LD A, (GameState.PlayerActions + FPlayerActions.Action)
-                CP PLAYER_ACTION_HERO_MOVEMENT
-                RET NZ
-
-                CALL WorldTime.StopAdvance                                      ; удалить следующий "мировой тик", заранее запрошенный во время движения
-
-                ; сброс действия игрока
-                XOR A                                                           ; PLAYER_ACTION_NONE
-                LD (GameState.PlayerActions + FPlayerActions.Action), A
+.PathComplete   ; установить признак отсутствия активного пути
+                LD (IX + FObjectCharacter.PathID), PATH_ID_NONE
                 RET
 
 .NextPath       ; расчёт адреса текущей FPath
@@ -182,10 +172,7 @@ Move            ; --------------------------------------------------------------
                 LD E, A
                 SET 7, E    ; Adr.HeroPath начинается с 0x80
                 LD D, HIGH Adr.HeroPath
-
-                CALL SetDistance
-                JP RequestNextWorldTick
-
+                JP SetDistance
 ; -----------------------------------------
 ; рассчитать DDA-линию от объекта до текущей точки пути
 ; In:
@@ -202,36 +189,8 @@ Move            ; --------------------------------------------------------------
 ;   сброс RequestEvent.Flag запрещает переносить запрос события между сегментами пути
 ; -----------------------------------------
 SetDistance:    CALL Character.DistancePath
-                RES_FLAG_MODIFY RequestEvent.Flag                              ; сброс запроса события предыдущего сегмента
+                RES_FLAG_MODIFY RequestEvent.Flag                               ; сброс флага запроса события предыдущего сегмента
                 JP Tick.Utils.Movement.SetLine
-
-; -----------------------------------------
-; запрос следующего "мирового тика" для продолжающегося действия игрока
-; In:
-;   IX - адрес структуры объекта (FObjectCharacter)
-; Out:
-; Corrupt:
-;   HL, AF
-; -----------------------------------------
-RequestNextWorldTick:
-                LD A, (GameState.PlayerActions + FPlayerActions.Action)
-                CP PLAYER_ACTION_HERO_MOVEMENT
-                RET NZ                                                          ; выход, если игрок не выполняет перемещение
-
-                LD A, (GameState.PlayerActions + FPlayerActions.SelectedHeroID)
-                CP (IX + FObjectCharacter.CharacterID)
-                RET NZ                                                          ; выход, если это не выбранный игроком персонаж
-
-                LD A, (GameConfig.PlaybackSpeed)
-
-                ifdef _DEBUG
-                OR A
-                DEBUG_BREAK_POINT_Z                                             ; произошла ошибка!
-                endif
-
-                LD L, A
-                LD H, #00
-                JP WorldTime.RequestAdvance
 
 RequestEvent    ; запрос на создание ивента
 
