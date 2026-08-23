@@ -5,10 +5,11 @@
 ; инициализация пути (обёртка)
 ; In:
 ;   C' - длина пути
-;   IX - адрес персонажа            (FCharacter)
-;   IY - адрес объекта персонажа    (FObjectCharacter)
+;   IX - адрес персонажа          (FCharacter)
+;   IY - адрес объекта персонажа  (FObjectCharacter)
 ; Out:
 ; Corrupt:
+;   HL, DE, BC, AF
 ; Note:
 ;   ℹ️ код расположен в странице 0
 ; -----------------------------------------
@@ -18,8 +19,8 @@ PathInitialize.Wrap:
 ; инициализация пути
 ; In:
 ;   C  - длина пути
-;   IX - адрес персонажа            (FCharacter)
-;   IY - адрес объекта персонажа    (FObjectCharacter)
+;   IX - адрес персонажа          (FCharacter)
+;   IY - адрес объекта персонажа  (FObjectCharacter)
 ; Out:
 ; Corrupt:
 ;   HL, DE, BC, AF
@@ -29,8 +30,8 @@ PathInitialize.Wrap:
 PathInitialize  ; сохранение длины пути
                 LD A, C
                 EX AF, AF'
-                
-                ; инициализация персонажа в буфере
+
+                ; инициализация объекта персонажа
                 DEC C                                                           ; начинается с -1
                 LD (IY + FObjectCharacter.PathID), C
                 XOR A
@@ -38,26 +39,6 @@ PathInitialize  ; сохранение длины пути
                 LD (IY + FObjectCharacter.MovementBudget.High), A               ; новый маршрут не наследует остаток бюджета предыдущего действия
                 LD (IY + FObjectCharacter.MovementPending.Low), A
                 LD (IY + FObjectCharacter.MovementPending.High), A
-
-                ; копирования данных из буфера в массив
-                PUSH IY
-                PUSH IX
-                LD A, (GameState.PlayerActions + FPlayerActions.SelectedHeroID)
-                CALL Character.Utilities.GetAdr
-                
-                ; копирование FCharacter
-                PUSH IX
-                POP DE
-                POP HL
-                LD BC, CHARACTER_SIZE
-                CALL Memcpy.FastLDIR
-
-                ; копирование FObjectCharacter
-                PUSH IY
-                POP DE
-                POP HL
-                LD C, OBJECT_SIZE
-                CALL Memcpy.FastLDIR
 
                 ; ToDo: FObjectCharacter.WayPointID по идее должен не изменяться,
                 ;       т.к. он отражает текущее положение на гексагоне
@@ -67,6 +48,7 @@ PathInitialize  ; сохранение длины пути
                 ADD A, A    ; x2
                 ADD A, A    ; x4
                 LD C, A
+                LD B, #00                                                       ; BC = размер пути; B выше содержал SelectedHeroID
 
                 ; копирование пути в буфер
                 LD HL, Adr.SortBuffer                                           ; т.к. обновление UI и обработка событий,

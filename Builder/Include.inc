@@ -37,6 +37,7 @@
                 define ENABLE_MOUSE                                             ; разрешить мышь
                 define ENABLE_KEMSTON_JOYSTICK_SEGA                             ; разрешить использовать расширенный Кемстон Джойстик (SEGA 8 bits)
                 define ENABLE_DEBUG_AI_MOVEMENT                                 ; разрешить использовать отладочных AI агентов
+                define ENABLE_LOADING_PROCESS                                   ; разрешить использовать прогресс бар загрузки
 
                 ; дополнительный функционал
                 ; define ENABLE_UI_PROGRESS_DURATION                              ; разрешить дополнительную интерполяцию Progress по Duration
