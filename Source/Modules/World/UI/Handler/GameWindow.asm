@@ -1,10 +1,9 @@
-
                 ifndef _MODULE_WORLD_UI_HANDLER_GAME_WINDOW_
                 define _MODULE_WORLD_UI_HANDLER_GAME_WINDOW_
 ; -----------------------------------------
 ; обработчик UI элемента "игрового окна"
 ; In:
-;   флаг переполнения сброшен, если  таймера подсказки обнулился
+;   флаг переполнения сброшен, если таймер подсказки обнулился
 ; Out:
 ; Corrupt:
 ; Note:
@@ -12,7 +11,7 @@
 GameWindow:     ; проверка бездействия игрока
                 LD A, (GameState.PlayerActions + FPlayerActions.Action)
                 OR A                                                            ; PLAYER_ACTION_NONE
-                RET NZ                                                          ; выход, если действие игрока незакончено
+                RET NZ                                                          ; выход, если действие игрока не закончено
 
                 ; проверка клавиши "выбор"
                 LD A, (GameConfig.KeySelect)
@@ -20,71 +19,52 @@ GameWindow:     ; проверка бездействия игрока
                 RET NZ                                                          ; выход, если не нажата клавиша "выбор"
 
                 ; ToDo: в зависимости от действий игрока GameState.PlayerActions
-                ;       меняем поведение, пока только одно выбор гексагона!
+                ;       меняем поведение, пока только одно — выбор гексагона!
 
-                ; копировать объект "герой"
+                ; определение позиции гексагона под курсором мыши
+                CALL World.Hexagon.GetPosByMouse                                ; BC - координаты гексагона под курсором (B - y, C - x)
+
+                ; получить адреса живого героя и его начальную позицию
+                PUSH BC                                                         ; сохранение координат назначения
                 LD A, (GameState.PlayerActions + FPlayerActions.SelectedHeroID)
                 LD E, A
-                LD DE, Adr.ExtraBuffer
-                EXX
-                CALL_IN_PAGE Page.Object, Character.Utilities.MemcpyObject      ; вызов функции - копирование объекта "персонаж"
+                CALL_IN_PAGE Page.Object, Character.Utilities.GetPosHexagon.Wrap
+                POP BC                                                          ; восстановление координат назначения
 
-                ;   IX - адрес героя            (FCharacter)
-                ;   IY - адрес объекта героя    (FObjectCharacter)
-
-                CALL World.Hexagon.GetPosByMouse                                ; определение позиции гексагона под курсором мыши
-
-                ; координаты выбранного героя
-                LD L, (IY + FObject.Position.X.High)
-                LD H, (IY + FObject.Position.Y.High)
+                ;   DE - координаты героя               (D = Y, E = X)
+                ;   BC - координаты назначения          (B = Y, C = X)
 
                 ; сравнение позиций
+                LD L, E
+                LD H, D
                 OR A
                 SBC HL, BC
                 RET Z                                                           ; выход, если позиции совпадают
-                ADD HL, BC
 
-                ; проверка длины шага
-                PUSH BC
-                EX DE, HL
-                CALL World.Hexagon.Distance                                     ; определение расстояния между гексагонами
-                DEC A
-                POP BC
-                RET NZ                                                          ; выход, если расстояние больше 1
+                ; подготовить параметры поиска
+                EXX
 
-                ; установить действие игрока, перемещение героя
+                ; соседний гекс формирует прямой путь,
+                ; для остальных выполняется ограниченный BFS
+                CALL_IN_PAGE Page.Pathfinding, Pathfinding.Request.Wrap
+
+                ; A' = длина найденного пути
+                EX AF, AF'
+                OR A
+                RET Z                                                           ; выход, путь не найден
+
+                LD C, A                                                         ; длина найденного пути
+                EXX                                                             ; C' = длина пути
+
+                ; применить найденный маршрут к тому же живому объекту
+                CALL_IN_PAGE Page.Page0, Character.PathInitialize.Wrap
+                EX AF, AF'
+                OR A
+                RET Z                                                           ; защитная проверка отклонила маршрут
+
+                ; начать движение только после успешной установки пути
                 LD A, PLAYER_ACTION_HERO_MOVEMENT
                 LD (GameState.PlayerActions + FPlayerActions.Action), A
-
-                ; определение индекса Render-буфера по координатам гексагона
-                PUSH BC
-                LD D, B
-                LD E, C
-                EXX
-                CALL_IN_PAGE \
-                    Page.Page1, \
-                    BufferUtilities.GetHextileIDByCoord.Wrap                    ; вызов функции - получение ID гексагона по координатам
-                ; ToDo построеть очередь для перемещения от текущего WayPoint'а
-                ;      к указанному, на основе координат назначения
-
-                POP BC
-                LD HL, Adr.SortBuffer                                           ; т.к. обновление UI и обработка событий,
-                                                                                ; происходит перед отрисовкой, данный буфер свободный
-                                                                                ; для временного хранения
-                LD (HL), C      ; FPath.HexCoord.X
-                INC L
-                LD (HL), B      ; FPath.HexCoord.Y
-                INC L
-                EX AF, AF'
-                LD (HL), A      ; FPath.HextileID
-                INC L
-                LD (HL), #00    ; FPath.WayPointIdx (пока нулевой)
-                
-                ; инициализация пути героя
-                LD C, #01       ; длина пути в массиве
-                EXX
-                JP_IN_PAGE Page.Page0, Character.PathInitialize.Wrap            ; вызов функции - инициализация пути
-                ; первый пакет "мировых тиков" запросит персонаж после завершения поворота
-                ; RET
+                RET
 
                 endif ; ~_MODULE_WORLD_UI_HANDLER_GAME_WINDOW_

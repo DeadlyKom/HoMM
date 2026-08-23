@@ -21,6 +21,7 @@
                 include "WorldInfo.inc"
                 include "WorldTime.inc"
                 include "AIDirector.inc"
+                include "Pathfinding.inc"
                 include "TickScheduler.inc"
                 include "SpriteBound.inc"
                 include "SpriteClipping.inc"
