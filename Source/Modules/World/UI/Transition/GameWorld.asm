@@ -12,7 +12,8 @@ GameWorld:      ; подготовка экрана
                 SHOW_SHADOW_SCREEN                                              ; отображение теневого экрана
                 CALL_IN_PAGE PAGE_7, Func.BaseScrcpy                            ; восстановление базового экрана
                 HALT
-                SHOW_BASE_SCREEN                                                ; отображение базового экрана
+                RES_RENDER_FLAG SWAP_DISABLE_BIT                                ; разрешение переключения экранов
+                RES_FLAG_MODIFY World.Base.Render.CursorMemcpyGate.Flag         ; разрешение работы с буфером курсора
 
                 ; установка активного UI слоя
                 SET_UI_LAYER World.Base.Layers.GameWorld, \
