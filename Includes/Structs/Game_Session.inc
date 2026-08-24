@@ -11,7 +11,7 @@ SaveSlot        FSaveSlot                                                       
 WorldInfo       FWorldInfo                                                      ; информация о "мире"                                           [байт]
 PeriodTick      FTick                                                           ; период тиков                                                  [4 байта]
 WorldTime       FWorldTime                                                      ; календарное игровое время                                     [7 байт]
-WorldTimeCtrl   FWorldTimeControl                                               ; управление прокруткой игрового времени                        [4 байта]
+WorldTimeCtrl   FWorldTimeControl                                               ; управление течением игрового времени                          [2 байта]
 
                 ends
 

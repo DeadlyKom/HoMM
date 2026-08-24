@@ -4,6 +4,8 @@
 
                 module UI
                 include "Handler/Include.inc"
+                include "Initialize/Include.inc"
+                include "Transition/Include.inc"
                 endmodule
 
                 endif ; ~_MODULE_WORLD_UI_INCLUDE_

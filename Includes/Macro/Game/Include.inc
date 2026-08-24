@@ -14,6 +14,7 @@
                 include "Game_MainMenu.inc"
                 include "Game_HardInput.inc"
                 include "Game_InputTimer.inc"
+                include "Game_TickRuntime.inc"
                 include "Game_MainLoopCore.inc"
 
                 include "Game_World.inc"

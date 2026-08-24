@@ -43,12 +43,14 @@ TickObjectChunk:; получение объектов в чанке
                 INC H                                                           ; переход на страницу значений чанка
                 EX DE, HL
 
-.Loop           LD A, (DE)                                                      ; чтение ID объекта
+.Loop           ; определение адреса объекта
+                LD A, (DE)                                                      ; чтение ID объекта
                 CALL Object.Utilities.GetAdr.IX
+                INC L                                                           ; переход к флагам объекта
 
                 ; проверка флага, разрешающего тик объекта
-                BIT OBJECT_TICK_ENABLED_BIT, (IX + FObject.Flags)
-                JR Z, .SkipObject
+                BIT OBJECT_TICK_ENABLED_BIT, (HL)                               ; проверка флага, разрешающего тик объекта
+                JR Z, .SkipObject                                               ; переход, если тик объекта запрещён
 
                 LD A, B                                                         ; текущий CadencePassId диапазона
                 CP (IX + FObject.CadencePassID)
@@ -56,6 +58,7 @@ TickObjectChunk:; получение объектов в чанке
 
                 ; помечаем объект до тика, чтобы исключить повторную обработку
                 ; при переносе в другой чанк/диапазон во время тика
+                ; пропущенные тики в режиме "остановки времени" не накапливаются
                 LD (IX + FObject.CadencePassID), B
 
                 ; установить Carry согласно активной фазе "мирового тика" текущего cadence-прохода
@@ -64,10 +67,18 @@ TickObjectChunk:; получение объектов в чанке
                 EX AF, AF'                                                      ; сохранить Carry в альтернативном регистре флагов
 
                 ; проверка флага, разрешающего проверку попадания курсора в bound объекта
-                BIT OBJECT_CURSOR_HIT_TEST_BIT, (IX + FObject.Flags)
-                CALL NZ, CursorHitTest
+                BIT OBJECT_CURSOR_HIT_TEST_BIT, (HL)                            ; проверка флага, разрешающего проверку попадания курсора в bound объекта
+                CALL NZ, CursorHitTest                                          ; вызов, если проверка попадания курсора разрешена
 
-                ; сохранение количества объектов до тика
+                ; проверка режима "остановки времени"
+.Suspend.Flag   FLAG_MODIFY 0                                                   ; флаг, выборочного отключения тиков объектов в режиме "остановки времени"
+                JR NC, .TickAllowed                                             ; переход, если режим "остановки времени" выключен
+
+                ; проверка разрешения тика объекта в режиме "остановки времени"
+                BIT OBJECT_TICK_WHEN_SUSPENDED_BIT, (IX + FObject.Flags)        ; проверка флага, разрешающего тик объекта в режиме "остановки времени"
+                JR Z, .SkipObject                                               ; переход, если тик объекта запрещён
+
+.TickAllowed    ; сохранение количества объектов до тика
                 LD A, (GameSession.WorldInfo + FWorldInfo.ObjectNum)
                 LD (SpawnOffset.OldObjectNum), A
 
@@ -83,7 +94,7 @@ TickObjectChunk:; получение объектов в чанке
                 LD HL, TickObjectJumpTable
                 PUSH BC                                                         ; сохранение CadencePassId и количества оставшихся объектов
                 PUSH DE                                                         ; сохранение указателя на текущий объект в массиве чанка
-.RelativeDeltaTime EQU $+1
+.CadenceRange   EQU $+1
                 LD C, #00                                                       ; диапазон cadence: 0 - 1/2, 1 - 1/4, 2 - 1/8
                 CALL Func.JumpTable
                 POP DE
@@ -206,7 +217,7 @@ SpawnOffset     PUSH BC
 ;   ℹ️ код расположен в странице 0
 ; -----------------------------------------
 CursorHitTest   ; проверка диапозона
-                LD A, (TickObjectChunk.RelativeDeltaTime)
+                LD A, (TickObjectChunk.CadenceRange)
                 OR A
                 JR NZ, .CursorMiss                                              ; переход, если диапазон не нулевой
 

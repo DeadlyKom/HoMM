@@ -4,6 +4,7 @@
 
                 module Handler
                 include "Minimap.asm"
+                include "GamePause.asm"
                 include "GameWindow.asm"
                 endmodule
 

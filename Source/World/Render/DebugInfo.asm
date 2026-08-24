@@ -11,7 +11,10 @@
 ;   вызывается после настройки Console для отображения на двух экранах
 ;   дополнительные блоки включаются соответствующими define в начале файла
 ; ----------------------------------------
-DebugInfo:      CALL .Coordinates
+DebugInfo:      ifdef DEBUG_INFO_GAME_SUSPEND
+                CALL .GameSuspend
+                endif
+                CALL .Coordinates
                 ifdef DEBUG_INFO_SCREEN_BLOCKS
                 CALL .ScreenBlocks
                 endif
@@ -28,6 +31,32 @@ DebugInfo:      CALL .Coordinates
                 CALL .CursorHitTest
                 endif
                 RET
+; -----------------------------------------
+; отображение режима "остановки времени"
+; ----------------------------------------
+                ifdef DEBUG_INFO_GAME_SUSPEND
+.GameSuspend    ; определение символа индикатора
+                TICK_CONTROL_FLAGS_A
+                ADD A, A                                                       ; перенос флага режима "остановки времени" во флаг переполнения
+                LD A, ' '
+                JR NC, .GameSuspend.Compare                                    ; переход, если режим "остановки времени" выключен
+                LD A, 'P'
+
+.GameSuspend.Compare
+                ; проверка изменения символа индикатора
+.GameSuspend.Value EQU $+1
+                CP #00                                                         ; последний отображённый символ индикатора
+                RET Z                                                           ; выход, если состояние режима "остановки времени" не изменилось
+                LD (.GameSuspend.Value), A
+
+                ; отображение индикатора режима "остановки времени"
+                SET_REG_ATTR_IPB A, WHITE, BLACK, 0
+                CALL Console.SetAttribute
+                LD DE, #001C                                                    ; позиция перед счётчиком FPS с одним знакоместом пробела
+                CALL Console.SetCursor
+                LD A, (.GameSuspend.Value)
+                JP Console.DrawChar
+                endif
 ; -----------------------------------------
 ; отображение координат карты и гексагона под курсором
 ; ----------------------------------------

@@ -18,7 +18,7 @@ EnvTp	        EQU 13
 Begin           EQU $
                 include "PT3.asm"
 Size            EQU $-Begin
-                display " - PT3 Player:\t\t\t\t\t", /A, Begin, " = busy [ ", /D, Size, " bytes  ]"
+                display " - PT3 Player:\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, Size, " bytes  ]"
 
                 endmodule
 

@@ -1,90 +1,138 @@
-
                 ifndef _MODULE_WORLD_UI_HANDLER_GAME_WINDOW_
                 define _MODULE_WORLD_UI_HANDLER_GAME_WINDOW_
 ; -----------------------------------------
 ; обработчик UI элемента "игрового окна"
 ; In:
-;   флаг переполнения сброшен, если  таймера подсказки обнулился
+;   флаг переполнения сброшен, если таймер подсказки обнулился
 ; Out:
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-GameWindow:     ; проверка бездействия игрока
-                LD A, (GameState.PlayerActions + FPlayerActions.Action)
-                OR A                                                            ; PLAYER_ACTION_NONE
-                RET NZ                                                          ; выход, если действие игрока незакончено
+GameWindow:     ; проверка режима "остановки времени"
+                CHECK_TICK_CONTROL_FLAG GAME_SUSPEND_BIT
+                RET Z                                                           ; выход, если режим "остановки времени" выключен
 
-                ; проверка клавиши "выбор"
+                ; проверка нажатия клавиши "отмена"
+                LD A, (GameConfig.KeyESC)
+                CALL Input.CheckKeyState
+                JR NZ, .CancelReleased                                          ; переход, если клавиша отпущена
+
+                ; проверка флага защёлки клавиши "отмена"
+.CancelFlag     FLAG_MODIFY 1                                                   ; флаг, текущее нажатие уже обработано
+                RET C                                                           ; выход, если текущее нажатие уже обработано
+
+                SET_FLAG_MODIFY GameWindow.CancelFlag                           ; установка защёлки до выполнения команды
+                JR .CancelPath
+
+.CancelReleased ; сброс флага защёлки клавиши "отмена"
+                RES_FLAG_MODIFY GameWindow.CancelFlag
+
+                ; проверка нажатия клавиши "выбор"
                 LD A, (GameConfig.KeySelect)
                 CALL Input.CheckKeyState
-                RET NZ                                                          ; выход, если не нажата клавиша "выбор"
+                JR NZ, .SelectReleased                                          ; переход, если клавиша отпущена
 
-                ; ToDo: в зависимости от действий игрока GameState.PlayerActions
-                ;       меняем поведение, пока только одно выбор гексагона!
+                ; проверка флага защёлки клавиши "выбор"
+.SelectFlag     FLAG_MODIFY 1                                                   ; флаг, текущее нажатие уже обработано
+                RET C                                                           ; выход, если текущее нажатие уже обработано
 
-                ; копировать объект "герой"
+                ; установка флага защёлки клавиши "выбор"
+                SET_FLAG_MODIFY GameWindow.SelectFlag                           ; принять нажатие до BFS и возможных ранних выходов
+                JR .BuildPath
+
+.SelectReleased ; сброс флага защёлки клавиши "выбор"
+                RES_FLAG_MODIFY GameWindow.SelectFlag
+                RET
+
+.CancelPath     ; отмена пути выбранного персонажа
                 LD A, (GameState.PlayerActions + FPlayerActions.SelectedHeroID)
                 LD E, A
-                LD DE, Adr.ExtraBuffer
-                EXX
-                CALL_IN_PAGE Page.Object, Character.Utilities.MemcpyObject      ; вызов функции - копирование объекта "персонаж"
+                EXX                                                             ; E' = CharacterID
+                CALL_IN_PAGE Page.Page0, Character.PathCancel.Wrap
+                RET
 
-                ;   IX - адрес героя            (FCharacter)
-                ;   IY - адрес объекта героя    (FObjectCharacter)
+.BuildPath      ; ToDo: в зависимости от действий игрока GameState.PlayerActions
+                ;       меняем поведение, пока только одно — выбор гексагона!
 
-                CALL World.Hexagon.GetPosByMouse                                ; определение позиции гексагона под курсором мыши
+                ; определение позиции гексагона под курсором мыши
+                CALL World.Hexagon.GetPosByMouse                                ; BC - координаты гексагона под курсором (B - y, C - x)
 
-                ; координаты выбранного героя
-                LD L, (IY + FObject.Position.X.High)
-                LD H, (IY + FObject.Position.Y.High)
+                ; получить адреса живого героя и его начальную позицию
+                PUSH BC                                                         ; сохранение координат назначения
+                LD A, (GameState.PlayerActions + FPlayerActions.SelectedHeroID)
+                LD E, A
+                CALL_IN_PAGE Page.Object, Character.Utilities.GetPosHexagon.Wrap
+                POP BC                                                          ; восстановление координат назначения
+
+                ;   DE - координаты героя               (D = Y, E = X)
+                ;   BC - координаты назначения          (B = Y, C = X)
 
                 ; сравнение позиций
+                LD L, E
+                LD H, D
                 OR A
                 SBC HL, BC
                 RET Z                                                           ; выход, если позиции совпадают
-                ADD HL, BC
 
-                ; проверка длины шага
-                PUSH BC
-                EX DE, HL
-                CALL World.Hexagon.Distance                                     ; определение расстояния между гексагонами
-                DEC A
-                POP BC
-                RET NZ                                                          ; выход, если расстояние больше 1
-
-                ; установить действие игрока, перемещение героя
-                LD A, PLAYER_ACTION_HERO_MOVEMENT
-                LD (GameState.PlayerActions + FPlayerActions.Action), A
-
-                ; определение индекса Render-буфера по координатам гексагона
-                PUSH BC
-                LD D, B
-                LD E, C
+                ; подготовить параметры поиска
                 EXX
-                CALL_IN_PAGE \
-                    Page.Page1, \
-                    BufferUtilities.GetHextileIDByCoord.Wrap                    ; вызов функции - получение ID гексагона по координатам
-                ; ToDo построеть очередь для перемещения от текущего WayPoint'а
-                ;      к указанному, на основе координат назначения
 
-                POP BC
-                LD HL, Adr.SortBuffer                                           ; т.к. обновление UI и обработка событий,
-                                                                                ; происходит перед отрисовкой, данный буфер свободный
-                                                                                ; для временного хранения
-                LD (HL), C      ; FPath.HexCoord.X
-                INC L
-                LD (HL), B      ; FPath.HexCoord.Y
-                INC L
+                ; соседний гекс формирует прямой путь,
+                ; для остальных выполняется ограниченный BFS
+                CALL_IN_PAGE Page.Pathfinding, Pathfinding.Request.Wrap
+
+                ; A' = длина найденного пути
                 EX AF, AF'
-                LD (HL), A      ; FPath.HextileID
-                INC L
-                LD (HL), #00    ; FPath.WayPointIdx (пока нулевой)
-                
-                ; инициализация пути героя
-                LD C, #01       ; длина пути в массиве
-                EXX
-                JP_IN_PAGE Page.Page0, Character.PathInitialize.Wrap            ; вызов функции - инициализация пути
-                ; первый пакет "мировых тиков" запросит персонаж после завершения поворота
-                ; RET
+                OR A
+                RET Z                                                           ; выход, путь не найден
+
+                LD C, A                                                         ; длина найденного пути
+                EXX                                                             ; C' = длина пути
+
+                ; применить найденный маршрут к объекту
+                CALL_IN_PAGE Page.Page0, Character.PathInitialize.Wrap
+                RET
+; -----------------------------------------
+; синхронизировать защёлки кнопок маршрута
+; In:
+; Out:
+; Corrupt:
+;   HL, BC, AF
+; Note:
+;   вызывается Input.Scan каждое прерывание, в том числе когда курсор
+;   находится вне GameWindow
+; -----------------------------------------
+.SyncButtons    ; проверка клавиши "отмена"
+                LD A, (GameConfig.KeyESC)
+                CALL Input.CheckKeyState
+                JR NZ, .CancelUp                                                ; переход, если клавиша отпущена
+
+                ; проверка режима "остановки времени"
+                CHECK_TICK_CONTROL_FLAG GAME_SUSPEND_BIT
+                JR NZ, .SyncSelect                                              ; переход, если режим "остановки времени" включён
+
+                ; установка флага защёлки клавиши "отмена"
+                SET_FLAG_MODIFY GameWindow.CancelFlag                           ; блокировать удержание клавиши вне паузы
+                JR .SyncSelect
+
+.CancelUp       ; сброс флага защёлки клавиши "отмена"
+                RES_FLAG_MODIFY GameWindow.CancelFlag
+
+.SyncSelect     ; проверка нажатия клавиши "выбор"
+                LD A, (GameConfig.KeySelect)
+                CALL Input.CheckKeyState
+                JR NZ, .SelectUp                                                ; переход, если клавиша отпущена
+
+                ; проверка режима "остановки времени"
+                CHECK_TICK_CONTROL_FLAG GAME_SUSPEND_BIT
+                RET NZ                                                          ; выход, если режим "остановки времени" включён
+
+                ; установка флага защёлки клавиши "выбор"
+                SET_FLAG_MODIFY GameWindow.SelectFlag                           ; блокировать удержание клавиши вне паузы
+                RET
+
+.SelectUp       ; сброс флага защёлки клавиши "выбор"
+                RES_FLAG_MODIFY GameWindow.SelectFlag
+                RET
 
                 endif ; ~_MODULE_WORLD_UI_HANDLER_GAME_WINDOW_

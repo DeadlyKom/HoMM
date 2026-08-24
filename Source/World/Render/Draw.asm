@@ -52,7 +52,7 @@ Draw:           ; -----------------------------------------
                 CALL Minimap.GenFog                                             ; генерация тумана для миникарты
                 CALL Minimap.Compilation                                        ; компиляция миникарты
                 CALL Minimap.Memcpy                                             ; копирование миникарты
-                CALL Update.Minimap                                              ; обновление миникарты (теневого экрана)
+                CALL Update.Minimap                                             ; обновление миникарты (теневого экрана)
 
 .Update         ; -----------------------------------------
                 ; обновление
@@ -67,10 +67,7 @@ Draw:           ; -----------------------------------------
                 ; -----------------------------------------
                 ; проверка пересечения курсором UI элементов
                 SET_MODULE_PAGE_World                                           ; включить страницу модуля "World"
-                LD HL, World.Base.Layers
-                LD B, World.Base.Layers.Num
                 CALL UI.Update
-
 ; -----------------------------------------
 ; курсор
 ;                 LD HL, (GameSession + FGameSession.WorldInfo.Cursor)

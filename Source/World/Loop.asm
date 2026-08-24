@@ -36,8 +36,8 @@ Loop:
                 CALL World.Base.Render.PipelineHexagons.MemcpyScreen
 
 .TickScheduler  ; проверка флага паузы игры
-                CHECK_UI_FLAG UI_GAME_PAUSE_BIT
-                RET NZ                                                          ; выход если пауза игры включена
+                CHECK_TICK_CONTROL_FLAG GAME_PAUSE_BIT
+                RET NZ                                                          ; выход, если пауза игры включена
 
                 ; после показа кадра оставшееся время передаётся планировщику обновления объектов
                 ; кадровый барьер проверяется до переключения страницы,

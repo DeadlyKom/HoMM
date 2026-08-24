@@ -1,4 +1,3 @@
-
                 ifndef _TICK_OBJECT_HERO_
                 define _TICK_OBJECT_HERO_
 ; -----------------------------------------
@@ -20,7 +19,7 @@ Character:      ; сохранить параметры текущего cadence
                 LD (Move.RelativeCadence), A
                 EX AF, AF'
                 CALC_INV_FLAG_MODIFY                                            ; определение флага
-                                                                                ; 0 - активной фазе "мирового тика", 1 - обычный cadence-проход
+                                                                                ; 0 - активная фаза "мирового тика", 1 - обычный cadence-проход
                 APPLY_FLAG_MODIFY Character.WorldTickFlag                       ; применить флаг
                 APPLY_FLAG_MODIFY Move.WorldTickFlag_                           ; применить флаг
 
@@ -50,19 +49,23 @@ Character:      ; сохранить параметры текущего cadence
                 POP DE
                 RET NZ
 
-                ; после поворота выбранный игроком персонаж запрашивает первый пакет времени
+                ; начать движение только в активной фазе "мирового тика"
 .WorldTickFlag  FLAG_INV_MODIFY 0
-                JP NC, Move.Init
-                JP RequestNextWorldTick
+                RET C                                                           ; выход, если активная фаза "мирового тика" отсутствует
+
 Move.Init       CALL SetDistance
                 CALL Tick.Utils.Movement.UpdateEffectiveStepCost                ; рассчитать стоимость шага начального гекса
+
 Move            ; --------------------------------------------------------------
                 ; перемещение
 
                 CALL Tick.Utils.Movement.GetCharacterMovementBudget             ; получить бюджет движения за один "мировой тик"
+
 .WorldTickFlag_ FLAG_INV_MODIFY 0
                 CALL NC, Tick.Utils.Movement.AddBudget                          ; временной бюджет начисляется один раз за cadence-эпоху
+
                 CALL Tick.Utils.Movement.GetCharacterMovementBudget             ; получить бюджет движения за один "мировой тик"
+
 .RelativeCadence EQU $+1
                 LD A, #00
                 CALL Tick.Utils.Movement.TransferBudget                         ; передать движению долю пакета текущего cadence-прохода
@@ -93,13 +96,17 @@ Move            ; --------------------------------------------------------------
                 CALL Object.Utilities.UpdateChunkByPosition                     ; синхронизация чанка объекта после фактического движения
 
                 LD A, (IX + FObject.Position.X.High)
+
 .PreviousHexX   EQU $+1
                 CP #00
                 JR NZ, .RequestEvent
+
                 LD A, (IX + FObject.Position.Y.High)
+
 .PreviousHexY   EQU $+1
                 CP #00
                 JR Z, .AnimationState
+
 .RequestEvent   CALL RequestEvent                                               ; игрок перешёл в другой гекс
 
 .AnimationState ; установить состояние перемещения героя,
@@ -113,15 +120,15 @@ Move            ; --------------------------------------------------------------
                 AND %00111111
                 OR ANIM_STATE_MOVE
                 LD (IX + FObjectCharacter.Super.Sprite), A
-                SET OBJECT_DIRTY_BIT, (IX + FObject.Flags)                      ; установить флаг, объект требуется обновиться
-                ; --------------------------------------------------------------
+                SET OBJECT_DIRTY_BIT, (IX + FObject.Flags)                      ; установить флаг, объект требуется обновить
+
                 ; проверка достижения заданной точки
                 LD A, (IX + FObjectCharacter.Movement.RemainingSteps.Low)
                 OR (IX + FObjectCharacter.Movement.RemainingSteps.High)
+                RET NZ                                                          ; выход, если продолжить перемещение в следующем cadence-проходе
 
-                JP NZ, RequestNextWorldTick                                     ; продолжить перемещение на следующем "мировом тике"
-
-                ; герой достиг точки назначения, принудительно назначим ему конечную точку пути
+                ; герой достиг точки назначения,
+                ; принудительно назначить ему конечную точку пути
 
                 ; расчёт адреса текущей FPath
                 LD A, (IX + FObjectCharacter.PathID)
@@ -130,39 +137,32 @@ Move            ; --------------------------------------------------------------
                 LD E, A
                 SET 7, E    ; Adr.HeroPath начинается с 0x80
                 LD D, HIGH Adr.HeroPath
-                LD A, (DE) ; FPath.HexCoord.X
+
+                LD A, (DE)                                                      ; FPath.HexCoord.X
                 LD (IX + FObject.Position.X.High), A
                 LD (IX + FObject.Position.X.Low), HEXTILE_SIZE_X << 4           ; середина гексагона
+
                 INC E
-                LD A, (DE) ; FPath.HexCoord.Y
+                LD A, (DE)                                                      ; FPath.HexCoord.Y
                 LD (IX + FObject.Position.Y.High), A
                 LD (IX + FObject.Position.Y.Low), HEXTILE_SIZE_Y << 4           ; середина гексагона
 
                 CALL Object.Utilities.UpdateChunkByPosition                     ; синхронизация чанка после фиксации в конечной точке сегмента
 
-                ; следующая точка пути
-                DEC (IX + FObjectCharacter.PathID)
+                ; завершить текущую точку пути
                 RES ANIM_STATE_BIT, (IX + FObjectCharacter.Super.Sprite)
 
-                ; проверка завершения пути
+                ; локальный нулевой элемент является последним в каждом слоте
                 LD A, (IX + FObjectCharacter.PathID)
-                CP PATH_ID_NONE
-                JR NZ, .NextPath                                                ; переход, если путь не закончился
+                AND HERO_PATH_SLOT_INDEX_MASK
+                JR Z, .PathComplete                                             ; переход, если достигнут последний элемент текущего слота
 
-                ; завершить действие только для выбранного игроком персонажа
-                LD A, (GameState.PlayerActions + FPlayerActions.SelectedHeroID)
-                CP (IX + FObjectCharacter.CharacterID)
-                RET NZ
+                ; перейти к предыдущему элементу внутри текущего слота
+                DEC (IX + FObjectCharacter.PathID)
+                JR .NextPath                                                    ; перейти к следующей точке того же слота
 
-                LD A, (GameState.PlayerActions + FPlayerActions.Action)
-                CP PLAYER_ACTION_HERO_MOVEMENT
-                RET NZ
-
-                CALL WorldTime.StopAdvance                                      ; удалить следующий "мировой тик", заранее запрошенный во время движения
-
-                ; сброс действия игрока
-                XOR A                                                           ; PLAYER_ACTION_NONE
-                LD (GameState.PlayerActions + FPlayerActions.Action), A
+.PathComplete   ; установить признак отсутствия активного пути
+                LD (IX + FObjectCharacter.PathID), PATH_ID_NONE
                 RET
 
 .NextPath       ; расчёт адреса текущей FPath
@@ -172,9 +172,7 @@ Move            ; --------------------------------------------------------------
                 LD E, A
                 SET 7, E    ; Adr.HeroPath начинается с 0x80
                 LD D, HIGH Adr.HeroPath
-
-                CALL SetDistance
-                JP RequestNextWorldTick
+                JP SetDistance
 ; -----------------------------------------
 ; рассчитать DDA-линию от объекта до текущей точки пути
 ; In:
@@ -191,34 +189,11 @@ Move            ; --------------------------------------------------------------
 ;   сброс RequestEvent.Flag запрещает переносить запрос события между сегментами пути
 ; -----------------------------------------
 SetDistance:    CALL Character.DistancePath
-                RES_FLAG_MODIFY RequestEvent.Flag                              ; сброс запроса события предыдущего сегмента
+                RES_FLAG_MODIFY RequestEvent.Flag                               ; сброс флага запроса события предыдущего сегмента
                 JP Tick.Utils.Movement.SetLine
-; -----------------------------------------
-; запрос следующего "мирового тика" для продолжающегося действия игрока
-; In:
-;   IX - адрес структуры объекта (FObjectCharacter)
-; Out:
-; Corrupt:
-;   HL, AF
-; -----------------------------------------
-RequestNextWorldTick:
-                LD A, (GameState.PlayerActions + FPlayerActions.Action)
-                CP PLAYER_ACTION_HERO_MOVEMENT
-                RET NZ                                                          ; выход, если игрок не выполняет перемещение
 
-                LD A, (GameState.PlayerActions + FPlayerActions.SelectedHeroID)
-                CP (IX + FObjectCharacter.CharacterID)
-                RET NZ                                                          ; выход, если это не выбранный игроком персонаж
-
-                LD A, (GameConfig.PlaybackSpeed)
-                ifdef _DEBUG
-                OR A
-                DEBUG_BREAK_POINT_Z                                             ; произошла ошибка!
-                endif
-                LD L, A
-                LD H, #00
-                JP WorldTime.RequestAdvance
 RequestEvent    ; запрос на создание ивента
+
 .Flag           FLAG_MODIFY 0
                 RET C                                                           ; выход, если ивент активирован
                 SET_FLAG_MODIFY RequestEvent.Flag                               ; установка флага создания ивента

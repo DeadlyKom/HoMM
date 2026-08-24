@@ -143,9 +143,25 @@ PipelineHexagons:
 .SkipCurRestore ; экранный цикл уже завершён независимо от наличия UI-запроса
                 RES_RENDER_FLAGS SWAPPED_PENDING | SWAP_PENDING                 ; сброс флага переключения экранов
 
-                ; проверка возможности начать обработку запроса смены UI режима
+                SET_MODULE_PAGE_World                                           ; включить страницу модуля "World"
+
+                ; проверка запроса паузы игры
+                CHECK_TICK_REQUEST_FLAG GAME_PAUSE_REQUEST_BIT
+                JR Z, .PreviousMode                                             ; переход, если запроc "паузы игры" сброшен
+
+                ; проверка текущего состояния "паузы игры"
+                CHECK_TICK_CONTROL_FLAG GAME_PAUSE_BIT
+                CALL Z, World.UI.Initialize.GamePause                           ; вызов, если "пауза игры" выключена
+                                                                                ; запустить режим "паузы игры"
+                JR .ProcessUI
+
+.PreviousMode   ; проверка текущего состояния "паузы игры"
+                CHECK_TICK_CONTROL_FLAG GAME_PAUSE_BIT
+                CALL NZ, World.UI.Initialize.PreviousMode                       ; вызов, если "пауза игры" включена
+                                                                                ; вернуть предыдущий режим
+.ProcessUI      ; проверка возможности начать обработку запроса смены UI режима
                 CALL UI.Runtime.Process
-                JP C, UI.Runtime.StartTransition                                ; начать перехода запроса смены UI режима
+                JP C, UI.Runtime.StartTransition                                ; переход, если начат переход UI режима
 
                 ; сброс флагов, позволяющий новый цикл подготовки кадра
                 RES_FLAG_MODIFY CursorMemcpyGate.Flag                           ; разрешение работы с буфером курсора

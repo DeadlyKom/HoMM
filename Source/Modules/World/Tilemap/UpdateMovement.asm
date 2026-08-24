@@ -11,7 +11,11 @@
 ; -----------------------------------------
 UpdateMovement: RES_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             ; сброс флага разрешения обновления скролла карты
 
-                ; проверка установки положения карты по мини-карте
+                ; проверка паузы игры
+                CHECK_TICK_CONTROL_FLAG GAME_PAUSE_BIT
+                JR NZ, ResetMapScroll                                           ; переход, если пауза игры включена
+                                                                                ; сбросим данные инпута
+.Update         ; проверка установки положения карты по мини-карте
                 CHECK_VIEW_FLAG SET_MAP_POSITION_ON_MINIMAP_BIT
                 JR NZ, SetMapPosition                                           ; переход, если требуется установка положения карты по мини-карте
 
@@ -58,9 +62,7 @@ UpdateMovement: RES_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             
                 CALL ApplyToY_Axis_
 
                 ; сброс обработанных битов направления перемещения
-                LD A, (GameState.Input.Value)
-                AND ~MOVEMENT_MASK
-                LD (GameState.Input.Value), A
+                CALL ResetMapScroll
 
                 POP BC
 

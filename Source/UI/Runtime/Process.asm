@@ -34,10 +34,6 @@ Process:        ; инициализация
                 RES UI_REQUEST_PENDING_BIT, (HL)
                 SET UI_TRANSITION_ACTIVE_BIT, (HL)
 
-                ; заблокировать "мир" и запустить нужный переход
-                SET_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                           ; блокировать сканирывания ввода
-                SET_UI_FLAG UI_GAME_PAUSE_BIT                                   ; включение паузы игры
-
                 SCF                                                             ; флаг установлен, операция успешна
                 RET
 

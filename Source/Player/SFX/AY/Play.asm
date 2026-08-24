@@ -64,6 +64,6 @@ Play:           ; инициализация
                 LD (HL), E
                 RET
 
-                display "\t- Play: \t\t\t\t\t", /A, Play, " = busy [ ", /D, $ - Play, " bytes  ]"
+                display "\t- Play: \t\t\t\t\t", /A, Play, "\t= busy [ ", /D, $ - Play, " bytes  ]"
 
                 endif ; ~ _PLAYER_SFX_AY_PLAY_

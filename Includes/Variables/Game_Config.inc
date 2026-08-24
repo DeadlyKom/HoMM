@@ -12,6 +12,7 @@ GameConfig      EQU Adr.GameConfig                                              
 .KeyAccel       EQU GameConfig + FGameConfig.Keys.Acceleration                  ; клавиша по умолчанию "ускорить"
 .KeyMenu        EQU GameConfig + FGameConfig.Keys.Menu                          ; клавиша по умолчанию "меню/пауза"
 .KeySpellBook   EQU GameConfig + FGameConfig.HotKeys.SpellBook                  ; клавиша по умолчанию "книга заклинаний"
+.KeySuspend     EQU GameConfig + FGameConfig.HotKeys.Suspend                    ; клавиша режима "остановки времени"
 .Options        EQU GameConfig + FGameConfig.Options                            ; флаги игровых настроек
 .SpeedCursorMin EQU GameConfig + FGameConfig.SpeedCursorMin                     ; минимальная скорость курсора
 .SpeedCursorMax EQU GameConfig + FGameConfig.SpeedCursorMax                     ; максимальная скорость курсора

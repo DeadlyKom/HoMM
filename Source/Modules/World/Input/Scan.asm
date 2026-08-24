@@ -14,7 +14,7 @@ Scan:           ; проверка HardWare ограничения мыши
                 CALL Mouse.UpdateCursor                                         ; обновить положение курсора
 
                 ifdef _DEBUG
-                CALL .DebugSpawnStandard                                        ; отладочный спавн штандарта по одиночному нажатию ПКМ
+                CALL .DebugSpawnStandard                                        ; отладочный спавн штандарта по одиночному нажатию E
                 endif
 
                 LD BC, Mouse.Position
@@ -47,7 +47,7 @@ Scan:           ; проверка HardWare ограничения мыши
                 ; запрос открытия "книги заклинаний"
                 LD A, (GameConfig.KeySpellBook)
                 CALL Input.CheckKeyState
-                LD C, UI_MODE_SPELLBOOK
+                LD A, UI_MODE_SPELLBOOK
                 CALL Z, UI.Runtime.Request
 
                 ; проверка клавиши "выбор"
@@ -59,7 +59,11 @@ Scan:           ; проверка HardWare ограничения мыши
                 ; LD A, (GameConfig.KeyESC)
 
                 ; проверка клавиши "меню/пауза"
-                ; LD A, (GameConfig.KeyMenu)
+                CALL Input.MenuPause                                            ; обработать нажатие и отпускание
+
+                ; запрос режима "остановки времени"
+                CALL Input.GameSuspend                                          ; обработать нажатие и отпускание
+                CALL World.UI.Handler.GameWindow.SyncButtons                    ; синхронизировать защёлки клавиш "выбор" и "отмена"
 
                 ; проверка клавиш перемещения
                 LD A, (GameConfig.KeyAccel)
@@ -96,26 +100,24 @@ Scan:           ; проверка HardWare ограничения мыши
 
                 ifdef _DEBUG
 ; -----------------------------------------
-; отладочный спавн штандарта в гексе под курсором по нажатию ПКМ
+; отладочный спавн штандарта в гексе под курсором по нажатию клавиши E
 ; In:
 ; Out:
 ; Corrupt:
 ;   HL, DE, BC, AF, AF'
 ; Note:
-;   удержание кнопки не создаёт дополнительные объекты;
+;   удержание клавиши не создаёт дополнительные объекты;
 ;   новое событие формируется только после отпускания и следующего нажатия
 ; -----------------------------------------
 .DebugSpawnStandard
-                LD A, VK_RBUTTON
+                LD A, VK_E
                 CALL Input.CheckKeyState
-                JR NZ, .RightButtonReleased                                    ; переход, если ПКМ отпущена
+                JR NZ, .SpawnKeyReleased                                        ; переход, если клавиша E отпущена
 
-                LD A, (.RightButtonState)
-                OR A
-                RET NZ                                                          ; выход, если нажатие уже обработано
+.SpawnKeyFlag   FLAG_MODIFY 0                                                   ; флаг, текущее нажатие уже обработано
+                RET C                                                           ; выход, если нажатие уже обработано
 
-                INC A
-                LD (.RightButtonState), A                                      ; сохранение обработанного состояния нажатия
+                SET_FLAG_MODIFY Scan.SpawnKeyFlag                               ; установить защёлку до обработки нажатия
 
                 ; проверка нахождения курсора внутри области мира
                 LD A, (Mouse.PositionX)
@@ -129,19 +131,14 @@ Scan:           ; проверка HardWare ограничения мыши
                 RET NC
 
                 ; получение гексагона под курсором
-                CALL World.Hexagon.GetPosByMouse                               ; BC: B - y, C - x
+                CALL World.Hexagon.GetPosByMouse                                ; BC: B - y, C - x
                 LD D, B
                 LD E, C
+                JP_IN_PAGE Page.Page0, Tick.Spawn.Standard                      ; вызов спавна штандарта в странице 0
 
-                JP_IN_PAGE Page.Page0, Tick.Spawn.Standard                     ; вызов спавна штандарта в странице 0
-
-.RightButtonReleased
-                XOR A
-                LD (.RightButtonState), A                                      ; разрешить обработку следующего нажатия
+.SpawnKeyReleased
+                RES_FLAG_MODIFY Scan.SpawnKeyFlag                               ; сбросить защёлку после отпускания клавиши
                 RET
-
-.RightButtonState
-                DB #00
                 endif
 
                 endif ; ~_MODULE_WORLD_INPUT_SCAN_

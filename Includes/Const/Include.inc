@@ -17,6 +17,7 @@
                 include "WorldTime.inc"
                 include "Interrupt.inc"
                 include "StateTree.inc"
+                include "Pathfinding.inc"
                 include "TickScheduler.inc"
                 include "SpriteClipping.inc"
                 include "SpriteNotClipping.inc"
