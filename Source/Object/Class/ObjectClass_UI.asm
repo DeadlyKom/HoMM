@@ -12,7 +12,10 @@
 ; Note:
 ; -----------------------------------------
 UI:             ; инициализация базового состояния объекта
-                LD (IY + FObject.Flags), OBJECT_DIRTY | OBJECT_TICK_ENABLED | OBJECT_SELF_CALCULATED_POSITION
+                LD (IY + FObject.Flags), OBJECT_DIRTY | \
+                                        OBJECT_TICK_ENABLED | \
+                                        OBJECT_SELF_CALCULATED_POSITION | \
+                                        OBJECT_TICK_WHEN_SUSPENDED
 
                 ; инициализация флага выравнивания положения по знакоместу
                 BIT OBJECT_UI_ATTR_ALIGN_BIT, (IX + FODS_UI.Flags)

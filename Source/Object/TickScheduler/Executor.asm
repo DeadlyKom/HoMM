@@ -67,7 +67,13 @@ RunCadence_1_2: ; инициализация
 ; Note:
 ;   ℹ️ код расположен в странице 0
 ; ----------------------------------------
-RunCadence:     LD (TickObjectChunk.RelativeDeltaTime), A                       ; установка диапазона cadence: 0 - 1/2, 1 - 1/4, 2 - 1/8
+RunCadence:     LD (TickObjectChunk.CadenceRange), A                            ; установка диапазона cadence: 0 - 1/2, 1 - 1/4, 2 - 1/8
+
+                ; применение режима "остановки времени"
+                TICK_CONTROL_FLAGS_A
+                ADD A, A                                                        ; GAME_SUSPEND_BIT: перенос флага режима "остановки времени" во флаг переполнения
+                CALC_FLAG_MODIFY                                                ; определение флага режима "остановки времени"
+                APPLY_FLAG_MODIFY TickObjectChunk.Suspend.Flag                  ; применение флага режима "остановки времени"
 
                 ; "мировой тик" не зависит от частоты cadence-диапазона
                 ; при активной фазе каждый диапазон получает "мировой тик" один раз за cadence-эпоху
@@ -118,8 +124,22 @@ RunCadence:     LD (TickObjectChunk.RelativeDeltaTime), A                       
                 INC A
                 AND %00000111
                 LD (HL), A
-                JP Z, WorldTime.AdvanceEpoch                                    ; переход 7 -> 0: начало новой cadence-эпохи
-                RET
+
+                ; проверка завершения текущей эпохи
+                RET NZ                                                          ; выход, если текущая эпоха не завершена
+
+                ; проверка запроса режима "остановки времени"
+                TICK_REQUEST_FLAGS_A
+                ADD A, A                                                        ; GAME_SUSPEND_REQUEST_BIT: перенос флага запроса режима "остановки времени" во флаг переполнения
+                JR NC, .ResumeWorld                                             ; переход, если режим "остановки времени" не запрошен
+
+                ; применение режима "остановки времени"
+                SET_TICK_CONTROL_FLAG GAME_SUSPEND_BIT                          ; установка флага режима "остановки времени"
+                RET                                                             ; выход без открытия новой эпохи "мирового тика"
+
+.ResumeWorld    ; выключение режима "остановки времени"
+                RES_TICK_CONTROL_FLAG GAME_SUSPEND_BIT                          ; сброс флага режима "остановки времени"
+                JP WorldTime.AdvanceEpoch                                       ; начало новой мировой cadence-эпохи
 
 ; барьер / проверка эпохи
 CheckEpochBarrier:

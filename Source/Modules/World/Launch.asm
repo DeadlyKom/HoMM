@@ -69,7 +69,8 @@ Launch:         ; -----------------------------------------
                 ; -----------------------------------------
                 ; инициализация мира
                 SET_UI_MODE UI_MODE_WORLD                                       ; установить UI режим "мир"
-                SET_UI_FLAG UI_GAME_PAUSE_BIT                                   ; мир запускается на паузе
+                SET_TICK_CONTROL_FLAGS GAME_SUSPEND                             ; мир запускается в режиме "остановки времени"
+                SET_TICK_REQUEST_FLAGS GAME_SUSPEND_REQUEST                     ; запрос соответствует фактическому состоянию
                 SET_MAIN_LOOP World.Base.Loop                                   ; установка главного цикла
                 SET_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE             ; установка флагов
                 SET_MAIN_SWAP World.Base.Render.PipelineHexagons.Swap           ; установить функцию долгого переключения экранов

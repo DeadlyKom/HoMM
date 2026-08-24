@@ -17,20 +17,14 @@ Input.MenuPause:; проверка клавиши "меню/пауза"
                 CALL Input.CheckKeyState
                 JR NZ, .Released                                                ; переход, если клавиша отпущена
 
+                ; проверка флага обработки первого нажатия
 .Flag           FLAG_MODIFY 0                                                   ; флаг, текущее нажатие клавиши уже обработано
                 RET C                                                           ; выход, если обработанная клавиша продолжает удерживаться
 
                 SET_FLAG_MODIFY Input.MenuPause.Flag                            ; установка флага защёлки обработки первого нажатия
 
-                ; проверка текущего состояния паузы мира
-                LD HL, GameState.UIRuntime + FUIRuntime.Flags
-                BIT UI_GAME_PAUSE_BIT, (HL)
-                JR Z, .Pause                                                    ; переход, если флаг паузы сброшен
-
-                RES UI_GAME_PAUSE_BIT, (HL)                                     ; сброс флага, продолжить симуляцию мира
-                RET
-
-.Pause          SET UI_GAME_PAUSE_BIT, (HL)                                     ; установка флага, остановить симуляцию мира
+                ; полная пауза немедленно останавливает планировщик объектов
+                SWAP_TICK_CONTROL_FLAG GAME_PAUSE_BIT
                 RET
 
 .Released       RES_FLAG_MODIFY Input.MenuPause.Flag                            ; сброс флага защёлки после отпускания клавиши

@@ -15,6 +15,7 @@
                 
                 struct FHotKeys                                                 ; горячие клавиши
 .SpellBook      DB #00                                                          ; клавиша "книга заклинаний"
+.Suspend        DB #00                                                          ; клавиша режима "остановки времени"
                 ends
 
                 endif ; ~_STRUCTS_KEYS_

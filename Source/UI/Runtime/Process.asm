@@ -36,7 +36,7 @@ Process:        ; инициализация
 
                 ; заблокировать "мир" и запустить нужный переход
                 SET_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                           ; блокировать сканирывания ввода
-                SET_UI_FLAG UI_GAME_PAUSE_BIT                                   ; включение паузы игры
+                SET_TICK_CONTROL_FLAG GAME_PAUSE_BIT                            ; полностью остановить планировщик объектов
 
                 SCF                                                             ; флаг установлен, операция успешна
                 RET

@@ -8,6 +8,7 @@ Input.Begin     EQU $
                 include "Input_Select.asm"
                 include "Input_Movement.asm"
                 include "Input_MenuPause.asm"
+                include "Input_GameSuspend.asm"
                 include "Input_Accelerate.asm"
                 display " - Input 'World':\t\t\t\t\t\t\t= busy [ ", /D, $-Input.Begin, " byte(s) ]"
                 endmodule

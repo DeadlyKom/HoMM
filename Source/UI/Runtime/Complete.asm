@@ -26,7 +26,7 @@ Complete:       ; сохранение предыдущего режима
 
 .Resume         ; восстановить работу
                 RES_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                           ; разрешить сканирование ввода
-                RES_UI_FLAG UI_GAME_PAUSE_BIT                                   ; выключение паузы игры                              
+                RES_TICK_CONTROL_FLAG GAME_PAUSE_BIT                            ; выключить полную паузу планировщика
                 JR Complete
 
                 endif ; ~_UI_RUNTIME_COMPLETE_

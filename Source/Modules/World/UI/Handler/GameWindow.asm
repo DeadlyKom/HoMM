@@ -8,9 +8,9 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-GameWindow:     ; команды маршрута разрешены только во время паузы мира
-                CHECK_UI_FLAG UI_GAME_PAUSE_BIT
-                RET Z
+GameWindow:     ; проверка режима "остановки времени"
+                CHECK_TICK_CONTROL_FLAG GAME_SUSPEND_BIT
+                RET Z                                                           ; выход, если режим "остановки времени" выключен
 
                 ; проверка нажатия клавиши "отмена"
                 LD A, (GameConfig.KeyESC)
@@ -107,9 +107,9 @@ GameWindow:     ; команды маршрута разрешены тольк�
                 CALL Input.CheckKeyState
                 JR NZ, .CancelUp                                                ; переход, если клавиша отпущена
 
-                ; проверка состояния паузы мира
-                CHECK_UI_FLAG UI_GAME_PAUSE_BIT
-                JR NZ, .SyncSelect                                              ; переход, т.к. на паузе нажатие принимает только GameWindow
+                ; проверка режима "остановки времени"
+                CHECK_TICK_CONTROL_FLAG GAME_SUSPEND_BIT
+                JR NZ, .SyncSelect                                              ; переход, если режим "остановки времени" включён
 
                 ; установка флага защёлки клавиши "отмена"
                 SET_FLAG_MODIFY GameWindow.CancelFlag                           ; блокировать удержание клавиши вне паузы
@@ -123,9 +123,9 @@ GameWindow:     ; команды маршрута разрешены тольк�
                 CALL Input.CheckKeyState
                 JR NZ, .SelectUp                                                ; переход, если клавиша отпущена
 
-                ; проверка состояния паузы мира
-                CHECK_UI_FLAG UI_GAME_PAUSE_BIT
-                RET NZ                                                          ; выход, т.к. на паузе нажатие принимает только GameWindow
+                ; проверка режима "остановки времени"
+                CHECK_TICK_CONTROL_FLAG GAME_SUSPEND_BIT
+                RET NZ                                                          ; выход, если режим "остановки времени" включён
 
                 ; установка флага защёлки клавиши "выбор"
                 SET_FLAG_MODIFY GameWindow.SelectFlag                           ; блокировать удержание клавиши вне паузы

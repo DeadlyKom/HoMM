@@ -6,6 +6,7 @@ GameState       EQU Adr.GameState                                               
 .Render         EQU GameState + FGameState.Render                               ; флаги отрисовки
 .Music          EQU GameState + FGameState.Music                                ; флаги музыки
 .UIRuntime      EQU GameState + FGameState.UIRuntime                            ; UI режим
+.TickRuntime    EQU GameState + FGameState.TickRuntime                          ; управление тиком
 .DisplayList    EQU GameState + FGameState.DisplayList                          ; адрес список отображения
 .DisplayListLen EQU GameState + FGameState.DisplayListLen                       ; длина список отображения
 .Interrupt      EQU GameState + FGameState.Interrupt                            ; флаги прерывания
