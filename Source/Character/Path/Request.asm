@@ -569,7 +569,7 @@ Request:        ; проверить границы начальной и кон
 .TailPtr        DW Adr.PathfindQueue
 .PathWritePtr   DW Adr.SortBuffer
 
-                display " - Bounded pathfinding (BFS):\t\t\t", /A, Request.Wrap, "\t= busy [ ", /D, $-Request.Wrap, " byte(s) ]"
+                display " - Bounded pathfinding (BFS):\t\t\t\t", /A, Request.Wrap, "\t= busy [ ", /D, $-Request.Wrap, " byte(s) ]"
                 endmodule
 
                 endif ; ~_PATHFINDING_REQUEST_

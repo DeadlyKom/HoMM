@@ -4,14 +4,19 @@
 ; -----------------------------------------
 ; обновление UI
 ; In:
-;   HL - указывает на массив FUILayer
-;   B  - количество слоёв в массиве
 ; Out:
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Update:         ; сброс флага найденного перекрытия
-                RES_FLAG_MODIFY Update.Flag
+Update:         ; проверка количества активных слоёв
+                LD A, (GameState.UIRuntime + FUIRuntime.LayersNum)
+                OR A
+                RET Z                                                           ; выход, если активные слои отсутствуют
+                
+                ; инициализация
+                LD B, A
+                LD HL, (GameState.UIRuntime + FUIRuntime.LayerAdr)
+                RES_FLAG_MODIFY Update.Flag                                     ; сброс флага найденного перекрытия
 
 .LayerLoop      ; основной цикл обхода слои
                 BIT LAYER_UI_VISIBLE_BIT, (HL)
@@ -55,9 +60,9 @@ Update:         ; сброс флага найденного перекрыти�
                 INC HL
 
                 ; чтение размера элемента
-                LD B, (HL)
-                INC HL
                 LD C, (HL)
+                INC HL
+                LD B, (HL)
 
                 CALL HandlerIfInRect
 

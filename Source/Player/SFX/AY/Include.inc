@@ -26,7 +26,7 @@ A               FChannelAY
 B               FChannelAY
 C               FChannelAY
                 ends
-                display " - SFX AY: \t\t\t\t\t\t", /A, Begin, " = busy [ ", /D, Size, " bytes  ]"
+                display " - SFX AY: \t\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, Size, " bytes  ]"
 Begin           EQU $
 
                 include "Initialize.asm"

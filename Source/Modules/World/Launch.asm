@@ -69,6 +69,8 @@ Launch:         ; -----------------------------------------
                 ; -----------------------------------------
                 ; инициализация мира
                 SET_UI_MODE UI_MODE_WORLD                                       ; установить UI режим "мир"
+                SET_UI_LAYER World.Base.Layers.GameWorld, \
+                                World.Base.Layers.GameWorld.Num                 ; установка активного UI слоя
                 SET_TICK_CONTROL_FLAGS GAME_SUSPEND                             ; мир запускается в режиме "остановки времени"
                 SET_TICK_REQUEST_FLAGS GAME_SUSPEND_REQUEST                     ; запрос соответствует фактическому состоянию
                 SET_MAIN_LOOP World.Base.Loop                                   ; установка главного цикла

@@ -2,7 +2,7 @@
                 ifndef _STRUCTS_UI_RUNTIME_
                 define _STRUCTS_UI_RUNTIME_
 
-                struct FUIRuntime                                               ; структура описывающая режим UI                [4 байта]
+                struct FUIRuntime                                               ; структура описывающая режим UI                [7 байт]
 Mode            DB #00                                                          ; текущий экран
 PreviousMode    DB #00                                                          ; экран для возврата
 RequestedMode   DB #00                                                          ; запрошенный экран
@@ -16,6 +16,8 @@ RequestedMode   DB #00                                                          
 ;   RP      [0]     - флаг, запрос на смену UI режима
 ; -----------------------------------------
 Flags           DB #00                                                          ; флаги
+LayerAdr        DW #0000                                                        ; адрес активного слоя
+LayersNum       DB #00                                                          ; количество активных слоёв
                 ends
 
                 endif ; ~_STRUCTS_UI_RUNTIME_

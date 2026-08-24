@@ -182,6 +182,6 @@ Tick:           LD BC, #03FD
                 LD H, A                                                         ; обнуление старшего байта
                 JR .NextChannel_
 
-                display "\t- Tick: \t\t\t\t\t", /A, Tick, " = busy [ ", /D, $ - Tick, " bytes  ]"
+                display "\t- Tick: \t\t\t\t\t", /A, Tick, "\t= busy [ ", /D, $ - Tick, " bytes  ]"
                 
                 endif ; ~ _PLAYER_SFX_AY_TICK_

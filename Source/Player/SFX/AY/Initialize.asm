@@ -46,6 +46,6 @@ Initialize:     INC HL                                                          
 
                 RET
 
-                display "\t- Initialize: \t\t\t\t\t", /A, Initialize, " = busy [ ", /D, $ - Initialize, " bytes  ]"
+                display "\t- Initialize: \t\t\t\t\t", /A, Initialize, "\t= busy [ ", /D, $ - Initialize, " bytes  ]"
 
                 endif ; ~ _PLAYER_SFX_AY_INITIALIZE_

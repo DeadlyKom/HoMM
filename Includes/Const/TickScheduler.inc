@@ -10,7 +10,9 @@ GAME_PAUSE                  EQU 1 << GAME_PAUSE_BIT
 
 ; FTickRuntime.Requests
 GAME_SUSPEND_REQUEST_BIT    EQU 0x07                                            ; флаг, запроса "остановки времени"
+GAME_PAUSE_REQUEST_BIT      EQU 0x06                                            ; флаг, запроса паузы игры
 GAME_SUSPEND_REQUEST        EQU 1 << GAME_SUSPEND_REQUEST_BIT
+GAME_PAUSE_REQUEST          EQU 1 << GAME_PAUSE_REQUEST_BIT
 
 CHUNK_ORDER_NEED_REBUID_BIT EQU 0x07                                            ; флаг, необходимости перестроения массива ChunkOrder
 CHUNK_ORDER_NEED_REBUID     EQU 1 << CHUNK_ORDER_NEED_REBUID_BIT

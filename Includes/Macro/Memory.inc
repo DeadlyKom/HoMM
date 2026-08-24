@@ -193,9 +193,9 @@ MEMCPY_TO_PAGE  macro Source?, Destination?, DestinationPage?, Size?
 SetPort:        macro Page?, Screen?
                 LD HL, Adr.Port_7FFD
                 if Screen? = 0
-                RES Screen?, (HL)
+                RES SCREEN_BIT, (HL)
                 else
-                SET Screen?, (HL)
+                SET SCREEN_BIT, (HL)
                 endif
                 LD A, Page?
                 SET_PAGE_A

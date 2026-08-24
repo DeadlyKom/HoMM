@@ -43,6 +43,7 @@
                 ; define ENABLE_UI_PROGRESS_DURATION                              ; разрешить дополнительную интерполяцию Progress по Duration
                 
                 ; отладочное отображение
+                define DEBUG_INFO_GAME_SUSPEND                                  ; режим "остановки времени"
                 ; define DEBUG_INFO_SCREEN_BLOCKS                                 ; содержимое ScreenBlock
                 ; define DEBUG_INFO_MOUSE_POSITION                                ; позиция мыши
                 ; define DEBUG_INFO_VISIBLE_AREA                                  ; размер видимой области

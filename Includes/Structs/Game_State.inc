@@ -2,7 +2,7 @@
                 ifndef _STRUCTS_GAME_STATE_
                 define _STRUCTS_GAME_STATE_
 
-                struct FGameState                                               ; переменные состояния игры                                     [45 байта] / 64
+                struct FGameState                                               ; переменные состояния игры                                     [48 байт] / 64
 ; -----------------------------------------
 ;      7    6    5    4    3    2    1    0
 ;   +----+----+----+----+----+----+----+----+
@@ -35,7 +35,7 @@ Render          DB #00                                                          
 ;   FS      [0]     - флаг, разрешения проигрывания музыки
 ; -----------------------------------------
 Music           DB #00                                                          ; флаги отрисовки                                               [1 байт]
-UIRuntime       FUIRuntime                                                      ; UI режим                                                      [4 байта]
+UIRuntime       FUIRuntime                                                      ; UI режим                                                      [7 байт]
 TickRuntime     FTickRuntime                                                    ; управление тиком                                              [2 байта]
 DisplayList     DW #0000                                                        ; адрес список отображения                                      [2 байта]
 DisplayListLen  DB #00                                                          ; длина список отображения                                      [1 байт]
