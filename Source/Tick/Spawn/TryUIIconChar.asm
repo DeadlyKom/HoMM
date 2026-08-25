@@ -13,7 +13,7 @@
 ;   ℹ️ код расположен в странице 0
 ; -----------------------------------------
 TryUIIconChar:  ; проверка попадания курсора в bound объекта
-                BIT OBJECT_CURSOR_HIT_STATE_BIT, (IX + FObject.Flags)
+                BIT OBJECT_CURSOR_HIT_STATE_BIT, (IX + FObject.FastFlags)
                 RET Z                                                           ; выход, если курсор находится вне bound объекта
 
                 ; получение адреса настроек объекта по умолчанию

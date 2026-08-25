@@ -28,7 +28,7 @@ UI.UpdateHover: ; получение настроек UI объекта
                 RET Z                                                           ; выход, если hover-поведение не поддерживается
 
                 ; проверка попадания курсора в bound объекта привязки
-                BIT OBJECT_CURSOR_HIT_STATE_BIT, (IY + FObject.Flags)
+                BIT OBJECT_CURSOR_HIT_STATE_BIT, (IY + FObject.FastFlags)
                 RET Z                                                           ; выход, если курсор покинул объект привязки
 
                 ; обновление времени жизни hover UI

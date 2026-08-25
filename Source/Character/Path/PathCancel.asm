@@ -37,7 +37,7 @@ PathCancel:     LD (IY + FObjectCharacter.PathID), PATH_ID_NONE
                 LD (IY + FObjectCharacter.MovementPending.Low), A
                 LD (IY + FObjectCharacter.MovementPending.High), A
 
-                SET OBJECT_DIRTY_BIT, (IY + FObject.Flags)                      ; обновить спрайт после остановки движения
+                SET OBJECT_DIRTY_BIT, (IY + FObject.FastFlags)                  ; обновить спрайт после остановки движения
                 RET
 
                 endif ; ~_CHARACTER_PATH_CANCEL_

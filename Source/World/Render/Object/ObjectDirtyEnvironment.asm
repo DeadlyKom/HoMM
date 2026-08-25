@@ -31,7 +31,7 @@ DirtyEnvir:     ; инициализация
                 SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
 
                 ; проверка флага обновления объекта
-                BIT OBJECT_DIRTY_BIT, (IY + FObject.Flags)
+                BIT OBJECT_DIRTY_BIT, (IY + FObject.FastFlags)
                 JR Z, .NextObject                                               ; переход, если флаг не установлен
                 PUSH DE
 

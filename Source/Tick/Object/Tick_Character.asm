@@ -23,9 +23,6 @@ Character:      ; сохранить параметры текущего cadence
                 APPLY_FLAG_MODIFY Character.WorldTickFlag                       ; применить флаг
                 APPLY_FLAG_MODIFY Move.WorldTickFlag_                           ; применить флаг
 
-                ; проверка необходимости создания UI объекта
-                CALL Tick.Spawn.TryUIIconChar
-
                 ; проверка перемещения героя
                 LD C, (IX + FObjectCharacter.Super.Sprite)
                 BIT ANIM_STATE_BIT, C
@@ -76,14 +73,17 @@ Move            ; --------------------------------------------------------------
                 LD (.PreviousHexY), A
 
 .StepLoop       ; чтение рассчитанной стоимости DDA-шага для текущего участка маршрута
-                LD E, (IX + FObjectCharacter.StepCost)
-                LD D, #00
-                LD A, E
-                OR A
+                LD A, (IX + FObjectCharacter.Movement.Flags)
+                AND MOVEMENT_STEP_COST_MASK
+
+                ; проверка возможности движения по текущему участку маршрута
                 JR Z, .Animation                                                ; нулевая стоимость запрещает движение по поверхности
+                
+                ; стоимость шага
+                LD E, A
+                LD D, #00
 
                 LD HL, (IX + FObjectCharacter.MovementBudget)
-                OR A
                 SBC HL, DE
                 JR C, .Animation                                                ; бюджета недостаточно для четвертьпиксельного шага
                 LD (IX + FObjectCharacter.MovementBudget), HL
@@ -120,7 +120,7 @@ Move            ; --------------------------------------------------------------
                 AND %00111111
                 OR ANIM_STATE_MOVE
                 LD (IX + FObjectCharacter.Super.Sprite), A
-                SET OBJECT_DIRTY_BIT, (IX + FObject.Flags)                      ; установить флаг, объект требуется обновить
+                SET OBJECT_DIRTY_BIT, (IX + FObject.FastFlags)                  ; установить флаг, объект требуется обновить
 
                 ; проверка достижения заданной точки
                 LD A, (IX + FObjectCharacter.Movement.RemainingSteps.Low)

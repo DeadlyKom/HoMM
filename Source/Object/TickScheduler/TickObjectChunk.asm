@@ -46,7 +46,7 @@ TickObjectChunk:; получение объектов в чанке
 .Loop           ; определение адреса объекта
                 LD A, (DE)                                                      ; чтение ID объекта
                 CALL Object.Utilities.GetAdr.IX
-                INC L                                                           ; переход к флагам объекта
+                INC L                                                           ; переход к быстрым флагам объекта
 
                 ; проверка флага, разрешающего тик объекта
                 BIT OBJECT_TICK_ENABLED_BIT, (HL)                               ; проверка флага, разрешающего тик объекта
@@ -71,12 +71,16 @@ TickObjectChunk:; получение объектов в чанке
                 BIT OBJECT_CURSOR_HIT_TEST_BIT, (HL)                            ; проверка флага, разрешающего проверку попадания курсора в bound объекта
                 CALL NZ, CursorHitTest                                          ; вызов, если проверка попадания курсора разрешена
 
-                ; проверка режима "остановки времени"
+                ; проверка наличия функции предварительного тика объекта
+                BIT OBJECT_PRE_TICK_BIT, (IX + FObject.FastFlags)
+                CALL NZ, PreTickObject                                          ; вызов, если функция предварительного тика присутствует
+
+.CheckSuspend   ; проверка режима "остановки времени"
 .Suspend.Flag   FLAG_MODIFY 0                                                   ; флаг, выборочного отключения тиков объектов в режиме "остановки времени"
                 JR NC, .TickAllowed                                             ; переход, если режим "остановки времени" выключен
 
                 ; проверка разрешения тика объекта в режиме "остановки времени"
-                BIT OBJECT_TICK_WHEN_SUSPENDED_BIT, (IX + FObject.Flags)        ; проверка флага, разрешающего тик объекта в режиме "остановки времени"
+                BIT OBJECT_TICK_WHEN_SUSPENDED_BIT, (IX + FObject.SlowFlags)    ; проверка флага, разрешающего тик объекта в режиме "остановки времени"
                 JR Z, .SkipObject                                               ; переход, если тик объекта запрещён
 
 .TickAllowed    ; сохранение количества объектов до тика
@@ -108,7 +112,7 @@ TickObjectChunk:; получение объектов в чанке
                 CALL NZ, SpawnOffset                                            ; корректировка указателя, если созданы новые объекты
 
                 ; проверка необходимости удаления объекта
-                BIT OBJECT_PENDING_KILL_STATE_BIT, (IX + FObject.Flags)
+                BIT OBJECT_PENDING_KILL_STATE_BIT, (IX + FObject.FastFlags)
                 JR NZ, .RemoveObject
 
 .SkipObject     OR A                                                            ; сброс флага переполнения, текущий кадр не завершён
@@ -154,7 +158,7 @@ TickObjectChunk:; получение объектов в чанке
                 SCF                                                             ; текущий кадр завершён
                 RET NZ                                                          ; выход, если фрейм сменился
 
-                JR .Loop                                                        ; следующий ID сместился на текущий адрес
+                JP .Loop                                                        ; следующий ID сместился на текущий адрес
 ; -----------------------------------------
 ; корректировка указателя текущего объекта после создания объектов
 ; In:
@@ -236,10 +240,69 @@ CursorHitTest   ; проверка диапозона
                 CP (IX + FObject.Bound + FSpriteBound.Size.Height)
                 JR NC, .CursorMiss                                              ; переход, если курсор находится ниже bound объекта
 
-                SET OBJECT_CURSOR_HIT_STATE_BIT, (IX + FObject.Flags)           ; установка флага нахождения курсор в bound объекте
+                SET OBJECT_CURSOR_HIT_STATE_BIT, (IX + FObject.FastFlags)       ; установка флага нахождения курсор в bound объекте
                 RET
 
-.CursorMiss     RES OBJECT_CURSOR_HIT_STATE_BIT, (IX + FObject.Flags)           ; сброс флага нахождения курсор в bound объекте
+.CursorMiss     RES OBJECT_CURSOR_HIT_STATE_BIT, (IX + FObject.FastFlags)       ; сброс флага нахождения курсор в bound объекте
+                RET
+; -----------------------------------------
+; предварительный тик объекта
+; In:
+;   IX - адрес структуры объекта (FObject)
+;   BC - CadencePassId и количество оставшихся объектов
+;   DE - указатель на текущий объект в массиве чанка
+; Out:
+;   IX, BC - сохраняют исходные значения
+;   DE - скорректирован, если предварительный тик создал объекты
+; Corrupt:
+;   все регистры, кроме IX, BC, DE
+; ----------------------------------------
+PreTickObject:  ; сохранение количества объектов до предварительного тика
+                LD A, (GameSession.WorldInfo + FWorldInfo.ObjectNum)
+                LD (SpawnOffset.OldObjectNum), A
+
+                ; получение класса объекта для диспетчеризации предварительного тика
+                LD A, (IX + FObject.Class)
+                AND OBJECT_CLASS_MASK
+
+                ifdef _DEBUG
+                CP OBJECT_CLASS_MAX
+                DEBUG_BREAK_POINT_NC
+                endif
+
+                ; вызов предварительного тика объекта
+                LD HL, PreTickObjectJumpTable
+                PUSH BC                                                         ; сохранение CadencePassId и количества оставшихся объектов
+                PUSH DE                                                         ; сохранение указателя на текущий объект в массиве чанка
+                CALL Func.JumpTable
+                POP DE
+                POP BC
+
+                ; проверка количества объектов, созданных предварительным тиком
+                LD A, (GameSession.WorldInfo + FWorldInfo.ObjectNum)
+                LD HL, SpawnOffset.OldObjectNum
+                SUB (HL)
+                CALL NZ, SpawnOffset                                            ; корректировка указателя, если созданы новые объекты
+                RET
+; -----------------------------------------
+; диспетчер предварительного тика объекта
+; In:
+;   IX - адрес структуры объекта (FObject)
+; Out:
+;   IX - сохраняет исходное значение
+; Corrupt:
+;   все регистры, кроме IX
+; ----------------------------------------
+PreTickObjectJumpTable:
+                DW Page0.Tick.Spawn.TryUIIconChar                               ; OBJECT_CLASS_CHARACTER
+                DW Page0.Tick.Spawn.TryUIIconChar                               ; OBJECT_CLASS_CHARACTER_AI
+                DW PreTickObject_NoTick                                         ; OBJECT_CLASS_CONSTRUCTION
+                DW PreTickObject_NoTick                                         ; OBJECT_CLASS_PROPS
+                DW PreTickObject_NoTick                                         ; OBJECT_CLASS_INTERACTION
+                DW PreTickObject_NoTick                                         ; OBJECT_CLASS_PARTICLE
+                DW PreTickObject_NoTick                                         ; OBJECT_CLASS_DECAL
+                DW PreTickObject_NoTick                                         ; OBJECT_CLASS_UI
+PreTickObject_NoTick:
                 RET
 ; -----------------------------------------
 ; диспетчер тика объекта

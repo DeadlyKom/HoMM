@@ -40,7 +40,7 @@ UI.UpdateLifetime:
 
 .PendingKill    ; обнуляем Lifetime и откладываем безопасное удаление до завершения тика объекта
                 LD (IX + FObjectUI.Lifetime), UI_LIFETIME_INFINITE
-                SET OBJECT_PENDING_KILL_STATE_BIT, (IX + FObject.Flags)         ; объект помечен на удаление
+                SET OBJECT_PENDING_KILL_STATE_BIT, (IX + FObject.FastFlags)     ; объект помечен на удаление
                 RET
 
                 endif ; ~_TICK_OBJECT_UI_UPDATE_LIFETIME_

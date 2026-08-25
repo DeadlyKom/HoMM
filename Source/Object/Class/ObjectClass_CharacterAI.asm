@@ -13,15 +13,24 @@
 ; -----------------------------------------
 CharacterAI:    ; -----------------------------------------
                 ; инициализация базового состояния объекта
-                LD (IY + FObject.Flags), OBJECT_DIRTY | OBJECT_TICK_ENABLED | OBJECT_CURSOR_HIT_TEST
-                LD (IY + FObject.Sprite), ANIM_STATE_IDLE | (DIR_DOWN_LEFT << SPRITE_DIR_BIT)
+                ; -----------------------------------------
+
+                ; -----------------------------------------
+                ; копирование флага предварительного тика из настроек объекта по умолчанию
+                LD A, (IX + FObjectDefaultSettings.Flags)
+                AND OBJECT_DEFAULT_PRE_TICK
+                OR OBJECT_DIRTY | \
+                    OBJECT_TICK_ENABLED | \
+                    OBJECT_CURSOR_HIT_TEST
+                LD (IY + FObject.FastFlags), A
+                LD (IY + FObject.Sprite), ANIM_STATE_IDLE | \
+                                            (DIR_DOWN_LEFT << SPRITE_DIR_BIT)
                 ; -----------------------------------------
 
                 ; -----------------------------------------
                 ; инициализация состояния персонажа на карте
                 LD (IY + FObjectCharacter.CharacterID), CHARACTER_ID_NONE
                 LD (IY + FObjectCharacter.PathID), PATH_ID_NONE
-                LD (IY + FObjectCharacter.WayPointID), WAY_POINT_NONE
                 ; -----------------------------------------
 
                 ; -----------------------------------------

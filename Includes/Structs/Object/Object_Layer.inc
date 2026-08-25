@@ -2,8 +2,8 @@
                 ifndef _STRUCT_LAYER_OBJECT_
                 define _STRUCT_LAYER_OBJECT_
 
-                struct FLayerObject                                             ; промежуточный класс объектов Decal и UI                   [17 байт]
-Super           FObject                                                         ; базовый класс объекта                                     [14 байт]
+                struct FLayerObject                                             ; промежуточный класс объектов Decal и UI                   [18 байт]
+Super           FObject                                                         ; базовый класс объекта                                     [15 байт]
 ; -----------------------------------------
 ;      7    6    5    4    3    2    1    0
 ;   +----+----+----+----+----+----+----+----+

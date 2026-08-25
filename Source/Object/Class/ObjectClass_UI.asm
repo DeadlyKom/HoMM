@@ -11,11 +11,13 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-UI:             ; инициализация базового состояния объекта
-                LD (IY + FObject.Flags), OBJECT_DIRTY | \
-                                        OBJECT_TICK_ENABLED | \
-                                        OBJECT_SELF_CALCULATED_POSITION | \
-                                        OBJECT_TICK_WHEN_SUSPENDED
+UI:             ; инициализация быстрых флагов объекта
+                LD (IY + FObject.FastFlags), OBJECT_DIRTY | \
+                                            OBJECT_TICK_ENABLED | \
+                                            OBJECT_SELF_CALCULATED_POSITION
+
+                ; инициализация медленных флагов объекта
+                LD (IY + FObject.SlowFlags), OBJECT_TICK_WHEN_SUSPENDED
 
                 ; инициализация флага выравнивания положения по знакоместу
                 BIT OBJECT_UI_ATTR_ALIGN_BIT, (IX + FODS_UI.Flags)

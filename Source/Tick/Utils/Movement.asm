@@ -15,7 +15,9 @@
 ;   знаки расстояний сохраняются во флагах направлений, а длины хранятся положительными;
 ;   при равных длинах главной считается горизонтальная ось
 ; -----------------------------------------
-SetLine:        XOR A
+SetLine:        ; сброс флагов предыдущего сегмента с сохранением StepCost
+                LD A, (IX + FObjectCharacter.Movement.Flags)
+                AND MOVEMENT_STEP_COST_MASK
                 LD (IX + FObjectCharacter.Movement.Flags), A
 
                 BIT 7, D
@@ -121,7 +123,7 @@ FacePath:       LD E, (IX + FObject.Position.X.High)
                 OR ANIM_STATE_TURN
 
                 LD (IX + FObjectCharacter.Super.Sprite), A
-                SET OBJECT_DIRTY_BIT, (IX + FObject.Flags)
+                SET OBJECT_DIRTY_BIT, (IX + FObject.FastFlags)
                 LD A, #01
                 OR A
                 RET
@@ -270,7 +272,7 @@ TransferBudget: LD B, A                                                         
 ; In:
 ;   IX - адрес структуры объекта (FObjectCharacter)
 ; Out:
-;   FObjectCharacter.StepCost - итоговая стоимость одного DDA-шага
+;   младшие биты FObjectCharacter.Movement.Flags - итоговая стоимость одного DDA-шага
 ; Corrupt:
 ;   HL, DE, BC, AF, AF'
 ; Note:
@@ -333,8 +335,11 @@ UpdateEffectiveStepCost:
                 RR L
 
                 POP IX                                                          ; восстановить адрес объекта
-                LD A, L
-                LD (IX + FObjectCharacter.StepCost), A
+                ; сохранение рассчитанной стоимости с сохранением флагов DDA
+                LD A, (IX + FObjectCharacter.Movement.Flags)
+                AND MOVEMENT_DDA_FLAGS_MASK
+                OR L
+                LD (IX + FObjectCharacter.Movement.Flags), A
                 RET
 .ScaleTable     ; таблица множителей стоимости шага от уровня Pathfinding       ; значения fixed point 4.4
                 DB PATHFINDING_SCALE_NONE                                      ; SKILL_LEVEL_NONE
@@ -410,7 +415,7 @@ Step:           ; проверка наличия оставшихся DDA-ша�
 ;   IX - адрес структуры объекта (FObjectCharacter)
 ; Out:
 ;   FObject.Position.X - координата смещена на четверть пикселя в заданном направлении
-;   FObjectCharacter.StepCost - обновлена при переходе в соседний гекс
+;   младшие биты FObjectCharacter.Movement.Flags - стоимость обновлена при переходе в соседний гекс
 ; Corrupt:
 ;   HL, DE, BC, AF, AF'
 ; Note:
@@ -462,7 +467,7 @@ StepX:          ; проверка направления движения по 
 ; Out:
 ;   FObject.Position.Y - координата смещена на четверть пикселя в заданном направлении
 ;   FObject.Position.X - скорректирована при переходе между смещёнными строками гексов
-;   FObjectCharacter.StepCost - обновлена при переходе в соседнюю строку гексов
+;   младшие биты FObjectCharacter.Movement.Flags - стоимость обновлена при переходе в соседнюю строку гексов
 ; Corrupt:
 ;   HL, DE, BC, AF, AF'
 ; Note:

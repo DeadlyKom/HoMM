@@ -28,9 +28,6 @@ CharacterAI:    ; сохранение параметров текущего cad
                 ADC A, A
                 LD (AI.Move.WorldTickFlag), A
 
-                ; проверка необходимости создания UI объекта
-                CALL Tick.Spawn.TryUIIconChar
-
                 ; проверка активного движения AI-персонажа
                 LD C, (IX + FObjectCharacter.Super.Sprite)
                 BIT ANIM_STATE_BIT, C
@@ -80,17 +77,18 @@ AI.Move         ; начисление и распределение бюдже�
                 LD (AI.Move.MovedFlag), A
 
 .StepLoop       ; чтение рассчитанной стоимости DDA-шага для текущего участка маршрута
-                LD E, (IX + FObjectCharacter.StepCost)
-                LD D, #00
+                LD A, (IX + FObjectCharacter.Movement.Flags)
+                AND MOVEMENT_STEP_COST_MASK
 
                 ; проверка возможности движения по текущему участку маршрута
-                LD A, E
-                OR A
                 JR Z, .Animation                                                ; переход, если поверхность запрещает движение
+                
+                ; стоимость шага
+                LD E, A
+                LD D, #00
 
                 ; проверка наличия бюджета для одного DDA-шага
                 LD HL, (IX + FObjectCharacter.MovementBudget)
-                OR A
                 SBC HL, DE
                 JR C, .Animation                                                ; переход, если бюджета недостаточно для DDA-шага
                 LD (IX + FObjectCharacter.MovementBudget), HL
@@ -138,7 +136,7 @@ AI.Move         ; начисление и распределение бюдже�
                 AND %00111111
                 OR ANIM_STATE_MOVE
                 LD (IX + FObjectCharacter.Super.Sprite), A
-                SET OBJECT_DIRTY_BIT, (IX + FObject.Flags)
+                SET OBJECT_DIRTY_BIT, (IX + FObject.FastFlags)
 
 .CheckCompletion; проверка достижения заданной точки
                 LD A, (IX + FObjectCharacter.Movement.RemainingSteps.Low)
@@ -159,7 +157,7 @@ AI.Move         ; начисление и распределение бюдже�
 
                 LD (IX + FObjectCharacter.PathID), PATH_ID_NONE
                 RES ANIM_STATE_BIT, (IX + FObjectCharacter.Super.Sprite)
-                SET OBJECT_DIRTY_BIT, (IX + FObject.Flags)
+                SET OBJECT_DIRTY_BIT, (IX + FObject.FastFlags)
                 RET
 ; -----------------------------------------
 ; выбрать следующую из двух демонстрационных точек
@@ -167,7 +165,6 @@ AI.Move         ; начисление и распределение бюдже�
 ;   IX - адрес структуры объекта (FObjectCharacterAI)
 ; Out:
 ;   Adr.AIPath - записана следующая демонстрационная точка
-;   FObjectCharacter.WayPointID - переключен индекс демонстрационной точки
 ;   FObjectCharacter.PathID - установлен индекс текущего пути
 ; Corrupt:
 ;   HL, DE, AF
@@ -175,19 +172,21 @@ AI.Move         ; начисление и распределение бюдже�
 ;   AI ходит между двумя фиксированными гексами A и B
 ;   ToDo: заменить демонстрационную логику на State Tree
 ; -----------------------------------------
-AI.AssignPath:  ; переключение индекса демонстрационной точки
-                LD A, (IX + FObjectCharacter.WayPointID)
-                INC A                                                           ; #FF -> 0 при первом назначении
-                AND #01
-                LD (IX + FObjectCharacter.WayPointID), A
-
-                ; выбор координат следующей демонстрационной точки
-                LD DE, (AI_DEMO_POINT_B_Y << 8) | AI_DEMO_POINT_B_X
-
-                ; проверка выбора точки B
-                OR A
-                JR Z, .Store                                                    ; переход, если выбрана точка B
+AI.AssignPath:  ; подготовка точки A, если AI уже находится в точке B
                 LD DE, (AI_DEMO_POINT_A_Y << 8) | AI_DEMO_POINT_A_X
+
+                ; проверка координаты X демонстрационной точки B
+                LD A, (IX + FObject.Position.X.High)
+                CP AI_DEMO_POINT_B_X
+                JR NZ, .PointB                                                  ; выбрать точку B, если координата X отличается
+
+                ; проверка координаты Y демонстрационной точки B
+                LD A, (IX + FObject.Position.Y.High)
+                CP AI_DEMO_POINT_B_Y
+                JR Z, .Store                                                    ; выбрать точку A, если AI находится в точке B
+
+.PointB         ; выбор точки B, если AI находится вне точки B
+                LD DE, (AI_DEMO_POINT_B_Y << 8) | AI_DEMO_POINT_B_X
 
 .Store          ; запись FPath для демонстрационного движения
                 LD HL, Adr.AIPath

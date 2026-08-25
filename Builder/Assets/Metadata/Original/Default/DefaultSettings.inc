@@ -15,7 +15,7 @@ ODS_ID_COUNTER = ODS_ID_COUNTER + 1
                 FODS_Character {
                     {
                         /*Super.Class*/      OBJECT_CLASS_CHARACTER,
-                        /*Super.Flags*/      OBJECT_NEUTRAL,
+                        /*Super.Flags*/      OBJECT_NEUTRAL | OBJECT_DEFAULT_PRE_TICK,
                         /*Super.Variable_A*/ ODS_ID_UI,
                         /*Super.Variable_B*/ 0
                     },
@@ -27,7 +27,7 @@ ODS_ID_COUNTER = ODS_ID_COUNTER + 1
                 FODS_Character {
                     {
                         /*Super.Class*/      OBJECT_CLASS_CHARACTER_AI,
-                        /*Super.Flags*/      OBJECT_NEUTRAL,
+                        /*Super.Flags*/      OBJECT_NEUTRAL | OBJECT_DEFAULT_PRE_TICK,
                         /*Super.Variable_A*/ ODS_ID_UI,
                         /*Super.Variable_B*/ 0
                     },

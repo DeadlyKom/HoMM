@@ -231,7 +231,7 @@ AddObjects:     ; инициализация
 
                 ; чтение Y текущего элемента
                 INC E                                                           ; пропуск FObject.Class
-                INC E                                                           ; пропуск FObject.Flags
+                INC E                                                           ; пропуск FObject.FastFlags
                 EX DE, HL
                 LD C, (HL)                                                      ; чтение Object.Position.Y.Low
                 INC L
@@ -245,7 +245,7 @@ AddObjects:     ; инициализация
                 LD E, (HL)
 
                 INC E                                                           ; пропуск FObject.Class
-                INC E                                                           ; пропуск FObject.Flags
+                INC E                                                           ; пропуск FObject.FastFlags
 
                 ; HL - адрес SortBuffer предыдущего элемента
                 ; DE - адрес поля Position.Y предыдущего объекта
@@ -270,7 +270,7 @@ AddObjects:     ; инициализация
                 ; -----------------------------------------
                 
                 ; обмен предыдущего и текущего элемента SortBuffer
-                DEC E                                                           ; переход к адресу Object.FObject.Flags
+                DEC E                                                           ; переход к адресу Object.FObject.FastFlags
                 DEC E                                                           ; переход к адресу Object.FObject.Class
 
                 ; переход к адресу SortBuffer текущего элемента

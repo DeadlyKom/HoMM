@@ -31,19 +31,19 @@ Draw:           ; инициализация
 
                 ; проверка видимости объекта по положению в гексагонах
                 OR A                                                            ; сброс флага переполнения перед условной проверкой
-                BIT OBJECT_SELF_CALCULATED_POSITION_BIT, (IY + FObject.Flags)
+                BIT OBJECT_SELF_CALCULATED_POSITION_BIT, (IY + FObject.FastFlags)
                 CALL Z, IsVisible                                               ; проверка видимости объекта
                 JR C, .NextObject                                               ; переход, если объект не виден
 
 .CheckRefresh   ; проверка флага обновления объекта
-                BIT OBJECT_DIRTY_BIT, (IY + FObject.Flags)
+                BIT OBJECT_DIRTY_BIT, (IY + FObject.FastFlags)
                 JR Z, .ForcedVisibility                                         ; переход, если флаг не установлен,
                                                                                 ; но необходимо проверить обновление screen block'а или принудительное обновление
-                RES OBJECT_DIRTY_BIT, (IY + FObject.Flags)                      ; сброс флага
+                RES OBJECT_DIRTY_BIT, (IY + FObject.FastFlags)                  ; сброс флага
 
 .NeedRefresh    PUSH DE
                 ; расчёт положения объекта относительно верхнего левого видимого края
-                BIT OBJECT_SELF_CALCULATED_POSITION_BIT, (IY + FObject.Flags)
+                BIT OBJECT_SELF_CALCULATED_POSITION_BIT, (IY + FObject.FastFlags)
                 CALL Z, Utilities.TransformToScr.Store
 
                 ; определение способа отображения объекта
@@ -64,7 +64,7 @@ Draw:           ; инициализация
                 POP IY                                                          ; восстановление адреса обрабатываемого объекта
 
                 ; bound самостоятельно рассчитываемого объекта обновляется внутри его Draw
-                BIT OBJECT_SELF_CALCULATED_POSITION_BIT, (IY + FObject.Flags)
+                BIT OBJECT_SELF_CALCULATED_POSITION_BIT, (IY + FObject.FastFlags)
                 CALL Z, .StoreBound
 
                 ; отметка screen block'ов фактически отображённого объекта

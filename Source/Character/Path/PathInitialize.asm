@@ -69,8 +69,8 @@ PathInitialize: ; сохранение длины пути
                 DEC A                                                           ; текущий FPath = slot * 8 + length - 1
                 LD (IY + FObjectCharacter.PathID), A
 
-                ; ToDo: FObjectCharacter.WayPointID по идее должен не изменяться,
-                ;       т.к. он отражает текущее положение на гексагоне
+                ; ToDo: определить общее размещение WayPointID для player/AI
+                ;       индекс должен сохранять положение внутри маршрута независимо от текущего гексагона
 
                 ; адрес начала собственного слота: Adr.HeroPath + slot * 32
                 LD A, E

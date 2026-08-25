@@ -10,9 +10,11 @@ HERO_PATH_SLOT_CAPACITY     EQU PATHFINDING_MAX_DISTANCE                        
 HERO_PATH_SLOT_INDEX_MASK   EQU HERO_PATH_SLOT_CAPACITY - 1                     ; маска локального индекса FPath внутри слота
 
 ; значения FObjectCharacter.Movement.Flags
-MOVEMENT_MAJOR_Y_BIT        EQU 0x00                                            ; главная ось DDA: 0 - X, 1 - Y
-MOVEMENT_STEP_X_NEG_BIT     EQU 0x01                                            ; направление шага по X: 0 - вправо, 1 - влево
-MOVEMENT_STEP_Y_NEG_BIT     EQU 0x02                                            ; направление шага по Y: 0 - вниз,  1 - вверх
+MOVEMENT_STEP_COST_MASK     EQU %00011111                                       ; маска стоимости DDA-шага
+MOVEMENT_DDA_FLAGS_MASK     EQU %11100000                                       ; маска направления DDA
+MOVEMENT_MAJOR_Y_BIT        EQU 0x05                                            ; главная ось DDA: 0 - X, 1 - Y
+MOVEMENT_STEP_X_NEG_BIT     EQU 0x06                                            ; направление шага по X: 0 - вправо, 1 - влево
+MOVEMENT_STEP_Y_NEG_BIT     EQU 0x07                                            ; направление шага по Y: 0 - вниз,  1 - вверх
 
 ; значения для поля FObject.Sprite
 ANIM_STATE_BIT              EQU 0x06                                            ; флаг,  состояния анимации

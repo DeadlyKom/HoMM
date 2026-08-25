@@ -251,7 +251,7 @@ DebugInfo:      ifdef DEBUG_INFO_GAME_SUSPEND
                 ifdef DEBUG_INFO_CURSOR_HIT_TEST
 .CursorHitTest  PUSH_PAGE                                                       ; сохранить текущую страницу памяти
                 SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
-                LD A, (Adr.ObjectsArray + FObject.Flags)
+                LD A, (Adr.ObjectsArray + FObject.FastFlags)
                 AND OBJECT_CURSOR_HIT_STATE
                 LD E, A                                                         ; сохранить результат Cursor HitTest
                 POP_PAGE                                                        ; восстановить страницу памяти
