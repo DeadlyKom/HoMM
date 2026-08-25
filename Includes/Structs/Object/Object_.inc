@@ -78,4 +78,5 @@ Bound           FSpriteBound                                                    
 Settings        DB #00                                                          ; настройки объекта по умолчанию                            [1 байт]
                 ends
 
+
                 endif ; ~_STRUCT_OBJECT_
