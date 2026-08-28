@@ -85,6 +85,7 @@ PipelineHexagons:
                 ;       * сброс флагов готовности экрана
                 ; -----------------------------------------
                 SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
+                CALL World.Base.Tilemap.Update.LightmapHero                    ; обновить карту освещения по экранному знакоместу выбранного героя
                 CALL World.Base.Render.Object.InView                            ; формирование списка объектов в области видимости
                 PUSH AF
                 CALL NZ, World.Base.Render.Object.DirtyEnvir                    ; анализ видимых объектов и выставление флагов гексагонов, которые требуется перерисовать

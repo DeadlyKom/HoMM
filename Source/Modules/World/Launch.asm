@@ -78,6 +78,7 @@ Launch:         ; -----------------------------------------
                 SET_MAIN_SWAP World.Base.Render.PipelineHexagons.Swap           ; установить функцию долгого переключения экранов
                 SET_WORLD_RENDER World.Base.Render.Draw                         ; инициализаци главного рендера "мира"
                 SET_USER_HANDLER World.Base.Interrupt                           ; установка обработчика прерываний
+                RES_MUSIC_FLAG MUSIC_ENABLE_BIT                                 ; запретить проигрывать музыку
                 RES_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                           ; разрешить сканирование ввода
                 ; SET_RENDER_FLAG SWAP_DISABLE_BIT                                ; запретить смену экранов
                 SET_RENDER_SHADOW                                               ; установка Render флага переключение экрана на теневой
