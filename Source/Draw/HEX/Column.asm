@@ -237,6 +237,9 @@ LIGHTMAP_SYNC   macro
                 LD A, #FF
                 LD (Column.PaperMaskBase), A
                 LD (Column.PaperMaskHigh), A
+                XOR A
+                LD (Column.PaperColorBase), A
+                LD (Column.PaperColorHigh), A
                 endm
 ; -----------------------------------------
 ; переход на строку выше в карте освещения
@@ -657,21 +660,29 @@ Column:         ; корректировка начального адреса �
                 RRCA
                 AND %00000011
 
-                ; расчёт смещения перехода для выбора приближённой маски PAPER
-                ADD A, A
-                NEG
-                ADD A, #06
-                LD (.LightMaskJump), A
+                ; проверка необходимости сохранить исходный PAPER для уровня 0
+                OR A
+                JR Z, .LightOriginalPaper                                      ; сохранить исходный атрибут, если затемнение отсутствует
 
-                ; построение приближённой маски PAPER для уровня освещения 0-3
-                LD A, %11000111
-.LightMaskJump  EQU $+1
-                JR $
-                SET 5, A
-                SET 4, A
-                SET 3, A
+                ; расчёт тёмного PAPER: уровень 1-3 преобразуется в цвет 3-1
+                NEG
+                ADD A, #04
+                ADD A, A                                                        ; перенос цвета в поле PAPER, x2
+                ADD A, A                                                        ; перенос цвета в поле PAPER, x4
+                ADD A, A                                                        ; перенос цвета в поле PAPER, x8
+                LD (.PaperColorBase), A
+                LD (.PaperColorHigh), A
+                LD A, %10000111                                                 ; сохранение FLASH и INK со сбросом BRIGHT и исходного PAPER
+                JR .LightStoreMask
+
+.LightOriginalPaper
+                XOR A
+                LD (.PaperColorBase), A
+                LD (.PaperColorHigh), A
+                DEC A                                                           ; маска #FF сохраняет исходный атрибут
 
                 ; обновление текущей маски PAPER для обычного и масочного вывода
+.LightStoreMask
                 LD (.PaperMaskBase), A
                 LD (.PaperMaskHigh), A
 
@@ -682,9 +693,11 @@ Column:         ; корректировка начального адреса �
                 ; проверка флага записи атрибута
                 JR NC, .BaseNoAttributeWrite                                   ; переход без записи, если OverrideAttr сброшен
 
-                ; применение текущей маски только к полю PAPER
+                ; применение текущей маски и цвета PAPER
 .PaperMaskBase  EQU $+1
                 AND #FF
+.PaperColorBase EQU $+1
+                OR #00
                 LD (DE), A                                                      ; запись байта в экран атрибутов
 
 .BaseNoAttributeWrite
@@ -693,7 +706,7 @@ Column:         ; корректировка начального адреса �
                 SRA A                                                           ; флаг маски отвечает, отвечающий за последующее рисование
                                                                                 ;   если флаг сброшен, следующиее идёт вывод без маски
                                                                                 ;   если флаг установлен, следующее идёт вывод с маской
-                JR NC, .BoundaryLoop                                            ; переход, если флаг рисования без маски
+                JP NC, .BoundaryLoop                                            ; переход, если флаг рисования без маски
 
                 ;   SP  - адрес спрайта
                 ;   HL  - адрес экрана
@@ -746,9 +759,11 @@ Column:         ; корректировка начального адреса �
                 ; проверка флага записи атрибута
                 JR NC, .HighNoAttributeWrite                                   ; переход без записи, если OverrideAttr сброшен
 
-                ; применение текущей маски только к полю PAPER
+                ; применение текущей маски и цвета PAPER
 .PaperMaskHigh  EQU $+1
                 AND #FF
+.PaperColorHigh EQU $+1
+                OR #00
                 LD (DE), A                                                      ; запись байта в экран атрибутов
 
 .HighNoAttributeWrite
