@@ -53,7 +53,9 @@ Update:
 ;   необходимо включить страницу 0
 ;   карта освещения перестраивается только при смене экранного знакоместа героя
 ; -----------------------------------------
-.LightmapHero   ; получение объекта выбранного героя
+.LightmapHero   CALL .LightPaperTick                                            ; обновить базовый PAPER по аппаратному счётчику 1/50
+
+                ; получение объекта выбранного героя
                 LD A, (GameState.PlayerActions + FPlayerActions.SelectedHeroID)
                 CALL Character.Utilities.GetAdr
 
@@ -135,7 +137,9 @@ Update:
                 LD (.LightmapCenterValid), A
 
                 CALL .LightmapTest                                               ; построение карты освещения вокруг нового центра
+                JP .InvalidateLight                                              ; перерисовать весь свет после перестроения карты
 
+.InvalidateLight
                 ; установка признака обновления для всех гексагонов Render-буфера
                 LD HL, Adr.RenderBuffer
                 LD B, TILEMAP_DATA_SIZE
@@ -149,6 +153,75 @@ Update:
                 LD DE, #0101
                 CALL SafeFill.b176
                 RET
+
+.LightPaperTick
+                ; проверка наличия начального значения аппаратного счётчика
+                LD A, (.LightPaperTickValid)
+                OR A
+                JR NZ, .LightPaperTickCheck                                    ; проверить интервал, если начальный тик уже сохранён
+
+                ; сохранение начального аппаратного тика для первого интервала
+                LD HL, (TickCounterRef)
+                LD (.LightPaperLastTick), HL
+                LD A, #01
+                LD (.LightPaperTickValid), A
+                RET
+
+.LightPaperTickCheck
+                ; расчёт количества аппаратных тиков от последней смены PAPER
+                LD HL, (TickCounterRef)
+                LD DE, (.LightPaperLastTick)
+                OR A                                                            ; сброс Carry перед 16-битным вычитанием
+                SBC HL, DE
+
+                ; проверка достижения интерва в 10 секунд по счётчику 1/50
+                LD DE, 50 * 10
+                OR A                                                            ; сброс Carry перед 16-битным сравнением
+                SBC HL, DE
+                RET C                                                           ; выйти, если с последней смены прошло меньше 500 тиков
+
+.LightPaperTickElapsed
+                ; обновление начала следующего интерва текущим аппаратным тиком
+                LD HL, (TickCounterRef)
+                LD (.LightPaperLastTick), HL
+
+                ; расчёт следующей фазы по текущему направлению
+                LD A, (.LightPaperPhase)
+                LD B, A
+                LD A, (.LightPaperDirection)
+                ADD A, B
+
+                ; проверка выхода выше фазы #03 при движении вверх
+                CP #04
+                JR Z, .LightPaperTurnDown                                      ; сменить направление и выбрать фазу #02 после #03
+
+                ; проверка выхода ниже фазы #00 при движении вниз
+                CP #FF
+                JR Z, .LightPaperTurnUp                                        ; сменить направление и выбрать фазу #01 после #00
+                JR .LightPaperPhaseReady
+
+.LightPaperTurnDown
+                ; установка шага -1 и следующей фазы после верхней границы
+                LD A, #FF
+                LD (.LightPaperDirection), A
+                LD A, #02
+                JR .LightPaperPhaseReady
+
+.LightPaperTurnUp
+                ; установка шага +1 и следующей фазы после нижней границы
+                LD A, #01
+                LD (.LightPaperDirection), A
+
+.LightPaperPhaseReady
+                ; обновление фазы и трёх операндов расчёта PAPER в рендере
+                LD (.LightPaperPhase), A
+                CALL Kernel.Hex.SetLightPaperBase
+                JP .InvalidateLight                                             ; перерисовать все гексагоны после смены PAPER
+
+.LightPaperLastTick   DW #0000
+.LightPaperPhase      DB #00
+.LightPaperDirection  DB #01
+.LightPaperTickValid  DB #00
 
 .LightmapCenterX       DB #00
 .LightmapCenterY       DB #00
@@ -232,13 +305,13 @@ Update:
                 LD E, A
 
                 ; проверка попадания во внутреннюю треть радиуса гексагона
-                CP 18+6
+                CP 18+6-8
                 LD A, #00                                                       ; уровень 0 сохраняет исходный атрибут в центре
                 JR C, .LightLevelReady                                          ; уровень 0, если гексагональное расстояние меньше 18
 
                 ; проверка попадания во вторую треть радиуса гексагона
                 LD A, E
-                CP 35+13
+                CP 35+13-8
                 LD A, #01
                 JR C, .LightLevelReady                                          ; уровень 1, если гексагональное расстояние меньше 35
 
