@@ -582,15 +582,21 @@ SkipBoundary:   ; в стеке хранится адрес функции ри�
 .MaskBoundaryReady
                 ; проверка причины пропуска знакомест перед масочным отображением
                 OR (IX + 4)
-                JP NZ, Column.InViewMask                                        ; перейти к отображению после нижнего экранного отсечения
+                JP Z, HalfColumn.RestoreLight                                   ; восстановить свет основания, если пропущена только нижняя половина столбца
 
-                JP HalfColumn.RestoreLight                                      ; восстановить свет основания после пропуска нижней половины столбца
+                ; сохранение масочного режима вывода после нижнего экранного отсечения
+                LD A, #01
+                LD (HalfColumn.BoundaryDrawMode), A
+                JP HalfColumn.RestoreBoundaryLight                              ; восстановить свет из последней видимой строки перед масочным отображением
 
 .BoundaryReady  ; проверка причины пропуска знакомест
                 OR (IX + 4)
-                JP NZ, Column.x8                                                ; перейти к отображению после нижнего экранного отсечения
+                JP Z, HalfColumn.RestoreLight                                   ; восстановить свет основания, если пропущена только нижняя половина столбца
 
-                JP HalfColumn.RestoreLight                                      ; восстановить свет основания после пропуска нижней половины столбца
+                ; сохранение обычного режима вывода после нижнего экранного отсечения
+                XOR A
+                LD (HalfColumn.BoundaryDrawMode), A
+                JP HalfColumn.RestoreBoundaryLight                              ; восстановить свет из последней видимой строки перед обычным отображением
 ; -----------------------------------------
 ; пропуск половины гексагонального столбца и отрисовка второй половины
 ; In:
@@ -626,6 +632,65 @@ HalfColumn:     ; проверка необходимости пропуска �
 
                 LD A, #04                                                       ; пропускаем ровно 4 знакоместа
                 JP SkipBoundary                                                 ; пропустить 4 знакоместа в гексагональном столбце
+
+.RestoreBoundaryLight
+                ; проверка применения освещения для видимого гексагона
+                LD A, (Column.LightApplyJump)
+                CP #20
+                JR NZ, .BoundaryDraw                                            ; перейти без изменения PAPER, если освещение отключено для тумана
+
+                ; сохранение адреса света последнего видимого знакоместа
+                LD A, (Column.LightMapReadAddress)
+                LD (.BoundaryLightMapReadAddress), A
+
+                ; копирование смещения двухбитного уровня для текущего столбца
+                LD A, (Column.LightShiftJump)
+                LD (.BoundaryLightShiftJump), A
+
+                ; чтение уровня освещения последнего видимого знакоместа
+.BoundaryLightMapReadAddress EQU $+1
+                LD A, (LIGHTMAP_BUFFER)
+.BoundaryLightShiftJump EQU $+1
+                JR $
+                RRCA
+                RRCA
+                RRCA
+                RRCA
+                RRCA
+                RRCA
+                AND %00000011
+
+                ; проверка необходимости сохранить исходный PAPER для уровня 0
+                OR A
+                JR Z, .BoundaryOriginalPaper                                    ; сохранить исходный PAPER, если затемнение отсутствует
+
+                ; расчёт тёмного PAPER для уровня 1-3
+                NEG
+                ADD A, #04
+                ADD A, A                                                        ; перенос цвета в поле PAPER, x2
+                ADD A, A                                                        ; перенос цвета в поле PAPER, x4
+                ADD A, A                                                        ; перенос цвета в поле PAPER, x8
+                LD (Column.PaperColorBase), A
+                LD (Column.PaperColorHigh), A
+                LD A, %10000111                                                 ; сохранение FLASH и INK со сбросом BRIGHT и исходного PAPER
+                JR .BoundaryStoreMask
+
+.BoundaryOriginalPaper
+                XOR A
+                LD (Column.PaperColorBase), A
+                LD (Column.PaperColorHigh), A
+                DEC A                                                           ; маска #FF сохраняет исходный атрибут
+
+.BoundaryStoreMask
+                LD (Column.PaperMaskBase), A
+                LD (Column.PaperMaskHigh), A
+
+.BoundaryDraw   ; проверка сохранённого режима вывода после нижнего экранного отсечения
+.BoundaryDrawMode EQU $+1
+                LD A, #00
+                OR A
+                JP Z, Column.x8                                                 ; перейти к обычному отображению, если масочный режим не установлен
+                JP Column.InViewMask                                            ; перейти к масочному отображению, если масочный режим установлен
 
 .RestoreLight   ; проверка применения освещения для видимого гексагона
                 LD A, (Column.LightApplyJump)

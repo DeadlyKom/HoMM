@@ -44,15 +44,15 @@ Draw:           ; -----------------------------------------
                 LD DE, #0302
                 CALL Tick.Utils.Reconnaissance.Request.Group                    ; создать событие разведки для группы владельца персонажа
 
+                ; выполнить первичную рекогносцировку до формирования буферов,
+                ; чтобы первый Render-буфер сразу содержал видимые гексагоны
+                CALL Event.Handler.Before
+
                 ; принудительное обновление Tilemap- и Render-буферов
                 SET_PAGE_MAP                                                    ; включить страницу работы с картой
                 CALL World.Base.Tilemap.Update.RenderBuffer
                 CALL World.Base.Tilemap.Update.TileBuffer
                 CALL Draw.HexDLGeneration
-                CALL Minimap.GenFog                                             ; генерация тумана для миникарты
-                CALL Minimap.Compilation                                        ; компиляция миникарты
-                CALL Minimap.Memcpy                                             ; копирование миникарты
-                CALL Update.Minimap                                             ; обновление миникарты (теневого экрана)
 
 .Update         ; -----------------------------------------
                 ; обновление
