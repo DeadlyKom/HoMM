@@ -8,6 +8,7 @@ Object:
 .RemoveAtSwap           EQU Page0.Object.RemoveAtSwap                           ; удаление объекта, перемещая последний элемент в массиве
 .SmartRemove            EQU Page0.Object.SmartRemove                            ; умное удаление объекта
 .FindLastByPredicate    EQU Page0.Object.FindLastByPredicate                    ; поиск объекта с конца массива, используя предикат
+.LightmapSource         EQU Page0.Object.LightmapSource                         ; добавить свет объекта во временную карту освещения
 ; Object.Sort:
 ; .GnomeSort              EQU Page0.Object.Sort.GnomeSort                         ; сортировка адресов видимых объектов по оси Y
 

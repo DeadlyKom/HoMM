@@ -44,100 +44,54 @@ Update:
                 CALL World.Base.Render.Reset
                 JP Buffer.Render
 ; -----------------------------------------
-; обновление карты освещения по экранному знакоместу выбранного героя
+; подготовка временной карты освещения перед обходом SortBuffer
 ; In:
 ; Out:
 ; Corrupt:
-;   AF, BC, DE, HL, IX, IY, AF'
+;   AF, BC, DE, HL
 ; Note:
-;   необходимо включить страницу 0
-;   карта освещения перестраивается только при смене экранного знакоместа героя
+;   Adr.SharedBuffer используется только до начала отрисовки объектов
 ; -----------------------------------------
-.LightmapHero   CALL .LightPaperTick                                            ; обновить базовый PAPER по аппаратному счётчику 1/50
+.LightmapBegin  CALL .LightPaperTick                                            ; обновить базовый PAPER по аппаратному счётчику 1/50
 
-                ; получение объекта выбранного героя
-                LD A, (GameState.PlayerActions + FPlayerActions.SelectedHeroID)
-                CALL Character.Utilities.GetAdr
+                ; заполнение 132 байт временной карты тёмным уровнем 3
+                LD HL, Adr.SharedBuffer
+                LD DE, Adr.SharedBuffer + 1
+                LD BC, 6 * SCR_WORLD_SIZE_Y - 1
+                LD (HL), #FF
+                LDIR
+                RET
+; -----------------------------------------
+; применение временной карты освещения после обхода SortBuffer
+; In:
+; Out:
+; Corrupt:
+;   AF, BC, DE, HL
+; Note:
+;   неизменившаяся карта не вызывает перерисовку гексагонов
+; -----------------------------------------
+.LightmapFinish
+                LD HL, Adr.SharedBuffer
+                LD DE, Adr.TilemapBuffer + 80
+                LD B, 6 * SCR_WORLD_SIZE_Y
 
-                ; расчёт точного положения основания героя относительно экрана в формате 12.4
-                CALL Utilities.TransformToScr
+.LightmapCompareLoop
+                ; проверка изменения очередного упакованного байта освещения
+                LD A, (DE)
+                CP (HL)
+                JR NZ, .LightmapChanged                                        ; применить карту, если найдено отличие
+                INC HL
+                INC DE
+                DJNZ .LightmapCompareLoop                                      ; продолжить, если остались байты карты освещения
+                RET
 
-                ; расчёт горизонтального знакоместа делением экранной координаты 12.4 на 8 пикселей
-                LD A, E
-                ADD A, A                                                        ; перенос старшего дробного бита в Carry
-                LD A, D
-                RLA
-
-                ; проверка отрицательного экранного знакоместа по горизонтали
-                JR C, .LightmapCenterXNegative                                 ; перейти к левой границе, если экранная координата отрицательная
-
-                ; проверка правой границы области влияния источника света
-                CP SCR_WORLD_SIZE_X + 10
-                JR NC, .LightmapCenterOutside                                  ; выбрать тёмную карту, если источник правее области влияния
-                JR .LightmapCenterXReady
-
-.LightmapCenterXNegative
-                ; проверка левой границы области влияния источника света
-                CP -10
-                JR C, .LightmapCenterOutside                                   ; выбрать тёмную карту, если источник левее области влияния
-
-.LightmapCenterXReady
-                LD C, A                                                         ; экранное знакоместо по горизонтали
-
-                ; расчёт вертикального знакоместа делением экранной координаты 12.4 на 8 пикселей
-                LD A, L
-                ADD A, A                                                        ; перенос старшего дробного бита в Carry
-                LD A, H
-                RLA
-
-                ; проверка отрицательного экранного знакоместа по вертикали
-                JR C, .LightmapCenterYNegative                                 ; перейти к верхней границе, если экранная координата отрицательная
-
-                ; проверка нижней границы области влияния источника света
-                CP SCR_WORLD_SIZE_Y + 8
-                JR NC, .LightmapCenterOutside                                  ; выбрать тёмную карту, если источник ниже области влияния
-                JR .LightmapCenterYReady
-
-.LightmapCenterYNegative
-                ; проверка верхней границы области влияния источника света
-                CP -8
-                JR C, .LightmapCenterOutside                                   ; выбрать тёмную карту, если источник выше области влияния
-
-.LightmapCenterYReady
-                LD B, A                                                         ; экранное знакоместо по вертикали
-                JR .LightmapCenterCheck
-
-.LightmapCenterOutside
-                ; выбор заведомо далёкого центра для полностью тёмной карты освещения
-                LD BC, #8080
-
-.LightmapCenterCheck
-                ; проверка наличия ранее рассчитанного центра освещения
-                LD A, (.LightmapCenterValid)
-                OR A
-                JR Z, .LightmapCenterChanged                                   ; перестроить карту, если центр ещё не был рассчитан
-
-                ; проверка изменения горизонтального знакоместа источника света
-                LD A, (.LightmapCenterX)
-                CP C
-                JR NZ, .LightmapCenterChanged                                  ; перестроить карту, если герой сменил знакоместо по горизонтали
-
-                ; проверка изменения вертикального знакоместа источника света
-                LD A, (.LightmapCenterY)
-                CP B
-                RET Z                                                           ; выйти без перестроения, если знакоместо героя не изменилось
-
-.LightmapCenterChanged
-                ; сохранение нового экранного знакоместа источника света
-                LD A, C
-                LD (.LightmapCenterX), A
-                LD A, B
-                LD (.LightmapCenterY), A
-                LD A, #01
-                LD (.LightmapCenterValid), A
-
-                CALL .LightmapTest                                               ; построение карты освещения вокруг нового центра
-                JP .InvalidateLight                                              ; перерисовать весь свет после перестроения карты
+.LightmapChanged
+                ; копирование изменившейся карты в постоянную область TilemapBuffer
+                LD HL, Adr.SharedBuffer
+                LD DE, Adr.TilemapBuffer + 80
+                LD BC, 6 * SCR_WORLD_SIZE_Y
+                LDIR
+                JP .InvalidateLight                                             ; перерисовать весь свет после изменения карты
 
 .InvalidateLight
                 ; установка признака обновления для всех гексагонов Render-буфера
@@ -155,6 +109,42 @@ Update:
                 RET
 
 .LightPaperTick
+                ; проверка режима остановки времени
+                CHECK_TICK_CONTROL_FLAG GAME_SUSPEND_BIT
+                JR Z, .LightPaperResume                                         ; перейти к таймеру, если остановка времени выключена
+
+                ; проверка сохранения аппаратного тика начала остановки времени
+                LD A, (.LightPaperSuspendActive)
+                OR A
+                RET NZ                                                          ; выйти, если начало текущей остановки времени уже сохранено
+
+                ; сохранение аппаратного тика начала остановки времени
+                LD HL, (TickCounterRef)
+                LD (.LightPaperSuspendTick), HL
+                INC A                                                           ; установить признак активной остановки времени
+                LD (.LightPaperSuspendActive), A
+                RET
+
+.LightPaperResume
+                ; проверка необходимости исключить завершившуюся остановку времени из интервала PAPER
+                LD A, (.LightPaperSuspendActive)
+                OR A
+                JR Z, .LightPaperTickStart                                      ; перейти к таймеру, если остановка времени не прерывала интервал
+
+                ; расчёт продолжительности завершившейся остановки времени в аппаратных тиках
+                LD HL, (TickCounterRef)
+                LD DE, (.LightPaperSuspendTick)
+                OR A                                                            ; сброс Carry перед 16-битным вычитанием
+                SBC HL, DE
+
+                ; перенос начала интервала PAPER на продолжительность остановки времени
+                LD DE, (.LightPaperLastTick)
+                ADD HL, DE
+                LD (.LightPaperLastTick), HL
+                XOR A                                                           ; сброс признака завершившейся остановки времени
+                LD (.LightPaperSuspendActive), A
+
+.LightPaperTickStart
                 ; проверка наличия начального значения аппаратного счётчика
                 LD A, (.LightPaperTickValid)
                 OR A
@@ -222,145 +212,7 @@ Update:
 .LightPaperPhase      DB #00
 .LightPaperDirection  DB #01
 .LightPaperTickValid  DB #00
-
-.LightmapCenterX       DB #00
-.LightmapCenterY       DB #00
-.LightmapCenterValid   DB #00
-; -----------------------------------------
-; создание временной гексагональной карты освещения
-; In:
-; Out:
-; Corrupt:
-;   AF, BC, DE, HL, AF'
-; Note:
-;   центр задаётся экранным знакоместом выбранного героя
-; -----------------------------------------
-.LightmapTest   PUSH IX
-                LD IX, Adr.TilemapBuffer + 80
-
-                ; инициализация упакованного байта четырёх уровней освещения
-                XOR A
-                EX AF, AF'
-
-                ; расчёт начальной вертикальной координаты относительно центра карты
-                LD A, (.LightmapCenterY)
-                NEG
-                LD D, A
-                LD B, SCR_WORLD_SIZE_Y
-
-.LightmapRow    ; расчёт начальной горизонтальной координаты относительно центра карты
-                LD A, (.LightmapCenterX)
-                NEG
-                LD E, A
-                LD C, 6 * 4
-
-.LightmapCell   PUSH BC                                                         ; сохранение счётчиков строк и знакомест
-                PUSH DE                                                         ; сохранение координат знакоместа
-
-                ; проверка знака горизонтальной координаты для расчёта модуля
-                LD A, E
-                OR A
-                JP P, .LightmapAbsX                                             ; сохранить координату, если она неотрицательная
-                NEG
-.LightmapAbsX   LD E, A
-
-                ; проверка выхода за горизонтальный радиус внешнего гексагона
-                CP 11
-                JR NC, .LightLevelDark                                          ; выбрать уровень 3, если горизонтальное расстояние не меньше 11 знакомест
-
-                ; проверка знака вертикальной координаты для расчёта модуля
-                LD A, D
-                OR A
-                JP P, .LightmapAbsY                                             ; сохранить координату, если она неотрицательная
-                NEG
-.LightmapAbsY   LD D, A
-
-                ; проверка выхода за вертикальный радиус внешнего гексагона
-                CP 9
-                JR NC, .LightLevelDark                                          ; выбрать уровень 3, если вертикальное расстояние не меньше 9 знакомест
-
-                ; расчёт вертикальной границы основания гексагона: 5 * |x|
-                LD A, E
-                ADD A, A
-                ADD A, A
-                ADD A, E
-                LD L, A
-
-                ; расчёт наклонной границы основания гексагона: 2 * |x| + 6 * |y|
-                LD A, D
-                ADD A, A
-                LD H, A
-                ADD A, A
-                ADD A, H
-                LD H, A
-                LD A, E
-                ADD A, A
-                ADD A, H
-
-                ; проверка выбора дальнейшей из вертикальной и наклонной границ
-                CP L
-                JR NC, .LightmapDistanceReady                                  ; сохранить наклонную границу, если она не меньше вертикальной
-                LD A, L
-.LightmapDistanceReady
-                LD E, A
-
-                ; проверка попадания во внутреннюю треть радиуса гексагона
-                CP 18+6-8
-                LD A, #00                                                       ; уровень 0 сохраняет исходный атрибут в центре
-                JR C, .LightLevelReady                                          ; уровень 0, если гексагональное расстояние меньше 18
-
-                ; проверка попадания во вторую треть радиуса гексагона
-                LD A, E
-                CP 35+13-8
-                LD A, #01
-                JR C, .LightLevelReady                                          ; уровень 1, если гексагональное расстояние меньше 35
-
-                ; проверка попадания во внешнюю треть радиуса гексагона
-                LD A, E
-                CP 53+3
-                LD A, #02
-                JR C, .LightLevelReady                                          ; уровень 2, если гексагональное расстояние меньше 53
-
-.LightLevelDark
-                LD A, #03                                                       ; уровень 3 за пределами гексагона освещения
-
-.LightLevelReady
-                POP DE                                                          ; восстановление координат знакоместа
-                POP BC                                                          ; восстановление счётчиков строк и знакомест
-
-                ; упаковка очередного двухбитного уровня в старшие биты байта
-                RRCA
-                RRCA
-                LD L, A
-                EX AF, AF'
-                SRL A
-                SRL A
-                OR L
-                EX AF, AF'
-
-                ; расчёт координаты следующего знакоместа
-                INC E
-                DEC C
-
-                ; проверка заполнения очередной группы из четырёх знакомест
-                LD A, C
-                AND #03
-                JR NZ, .LightmapCell                                            ; продолжить упаковку, если в группе осталось знакоместо
-
-                EX AF, AF'                                                      ; восстановление готового упакованного байта
-                LD (IX + 0), A
-                INC IX
-
-                ; проверка окончания текущей строки карты освещения
-                LD A, C
-                OR A
-                JR NZ, .LightmapCell                                            ; продолжить строку, если остались знакоместа или выравнивание
-
-                ; расчёт координаты следующей строки
-                INC D
-                DJNZ .LightmapRow                                               ; продолжить построение, если осталась строка карты
-
-                POP IX
-                RET
+.LightPaperSuspendTick  DW #0000
+.LightPaperSuspendActive DB #00
 
                 endif ; ~_WORLD_UPDATE_BUFFERS_

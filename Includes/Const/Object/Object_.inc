@@ -10,6 +10,7 @@ OBJECT_EMPTY_ELEMENT                EQU #FF                                     
 ; значения для поля FObject.FastFlags
 ; динамические флаги
 OBJECT_DIRTY_BIT                    EQU 0x07                                    ; флаг, объект необходимо обновить
+OBJECT_LIGHT_SOURCE_BIT             EQU 0x06                                    ; флаг, объект является источником света
 OBJECT_CURSOR_HIT_STATE_BIT         EQU 0x05                                    ; флаг, курсор находится в bound объекта
 OBJECT_PENDING_KILL_STATE_BIT       EQU 0x04                                    ; флаг, объект помечен на удаление
 
@@ -24,6 +25,7 @@ OBJECT_WEAKLY_REFERENCED_BIT        EQU 0x01                                    
 OBJECT_TICK_WHEN_SUSPENDED_BIT      EQU 0x00                                    ; флаг, разрешающий тик объекта в режиме "остановки времени"
 
 OBJECT_DIRTY                        EQU 1 << OBJECT_DIRTY_BIT
+OBJECT_LIGHT_SOURCE                 EQU 1 << OBJECT_LIGHT_SOURCE_BIT
 OBJECT_CURSOR_HIT_STATE             EQU 1 << OBJECT_CURSOR_HIT_STATE_BIT
 OBJECT_PENDING_KILL_STATE           EQU 1 << OBJECT_PENDING_KILL_STATE_BIT
 OBJECT_PRE_TICK                     EQU 1 << OBJECT_PRE_TICK_BIT

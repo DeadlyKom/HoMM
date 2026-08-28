@@ -6,21 +6,23 @@
 POINTER_VER     defl 1
 
 SpriteInfo      ; -----------------------------------------
+.Ox             EQU -0
+.Oy             EQU -0
                 if POINTER_VER = 0
-                SPRITE  7,  6,  0,  0, OR_XOR,  0, Sprite._00
-                SPRITE  7,  8,  0,  0, OR_XOR,  0, Sprite._01
-                SPRITE  5, 10,  1,  0, OR_XOR,  0, Sprite._02
-                SPRITE  7,  5,  0,  5, OR_XOR,  0, Sprite._03
+                SPRITE  7,  6,  0+SpriteInfo.Ox,  0+SpriteInfo.Oy, OR_XOR,  0, Sprite._00
+                SPRITE  7,  8,  0+SpriteInfo.Ox,  0+SpriteInfo.Oy, OR_XOR,  0, Sprite._01
+                SPRITE  5, 10,  1+SpriteInfo.Ox,  0+SpriteInfo.Oy, OR_XOR,  0, Sprite._02
+                SPRITE  7,  5,  0+SpriteInfo.Ox,  5+SpriteInfo.Oy, OR_XOR,  0, Sprite._03
                 elseif POINTER_VER = 1
-                SPRITE  7,  6,  8,  0, OR_XOR,  0, Sprite._10
-                SPRITE  5,  8,  9,  0, OR_XOR,  0, Sprite._11
-                SPRITE  7,  5,  8,  5, OR_XOR,  0, Sprite._12
-                SPRITE  9,  5,  7,  5, OR_XOR,  0, Sprite._13
+                SPRITE  7,  6,  8+SpriteInfo.Ox,  0+SpriteInfo.Oy, OR_XOR,  0, Sprite._10
+                SPRITE  5,  8,  9+SpriteInfo.Ox,  0+SpriteInfo.Oy, OR_XOR,  0, Sprite._11
+                SPRITE  7,  5,  8+SpriteInfo.Ox,  5+SpriteInfo.Oy, OR_XOR,  0, Sprite._12
+                SPRITE  9,  5,  7+SpriteInfo.Ox,  5+SpriteInfo.Oy, OR_XOR,  0, Sprite._13
                 elseif POINTER_VER = 2
-                SPRITE  7,  6,  8,  0, OR_XOR,  0, Sprite._20
-                SPRITE  5,  9,  9,  0, OR_XOR,  0, Sprite._21
-                SPRITE 10,  4,  7,  6, OR_XOR,  0, Sprite._22
-                SPRITE 10,  3,  7,  7, OR_XOR,  0, Sprite._23
+                SPRITE  7,  6,  8+SpriteInfo.Ox,  0+SpriteInfo.Oy, OR_XOR,  0, Sprite._20
+                SPRITE  5,  9,  9+SpriteInfo.Ox,  0+SpriteInfo.Oy, OR_XOR,  0, Sprite._21
+                SPRITE 10,  4,  7+SpriteInfo.Ox,  6+SpriteInfo.Oy, OR_XOR,  0, Sprite._22
+                SPRITE 10,  3,  7+SpriteInfo.Ox,  7+SpriteInfo.Oy, OR_XOR,  0, Sprite._23
                 endif
                 ; -----------------------------------------
 Sprite:         if POINTER_VER = 0

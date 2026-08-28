@@ -85,10 +85,11 @@ PipelineHexagons:
                 ;       * сброс флагов готовности экрана
                 ; -----------------------------------------
                 SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
-                CALL World.Base.Tilemap.Update.LightmapHero                    ; обновить карту освещения по экранному знакоместу выбранного героя
+                CALL World.Base.Tilemap.Update.LightmapBegin                   ; очистить временную карту освещения перед обходом объектов
                 CALL World.Base.Render.Object.InView                            ; формирование списка объектов в области видимости
                 PUSH AF
-                CALL NZ, World.Base.Render.Object.DirtyEnvir                    ; анализ видимых объектов и выставление флагов гексагонов, которые требуется перерисовать
+                CALL NZ, World.Base.Render.Object.DirtyEnvir                    ; построить свет объектов и выставить флаги гексагонов, которые требуется перерисовать
+                CALL World.Base.Tilemap.Update.LightmapFinish                  ; применить изменившуюся карту освещения после обхода объектов
 
                 SET_PAGE_MAP                                                    ; включить страницу работы с картой
                 CALL BufferUtilities.AdjRenderBufCol                            ; корректировка столбцов рендер буфера

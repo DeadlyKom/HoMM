@@ -16,9 +16,9 @@ Character:      ; -----------------------------------------
                 ; -----------------------------------------
 
                 ; -----------------------------------------
-                ; копирование флага предварительного тика из настроек объекта по умолчанию
+                ; копирование флагов предварительного тика и источника света из настроек объекта по умолчанию
                 LD A, (IX + FObjectDefaultSettings.Flags)
-                AND OBJECT_DEFAULT_PRE_TICK
+                AND OBJECT_DEFAULT_PRE_TICK | OBJECT_DEFAULT_LIGHT_SOURCE
                 OR OBJECT_DIRTY | \
                     OBJECT_TICK_ENABLED | \
                     OBJECT_CURSOR_HIT_TEST

@@ -9,6 +9,7 @@
                 include "PlacementNew.asm"
                 include "RemoveAtSwap.asm"
                 include "FindLastByPredicate.asm"
+                include "Lightmap.asm"
 
                 ; include "Sort/Include.inc"                                      ; не требуется, сортировка осуществляется при вставке
                 include "Class/Include.inc"

@@ -1,11 +1,11 @@
 
                 ifndef _METADATA_MAP_DEBUG_OBJECTS_
                 define _METADATA_MAP_DEBUG_OBJECTS_
-MAKE_MAP_OBJECT macro Label?, X?, x?, Y?, y?, SpriteIndex?
+MAKE_MAP_OBJECT macro Label?, X?, Y?, SpriteIndex?
                 FMapObject {
                     (Label? << 1),
-                    ((X?) << 1) + (x?),
-                    ((Y?) << 1) + (y?),
+                    (X?),
+                    (Y?),
                     (SpriteIndex?)
                 }
                 endm
@@ -13,20 +13,25 @@ MAKE_MAP_OBJECT macro Label?, X?, x?, Y?, y?, SpriteIndex?
                 DB ASSETS_ID_DEFAULT_SETTINGS                                   ; идентификатор ассета дефолтных настроек объектов
                 DB Objects.Num
 
-                ; MAKE_MAP_OBJECT                                                 \
-                ; /*тип объекта*/                     ODS_ID_TEST,                \
-                ; /*позиция объекта на карте*/        5,0,    5,1,                \
-                ; /*ID спрайта в Graphic pack #01*/   SPRITE_ID_TELEPORT
+                MAKE_MAP_OBJECT                                                   \
+                /*тип объекта*/                     ODS_ID_TORCH,                 \
+                /*позиция объекта на карте*/        3, 2,                         \
+                /*ID спрайта в ассете настроек*/    SPRITE_ID_TORCH
 
-                ; MAKE_MAP_OBJECT                                                 \
-                ; /*тип объекта*/                     ODS_ID_TEST,                \
-                ; /*позиция объекта на карте*/        23,0,   24,1,               \
-                ; /*ID спрайта в Graphic pack #01*/   SPRITE_ID_NECROPOLIS
+                MAKE_MAP_OBJECT                                                   \
+                /*тип объекта*/                     ODS_ID_TORCH,                 \
+                /*позиция объекта на карте*/        4, 3,                         \
+                /*ID спрайта в ассете настроек*/    SPRITE_ID_TORCH
 
-                ; MAKE_MAP_OBJECT                                                 \
-                ; /*тип объекта*/                     ODS_ID_TEST,                \
-                ; /*позиция объекта на карте*/        21,0,   27,1,               \
-                ; /*ID спрайта в Graphic pack #01*/   SPRITE_ID_TELEPORT
+                MAKE_MAP_OBJECT                                                   \
+                /*тип объекта*/                     ODS_ID_TORCH,                 \
+                /*позиция объекта на карте*/        6, 5,                         \
+                /*ID спрайта в ассете настроек*/    SPRITE_ID_TORCH
+
+                MAKE_MAP_OBJECT                                                   \
+                /*тип объекта*/                     ODS_ID_TORCH,                 \
+                /*позиция объекта на карте*/        8, 7,                         \
+                /*ID спрайта в ассете настроек*/    SPRITE_ID_TORCH
 
 Objects.Num     EQU ($-Objects) / FMapObject
 

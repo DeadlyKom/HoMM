@@ -16,6 +16,11 @@ Construction:   ; -----------------------------------------
                 BIT OBJECT_AFFILIATION_BIT, (IX + FObjectDefaultSettings.Flags) ; принадлежность
                                                                                 ;   0 - объект не может кому либо принадлежать
                                                                                 ;   1 - объект может принадлежать кому либо
+
+                ; копирование флага источника света из настроек объекта по умолчанию
+                LD A, (IX + FObjectDefaultSettings.Flags)
+                AND OBJECT_DEFAULT_LIGHT_SOURCE
+                LD (IY + FObject.FastFlags), A
                 ; -----------------------------------------
 
                 OR A                                                            ; сброс флага переполнения, успешная инициализация
