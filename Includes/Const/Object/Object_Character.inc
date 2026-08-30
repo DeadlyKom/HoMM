@@ -5,6 +5,12 @@ CHARACTER_ID_NONE           EQU #FF                                             
 PATH_ID_NONE                EQU #FF                                             ; индекс в массиве пути отсутствует
 WAY_POINT_NONE              EQU #FF                                             ; индекс WayPoint'а отсутствует
 
+; значения для поля FObjectCharacter.CharacterID
+CHARACTER_ID_MASK           EQU %00011111                                       ; маска идентификатора владельца
+CHARACTER_ACTION_BIT        EQU 0x07                                            ; флаг, выполнения текущего действия
+                                                                                ;   0 - бездействие
+                                                                                ;   1 - выполняется действие (любое)
+
 HERO_PATH_SLOT_COUNT        EQU #04                                             ; количество независимых маршрутов персонажей игрока
 HERO_PATH_SLOT_CAPACITY     EQU PATHFINDING_MAX_DISTANCE                        ; количество FPath в одном слоте маршрута
 HERO_PATH_SLOT_INDEX_MASK   EQU HERO_PATH_SLOT_CAPACITY - 1                     ; маска локального индекса FPath внутри слота

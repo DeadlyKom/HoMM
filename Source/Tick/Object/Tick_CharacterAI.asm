@@ -156,6 +156,7 @@ AI.Move         ; начисление и распределение бюдже�
                 CALL Object.Utilities.UpdateChunkByPosition                     ; синхронизация чанка после фиксации в конечной точке сегмента
 
                 LD (IX + FObjectCharacter.PathID), PATH_ID_NONE
+                RES CHARACTER_ACTION_BIT, (IX + FObjectCharacter.CharacterID)   ; сброс флага, выполнение действия завершённо
                 RES ANIM_STATE_BIT, (IX + FObjectCharacter.Super.Sprite)
                 SET OBJECT_DIRTY_BIT, (IX + FObject.FastFlags)
                 RET
@@ -198,6 +199,7 @@ AI.AssignPath:  ; подготовка точки A, если AI уже нахо
                 INC L
                 LD (HL), #00                                                    ; FPath.WayPointIdx
                 LD (IX + FObjectCharacter.PathID), #00
+                SET CHARACTER_ACTION_BIT, (IX + FObjectCharacter.CharacterID)   ; установка флага, активно выполнение действия
                 RET
 ; -----------------------------------------
 ; рассчитать DDA-линию от AI-объекта до текущей демонстрационной точки

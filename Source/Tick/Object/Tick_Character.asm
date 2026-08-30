@@ -163,6 +163,7 @@ Move            ; --------------------------------------------------------------
 
 .PathComplete   ; установить признак отсутствия активного пути
                 LD (IX + FObjectCharacter.PathID), PATH_ID_NONE
+                RES CHARACTER_ACTION_BIT, (IX + FObjectCharacter.CharacterID)   ; сброс флага, выполнение действия завершённо
                 RET
 
 .NextPath       ; расчёт адреса текущей FPath

@@ -142,10 +142,10 @@ FacePath:       LD E, (IX + FObject.Position.X.High)
 GetCharacterMovementBudget:
                 ; ToDo: временная реализация возвращает базовое значение MOVEMENT_DEFAULT_SPEED
                 ;       в дальнейшем здесь должна появиться формула:
-                ;           CharacterMovementBudget =
-                ;               MOVEMENT_DEFAULT_SPEED
-                ;             * CharacterSpeedScale
-                ;             * SkillSpeedScale
+                ;           MovementRate =
+                ;               BaseSpeed
+                ;             * CharacterScale
+                ;             * EquipmentScale
                 ;             * BuffSpeedScale
                 ;             * DebuffSpeedScale
 
@@ -194,7 +194,7 @@ AddBudget:      LD A, (GameSession.WorldTimeCtrl + FWorldTimeControl.PlaybackSca
 ;   DE - бюджет движения персонажа за один "мировой тик"
 ;   IX - адрес структуры объекта (FObjectCharacter)
 ; Out:
-;   FObjectCharacter.MovementPending - уменьшен на переданную долю;
+;   FObjectCharacter.MovementPending - уменьшен на переданную долю
 ;   FObjectCharacter.MovementBudget - увеличен на переданную долю
 ; Corrupt:
 ;   HL, DE, BC, AF
@@ -283,7 +283,15 @@ TransferBudget: LD B, A                                                         
 ;   StepCost = ceil(SurfaceStepCost * PathfindingScale / 16)
 ;
 ;   ToDo:
-;     добавить к формуле профиль проходимости, экипировку, бафы и дебафы
+;     расширить формулу:
+;       PathfindingScale = .ScaleTable[FCharacter.Skills.SecondarySkill.Pathfinding]
+;
+;       StepCost =
+;           SurfaceStepCost
+;         * TerrainProfileScale
+;         * PathfindingScale
+;         * TerrainBuffScale
+;         * TerrainDebuffScale
 ; -----------------------------------------
 UpdateEffectiveStepCost:
                 LD E, (IX + FObject.Position.X.High)
@@ -342,10 +350,10 @@ UpdateEffectiveStepCost:
                 LD (IX + FObjectCharacter.Movement.Flags), A
                 RET
 .ScaleTable     ; таблица множителей стоимости шага от уровня Pathfinding       ; значения fixed point 4.4
-                DB PATHFINDING_SCALE_NONE                                      ; SKILL_LEVEL_NONE
-                DB PATHFINDING_SCALE_BASIC                                     ; SKILL_LEVEL_BASIC
-                DB PATHFINDING_SCALE_ADVANCED                                  ; SKILL_LEVEL_ADVANCED
-                DB PATHFINDING_SCALE_EXPERT                                    ; SKILL_LEVEL_EXPERT
+                DB PATHFINDING_SCALE_NONE                                       ; SKILL_LEVEL_NONE
+                DB PATHFINDING_SCALE_BASIC                                      ; SKILL_LEVEL_BASIC
+                DB PATHFINDING_SCALE_ADVANCED                                   ; SKILL_LEVEL_ADVANCED
+                DB PATHFINDING_SCALE_EXPERT                                     ; SKILL_LEVEL_EXPERT
 ; -----------------------------------------
 ; выполнить один шаг DDA, равный четверти пикселя по главной оси
 ; In:

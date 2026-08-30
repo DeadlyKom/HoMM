@@ -25,12 +25,9 @@ Character.Address.IX:; расчёт адреса распологаемого п
                 ; IX = CHARACTER_SIZE * CharacterID
                 ADD A, A    ; x2
                 ADD A, A    ; x4
-                ADD A, LOW Adr.CharacterArray >> 3
+                ADD A, A    ; x8
                 LD IXL, A
-                ADC A, HIGH Adr.CharacterArray >> 3
-                SUB IXL
-                LD IXH, A
-                ADD IX, IX  ; x8
+                LD IXH, HIGH Adr.CharacterArray >> 2
                 ADD IX, IX  ; x16
                 ADD IX, IX  ; x32
 
@@ -59,12 +56,9 @@ Character.Address.HL:; расчёт адреса размещаемого пер
                 ; HL = CHARACTER_SIZE * CharacterID
                 ADD A, A    ; x2
                 ADD A, A    ; x4
-                ADD A, LOW Adr.CharacterArray >> 3
+                ADD A, A    ; x8
                 LD L, A
-                ADC A, HIGH Adr.CharacterArray >> 3
-                SUB L
-                LD H, A
-                ADD HL, HL  ; x8
+                LD H, HIGH Adr.CharacterArray >> 2
                 ADD HL, HL  ; x16
                 ADD HL, HL  ; x32
 

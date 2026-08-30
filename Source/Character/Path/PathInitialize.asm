@@ -47,6 +47,7 @@ PathInitialize: ; сохранение длины пути
 
                 ifdef _DEBUG
                 LD A, E                                                         ; номер слота HeroPath
+                AND CHARACTER_ID_MASK
                 CP HERO_PATH_SLOT_COUNT
                 DEBUG_BREAK_POINT_NC                                            ; ошибка, CharacterID персонажа-человека не входит в диапазон [0..3]
                 endif
@@ -68,6 +69,8 @@ PathInitialize: ; сохранение длины пути
                 ADD A, C
                 DEC A                                                           ; текущий FPath = slot * 8 + length - 1
                 LD (IY + FObjectCharacter.PathID), A
+
+                SET CHARACTER_ACTION_BIT, (IY + FObjectCharacter.CharacterID)   ; установка флага, активно выполнение действия
 
                 ; ToDo: определить общее размещение WayPointID для player/AI
                 ;       индекс должен сохранять положение внутри маршрута независимо от текущего гексагона

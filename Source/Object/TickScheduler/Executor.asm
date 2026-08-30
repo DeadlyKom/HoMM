@@ -128,6 +128,9 @@ RunCadence:     LD (TickObjectChunk.CadenceRange), A                            
                 ; проверка завершения текущей эпохи
                 RET NZ                                                          ; выход, если текущая эпоха не завершена
 
+                ; запросить остановку времени при отсутствии действий персонажей человека
+                CALL TryAutoSuspend
+
                 ; проверка запроса режима "остановки времени"
                 TICK_REQUEST_FLAGS_A
                 ADD A, A                                                        ; GAME_SUSPEND_REQUEST_BIT: перенос флага запроса режима "остановки времени" во флаг переполнения
@@ -181,5 +184,56 @@ CheckEpochBarrier:
                 LD A, C
                 LD (TickScheduler.Variables + FTickScheduler.LastCenterChunk), A
                 JP BuilderTwoPass
+; -----------------------------------------
+; запросить остановку времени при отсутствии действий персонажей человека
+; In:
+; Out:
+; Corrupt:
+;   HL, DE, BC, IX, IY, AF
+; Note:
+;   необходимо вызывать, только после полного завершения cadence-эпохи
+; ----------------------------------------
+TryAutoSuspend: ; получение количества персонажей участника-человека
+                LD DE, Adr.ParticipantArray + FParticipant.CharactersNum        ; FParticipant[0]
+                LD A, (DE)
+                
+                ifdef _DEBUG
+                OR A
+                DEBUG_BREAK_POINT_Z                                             ; у участника-человека, не может быть отсутствие персонажей
+                endif
+
+                ; инициализация
+                LD B, A
+                INC E                                                           ; FParticipant.Characters[0]
+
+.CharacterLoop  ; получение объекта текущего персонажа
+                LD A, (DE)
+                INC E
+                ; -----------------------------------------
+                ; получить адреса персонажа
+                ; In:
+                ;   A  - индекс персонажа
+                ; Out:
+                ;   IX - адрес персонажа            (FCharacter)
+                ;   IY - адрес объекта персонажа    (FObjectCharacter)
+                ; Corrupt:
+                ;   HL, AF, IX, IY
+                ; -----------------------------------------
+                CALL Character.Utilities.GetAdr
+
+                ; проверка привязки объекта к персонажу
+                LD A, (IY + FObjectCharacter.CharacterID)
+                CP CHARACTER_ID_NONE
+                JR Z, .NextCharacter                                            ; переход, если персонаж не инициализирован
+
+                ; проверка выполнения персонажем текущего действия
+                BIT CHARACTER_ACTION_BIT, A
+                RET NZ                                                          ; завершить проверку, если найдено активное действие
+
+.NextCharacter  DJNZ .CharacterLoop                                             ; продолжить, пока проверены не все персонажи участника
+
+                ; запрос режима "остановки времени"
+                SET_TICK_REQUEST_FLAG GAME_SUSPEND_REQUEST_BIT
+                RET
 
                 endif ; ~_OBJECT_TICK_SCHEDULER_EXECUTOR_

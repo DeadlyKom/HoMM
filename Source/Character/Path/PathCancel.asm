@@ -27,6 +27,8 @@ PathCancel.Wrap:
 ;   ℹ️ код расположен в странице 0
 ; -----------------------------------------
 PathCancel:     LD (IY + FObjectCharacter.PathID), PATH_ID_NONE
+
+                RES CHARACTER_ACTION_BIT, (IY + FObjectCharacter.CharacterID)   ; сброс флага, выполнение действия завершённо
                 RES ANIM_STATE_BIT, (IY + FObjectCharacter.Super.Sprite)
 
                 XOR A

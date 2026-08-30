@@ -49,7 +49,7 @@ Add_Character:  ; проверка достижения максимальног
                 ADD HL, BC
                 POP BC
 
-                LD A, (IY + FParticipant.CharactersNum)                        ; индекс персонажа внутри массива участника
+                LD A, (IY + FParticipant.CharactersNum)                         ; индекс персонажа внутри массива участника
                 ADD A, L
                 LD L, A
                 LD (HL), B                                                      ; добавить CharacterID персонажа участнику
