@@ -80,6 +80,7 @@ Launch:         ; -----------------------------------------
                 SET_USER_HANDLER World.Base.Interrupt                           ; установка обработчика прерываний
                 RES_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                           ; разрешить сканирование ввода
                 ; SET_RENDER_FLAG SWAP_DISABLE_BIT                                ; запретить смену экранов
+                RES_MUSIC_FLAG MUSIC_ENABLE_BIT                                 ; запретить проигрывать музыку
                 SET_RENDER_SHADOW                                               ; установка Render флага переключение экрана на теневой
                 RES_RENDER_FLAG FPS_DISABLE_BIT                                 ; разрешить отображение FPS
                 SET_MOUSE_POSITION 128, 96                                      ; установить позицию мыши

@@ -16,17 +16,17 @@
 MapPosToSprFormat:
                 ; расчёт положения карты по горизонтали
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)        ; положение в гексагонах (6)
-                ADD A, A    ; x2
-                LD C, A
-                ADD A, A    ; x4
-                ADD A, C    ; x6
                 LD B, A
-                RR B
-                RR C
+                ADD A, A    ; x2
+                ADD A, B    ; x3
+                LD B, A
+                LD C, #00                                                       ; BC = X * 48 * 16 в формате 12.4
+
+                ; расчёт смещения карты внутри гексагона в формате 12.4
                 LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.X)          ; положение в знакоместах
-                LD L, #00
                 LD H, A
-                RR H
+                LD L, C
+                SRL H
                 RR L
                 ADD HL, BC
                 LD (TransformToScr.MapPositionX), HL                            ; положения карты по горизонтали

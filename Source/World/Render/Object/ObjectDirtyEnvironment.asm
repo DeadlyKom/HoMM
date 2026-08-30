@@ -42,10 +42,7 @@ DirtyEnvir:     ; инициализация
 
                 ; проверка наличия bound спрайта
                 LD A, C
-                OR A
-                JR Z, .Failed                                                   ; переход, если ширина bound нулевая
-                LD A, B
-                OR A
+                OR B
                 JR Z, .Failed                                                   ; переход, если высота bound нулевая
 
                 PUSH BC
