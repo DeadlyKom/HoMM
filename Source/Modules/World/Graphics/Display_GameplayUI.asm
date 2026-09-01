@@ -17,6 +17,45 @@ GameplayUI:     ; подготовка основного экрана
                 LD A, #00
                 LD DE, #50D4
                 CALL .DrawIcon                                                  ; отображение иконки
+                LD A, #01
+                LD DE, #50D9
+                CALL .DrawIcon                                                  ; отображение иконки "персонаж"
+
+                LD A, #00
+                LD DE, #5DC7
+                CALL .DrawIcon                                                  ; отображение иконки
+                LD A, #02
+                LD DE, #5EC7
+                CALL .DrawIcon                                                  ; отображение иконки "книга заклинаний"
+
+                LD A, #00
+                LD DE, #5DE1
+                CALL .DrawIcon                                                  ; отображение иконки
+                LD A, #03
+                LD DE, #5DE4
+                CALL .DrawIcon                                                  ; отображение иконки "инвентарь"
+
+                LD A, #00
+                LD DE, #95C7
+                CALL .DrawIcon                                                  ; отображение иконки
+                LD A, #04
+                LD DE, #96C8
+                CALL .DrawIcon                                                  ; отображение иконки "квест"
+
+                ; LD A, #00
+                ; LD DE, #95E1
+                ; CALL .DrawIcon                                                  ; отображение иконки
+                ; LD A, #05
+                ; LD DE, #94E4
+                ; CALL .DrawIcon                                                  ; отображение иконки "карта"
+
+                LD A, #00
+                LD DE, #A2D4
+                CALL .DrawIcon                                                  ; отображение иконки
+                LD A, #06
+                LD DE, #9FD4
+                CALL .DrawIcon                                                  ; отображение иконки "настройки"
+
                 RET
 ; -----------------------------------------
 ; отображение иконки
