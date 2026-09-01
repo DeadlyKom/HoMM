@@ -77,7 +77,9 @@ UpdateMovement: RES_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             
                 RET Z
 
 .Changed        ifdef _DEBUG
+                ifdef DEBUG_INFO_COORDINATES
                 SET_FLAG_MODIFY World.Base.Render.DebugInfo.Coordinates.Flag    ; установка флага, изменения координат мира
+                endif
                 endif
                 SET_VIEW_FLAG_A UPDATE_RENDER_BUF_BIT                           ; установка флага обновления буфера рендера
 
@@ -89,7 +91,9 @@ UpdateMovement: RES_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             
                 JP World.Base.Render.Update.MinimapView                         ; обновление маркера положения на миникарте
 SetMapPosition  RES_VIEW_FLAG SET_MAP_POSITION_ON_MINIMAP_BIT                   ; сброс флага установки положения карты по мини-карте
                 ifdef _DEBUG
+                ifdef DEBUG_INFO_COORDINATES
                 SET_FLAG_MODIFY World.Base.Render.DebugInfo.Coordinates.Flag    ; установка флага, изменения координат мира
+                endif
                 endif
                 VIEW_FLAGS
                 SET_FLAG UPDATE_TILEMAP_BUF_BIT                                 ; установка флага обновления буфера тайлов

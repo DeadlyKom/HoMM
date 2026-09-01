@@ -1,6 +1,6 @@
 
-                ifndef _MODULE_WORLD_DISPLAY_GAME_WINDOW_
-                define _MODULE_WORLD_DISPLAY_GAME_WINDOW_
+                ifndef _MODULE_WORLD_DISPLAY_GAMEPLAY_WINDOW_
+                define _MODULE_WORLD_DISPLAY_GAMEPLAY_WINDOW_
 ; -----------------------------------------
 ; очистка screen block'ов
 ; In:
@@ -8,14 +8,13 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-GameWindow:     ; подготовка основного экрана
+GameplayWindow: ; подготовка основного экрана
                 CLS SCR_ADR_BASE, 0xFF                                          ; очистка основного экрана
                 ATTR_IPB SCR_ADR_BASE, BLACK, WHITE, 0                          ; очистка атрибутов основного экрана
 
-                ; отображение рамки игрового окна
                 SET_RENDER_TO_BASE_SCREEN                                       ; установка работы с основным экраном
-                LD HL, Frame
-                CALL Draw.SpriteNotBound
+                CALL GameplayFrame                                              ; отображение рамки игрового окна
+                CALL GameplayUI                                                 ; отображение пользовательского интерфейса игрового окна
 
                 SHOW_BASE_SCREEN                                                ; отображение базового экрана
 
@@ -24,10 +23,6 @@ GameWindow:     ; подготовка основного экрана
                 CALL Console.SetDrawToTwo                                       ; отображение консоли в 2х экранах
                 JP_SHOW_SHADOW_SCREEN                                           ; отображение теневого экрана
 
-.Ornament       ; отображение внутреннего орнамента рамки игрового окна
-                LD HL, Ornament
-                JP Draw.SpriteNotBound
+                display " - Display gameplay window:\t\t\t\t\t\t= busy [ ", /D, $-GameplayWindow, " byte(s) ]"
 
-                display " - Display game window:\t\t\t\t\t\t= busy [ ", /D, $-GameWindow, " byte(s) ]"
-
-                endif ; ~_MODULE_WORLD_DISPLAY_GAME_WINDOW_
+                endif ; ~_MODULE_WORLD_DISPLAY_GAMEPLAY_WINDOW_

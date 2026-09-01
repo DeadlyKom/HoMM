@@ -1,6 +1,6 @@
 
-                ifndef _GRAPHICS_UI_GAME_WORLD_PACK_FRAME_
-                define _GRAPHICS_UI_GAME_WORLD_PACK_FRAME_
+                ifndef _GRAPHICS_UI_GAMEPLAY_WORLD_PACK_FRAME_
+                define _GRAPHICS_UI_GAMEPLAY_WORLD_PACK_FRAME_
 
                 module Frame
                 ORG #0000
@@ -25,4 +25,4 @@ Sprite:
                 SAVE_PACK "Builder/Assets/Graphics/Compressed/UI/GameWorld_Frame.pack"
                 endmodule
 
-                endif ; ~ _GRAPHICS_UI_GAME_WORLD_PACK_FRAME_
+                endif ; ~ _GRAPHICS_UI_GAMEPLAY_WORLD_PACK_FRAME_

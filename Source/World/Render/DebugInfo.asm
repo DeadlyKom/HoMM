@@ -14,7 +14,9 @@
 DebugInfo:      ifdef DEBUG_INFO_GAME_SUSPEND
                 CALL .GameSuspend
                 endif
+                ifdef DEBUG_INFO_COORDINATES
                 CALL .Coordinates
+                endif
                 ifdef DEBUG_INFO_SCREEN_BLOCKS
                 CALL .ScreenBlocks
                 endif
@@ -60,6 +62,7 @@ DebugInfo:      ifdef DEBUG_INFO_GAME_SUSPEND
 ; -----------------------------------------
 ; отображение координат карты и гексагона под курсором
 ; ----------------------------------------
+                ifdef DEBUG_INFO_COORDINATES
 .Coordinates
 .Coordinates.Flag FLAG_MODIFY 1                                                 ; флаг, необходимости обновления координат
                 RET NC                                                          ; выход, если координаты не изменились
@@ -87,6 +90,7 @@ DebugInfo:      ifdef DEBUG_INFO_GAME_SUSPEND
                 CALL Console.DrawByte
                 LD A, (GameSession.WorldInfo + FWorldInfo.Cursor.Y)
                 JP Console.DrawByte
+                endif
 ; -----------------------------------------
 ; отображение содержимого ScreenBlock
 ; ----------------------------------------

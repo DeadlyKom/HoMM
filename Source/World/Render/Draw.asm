@@ -134,7 +134,9 @@ Draw:           ; -----------------------------------------
                 ifdef _DEBUG
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 SET_RENDER_TO_BASE_SCREEN                                       ; установка работы с основным экраном
+                ifdef DEBUG_INFO_WORLD_TIME
                 CALL WorldTime.DebugRender                                      ; отображение игрового календаря
+                endif
                 CALL DebugInfo                                                  ; отображение отладочной информации о мире
                 endif
 

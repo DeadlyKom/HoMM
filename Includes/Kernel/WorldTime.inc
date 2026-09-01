@@ -8,8 +8,10 @@ WorldTime:
 .IsWorldTick    EQU Kernel.WorldTime.IsWorldTick                                ; определение наличия "мирового тика" в текущем cadence-проходе
 
                 ifdef _DEBUG
+                ifdef DEBUG_INFO_WORLD_TIME
 .DebugRender    EQU Kernel.WorldTime.DebugRender                                ; отладочное отображение игрового календаря
 .DebugRender.Flag EQU Kernel.WorldTime.DebugRender.Flag                         ; флаг, необходимости обновления отладочного отображения
+                endif
                 endif
 
                 endif ; ~_KERNEL_WORLD_TIME_

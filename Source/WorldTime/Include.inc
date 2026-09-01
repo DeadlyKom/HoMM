@@ -8,7 +8,9 @@
                 include "AdvanceEpoch.asm"
 
                 ifdef _DEBUG
+                ifdef DEBUG_INFO_WORLD_TIME
                 include "DebugRender.asm"
+                endif
                 endif
 
                 endmodule

@@ -1,6 +1,6 @@
 
-                ifndef _GRAPHICS_UI_GAME_WORLD_PACK_ORNAMENT_
-                define _GRAPHICS_UI_GAME_WORLD_PACK_ORNAMENT_
+                ifndef _GRAPHICS_UI_GAMEPLAY_WORLD_PACK_ORNAMENT_
+                define _GRAPHICS_UI_GAMEPLAY_WORLD_PACK_ORNAMENT_
 
                 module Ornament
                 ORG #0000
@@ -30,4 +30,4 @@ Sprite:
                 SAVE_PACK "Builder/Assets/Graphics/Compressed/UI/GameWorld_Ornament.pack"
                 endmodule
 
-                endif ; ~ _GRAPHICS_UI_GAME_WORLD_PACK_ORNAMENT_
+                endif ; ~ _GRAPHICS_UI_GAMEPLAY_WORLD_PACK_ORNAMENT_

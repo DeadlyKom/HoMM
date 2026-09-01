@@ -100,7 +100,7 @@ PipelineHexagons:
                 CALL NZ, Object.Draw                                            ; отображение объектов в массиве SortBuffer
 
                 SET_MODULE_PAGE_World                                           ; включить страницу модуля "World"
-                CALL World.Display.GameWindow.Ornament
+                CALL World.Display.GameplayFrame.Ornament
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                  
                 ; установка флага готовности кадра и долгого переключения экранов

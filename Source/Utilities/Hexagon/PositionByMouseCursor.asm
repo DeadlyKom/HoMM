@@ -257,6 +257,7 @@ GetPosByMouse:  ; сброс флага, необходимости дополн
 
 .SetPosition    ; сохранение найденой позиции гексагона под курсором
                 ifdef _DEBUG
+                ifdef DEBUG_INFO_COORDINATES
                 LD A, (GameSession + FGameSession.WorldInfo.Cursor.X)
                 CP C
                 JR NZ, .CursorChanged
@@ -264,6 +265,7 @@ GetPosByMouse:  ; сброс флага, необходимости дополн
                 CP B
                 RET Z                                                           ; выход, если позиция не изменилась
 .CursorChanged  SET_FLAG_MODIFY World.Base.Render.DebugInfo.Coordinates.Flag    ; установка флага, изменения координат мира
+                endif
                 endif
                 LD (GameSession + FGameSession.WorldInfo.Cursor), BC
                 RET

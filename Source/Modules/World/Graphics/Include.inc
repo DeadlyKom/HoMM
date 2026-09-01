@@ -3,9 +3,13 @@
                 define _MODULE_WORLD_GRAPHICS_INCLUDE_
 
                 module Display
-                include "Display_GameWindow.asm"
+                include "Display_GameplayUI.asm"
+                include "Display_GameplayFrame.asm"
+                include "Display_GameplayWindow.asm"
+Icons           include "Builder/Assets/Graphics/Original/UI/Gameplay/Screen/World_Icons/Icons.inc"
 Frame           incbin "Builder/Assets/Graphics/Compressed/UI/GameWorld_Frame.pack"
 Ornament        incbin "Builder/Assets/Graphics/Compressed/UI/GameWorld_Ornament.pack"
+BigDiamond      incbin "Builder/Assets/Graphics/Compressed/UI/GameWorld_BigDiamond.pack"
                 endmodule
 
                 endif ; ~_MODULE_WORLD_GRAPHICS_INCLUDE_
