@@ -42,12 +42,12 @@ GameplayUI:     ; подготовка основного экрана
                 LD DE, #96C8
                 CALL .DrawIcon                                                  ; отображение иконки "квест"
 
-                ; LD A, #00
-                ; LD DE, #95E1
-                ; CALL .DrawIcon                                                  ; отображение иконки
-                ; LD A, #05
-                ; LD DE, #94E4
-                ; CALL .DrawIcon                                                  ; отображение иконки "карта"
+                LD A, #00
+                LD DE, #95E1
+                CALL .DrawIcon                                                  ; отображение иконки
+                LD A, #05
+                LD DE, #94E4
+                CALL .DrawIcon                                                  ; отображение иконки "карта"
 
                 LD A, #00
                 LD DE, #A2D4

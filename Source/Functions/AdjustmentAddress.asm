@@ -16,7 +16,7 @@ AdjustmentAdr:  PUSH HL                                                         
 
                 ; проверка необходимости корректировки адресов
                 LD A, (HL)                                                      ; количество корректируемых адресов
-                INC L
+                INC HL
 
                 ; расчёт адреса расположения кода
                 LD E, A
@@ -37,9 +37,9 @@ AdjustmentAdr:  PUSH HL                                                         
 .Loop           ; чтение смещения
                 EX DE, HL
                 LD C, (HL)
-                INC L
+                INC HL
                 LD B, (HL)
-                INC L
+                INC HL
                 EX DE, HL
                 ADD HL, BC
 
