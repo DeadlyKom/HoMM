@@ -14,6 +14,17 @@ Launch:         ; -----------------------------------------
                 LD A, (GameState.Assets + FAssets.Address.Page)
                 LD (Kernel.Modules.World.Page), A
 
+                ; расчёт адреса первого блока после модуля мира
+                LD D, A                                                         ; сохранение страницы дополнительного блока памяти
+                LD IX, GameState.Assets
+                CALL_IN_PAGE Page.AssetManager, AssetsManager.CalcNextBlock
+                LD (Kernel.Modules.World.MemoryAddress), HL                     ; сохранение адреса дополнительного блока памяти
+
+                ; выделение одного блока памяти по рассчитанному адресу
+                LD E, #01
+                SET_REGISTER IX, HL
+                CALL_IN_PAGE Page.AssetManager, AssetsManager.MemAllocation
+
                 ; отключение обработчика прогресса перед заменой SharedCode
                 RES_USER_HANDLER
                 ; -----------------------------------------

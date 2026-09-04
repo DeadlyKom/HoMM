@@ -18,6 +18,7 @@
                 include "Kernel.inc"
                 include "Screen_.inc"
                 include "Surface.inc"
+                include "Register.inc"
                 include "Interrupt.inc"
                 include "Functions.inc"
                 include "GraphicHex.inc"

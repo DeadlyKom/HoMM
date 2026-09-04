@@ -6,12 +6,14 @@
 Begin:          EQU $
                 include "Core.asm"
                 include "Load.asm"
-                include "SelectDisk.asm"
                 include "Mark.asm"
-                include "MarkAsUnclaimed.asm"
                 include "Release.asm"
-                include "Allocation.asm"
                 include "TryToFree.asm"
+                include "MemRelease.asm"
+                include "Allocation.asm"
+                include "SelectDisk.asm"
+                include "MemAllocation.asm"
+                include "MarkAsUnclaimed.asm"
 Size            EQU $-Begin
                 display " - Assets manager: \t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, Size, " byte(s)  ]"
                 endmodule
