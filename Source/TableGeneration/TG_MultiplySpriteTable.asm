@@ -56,8 +56,6 @@ TG_MulSprTable: LD HL, Adr.MultiplySprite
                 DEC D
                 JR NZ, .RowLoop
 
-
-
                 RET
 
                 display " - Multiply sprite table generator:\t\t\t", /A, TG_MulSprTable, "\t= busy [ ", /D, $-TG_MulSprTable, " byte(s)  ]"
