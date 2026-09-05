@@ -18,5 +18,6 @@
                 include "Game_MainLoopCore.inc"
 
                 include "Game_World.inc"
+                include "Game_WorldTime.inc"
 
                 endif ; ~_MACRO_GAME_INCLUDE_

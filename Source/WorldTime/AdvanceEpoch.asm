@@ -23,9 +23,8 @@ AdvanceEpoch:   ; чтение скорости проигрывания
                 ; сохранить масштаб текущей cadence-эпохи
                 LD (GameSession.WorldTimeCtrl + FWorldTimeControl.PlaybackScale), A
 
-                ; включить активную фазу "мирового тика" для новой cadence-эпохи
-                LD HL, GameSession.WorldTimeCtrl + FWorldTimeControl.Flags
-                SET WORLD_EPOCH_ACTIVE_BIT, (HL)
+                ; включить фазу "мирового тика" и запросить обновление фазы суток
+                SET_WORLD_CHRONO_FLAGS WORLD_EPOCH_ACTIVE | WORLD_DAY_PHASE_UPDATE
 
                 ; календарь получает весь пакет без повторного обхода мира
                 LD B, A
@@ -47,8 +46,7 @@ AdvanceEpoch:   ; чтение скорости проигрывания
 ;   вызывается после полного завершения CadenceStep 4
 ; ----------------------------------------
 CloseEpoch:     PUSH HL
-                LD HL, GameSession.WorldTimeCtrl + FWorldTimeControl.Flags
-                RES WORLD_EPOCH_ACTIVE_BIT, (HL)
+                RES_WORLD_CHRONO_FLAG WORLD_EPOCH_ACTIVE_BIT                    ; сброс флага активной фазы "мирового тика"
                 POP HL
                 RET
 

@@ -67,7 +67,7 @@ GameState       EQU Adr.ScrAdrTable + 0x01C0                                    
 ScrAttrAdrTable EQU Adr.ScrAdrTable + Size.ScrAdrTable                          ; адрес таблицы преобразования адресов экрана в атрибутные
 ShiftTable      EQU Adr.ScrAttrAdrTable + Size.ScrAttrAdrTable                  ; адрес таблицы сдвигов
 ByteMirrorTable EQU Adr.ShiftTable + Size.ShiftTable                            ; адрес таблицы зеркальных байт
-MultiplySprite  EQU Adr.ByteMirrorTable + Size.ByteMirrorTable                  ; адрес таблицы умножения для расчёта размера спрайта (без учёта маски)
+MultiplySprite  EQU Adr.ByteMirrorTable + Size.ByteMirrorTable                  ; адрес таблицы для расчёта полного размера данных спрайта
 MemoryMap       EQU Adr.MultiplySprite + Size.MultiplySprite                    ; адрес массива хранения значений портов для переключения памяти
 GameSession     EQU Adr.MemoryMap + Size.MemoryMap                              ; адрес переменных состояния сессии
 EntryPoint      EQU Adr.GameSession + Size.GameSession                          ; адрес точки входа

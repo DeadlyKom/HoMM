@@ -28,53 +28,60 @@ DrawLD_ATTR:    ; сохранение данных bound спрайта
                 LD A, B
                 LD (GameState.SpriteBound + FSpriteBound.Size.Width), A
 
-                DEC C       ; началос с 1
-                LD A, C                                                         ; ширины спрайта в знакоместах
+                ; расчёт и сохранение ширины для выбора функции отображения
+                DEC C
+                LD A, C                                                         ; ширина спрайта в знакоместах минус один
                 EX AF, AF'
-                LD B, A                                                         ; ширина невидимой части спрайта в пикселях (-/+)
+                LD B, A                                                         ; позиция по горизонтали или отрицательное смещение при левом клипе
 
-                ; расчёт смещения от начала адреса спрайта
-                LD A, (DrawClipping.Flags)
-                LD H, A     ; %ddmppppp                                         ; FSpriteData.Page
-                XOR C
-                AND %10000000
-                XOR C
-                LD C, H     ; %ddmppppp                                         ; значение LD/OR & XOR
-                LD H, A     ; %a0000ww
+                ; принудительная установка флага атрибутов для режима LD ATTR
+                SET 7, C                                                        ; %100000ww, флаг атрибутов и код ширины
 
-                ; определение необходимости обрезать спрайт сверху
+                ; проверка наличия невидимых строк сверху
                 LD A, L
                 OR A
-                LD L, H
-                LD H, HIGH Adr.MultiplySprite
-                JP Z, DrawOR_XOR_ATTR.ToCopy
 
-                ; 
-                LD H, A ; 8
+                ; подготовка указателя таблицы для расчёта размера спрайта
+                LD L, C
+                LD H, HIGH Adr.MultiplySprite
+
+                ; ⚠️ ВАЖНО ⚠️
+                ; для LD_ATTR индекс таблицы должен содержать AR = 1 и MD = 0
+                ; таблица возвращает полный размер данных без дополнительного удвоения
+                JP Z, DrawOR_XOR_ATTR.ToCopy                                    ; переход, если сверху нет невидимых строк
+
+                ; расчёт ширины спрайта в знакоместах
+                LD H, A                                                         ; количество невидимых строк сверху
                 LD A, L
                 AND #03
-                INC A       ; начало с 0
-                LD L, A
+                INC A
+                LD L, A                                                         ; ширина спрайта в знакоместах
 
+                ; расчёт количества байт пикселей в невидимых строках
                 XOR A
-
 .PixelLoop      ADD A, H
                 DEC L
-                JR NZ, .PixelLoop
+                JR NZ, .PixelLoop                                               ; переход, если учтены не все знакоместа по ширине
 
+                ; расчёт размера невидимой части с учётом масок и атрибутов
+                ; на каждые восемь байт пикселей приходятся два байта маски и атрибута
                 LD L, A
-                RRA     ; /2
-                RRA     ; /4
+                RRA
+                RRA
                 ADD A, L
 
-                ; приращение смещение к адресу спрайта
+                ; расчёт адреса начала видимой части спрайта
                 ADD A, E
                 LD E, A
                 ADC A, D
                 SUB E
                 LD D, A
 
+                ; восстановление указателя таблицы для расчёта размера видимой части
+                LD H, HIGH Adr.MultiplySprite
+                LD L, C
                 JP DrawOR_XOR_ATTR.ToCopy
+
                 display " - Draw function 'LD ATTR':\t\t\t\t", /A, DrawLD_ATTR, "\t= busy [ ", /D, $-DrawLD_ATTR, " byte(s)  ]"
 
                 endif ; ~ _DRAW_SPRITE_DRAW_LOAD_ATTR_

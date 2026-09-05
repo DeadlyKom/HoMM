@@ -16,17 +16,14 @@ GameplayWindow: ; подготовка основного экрана
                 SET_RENDER_TO_BASE_SCREEN                                       ; установка работы с основным экраном
                 CALL World.Display.GameplayFrame                                ; отображение рамки игрового окна
                 CALL World.Display.GameplayUI                                   ; отображение пользовательского интерфейса игрового окна
-
-                ; отображение текстуры ромба с фиксированной фазой
-                LD HL, (Kernel.Modules.World.MemoryAddress)
-                LD A, #80
-                OR A                                                            ; прямое направление прохода текстуры
-                CALL World.Display.DiamondTexture
+                SET_WORLD_CHRONO_FLAG WORLD_DAY_PHASE_UPDATE_BIT                ; запрос начального отображения фазы суток
+                CALL World.Display.DiamondChrono.Initialize                     ; инициализация отображения фазы суток
 
                 SHOW_BASE_SCREEN                                                ; отображение базового экрана
 
                 ; подготовка теневого экрана
                 CALL Func.ShadowScrcpyInPage                                    ; копирование экрана в теневой
+                RES_FLAG_MODIFY World.Base.Render.PipelineHexagons.DiamondFlag  ; сброс запроса переноса ромба после полной копии экрана
                 CALL Console.SetDrawToTwo                                       ; отображение консоли в 2х экранах
                 JP_SHOW_SHADOW_SCREEN                                           ; отображение теневого экрана
 

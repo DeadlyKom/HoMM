@@ -6,7 +6,7 @@
                 include "Display_GameplayUI.asm"
                 include "Display_GameplayFrame.asm"
                 include "Display_DiamondTexture.asm"
-                include "Display_DiamondTest.asm"
+                include "Display_DiamondChrono.asm"
 Icons           include "Builder/Assets/Graphics/Original/UI/Gameplay/Screen/World_Icons/Icons.inc"
 Frame           incbin "Builder/Assets/Graphics/Compressed/UI/GameWorld_Frame.pack"
 Ornament        incbin "Builder/Assets/Graphics/Compressed/UI/GameWorld_Ornament.pack"

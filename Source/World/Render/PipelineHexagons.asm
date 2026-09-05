@@ -101,7 +101,10 @@ PipelineHexagons:
 
                 SET_MODULE_PAGE_World                                           ; включить страницу модуля "World"
                 CALL World.Display.GameplayFrame.Ornament
-                CALL World.Display.DiamondTest                                  ; отображение текстуры ромба при изменении фазы
+
+                ; проверка запроса обновления фазы суток
+                CHECK_WORLD_CHRONO_FLAG WORLD_DAY_PHASE_UPDATE_BIT
+                CALL NZ, World.Display.DiamondChrono.Display                    ; вызов, если запрошено обновление фазы суток
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                  
                 ; установка флага готовности кадра и долгого переключения экранов
@@ -182,8 +185,10 @@ PipelineHexagons:
 ;   работа с буфером курсора должна быть заблокирована
 ; -----------------------------------------
 .CopyDiamond    ; расчёт адреса первого байта области ромба
-                SCREEN_ADR_REG HL, SCR_ADR_BASE, \
-                                World.Display.DiamondTexture.X, World.Display.DiamondTexture.Y
+                SCREEN_ADR_REG HL, \
+                    SCR_ADR_BASE, \
+                    World.Display.DiamondTexture.X, \
+                    World.Display.DiamondTexture.Y
                 LD B, #2D                                                       ; высота ромба в пикселях
 
 .DiamondRow     ; сохранение счётчика строк и адреса основного экрана
