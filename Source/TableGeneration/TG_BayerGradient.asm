@@ -225,7 +225,7 @@ TG_BayerGradient:
                 DB 15, 47,  7, 39, 13, 45,  5, 37
                 DB 63, 31, 55, 23, 61, 29, 53, 21
 
-                display " - Bayer gradient generator:\t\t\t", /A, TG_BayerGradient, "\t= busy [ ", /D, $-TG_BayerGradient, " byte(s)  ]"
+                display " - Bayer gradient generator:\t\t\t\t\t\t= busy [ ", /D, $-TG_BayerGradient, " byte(s) ]"
                 endmodule
 
                 endif ; ~ _TABLE_GENERATION_BAYER_GRADIENT_

@@ -12,7 +12,7 @@
 ; Note:
 ;   ромб занимает координаты X = 201..245 и Y = 110..154
 ;   экранное окно занимает шесть байт начиная с X = 200
-;   основной или теневой экран выбирается через GameState.Screen
+;   отображение выполняется на базовом экране
 ;   прямая половина проходит текстуру от 0 до 255
 ;   обратная половина проходит отзеркаленную текстуру от 255 до 0
 ;   крайний пиксель повторяется в точке смены направления
@@ -93,13 +93,6 @@ DiamondTexture: ; проверка направления прохода тек�
 
                 ; расчёт адреса первого экранного байта области ромба
                 SCREEN_ADR_REG DE, SCR_ADR_BASE, .X, .Y
-
-                ; выбор основного или теневого экрана
-                LD A, (GameState.Screen)
-                XOR D
-                AND %10000000
-                XOR D
-                LD D, A
 
                 ; инициализация геометрии ромба и начальной строки текстуры
                 LD C, #17
@@ -431,6 +424,6 @@ ReadSource:     ; чтение байтов физической строки т
                 SET_FLAG_MODIFY ReadSource.Flag
                 JR .Continue
 
-                display " - Display diamond texture:\t\t\t\t", /A, DiamondTexture, "\t= busy [ ", /D, $-DiamondTexture, " byte(s) ]"
+                display " - Display diamond texture:\t\t\t\t\t\t= busy [ ", /D, $-DiamondTexture, " byte(s) ]"
 
                 endif ; ~_MODULE_WORLD_DISPLAY_DIAMOND_TEXTURE_

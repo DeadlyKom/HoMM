@@ -5,6 +5,7 @@
                 include "ProgressTimeline.inc"                                  ; (0)
                 include "Kernel_Bind.inc"
                 include "Launch.asm"
+                include "Launch/Include.inc"
                 include "UI/Include.inc"
                 include "Input/Include.inc"
                 include "Tilemap/Include.inc"
@@ -12,6 +13,7 @@
                 include "Source/TableGeneration/TG_DIV_6.asm"                   ; генератор таблицы
                 include "Source/TableGeneration/TG_BitScanLsbTable.asm"         ; генератор таблицы
                 include "Source/TableGeneration/TG_ScreenBlockTable.asm"        ; генератор таблицы
+                include "Source/TableGeneration/TG_BayerGradient.asm"           ; генератор текстуры Bayer
                 include "Source/Utilities/Hexagon/Distance.asm"
                 include "Source/Utilities/Hexagon/PositionByMouseCursor.asm"
 
