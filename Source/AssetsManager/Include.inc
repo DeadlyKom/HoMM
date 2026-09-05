@@ -16,6 +16,7 @@ Begin:          EQU $
                 include "FindFreeMem.asm"
                 include "MemAllocation.asm"
                 include "MarkAsUnclaimed.asm"
+                include "FindInitialBlock.asm"
 Size            EQU $-Begin
                 display " - Assets manager: \t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, Size, " byte(s)  ]"
                 endmodule
