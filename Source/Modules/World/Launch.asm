@@ -21,9 +21,11 @@ Launch:         ; -----------------------------------------
                 LD (Kernel.Modules.World.MemoryAddress), HL                     ; сохранение адреса дополнительного блока памяти
 
                 ; выделение одного блока памяти по рассчитанному адресу
-                LD E, #01
+                LD E, #01                                                       ; блок 256 байт всегда существует, если модуль был архивированный
                 SET_REGISTER IX, HL
-                CALL_IN_PAGE Page.AssetManager, AssetsManager.MemAllocation
+                CALL_IN_PAGE Page.AssetManager, AssetsManager.MemAllocation.Wrap
+                EX AF, AF'                                                      ; восстановление результата выделения памяти
+                DEBUG_BREAK_POINT_C                                             ; ошибка, выделение памяти не удалось
 
                 ; отключение обработчика прогресса перед заменой SharedCode
                 RES_USER_HANDLER
