@@ -22,15 +22,14 @@ TG_ShiftTable:  ;
                 SUB C
                 LD (.Jump), A
 .Jump           EQU $+1
-                JR $
-
-                ADD HL, HL
-                ADD HL, HL
-                ADD HL, HL
-                ADD HL, HL
-                ADD HL, HL
-                ADD HL, HL
-                ADD HL, HL
+                JR NZ, $
+                ADD HL, HL  ; << 1
+                ADD HL, HL  ; << 2
+                ADD HL, HL  ; << 3
+                ADD HL, HL  ; << 4
+                ADD HL, HL  ; << 5
+                ADD HL, HL  ; << 6
+                ADD HL, HL  ; << 7
 
                 EX DE, HL
                 LD (HL), D

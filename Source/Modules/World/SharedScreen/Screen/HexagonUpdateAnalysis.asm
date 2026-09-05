@@ -88,7 +88,7 @@ HexUpdateAnalysis:
                 ADD A, #08
                 LD (.RowsJump), A
 .RowsJump       EQU $+1
-                JR $
+                JR NZ, $
                 PUSH BC
                 PUSH BC
                 PUSH BC

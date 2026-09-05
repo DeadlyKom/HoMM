@@ -62,6 +62,8 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
 
 .Tick           ; *************** Tick ***************
 
+                CALL World.Display.DiamondTest.Tick                             ; отсчёт тестовой смены фазы текстуры времени суток
+
                 ; -----------------------------------------
                 ; уменьшение счётчиков периодов, без переполнения
                 LD HL, GameSession.PeriodTick + FTick.Scroll

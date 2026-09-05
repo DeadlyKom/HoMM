@@ -462,7 +462,7 @@ SkipBoundary:   ; в стеке хранится адрес функции ри�
                 ADD A, #08
                 LD (.SkipJump), A
 .SkipJump       EQU $+1
-                JR $
+                JR NZ, $
                 POP BC
                 POP BC
                 POP BC
@@ -606,7 +606,7 @@ Column:         ; корректировка начального адреса �
                 ADD A, A    ; x4
                 LD (.FillJump), A
 .FillJump       EQU $+1
-                JR $
+                JR NZ, $
                 STORE_HEIGHT_BOUNDARY_0
                 STORE_HEIGHT_BOUNDARY_0
                 STORE_HEIGHT_BOUNDARY_0

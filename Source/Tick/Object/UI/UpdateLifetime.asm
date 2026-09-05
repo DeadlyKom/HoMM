@@ -27,7 +27,7 @@ UI.UpdateLifetime:
                 LD (.Jump), A
                 LD A, #FF   ; x1
 .Jump           EQU $+1
-                JR $
+                JR NZ, $
                 ADD A, A    ; x4
                 ADD A, A    ; x2
 

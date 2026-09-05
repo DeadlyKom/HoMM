@@ -34,7 +34,7 @@ UI.UpdateProgress:; получение шага прогресса
                 LD (.Jump), A
                 LD A, B
 .Jump           EQU $+1
-                JR $
+                JR NZ, $
                 ADD A, A  ; x4
                 ADD A, A  ; x2
                 LD B, A                                                         ; шаг прогресса с учётом частоты cadence-диапазона
@@ -80,7 +80,7 @@ UI.UpdateProgress:; получение шага прогресса
                 LD (.AlphaJump), A
                 LD A, #01
 .AlphaJump      EQU $+1
-                JR $
+                JR NZ, $
                 ADD A, A  ; x4
                 ADD A, A  ; x2
                 LD B, A                                                         ; относительный временной шаг AlphaCounter
