@@ -19,9 +19,8 @@ Compilation:    LD HL, Adr.FogShadingBuf
                 LD DE, Adr.MapShadingBuf
                 LD B, MAX_WORLD_HEX_Y
 
+                ; объединение 6 байт каждой строки миникарты
 .Loop           COMPILATION_BYTE
-                COMPILATION_BYTE
-                COMPILATION_BYTE
                 COMPILATION_BYTE
                 COMPILATION_BYTE
                 COMPILATION_BYTE
