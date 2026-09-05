@@ -8,10 +8,12 @@ Begin:          EQU $
                 include "Load.asm"
                 include "Mark.asm"
                 include "Release.asm"
+                include "CheckFree.asm"
                 include "TryToFree.asm"
                 include "MemRelease.asm"
                 include "Allocation.asm"
                 include "SelectDisk.asm"
+                include "FindFreeMem.asm"
                 include "MemAllocation.asm"
                 include "MarkAsUnclaimed.asm"
 Size            EQU $-Begin

@@ -9,7 +9,7 @@ AssetsManager
 .Release            EQU Bootloader.KernelMinimal.AssetsManager.Release          ; освободить ранее занятую область данными в доступной ОЗУ
 .MemAllocation      EQU Bootloader.KernelMinimal.AssetsManager.MemAllocation    ; выделить участок памяти
 .MemRelease         EQU Bootloader.KernelMinimal.AssetsManager.MemRelease       ; освободить ранее выделенный участок памяти
-.Release.Force      EQU Bootloader.KernelMinimal.AssetsManager.ReleaseForce     ; освободить ранее занятую область данными в доступной ОЗУ  (принудительно)
+.Release.Force      EQU Bootloader.KernelMinimal.AssetsManager.ClaerForce       ; освободить ранее занятую область данными в доступной ОЗУ  (принудительно)
 .ReleaseAsset       EQU Bootloader.KernelMinimal.AssetsManager.ReleaseAsset     ; освободить ранее загруженный ресурс
 .Allocation         EQU Bootloader.KernelMinimal.AssetsManager.Allocation       ; распределение ресурса
 .TryToFree          EQU Bootloader.KernelMinimal.AssetsManager.TryToFree        ; попытка освободить память под ресурс
