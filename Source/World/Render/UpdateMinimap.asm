@@ -65,13 +65,13 @@ Update:
                 SET_PAGE_SCREEN_SHADOW
                 BIT 6, H
                 JR Z, $+8                                                       ; пропуск очистки при первом вызове
-                RES 6, (HL)                                                     ; сброс яркости старого знакоместа
+                SET_ATTR_IPB BLACK, WHITE, 0                                    ; восстановление атрибута старого знакоместа
                 SET 7, H
-                RES 6, (HL)                                                     ; сброс яркости старого знакоместа
+                SET_ATTR_IPB BLACK, WHITE, 0                                    ; восстановление атрибута старого знакоместа
                 EX DE, HL
-                SET 6, (HL)                                                     ; подсветка нового знакоместа
+                SET_ATTR_IPB BLUE, WHITE, 1                                     ; установка атрибута нового знакоместа
                 SET 7, H
-                SET 6, (HL)                                                     ; подсветка нового знакоместа
+                SET_ATTR_IPB BLUE, WHITE, 1                                     ; установка атрибута нового знакоместа
                 RET
 
                 display " - Update minimap shadow screen:\t\t\t", /A, Update, "\t= busy [ ", /D, $-Update, " byte(s)  ]"
