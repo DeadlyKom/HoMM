@@ -148,9 +148,7 @@ PipelineHexagons:
                 ; ToDo: см Interrupt.Memcpy описание ошибки
                 ; RESTORE_SCR_
 
-.SkipCurRestore ; экранный цикл уже завершён независимо от наличия UI-запроса
-                RES_RENDER_FLAGS SWAPPED_PENDING | SWAP_PENDING                 ; сброс флага переключения экранов
-
+.SkipCurRestore ; подготовка обработки UI после копирования экранных блоков
                 SET_MODULE_PAGE_World                                           ; включить страницу модуля "World"
 
                 ; проверка запроса паузы игры
@@ -169,11 +167,18 @@ PipelineHexagons:
                                                                                 ; вернуть предыдущий режим
 .ProcessUI      ; проверка возможности начать обработку запроса смены UI режима
                 CALL UI.Runtime.Process
-                JP C, UI.Runtime.StartTransition                                ; переход, если начат переход UI режима
+                JP C, .StartUI                                                  ; переход, если начат переход UI режима
 
-                ; сброс флагов, позволяющий новый цикл подготовки кадра
+                ; разрешение работы с курсором перед показом теневого экрана
                 RES_FLAG_MODIFY CursorMemcpyGate.Flag                           ; разрешение работы с буфером курсора
+
+                ; завершение переноса кадра при разрешённой работе с курсором
+                RES_RENDER_FLAGS SWAPPED_PENDING | SWAP_PENDING                 ; сброс флагов ожидания переключения экранов
                 RET
+
+.StartUI        ; передача управления переходу UI при заблокированном курсоре
+                RES_RENDER_FLAGS SWAPPED_PENDING | SWAP_PENDING                 ; сброс флагов ожидания переключения экранов
+                JP UI.Runtime.StartTransition
 ; -----------------------------------------
 ; перенос области ромба с основного экрана на теневой
 ; In:
