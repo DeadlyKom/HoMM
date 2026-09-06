@@ -271,7 +271,9 @@ DrawOR_XOR:     ; сохранение данных bound спрайта
 DrawOR_XOR.Exit
 .ContainerSP    EQU $+1
                 LD SP, #0000
+                SCF                                                             ; установка флага переполнения, спрайт виден
                 RET
+
                 display " - Draw function 'OR XOR':\t\t\t\t", /A, DrawOR_XOR, "\t= busy [ ", /D, $-DrawOR_XOR, " byte(s)  ]"
 
                 endif ; ~ _DRAW_SPRITE_DRAW_OR_XOR_

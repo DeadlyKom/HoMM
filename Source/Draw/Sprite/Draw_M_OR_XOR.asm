@@ -270,7 +270,9 @@ DrawM_OR_XOR    ; сохранение данных bound спрайта
 DrawM_OR_XOR.Exit
 .ContainerSP    EQU $+1
                 LD SP, #0000
+                SCF                                                             ; установка флага переполнения, спрайт виден
                 RET
+
                 display " - Draw function 'Mirror OR XOR':\t\t\t", /A, DrawM_OR_XOR, "\t= busy [ ", /D, $-DrawM_OR_XOR, " byte(s)  ]"
 
                 endif ; ~ _DRAW_SPRITE_DRAW_M_OR_XOR_

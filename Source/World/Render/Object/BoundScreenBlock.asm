@@ -89,7 +89,7 @@ BoundScreenBlock:
 
                 ; расчёт смещения JR для входа в развёрнутую отметку строк
                 LD A, E
-                ADD A, A                                                        ; x2
+                ADD A, A    ; x2
                 LD (.MarkJump), A
 
                 SET_PAGE_SCREEN_SHADOW                                          ; переход к буферу обновлённых screen block'ов

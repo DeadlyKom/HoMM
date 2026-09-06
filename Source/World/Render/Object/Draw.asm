@@ -46,6 +46,11 @@ Draw:           ; инициализация
                 BIT OBJECT_SELF_CALCULATED_POSITION_BIT, (IY + FObject.FastFlags)
                 CALL Z, Utilities.TransformToScr.Store
 
+                ; сброс временного bound перед отображением объекта
+                XOR A
+                LD (IY + FObject.Bound.Size.Width), A
+                LD (GameState.SpriteBound + FSpriteBound.Size.Width), A
+
                 ; определение способа отображения объекта
                 LD A, (IY + FObjectDefaultSettings.Class)
                 AND OBJECT_CLASS_MASK
@@ -60,8 +65,10 @@ Draw:           ; инициализация
                 LD HL, .JumpTable
                 LD IX, Draw.SpriteClipping
                 CALL Func.JumpTable
-                SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
                 POP IY                                                          ; восстановление адреса обрабатываемого объекта
+                JR NC, .Clipped                                                 ; переход, если спрайт отсечён
+                
+                SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
 
                 ; bound самостоятельно рассчитываемого объекта обновляется внутри его Draw
                 BIT OBJECT_SELF_CALCULATED_POSITION_BIT, (IY + FObject.FastFlags)
@@ -70,7 +77,7 @@ Draw:           ; инициализация
                 ; отметка screen block'ов фактически отображённого объекта
                 CALL BoundScreenBlock.Mark
 
-                ; восстановление адреса обхода SortBuffer
+.Clipped        ; восстановление адреса обхода SortBuffer
                 POP DE
 .NextObject     POP BC
                 DJNZ .Loop
@@ -96,9 +103,8 @@ Draw:           ; инициализация
 ; Note:
 ;   ℹ️ необходимо включить страницу работы с объектами (страница 0)
 ; -----------------------------------------
-.StoreBound     LD HL, FObject.Bound
-                PUSH IY
-                POP DE
+.StoreBound     SET_REGISTER DE, IY
+                LD HL, FObject.Bound
                 ADD HL, DE
                 EX DE, HL                                                       ; DE - адрес FObject.Bound
                 LD HL, GameState.SpriteBound                                    ; HL - адрес временного bound

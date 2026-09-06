@@ -301,7 +301,9 @@ DrawOR_XOR_Save.Exit
                 ; выходЫ
 .ContainerSP    EQU $+1
                 LD SP, #0000
+                SCF                                                             ; установка флага переполнения, спрайт виден
                 RET
+
                 display " - Draw function 'OR XOR Save':\t\t\t", /A, DrawOR_XOR_Save, "\t= busy [ ", /D, $-DrawOR_XOR_Save, " byte(s)  ]"
 
                 endif ; ~ _DRAW_SPRITE_DRAW_OR_XOR_SAVE_
