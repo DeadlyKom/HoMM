@@ -136,11 +136,14 @@ DrawNotClipping.Bound
                 BIT SPRITE_NOT_CLIPPING_LOCATION_BIT, (HL)
                 JR NZ, .IsAbsolute                                              ; переход, если абсолютные
 
-                ; относительные
+                ; расчёт абсолютной позиции блока
+                PUSH HL                                                         ; сохранение адреса флагов блока
 .Possition      EQU $+1
                 LD HL, #0000
                 ADD HL, DE
                 EX DE, HL
+                POP HL                                                          ; восстановление адреса флагов блока
+
 .IsAbsolute     ; DE - координаты (D - y, E - x)        (в пикселях)
                 ; BC - размер спрайта (B - y, C - x)    (в пикселях)
                 ; A' - флаги вывода спрайта
