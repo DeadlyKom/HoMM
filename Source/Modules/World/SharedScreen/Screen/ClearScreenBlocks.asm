@@ -28,7 +28,6 @@ ClearScrBlock:  LD HL, Adr.ScreenBlock
                 LDI
                 LDI
                 LDI
-                LDI
 
                 RET
 
