@@ -44,8 +44,12 @@ DebugRender:
                 LD BC, .LinePadding
                 CALL Console.DrawString
 
+                ; преобразование часов для десятичного вывода
                 LD A, (GameSession.WorldTime + FWorldTime.Hour)
-                CALL Console.DrawByte
+                LD L, A
+                CALL Convert.BinaryToDecimal.x8
+                LD A, #02                                                       ; отображать два разряда
+                CALL .DrawDecimal
 
                 LD DE, #0B18
                 CALL Console.SetCursor

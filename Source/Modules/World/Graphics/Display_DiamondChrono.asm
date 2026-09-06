@@ -97,18 +97,8 @@ DiamondChrono:
 .FracOne        INC C
 .FracNext       DJNZ .Fraction
 
-                ; преобразование часов из BCD в число 0..23
+                ; чтение часов в диапазоне 0..23
                 LD A, (GameSession.WorldTime + FWorldTime.Hour)
-                LD B, A
-                AND #30
-                RRCA
-                LD L, A
-                RRCA
-                ADD A, L
-                RRCA
-                LD L, A
-                LD A, B
-                SUB L
 
                 ; расчёт времени суток в долях часа размером 1/64
                 LD H, #00
