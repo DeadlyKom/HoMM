@@ -191,9 +191,8 @@ PipelineHexagons:
                     World.Display.DiamondTexture.Y
                 LD B, #2D                                                       ; высота ромба в пикселях
 
-.DiamondRow     ; сохранение счётчика строк и адреса основного экрана
-                PUSH BC
-                PUSH HL
+.DiamondRow     ; сохранение младшего байта адреса основного экрана
+                LD A, L
 
                 ; расчёт адреса соответствующей строки теневого экрана
                 LD D, H
@@ -201,13 +200,14 @@ PipelineHexagons:
                 SET 7, D
 
                 ; копирование шести байтов текущей строки ромба
+                LD C, #06                                                       ; шесть LDI уменьшают C до нуля и сохраняют счётчик строк B
                 LDI
                 LDI
                 LDI
                 LDI
                 LDI
                 LDI
-                POP HL
+                LD L, A
 
                 ; расчёт адреса следующей пиксельной строки
                 INC H
@@ -229,7 +229,6 @@ PipelineHexagons:
                 LD H, A
 
 .DiamondNext    ; переход к следующей строке области ромба
-                POP BC
                 DJNZ .DiamondRow
 
                 ; сброс запроса после завершения переноса ромба
