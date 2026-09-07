@@ -33,7 +33,10 @@ SetPage:        PUSH HL
                 LD L, A
                 LD H, HIGH Adr.MemoryMap
 
+.ReadPort       ; метка позволяющая повторно вызвать чтение порта
                 LD A, (BC)
+
+.Pending        ; метка участка, который может потребовать повторения после прерывания
 ._5_bit         EQU $+1
                 AND PAGE_MASK_INV                                               ; %00111000
                 OR (HL)
