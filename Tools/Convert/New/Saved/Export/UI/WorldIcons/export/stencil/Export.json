@@ -1,0 +1,18 @@
+[
+    {
+        "SprName": "stencil",
+        "SprWidth": 48,
+        "SprHeight": 56,
+        "PoxImgX": 112,
+        "PoxImgY": 0,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/WorldIcons/UI icons .aseprite",
+        "LayerIndex": 1,
+        "InkData": "",
+        "AttributeData": "",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/WorldIcons/export/stencil/stencil.mask",
+        "AsepriteIndex": 0,
+        "InkLayer": "",
+        "AttributeLayer": "",
+        "MaskLayer": ""
+    }
+]

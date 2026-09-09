@@ -11,6 +11,7 @@ Icons           include "Builder/Assets/Graphics/Original/UI/Gameplay/Screen/Wor
 Frame           incbin "Builder/Assets/Graphics/Compressed/UI/GameWorld_Frame.pack"
 Ornament        incbin "Builder/Assets/Graphics/Compressed/UI/GameWorld_Ornament.pack"
 BigDiamond      incbin "Builder/Assets/Graphics/Compressed/UI/GameWorld_BigDiamond.pack"
+Stencil         incbin "Builder/Assets/Graphics/Original/UI/Gameplay/Screen/World_Icons/stencil.mask.bin"
                 endmodule
 
                 endif ; ~_MODULE_WORLD_GRAPHICS_INCLUDE_
