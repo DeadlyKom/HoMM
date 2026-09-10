@@ -64,7 +64,7 @@ NoShift.Table:  ; функция для IY, функция первой стро
                 DW NoShift_Right._XX_XX_,       NoShift_OX,                 NoShift_OX.XX_XX            ; 2.0 байт
                 DW NoShift_Right._X_XXX_,       NoShift_OX,                 NoShift_Right.X_XXX         ; 1.0 байт
 
-                display " - Draw stencil function 'No Shift OR & XOR':\t\t\t= busy [ ", /D, $-Begin_NoShift, " byte(s) ]"
+                display " - Draw stencil function 'No Shift OR & XOR':\t\t\t\t= busy [ ", /D, $-Begin_NoShift, " byte(s) ]"
                 endmodule
 
                 endif ; ~ _DRAW_STENCIL_FUNCTION_NO_SHIFT_OR_XOR_

@@ -20,8 +20,8 @@
 ;   рабочие данные занимают первые 55 байт Adr.SharedBuffer
 ; -----------------------------------------
 DiamondTexture: ; проверка направления прохода текстуры
-.X              EQU 201
-.Y              EQU 110
+.X              EQU World.Stencil.Const.StencilPosX << 3
+.Y              EQU (World.Stencil.Const.StencilPosY << 3) + 6
 .SourceRow      EQU Adr.SharedBuffer
 .TextureWindow  EQU .SourceRow + #07
 

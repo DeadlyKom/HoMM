@@ -165,7 +165,7 @@ Shift.Table:    ; функция для IY, функция первой стро
                 DW Shift_OX_Right._xX_XXXXx_,   Shift_OX_Right._xXXXXX_x_,  Shift_OX_Right._xX_XXXXx    ; +4.5 байт
                 DW Shift_OX_Right._x_XXXXXx_,   Shift_OX_Right._xXXXXX_x_,  Shift_OX_Right._x_XXXXXx    ; +5.5 байт
 
-                display " - Draw stencil function 'Shift OR & XOR':\t\t\t\t= busy [ ", /D, $-Shift_OX, " byte(s) ]"
+                display " - Draw stencil function 'Shift OR & XOR':\t\t\t\t= busy [ ", /D, $-Begin_Shift, " byte(s) ]"
                 endmodule
 
                 endif ; ~ _DRAW_STENCIL_FUNCTION_SHIFT_OR_XOR_

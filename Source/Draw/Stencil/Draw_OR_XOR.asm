@@ -5,7 +5,7 @@ Const:          ; константные значения
 .StencilWidth   EQU #06                                                         ; ширина трафарета
 .StencilHeight  EQU #07                                                         ; высота трафарета
 .StencilPosX    EQU #19                                                         ; позиция трафарета по горизонтали в знакоместах
-.StencilPosY    EQU #0E                                                         ; позиция трафарета по вертикали в знакоместах
+.StencilPosY    EQU #0D                                                         ; позиция трафарета по вертикали в знакоместах
 .StencilBottom  EQU (Const.StencilPosY + Const.StencilHeight) << 3              ; нижняя граница трафарета
 .StencilRight   EQU (Const.StencilPosX + Const.StencilWidth) << 3               ; правая граница трафарета
 
@@ -269,6 +269,6 @@ DrawOR_XOR:     ; проверка положения спрайта относ�
                 ; таблица функций со сдвигом 
                 DW Function.OR_XOR.Shift.Table.OX_48,   Function.OR_XOR.Shift.Table.OX_32
 
-                display " - Draw stencil function 'OR XOR':\t\t\t\t= busy [ ", /D, $-DrawOR_XOR, " byte(s) ]"
+                display " - Draw stencil function 'OR XOR':\t\t\t\t\t= busy [ ", /D, $-DrawOR_XOR, " byte(s) ]"
 
                 endif ; ~ _DRAW_STENCIL_DRAW_OR_XOR_

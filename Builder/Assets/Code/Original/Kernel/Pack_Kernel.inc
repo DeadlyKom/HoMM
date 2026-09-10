@@ -23,6 +23,7 @@ Begin:          EQU $
                 include "Source/Memory/MemcpySprite.asm"
 
                 ; math
+                include "Source/Math/Curve.asm"
                 include "Source/Math/Sqrt/Sqrt.asm"
                 include "Source/Math/RNG/Rand8.asm"
                 include "Source/Math/Div/Div8x8.asm"

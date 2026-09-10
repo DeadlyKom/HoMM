@@ -31,7 +31,6 @@ DIV_16x8_16     macro           ; тактов: 304-360
                 INC L
                 endr
                 endm
-
 Div16x8_16:     DIV_16x8_16
                 RET
 

@@ -180,63 +180,26 @@ PipelineHexagons:
                 RES_RENDER_FLAGS SWAPPED_PENDING | SWAP_PENDING                 ; сброс флагов ожидания переключения экранов
                 JP UI.Runtime.StartTransition
 ; -----------------------------------------
-; перенос области ромба с основного экрана на теневой
+; перенос области трафарета с основного экрана на теневой
 ; In:
 ; Out:
 ; Corrupt:
-;   HL, DE, BC, AF
+;   HL, DE, BC, AF, IX
 ; Note:
 ;   ℹ️ необходимо включить страницу теневого экрана
 ;   работа с буфером курсора должна быть заблокирована
 ; -----------------------------------------
-.CopyDiamond    ; расчёт адреса первого байта области ромба
+.CopyDiamond    ; расчёт адреса левого верхнего знакоместа трафарета
                 SCREEN_ADR_REG HL, \
                     SCR_ADR_BASE, \
-                    World.Display.DiamondTexture.X, \
-                    World.Display.DiamondTexture.Y
-                LD B, #2D                                                       ; высота ромба в пикселях
+                    World.Stencil.Const.StencilPosX << 3, \
+                    World.Stencil.Const.StencilPosY << 3
 
-.DiamondRow     ; сохранение младшего байта адреса основного экрана
-                LD A, L
+                ; перенос семи строк знакомест шириной шесть знакомест
+                LD IXL, World.Stencil.Const.StencilHeight
+                CALL World.SharedScreen.ScreenRefresh.Memcpy.Screen_6
 
-                ; расчёт адреса соответствующей строки теневого экрана
-                LD D, H
-                LD E, L
-                SET 7, D
-
-                ; копирование шести байтов текущей строки ромба
-                LD C, #06                                                       ; шесть LDI уменьшают C до нуля и сохраняют счётчик строк B
-                LDI
-                LDI
-                LDI
-                LDI
-                LDI
-                LDI
-                LD L, A
-
-                ; расчёт адреса следующей пиксельной строки
-                INC H
-
-                ; проверка границы знакоместа по вертикали
-                LD A, H
-                AND #07
-                JR NZ, .DiamondNext                                             ; переход, если следующая строка остаётся внутри знакоместа
-
-                ; расчёт адреса следующей строки знакомест
-                LD A, L
-                ADD A, #20
-                LD L, A
-                JR C, .DiamondNext                                              ; переход, если адрес уже соответствует следующей трети экрана
-
-                ; коррекция старшего адреса внутри текущей трети экрана
-                LD A, H
-                SUB #08
-                LD H, A
-
-.DiamondNext    ; переход к следующей строке области ромба
-                DJNZ .DiamondRow
-
-                ; сброс запроса после завершения переноса ромба
+                ; сброс запроса после завершения переноса области
                 RES_FLAG_MODIFY PipelineHexagons.DiamondFlag
                 RET
 

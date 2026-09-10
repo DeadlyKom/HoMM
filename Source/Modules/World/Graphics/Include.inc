@@ -3,6 +3,7 @@
                 define _MODULE_WORLD_GRAPHICS_INCLUDE_
 
                 module Display
+                include "Firmament.asm"
                 include "Display_GameplayUI.asm"
                 include "Display_GameplayFrame.asm"
                 include "Display_DiamondTexture.asm"

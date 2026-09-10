@@ -4,6 +4,7 @@
 
                 include "Value.inc"
                 include "Disk.inc"
+                include "Curve.inc"
                 include "Vector8.inc"
                 include "Vector16.inc"
                 include "Address.inc"
