@@ -126,9 +126,10 @@ DrawOR_XOR:     ; проверка положения спрайта относ�
                 ; -----------------------------------------
 
                 ; смещение относительно адреса функций вывода (только вперёд)
-                LD A, C                                                         ; хранит количество отсекаемых знакомест справао экраном
+                LD A, C                                                         ; хранит количество отсекаемых знакомест справа от трафарета
                 ADD A, A    ; x2
-                ADD A, A    ; x4
+                ADD A, C    ; x3
+                ADD A, A    ; x6
                 ADD A, L
                 LD L, A
                 ADC A, H
@@ -143,12 +144,23 @@ DrawOR_XOR:     ; проверка положения спрайта относ�
                 LD IYH, A
                 INC HL
 
-                ; чтение адреса функции отображения (первой строки)
+                ; чтение адреса функции отображения первой строки
+                LD A, (HL)
+                LD (.DrawFunction), A
+                INC HL
+                LD A, (HL)
+                LD (.DrawFunction + 1), A
+                INC HL
+
+                ; чтение адреса продолжения вывода строки
                 LD A, (HL)
                 INC HL
                 LD H, (HL)
                 LD L, A
-                LD (.DrawFunction), HL
+
+                ; обновление адресов продолжения вывода строки
+                LD (Function.OR_XOR.NoShift_OX.ContinueDraw), HL
+                LD (Function.OR_XOR.Shift_OX_Right.ContinueDraw), HL
 
                 ; -----------------------------------------
 
@@ -158,7 +170,7 @@ DrawOR_XOR:     ; проверка положения спрайта относ�
                 JR Z, .NoShift                                                  ; переход, если пиксельный сдвиг отсутствует
 
                 ; расчёт старшего байта адреса таблицы сдвига
-                ADD A, A    ; x2
+                ADD A, A                                                        ; x2
                 ADD A, (HIGH Adr.ShiftTable) - 2
                 LD (.ShiftTable), A
                 LD (Function.OR_XOR.NextRow.ShiftTable), A

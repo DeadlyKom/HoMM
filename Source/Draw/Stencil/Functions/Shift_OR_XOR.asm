@@ -114,99 +114,56 @@ NextRow:        LD (.ContainerSpr), SP
                 JP .PrepareJump
 Shift_OX_Right: ; -----------------------------------------
 ._x_XXXXXx_     ; пропуск (+5.5 байт) перед отображением последующих строк
-                POP BC  ; +4.5 байт
-                POP BC  ; +3.5 байт
-._x_XXXx_       ; пропуск (+3.5 байт) перед отображением последующих строк
-                POP BC  ; +2.5 байт
-                POP BC  ; +1.5 байт
-                POP BC  ; +0.5 байт
-                ; -----------------------------------------
-._x_XXXXXx      ; отображение первой строки (+0.5 байт), с последующим пропуском (+5.5 байт)
-._x_XXXx        ; отображение первой строки (+0.5 байт), с последующим пропуском (+3.5 байт)
-                S_OR_XOR_HEAD_  ; применеие OR & XOR - начинающий (начало)
-                APPLY_STENCIL_  ; применение трафарета - завершающий
-                JP NextRow
-                ; -----------------------------------------
+                POP BC  ;  +4.5 байт
 ._xX_XXXXx_     ; пропуск (+4.5 байт) перед отображением последующих строк
-                POP BC  ; +3.5 байт
-                POP BC  ; +2.5 байт
-._xX_XXx_       ; пропуск (+2.5 байт) перед отображением последующих строк
-                POP BC  ; +1.5 байт
-                POP BC  ; +0.5 байт
-._xX_XXXXx      ; отображение первой строки (+1.5 байт), с последующим пропуском (+4.5 байт)
-._xX_XXx        ; отображение первой строки (+1.5 байт), с последующим пропуском (+2.5 байт)
-                S_OR_XOR_HEAD_  ; применеие OR & XOR - начинающий (начало)
-                APPLY_STENCIL   ; применение трафарета
-                JP ._xX_x_
-                ; -----------------------------------------
+                POP BC  ;  +3.5 байт
 ._xXX_XXXx_     ; пропуск (+3.5 байт) перед отображением последующих строк
-                POP BC  ; +2.5 байт
-                POP BC  ; +1.5 байт
-._xXX_Xx_       ; пропуск (+1.5 байт) перед отображением последующих строк
-                POP BC  ; +0.5 байт
-._xXX_XXXx      ; отображение первой строки (+2.5 байт), с последующим пропуском (+3.5 байт)
-._xXX_Xx        ; отображение первой строки (+2.5 байт), с последующим пропуском (+1.5 байт)
-                S_OR_XOR_HEAD_  ; применеие OR & XOR - начинающий (начало)
-                APPLY_STENCIL   ; применение трафарета
-                JP ._xXX_x_
-                ; -----------------------------------------
+._x_XXXx_       ; пропуск (+3.5 байт) перед отображением последующих строк
+                POP BC  ;  +2.5 байт
 ._xXXX_XXx_     ; пропуск (+2.5 байт) перед отображением последующих строк
-                POP BC  ; +1.5 байт
-                POP BC  ; +0.5 байт
-._xXXX_XXx      ; отображение первой строки (+3.5 байт), с последующим пропуском (+2.5 байт)
-._xXXX_x        ; отображение первой строки (+3.5 байт), с последующим пропуском (+0.5 байт)
-                S_OR_XOR_HEAD_  ; применеие OR & XOR - начинающий (начало)
-                APPLY_STENCIL   ; применение трафарета
-                ; -----------------------------------------
-._xXXX_x_       S_OR_XOR_TAIL   ; применеие OR & XOR (хвост)
-                S_OR_XOR_HEAD   ; применеие OR & XOR (начало)
-                APPLY_STENCIL   ; применение трафарета
-._xXX_x_        ; -----------------------------------------
-                S_OR_XOR_TAIL   ; применеие OR & XOR (хвост)
-                S_OR_XOR_HEAD   ; применеие OR & XOR (начало)
-                APPLY_STENCIL   ; применение трафарета
-                ; -----------------------------------------
-._xX_x_         S_OR_XOR_TAIL   ; применеие OR & XOR (хвост)
-                S_OR_XOR_HEAD   ; применеие OR & XOR (начало)
-                APPLY_STENCIL_  ; применение трафарета - завершающий
-                JP NextRow
-                ; -----------------------------------------
+._xX_XXx_       ; пропуск (+2.5 байт) перед отображением последующих строк
+                POP BC  ;  +1.5 байт
 ._xXXXX_Xx_     ; пропуск (+1.5 байт) перед отображением последующих строк
-                POP BC  ; +0.5 байт
-._xXXXX_Xx      ; отображение первой строки (+4.5 байт), с последующим пропуском (+1.5 байт)
-                S_OR_XOR_HEAD_  ; применеие OR & XOR - начинающий (начало)
-                APPLY_STENCIL   ; применение трафарета
+._xXX_Xx_       ; пропуск (+1.5 байт) перед отображением последующих строк
+                POP BC  ;  +0.5 байт
+._xXXXXX_x_     ; отображение последующих строк (+5.5 байт), с пропуском (+0.5 байт)
+._xXXX_x_       ; отображение последующих строк (+3.5 байт), с пропуском (+0.5 байт)
+                S_OR_XOR_HEAD_                                                  ; применеие OR & XOR - начинающий (начало)
+                APPLY_STENCIL_                                                  ; применение трафарета - завершающий
+.ContinueDraw   EQU $+1
+                JP #0000                                                        ; переход к продолжению вывода строки
                 ; -----------------------------------------
-                S_OR_XOR_TAIL   ; применеие OR & XOR (хвост)
-                S_OR_XOR_HEAD   ; применеие OR & XOR (начало)
-                APPLY_STENCIL   ; применение трафарета
-                JP ._xXXX_x_
+._xXXXXX_x      S_OR_XOR_BYTE                                                   ; применение OR & XOR (составной байт)
                 ; -----------------------------------------
-._xXXXXX_x      ; отображение первой строки (+5.5 байт), с последующим пропуском (+0.5 байт)
-                S_OR_XOR_HEAD_  ; применеие OR & XOR - начинающий (начало)
-                APPLY_STENCIL   ; применение трафарета
+._xXXXX_Xx      S_OR_XOR_BYTE                                                   ; применение OR & XOR (составной байт)
                 ; -----------------------------------------
-                S_OR_XOR_TAIL   ; применеие OR & XOR (хвост)
-                S_OR_XOR_HEAD   ; применеие OR & XOR (начало)
-                APPLY_STENCIL   ; применение трафарета
+._xXXX_XXx      ; отображение первой строки (+3.5 байт), с пропуском (+2.5 байт)
+._xXXX_x        ; отображение первой строки (+3.5 байт), с пропуском (+0.5 байт)
+                S_OR_XOR_BYTE                                                   ; применение OR & XOR (составной байт)
                 ; -----------------------------------------
-                S_OR_XOR_TAIL   ; применеие OR & XOR (хвост)
-                S_OR_XOR_HEAD   ; применеие OR & XOR (начало)
-                APPLY_STENCIL   ; применение трафарета
-                JP ._xXXX_x_
-Shift.Table:    ; первая функция идёт для IY
-.OX_32          DW Shift_OX_xXXXx,              Shift_OX_xXXXx,                 ;  4.0 байт
-                DW Shift_OX_Right._xXXX_x,      Shift_OX_Right._xXXX_x          ; +0.5 байт
-                DW Shift_OX_Right._xXX_Xx_,     Shift_OX_Right._xXX_Xx          ; +1.5 байт
-                DW Shift_OX_Right._xX_XXx_,     Shift_OX_Right._xX_XXx          ; +2.5 байт
-                DW Shift_OX_Right._x_XXXx_,     Shift_OX_Right._x_XXXx          ; +3.5 байт
-.OX_48          DW Shift_OX_xXXXXXx,            Shift_OX_xXXXXXx,               ;  6.0 байт
-                DW Shift_OX_Right._xXXXXX_x,    Shift_OX_Right._xXXXXX_x        ; +0.5 байт
-                DW Shift_OX_Right._xXXXX_Xx_,   Shift_OX_Right._xXXXX_Xx        ; +1.5 байт
-                DW Shift_OX_Right._xXXX_XXx_,   Shift_OX_Right._xXXX_XXx        ; +2.5 байт
-                DW Shift_OX_Right._xXX_XXXx_,   Shift_OX_Right._xXX_XXXx        ; +3.5 байт
-                DW Shift_OX_Right._xX_XXXXx_,   Shift_OX_Right._xX_XXXXx        ; +4.5 байт
-                DW Shift_OX_Right._x_XXXXXx_,   Shift_OX_Right._x_XXXXXx        ; +5.5 байт
+._xXX_XXXx      ; отображение первой строки (+2.5 байт), с пропуском (+3.5 байт)
+._xXX_Xx        ; отображение первой строки (+2.5 байт), с пропуском (+1.5 байт)
+                S_OR_XOR_BYTE                                                   ; применение OR & XOR (составной байт)
+                ; -----------------------------------------
+._xX_XXXXx      ; отображение первой строки (+1.5 байт), с пропуском (+4.5 байт)
+._xX_XXx        ; отображение первой строки (+1.5 байт), с пропуском (+2.5 байт)
+                S_OR_XOR_BYTE                                                   ; применение OR & XOR (составной байт)
+                JP NextRow
+._x_XXXXXx      EQU NextRow
+._x_XXXx        EQU NextRow
+Shift.Table:    ; функция для IY, функция первой строки, продолжение вывода
+.OX_32          DW Shift_OX_xXXXx,              Shift_OX_xXXXx,             NextRow                     ;  4.0 байт
+                DW Shift_OX_Right._xXXX_x_,     Shift_OX_Right._xXXX_x_,    Shift_OX_Right._xXXX_x      ; +0.5 байт
+                DW Shift_OX_Right._xXX_Xx_,     Shift_OX_Right._xXXX_x_,    Shift_OX_Right._xXX_Xx      ; +1.5 байт
+                DW Shift_OX_Right._xX_XXx_,     Shift_OX_Right._xXXX_x_,    Shift_OX_Right._xX_XXx      ; +2.5 байт
+                DW Shift_OX_Right._x_XXXx_,     Shift_OX_Right._xXXX_x_,    Shift_OX_Right._x_XXXx      ; +3.5 байт
+.OX_48          DW Shift_OX_xXXXXXx,            Shift_OX_xXXXXXx,           NextRow                     ;  6.0 байт
+                DW Shift_OX_Right._xXXXXX_x_,   Shift_OX_Right._xXXXXX_x_,  Shift_OX_Right._xXXXXX_x    ; +0.5 байт
+                DW Shift_OX_Right._xXXXX_Xx_,   Shift_OX_Right._xXXXXX_x_,  Shift_OX_Right._xXXXX_Xx    ; +1.5 байт
+                DW Shift_OX_Right._xXXX_XXx_,   Shift_OX_Right._xXXXXX_x_,  Shift_OX_Right._xXXX_XXx    ; +2.5 байт
+                DW Shift_OX_Right._xXX_XXXx_,   Shift_OX_Right._xXXXXX_x_,  Shift_OX_Right._xXX_XXXx    ; +3.5 байт
+                DW Shift_OX_Right._xX_XXXXx_,   Shift_OX_Right._xXXXXX_x_,  Shift_OX_Right._xX_XXXXx    ; +4.5 байт
+                DW Shift_OX_Right._x_XXXXXx_,   Shift_OX_Right._xXXXXX_x_,  Shift_OX_Right._x_XXXXXx    ; +5.5 байт
 
                 display " - Draw stencil function 'Shift OR & XOR':\t\t\t\t= busy [ ", /D, $-Shift_OX, " byte(s) ]"
                 endmodule
