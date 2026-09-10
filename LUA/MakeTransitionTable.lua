@@ -44,7 +44,7 @@
             end
         end
 
-        _pc("DB " .. #offsets)
+        _pc("DW " .. #offsets)
         local size_offset = #offsets * 2                                        -- размер адресов смещений + количество + смещение к первой функции
         local old_offset = -size_offset
         for i = 1, #offsets do
