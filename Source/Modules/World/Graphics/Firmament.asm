@@ -1,11 +1,69 @@
                 ifndef _MODULE_WORLD_GRAPHICS_FIRMAMENT_
                 define _MODULE_WORLD_GRAPHICS_FIRMAMENT_
+
+                struct FFirmamentObject                                         ; описание объекта небосвода                            [5 байт]
+Function        DW #0000                                                        ; адрес функции вывода                                   [2 байта]
+PhaseOffset     DW #0000                                                        ; смещение фазы объекта 0..511                           [2 байта]
+Argument        DB #00                                                          ; аргумент функции вывода                                [1 байт]
+                ends
+
 Const:          ; константные значения
 .Sun.Width      EQU 48                                                          ; размер спрайта "солнце" по горизнтали
 .Sun.Height     EQU 48                                                          ; размер спрайта "солнце" по вертикали
 .Sun.Ox         EQU 24                                                          ; смещение спрайта "солнце" по горизнтали
 .Sun.Oy         EQU 24                                                          ; смещение спрайта "солнце" по горизнтали
+.Moon.Width     EQU 32                                                          ; размер спрайта "луна" по горизонтали
+.Moon.Height    EQU 32                                                          ; размер спрайта "луна" по вертикали
+.Moon.Ox        EQU 16                                                          ; смещение спрайта "луна" по горизонтали
+.Moon.Oy        EQU 16                                                          ; смещение спрайта "луна" по вертикали
 Firmament:      ; данные и спрайты небосвода
+; -----------------------------------------
+; отображение объектов небосвода по фазе суток
+; In:
+;   HL - текущая фаза суток 0..511
+; Out:
+; Corrupt:
+;   HL, DE, BC, AF, HL', DE', BC', AF', IX, IY, SP
+; Note:
+; -----------------------------------------
+.Display        ; сохранение текущей фазы суток
+                LD D, H
+                LD E, L
+
+                ; подготовка обхода таблицы объектов
+                LD B, .Objects.Num
+                LD IY, .Objects
+
+.ObjectLoop     PUSH BC
+                PUSH DE
+
+                ; чтение адреса функции вывода объекта
+                LD A, (IY + FFirmamentObject.Function)
+                LD IXL, A
+                LD A, (IY + FFirmamentObject.Function + 1)
+                LD IXH, A
+
+                ; расчёт фактической фазы объекта
+                LD HL, (IY + FFirmamentObject.PhaseOffset)
+                ADD HL, DE
+                RES 1, H                                                        ; приведение фазы к диапазону 0..511
+
+                ; чтение аргумента функции вывода
+                LD A, (IY + FFirmamentObject.Argument)
+
+                ; вызов функции с сохранением состояния обхода
+                PUSH IY
+                CALL_IX
+                POP IY
+                
+                ; переход к следующему объекту небосвода
+                LD BC, FFirmamentObject
+                ADD IY, BC
+
+                POP DE
+                POP BC
+                DJNZ .ObjectLoop
+                RET
 ; -----------------------------------------
 ; отображение солнца по фазе суток
 ; In:
@@ -71,6 +129,65 @@ Firmament:      ; данные и спрайты небосвода
                 LD IX, Stencil
                 JP World.Stencil.DrawOR_XOR
 ; -----------------------------------------
+; отображение луны по фазе суток
+; In:
+;   HL - фаза движения луны 0..511
+; Out:
+; Corrupt:
+;   HL, DE, BC, AF, HL', DE', BC', AF', IX, IY, SP
+; Note:
+; -----------------------------------------
+.DisplayMoon    ; отображение луны через трафарет
+
+                ; сохранение фазы движения луны
+                LD D, H
+                LD E, L
+
+                ; расчёт горизонтального пути луны 0..80 пикселей
+                ; TravelX = round(Phase * 80 / 512) = (Phase * 5 + 16) >> 5
+                ADD HL, HL                                                      ; Phase * 2
+                ADD HL, HL                                                      ; Phase * 4
+                ADD HL, DE                                                      ; Phase * 5
+                LD BC, #0010
+                ADD HL, BC                                                      ; Phase * 5 + 16
+                ADD HL, HL
+                ADD HL, HL
+                ADD HL, HL                                                      ; H = TravelX 0..80
+
+                ; расчёт левой координаты луны относительно правой границы трафарета
+                LD A, World.Stencil.Const.StencilRight
+                SUB H                                                           ; X = StencilRight - TravelX
+
+                ; проверка положения луны относительно левой границы трафарета
+                CP (World.Stencil.Const.StencilPosX << 3) - Const.Moon.Width + 1
+                RET C                                                           ; выход, если луна полностью находится слева от трафарета
+
+                ; проверка положения луны относительно правой границы трафарета
+                CP World.Stencil.Const.StencilRight
+                RET NC                                                          ; выход, если луна полностью находится справа от трафарета
+
+                ; сохранение горизонтальной позиции и восстановление фазы
+                EX AF, AF'
+                LD H, D
+                LD L, E
+                CALL .GetArcHeight                                              ; получение вертикального смещения
+
+                ; расчёт положения pivot по вертикали
+                ADD A, (World.Stencil.Const.StencilPosY << 3) + \
+                        (World.Stencil.Const.StencilHeight << 2)
+                SUB Const.Moon.Oy
+                LD D, A
+
+                ; восстановление горизонтальной позиции
+                EX AF, AF'
+                LD E, A
+
+                ; отображение луны
+                LD HL, .Moon
+                LD BC, (Const.Moon.Height << 8) + Const.Moon.Width              ; B = высота, C = ширина
+                LD IX, Stencil
+                JP World.Stencil.DrawOR_XOR
+; -----------------------------------------
 ; получение вертикального смещения по фазе суток
 ; In:
 ;   HL - фаза суток 0..511
@@ -89,7 +206,7 @@ Firmament:      ; данные и спрайты небосвода
 
                 ; подготовка получения значения кривой
                 LD HL, .ArcHeight
-                LD B, .ArcHeightNum
+                LD B, .ArcHeight.Num
                 JP Kernel.Math.Curve.GetValue
 .ArcHeight      ; кривая вертикального смещения для фазы суток 0..511
                 ; Position = Phase >> 1, диапазон 0..255
@@ -103,7 +220,13 @@ Firmament:      ; данные и спрайты небосвода
                 FCurveKey { 218, 18 }
                 FCurveKey { 245, 39 }
                 FCurveKey { 255, 63 }
-.ArcHeightNum   EQU ($-.ArcHeight) / FCurveKey
+.ArcHeight.Num  EQU ($-.ArcHeight) / FCurveKey
+
+.Objects        ; солнце, без смещения фазы, аргумент не используется
+                FFirmamentObject { .DisplaySun,  #0000, #00 }
+                ; луна, смещение на половину цикла, аргумент не используется
+                FFirmamentObject { .DisplayMoon, #0100, #00 }
+.Objects.Num    EQU ($-.Objects) / FFirmamentObject
 
                 ; спрайты небосвода в прямом формате OR & XOR
                 ; 48x48

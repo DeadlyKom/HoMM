@@ -52,9 +52,9 @@ DiamondChrono:
                 LD HL, (Kernel.Modules.World.MemoryAddress)
                 CALL DiamondTexture                                             ; отображение новой фазы на основном экране
 
-                ; отображение солнца по текущей фазе суток
+                ; отображение объектов небосвода по текущей фазе суток
                 LD HL, (.LastPhase)
-                CALL Firmament.DisplaySun
+                CALL Firmament.Display
 
                 ; установка запроса переноса обновлённого ромба
                 SET_FLAG_MODIFY World.Base.Render.PipelineHexagons.DiamondFlag
