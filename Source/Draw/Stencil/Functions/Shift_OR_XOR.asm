@@ -24,11 +24,11 @@ Shift_OX_xXXXXXx; 6.0 байт
                 S_OR_XOR_HEAD_  ; применеие OR & XOR - начинающий (начало)
                 APPLY_STENCIL   ; применение трафарета
                 ; -----------------------------------------
-                S_OR_XOR_TAIL   ; применеие OR & XOR (хвост)
+._xXXXXXx       S_OR_XOR_TAIL                                                   ; применеие OR & XOR (хвост)
                 S_OR_XOR_HEAD   ; применеие OR & XOR (начало)
                 APPLY_STENCIL   ; применение трафарета
                 ; -----------------------------------------
-                S_OR_XOR_TAIL   ; применеие OR & XOR (хвост)
+._xXXXXx        S_OR_XOR_TAIL                                                   ; применеие OR & XOR (хвост)
                 S_OR_XOR_HEAD   ; применеие OR & XOR (начало)
                 APPLY_STENCIL   ; применение трафарета
                 ; -----------------------------------------
@@ -36,15 +36,15 @@ Shift_OX_xXXXXXx; 6.0 байт
                 S_OR_XOR_HEAD   ; применеие OR & XOR (начало)
                 APPLY_STENCIL   ; применение трафарета
                 ; -----------------------------------------
-                S_OR_XOR_TAIL   ; применеие OR & XOR (хвост)
+._xXXx          S_OR_XOR_TAIL                                                   ; применеие OR & XOR (хвост)
                 S_OR_XOR_HEAD   ; применеие OR & XOR (начало)
                 APPLY_STENCIL   ; применение трафарета
                 ; -----------------------------------------
-                S_OR_XOR_TAIL   ; применеие OR & XOR (хвост)
+._xXx           S_OR_XOR_TAIL                                                   ; применеие OR & XOR (хвост)
                 S_OR_XOR_HEAD   ; применеие OR & XOR (начало)
                 APPLY_STENCIL   ; применение трафарета
                 ; -----------------------------------------
-                S_OR_XOR_TAIL_  ; применеие OR & XOR - завершающий (хвост)
+._x             S_OR_XOR_TAIL_                                                  ; применеие OR & XOR - завершающий (хвост)
                 APPLY_STENCIL_  ; применение трафарета - завершающий
 
                 ; -----------------------------------------
@@ -112,6 +112,24 @@ NextRow:        LD (.ContainerSpr), SP
 .NextBoundary   LD H, D                                                         ; сохранение старший байт адреса экрана
 .NextRow        LD E, L                                                         ; восстановление младший байт адреса экрана
                 JP .PrepareJump
+Shift_OX_Left:  ; обработчики левого отсечения
+._xXXXXX_x      ; пропуск (-5.5 байт) перед отображением строки
+                POP BC  ;  +4.5 байт
+._xXXXX_Xx      ; пропуск (-4.5 байт) перед отображением строки
+                POP BC  ;  +3.5 байт
+._xXXX_XXx      ; пропуск (-3.5 байт) перед отображением строки шириной 48 пикселей
+._xXXX_x        ; пропуск (-3.5 байт) перед отображением строки шириной 32 пикселя
+                POP BC  ;  +2.5 байт
+._xXX_XXXx      ; пропуск (-2.5 байт) перед отображением строки шириной 48 пикселей
+._xXX_Xx        ; пропуск (-2.5 байт) перед отображением строки шириной 32 пикселя
+                POP BC  ;  +1.5 байт
+._xX_XXXXx      ; пропуск (-1.5 байт) перед отображением строки шириной 48 пикселей
+._xX_XXx        ; пропуск (-1.5 байт) перед отображением строки шириной 32 пикселя
+                POP BC  ;  +0.5 байт
+._x_XXXXXx      ; пропуск (-0.5 байт) перед отображением строки шириной 48 пикселей
+._x_XXXx        ; пропуск (-0.5 байт) перед отображением строки шириной 32 пикселя
+.ContinueDraw   EQU $+1
+                JP #0000                                                        ; переход к продолжению вывода строки
 Shift_OX_Right: ; -----------------------------------------
 ._x_XXXXXx_     ; пропуск (+5.5 байт) перед отображением последующих строк
                 POP BC  ;  +4.5 байт
@@ -151,12 +169,28 @@ Shift_OX_Right: ; -----------------------------------------
                 JP NextRow
 ._x_XXXXXx      EQU NextRow
 ._x_XXXx        EQU NextRow
-Shift.Table:    ; функция для IY, функция первой строки, продолжение вывода
+Shift.Table:    ; таблица функций вывода
+                ; левое отсечение спрайта шириной 32 пикселя
+                ; функция для IY, функция первой строки, продолжение вывода
+                DW Shift_OX_Left._xXXX_x,       Shift_OX_Left._xXXX_x,      Shift_OX_xXXXXXx._x         ; -3.5 байт
+                DW Shift_OX_Left._xXX_Xx,       Shift_OX_Left._xXX_Xx,      Shift_OX_xXXXXXx._xXx       ; -2.5 байт
+                DW Shift_OX_Left._xX_XXx,       Shift_OX_Left._xX_XXx,      Shift_OX_xXXXXXx._xXXx      ; -1.5 байт
+                DW Shift_OX_Left._x_XXXx,       Shift_OX_Left._x_XXXx,      Shift_OX_xXXXXXx._xXXXx     ; -0.5 байт
+                ; функция для IY, функция первой строки, продолжение вывода
 .OX_32          DW Shift_OX_xXXXx,              Shift_OX_xXXXx,             NextRow                     ;  4.0 байт
                 DW Shift_OX_Right._xXXX_x_,     Shift_OX_Right._xXXX_x_,    Shift_OX_Right._xXXX_x      ; +0.5 байт
                 DW Shift_OX_Right._xXX_Xx_,     Shift_OX_Right._xXXX_x_,    Shift_OX_Right._xXX_Xx      ; +1.5 байт
                 DW Shift_OX_Right._xX_XXx_,     Shift_OX_Right._xXXX_x_,    Shift_OX_Right._xX_XXx      ; +2.5 байт
                 DW Shift_OX_Right._x_XXXx_,     Shift_OX_Right._xXXX_x_,    Shift_OX_Right._x_XXXx      ; +3.5 байт
+                ; левое отсечение спрайта шириной 48 пикселей
+                ; функция для IY, функция первой строки, продолжение вывода
+                DW Shift_OX_Left._xXXXXX_x,     Shift_OX_Left._xXXXXX_x,    Shift_OX_xXXXXXx._x         ; -5.5 байт
+                DW Shift_OX_Left._xXXXX_Xx,     Shift_OX_Left._xXXXX_Xx,    Shift_OX_xXXXXXx._xXx       ; -4.5 байт
+                DW Shift_OX_Left._xXXX_XXx,     Shift_OX_Left._xXXX_XXx,    Shift_OX_xXXXXXx._xXXx      ; -3.5 байт
+                DW Shift_OX_Left._xXX_XXXx,     Shift_OX_Left._xXX_XXXx,    Shift_OX_xXXXXXx._xXXXx     ; -2.5 байт
+                DW Shift_OX_Left._xX_XXXXx,     Shift_OX_Left._xX_XXXXx,    Shift_OX_xXXXXXx._xXXXXx    ; -1.5 байт
+                DW Shift_OX_Left._x_XXXXXx,     Shift_OX_Left._x_XXXXXx,    Shift_OX_xXXXXXx._xXXXXXx   ; -0.5 байт
+                ; функция для IY, функция первой строки, продолжение вывода
 .OX_48          DW Shift_OX_xXXXXXx,            Shift_OX_xXXXXXx,           NextRow                     ;  6.0 байт
                 DW Shift_OX_Right._xXXXXX_x_,   Shift_OX_Right._xXXXXX_x_,  Shift_OX_Right._xXXXXX_x    ; +0.5 байт
                 DW Shift_OX_Right._xXXXX_Xx_,   Shift_OX_Right._xXXXXX_x_,  Shift_OX_Right._xXXXX_Xx    ; +1.5 байт

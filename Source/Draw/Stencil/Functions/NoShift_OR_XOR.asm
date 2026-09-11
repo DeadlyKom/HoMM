@@ -35,6 +35,21 @@ NoShift_OX:     NS_OR_XOR_HEAD                                                  
 .XX_XXXX        ; отображение строки (2.0 байт), с пропуском (4.0 байт)
 .XX_XX          NS_OR_XOR_BYTE                                                  ; отображение строки (2.0 байт)
                 JP NextRow
+NoShift_Left:   ; обработчики левого отсечения
+._XXXXX_X       ; пропуск (-5.0 байт) перед отображением строки
+                POP BC  ; +4.0 байт
+._XXXX_XX       ; пропуск (-4.0 байт) перед отображением строки
+                POP BC  ; +3.0 байт
+._XXX_XXX       ; пропуск (-3.0 байт) перед отображением строки шириной 48 пикселей
+._XXX_X         ; пропуск (-3.0 байт) перед отображением строки шириной 32 пикселя
+                POP BC  ; +2.0 байт
+._XX_XXXX       ; пропуск (-2.0 байт) перед отображением строки шириной 48 пикселей
+._XX_XX         ; пропуск (-2.0 байт) перед отображением строки шириной 32 пикселя
+                POP BC  ; +1.0 байт
+._X_XXXXX       ; пропуск (-1.0 байт) перед отображением строки шириной 48 пикселей
+._X_XXX         ; пропуск (-1.0 байт) перед отображением строки шириной 32 пикселя
+                POP BC
+                JP NoShift_OX
 NoShift_Right:  ; обработчики правого отсечения
 ._X_XXXXX_     ; пропуск (+5.0 байт) перед отображением последующих строк
                 POP BC  ; +4.0 байт
@@ -52,13 +67,27 @@ NoShift_Right:  ; обработчики правого отсечения
                 JP NoShift_OX
 .X_XXXXX        EQU NextRow
 .X_XXX          EQU NextRow
-NoShift.Table:  ; функция для IY, функция первой строки, продолжение вывода
+NoShift.Table:  ; таблица функций вывода
+                ; левое отсечение спрайта шириной 48 пикселей
+                ; функция для IY, функция первой строки, продолжение вывода
+                DW NoShift_Left._XXXXX_X,       NoShift_Left._XXXXX_X,      NextRow                     ; -5.0 байт
+                DW NoShift_Left._XXXX_XX,       NoShift_Left._XXXX_XX,      NoShift_OX.XX_XXXX          ; -4.0 байт
+                DW NoShift_Left._XXX_XXX,       NoShift_Left._XXX_XXX,      NoShift_OX.XXX_XXX          ; -3.0 байт
+                DW NoShift_Left._XX_XXXX,       NoShift_Left._XX_XXXX,      NoShift_OX.XXXX_XX          ; -2.0 байт
+                DW NoShift_Left._X_XXXXX,       NoShift_Left._X_XXXXX,      NoShift_OX.XXXXX_X          ; -1.0 байт
+                ; функция для IY, функция первой строки, продолжение вывода
 .OX_48          DW NoShift_OX,                  NoShift_OX,                 NoShift_OX.XXXXXX           ; 6.0 байт
                 DW NoShift_Right._XXXXX_X_,     NoShift_OX,                 NoShift_OX.XXXXX_X          ; 5.0 байт
                 DW NoShift_Right._XXXX_XX_,     NoShift_OX,                 NoShift_OX.XXXX_XX          ; 4.0 байт
                 DW NoShift_Right._XXX_XXX_,     NoShift_OX,                 NoShift_OX.XXX_XXX          ; 3.0 байт
                 DW NoShift_Right._XX_XXXX_,     NoShift_OX,                 NoShift_OX.XX_XXXX          ; 2.0 байт
                 DW NoShift_Right._X_XXXXX_,     NoShift_OX,                 NoShift_Right.X_XXXXX       ; 1.0 байт
+                ; левое отсечение спрайта шириной 32 пикселя
+                ; функция для IY, функция первой строки, продолжение вывода
+                DW NoShift_Left._XXX_X,         NoShift_Left._XXX_X,        NextRow                     ; -3.0 байт
+                DW NoShift_Left._XX_XX,         NoShift_Left._XX_XX,        NoShift_OX.XX_XX            ; -2.0 байт
+                DW NoShift_Left._X_XXX,         NoShift_Left._X_XXX,        NoShift_OX.XXX_X            ; -1.0 байт
+                ; функция для IY, функция первой строки, продолжение вывода
 .OX_32          DW NoShift_OX,                  NoShift_OX,                 NoShift_OX.XXXX             ; 4.0 байт
                 DW NoShift_Right._XXX_X_,       NoShift_OX,                 NoShift_OX.XXX_X            ; 3.0 байт
                 DW NoShift_Right._XX_XX_,       NoShift_OX,                 NoShift_OX.XX_XX            ; 2.0 байт
