@@ -99,8 +99,18 @@ PipelineHexagons:
                 POP AF
                 CALL NZ, Object.Draw                                            ; отображение объектов в массиве SortBuffer
 
+                ; -----------------------------------------
                 SET_MODULE_PAGE_World                                           ; включить страницу модуля "World"
+
+                ; проверка завершения режима остановки времени
+                CHECK_TICK_CONTROL_FLAG GAME_SUSPEND_BIT
+                CALL Z, World.Display.GameplaySuspend.Resume                    ; вызов, если остановка времени выключена
+
                 CALL World.Display.GameplayFrame.Ornament
+
+                ; проверка режима "остановки времени"
+                CHECK_TICK_CONTROL_FLAG GAME_SUSPEND_BIT
+                CALL NZ, World.Display.GameplaySuspend                          ; вызов, если режим "остановки времени" включён
 
                 ; проверка запроса обновления фазы суток
                 CHECK_WORLD_CHRONO_FLAG WORLD_DAY_PHASE_UPDATE_BIT
@@ -131,6 +141,10 @@ PipelineHexagons:
                 ; проверка необходимости переноса обновлённого ромба
 .DiamondFlag    FLAG_MODIFY 0                                                   ; флаг переноса ромба в теневой экран
                 CALL C, .CopyDiamond                                            ; вызов, если ромб обновлён на основном экране
+
+                ; проверка необходимости переноса индикатора или восстановленной рамки
+.SuspendFlag    FLAG_MODIFY 0                                                   ; флаг, запрос переноса области индикатора паузы
+                CALL C, .CopySuspend                                            ; вызов, если область индикатора обновлена на основном экране
 
                 ; принудительно меняем адрес на теневой буфер,
                 ; затераем возможное копирование курсора
@@ -201,6 +215,29 @@ PipelineHexagons:
 
                 ; сброс запроса после завершения переноса области
                 RES_FLAG_MODIFY PipelineHexagons.DiamondFlag
+                RET
+; -----------------------------------------
+; перенос области индикатора паузы с основного экрана на теневой
+; In:
+; Out:
+; Corrupt:
+;   HL, DE, BC, AF, IX
+; Note:
+;   необходимо включить страницу теневого экрана
+;   работа с буфером курсора должна быть заблокирована
+;   область переносится вместе с атрибутами
+; -----------------------------------------
+.CopySuspend    ; расчёт начала блока из четырёх знакомест у правого края рамки
+                SCREEN_ADR_REG HL, SCR_ADR_BASE, \
+                    (World.Display.Const.Suspend.PausePosX - 2) << 3, \
+                    World.Display.Const.Suspend.PausePosY << 3
+
+                ; перенос четырёх строк знакомест шириной четыре знакоместа
+                LD IXL, #04
+                CALL World.SharedScreen.ScreenRefresh.Memcpy.Screen_4
+
+                ; сброс запроса после завершения переноса области
+                RES_FLAG_MODIFY PipelineHexagons.SuspendFlag
                 RET
 
                 ; вентель, блокирующий восстановление курсора из буфера вовремя 

@@ -45,7 +45,6 @@
                 ; отладочное отображение
                 ; define DEBUG_INFO_WORLD_TIME                                    ; игровой календарь
                 ; define DEBUG_INFO_COORDINATES                                   ; позиция карты и гексагона под курсором
-                define DEBUG_INFO_GAME_SUSPEND                                  ; режим "остановки времени"
                 ; define DEBUG_INFO_SCREEN_BLOCKS                                 ; содержимое ScreenBlock
                 ; define DEBUG_INFO_MOUSE_POSITION                                ; позиция мыши
                 ; define DEBUG_INFO_VISIBLE_AREA                                  ; размер видимой области
