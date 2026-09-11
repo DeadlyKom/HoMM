@@ -1,11 +1,12 @@
                 ifndef _MODULE_WORLD_GRAPHICS_FIRMAMENT_
                 define _MODULE_WORLD_GRAPHICS_FIRMAMENT_
 
-                struct FFirmamentObject                                         ; описание объекта небосвода                            [5 байт]
-Function        DW #0000                                                        ; адрес функции вывода                                   [2 байта]
-PhaseOffset     DW #0000                                                        ; смещение фазы объекта 0..511                           [2 байта]
-Argument        DB #00                                                          ; аргумент функции вывода                                [1 байт]
-                ends
+                struct FFirmamentObject                                         ; описание объекта небосвода                            [6 байт]
+Function        DW #0000                                                        ; адрес функции вывода                                  [2 байта]
+PhaseOffset     DW #0000                                                        ; смещение фазы объекта 0..511                          [2 байта]
+PhaseScale      DB #00                                                          ; масштаб фазы fixed point 4.4                          [1 байт]
+Argument        DB #00                                                          ; аргумент функции вывода                               [1 байт]
+                ends     
 
 Const:          ; константные значения
 .Sun.Width      EQU 48                                                          ; размер спрайта "солнце" по горизнтали
@@ -16,6 +17,9 @@ Const:          ; константные значения
 .Moon.Height    EQU 32                                                          ; размер спрайта "луна" по вертикали
 .Moon.Ox        EQU 16                                                          ; смещение спрайта "луна" по горизонтали
 .Moon.Oy        EQU 16                                                          ; смещение спрайта "луна" по вертикали
+
+                TO_FP_EQU Firmament.SunPhaseScale, 1.5, 4
+                TO_FP_EQU Firmament.MoonPhaseScale, 1.5, 4
 Firmament:      ; данные и спрайты небосвода
 ; -----------------------------------------
 ; отображение объектов небосвода по фазе суток
@@ -48,6 +52,13 @@ Firmament:      ; данные и спрайты небосвода
                 ADD HL, DE
                 RES 1, H                                                        ; приведение фазы к диапазону 0..511
 
+                ; чтение масштаба фазы объекта
+                LD B, (IY + FFirmamentObject.PhaseScale)
+
+                ; расчёт масштабированной фазы объекта
+                CALL .ScalePhase
+                JR NC, .NextObject                                              ; переход, если объект находится вне масштабированного цикла
+
                 ; чтение аргумента функции вывода
                 LD A, (IY + FFirmamentObject.Argument)
 
@@ -55,14 +66,83 @@ Firmament:      ; данные и спрайты небосвода
                 PUSH IY
                 CALL_IX
                 POP IY
-                
-                ; переход к следующему объекту небосвода
+
+.NextObject     ; переход к следующему объекту небосвода
                 LD BC, FFirmamentObject
                 ADD IY, BC
 
                 POP DE
                 POP BC
                 DJNZ .ObjectLoop
+                RET
+; -----------------------------------------
+; масштабирование фазы движения относительно зенита
+; In:
+;   HL - фаза движения объекта 0..511
+;   B  - масштаб фазы fixed point 4.4
+; Out:
+;   HL - масштабированная фаза движения 0..511
+;   флаг переполнения установлен, если фаза находится в диапазоне 0..511
+; Corrupt:
+;   HL, DE, BC, AF
+; Note:
+;   PhaseScale хранится в формате fixed point 4.4, 16 = 1.0
+;   MotionPhase = 256 + round(abs(ObjectPhase - 256) * PhaseScale / 16) * Sign
+; -----------------------------------------
+.ScalePhase     ; масштабирование фазы движения объекта
+                ; расчёт знакового смещения фазы относительно зенита
+                DEC H                                                           ; Delta = ObjectPhase - 256
+                LD C, #00                                                       ; положительное смещение фазы
+
+                ; проверка знака смещения фазы
+                BIT 7, H
+                JR Z, .ScaleMagnitude                                           ; переход, если смещение фазы положительное
+                DEC C                                                           ; отрицательное смещение фазы
+
+                ; преобразование отрицательного смещения в абсолютное значение
+                XOR A
+                SUB L
+                LD L, A
+                SBC A, A
+                SUB H
+                LD H, A
+
+.ScaleMagnitude ; расчёт масштаба абсолютного смещения фазы
+                LD D, H
+                LD E, L
+                LD A, B
+                CALL Kernel.Math.Mul16x8_16                                     ; Product = abs(Delta) * PhaseScale
+
+                ; округление и преобразование произведения fixed point 4.4
+                LD DE, #0008
+                ADD HL, DE                                                      ; Product + 0.5
+                SRL H
+                RR L
+                SRL H
+                RR L
+                SRL H
+                RR L
+                SRL H
+                RR L                                                            ; ScaledDelta = round(Product / 16)
+
+                ; проверка исходного знака смещения фазы
+                INC C
+                JR NZ, .AddZenith                                               ; переход, если смещение фазы положительное
+
+                ; восстановление отрицательного знака смещения фазы
+                XOR A
+                SUB L
+                LD L, A
+                SBC A, A
+                SUB H
+                LD H, A
+
+.AddZenith      ; восстановление положения относительно зенита
+                INC H                                                           ; MotionPhase = 256 + ScaledDelta
+
+                ; проверка диапазона масштабированной фазы
+                LD A, H
+                CP #02
                 RET
 ; -----------------------------------------
 ; отображение солнца по фазе суток
@@ -221,13 +301,12 @@ Firmament:      ; данные и спрайты небосвода
                 FCurveKey { 245, 39 }
                 FCurveKey { 255, 63 }
 .ArcHeight.Num  EQU ($-.ArcHeight) / FCurveKey
-
-.Objects        ; солнце, без смещения фазы, аргумент не используется
-                FFirmamentObject { .DisplaySun,  #0000, #00 }
-                ; луна, смещение на половину цикла, аргумент не используется
-                FFirmamentObject { .DisplayMoon, #0100, #00 }
+                ; -----------------------------------------
+.Objects        ; таблица объектов небосвода  
+                FFirmamentObject { .DisplaySun,  #0000, .SunPhaseScale,  #00 }  ; солнце
+                FFirmamentObject { .DisplayMoon, #0100, .MoonPhaseScale, #00 }  ; луна
 .Objects.Num    EQU ($-.Objects) / FFirmamentObject
-
+                ; -----------------------------------------
                 ; спрайты небосвода в прямом формате OR & XOR
                 ; 48x48
 .Sun            incbin "Builder/Assets/Graphics/Original/UI/Gameplay/Screen/World_Icons/sun.bin"
