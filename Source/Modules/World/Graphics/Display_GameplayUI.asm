@@ -14,45 +14,45 @@ GameplayUI:     ; подготовка основного экрана
                 LD HL, BigDiamond
                 CALL Draw.SpriteNotBound                                        ; отображение большого ромба
 
-                LD A, #00
+                LD A, Icons.Index.Diamond
                 LD DE, #50D4
                 CALL .DrawIcon                                                  ; отображение иконки
-                LD A, #01
+                LD A, Icons.Index.Character
                 LD DE, #50D9
                 CALL .DrawIcon                                                  ; отображение иконки "персонаж"
 
-                LD A, #00
+                LD A, Icons.Index.Diamond
                 LD DE, #5DC7
                 CALL .DrawIcon                                                  ; отображение иконки
-                LD A, #02
+                LD A, Icons.Index.SpellsBook
                 LD DE, #5EC7
                 CALL .DrawIcon                                                  ; отображение иконки "книга заклинаний"
 
-                LD A, #00
+                LD A, Icons.Index.Diamond
                 LD DE, #5DE1
                 CALL .DrawIcon                                                  ; отображение иконки
-                LD A, #03
+                LD A, Icons.Index.Inventory
                 LD DE, #5DE4
                 CALL .DrawIcon                                                  ; отображение иконки "инвентарь"
 
-                LD A, #00
+                LD A, Icons.Index.Diamond
                 LD DE, #95C7
                 CALL .DrawIcon                                                  ; отображение иконки
-                LD A, #04
+                LD A, Icons.Index.Quest
                 LD DE, #96C8
                 CALL .DrawIcon                                                  ; отображение иконки "квест"
 
-                LD A, #00
+                LD A, Icons.Index.Diamond
                 LD DE, #95E1
                 CALL .DrawIcon                                                  ; отображение иконки
-                LD A, #05
+                LD A, Icons.Index.Map
                 LD DE, #94E4
                 CALL .DrawIcon                                                  ; отображение иконки "карта"
 
-                LD A, #00
+                LD A, Icons.Index.Diamond
                 LD DE, #A2D4
                 CALL .DrawIcon                                                  ; отображение иконки
-                LD A, #06
+                LD A, Icons.Index.Options
                 LD DE, #9FD4
                 CALL .DrawIcon                                                  ; отображение иконки "настройки"
 
