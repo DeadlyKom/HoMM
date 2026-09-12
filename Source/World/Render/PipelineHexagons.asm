@@ -138,6 +138,13 @@ PipelineHexagons:
                 ; копирование блоков, если курсор находится в игровой зоне, он скопируется тоже
                 CALL ScreenBlock.Memcpy                                         ; копирование screen block'и в теневой экран
 
+                ifdef _DEBUG
+                ; перенос шести знакомест отладочной подписи вместе с атрибутами
+                LD HL, SCR_ADR_BASE + 24
+                LD IXL, #01
+                CALL World.SharedScreen.ScreenRefresh.Memcpy.Screen_6
+                endif
+
                 ; проверка необходимости переноса обновлённого ромба
 .DiamondFlag    FLAG_MODIFY 0                                                   ; флаг переноса ромба в теневой экран
                 CALL C, .CopyDiamond                                            ; вызов, если ромб обновлён на основном экране

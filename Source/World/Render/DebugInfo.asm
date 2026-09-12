@@ -253,14 +253,14 @@ DebugInfo:      ifdef DEBUG_INFO_COORDINATES
                 JP Console.DrawChar
                 endif
 IconDebug:
-.Text           ; имена иконок длиной шесть символов
-.Text.Empty     DB "      ", #00
-.Text.Center    DB "CENTER", #00
-.Text.Character DB "HERO  ", #00
-.Text.Spells    DB "SPELLS", #00
-.Text.Inventory DB "INVENT", #00
-.Text.Quest     DB "QUEST ", #00
-.Text.Map       DB "MAP   ", #00
-.Text.Options   DB "OPTION", #00
+.Text           ; имена иконок длиной пять символов
+.Text.Empty     DB "     ", #00
+.Text.Center    DB "CENTR", #00
+.Text.Character DB "HERO ", #00
+.Text.Spells    DB "SPELL", #00
+.Text.Inventory DB "INVEN", #00
+.Text.Quest     DB "QUEST", #00
+.Text.Map       DB "MAP  ", #00
+.Text.Options   DB "OPTNS", #00
 
                 endif ; ~_WORLD_RENDER_DEBUG_INFO_

@@ -117,13 +117,27 @@ GameUIIcons:    ; очистка
 .Map            LD BC, World.Base.Render.IconDebug.Text.Map
                 JR .Draw
 .Options        LD BC, World.Base.Render.IconDebug.Text.Options
-.Draw           SET_RENDER_FLAG SWAP_DISABLE_BIT
+.Draw           ; сохранение флагов рендера и режима консоли
+                LD A, (GameState.Render)
+                PUSH AF
+                LD A, (Kernel.Console.DrawChar.Function)
+                PUSH AF
+
+                ; вывод в основной экран без корректировки
+                SET_RENDER_FLAG SWAP_DISABLE_BIT
                 CALL Console.SetDrawToOne
                 SET_REG_ATTR_IPB A, RED, BLACK, 0
                 CALL Console.SetAttribute
-                LD HL, SCR_ADR_BASE + 24
+                LD HL, SCR_ADR_BASE + 25
                 CALL Console.SetScreenAdr
-                JP Console.DrawString
+                CALL Console.DrawString
+
+                ; восстановление режима консоли и флагов рендера
+                POP AF
+                LD (Kernel.Console.DrawChar.Function), A
+                POP AF
+                LD (GameState.Render), A
+                RET
                 else
 .Center         EQU Func.RET
 .Character      EQU Func.RET
