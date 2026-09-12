@@ -29,6 +29,12 @@ GameWorld:      ; игровой слой
                 SCR_WORLD_SIZE_X << 3, SCR_WORLD_SIZE_Y << 3, \
                 World.UI.Handler.GameWindow, \
                 UI_VISIBLE | UI_ENABLED
+
+                MAKE_UI_ELEMENT \
+                SCR_WORLD_ICONS_POS_X << 3, SCR_WORLD_ICONS_POS_Y << 3, \
+                SCR_WORLD_ICONS_SIZE_X << 3, SCR_WORLD_ICONS_SIZE_Y << 3, \
+                World.UI.Handler.GameUIIcons, \
+                UI_VISIBLE | UI_ENABLED
                 
                 MAKE_UI_ELEMENT \
                 SCR_MINIMAP_POS_X << 3, SCR_MINIMAP_POS_Y << 3, \

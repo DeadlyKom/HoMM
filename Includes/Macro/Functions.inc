@@ -21,6 +21,9 @@ JP_IN_PAGE      macro Page?, Function?
                 LD HL, Function?
                 JP Func.CallInPage
                 endm
+CALL_HL         macro
+                CALL Func.JP_HL
+                endm
 CALL_IX         macro
                 CALL Func.JP_IX
                 endm

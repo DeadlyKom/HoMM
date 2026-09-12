@@ -13,6 +13,7 @@ Func
 .JumpTable.NoShift      EQU Kernel.Functions.JumpTable.NoShift                  ; переход по таблице переходов
 .CallInPage             EQU Kernel.Functions.Call.InPage                        ; вызов функции с включением страницы (находясь в странице)
 .RET                    EQU Kernel.Functions.Call.RET
+.JP_HL                  EQU Kernel.Functions.Call.JP_HL
 .JP_IX                  EQU Kernel.Functions.Call.JP_IX
 .JP_IY                  EQU Kernel.Functions.Call.JP_IY
 .Delay                  EQU Kernel.Functions.Delay                              ; задержка 4 фрейма

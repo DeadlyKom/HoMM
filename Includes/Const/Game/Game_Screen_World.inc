@@ -13,6 +13,11 @@ SCR_MINIMAP_SIZE_Y      EQU 6                                                   
 SCR_MINIMAP_CLICK_OFS_X EQU 2                                                   ; компенсация положения указателя при клике по миникарте по горизонтали
 SCR_MINIMAP_CLICK_OFS_Y EQU 2                                                   ; компенсация положения указателя при клике по миникарте по вертикали
 
+SCR_WORLD_ICONS_POS_X   EQU 24                                                  ; положение UI иконок мира на экране по горизонтали в знакоместах
+SCR_WORLD_ICONS_POS_Y   EQU 9                                                   ; положение UI иконок мира на экране по вертикали в знакоместах
+SCR_WORLD_ICONS_SIZE_X  EQU 8                                                   ; размер видимой области UI иконок мира по горизонтали
+SCR_WORLD_ICONS_SIZE_Y  EQU 15                                                  ; размер видимой области UI иконок мира по вертикали
+
 SCREEN_CURSOR_X         EQU 256                                                 ; ширина экрана для курсора
 SCREEN_CURSOR_Y         EQU 192                                                 ; высота экрана для курсора
 SCREEN_EDGE             EQU 4                                                   ; ширина границы скролла карты

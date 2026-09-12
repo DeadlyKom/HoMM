@@ -2,7 +2,7 @@
                 ifndef _MODULE_WORLD_UI_HANDLER_GAME_PAUSE_
                 define _MODULE_WORLD_UI_HANDLER_GAME_PAUSE_
 ; -----------------------------------------
-; обработчик игрового меню паузы
+; обработчик игрового слоя "меню паузы"
 ; In:
 ; Out:
 ; Corrupt:

@@ -6,6 +6,7 @@
                 include "Minimap.asm"
                 include "GamePause.asm"
                 include "GameWindow.asm"
+                include "GameUIIcons.asm"
                 endmodule
 
                 endif ; ~_MODULE_WORLD_UI_HANDLER_INCLUDE_

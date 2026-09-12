@@ -21,6 +21,7 @@ Call:
                 JP_SET_PAGE_A                                                   ; включение страниц
 
 .RET            RET
+.JP_HL          JP (HL)
 .JP_IX          JP (IX)
 .JP_IY          JP (IY)
 

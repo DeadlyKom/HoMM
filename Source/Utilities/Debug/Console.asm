@@ -245,7 +245,6 @@ SetDrawToTwo:   LD A, TwoScreen-DrawChar.Function-1
                 RET
 
                 display " - Console:\t\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
-
                 endmodule
 
                 endif ; ~_DEBUG_CONSOLE_
