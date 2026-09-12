@@ -4,24 +4,25 @@
 
                 module Icons
 Index:          ; вычисление индексов записей в таблице спрайтов
-.Diamond        EQU (SpriteInfo.Diamond        - SpriteInfo) / FSprite
-.Center         EQU (SpriteInfo.Center         - SpriteInfo) / FSprite
-.Character      EQU (SpriteInfo.Character      - SpriteInfo) / FSprite
-.SpellsBook     EQU (SpriteInfo.SpellsBook     - SpriteInfo) / FSprite
-.Inventory      EQU (SpriteInfo.Inventory      - SpriteInfo) / FSprite
-.Quest          EQU (SpriteInfo.Quest          - SpriteInfo) / FSprite
-.Map            EQU (SpriteInfo.Map            - SpriteInfo) / FSprite
-.Options        EQU (SpriteInfo.Options        - SpriteInfo) / FSprite
-.TopLeftSlot    EQU (SpriteInfo.TopLeftSlot    - SpriteInfo) / FSprite
-.TopRightSlot   EQU (SpriteInfo.TopRightSlot   - SpriteInfo) / FSprite
-.BottomLeftSlot EQU (SpriteInfo.BottomLeftSlot - SpriteInfo) / FSprite
-.BottomRSlot    EQU (SpriteInfo.BottomRSlot    - SpriteInfo) / FSprite
-.Cloud          EQU (SpriteInfo.Cloud          - SpriteInfo) / FSprite
-.Freeze         EQU (SpriteInfo.Freeze         - SpriteInfo) / FSprite
-.Rain           EQU (SpriteInfo.Rain           - SpriteInfo) / FSprite
-.Thunder        EQU (SpriteInfo.Thunder        - SpriteInfo) / FSprite
-.Tornado        EQU (SpriteInfo.Tornado        - SpriteInfo) / FSprite
-.Wind           EQU (SpriteInfo.Wind           - SpriteInfo) / FSprite
+.None           EQU #00
+.Diamond        EQU (SpriteInfo.Diamond     - SpriteInfo) / FSprite
+.Center         EQU (SpriteInfo.Center      - SpriteInfo) / FSprite
+.Character      EQU (SpriteInfo.Character   - SpriteInfo) / FSprite
+.SpellsBook     EQU (SpriteInfo.SpellsBook  - SpriteInfo) / FSprite
+.Inventory      EQU (SpriteInfo.Inventory   - SpriteInfo) / FSprite
+.Quest          EQU (SpriteInfo.Quest       - SpriteInfo) / FSprite
+.Map            EQU (SpriteInfo.Map         - SpriteInfo) / FSprite
+.Options        EQU (SpriteInfo.Options     - SpriteInfo) / FSprite
+.SlotTL         EQU (SpriteInfo.SlotTL      - SpriteInfo) / FSprite
+.SlotTR         EQU (SpriteInfo.SlotTR      - SpriteInfo) / FSprite
+.SlotBL         EQU (SpriteInfo.SlotBL      - SpriteInfo) / FSprite
+.SlotBR         EQU (SpriteInfo.SlotBR      - SpriteInfo) / FSprite
+.Cloud          EQU (SpriteInfo.Cloud       - SpriteInfo) / FSprite
+.Freeze         EQU (SpriteInfo.Freeze      - SpriteInfo) / FSprite
+.Rain           EQU (SpriteInfo.Rain        - SpriteInfo) / FSprite
+.Thunder        EQU (SpriteInfo.Thunder     - SpriteInfo) / FSprite
+.Tornado        EQU (SpriteInfo.Tornado     - SpriteInfo) / FSprite
+.Wind           EQU (SpriteInfo.Wind        - SpriteInfo) / FSprite
 
 SpriteInfo:     ; основные иконки
 .Diamond        SPRITE 23, 23,  0,  0, OR_XOR,  0, Sprite.Diamond               ; ромб под основные иконки
@@ -34,10 +35,10 @@ SpriteInfo:     ; основные иконки
 .Options        SPRITE 22, 23,  0,  0, OR_XOR,  0, Sprite.Options               ; иконка "настройки"
 
                 ; вспомогательные иконки
-.TopLeftSlot    SPRITE 13, 13,  0,  0, OR_XOR,  0, Sprite.TopLeftSlot           ; ромб под вспомогательные иконки "верхний левый"
-.TopRightSlot   SPRITE 13, 13,  0,  0, OR_XOR,  0, Sprite.TopRightSlot          ; ромб под вспомогательные иконки "верхний правый"
-.BottomLeftSlot SPRITE 13, 13,  0,  0, OR_XOR,  0, Sprite.BottomLeftSlot        ; ромб под вспомогательные иконки "нижний левый"
-.BottomRSlot    SPRITE 13, 13,  0,  0, OR_XOR,  0, Sprite.BottomRightSlot       ; ромб под вспомогательные иконки "нижний правый"
+.SlotTL         SPRITE 13, 13,  0,  0, OR_XOR,  0, Sprite.SlotTL                ; ромб под вспомогательные иконки "верхний левый"
+.SlotTR         SPRITE 13, 13,  0,  0, OR_XOR,  0, Sprite.SlotTR                ; ромб под вспомогательные иконки "верхний правый"
+.SlotBL         SPRITE 13, 13,  0,  0, OR_XOR,  0, Sprite.SlotBL                ; ромб под вспомогательные иконки "нижний левый"
+.SlotBR         SPRITE 13, 13,  0,  0, OR_XOR,  0, Sprite.SlotBR                ; ромб под вспомогательные иконки "нижний правый"
 .Cloud          SPRITE 14,  9,  0,  0, OR_XOR,  0, Sprite.Cloud                 ; иконка "облако"
 .Freeze         SPRITE 11, 11,  0,  0, OR_XOR,  0, Sprite.Freeze                ; иконка "замораживания"
 .Rain           SPRITE 12, 10,  0,  0, OR_XOR,  0, Sprite.Rain                  ; иконка "дождь"
@@ -47,10 +48,10 @@ SpriteInfo:     ; основные иконки
 
 Sprite:
 .Diamond        incbin "small_diamond.bin"
-.TopLeftSlot    incbin "top_left_diamond_slot.bin"
-.TopRightSlot   incbin "top_right_diamond_slot.bin"
-.BottomLeftSlot incbin "bottom_left_diamond_slot.bin"
-.BottomRightSlot incbin "bottom_right_diamond_slot.bin"
+.SlotTL         incbin "top_left_diamond_slot.bin"
+.SlotTR         incbin "top_right_diamond_slot.bin"
+.SlotBL         incbin "bottom_left_diamond_slot.bin"
+.SlotBR         incbin "bottom_right_diamond_slot.bin"
 .Center         incbin "center.bin"
 .Character      incbin "character.bin"
 .SpellsBook     incbin "spells_book.bin"
