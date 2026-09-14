@@ -14,6 +14,6 @@ Launch:         ; сохранение страницы загруженного
                 LD A, (GameState.Assets + FAssets.Address.Page)
                 LD (Kernel.Modules.Characteristics.Page), A
                 RET
-                display " - Launch 'Characteristics':\t\t\t\t\t\t\t= busy [ ", /D, $-Launch, " byte(s) ]"
+                display " - Launch 'Characteristics':\t\t\t\t\t\t= busy [ ", /D, $-Launch, " byte(s) ]"
 
                 endif ; ~_MODULE_CHARACTERISTICS_LAUNCH_

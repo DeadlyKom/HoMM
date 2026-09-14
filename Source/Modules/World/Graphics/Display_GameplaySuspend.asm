@@ -157,6 +157,6 @@ GameplaySuspend:; расчёт адреса задержки текущего ш
                 SET_FLAG_MODIFY World.Base.Render.PipelineHexagons.SuspendFlag
                 RET
 
-                display " - Display gameplay suspend:\t\t\t\t\t= busy [ ", /D, $-GameplaySuspend, " byte(s) ]"
+                display " - Display gameplay suspend:\t\t\t\t\t\t= busy [ ", /D, $-GameplaySuspend, " byte(s) ]"
 
                 endif ; ~_MODULE_WORLD_DISPLAY_GAMEPLAY_SUSPEND_
