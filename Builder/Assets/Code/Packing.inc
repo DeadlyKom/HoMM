@@ -12,5 +12,6 @@
                 include "Original/MainMenu/Pack.inc"                            ; ASSETS_ID_MAIN_MENU
                 include "Original/Session/Pack.inc"                             ; ASSETS_ID_SESSION
                 include "Original/World/Pack.inc"                               ; ASSETS_ID_WORLD
+                include "Original/Characteristics/Pack.inc"                     ; ASSETS_ID_CHARACTERISTICS
 
                 endif ; ~_ASSETS_PACKING_CODE_INCLUDE_

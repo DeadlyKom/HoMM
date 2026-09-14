@@ -133,6 +133,64 @@ Size            EQU $-Begin
                 endif
                 ASSETS_SIZE PackedFile?
                 endm
+; ------------------------------------------------------------
+; COMPRESS_ASSET_CODE
+; упаковка перемещаемого кода с таблицей релокации
+; RawFile?     - путь несжатого пакета без суффикса прохода
+; PackedFile?  - путь итогового сжатого пакета
+; Begin и Size исходного кода задаются модулем при PASS = 0/1
+; ------------------------------------------------------------
+COMPRESS_ASSET_CODE macro RawFile?, PackedFile?
+                ; проверка режима полной пересборки
+                ifdef _REBUILD
+
+                ; сохранение кода первого прохода
+                if     PASS = 0
+                savebin RawFile? .. ".pass-1", Begin, Size
+
+                ; сохранение кода второго прохода
+                elseif PASS = 1
+                savebin RawFile? .. ".pass-2", Begin, Size
+
+                ; формирование перемещаемого пакета на завершающем проходе
+                elseif PASS = 2
+
+                ORG 0x0000
+Begin:          EQU $
+                include "Source/Functions/AdjustmentAddress.asm"                ; корректирование адресов (всегда первая)
+
+                ; формирование таблицы релокации по двум проходам
+                define __ASSET_CODE_RAW_FILE__ RawFile?
+                lua allpass
+                    local raw = sj.get_define("__ASSET_CODE_RAW_FILE__")
+                    raw = raw:match("^%s*(.-)%s*$")
+                    raw = raw:match('^"(.*)"$') or raw
+                    MakeTransitionTable(raw .. ".pass-1", raw .. ".pass-2")
+                endlua
+                undefine __ASSET_CODE_RAW_FILE__
+
+                ; добавление кода после таблицы релокации
+                incbin RawFile? .. ".pass-1"
+
+                ; расчёт полного размера перемещаемого пакета
+Size            EQU $                                                           ; размер кода, таблицы и обработчика релокации
+
+                ; сохранение и сжатие пакета
+                COMPRESSED_ASSET RawFile?, PackedFile?
+                endif
+                endif
+
+                ; чтение размера готового архива без повторной упаковки
+                if PASS = 2
+                ifndef _REBUILD
+                ASSETS_SIZE PackedFile?
+                endif
+                else
+                ; предварительные размеры до создания архива
+Size.ar         EQU 0
+Size.Sector.ar  EQU 0
+                endif
+                endm
 SAVE_PACK       macro RawFile?
 
                 if !(exist Size)

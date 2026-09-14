@@ -207,7 +207,7 @@
 ### Состав Include-цепочки
 
 `Source/Modules/World/Include.inc` подключает:
-- `Kernel_Bind.inc`
+- `Kernel/Bind.inc`
 - `Launch.asm`
 - `UI/Include.inc`
 - `Input/Include.inc`

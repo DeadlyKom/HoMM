@@ -3,11 +3,11 @@
                 define _MODULE_WORLD_INCLUDE_
 
                 include "ProgressTimeline.inc"                                  ; (0)
-                include "Kernel_Bind.inc"
+                include "Kernel/Bind.inc"                                       ; (1)
                 include "Launch.asm"
-                include "Launch/Include.inc"
                 include "UI/Include.inc"
                 include "Input/Include.inc"
+                include "Launch/Include.inc"
                 include "Tilemap/Include.inc"
                 include "Graphics/Include.inc"
                 include "Utilities/Include.inc"

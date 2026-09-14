@@ -36,6 +36,8 @@
                 ADD_ASSETS 1, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/Session.pack.ar", Session.Size.Sector.ar
                 ; ASSETS_ID_WORLD
                 ADD_ASSETS 1, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/world.pack.ar", World.Size.Sector.ar
+                ; ASSETS_ID_CHARACTERISTICS
+                ADD_ASSETS 1, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/Characteristics.pack.ar", Characteristics.Size.Sector.ar
                 ; ASSETS_ID_DEFAULT_SETTINGS
                 ADD_ASSETS 3, Page.ObjectDefaultSettings, Adr.ObjectDefaultSettings, "Builder/Assets/Metadata/Compressed/Default/DefaultSettings.meta.ar", Metadata.Default.Size.Sector.ar
                 ; ASSETS_ID_CURSOR_PACK

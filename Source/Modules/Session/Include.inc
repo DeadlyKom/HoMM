@@ -2,7 +2,7 @@
                 ifndef _MODULE_SESSION_INCLUDE_
                 define _MODULE_SESSION_INCLUDE_
 
-                include "Kernel/Bind.inc"
+                include "Kernel/Bind.inc"                                       ; (0)
                 include "Launch.asm"
                 include "Kernel/Include.inc"
                 include "Utilities/Include.inc"

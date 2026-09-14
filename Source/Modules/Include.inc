@@ -11,6 +11,7 @@ Begin           EQU $
                 include "Session/Execute.asm"
                 include "Progress/Execute.asm"
                 include "MainMenu/Execute.asm"
+                include "Characteristics/Execute.asm"
 Size            EQU $-Begin
                 display " - Modules:\t\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, Size, " byte(s)  ]"
                 endmodule

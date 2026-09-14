@@ -73,7 +73,7 @@
 ## `Source/Modules/World/Include.inc`
 
 Этот include-файл подключает:
-- `Kernel_Bind.inc`
+- `Kernel/Bind.inc`
 - `Launch.asm`
 - `UI/Include.inc`
 - `Input/Include.inc`

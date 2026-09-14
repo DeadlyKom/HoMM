@@ -30,6 +30,7 @@ REG_ASSETS_ID_DEBUG macro Label?
                     REG_ASSETS_ID       ASSETS_ID_FONT_RU_8_PARTICLE            ; русский шрифт 8 (для частиц)
                     REG_ASSETS_ID       ASSETS_ID_SESSION                       ; сессия
                     REG_ASSETS_ID       ASSETS_ID_WORLD                         ; мир
+                    REG_ASSETS_ID       ASSETS_ID_CHARACTERISTICS               ; характеристики
                     REG_ASSETS_ID       ASSETS_ID_DEFAULT_SETTINGS              ; дефолтные настройки объектов
                     REG_ASSETS_ID       ASSETS_ID_CURSOR_PACK                   ; графика: курсора
                     REG_ASSETS_ID       ASSETS_ID_HERO_PACK                     ; графика: героев

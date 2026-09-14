@@ -115,6 +115,11 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     World.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - World\t\t\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_CHARACTERISTICS, \
+                                    Characteristics.Size, \
+                                    Characteristics.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Characteristics\t\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_DEFAULT_SETTINGS, \
                                     Metadata.Default.Size, \
                                     Metadata.Default.Size.Sector.ar, \
