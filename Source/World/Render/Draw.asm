@@ -50,8 +50,8 @@ Draw:           ; -----------------------------------------
 
                 ; принудительное обновление Tilemap- и Render-буферов
                 SET_PAGE_MAP                                                    ; включить страницу работы с картой
-                CALL World.Base.Tilemap.Update.RenderBuffer
-                CALL World.Base.Tilemap.Update.TileBuffer
+                CALL World.SharedCode.Tilemap.Update.RenderBuffer
+                CALL World.SharedCode.Tilemap.Update.TileBuffer
                 CALL Draw.HexDLGeneration
 
 .Update         ; -----------------------------------------
@@ -118,9 +118,9 @@ Draw:           ; -----------------------------------------
                 ; обновление Tilemap- и Render-буферов
                 SET_PAGE_MAP                                                    ; включить страницу работы с картой
                 CHECK_VIEW_FLAG UPDATE_RENDER_BUF_BIT
-                CALL NZ, World.Base.Tilemap.Update.RenderBuffer
+                CALL NZ, World.SharedCode.Tilemap.Update.RenderBuffer
                 CHECK_VIEW_FLAG UPDATE_TILEMAP_BUF_BIT
-                CALL NZ, World.Base.Tilemap.Update.TileBuffer
+                CALL NZ, World.SharedCode.Tilemap.Update.TileBuffer
                 ; -----------------------------------------
                 CALL Fog.Make
                 CALL Fog.Tick

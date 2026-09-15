@@ -175,7 +175,7 @@ DebugInfo:      ifdef DEBUG_INFO_COORDINATES
 ; отображение размера видимой области в чанках
 ; ----------------------------------------
                 ifdef DEBUG_INFO_VISIBLE_AREA
-.VisibleArea    LD HL, (World.Base.Render.Object.InView.VisibleSize)
+.VisibleArea    LD HL, (World.SharedCode.Render.Object.InView.VisibleSize)
 .VisibleArea.Value EQU $+1
                 LD DE, #FFFF                                                    ; последний отображённый размер видимой области
                 OR A
@@ -191,19 +191,19 @@ DebugInfo:      ifdef DEBUG_INFO_COORDINATES
 
                 LD DE, #170C
                 CALL Console.SetCursor
-                LD A, (World.Base.Render.Object.InView.VisibleSize + 0)
+                LD A, (World.SharedCode.Render.Object.InView.VisibleSize + 0)
                 CALL Console.DrawByte
                 LD A, ','
                 CALL Console.DrawChar
                 RES_FLAG_MODIFY DebugInfo.VisibleArea.Flag                      ; сброс флага, после завершения отрисовки
-                LD A, (World.Base.Render.Object.InView.VisibleSize + 1)
+                LD A, (World.SharedCode.Render.Object.InView.VisibleSize + 1)
                 JP Console.DrawByte
                 endif
 ; -----------------------------------------
 ; отображение количества видимых объектов
 ; ----------------------------------------
                 ifdef DEBUG_INFO_VISIBLE_OBJECTS
-.VisibleObjects LD A, (World.Base.Render.Object.InView.Num)
+.VisibleObjects LD A, (World.SharedCode.Render.Object.InView.Num)
 .VisibleObjects.Value EQU $+1
                 CP #FF                                                          ; последнее отображённое количество видимых объектов
                 JR Z, .VisibleObjects.CheckFlag
@@ -217,7 +217,7 @@ DebugInfo:      ifdef DEBUG_INFO_COORDINATES
                 LD DE, #1712
                 CALL Console.SetCursor
                 RES_FLAG_MODIFY DebugInfo.VisibleObjects.Flag                   ; сброс флага, после завершения отрисовки
-                LD A, (World.Base.Render.Object.InView.Num)
+                LD A, (World.SharedCode.Render.Object.InView.Num)
                 JP Console.DrawByte
                 endif
 ; -----------------------------------------

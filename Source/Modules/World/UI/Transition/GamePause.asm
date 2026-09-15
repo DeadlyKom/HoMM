@@ -16,8 +16,8 @@ GamePause:      ; подготовка экрана
                 SET_RENDER_FLAG SWAP_DISABLE_BIT                                ; запрет переключения экранов
 
                 ; установка активного UI слоя
-                SET_UI_LAYER World.Base.Layers.GamePause, \
-                                World.Base.Layers.GamePause.Num
+                SET_UI_LAYER World.SharedCode.Layers.GamePause, \
+                                World.SharedCode.Layers.GamePause.Num
 
                 CALL World.Tilemap.ResetMapScroll                               ; сброс перемещения скролла карты
                 RES_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             ; сброс запроса обновления скролла карты

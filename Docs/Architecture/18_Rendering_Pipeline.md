@@ -152,15 +152,15 @@ Render pipeline мира начинается не в `Draw`, а раньше �
 - включает нужный режим render flags.
 
 Ключевые строки:
-- `SET_MAIN_LOOP World.Base.Loop`
-- `SET_MAIN_SWAP World.Base.Render.PipelineHexagons.Swap`
-- `SET_WORLD_RENDER World.Base.Render.Draw`
-- `SET_USER_HANDLER World.Base.Interrupt`
+- `SET_MAIN_LOOP World.SharedCode.Loop`
+- `SET_MAIN_SWAP World.SharedCode.Render.PipelineHexagons.Swap`
+- `SET_WORLD_RENDER World.SharedCode.Render.Draw`
+- `SET_USER_HANDLER World.SharedCode.Interrupt`
 - `SET_RENDER_SHADOW`
 
 То есть pipeline начинается с того, что модуль `World` встраивает свои обработчики в общую управляющую схему приложения.
 
-## Каркас рендер-цикла: роль `World.Base.Loop`
+## Каркас рендер-цикла: роль `World.SharedCode.Loop`
 
 `Source/World/Loop.asm` — это диспетчер render-цикла.
 Он не рисует сам, а регулирует, в какую фазу система имеет право войти.
@@ -170,7 +170,7 @@ Render pipeline мира начинается не в `Draw`, а раньше �
 ### Шаг 1. Проверить, завершён ли длинный swap
 
 Сначала цикл смотрит `SWAPPED_PENDING_BIT`.
-Если этот бит установлен, управление немедленно уходит в `World.Base.Render.PipelineHexagons.MemcpyScreen`.
+Если этот бит установлен, управление немедленно уходит в `World.SharedCode.Render.PipelineHexagons.MemcpyScreen`.
 
 Это значит:
 - новый draw запускать ещё нельзя;
@@ -193,12 +193,12 @@ Render pipeline мира начинается не в `Draw`, а раньше �
 
 Через patch-point `.FuncDraw` loop переходит в фактическую draw-фазу мира.
 
-Итак, `World.Base.Loop` — это gatekeeper:
+Итак, `World.SharedCode.Loop` — это gatekeeper:
 - он не даёт рендеру начаться слишком рано;
 - он принудительно завершает незакрытые экранные операции;
 - он удерживает чистую последовательность кадров.
 
-## Внутренние фазы `World.Base.Render.Draw`
+## Внутренние фазы `World.SharedCode.Render.Draw`
 
 `Source/World/Render/Draw.asm` делит кадр на несколько логических состояний:
 - transition;
@@ -384,7 +384,7 @@ Render pipeline мира начинается не в `Draw`, а раньше �
 ### Фаза 2. Прерывание инициирует swap
 
 В `Source/World/Interrupt.asm`, если `FRAME_READY_BIT` установлен, вызывается `Render.Swap`.
-Через `SET_MAIN_SWAP` этот путь направлен не в обычный `Bootloader.EntryPoint.Swap.RET`, а в `World.Base.Render.PipelineHexagons.Swap`.
+Через `SET_MAIN_SWAP` этот путь направлен не в обычный `Bootloader.EntryPoint.Swap.RET`, а в `World.SharedCode.Render.PipelineHexagons.Swap`.
 
 ### Фаза 3. Мир показывает базовый экран
 
@@ -396,7 +396,7 @@ Render pipeline мира начинается не в `Draw`, а раньше �
 
 ### Фаза 4. Следующий оборот loop завершает перенос
 
-На следующем заходе `World.Base.Loop` видит `SWAPPED_PENDING_BIT` и вместо нового draw прыгает в `PipelineHexagons.MemcpyScreen`.
+На следующем заходе `World.SharedCode.Loop` видит `SWAPPED_PENDING_BIT` и вместо нового draw прыгает в `PipelineHexagons.MemcpyScreen`.
 
 Там выполняется:
 - блокировка курсорного memcpy-gate;

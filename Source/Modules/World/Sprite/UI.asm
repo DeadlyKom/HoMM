@@ -11,7 +11,7 @@
 ; Note:
 ; -----------------------------------------
 Load:           LD A, ASSETS_ID_UI_GAMEPLAY_COMMON_PACK
-                LD HL, World.Base.Render.Object.UI.Indexes
+                LD HL, World.SharedCode.Render.Object.UI.Indexes
                 LD DE, .HashSequence
                 JP World.Sprite.Load
 ; ⚠️ ВАЖНО ⚠️

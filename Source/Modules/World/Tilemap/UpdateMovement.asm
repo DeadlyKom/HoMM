@@ -78,7 +78,8 @@ UpdateMovement: RES_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             
 
 .Changed        ifdef _DEBUG
                 ifdef DEBUG_INFO_COORDINATES
-                SET_FLAG_MODIFY World.Base.Render.DebugInfo.Coordinates.Flag    ; установка флага, изменения координат мира
+                SET_FLAG_MODIFY \
+                    World.SharedCode.Render.DebugInfo.Coordinates.Flag          ; установка флага, изменения координат мира
                 endif
                 endif
                 SET_VIEW_FLAG_A UPDATE_RENDER_BUF_BIT                           ; установка флага обновления буфера рендера
@@ -88,11 +89,12 @@ UpdateMovement: RES_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             
                 LD DE, #0101
                 CALL SafeFill.b176
                 CALL Draw.HexDLGeneration
-                JP World.Base.Render.Update.MinimapView                         ; обновление маркера положения на миникарте
+                JP World.SharedCode.Render.Update.MinimapView                   ; обновление маркера положения на миникарте
 SetMapPosition  RES_VIEW_FLAG SET_MAP_POSITION_ON_MINIMAP_BIT                   ; сброс флага установки положения карты по мини-карте
                 ifdef _DEBUG
                 ifdef DEBUG_INFO_COORDINATES
-                SET_FLAG_MODIFY World.Base.Render.DebugInfo.Coordinates.Flag    ; установка флага, изменения координат мира
+                SET_FLAG_MODIFY \
+                    World.SharedCode.Render.DebugInfo.Coordinates.Flag          ; установка флага, изменения координат мира
                 endif
                 endif
                 VIEW_FLAGS

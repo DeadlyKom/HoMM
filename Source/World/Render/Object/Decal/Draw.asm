@@ -12,7 +12,7 @@
 ; -----------------------------------------
 Draw:           ; выравнивание экранного положения по знакоместу
                 BIT LAYER_OBJECT_ATTR_ALIGN_BIT, (IY + FObjectDecal.Layer.Flags)
-                CALL NZ, World.Base.Render.Object.LayerObject.AlignToAttr
-                JP World.Base.Render.Object.Simple.Draw                         ; отображение спрайта
+                CALL NZ, World.SharedCode.Render.Object.LayerObject.AlignToAttr
+                JP World.SharedCode.Render.Object.Simple.Draw                   ; отображение спрайта
 
                 endif ; ~_WORLD_RENDER_OBJECT_DECAL_DRAW_

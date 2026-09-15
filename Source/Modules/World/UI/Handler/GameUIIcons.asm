@@ -10,7 +10,7 @@
 ; -----------------------------------------
 GameUIIcons:    ; очистка
                 ifdef _DEBUG
-                LD BC, World.Base.Render.IconDebug.Text.Empty
+                LD BC, World.SharedCode.Render.IconDebug.Text.Empty
                 CALL .Draw
                 endif
                 
@@ -104,19 +104,19 @@ GameUIIcons:    ; очистка
 ; Note:
 ; -----------------------------------------
                 ifdef _DEBUG
-.Center         LD BC, World.Base.Render.IconDebug.Text.Center
+.Center         LD BC, World.SharedCode.Render.IconDebug.Text.Center
                 JR .Draw
-.Character      LD BC, World.Base.Render.IconDebug.Text.Character
+.Character      LD BC, World.SharedCode.Render.IconDebug.Text.Character
                 JR .Draw
-.SpellsBook     LD BC, World.Base.Render.IconDebug.Text.Spells
+.SpellsBook     LD BC, World.SharedCode.Render.IconDebug.Text.Spells
                 JR .Draw
-.Inventory      LD BC, World.Base.Render.IconDebug.Text.Inventory
+.Inventory      LD BC, World.SharedCode.Render.IconDebug.Text.Inventory
                 JR .Draw
-.Quest          LD BC, World.Base.Render.IconDebug.Text.Quest
+.Quest          LD BC, World.SharedCode.Render.IconDebug.Text.Quest
                 JR .Draw
-.Map            LD BC, World.Base.Render.IconDebug.Text.Map
+.Map            LD BC, World.SharedCode.Render.IconDebug.Text.Map
                 JR .Draw
-.Options        LD BC, World.Base.Render.IconDebug.Text.Options
+.Options        LD BC, World.SharedCode.Render.IconDebug.Text.Options
 .Draw           ; сохранение флагов рендера и режима консоли
                 LD A, (GameState.Render)
                 PUSH AF

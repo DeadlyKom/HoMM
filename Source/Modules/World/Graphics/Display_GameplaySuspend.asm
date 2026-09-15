@@ -47,7 +47,7 @@ GameplaySuspend:; расчёт адреса задержки текущего ш
                 LD (HL), #01                                                    ; начало цикла двух последних кадров
                 
 .DrawFrame      ; запрос переноса нового кадра индикатора на теневой экран
-                SET_FLAG_MODIFY World.Base.Render.PipelineHexagons.SuspendFlag
+                SET_FLAG_MODIFY World.SharedCode.Render.PipelineHexagons.SuspendFlag
 
                 ; чтение текущего кадра анимации
 .Frame          EQU $+1
@@ -154,7 +154,7 @@ GameplaySuspend:; расчёт адреса задержки текущего ш
                 SET_ATTR_IPB BLACK, WHITE, 0
 
                 ; запрос переноса восстановленного участка рамки на теневой экран
-                SET_FLAG_MODIFY World.Base.Render.PipelineHexagons.SuspendFlag
+                SET_FLAG_MODIFY World.SharedCode.Render.PipelineHexagons.SuspendFlag
                 RET
 
                 display " - Display gameplay suspend:\t\t\t\t\t\t= busy [ ", /D, $-GameplaySuspend, " byte(s) ]"

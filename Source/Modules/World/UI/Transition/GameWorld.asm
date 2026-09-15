@@ -13,11 +13,11 @@ GameWorld:      ; подготовка экрана
                 CALL_IN_PAGE PAGE_7, Func.BaseScrcpy                            ; восстановление базового экрана
                 HALT
                 RES_RENDER_FLAG SWAP_DISABLE_BIT                                ; разрешение переключения экранов
-                RES_FLAG_MODIFY World.Base.Render.CursorMemcpyGate.Flag         ; разрешение работы с буфером курсора
+                RES_FLAG_MODIFY World.SharedCode.Render.CursorMemcpyGate.Flag   ; разрешение работы с буфером курсора
 
                 ; установка активного UI слоя
-                SET_UI_LAYER World.Base.Layers.GameWorld, \
-                                World.Base.Layers.GameWorld.Num
+                SET_UI_LAYER World.SharedCode.Layers.GameWorld, \
+                                World.SharedCode.Layers.GameWorld.Num
 
                 RES_TICK_CONTROL_FLAG GAME_PAUSE_BIT                            ; выключить паузу игры
                 JP UI.Runtime.Complete                                          ; завершить переход смены UI режима

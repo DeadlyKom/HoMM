@@ -85,9 +85,9 @@ PipelineHexagons:
                 ;       * сброс флагов готовности экрана
                 ; -----------------------------------------
                 SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
-                CALL World.Base.Render.Object.InView                            ; формирование списка объектов в области видимости
+                CALL World.SharedCode.Render.Object.InView                      ; формирование списка объектов в области видимости
                 PUSH AF
-                CALL NZ, World.Base.Render.Object.DirtyEnvir                    ; анализ видимых объектов и выставление флагов гексагонов, которые требуется перерисовать
+                CALL NZ, World.SharedCode.Render.Object.DirtyEnvir              ; анализ видимых объектов и выставление флагов гексагонов, которые требуется перерисовать
 
                 SET_PAGE_MAP                                                    ; включить страницу работы с картой
                 CALL BufferUtilities.AdjRenderBufCol                            ; корректировка столбцов рендер буфера
@@ -128,7 +128,7 @@ PipelineHexagons:
                 JP_SHOW_BASE_SCREEN                                             ; отображение базового экрана
 
 .MemcpyScreen   ; ToDo: см Interrupt.Memcpy описание ошибки
-                ; RESTORE_SCR World.Base.Interrupt.Memcpy
+                ; RESTORE_SCR World.SharedCode.Interrupt.Memcpy
                 
                 ; ToDo: мб такая ситуация, когда за время копирование, данные в буфере фона курсора устарели
                 ;       придётся их копировать в другой и восстанавливать из него

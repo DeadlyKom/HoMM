@@ -19,7 +19,7 @@ Draw:           ; опредение объекта привязки
                 ; расчёт экранного положения объекта привязки
                 PUSH IY                                                         ; сохранение адреса UI объекта
                 CALL Object.Utilities.GetAdr.IY
-                CALL World.Base.Render.Object.IsVisible
+                CALL World.SharedCode.Render.Object.IsVisible
                 JR C, .NotVisible                                               ; переход, если объект привязки не виден
 
                 ; преобразование положения объекта относительно экрана
@@ -48,7 +48,7 @@ Draw:           ; опредение объекта привязки
                 endif
 
 .NoneAnchor     ; проверка видимости объекта
-                CALL World.Base.Render.Object.IsVisible
+                CALL World.SharedCode.Render.Object.IsVisible
                 JR NC, Draw.NotAnchor                                           ; переход, если объект виден
 
                 OR A                                                            ; сброс флага переполнения, объект не виден
@@ -56,7 +56,7 @@ Draw:           ; опредение объекта привязки
 
 .UI             ; выравнивание экранного положения по знакоместу
                 BIT LAYER_OBJECT_ATTR_ALIGN_BIT, (IY + FObjectUI.Layer.Flags)
-                CALL NZ, World.Base.Render.Object.LayerObject.AlignToAttr
+                CALL NZ, World.SharedCode.Render.Object.LayerObject.AlignToAttr
 
                 ; опредление типа объекта UI (в старшем полубайте, храниться смещение индекса)
                 LD A, (IY + FObject.Settings)                                   ; настройки объекта по умолчанию
@@ -87,7 +87,7 @@ Draw:           ; опредение объекта привязки
                 RET NC                                                          ; выход, если спрайт отсечён
 
                 SET_PAGE_OBJECT                                                 ; восстановление страницы работы с объектами
-                CALL World.Base.Render.Object.Draw.StoreBound                   ; сохранение рассчитанного bound в UI объекте
+                CALL World.SharedCode.Render.Object.Draw.StoreBound             ; сохранение рассчитанного bound в UI объекте
                 SCF                                                             ; установка флага переполнения, спрайт виден
                 RET
 

@@ -3,7 +3,7 @@
                 define _MODULE_CHARACTERISTICS_LAUNCH_INCLUDE_
 
                 module Launch
-                ; функции инициализации запуска модуля
+                include "Deploy.asm"
                 endmodule
 
                 endif ; ~_MODULE_CHARACTERISTICS_LAUNCH_INCLUDE_

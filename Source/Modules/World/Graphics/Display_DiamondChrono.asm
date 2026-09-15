@@ -57,7 +57,7 @@ DiamondChrono:
                 CALL Firmament.Display
 
                 ; установка запроса переноса обновлённого ромба
-                SET_FLAG_MODIFY World.Base.Render.PipelineHexagons.DiamondFlag
+                SET_FLAG_MODIFY World.SharedCode.Render.PipelineHexagons.DiamondFlag
                 RET
 ; -----------------------------------------
 ; расчёт фазы суток по текущему времени "мира"

@@ -23,7 +23,8 @@ GameplayWindow: ; подготовка основного экрана
 
                 ; подготовка теневого экрана
                 CALL Func.ShadowScrcpyInPage                                    ; копирование экрана в теневой
-                RES_FLAG_MODIFY World.Base.Render.PipelineHexagons.DiamondFlag  ; сброс запроса переноса ромба после полной копии экрана
+                RES_FLAG_MODIFY \
+                    World.SharedCode.Render.PipelineHexagons.DiamondFlag        ; сброс запроса переноса ромба после полной копии экрана
                 CALL Console.SetDrawToTwo                                       ; отображение консоли в 2х экранах
                 JP_SHOW_SHADOW_SCREEN                                           ; отображение теневого экрана
 

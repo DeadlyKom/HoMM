@@ -11,7 +11,7 @@
 ; Note:
 ; -----------------------------------------
 Load:           LD A, ASSETS_ID_HERO_PACK
-                LD HL, World.Base.Render.Object.Character.Indexes
+                LD HL, World.SharedCode.Render.Object.Character.Indexes
                 LD DE, .HashSequence
                 JP World.Sprite.Load
 ; ⚠️ ВАЖНО ⚠️

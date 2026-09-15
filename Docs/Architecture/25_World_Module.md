@@ -47,7 +47,7 @@
 ## Launch-Фаза
 
 `Source/Modules/World/Launch.asm` — один из самых информативных файлов проекта.
-Он показывает, что запуск мира включает не просто вызов `World.Base.Loop`, а целую последовательность сборки runtime-среды.
+Он показывает, что запуск мира включает не просто вызов `World.SharedCode.Loop`, а целую последовательность сборки runtime-среды.
 
 ### Что делает Launch
 
@@ -90,7 +90,7 @@
 
 ## Shared Runtime слой `Source/World/`
 
-`Source/World/Include.inc` формирует `module Base` и включает:
+`Source/World/Include.inc` формирует `module SharedCode` и включает:
 - `Loop.asm`
 - `Interrupt.asm`
 - `Render/Include.inc`
@@ -210,15 +210,15 @@ Render мира — это не просто “нарисовать всё”.
 ```mermaid
 flowchart TD
     World --> Launch[Launch]
-    Launch --> Base[Source/World/Base]
+    Launch --> SharedCode[World.SharedCode]
     Launch --> Input[Modules/World/Input]
     Launch --> UI[Modules/World/UI]
     Launch --> Tilemap[Modules/World/Tilemap]
     Launch --> Graphics[Modules/World/Graphics]
-    Base --> Loop[Loop]
-    Base --> Interrupt[Interrupt]
-    Base --> Render[Render]
-    Base --> Layers[UI Layers]
+    SharedCode --> Loop[Loop]
+    SharedCode --> Interrupt[Interrupt]
+    SharedCode --> Render[Render]
+    SharedCode --> Layers[UI Layers]
 ```
 
 ## Практический итог главы

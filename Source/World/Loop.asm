@@ -33,7 +33,7 @@ Loop:
                 JR$
 
 .MemcpyScreen   ; завершение обработки уже показанного кадра и подготовка экранов к следующей отрисовке
-                CALL World.Base.Render.PipelineHexagons.MemcpyScreen
+                CALL World.SharedCode.Render.PipelineHexagons.MemcpyScreen
 
 .TickScheduler  ; проверка флага паузы игры
                 CHECK_TICK_CONTROL_FLAG GAME_PAUSE_BIT
