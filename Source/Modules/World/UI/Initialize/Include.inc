@@ -3,8 +3,8 @@
                 define _MODULE_WORLD_UI_INITIALIZE_INCLUDE_
 
                 module Initialize
-                include "GameWorld.asm"
-                include "GamePause.asm"
+                include "Layer_GameView.asm"
+                include "Layer_GamePause.asm"
                 include "PreviousMode.asm"
                 endmodule
 

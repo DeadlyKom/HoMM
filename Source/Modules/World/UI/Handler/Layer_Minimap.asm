@@ -1,6 +1,6 @@
 
-                ifndef _MODULE_WORLD_UI_HANDLER_MINIMAP_
-                define _MODULE_WORLD_UI_HANDLER_MINIMAP_
+                ifndef _MODULE_WORLD_UI_HANDLER_LAYER_MINIMAP_
+                define _MODULE_WORLD_UI_HANDLER_LAYER_MINIMAP_
 ; -----------------------------------------
 ; обработчик UI слоя "миникарты"
 ; In:
@@ -9,7 +9,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Minimap:        ; проверка нажатия клавиши "выбор"
+Layer_Minimap:  ; проверка нажатия клавиши "выбор"
                 LD A, (GameState.Input.Value)
                 BIT SELECT_KEY_BIT, A
                 RET Z                                                           ; выход, если небыла нажата клавиша "выбор"
@@ -125,4 +125,4 @@ Minimap:        ; проверка нажатия клавиши "выбор"
 ;                 JR NC, $+3
 ;                 INC B
 
-                endif ; ~_MODULE_WORLD_UI_HANDLER_MINIMAP_
+                endif ; ~_MODULE_WORLD_UI_HANDLER_LAYER_MINIMAP_

@@ -1,6 +1,6 @@
 
-                ifndef _MODULE_WORLD_UI_HANDLER_GAME_UI_ICONS_
-                define _MODULE_WORLD_UI_HANDLER_GAME_UI_ICONS_
+                ifndef _MODULE_WORLD_UI_HANDLER_LAYER_GAME_UI_
+                define _MODULE_WORLD_UI_HANDLER_LAYER_GAME_UI_
 ; -----------------------------------------
 ; обработчик UI слоя "иконок"
 ; In:
@@ -8,7 +8,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-GameUIIcons:    ; очистка
+Layer_GameUI:   ; очистка
                 ifdef _DEBUG
                 LD BC, World.SharedCode.Render.IconDebug.Text.Empty
                 CALL .Draw
@@ -106,8 +106,6 @@ GameUIIcons:    ; очистка
                 ifdef _DEBUG
 .Center         LD BC, World.SharedCode.Render.IconDebug.Text.Center
                 JR .Draw
-.Character      LD BC, World.SharedCode.Render.IconDebug.Text.Character
-                JR .Draw
 .SpellsBook     LD BC, World.SharedCode.Render.IconDebug.Text.Spells
                 JR .Draw
 .Inventory      LD BC, World.SharedCode.Render.IconDebug.Text.Inventory
@@ -140,7 +138,6 @@ GameUIIcons:    ; очистка
                 RET
                 else
 .Center         EQU Func.RET
-.Character      EQU Func.RET
 .SpellsBook     EQU Func.RET
 .Inventory      EQU Func.RET
 .Quest          EQU Func.RET
@@ -148,4 +145,4 @@ GameUIIcons:    ; очистка
 .Options        EQU Func.RET
                 endif
 
-                endif ; ~_MODULE_WORLD_UI_HANDLER_GAME_UI_ICONS_
+                endif ; ~_MODULE_WORLD_UI_HANDLER_LAYER_GAME_UI_

@@ -3,8 +3,9 @@
                 define _MODULE_WORLD_UI_TRANSITION_INCLUDE_
 
                 module Transition
-                include "GameWorld.asm"
-                include "GamePause.asm"
+                include "Layer_GameView.asm"
+                include "Layer_GamePause.asm"
+                include "ToCharacteristics.asm"
                 endmodule
 
                 endif ; ~_MODULE_WORLD_UI_TRANSITION_INCLUDE_

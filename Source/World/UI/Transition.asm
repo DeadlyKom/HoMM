@@ -2,7 +2,6 @@
                 ifndef _WORLD_UI_TRANSITION_
                 define _WORLD_UI_TRANSITION_
 
-                module UI
                 module Transition
 ; -----------------------------------------
 ; переход к обработчику игрового меню паузы
@@ -11,7 +10,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-GamePause:      JP World.UI.Transition.GamePause                                ; перейти к обработчику перехода
+Layer_GamePause:JP World.UI.Transition.Layer_GamePause                          ; перейти к обработчику перехода
 ; -----------------------------------------
 ; переход к обработчику игрового слоя
 ; In:
@@ -19,9 +18,7 @@ GamePause:      JP World.UI.Transition.GamePause                                
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-GameWorld:      JP World.UI.Transition.GameWorld                                ; перейти к обработчику перехода
-
-                endmodule
+Layer_GameView: JP World.UI.Transition.Layer_GameView                           ; перейти к обработчику перехода
                 endmodule
 
                 endif ; ~_WORLD_UI_TRANSITION_

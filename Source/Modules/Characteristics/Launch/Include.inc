@@ -4,6 +4,7 @@
 
                 module Launch
                 include "Deploy.asm"
+                include "CharacteristicsInitialize.asm"
                 endmodule
 
                 endif ; ~_MODULE_CHARACTERISTICS_LAUNCH_INCLUDE_

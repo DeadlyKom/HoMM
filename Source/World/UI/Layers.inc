@@ -27,19 +27,19 @@ GameWorld:      ; игровой слой
                 MAKE_UI_ELEMENT \
                 SCR_WORLD_POS_X << 3, SCR_WORLD_POS_Y << 3, \
                 SCR_WORLD_SIZE_X << 3, SCR_WORLD_SIZE_Y << 3, \
-                World.UI.Handler.GameWindow, \
+                World.UI.Handler.Layer_GameView, \
                 UI_VISIBLE | UI_ENABLED
 
                 MAKE_UI_ELEMENT \
                 SCR_WORLD_ICONS_POS_X << 3, SCR_WORLD_ICONS_POS_Y << 3, \
                 SCR_WORLD_ICONS_SIZE_X << 3, SCR_WORLD_ICONS_SIZE_Y << 3, \
-                World.UI.Handler.GameUIIcons, \
+                World.UI.Handler.Layer_GameUI, \
                 UI_VISIBLE | UI_ENABLED
                 
                 MAKE_UI_ELEMENT \
                 SCR_MINIMAP_POS_X << 3, SCR_MINIMAP_POS_Y << 3, \
                 SCR_MINIMAP_SIZE_X << 3, SCR_MINIMAP_SIZE_Y << 3, \
-                World.UI.Handler.Minimap, \
+                World.UI.Handler.Layer_Minimap, \
                 UI_VISIBLE | UI_ENABLED
 .ElementNum     EQU ($-GameWorld) / FUIElement
 
@@ -47,7 +47,7 @@ GamePause:      ; слой игрового меню паузы
                 MAKE_UI_ELEMENT \
                 #00, #00, \
                 LOW SCREEN_CURSOR_X, SCREEN_CURSOR_Y, \
-                World.UI.Handler.GamePause, \
+                World.UI.Handler.Layer_GamePause, \
                 UI_VISIBLE | UI_ENABLED
 .ElementNum     EQU ($-GamePause) / FUIElement
 

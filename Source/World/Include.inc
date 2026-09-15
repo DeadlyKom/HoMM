@@ -12,8 +12,7 @@
                 include "Interrupt.asm"
                 include "Render/Include.inc"
                 include "Tilemap/Include.inc"
-                include "Source/World/UI/Layers.inc"
-                include "Source/World/UI/Transition.asm"
+                include "Source/World/UI/Include.inc"
 Size            EQU $-Adr.World
 
                 ENT

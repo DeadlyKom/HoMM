@@ -63,7 +63,7 @@ Scan:           ; проверка HardWare ограничения мыши
 
                 ; запрос режима "остановки времени"
                 CALL Input.GameSuspend                                          ; обработать нажатие и отпускание
-                CALL World.UI.Handler.GameWindow.SyncButtons                    ; синхронизировать защёлки клавиш "выбор" и "отмена"
+                CALL World.UI.Handler.Layer_GameView.SyncButtons                ; синхронизировать защёлки клавиш "выбор" и "отмена"
 
                 ; проверка клавиш перемещения
                 LD A, (GameConfig.KeyAccel)

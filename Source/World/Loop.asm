@@ -30,7 +30,23 @@ Loop:
 
                 ; подготовка флагов для перехода между циклами
                 SET_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE
-                JR$
+                
+                ; выбор запускаемого модуля по запрошенному UI режиму
+                LD A, (GameState.UIRuntime + FUIRuntime.RequestedMode)
+                LD HL, .JumpTable
+                JP Func.JumpTable
+
+.JumpTable      DW .NoMode                                                      ; UI_MODE_NONE
+                DW ExecuteModule.Characteristics                                ; UI_MODE_CHARACTERISTICS
+                DW .NoMode                                                      ; UI_MODE_INVENTORY
+                DW .NoMode                                                      ; UI_MODE_SPELLBOOK
+                DW .NoMode                                                      ; UI_MODE_MAP
+                DW .NoMode                                                      ; UI_MODE_QUEST_LOG
+                DW .NoMode                                                      ; UI_MODE_SETTINGS
+                DW .NoMode                                                      ; UI_MODE_GAME_PAUSE
+                DW .NoMode                                                      ; UI_MODE_WORLD
+                DW .NoMode                                                      ; UI_MODE_BATTLE
+.NoMode         RET                                                             ; выход без запуска другого модуля
 
 .MemcpyScreen   ; завершение обработки уже показанного кадра и подготовка экранов к следующей отрисовке
                 CALL World.SharedCode.Render.PipelineHexagons.MemcpyScreen

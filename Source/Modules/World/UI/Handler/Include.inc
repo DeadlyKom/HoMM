@@ -3,10 +3,11 @@
                 define _MODULE_WORLD_UI_HANDLER_INCLUDE_
 
                 module Handler
-                include "Minimap.asm"
-                include "GamePause.asm"
-                include "GameWindow.asm"
-                include "GameUIIcons.asm"
+                include "Layer_GameUI.asm"
+                include "Layer_Minimap.asm"
+                include "Layer_GameView.asm"
+                include "Layer_GamePause.asm"
+                include "Icon_Characteristics.asm"
                 endmodule
 
                 endif ; ~_MODULE_WORLD_UI_HANDLER_INCLUDE_

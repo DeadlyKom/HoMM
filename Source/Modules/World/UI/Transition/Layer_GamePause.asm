@@ -1,14 +1,14 @@
 
-                ifndef _MODULE_WORLD_UI_TRANSITION_GAME_PAUSE_
-                define _MODULE_WORLD_UI_TRANSITION_GAME_PAUSE_
+                ifndef _MODULE_WORLD_UI_TRANSITION_LAYER_GAME_PAUSE_
+                define _MODULE_WORLD_UI_TRANSITION_LAYER_GAME_PAUSE_
 ; -----------------------------------------
-; переход к игровому меню паузы
+; переход к UI слою "меню паузы"
 ; In:
 ; Out:
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-GamePause:      ; подготовка экрана
+Layer_GamePause:; подготовка экрана
                 SHOW_SHADOW_SCREEN                                              ; отображение теневого экрана
                 CALL .ApplyScrGrid                                              ; наложение сетки на базовый экран
                 HALT
@@ -16,8 +16,8 @@ GamePause:      ; подготовка экрана
                 SET_RENDER_FLAG SWAP_DISABLE_BIT                                ; запрет переключения экранов
 
                 ; установка активного UI слоя
-                SET_UI_LAYER World.SharedCode.Layers.GamePause, \
-                                World.SharedCode.Layers.GamePause.Num
+                SET_UI_LAYER World.SharedCode.UI.Layers.GamePause, \
+                                World.SharedCode.UI.Layers.GamePause.Num
 
                 CALL World.Tilemap.ResetMapScroll                               ; сброс перемещения скролла карты
                 RES_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             ; сброс запроса обновления скролла карты
@@ -84,4 +84,4 @@ GamePause:      ; подготовка экрана
                 LD H, A
                 JR .RowLoop                                                    ; переход к обработке следующей строки экрана
 
-                endif ; ~_MODULE_WORLD_UI_TRANSITION_GAME_PAUSE_
+                endif ; ~_MODULE_WORLD_UI_TRANSITION_LAYER_GAME_PAUSE_

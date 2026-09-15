@@ -178,7 +178,7 @@ PipelineHexagons:
 
                 ; проверка текущего состояния "паузы игры"
                 CHECK_TICK_CONTROL_FLAG GAME_PAUSE_BIT
-                CALL Z, World.UI.Initialize.GamePause                           ; вызов, если "пауза игры" выключена
+                CALL Z, World.UI.Initialize.Layer_GamePause                     ; вызов, если "пауза игры" выключена
                                                                                 ; запустить режим "паузы игры"
                 JR .ProcessUI
 

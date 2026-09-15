@@ -1,5 +1,5 @@
-                ifndef _MODULE_WORLD_UI_HANDLER_GAME_WINDOW_
-                define _MODULE_WORLD_UI_HANDLER_GAME_WINDOW_
+                ifndef _MODULE_WORLD_UI_HANDLER_LAYER_GAME_VIEW_
+                define _MODULE_WORLD_UI_HANDLER_LAYER_GAME_VIEW_
 ; -----------------------------------------
 ; обработчик UI слоя "игрового окна"
 ; In:
@@ -8,7 +8,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-GameWindow:     ; проверка режима "остановки времени"
+Layer_GameView: ; проверка режима "остановки времени"
                 CHECK_TICK_CONTROL_FLAG GAME_SUSPEND_BIT
                 RET Z                                                           ; выход, если режим "остановки времени" выключен
 
@@ -21,11 +21,11 @@ GameWindow:     ; проверка режима "остановки времен
 .CancelFlag     FLAG_MODIFY 1                                                   ; флаг, текущее нажатие уже обработано
                 RET C                                                           ; выход, если текущее нажатие уже обработано
 
-                SET_FLAG_MODIFY GameWindow.CancelFlag                           ; установка защёлки до выполнения команды
+                SET_FLAG_MODIFY Layer_GameView.CancelFlag                       ; установка защёлки до выполнения команды
                 JR .CancelPath
 
 .CancelReleased ; сброс флага защёлки клавиши "отмена"
-                RES_FLAG_MODIFY GameWindow.CancelFlag
+                RES_FLAG_MODIFY Layer_GameView.CancelFlag
 
                 ; проверка нажатия клавиши "выбор"
                 LD A, (GameConfig.KeySelect)
@@ -37,11 +37,11 @@ GameWindow:     ; проверка режима "остановки времен
                 RET C                                                           ; выход, если текущее нажатие уже обработано
 
                 ; установка флага защёлки клавиши "выбор"
-                SET_FLAG_MODIFY GameWindow.SelectFlag                           ; принять нажатие до BFS и возможных ранних выходов
+                SET_FLAG_MODIFY Layer_GameView.SelectFlag                       ; принять нажатие до BFS и возможных ранних выходов
                 JR .BuildPath
 
 .SelectReleased ; сброс флага защёлки клавиши "выбор"
-                RES_FLAG_MODIFY GameWindow.SelectFlag
+                RES_FLAG_MODIFY Layer_GameView.SelectFlag
                 RET
 
 .CancelPath     ; отмена пути выбранного персонажа
@@ -112,11 +112,11 @@ GameWindow:     ; проверка режима "остановки времен
                 JR NZ, .SyncSelect                                              ; переход, если режим "остановки времени" включён
 
                 ; установка флага защёлки клавиши "отмена"
-                SET_FLAG_MODIFY GameWindow.CancelFlag                           ; блокировать удержание клавиши вне паузы
+                SET_FLAG_MODIFY Layer_GameView.CancelFlag                       ; блокировать удержание клавиши вне паузы
                 JR .SyncSelect
 
 .CancelUp       ; сброс флага защёлки клавиши "отмена"
-                RES_FLAG_MODIFY GameWindow.CancelFlag
+                RES_FLAG_MODIFY Layer_GameView.CancelFlag
 
 .SyncSelect     ; проверка нажатия клавиши "выбор"
                 LD A, (GameConfig.KeySelect)
@@ -128,11 +128,11 @@ GameWindow:     ; проверка режима "остановки времен
                 RET NZ                                                          ; выход, если режим "остановки времени" включён
 
                 ; установка флага защёлки клавиши "выбор"
-                SET_FLAG_MODIFY GameWindow.SelectFlag                           ; блокировать удержание клавиши вне паузы
+                SET_FLAG_MODIFY Layer_GameView.SelectFlag                       ; блокировать удержание клавиши вне паузы
                 RET
 
 .SelectUp       ; сброс флага защёлки клавиши "выбор"
-                RES_FLAG_MODIFY GameWindow.SelectFlag
+                RES_FLAG_MODIFY Layer_GameView.SelectFlag
                 RET
 
-                endif ; ~_MODULE_WORLD_UI_HANDLER_GAME_WINDOW_
+                endif ; ~_MODULE_WORLD_UI_HANDLER_LAYER_GAME_VIEW_

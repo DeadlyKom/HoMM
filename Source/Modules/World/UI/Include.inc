@@ -4,6 +4,7 @@
 
                 module UI
                 include "Handler/Include.inc"
+                include "Complete/Include.inc"
                 include "Initialize/Include.inc"
                 include "Transition/Include.inc"
                 endmodule

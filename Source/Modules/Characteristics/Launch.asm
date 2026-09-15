@@ -14,7 +14,8 @@ Launch:         ; -----------------------------------------
                 LD A, (GameState.Assets + FAssets.Address.Page)
                 LD (Kernel.Modules.Characteristics.Page), A
 
-                JP Launch.Deploy                                                ; развёртывание общего кода характеристик
+                CALL Launch.Deploy                                              ; развёртывание общего кода характеристик
+                JP Launch.Initialize                                            ; инициализация "характеристик"
 
                 display " - Launch 'Characteristics':\t\t\t\t\t\t= busy [ ", /D, $-Launch, " byte(s) ]"
 
