@@ -18,6 +18,7 @@
                 include "Interrupt.inc"
                 include "StateTree.inc"
                 include "Pathfinding.inc"
+                include "FallingBlocks.inc"
                 include "TickScheduler.inc"
                 include "SpriteClipping.inc"
                 include "SpriteNotClipping.inc"

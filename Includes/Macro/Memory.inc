@@ -170,6 +170,28 @@ MEMCPY_PAGE     macro Source?, Destination?, DestinationPage?, Size?
                 JP Memcpy.BetweenPages
 .Continue       EQU $
                 endm
+JP_MEMCPY_PAGE  macro Source?, Destination?, DestinationPage?, Size?
+                PUSH_PAGE                                                       ; сохранение номера страницы в стеке
+                LD HL, SetPageInStack
+                PUSH HL
+                ; -----------------------------------------
+                ; копирование данных между страницами
+                ; In:
+                ;   A HL - адрес исходника  (аккумулятор страница)
+                ;   A'DE - адрес назначения (аккумулятор страница)
+                ;   BC   - длина блока
+                ; Out:
+                ; Corrupt:
+                ; Note:
+                ; -----------------------------------------
+                LD HL, Source?
+                LD DE, Destination?
+                LD BC, Size?
+                EX AF, AF'
+                LD A, DestinationPage?
+                EX AF, AF'
+                JP Memcpy.BetweenPages
+                endm
 ; -----------------------------------------
 ; копирование данных в страницу (находясь в другой странице)
 ; In:
