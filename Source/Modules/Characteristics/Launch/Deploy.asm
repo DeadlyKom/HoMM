@@ -6,7 +6,7 @@
 ; In:
 ; Out:
 ; Corrupt:
-;   HL, DE, BC, AF, AF'
+;   HL, DE, BC, AF
 ; Note:
 ;   ℹ️ необходимо включить страницу модуля "характеристик"
 ; -----------------------------------------
@@ -16,8 +16,6 @@ Deploy:         RES_USER_HANDLER                                                
                 ; копирование блока SharedCode в общую область памяти
                 MEMCPY Characteristics.Adr.Deploy, Adr.Characteristics, \
                             Characteristics.Size.Deploy
-
-                ; перенос кода эффекта в страни цу 7
-                JP Characteristics.VFX.FallingBlocks.Deploy
+                RET
 
                 endif ; ~_MODULE_CHARACTERISTICS_LAUNCH_DEPLOY_

@@ -7,7 +7,6 @@
                 include "UI/Include.inc"
                 include "Input/Include.inc"
                 include "Launch/Include.inc"
-                include "Source/VFX/Crossfade/FallingBlocks/Include.inc"
 
                 ; блок кода, копируемый при развёртывании модуля
 Adr.Deploy      include "Source/Characteristics/Include.inc"
