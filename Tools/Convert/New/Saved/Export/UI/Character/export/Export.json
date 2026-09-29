@@ -1,0 +1,706 @@
+[
+    {
+        "SprName": "female_head",
+        "SprWidth": 32,
+        "SprHeight": 32,
+        "PoxImgX": 56,
+        "PoxImgY": 8,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_head.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_head.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "male_head",
+        "SprWidth": 32,
+        "SprHeight": 32,
+        "PoxImgX": 168,
+        "PoxImgY": 8,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_head.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_head.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "female_breast",
+        "SprWidth": 32,
+        "SprHeight": 48,
+        "PoxImgX": 56,
+        "PoxImgY": 40,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_breast.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_breast.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "male_breast",
+        "SprWidth": 32,
+        "SprHeight": 48,
+        "PoxImgX": 168,
+        "PoxImgY": 40,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_breast.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_breast.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "female_amulet",
+        "SprWidth": 24,
+        "SprHeight": 24,
+        "PoxImgX": 32,
+        "PoxImgY": 40,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_amulet.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_amulet.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "male_amulet",
+        "SprWidth": 24,
+        "SprHeight": 24,
+        "PoxImgX": 144,
+        "PoxImgY": 40,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_amulet.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_amulet.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "female_shoulder_pad",
+        "SprWidth": 24,
+        "SprHeight": 32,
+        "PoxImgX": 88,
+        "PoxImgY": 32,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_shoulder_pad.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_shoulder_pad.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "male_shoulder_pad",
+        "SprWidth": 24,
+        "SprHeight": 32,
+        "PoxImgX": 200,
+        "PoxImgY": 32,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_shoulder_pad.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_shoulder_pad.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "female_belt",
+        "SprWidth": 32,
+        "SprHeight": 16,
+        "PoxImgX": 56,
+        "PoxImgY": 88,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_belt.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_belt.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "male_belt",
+        "SprWidth": 32,
+        "SprHeight": 16,
+        "PoxImgX": 168,
+        "PoxImgY": 88,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_belt.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_belt.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "female_left_hand",
+        "SprWidth": 32,
+        "SprHeight": 40,
+        "PoxImgX": 88,
+        "PoxImgY": 72,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_left_hand.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_left_hand.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "male_left_hand",
+        "SprWidth": 32,
+        "SprHeight": 40,
+        "PoxImgX": 200,
+        "PoxImgY": 72,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_left_hand.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_left_hand.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "female_right_hand",
+        "SprWidth": 32,
+        "SprHeight": 48,
+        "PoxImgX": 24,
+        "PoxImgY": 64,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_right_hand.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_right_hand.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "male_right_hand",
+        "SprWidth": 32,
+        "SprHeight": 48,
+        "PoxImgX": 136,
+        "PoxImgY": 64,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_right_hand.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_right_hand.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "female_left_ring",
+        "SprWidth": 32,
+        "SprHeight": 32,
+        "PoxImgX": 96,
+        "PoxImgY": 112,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_left_ring.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_left_ring.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "male_left_ring",
+        "SprWidth": 32,
+        "SprHeight": 32,
+        "PoxImgX": 208,
+        "PoxImgY": 112,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_left_ring.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_left_ring.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "female_right_ring",
+        "SprWidth": 32,
+        "SprHeight": 32,
+        "PoxImgX": 16,
+        "PoxImgY": 112,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_right_ring.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_right_ring.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "male_right_ring",
+        "SprWidth": 32,
+        "SprHeight": 32,
+        "PoxImgX": 128,
+        "PoxImgY": 112,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_right_ring.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_right_ring.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "female_boot",
+        "SprWidth": 32,
+        "SprHeight": 32,
+        "PoxImgX": 56,
+        "PoxImgY": 144,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_boot.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_boot.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "male_boot",
+        "SprWidth": 32,
+        "SprHeight": 32,
+        "PoxImgX": 168,
+        "PoxImgY": 144,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_boot.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_boot.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "female_lower_body_1",
+        "SprWidth": 48,
+        "SprHeight": 32,
+        "PoxImgX": 48,
+        "PoxImgY": 112,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_lower_body_1.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_lower_body_1.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "male_lower_body_1",
+        "SprWidth": 48,
+        "SprHeight": 32,
+        "PoxImgX": 160,
+        "PoxImgY": 112,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_lower_body_1.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_lower_body_1.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "female_lower_body_2",
+        "SprWidth": 8,
+        "SprHeight": 24,
+        "PoxImgX": 48,
+        "PoxImgY": 144,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_lower_body_2.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_lower_body_2.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "male_lower_body_2",
+        "SprWidth": 8,
+        "SprHeight": 24,
+        "PoxImgX": 160,
+        "PoxImgY": 144,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_lower_body_2.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_lower_body_2.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "female_lower_body_3",
+        "SprWidth": 16,
+        "SprHeight": 8,
+        "PoxImgX": 40,
+        "PoxImgY": 168,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_lower_body_3.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_lower_body_3.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "male_lower_body_3",
+        "SprWidth": 16,
+        "SprHeight": 8,
+        "PoxImgX": 152,
+        "PoxImgY": 168,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_lower_body_3.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_lower_body_3.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "female_lower_body_4",
+        "SprWidth": 16,
+        "SprHeight": 32,
+        "PoxImgX": 88,
+        "PoxImgY": 144,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_lower_body_4.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_lower_body_4.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "male_lower_body_4",
+        "SprWidth": 16,
+        "SprHeight": 32,
+        "PoxImgX": 200,
+        "PoxImgY": 144,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_lower_body_4.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_lower_body_4.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "female_lower_body_5",
+        "SprWidth": 16,
+        "SprHeight": 8,
+        "PoxImgX": 88,
+        "PoxImgY": 176,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_lower_body_5.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_lower_body_5.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "male_lower_body_5",
+        "SprWidth": 24,
+        "SprHeight": 8,
+        "PoxImgX": 192,
+        "PoxImgY": 176,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_lower_body_5.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_lower_body_5.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "female_lower_body_0",
+        "SprWidth": 32,
+        "SprHeight": 8,
+        "PoxImgX": 56,
+        "PoxImgY": 104,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_lower_body_0.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/female_lower_body_0.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "male_lower_body_0",
+        "SprWidth": 32,
+        "SprHeight": 8,
+        "PoxImgX": 168,
+        "PoxImgY": 104,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/characters slots.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_lower_body_0.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/export/male_lower_body_0.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    }
+]

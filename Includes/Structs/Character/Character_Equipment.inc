@@ -13,7 +13,6 @@ RightHand       FItemID                                                         
 LeftRing        FItemID                                                         ; идентификатор предмета - кольцо левой руки
 RightRing       FItemID                                                         ; идентификатор предмета - кольцо правой руки
 Boot            FItemID                                                         ; идентификатор предмета - обувь
-
                 ends
 
                 endif ; ~_STRUCTS_CHARACTER_EQUIPMENT_
