@@ -24,6 +24,7 @@ Graph:          EQU $
                 SPRITE_BLOCK  16,   8, 168, 168, SPRITE_NOT_CLIPPING_POSITION | SPRITE_NOT_CLIPPING_DRAWING_LD_ATTR, Sprite.LowerBody_3
                 SPRITE_BLOCK  16,  32, 216, 144, SPRITE_NOT_CLIPPING_POSITION | SPRITE_NOT_CLIPPING_DRAWING_LD_ATTR, Sprite.LowerBody_4
                 SPRITE_BLOCK  16,   8, 216, 176, SPRITE_NOT_CLIPPING_POSITION | SPRITE_NOT_CLIPPING_DRAWING_LD_ATTR, Sprite.LowerBody_5
+                SPRITE_BLOCK  32,  32, 184, 144, SPRITE_NOT_CLIPPING_POSITION | SPRITE_NOT_CLIPPING_DRAWING_LD_ATTR, Sprite.Boot
 Graph.Num:      EQU ($-Graph) / FSpriteBlock
 Sprite:
 .Head           incbin "female_head.bin"
@@ -35,13 +36,19 @@ Sprite:
 .LeftHand_      incbin "female_left_hand_.bin"
 .RightHand      incbin "female_right_hand.bin"
 .LeftRing       incbin "female_left_ring.bin"
+.RightRing      incbin "female_right_ring.bin"
 .LowerBody_0    incbin "female_lower_body_0.bin"
 .LowerBody_1    incbin "female_lower_body_1.bin"
 .LowerBody_2    incbin "female_lower_body_2.bin"
 .LowerBody_3    incbin "female_lower_body_3.bin"
 .LowerBody_4    incbin "female_lower_body_4.bin"
 .LowerBody_5    incbin "female_lower_body_5.bin"
-                SAVE_PACK "Builder/Assets/Graphics/Compressed/UI/PaperDoll_Female.pack"
+.Boot           incbin "female_boot.bin"
+Size            EQU $-Begin
+                COMPRESSED_ASSET \
+                "Builder/Assets/Graphics/Original/UI/Characteristics/PaperDoll_Female.pack", \
+                "Builder/Assets/Graphics/Compressed/UI/PaperDoll_Female.pack.ar"
+
                 endmodule
                 endmodule
 

@@ -46,6 +46,10 @@
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/Hero.pack.ar", Graphics.Hero.Size.Sector.ar
                 ; ASSETS_ID_UI_GAMEPLAY_COMMON_PACK
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/UI/Common.pack.ar", Graphics.UI.Gameplay.Common.Size.Sector.ar
+                ; ASSETS_ID_UI_PAPER_DOLL_MALE_PACK
+                ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/UI/PaperDoll_Male.pack.ar", Graphics.UI.Characteristics.PaperDoll.Male.Size.Sector.ar
+                ; ASSETS_ID_UI_PAPER_DOLL_FEMALE_PACK
+                ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/UI/PaperDoll_Female.pack.ar", Graphics.UI.Characteristics.PaperDoll.Female.Size.Sector.ar
                 ; ASSETS_ID_HEX_FOG
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/Hex/Fog.pack.ar", Graphics.Hexagon.Fog.Size.Sector.ar
                 ; ASSETS_ID_HEX_GRASSLANDS

@@ -177,7 +177,7 @@ HexUpdateAnalysis:
                 EXX
                 EX DE, HL
                 LD L, A
-                LD A, (HL)  ; чтение B / 6 (0-3)
+                LD A, (HL)  ; чтение B / 6 (0…3)
                 EX DE, HL
                 EXX
                 ADD A, A    ; x2
@@ -191,12 +191,12 @@ HexUpdateAnalysis:
                 ;    
                 ;    S1-S0   [1,0]       - смещение в массиве screen block'ов
                 ;    H1,H0   [7,6]       - количество пересекаемых screen block'ов (0,1,2)
-                ;                           0 - screen block 0-3
-                ;                           1 - screen block 4-7
-                ;                           2 - screen block 8-11
-                ;                           3 - screen block 12-15
+                ;                           0 - screen block 0…3
+                ;                           1 - screen block 4…7
+                ;                           2 - screen block 8…11
+                ;                           3 - screen block 12…15
                 ; -----------------------------------------
-                OR (HL)                                                         ; добавление горизонтального смещения (0-3)
+                OR (HL)                                                         ; добавление горизонтального смещения (0…3)
                 AND %00111111                                                   ; обнуление пересекаемых screen block'ов
                 EX AF, AF'                                                      ; сохранение смещения в массиве screen block'ов
                 

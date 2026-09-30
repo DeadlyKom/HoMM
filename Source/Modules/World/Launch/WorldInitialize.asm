@@ -10,7 +10,7 @@
 ; Note:
 ;   ℹ️ необходимо включить страницу модуля "мира"
 ; -----------------------------------------
-WorldInitialize:; инициализация "мира"
+Initialize:     ; инициализация "мира"
                 SET_UI_MODE UI_MODE_WORLD                                       ; установить UI режим "мир"
                 SET_UI_LAYER World.SharedCode.UI.Layers.GameWorld, \
                                 World.SharedCode.UI.Layers.GameWorld.Num        ; установка активного UI слоя

@@ -140,6 +140,16 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     Graphics.UI.Gameplay.Common.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Graphics: Gameplay Common\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_UI_PAPER_DOLL_MALE_PACK, \
+                                    Graphics.UI.Characteristics.PaperDoll.Male.Size, \
+                                    Graphics.UI.Characteristics.PaperDoll.Male.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Graphics: Paper doll 'Male'\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_UI_PAPER_DOLL_FEMALE_PACK, \
+                                    Graphics.UI.Characteristics.PaperDoll.Female.Size, \
+                                    Graphics.UI.Characteristics.PaperDoll.Female.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Graphics: Paper doll 'Female'\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_HEX_FOG, \
                                     Graphics.Hexagon.Fog.Size, \
                                     Graphics.Hexagon.Fog.Size.Sector.ar, \

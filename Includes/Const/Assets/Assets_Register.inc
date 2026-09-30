@@ -35,6 +35,8 @@ REG_ASSETS_ID_DEBUG macro Label?
                     REG_ASSETS_ID       ASSETS_ID_CURSOR_PACK                   ; графика: курсора
                     REG_ASSETS_ID       ASSETS_ID_HERO_PACK                     ; графика: героев
                     REG_ASSETS_ID       ASSETS_ID_UI_GAMEPLAY_COMMON_PACK       ; графика: общий UI для Gameplay
+                    REG_ASSETS_ID       ASSETS_ID_UI_PAPER_DOLL_MALE_PACK       ; графика: образ персонажа - муржской
+                    REG_ASSETS_ID       ASSETS_ID_UI_PAPER_DOLL_FEMALE_PACK     ; графика: образ персонажа - женский
                     REG_ASSETS_ID       ASSETS_ID_HEX_FOG                       ; графика: гексагонная, туман
                     REG_ASSETS_ID       ASSETS_ID_HEX_GRASSLANDS                ; графика: гексагонная, природные ландшафты - луга
                     REG_ASSETS_ID       ASSETS_ID_MAP_DEBUG                     ; карта "отладочная"

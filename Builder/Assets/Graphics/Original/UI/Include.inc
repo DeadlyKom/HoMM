@@ -6,6 +6,7 @@
                 include "Gameplay/Include.inc"
                 include "Progress/Include.inc"
                 include "MainMenu/Include.inc"
+                include "Characteristics/Include.inc"
                 endmodule
 
                 endif ; ~ _GRAPHICS_UI_INCLUDE_

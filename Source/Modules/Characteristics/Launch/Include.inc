@@ -4,6 +4,8 @@
 
                 module Launch
                 include "Deploy.asm"
+                include "Window.asm"
+                include "InitSprites.asm"
                 include "CharacteristicsInitialize.asm"
                 endmodule
 

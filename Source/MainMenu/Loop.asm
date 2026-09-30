@@ -47,6 +47,14 @@ Loop:
                 SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
                 LD IX, .TmpParticipant; Adr.ExtraBuffer                                          ; адрес расположения массива FParticipantSettings
                 CALL Participant.Append                                         ; добавить участников
+                
+                ; -----------------------------------------
+                ; ToDo: отладочная установка активного игрока
+                LD A, PLAYER_CHARACTER_ID_MAIN
+                LD (GameState.PlayerActions + FPlayerActions.SelectedHeroID), A
+                LD A, PLAYER_ACTION_NONE
+                LD (GameState.PlayerActions + FPlayerActions.Action), A
+                ; -----------------------------------------
 
                 ifdef ENABLE_DEBUG_AI_MOVEMENT
                 CALL SpawnUnits                                                 ; спавн тестовых AI-агенты по карте
@@ -62,7 +70,8 @@ Loop:
                     ; настройки стартового героя участника
                     ; FCharacterSettings
                     {
-                        Character.Class.Druid,                                  ; класс героя
+                        Character.Gender.Male | \
+                        Character.Class.Druid,                                  ; гендер и класс героя
                         REPRESENT_ID_DRUID,                                     ; представление героя
                         ; навыки героя
                         ; FCharacterSkills
@@ -110,7 +119,6 @@ SpawnUnits:     LD IX, .AIAgent
                 INC C
                 DJNZ .SpawnLoop
                 RET
-
                 
 .ChunkPositions ; позиции
                 DB 3, 3
@@ -123,7 +131,8 @@ SpawnUnits:     LD IX, .AIAgent
                     ; настройки компьютерного героя участника
                     ; FCharacterSettings
                     {
-                        Character.Class.Wizard,
+                        Character.Gender.Male | \
+                        Character.Class.Wizard,                                 ; гендер и класс героя
                         REPRESENT_ID_WIZARD,                                    ; представление героя
                         {
                             {

@@ -15,6 +15,8 @@ Launch:         ; -----------------------------------------
                 LD (Kernel.Modules.Characteristics.Page), A
 
                 CALL Launch.Deploy                                              ; развёртывание общего кода характеристик
+                CALL Launch.InitSprites                                         ; загрузка и инициализация спрайтов
+                CALL Launch.Window                                              ; отображение окна "характеристик"
                 JP Launch.Initialize                                            ; инициализация "характеристик"
 
                 display " - Launch 'Characteristics':\t\t\t\t\t\t= busy [ ", /D, $-Launch, " byte(s) ]"
