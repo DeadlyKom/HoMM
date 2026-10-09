@@ -1,0 +1,20 @@
+
+                ifndef _INVENTORY_INCLUDE_
+                define _INVENTORY_INCLUDE_
+
+                module SharedCode
+                DISP Adr.Inventory
+
+                display "Shared code 'Inventory':\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.SharedPoint, " byte(s) / free ", /D, Size.SharedPoint - Size, "]\t[", /D, Page.Inventory, "]\t ------------------------"
+
+                include "Loop.asm"
+                include "Interrupt.asm"
+                include "Release.asm"
+                include "Render/Include.inc"
+                include "UI/Include.inc"
+Size            EQU $-Adr.Inventory
+
+                ENT
+                endmodule
+
+                endif ; ~_INVENTORY_INCLUDE_

@@ -8,6 +8,7 @@ MainMenu        EQU PAGE_5
 Session         EQU PAGE_5
 World           EQU PAGE_5
 Characteristics EQU PAGE_5
+Inventory       EQU PAGE_5
                 endmodule
 
                 module Adr
@@ -16,6 +17,7 @@ MainMenu        EQU Adr.SharedPoint                                             
 Session         EQU Adr.SharedPoint                                             ; адрес расположения кода "сессии"
 World           EQU Adr.SharedPoint                                             ; адрес расположения кода "мир"
 Characteristics EQU Adr.SharedPoint                                             ; адрес расположения кода "характеристик"
+Inventory       EQU Adr.SharedPoint                                             ; адрес расположения кода "инвентаря"
                 endmodule
 
                 endif ; ~_CONST_MEMORY_MAP_MODULES_

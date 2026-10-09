@@ -18,6 +18,8 @@
                 include "Game_MainLoopCore.inc"
 
                 include "Game_World.inc"
+                include "Game_Inventory.inc"
                 include "Game_WorldTime.inc"
+                include "Game_Characteristics.inc"
 
                 endif ; ~_MACRO_GAME_INCLUDE_

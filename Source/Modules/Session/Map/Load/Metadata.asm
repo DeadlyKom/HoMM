@@ -13,9 +13,8 @@ Metadata:       SET_PAGE_ASSETS                                                 
                 EX AF, AF'
                 LOAD_ASSETS_A                                                   ; загрузка ресурса
                                                                                 ;   HL - адрес загрузки/распаковки
-                ; сохранение страницы загруженной карты
-                LD A, (GameState.Assets + FAssets.Address.Page)
-                LD (Session.SharedCode.SetPageLoadedMap.LoadedMapPage), A
+                SAVE_ASSETS_PAGE \
+                        Session.SharedCode.SetPageLoadedMap.LoadedMapPage       ; сохранение страницы загруженного ресурса
                 RET
 
                 display " - Load metadata map:\t\t\t\t\t", /A, Metadata, "\t= busy [ ", /D, $-Metadata, " byte(s)  ]"

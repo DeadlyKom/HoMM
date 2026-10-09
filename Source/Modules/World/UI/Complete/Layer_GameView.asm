@@ -8,16 +8,25 @@
 ; Corrupt:
 ;   HL, AF
 ; Note:
+;   ℹ️ код расположен в модуле "мира"
 ; -----------------------------------------
-Layer_GameView: ; проверка запроса перехода к характеристикам
+Layer_GameView: ; выбор обработчика завершения по запрошенному UI режиму
                 LD A, (GameState.UIRuntime + FUIRuntime.RequestedMode)
-                CP UI_MODE_CHARACTERISTICS
-                JP NZ, UI.Runtime.Complete                                      ; переход, если запрошен другой UI режим
+                LD HL, .JumpTable
+                JP Func.JumpTable
 
-                ; запрос завершения главного цикла мира
-                SET_MAIN_FLAG ML_EXIT_BIT
+.Transition     SET_MAIN_FLAG ML_EXIT_BIT                                       ; запрос завершения главного цикла мира
+                JP UI.Runtime.Complete                                          ; завершение перехода UI
 
-                ; завершение перехода UI
-                JP UI.Runtime.Complete
+.JumpTable      DW UI.Runtime.Complete                                          ; UI_MODE_NONE
+                DW .Transition                                                  ; UI_MODE_CHARACTERISTICS
+                DW .Transition                                                  ; UI_MODE_INVENTORY
+                DW UI.Runtime.Complete                                          ; UI_MODE_SPELLBOOK
+                DW UI.Runtime.Complete                                          ; UI_MODE_MAP
+                DW UI.Runtime.Complete                                          ; UI_MODE_QUEST_LOG
+                DW UI.Runtime.Complete                                          ; UI_MODE_SETTINGS
+                DW UI.Runtime.Complete                                          ; UI_MODE_GAME_PAUSE
+                DW UI.Runtime.Complete                                          ; UI_MODE_WORLD
+                DW UI.Runtime.Complete                                          ; UI_MODE_BATTLE
 
                 endif ; ~_MODULE_WORLD_UI_COMPLETE_LAYER_GAME_VIEW_

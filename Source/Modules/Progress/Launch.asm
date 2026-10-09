@@ -21,9 +21,7 @@
 Launch:         ; первичная инициализация загруженного ассета Progress
                 ; на вершине стека лежит идентификатор запрошенной функции
 
-                ; сохранение страницы и адреса загруженного модуля
-                LD A, (GameState.Assets + FAssets.Address.Page)
-                LD (Kernel.Modules.Progress.Page), A
+                SAVE_ASSETS_PAGE Kernel.Modules.Progress.Page                   ; сохранение страницы загруженного ресурса
 
                 LD HL, (GameState.Assets + FAssets.Address.Adr)
                 LD (Kernel.Modules.Progress.Address), HL

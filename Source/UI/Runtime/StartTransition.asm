@@ -7,6 +7,7 @@
 ; Out:
 ; Corrupt:
 ; Note:
+;   ℹ️ код расположен в Kernel
 ; -----------------------------------------
 StartTransition:; чтение активируемого UI режима
                 LD A, (GameState.UIRuntime + FUIRuntime.RequestedMode)
@@ -15,7 +16,7 @@ StartTransition:; чтение активируемого UI режима
 
 .JumpTable      DW .NoMode                                                      ; UI_MODE_NONE
                 DW World.SharedCode.UI.Transition.Layer_GameView                ; UI_MODE_CHARACTERISTICS
-                DW UI.Runtime.Complete                                          ; UI_MODE_INVENTORY
+                DW World.SharedCode.UI.Transition.Layer_GameView                ; UI_MODE_INVENTORY
                 DW UI.Runtime.Complete                                          ; UI_MODE_SPELLBOOK
                 DW UI.Runtime.Complete                                          ; UI_MODE_MAP
                 DW UI.Runtime.Complete                                          ; UI_MODE_QUEST_LOG

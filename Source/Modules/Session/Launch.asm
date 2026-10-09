@@ -13,9 +13,7 @@
 Launch:         ; первичная инициализация загруженного ассета "сессии"
                 ; на вершине стека лежит исходный FunctionID (Make/Load)
 
-                ; сохранение страницы
-                LD A, (GameState.Assets + FAssets.Address.Page)
-                LD (Kernel.Modules.Session.Page), A
+                SAVE_ASSETS_PAGE Kernel.Modules.Session.Page                    ; сохранение страницы загруженного ресурса
 
                 ; повторный вход в диспетчер уже инициализированного ассета;
                 ; исходный FunctionID (Make/Load) сохранён в стеке

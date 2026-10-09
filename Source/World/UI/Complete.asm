@@ -4,14 +4,17 @@
 
                 module Complete
 ; -----------------------------------------
-; переход к обработчику завершения UI мира
+; переходник к обработчику завершения UI мира
 ; In:
 ; Out:
 ; Corrupt:
 ;   HL, AF
 ; Note:
+;   ℹ️ код расположен в "общей памяти"
 ; -----------------------------------------
-Layer_GameView: JP World.UI.Complete.Layer_GameView                             ; переход к обработчику завершения
+Layer_GameView: ; постоянная точка входа для завершения UI мира
+                ; вызов кода из модуля "мира"
+                JP World.UI.Complete.Layer_GameView
                 endmodule
 
                 endif ; ~_WORLD_UI_COMPLETE_

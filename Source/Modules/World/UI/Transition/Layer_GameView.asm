@@ -7,6 +7,7 @@
 ; Out:
 ; Corrupt:
 ; Note:
+;   ℹ️ код расположен в модуле "мира"
 ; -----------------------------------------
 Layer_GameView: ; выбор перехода мира по запрошенному UI режиму
                 LD A, (GameState.UIRuntime + FUIRuntime.RequestedMode)
@@ -15,7 +16,7 @@ Layer_GameView: ; выбор перехода мира по запрошенно
 
 .JumpTable      DW .NoMode                                                      ; UI_MODE_NONE
                 DW Characteristics                                              ; UI_MODE_CHARACTERISTICS
-                DW UI.Runtime.Complete                                          ; UI_MODE_INVENTORY
+                DW Inventory                                                    ; UI_MODE_INVENTORY
                 DW UI.Runtime.Complete                                          ; UI_MODE_SPELLBOOK
                 DW UI.Runtime.Complete                                          ; UI_MODE_MAP
                 DW UI.Runtime.Complete                                          ; UI_MODE_QUEST_LOG

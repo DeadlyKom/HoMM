@@ -60,8 +60,7 @@ GraphicsPackages:
 
                 ; инициализация буфера новыми значениями
                 ; позволит избавится от лишних обращений к ассет менеджеру
-                LD A, (GameState.Assets + FAssets.Address.Page)
-                LD (HL), A
+                SAVE_ASSETS_PAGE HL                                             ; сохранение страницы загруженного ресурса
                 SET 7, L
                 LD A, (GameState.Assets + FAssets.Address.Adr.High)
                 LD (HL), A

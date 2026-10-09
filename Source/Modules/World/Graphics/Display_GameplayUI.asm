@@ -119,7 +119,7 @@ Handler         DW #0000                                                        
                 FUIIcon { #00 | Icons.Index.Diamond, { #E8, #4A }, #00 | Icons.Index.Center,     { #EB, #4C }, World.UI.Handler.Layer_GameUI.Center }
                 FUIIcon { #00 | Icons.Index.Diamond, { #D4, #50 }, #00 | Icons.Index.Character,  { #D9, #50 }, World.UI.Handler.Characteristics }
                 FUIIcon { #00 | Icons.Index.Diamond, { #C7, #5D }, #00 | Icons.Index.SpellsBook, { #C7, #5E }, World.UI.Handler.Layer_GameUI.SpellsBook }
-                FUIIcon { #00 | Icons.Index.Diamond, { #E1, #5D }, #00 | Icons.Index.Inventory,  { #E4, #5D }, World.UI.Handler.Layer_GameUI.Inventory }
+                FUIIcon { #00 | Icons.Index.Diamond, { #E1, #5D }, #00 | Icons.Index.Inventory,  { #E4, #5D }, World.UI.Handler.Inventory }
                 FUIIcon { #40 | Icons.Index.SlotTL,  { #C1, #70 }, #80 | Icons.Index.Cloud,      { #C1, #72 }, #0000 }
                 FUIIcon { #40 | Icons.Index.SlotTR,  { #F1, #70 }, #80 | Icons.Index.None,       { #00, #00 }, #0000 }
                 FUIIcon { #40 | Icons.Index.SlotBL,  { #C1, #8C }, #80 | Icons.Index.None,       { #00, #00 }, #0000 }

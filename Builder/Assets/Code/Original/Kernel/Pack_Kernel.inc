@@ -24,8 +24,8 @@ Begin:          EQU $
 
                 ; math
                 include "Source/Math/Curve.asm"
-                include "Source/Math/Sqrt/Sqrt.asm"
                 include "Source/Math/RNG/Rand8.asm"
+                include "Source/Math/Sqrt/Sqrt.asm"
                 include "Source/Math/Div/Div8x8.asm"
                 include "Source/Math/Mul/16x8_16.asm"
                 include "Source/Math/Hash/Function.asm"

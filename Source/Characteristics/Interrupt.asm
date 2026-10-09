@@ -7,29 +7,15 @@
 ; Out:
 ; Corrupt:
 ; Note:
-;   пустышка, обработка прерывания пока отсутствует
 ; -----------------------------------------
 Interrupt:      SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
-                ; CALL Render.CursorMemcpyGate                                    ; проверка разрешения работы с буфером курсора
-                CALL Draw.Restore                                           ; восстановление фона под курсором (только для OR_XOR_SAVE)
-
-                ; ; проверка готовности кадра
-                ; CHECK_RENDER_FLAG FRAME_READY_BIT
-                ; JR Z, .RenderProcess                                            ; переход, если кадр не готов
+                CALL Draw.Restore                                               ; восстановление фона под курсором (только для OR_XOR_SAVE)
 
 .SwapScreens    ; ************ Swap Screens ************
                 CALL Render.Swap
 
-                ; ; проверка флага ожидания переключения экрана, но он не выполнен
-                ; CHECK_RENDER_FLAG SWAP_PENDING_BIT
-                ; JR NZ, .RenderProcess                                           ; переход, если в ожидании переключения экрана
-                ;                                                                 ; используется, если спереключение экрана мб дольше фрейма
-                ; --------------------------------------------------------------
-
 .RenderProcess  ; процесс отрисовки не завершён
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
-                ; CALL Render.CursorMemcpyGate                                    ; проверка разрешения работы с буфером курсора
-                ; JR C, .Input
                 CALL UI_Cursor.Update                                           ; обновление курсора
                 CALL C, UI_Cursor.Draw                                          ; отображение курсора
                 
@@ -47,6 +33,6 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
 
                 RET
 
-                display " - Main 'Characteristics' interrupt:\t\t\t\t", /A, Interrupt, "\t= busy [ ", /D, $-Interrupt, " byte(s)  ]"
+                display " - Main 'Characteristics' interrupt:\t\t\t", /A, Interrupt, "\t= busy [ ", /D, $-Interrupt, " byte(s)  ]"
 
                 endif ; ~_CHARACTERISTICS_MAIN_INTERRUPT_

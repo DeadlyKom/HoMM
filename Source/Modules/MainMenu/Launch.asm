@@ -9,9 +9,7 @@
 ; Note:
 ;    ℹ️ адрес исполнения неизвестен
 ; -----------------------------------------
-Launch:         ; сохранение страницы
-                LD A, (GameState.Assets + FAssets.Address.Page)
-                LD (Kernel.Modules.MainMenu.Page), A
+Launch:         SAVE_ASSETS_PAGE Kernel.Modules.MainMenu.Page                   ; сохранение страницы загруженного ресурса
 
                 ; очистка экрана
                 CLS SCR_ADR_BASE, 0xFF                                          ; очистка основного экрана

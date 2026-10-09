@@ -5,6 +5,8 @@
                 include "ProgressTimeline.inc"                                  ; (0)
                 include "Kernel/Bind.inc"                                       ; (1)
                 include "Launch.asm"
+                include "SaveState.asm"
+                include "RestoreState.asm"
                 include "UI/Include.inc"
                 include "Input/Include.inc"
                 include "Launch/Include.inc"

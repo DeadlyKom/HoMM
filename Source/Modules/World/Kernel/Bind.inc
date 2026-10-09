@@ -5,5 +5,6 @@ KERNEL_ID_COUNTER   defl 0                                                      
 
 ; индентификаторы функциё
                 BIND_ID_KERNEL World.Initialize, Launch                         ; функция запуска (0)
+                BIND_ID_KERNEL World.Restore, RestoreState                      ; восстановление состояния мира
 
                 endif ; ~_MODULE_WORLD_KERNEL_BIND_

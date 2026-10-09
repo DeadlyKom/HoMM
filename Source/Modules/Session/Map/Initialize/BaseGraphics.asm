@@ -50,6 +50,6 @@ Block.HextileTable:
                 MAKE_HEXTILE_BIND BASE_HEX_GRAPHICS_PACKAGE, #00                ; 0
 Block.HextileTable.Size EQU $-Block.HextileTable
 
-                display " - Initialize base graphics packages:\t\t\t", /A, GraphicsPackages, "\t= busy [ ", /D, $-GraphicsPackages, " byte(s)  ]"
+                display " - Initialize base graphics packages:\t\t\t", /A, BaseGraphics, "\t= busy [ ", /D, $-BaseGraphics, " byte(s)  ]"
 
                 endif ; ~_MODULE_SESSION_MAP_INITIALIZE_BASE_GRAPHICS_PACKAGES_

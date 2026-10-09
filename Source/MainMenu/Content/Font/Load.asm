@@ -11,10 +11,7 @@
 Load:           ; загрузка графики курсора
                 SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
                 LOAD_ASSETS ASSETS_ID_FONT_RU_8_PARTICLE                        ; загрузка ресурса шрифта
-
-                ; сохранение страницы
-                LD A, (GameState.Assets + FAssets.Address.Page)
-                LD (Page), A
+                SAVE_ASSETS_PAGE Page                                           ; сохранение страницы загруженного ресурса
 
                 ; инициализация для корректировки адреса
                 LD HL, (GameState.Assets + FAssets.Address.Adr)

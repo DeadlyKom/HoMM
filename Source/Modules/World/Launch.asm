@@ -9,10 +9,7 @@
 ; Note:
 ;    ℹ️ адрес исполнения неизвестен
 ; -----------------------------------------
-Launch:         ; -----------------------------------------
-                ; сохранение страницы
-                LD A, (GameState.Assets + FAssets.Address.Page)
-                LD (Kernel.Modules.World.Page), A
+Launch:         SAVE_ASSETS_PAGE Kernel.Modules.World.Page                      ; сохранение страницы загруженного ресурса
 
                 CALL Launch.CreateTexture                                       ; подготовка и генерация текстуры Bayer
                 CALL Launch.Deploy                                              ; развёртывание кода "мира"

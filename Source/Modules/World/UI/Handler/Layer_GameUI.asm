@@ -7,6 +7,7 @@
 ; Out:
 ; Corrupt:
 ; Note:
+;   ℹ️ код расположен в модуле "мира"
 ; -----------------------------------------
 Layer_GameUI:   ; очистка
                 ifdef _DEBUG
@@ -60,6 +61,7 @@ Layer_GameUI:   ; очистка
 ; Corrupt:
 ;   DE, AF
 ; Note:
+;   ℹ️ код расположен в модуле "мира"
 ; -----------------------------------------
 .HitTest        ; расчёт смещения курсора по горизонтали
                 LD A, (Mouse.PositionX)
@@ -102,13 +104,12 @@ Layer_GameUI:   ; очистка
 ; Corrupt:
 ;   HL, DE, BC, AF
 ; Note:
+;   ℹ️ код расположен в модуле "мира"
 ; -----------------------------------------
                 ifdef _DEBUG
 .Center         LD BC, World.SharedCode.Render.IconDebug.Text.Center
                 JR .Draw
 .SpellsBook     LD BC, World.SharedCode.Render.IconDebug.Text.Spells
-                JR .Draw
-.Inventory      LD BC, World.SharedCode.Render.IconDebug.Text.Inventory
                 JR .Draw
 .Quest          LD BC, World.SharedCode.Render.IconDebug.Text.Quest
                 JR .Draw
@@ -139,7 +140,6 @@ Layer_GameUI:   ; очистка
                 else
 .Center         EQU Func.RET
 .SpellsBook     EQU Func.RET
-.Inventory      EQU Func.RET
 .Quest          EQU Func.RET
 .Map            EQU Func.RET
 .Options        EQU Func.RET

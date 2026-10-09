@@ -21,6 +21,11 @@ Scan:           ; проверка HardWare ограничения мыши
                 LD (GameState.Input.Value), A
                 ; --------------------------------------------------------------
 
+                ; проверка клавиши "выход"
+                LD A, (GameConfig.KeyESC)
+                CALL Input.CheckKeyState
+                CALL Z, Input.Exit                                              ; вызов обработчика выхода, если клавиша нажата
+
                 ; проверка клавиши "выбор"
                 LD A, (GameConfig.KeySelect)
                 CALL Input.CheckKeyState

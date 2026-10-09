@@ -69,6 +69,18 @@ SET_PAGE_ASSETS macro
                 SET_PAGE_A
                 endm
 ; -----------------------------------------
+; сохранение страницы загруженного ресурса
+; In:
+;   Destination? - адрес сохранения страницы
+; Out:
+; Corrupt:
+;   AF
+; -----------------------------------------
+SAVE_ASSETS_PAGE macro Destination?
+                LD A, (GameState.Assets + FAssets.Address.Page)
+                LD (Destination?), A
+                endm
+; -----------------------------------------
 ; установка загрузки ресурса
 ; In:
 ;   ID?      - идентификатор ресурса
@@ -355,7 +367,7 @@ LOAD_EXE_ASSETS macro ID?
                 CALL AssetsManager.Load                                         ; загрузка ресурса
                 CALL C, AssetsManager.TryToFree                                 ; попытка освободить память под ресурс в случае ошибочной загрузки
                 DEBUG_BREAK_POINT_C                                             ; ошибка загрузки ресурса
-                JP (HL)                                                         ; запуск загруженного блока
+                JP Func.LaunchAsset                                             ; запуск загруженного блока
                 endm
 ; -----------------------------------------
 ; загрузка ресурса и запуск

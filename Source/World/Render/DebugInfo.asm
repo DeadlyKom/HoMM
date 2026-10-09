@@ -258,7 +258,6 @@ IconDebug:
 .Text.Center    DB "CENTR", #00
 .Text.Character DB "HERO ", #00
 .Text.Spells    DB "SPELL", #00
-.Text.Inventory DB "INVEN", #00
 .Text.Quest     DB "QUEST", #00
 .Text.Map       DB "MAP  ", #00
 .Text.Options   DB "OPTNS", #00

@@ -7,6 +7,7 @@
 ; Out:
 ; Corrupt:
 ; Note:
+;   ℹ️ код расположен в Kernel
 ; -----------------------------------------
 Update:         ; проверка количества активных слоёв
                 LD A, (GameState.UIRuntime + FUIRuntime.LayersNum)

@@ -6,7 +6,6 @@
 Begin           EQU $
                 include "Draw.asm"
 Indexes         ; индексы спрайтов в буфере спрайтов (Adr.SpriteInfoBuffer)
-
                 DB #00                                                          ; "Idle"
                 DB #00                                                          ; "Up"
                 DB #00                                                          ; "UpRight"
@@ -16,6 +15,7 @@ Indexes         ; индексы спрайтов в буфере спрайто
                 DB #00                                                          ; "DownLeft"
                 DB #00                                                          ; "Left"
                 DB #00                                                          ; "UpLeft"
+Indexes.Size    EQU $-Indexes
 
                 display " - Draw character object:\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $-Begin, " byte(s)  ]"
                 endmodule

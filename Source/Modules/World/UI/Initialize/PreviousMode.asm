@@ -7,6 +7,7 @@
 ; Out:
 ; Corrupt:
 ; Note:
+;   ℹ️ код расположен в модуле "мира"
 ; -----------------------------------------
 PreviousMode:   ; чтение предыдущего UI режима
                 LD A, (GameState.UIRuntime + FUIRuntime.PreviousMode)

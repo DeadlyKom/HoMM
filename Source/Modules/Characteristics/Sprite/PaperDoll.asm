@@ -41,15 +41,13 @@ Load:           ; определение гендера выбранного п�
                 SET_MODULE_PAGE_Characteristics                                 ; включить страницу модуля "Characteristics"
 
                 ; сохранение страницы и адреса спрайтов "образа персонажа"
-                LD A, (GameState.Assets + FAssets.Address.Page)
-                LD (Characteristics.Display.PaperDoll.Page), A
+                SAVE_ASSETS_PAGE Characteristics.Display.PaperDoll.Page         ; сохранение страницы загруженного ресурса
 
                 LD HL, (GameState.Assets + FAssets.Address.Adr)
                 LD (Characteristics.Display.PaperDoll.Address), HL
                 RET
 
                 display " - Sprite initialize 'Paper doll':\t\t\t", /A, Load, "\t= busy [ ", /D, $-Load, " byte(s)  ]"
-
                 endmodule
 
                 endif ; ~ _MODULE_CHARACTERISTICS_SPRITE_PAPER_DOLL_

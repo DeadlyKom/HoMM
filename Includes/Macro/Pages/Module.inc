@@ -88,5 +88,27 @@ JP_SET_MODULE_PAGE_Characteristics macro
                 LD A, (Kernel.Modules.Characteristics.Page)
                 JP_SET_PAGE_A
                 endm
+; -----------------------------------------
+; включить страницу модуля "Inventory"
+; In:
+; Out:
+; Corrupt:
+;   BC, AF
+; -----------------------------------------
+SET_MODULE_PAGE_Inventory macro
+                LD A, (Kernel.Modules.Inventory.Page)
+                SET_PAGE_A
+                endm
+; -----------------------------------------
+; включить страницу модуля "Inventory"
+; In:
+; Out:
+; Corrupt:
+;   BC, AF
+; -----------------------------------------
+JP_SET_MODULE_PAGE_Inventory macro
+                LD A, (Kernel.Modules.Inventory.Page)
+                JP_SET_PAGE_A
+                endm
 
                 endif ; ~_MACRO_PAGE_MODULE_

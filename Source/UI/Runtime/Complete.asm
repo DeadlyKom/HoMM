@@ -7,6 +7,7 @@
 ; Out:
 ; Corrupt:
 ; Note:
+;   ℹ️ код расположен в Kernel
 ; -----------------------------------------
 Complete:       ; сохранение предыдущего режима
                 LD A, (GameState.UIRuntime + FUIRuntime.Mode)

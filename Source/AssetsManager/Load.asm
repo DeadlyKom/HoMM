@@ -150,6 +150,7 @@ Load:           LD (GameState.AssetID), A                                       
 .IsLoaded       PUSH HL
                 CALL CopyAssetsData                                             ; копирование данных об ассетах
                 POP HL
+
                 ; установка страницы ресурса
                 LD A, (IX + FAssets.Address.Page)                               ; страница назначения
                 JP_PAGE_A                                                       ; установка страницы в 3 банк памяти (#C000-#FFFF)

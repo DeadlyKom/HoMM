@@ -38,9 +38,7 @@ Load:           ; инициализация
                 INC HL
                 LD (IY + FFrame.Duration), A
 
-                ; сохранение страницы
-                LD A, (GameState.Assets + FAssets.Address.Page)                 ; страница и загруженного ассета
-                LD (IY + FFrame.Address.Page), A
+                SAVE_ASSETS_PAGE IY + FFrame.Address.Page                       ; сохранение страницы загруженного ресурса
 
                 ; расчёт расположения кадра
                 LD E, (HL)

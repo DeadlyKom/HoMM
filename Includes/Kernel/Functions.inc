@@ -4,6 +4,7 @@
 Func
 .PopPage                EQU Kernel.Functions.PopPage                            ; восстановление страницы
 .ExeAssetCode           EQU Kernel.Functions.ExeAssetCode                       ; выполнить код ресурса (продвинутая компиляция кода)
+.LaunchAsset            EQU Kernel.Functions.LaunchAsset                        ; запуск загруженного модуля
 .RestoreAsset           EQU Kernel.Functions.RestoreAsset                       ; восстановление (перезагрузка) ранее загруженного ассета из стека
 .LoadAssetInPage        EQU Kernel.Functions.LoadAsset.InPage                   ; загрузка ассета (находясь в странице)
 .LoadAssetBlockInPage   EQU Kernel.Functions.LoadAsset.BlockInPage              ; загрузка ассета, с копированием блока ассета в буфер (находясь в странице)

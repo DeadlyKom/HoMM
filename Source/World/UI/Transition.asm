@@ -4,21 +4,25 @@
 
                 module Transition
 ; -----------------------------------------
-; переход к обработчику игрового меню паузы
+; переходник к обработчику игрового меню паузы
 ; In:
 ; Out:
 ; Corrupt:
 ; Note:
+;   ℹ️ код расположен в "общей памяти"
 ; -----------------------------------------
-Layer_GamePause:JP World.UI.Transition.Layer_GamePause                          ; перейти к обработчику перехода
+Layer_GamePause:; вызов кода из модуля "мира"
+                JP World.UI.Transition.Layer_GamePause
 ; -----------------------------------------
-; переход к обработчику игрового слоя
+; переходник к обработчику игрового слоя
 ; In:
 ; Out:
 ; Corrupt:
 ; Note:
+;   ℹ️ код расположен в "общей памяти"
 ; -----------------------------------------
-Layer_GameView: JP World.UI.Transition.Layer_GameView                           ; перейти к обработчику перехода
+Layer_GameView: ; вызов кода из модуля "мира"
+                JP World.UI.Transition.Layer_GameView
                 endmodule
 
                 endif ; ~_WORLD_UI_TRANSITION_

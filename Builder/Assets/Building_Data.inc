@@ -33,11 +33,13 @@
                 ; ASSETS_ID_FONT_RU_8_PARTICLE
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Metadata/Compressed/Font/Glyphs ru.pack.ar", Metadata.Font.Pack.Size.Sector.ar
                 ; ASSETS_ID_SESSION
-                ADD_ASSETS 1, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/Session.pack.ar", Session.Size.Sector.ar
+                ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/Session.pack.ar", Session.Size.Sector.ar
                 ; ASSETS_ID_WORLD
-                ADD_ASSETS 1, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/world.pack.ar", World.Size.Sector.ar
+                ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/world.pack.ar", World.Size.Sector.ar
                 ; ASSETS_ID_CHARACTERISTICS
-                ADD_ASSETS 1, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/Characteristics.pack.ar", Characteristics.Size.Sector.ar
+                ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/Characteristics.pack.ar", Characteristics.Size.Sector.ar
+                ; ASSETS_ID_INVENTORY
+                ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/Inventory.pack.ar", Inventory.Size.Sector.ar
                 ; ASSETS_ID_DEFAULT_SETTINGS
                 ADD_ASSETS 3, Page.ObjectDefaultSettings, Adr.ObjectDefaultSettings, "Builder/Assets/Metadata/Compressed/Default/DefaultSettings.meta.ar", Metadata.Default.Size.Sector.ar
                 ; ASSETS_ID_CURSOR_PACK

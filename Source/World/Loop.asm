@@ -26,7 +26,11 @@ Loop:
                 JP Z, $                                                         ; переход к подготовке нового кадра
 
 .Exit           ; завершение работы текущего цикла
-                RES_MAIN_FLAG ML_EXIT_BIT
+                RES_MAIN_FLAG ML_EXIT_BIT                                       ; завершение работы текущего цикла
+
+                ; сохранение состояния общей и страничной памяти мира
+                SET_MODULE_PAGE_World                                           ; включение страницы модуля "мира"
+                CALL World.SaveState                                            ; сохранение состояния мира
 
                 ; подготовка флагов для перехода между циклами
                 SET_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE
@@ -38,7 +42,7 @@ Loop:
 
 .JumpTable      DW .NoMode                                                      ; UI_MODE_NONE
                 DW ExecuteModule.Characteristics                                ; UI_MODE_CHARACTERISTICS
-                DW .NoMode                                                      ; UI_MODE_INVENTORY
+                DW ExecuteModule.Inventory                                      ; UI_MODE_INVENTORY
                 DW .NoMode                                                      ; UI_MODE_SPELLBOOK
                 DW .NoMode                                                      ; UI_MODE_MAP
                 DW .NoMode                                                      ; UI_MODE_QUEST_LOG
