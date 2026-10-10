@@ -43,9 +43,9 @@ UpdateChunk:    ; сравнение чанков
 
                 LD D, A                                                         ; сохранение нового чанка
                 LD (IX + FObject.Chunk), A                                      ; новый чанк становится текущей принадлежностью объекта
-                CALL Object.Utilities.GetObjectID.IX                            ; получить ID объекта
+                CALL Object.Utilities.GetObjectID.IX                            ; получить идентификатор объекта
 
-                ; перенос ID объекта из старого чанка в новый
+                ; перенос идентификатора объекта из старого чанка в новый
                 LD HL, GameSession.WorldInfo + FWorldInfo.ObjectNum
                 LD C, (HL)
                 LD B, #00

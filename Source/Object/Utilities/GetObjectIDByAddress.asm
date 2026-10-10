@@ -2,16 +2,16 @@
                 ifndef _OBJECT_UTILITIES_GET_OBJECT_ID_BY_ADDRESS_
                 define _OBJECT_UTILITIES_GET_OBJECT_ID_BY_ADDRESS_
 ; -----------------------------------------
-; получить ID объекта
+; получить идентификатор объекта
 ; In:
 ;   HL - адрес объекта
 ; Out:
-;   A  - ID объекта
+;   A  - идентификатор объекта
 ; Corrupt:
 ;   HL, AF
 ; Note:
 ; -----------------------------------------
-ObjectID.HL:    CALC_OBJECT_ID HL                                               ; расчёт ID объекта
+ObjectID.HL:    CALC_OBJECT_ID HL                                               ; расчёт идентификатора объекта
                 LD A, H
                 RET
 ; -----------------------------------------
@@ -19,7 +19,7 @@ ObjectID.HL:    CALC_OBJECT_ID HL                                               
 ; In:
 ;   IX - адрес объекта
 ; Out:
-;   A  - ID объекта
+;   A  - идентификатор объекта
 ; Corrupt:
 ;   HL, AF
 ; Note:
@@ -29,7 +29,7 @@ ObjectID.IX:    LD A, IXH
                 LD A, IXL
                 LD L, A
 
-                CALC_OBJECT_ID HL                                               ; расчёт ID объекта
+                CALC_OBJECT_ID HL                                               ; расчёт идентификатора объекта
                 LD A, H
                 RET
 ; -----------------------------------------
@@ -37,7 +37,7 @@ ObjectID.IX:    LD A, IXH
 ; In:
 ;   IY - адрес объекта
 ; Out:
-;   A  - ID объекта
+;   A  - идентификатор объекта
 ; Corrupt:
 ;   HL, AF
 ; Note:
@@ -47,7 +47,7 @@ ObjectID.IY:    LD A, IYH
                 LD A, IYL
                 LD L, A
                 
-                CALC_OBJECT_ID HL                                               ; расчёт ID объекта
+                CALC_OBJECT_ID HL                                               ; расчёт идентификатора объекта
                 LD A, H
                 RET
 

@@ -9,7 +9,7 @@ ASSETS_DATA_FILE_SECTORS   = 0
 
 ADD_ASSETS      macro Bank?, Page?, ORG?, Include?, SizeSec?
                 if SizeSec? > #FF
-                error "размер ассета превышает 255 секторов"
+                error "размер ресурса превышает 255 секторов"
                 endif
 
                 if ASSETS_DATA_FILE_SECTORS + SizeSec? > #FF

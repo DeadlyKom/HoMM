@@ -18,7 +18,7 @@
 ;       PROGRESS_PERCENT_FIXED 50.0
 ;       LAUNCH_ASSET_FUNCTION Progress.ToPercent, ExecuteModule.Progress
 ; -----------------------------------------
-Launch:         ; первичная инициализация загруженного ассета Progress
+Launch:         ; первичная инициализация загруженного ресурса Progress
                 ; на вершине стека лежит идентификатор запрошенной функции
 
                 SAVE_ASSETS_PAGE Kernel.Modules.Progress.Page                   ; сохранение страницы загруженного ресурса
@@ -26,7 +26,7 @@ Launch:         ; первичная инициализация загружен
                 LD HL, (GameState.Assets + FAssets.Address.Adr)
                 LD (Kernel.Modules.Progress.Address), HL
 
-                ; повторный вход в диспетчер уже инициализированного ассета
+                ; повторный вход в диспетчер уже инициализированного ресурса
                 ; HL содержит адрес диспетчера, а идентификатор функции сохранён в стеке
                 JP (HL)
 

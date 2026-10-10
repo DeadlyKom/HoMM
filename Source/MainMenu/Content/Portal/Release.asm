@@ -14,7 +14,7 @@ Release:        ; инициализация
                 LD HL, ArrayAssets
                 LD B, ArrayAssets.Num
 
-.Loop           ; чтение идентификатора загружаемого ассета
+.Loop           ; чтение идентификатора загружаемого ресурса
                 LD A, (HL)
                 INC HL
                 EXX

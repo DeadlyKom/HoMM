@@ -2,18 +2,18 @@
                 ifndef _MACRO_OBJECT_
                 define _MACRO_OBJECT_
 ; -----------------------------------------
-; расчёт ID объекта
+; расчёт идентификатора объекта
 ; In:
 ;   Reg? - промежуточный регистр (HL, IX, IY)
 ; Out:
-;   A    - ID объекта
+;   A    - идентификатор объекта
 ; Corrupt:
 ;   Reg?
 ; Note:
 ; -----------------------------------------
 CALC_OBJECT_ID  macro Reg?
 
-                ; преобразование адреса объекта в ID объекта:
+                ; преобразование адреса объекта в идентификатор объекта:
                 ; Adr.ObjectsArray + ID * OBJECT_SIZE, где OBJECT_SIZE = 32
                 if OBJECT_SIZE > 32
                 error "address calculation error"

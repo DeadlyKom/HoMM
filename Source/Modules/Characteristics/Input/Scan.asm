@@ -26,6 +26,11 @@ Scan:           ; проверка HardWare ограничения мыши
                 CALL Input.CheckKeyState
                 CALL Z, Input.Exit                                              ; вызов обработчика выхода, если клавиша нажата
 
+                ; проверка клавиши "переход к следующему"
+                LD A, (GameConfig.KeyNext)
+                CALL Input.CheckKeyState
+                CALL Z, Input.Next                                              ; вызов обработчика "переход к следующему", если клавиша нажата
+
                 ; проверка клавиши "выбор"
                 LD A, (GameConfig.KeySelect)
                 CALL Input.CheckKeyState

@@ -18,8 +18,8 @@ GameState       EQU Adr.GameState                                               
 .Input.Timer    EQU GameState + FGameState.Input.Timer                          ; флаги таймера ввода
 .View           EQU GameState + FGameState.View                                 ; флаги вида
 .PlayerActions  EQU GameState + FGameState.PlayerActions                        ; действия игрока
-.AssetID        EQU GameState + FGameState.AssetID                              ; идентификатор последнего загруженного ассета
-.Assets         EQU GameState + FGameState.Assets                               ; копия данных последнего загруженного ассета
+.AssetID        EQU GameState + FGameState.AssetID                              ; идентификатор последнего загруженного ресурса
+.Assets         EQU GameState + FGameState.Assets                               ; копия данных последнего загруженного ресурса
 .FontSize       EQU GameState + FGameState.FontSize                             ; размер выводимого символа
 .SpriteInfoNum  EQU GameState + FGameState.SpriteInfoNum                        ; количество спрайтов в массиве SpriteInfoBuffer
 .SpriteBound    EQU GameState + FGameState.SpriteBound                          ; bound спрайта после его отрисовки на экране

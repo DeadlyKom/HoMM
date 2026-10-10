@@ -26,6 +26,11 @@ Scan:           ; проверка доступности мыши
                 CALL Input.CheckKeyState
                 CALL Z, Input.Exit                                              ; вызов обработчика выхода, если клавиша нажата
 
+                ; проверка клавиши "переход к предыдущему"
+                LD A, (GameConfig.KeyPrevious)
+                CALL Input.CheckKeyState
+                CALL Z, Input.Previous                                          ; вызов обработчика "переход к предыдущему", если клавиша нажата
+
                 ; проверка клавиши "выбор"
                 LD A, (GameConfig.KeySelect)
                 CALL Input.CheckKeyState

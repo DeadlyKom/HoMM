@@ -4,8 +4,9 @@
 
                 module Input
                 include "Scan.asm"
-                include "Input_Select.asm"
                 include "Input_Exit.asm"
+                include "Input_Select.asm"
+                include "Input_Previous.asm"
                 endmodule
 
                 endif ; ~_MODULE_INVENTORY_INPUT_INCLUDE_

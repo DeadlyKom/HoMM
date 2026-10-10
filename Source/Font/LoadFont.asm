@@ -17,14 +17,14 @@ Load:           ; проверка наличия шрифта
                 CP .Max
                 RET NC                                                          ; выход, если в таблице отсутствует требуемый идентификатор
                 
-                ; расчёт адреса в таблице ассетов
+                ; расчёт адреса в таблице ресурсов
                 ADD A, LOW .FontAssetTable
                 LD L, A
                 ADC A, HIGH .FontAssetTable
                 SUB L
                 LD H, A
-                LD A, (HL)                                                      ; чтение идентификатора ассета из таблицы
-                PUSH AF                                                         ; сохранение идентификатора ассета
+                LD A, (HL)                                                      ; чтение идентификатора ресурса из таблицы
+                PUSH AF                                                         ; сохранение идентификатора ресурса
 
                 ; подготовка к загрузке шрифта
                 LD A, Page.Page3
@@ -40,10 +40,10 @@ Load:           ; проверка наличия шрифта
                 LD BC, FLinearAddress
                 CALL Func.CopyFromPage
 
-                POP AF                                                          ; восстановление идентификатора ассета
-                JP_LOAD_ASSETS_IN_PAGE_A                                        ; загрузка ассета (находясь в странице)
+                POP AF                                                          ; восстановление идентификатора ресурса
+                JP_LOAD_ASSETS_IN_PAGE_A                                        ; загрузка ресурса (находясь в странице)
 
-.FontAssetTable ; таблица ассетов шрифтов
+.FontAssetTable ; таблица ресурсов шрифтов
                 DB ASSETS_ID_FONT_RU_8                                          ; FONT_ID_DEFAULT_8
 .Max            EQU $-.FontAssetTable
 

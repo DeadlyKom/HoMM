@@ -141,7 +141,7 @@ Render pipeline мира начинается не в `Draw`, а раньше �
 
 ## Как `Launch` встраивает render pipeline в runtime
 
-`Source/Modules/World/Launch.asm` делает не только загрузку ассета мира.
+`Source/Modules/World/Launch.asm` делает не только загрузку ресурса мира.
 Он собирает runtime-среду для пайплайна:
 - копирует deploy-блок мира;
 - разворачивает shared-screen код на отдельной странице;

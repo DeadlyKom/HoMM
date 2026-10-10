@@ -32,7 +32,7 @@ TryUIIconChar:  ; проверка попадания курсора в bound о
                 BIT OBJECT_CHARACTER_SPAWN_UI_ON_HOVER_BIT, (HL)                ; FODS_Character.Flags
                 RET Z                                                           ; выход, если создание UI IconChar не разрешено
 
-                ; получение ID объекта привязки
+                ; получение идентификатора объекта привязки
                 CALL Object.Utilities.GetObjectID.IX
                 LD (FindUIIconChar.AnchorID), A
 
@@ -54,15 +54,15 @@ TryUIIconChar:  ; проверка попадания курсора в bound о
 
                 PUSH IX                                                         ; сохранение адреса объекта привязки
                 
-                ; чтение ID персонажа
+                ; чтение идентификатора персонажа
                 LD A, (IX + FObjectCharacter.CharacterID)
-                PUSH AF                                                         ; сохранение ID персонажа
+                PUSH AF                                                         ; сохранение идентификатора персонажа
                 CALL Object.Spawn
-                POP BC                                                          ; восстановление ID персонажа
+                POP BC                                                          ; восстановление идентификатора персонажа
                 JR C, .Failed                                                   ; переход, если отсутствует свободное место
 
                 ; получение индекса иконки персонажа
-                LD A, B                                                         ; ID персонажа
+                LD A, B                                                         ; идентификатор персонажа
                 CALL Character.Utilities.GetAdr.HL
                 INC L                                                           ; пропуск FCharacter.Class
                 LD L, (HL)                                                      ; FCharacter.RepresentID

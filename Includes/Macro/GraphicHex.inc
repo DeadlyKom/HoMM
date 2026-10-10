@@ -2,7 +2,7 @@
                 ifndef _MACRO_GRAPHIC_HEX_
                 define _MACRO_GRAPHIC_HEX_
 
-                ; макросы позволяютт связать графические пакеты с ID ассетом
+                ; макросы позволяют связать графические пакеты с идентификатором ресурса
 MAKE_TO_GRAPHICS_PACKAGE macro Label?, AssetID?
 GRAPHICS_PACKAGE_COUNTER  defl 0                                                ; счётчик гексагональных тайлов
 @Label?         EQU GRAPHICS_PACKAGE_COUNTER
@@ -16,7 +16,7 @@ GRAPHICS_PACKAGE_COUNTER = GRAPHICS_PACKAGE_COUNTER+1
                 endm
 
                 ; таблица сопоставления гексагональных тайлов и графического пакетов, где
-                ;  1. индекс массива - ID гексагонального тайла
+                ;  1. индекс массива - идентификатор гексагонального тайла
                 ;  2. первый байт - индекс в массиве FMapHeader.GraphicPack
                 ;  3. второй байт - смещение внутри текущего графического пакета (0-7)
                 ;

@@ -57,7 +57,7 @@ ASSETS_TRDOS    macro
                 CALL Memcpy.FastLDIR
                 endm
 ; -----------------------------------------
-; включить страницу расположения ассет менеджера
+; включить страницу расположения менеджера ресурсов
 ; In:
 ; Out:
 ;   IX - адрес структуры FAssets
@@ -268,7 +268,7 @@ LOAD_ASSETS_REG macro Reg?
                 DEBUG_BREAK_POINT_C                                             ; ошибка загрузки ресурса
                 endm
 ; -----------------------------------------
-; загрузка ассета (находясь в странице)
+; загрузка ресурса (находясь в странице)
 ; In:
 ;   A - идентификатор ресурса
 ; Out:
@@ -281,7 +281,7 @@ JP_LOAD_ASSETS_IN_PAGE_A macro
                 JP Func.LoadAssetInPage
                 endm
 ; -----------------------------------------
-; загрузка ассета (находясь в странице)
+; загрузка ресурса (находясь в странице)
 ; In:
 ;   ID? - идентификатор ресурса
 ; Out:
@@ -292,14 +292,14 @@ LOAD_ASSETS_IN_PAGE macro ID?
                 LOAD_ASSETS_IN_PAGE_A
                 endm
 ; -----------------------------------------
-; загрузка ассета, с копированием блока ассета в буфер (находясь в странице)
+; загрузка ресурса, с копированием блока ресурса в буфер (находясь в странице)
 ; In:
 ;   ID?     - идентификатор ресурса
-;   Offset? - смещение блока от начала ассета
+;   Offset? - смещение блока от начала ресурса
 ;   Buffer? - адрес буфера (ниже #C000)
 ;   Size?   - размер блока
 ; Out:
-;   HL - адрес блока в ассете
+;   HL - адрес блока в ресурсе
 ;   DE - адрес буфера
 ; Corrupt:
 ;   HL, DE, BC, AF, AF'
@@ -340,7 +340,7 @@ JP_RELEASE_ASSET macro ID?
                 JP_RELEASE_ASSET_A
                 endm
 ; -----------------------------------------
-; освобождение ассета (находясь в странице)
+; освобождение ресурса (находясь в странице)
 ; In:
 ;   ID? - идентификатор ресурса
 ; Out:
@@ -353,6 +353,22 @@ RELEASE_ASSETS_IN_PAGE macro ID?
 JP_RELEASE_ASSETS_IN_PAGE macro ID?
                 LD A, ID?
                 JP Func.ReleaseAssetInPage
+                endm
+; -----------------------------------------
+; пометка ресурса как невостребованного (находясь в странице)
+; In:
+;   ID? - идентификатор ресурса
+; Out:
+; Corrupt:
+;   BC, AF, AF', IX
+; -----------------------------------------
+MARK_ASSETS_UNCLAIMED_IN_PAGE macro ID?
+                LD A, ID?
+                CALL Func.MarkAsUnclaimedInPage
+                endm
+JP_MARK_ASSETS_UNCLAIMED_IN_PAGE macro ID?
+                LD A, ID?
+                JP Func.MarkAsUnclaimedInPage
                 endm
 ; -----------------------------------------
 ; загрузка ресурса и запуск
@@ -398,7 +414,7 @@ JP_EXE_ASSETS_NOT_PARAM macro AssetID?, Func?
 .Continue       JP Func.ExeAssetCode
                 endm
 ; -----------------------------------------
-; запуск функции ассет
+; запуск функции ресурса
 ; In:
 ;   SP+0     - 16-битный аргумент
 ;   AssetID? - идентификатор ресурса
@@ -428,9 +444,9 @@ JP_EXE_ASSET_FUNCTION_ONE_PARAM macro AssetID?
                 JP Func.ExeAssetCode
                 endm
 ; -----------------------------------------
-; запуск функции ассет
+; запуск функции ресурса
 ; In:
-;   SP+0     - FunctionID, снимается диспетчером ассета
+;   SP+0     - FunctionID, снимается диспетчером ресурса
 ;   SP+2     - параметр вызываемой функции
 ;   AssetID? - идентификатор ресурса
 ; Out:
@@ -444,19 +460,19 @@ EXE_ASSETS_FUNCTION_TWO_PARAMS macro AssetID?, Func?
                 POP DE                                                          ; первый параметр (FunctionID)
                 POP BC                                                          ; второй параметр
                 LD HL, .Continue+3
-                PUSH HL                                                         ; адрес продолжения после возврата из ассета
+                PUSH HL                                                         ; адрес продолжения после возврата из ресурса
                 PUSH_PAGE                                                       ; сохранение номера страницы в стеке
                 LD HL, Func.PopPage
                 PUSH HL                                                         ; адрес восстановления страницы
                 PUSH BC                                                         ; второй параметр функции
-                PUSH DE                                                         ; FunctionID для диспетчера ассета
+                PUSH DE                                                         ; FunctionID для диспетчера ресурса
                 LD A, AssetID?
 .Continue       JP Func.ExeAssetCode
                 endm
 ; -----------------------------------------
-; переход к функции ассета с двумя параметрами в стеке
+; переход к функции ресурса с двумя параметрами в стеке
 ; In:
-;   SP+0 - FunctionID, снимается диспетчером ассета
+;   SP+0 - FunctionID, снимается диспетчером ресурса
 ;   SP+2 - параметр вызываемой функции
 ; Corrupt:
 ;   HL, DE, BC, AF
@@ -469,7 +485,7 @@ JP_EXE_ASSET_FUNCTION_TWO_PARAMS macro AssetID?
                 LD BC, Func.PopPage
                 PUSH BC                                                         ; адрес восстановления страницы
                 PUSH HL                                                         ; второй параметр функции
-                PUSH DE                                                         ; FunctionID для диспетчера ассета
+                PUSH DE                                                         ; FunctionID для диспетчера ресурса
                 LD A, AssetID?
                 JP Func.ExeAssetCode
                 endm
@@ -497,17 +513,17 @@ MARK_RAM        macro Page?, Address?, Size?
                 CALL AssetsManager.Mark.Force                                   ; отметить область ОЗУ как занятая
                 endm
 ; -----------------------------------------
-; сохранение идентификатора последнего загруженного ассета
+; сохранение идентификатора последнего загруженного ресурса
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
 ASSETS_PUSH     macro
-                LD A, (GameState.AssetID)                                       ; идентификатора последнего загруженного ассета
+                LD A, (GameState.AssetID)                                       ; идентификатора последнего загруженного ресурса
                 PUSH AF
                 endm
 ; -----------------------------------------
-; восстановление ранее загруженного ассета
+; восстановление ранее загруженного ресурса
 ; In:
 ; Out:
 ; Corrupt:

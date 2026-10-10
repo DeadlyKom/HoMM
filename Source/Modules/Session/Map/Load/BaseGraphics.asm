@@ -22,7 +22,7 @@ BaseGraphics:   PUSH HL
                 LD A, #08                                                       ; всегда резервируем 8 спрайтов
                 RET
 List.BaseGraphicsPackageIDs:
-                ; список ID ассетов графических пакетов
+                ; список идентификаторов ресурсов графических пакетов
                 MAKE_TO_GRAPHICS_PACKAGE BASE_HEX_GRAPHICS_PACKAGE, ASSETS_ID_HEX_FOG 
 List.BaseGraphicsPackageIDs.Size EQU $-List.BaseGraphicsPackageIDs
 

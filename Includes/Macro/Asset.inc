@@ -124,7 +124,7 @@ Size            EQU $-Begin
                 endif
  
                 if Size >= BankSize
-                error "размер несжатого ассета должен быть меньше 16 КБ"
+                error "размер несжатого ресурса должен быть меньше 16 КБ"
                 endif
 
                 ifdef _COMPRESSED_ASSET
@@ -198,7 +198,7 @@ Size            EQU $-Begin
                 endif
 
                 if Size >= BankSize
-                error "размер несжатого ассета должен быть меньше 16 КБ"
+                error "размер несжатого ресурса должен быть меньше 16 КБ"
                 endif
 
                 savebin RawFile?, Begin, Size

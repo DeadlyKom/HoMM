@@ -25,7 +25,7 @@ Launch:         SAVE_ASSETS_PAGE Kernel.Modules.Characteristics.Page            
                 CP UI_MODE_INVENTORY
                 RET NZ                                                          ; выход, если переход выполнен не из инвентаря
 
-                JP_RELEASE_ASSETS_IN_PAGE ASSETS_ID_INVENTORY                   ; освобождение модуля "инвентаря" после переключения
+                JP_MARK_ASSETS_UNCLAIMED_IN_PAGE ASSETS_ID_INVENTORY            ; пометка модуля "инвентаря" как невостребованного после переключения
 
                 display " - Launch 'Characteristics':\t\t\t\t\t\t= busy [ ", /D, $-Launch, " byte(s) ]"
 

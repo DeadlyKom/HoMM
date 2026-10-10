@@ -11,8 +11,8 @@ BufferUtilities:
 .GetIndexRender.Wrap            EQU Page1.Buffer.Utilities.GetIndexRender.Wrap              ; определение индекса Render-буфера по координатам гексагона    (обёртка)
 .GetMapArrayAdr                 EQU Page1.Buffer.Utilities.GetMapArrayAdr                   ; получение адреса массива карты по координатам
 .GetMetaArrayAdr                EQU Page1.Buffer.Utilities.GetMetaArrayAdr                  ; получение адреса массива метаданных карты по координатам
-.GetHextileIDByCoord            EQU Page1.Buffer.Utilities.GetHextileIDByCoord              ; получение ID гексагона по координатам
-.GetHextileIDByCoord.Wrap       EQU Page1.Buffer.Utilities.GetHextileIDByCoord.Wrap         ; получение ID гексагона по координатам                         (обёртка)
+.GetHextileIDByCoord            EQU Page1.Buffer.Utilities.GetHextileIDByCoord              ; получение идентификатора гексагона по координатам
+.GetHextileIDByCoord.Wrap       EQU Page1.Buffer.Utilities.GetHextileIDByCoord.Wrap         ; получение идентификатора гексагона по координатам             (обёртка)
 .GetSurfaceStepCostByCoord.Wrap EQU Page1.Buffer.Utilities.GetSurfaceStepCostByCoord.Wrap   ; получение стоимости поверхности по координатам                (обёртка)
 .UpdateHextile                  EQU Page1.Buffer.Hextile                                    ; обновление Render-буфера указанного гексогонального тайла
 .AdjRenderBufCol                EQU Page1.Buffer.AdjRenderBufCol                            ; корректировка столбцов рендер буфера

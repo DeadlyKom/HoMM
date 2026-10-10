@@ -54,7 +54,7 @@ Objects:        ; чтение данных об объектах
 
                 DJNZ .ObjectLoop
 
-                CALL Object.Utilities.IncCadencePassIDs                         ; увеличение CadencePass'ы ID
+                CALL Object.Utilities.IncCadencePassIDs                         ; увеличение идентификаторов проходов CadencePass
                 RET
 
 .ObjectInit     LD B, (HL)                                                      ; FMapObject.Type
@@ -96,7 +96,7 @@ Objects:        ; чтение данных об объектах
                 ADD HL, HL  ; x2
                 ADD HL, HL  ; x4
                 ADD HL, HL  ; x8
-                LD DE, (GameState.Assets + FAssets.Address.Adr)                 ; адрес загрузки ассета графического ассета
+                LD DE, (GameState.Assets + FAssets.Address.Adr)                 ; адрес загрузки ресурса графического ресурса
                 ADD HL, DE
                 EX DE, HL
 
@@ -115,7 +115,7 @@ Objects:        ; чтение данных об объектах
                 ;   HL, DE, B, AF
                 ; Note:
                 ;   * структура FSprite расположена в буфере SpriteInfoBuffer нелинейно, переход между полями изменяя старший адрес
-                ;   * автоматически корректирует адрес и страницу после загрузки ассета
+                ;   * автоматически корректирует адрес и страницу после загрузки ресурса
                 ; -----------------------------------------
                 CALL Sprite.Add                                                 ; добавление спрайта в общий список
                 

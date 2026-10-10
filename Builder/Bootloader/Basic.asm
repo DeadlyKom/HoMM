@@ -74,7 +74,7 @@ StartBoot:      DI
                 LD (HardConfig.AvailablePages), A                               ; сохранение количества доступных страниц памяти по 16кб
 
                 ; копирование битового массива доступного ОЗУ
-                SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
+                SET_PAGE_ASSETS                                                 ; включить страницу расположения менеджера ресурсов
                 LD HL, Adr.TilemapBuffer
                 LD DE, Adr.AvailableMem
                 LD BC, Size.AvailableMem
@@ -113,27 +113,27 @@ StartBoot:      DI
                 MARK_RAM PAGE_7, MemBank_03, BankSize                           ; отметить страницу памяти 7 занятой
 
                 ; подготовка и загрузка кернеля
-                SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
+                SET_PAGE_ASSETS                                                 ; включить страницу расположения менеджера ресурсов
                 SET_LOAD_ASSETS ASSETS_ID_KERNEL, Page.Kernel, Adr.Kernel
                 LOAD_ASSETS ASSETS_ID_KERNEL
 
                 ; подготовка и загрузка кода страницы 0
-                SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
+                SET_PAGE_ASSETS                                                 ; включить страницу расположения менеджера ресурсов
                 SET_LOAD_ASSETS ASSETS_ID_PAGE_0, Page.Page0, Adr.Code.Page0
                 LOAD_ASSETS ASSETS_ID_PAGE_0
 
                 ; подготовка и загрузка кода страницы 1
-                SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
+                SET_PAGE_ASSETS                                                 ; включить страницу расположения менеджера ресурсов
                 SET_LOAD_ASSETS ASSETS_ID_PAGE_1, Page.Page1, Adr.Code.Page1
                 LOAD_ASSETS ASSETS_ID_PAGE_1
 
                 ; подготовка и загрузка кода страницы 3
-                SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
+                SET_PAGE_ASSETS                                                 ; включить страницу расположения менеджера ресурсов
                 SET_LOAD_ASSETS ASSETS_ID_PAGE_3, Page.Page3, Adr.Code.Page3
                 LOAD_ASSETS ASSETS_ID_PAGE_3
 
                 ; подготовка и загрузка кода страницы 3
-                SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
+                SET_PAGE_ASSETS                                                 ; включить страницу расположения менеджера ресурсов
                 SET_LOAD_ASSETS ASSETS_ID_PAGE_4, Page.Page4, Adr.Code.Page4
                 LOAD_ASSETS ASSETS_ID_PAGE_4
 

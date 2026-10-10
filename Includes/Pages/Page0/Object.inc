@@ -25,11 +25,11 @@ Object.Utilities:
 .GetAdr.IY              EQU Page0.Object.Utilities.Adr.IY                       ; получить адрес объекта
 .GetSettingsAdr.HL      EQU Page0.Object.Utilities.SettingsAdr.HL               ; получить адрес настроек объекта по умолчанию
 .GetSettingsAdr.IX      EQU Page0.Object.Utilities.SettingsAdr.IX               ; получить адрес настроек объекта по умолчанию
-.GetObjectID.HL         EQU Page0.Object.Utilities.ObjectID.HL                  ; получить ID объекта
-.GetObjectID.IX         EQU Page0.Object.Utilities.ObjectID.IX                  ; получить ID объекта
-.GetObjectID.IY         EQU Page0.Object.Utilities.ObjectID.IY                  ; получить ID объекта
+.GetObjectID.HL         EQU Page0.Object.Utilities.ObjectID.HL                  ; получить идентификатор объекта
+.GetObjectID.IX         EQU Page0.Object.Utilities.ObjectID.IX                  ; получить идентификатор объекта
+.GetObjectID.IY         EQU Page0.Object.Utilities.ObjectID.IY                  ; получить идентификатор объекта
 .CadencePassIdByChunk   EQU Page0.Object.Utilities.GetCadencePassIdByChunk      ; получить CadencePassId по номеру чанка
-.IncCadencePassIDs      EQU Page0.Object.Utilities.IncCadencePassIDs            ; увеличение CadencePass'ы ID
+.IncCadencePassIDs      EQU Page0.Object.Utilities.IncCadencePassIDs            ; увеличение идентификаторов проходов CadencePass
 .UpdateChunkByPosition  EQU Page0.Object.Utilities.UpdateChunkByPosition        ; обновить принадлежность объекта к чанку по текущей позиции
 .UpdateChunk            EQU Page0.Object.Utilities.UpdateChunk                  ; обновить принадлежность объекта к указанному чанку
 .InvalidateBound        EQU Page0.Object.Utilities.InvalidateBound              ; обновить область последнего bound объекта перед удалением

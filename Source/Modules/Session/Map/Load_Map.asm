@@ -60,7 +60,7 @@ Load.Map:       ; сохранение идентификатора загруж
                 DJNZ .DataBlockLoop
 
                 ; освобождение ресурса карты
-                SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
+                SET_PAGE_ASSETS                                                 ; включить страницу расположения менеджера ресурсов
 .MapAssetID     EQU $+1
                 LD A, #00
                 RELEASE_ASSET_A

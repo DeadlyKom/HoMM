@@ -28,7 +28,7 @@ Begin:          EQU $
 Hextile         incbin "Block.Hextile.bin"
 Hextile.Size    EQU $-Hextile
 
-                ; таблица гексагональных тайлов, для сопоставления индекса тайла с ID графического пакета и смещением внутри него
+                ; таблица гексагональных тайлов, для сопоставления индекса тайла с идентификатором графического пакета и смещением внутри него
 HextileTable    include "Block.HextileTable.inc"
 HextileTable.Size EQU $-HextileTable
 

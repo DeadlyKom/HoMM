@@ -25,7 +25,7 @@ Initialize:     ; генерация таблицы
                 RES_FLAG_MODIFY MainMenu.Base.Input.Scan.DisableSkipFlag        ; сброс флага запрещения пропуска интро
 
                 ; загрузка данных контента "главного меню"
-                CALL MainMenu.Base.Content.Font.Load                            ; загрузка ассета шрифта (для частиц)
+                CALL MainMenu.Base.Content.Font.Load                            ; загрузка ресурса шрифта (для частиц)
                 CALL MainMenu.Base.Content.Portal.Load                          ; загрузка данных контента "главного меню"
                 CALL MainMenu.Base.Content.Music.Load                           ; загрузка данных контента "музыка"
                 CALL MainMenu.Base.Render.Portal.Initialize                     ; первичная инициализация

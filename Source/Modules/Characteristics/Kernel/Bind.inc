@@ -4,6 +4,7 @@
 KERNEL_ID_COUNTER defl 0                                                         ; счётчик идентификаторов
 
 ; идентификаторы функций
+                ; ⚠️ ВАЖНО ⚠️ функция с идентификатором 0 автоматически вызывается после релокации ресурса
                 BIND_ID_KERNEL Characteristics.Initialize, Launch               ; функция запуска (0)
 
                 endif ; ~_MODULE_CHARACTERISTICS_KERNEL_BIND_

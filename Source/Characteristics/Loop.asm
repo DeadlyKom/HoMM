@@ -26,16 +26,25 @@ Loop:           ; главный цикл "характеристик"
                 ; подготовка флагов для перехода между циклами
                 SET_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE
 
-                ; проверка запроса перехода в инвентарь
+                ; выбор запускаемого модуля по запрошенному UI режиму
                 LD A, (GameState.UIRuntime + FUIRuntime.RequestedMode)
-                CP UI_MODE_INVENTORY
-                JP Z, ExecuteModule.Inventory                                   ; переход, если запрошен переход в инвентарь
+                LD HL, .JumpTable
+                JP Func.JumpTable
 
-                ; проверка запроса возврата в мир
-                CP UI_MODE_WORLD
-                RET NZ                                                          ; выход, если возврат в мир не запрошен
+.Restore        ; восстановление состояния мира
+                JP_EXE_ASSETS_NOT_PARAM ASSETS_ID_WORLD, World.Restore
 
-                JP_EXE_ASSETS_NOT_PARAM ASSETS_ID_WORLD, World.Restore          ; восстановление состояния мира
+.JumpTable      DW .NoMode                                                      ; UI_MODE_NONE
+                DW .NoMode                                                      ; UI_MODE_CHARACTERISTICS
+                DW ExecuteModule.Inventory                                      ; UI_MODE_INVENTORY
+                DW .NoMode                                                      ; UI_MODE_SPELLBOOK
+                DW .NoMode                                                      ; UI_MODE_MAP
+                DW .NoMode                                                      ; UI_MODE_QUEST_LOG
+                DW .NoMode                                                      ; UI_MODE_SETTINGS
+                DW .NoMode                                                      ; UI_MODE_GAME_PAUSE
+                DW .Restore                                                     ; UI_MODE_WORLD
+                DW .NoMode                                                      ; UI_MODE_BATTLE
+.NoMode         RET                                                             ; выход без запуска другого модуля
 
                 display " - Main loop:\t\t\t\t\t\t", /A, Loop, "\t= busy [ ", /D, $-Loop, " byte(s)  ]"
 

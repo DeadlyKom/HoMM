@@ -18,7 +18,7 @@ Initialize:     ; загрузка данных с диска о ресурса�
                                                                                 ; регистр С — номер подпрограммы #05 (чтение секторов)
                 CALL TRDOS.EXE_CMD                                              ; переход в TR-DOS
 
-                ; очистка массива ассетов
+                ; очистка массива ресурсов
                 LD HL, Adr.AssetsTable
                 LD DE, Adr.AssetsTable+1
                 LD BC, Size.AssetsTable-1

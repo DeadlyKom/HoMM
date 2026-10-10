@@ -27,14 +27,14 @@ Load:           ; определение гендера выбранного п�
                 ; -----------------------------------------
                 CALL Character.Utilities.GetAdr
 
-                ; выборка ID ассета от гендера персонажа
+                ; выборка идентификатора ресурса по гендеру персонажа
                 LD A, ASSETS_ID_UI_PAPER_DOLL_MALE_PACK
                 BIT CHARACTER_GENDER_BIT, (IX + FCharacter.Class)
                 JR Z, $+4                                                       ; переход, если муржской гендер
                 LD A, ASSETS_ID_UI_PAPER_DOLL_FEMALE_PACK
 
                 EX AF, AF'                                                      ; сохранение идентификатора ресурса
-                SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
+                SET_PAGE_ASSETS                                                 ; включить страницу расположения менеджера ресурсов
                 EX AF, AF'                                                      ; восстановление идентификатора ресурса
                 LOAD_ASSETS_A                                                   ; загрузка ресурса спрайтов
                 

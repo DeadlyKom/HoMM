@@ -1,7 +1,7 @@
 
                 ifndef _MODULE_SESSION_MAP_HEXTILE_SHADING_TABLE_
                 define _MODULE_SESSION_MAP_HEXTILE_SHADING_TABLE_
-HexShadingTable ; таблица соответствия ID гексагонального тайла и номера штриховка
+HexShadingTable ; таблица соответствия идентификатора гексагонального тайла и номера штриховка
                 DB #00 * 2  ; 0 - трава
                 DB #01 * 2  ; 1 - гора
                 DB #00 * 2  ; 2 - болото

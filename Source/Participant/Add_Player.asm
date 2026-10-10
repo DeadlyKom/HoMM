@@ -25,7 +25,7 @@ Add_Player:     ; инициализация FParticipant
                 LD A, (IX + FParticipantSettings.CastleID)
                 LD (IY + FParticipant.CastleID), A
 
-                ; инициализация массива идентификаторов ID героев данного участника
+                ; инициализация массива идентификаторов героев данного участника
                 LD (IY + FParticipant.CharactersNum), #00
                 ;---------------------------------------------------------------
                 ; расчтёт адреса структуры FCharacterSettings

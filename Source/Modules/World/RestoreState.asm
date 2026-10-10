@@ -28,8 +28,8 @@ RestoreState:   RES_USER_HANDLER                                                
                 CALL Launch.GameplayWindow                                      ; отображение игрового окна
                 CALL Launch.Initialize                                          ; инициализация "мира"
 
-                ; освобождение покинутых модулей после переключения на мир
-                RELEASE_ASSETS_IN_PAGE ASSETS_ID_CHARACTERISTICS                ; освобождение модуля "характеристик"
-                JP_RELEASE_ASSETS_IN_PAGE ASSETS_ID_INVENTORY                   ; освобождение модуля "инвентаря"
+                ; пометка покинутых модулей как невостребованных после переключения на мир
+                MARK_ASSETS_UNCLAIMED_IN_PAGE ASSETS_ID_CHARACTERISTICS         ; пометка модуля "характеристик" как невостребованного
+                JP_MARK_ASSETS_UNCLAIMED_IN_PAGE ASSETS_ID_INVENTORY            ; пометка модуля "инвентаря" как невостребованного
 
                 endif ; ~_MODULE_WORLD_RESTORE_STATE_

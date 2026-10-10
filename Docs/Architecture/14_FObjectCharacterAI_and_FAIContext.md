@@ -21,8 +21,8 @@
 
 Это очень сильное решение.
 Вместо того чтобы раздувать объект множеством полей:
-- blackboard ID;
-- state tree ID;
+- идентификатор blackboard;
+- идентификатор state tree;
 - flags AI;
 - локальные AI-таймеры;
 
@@ -83,7 +83,7 @@ Runtime-состояние дерева.
 
 ## Почему `FObjectCharacterAI` и `FAIContext` надо читать вместе
 
-`FObjectCharacterAI` без `FAIContext` — это просто объект с байтом ID.
+`FObjectCharacterAI` без `FAIContext` — это просто объект с байтом идентификатора.
 `FAIContext` без `FObjectCharacterAI` — это отвязанный runtime-пакет.
 
 Только вместе они образуют законченную архитектурную связку:

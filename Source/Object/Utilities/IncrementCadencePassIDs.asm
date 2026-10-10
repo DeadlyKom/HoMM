@@ -2,7 +2,7 @@
                 ifndef _OBJECT_UTILITIES_INCREMENT_CADENCE_PASS_IDS_
                 define _OBJECT_UTILITIES_INCREMENT_CADENCE_PASS_IDS_
 ; -----------------------------------------
-; увеличение CadencePass'ы ID
+; увеличение идентификаторов проходов CadencePass
 ; In:
 ; Out:
 ; Corrupt:

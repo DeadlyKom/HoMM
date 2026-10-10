@@ -6,7 +6,7 @@
                 include "Load.asm"
                 include "Release.asm"
 
-                ; массив идентификаторов загружаемых ассетов
+                ; массив идентификаторов загружаемых ресурсов
 ArrayAssets     DB ASSETS_ID_MAIN_MENU_GRAPH_PACK_0
                 DB ASSETS_ID_MAIN_MENU_GRAPH_PACK_1
                 DB ASSETS_ID_MAIN_MENU_GRAPH_PACK_2

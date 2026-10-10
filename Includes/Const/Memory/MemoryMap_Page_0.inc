@@ -54,7 +54,7 @@ CharacterArray          EQU CHARACTER_SIZE * MAX_PARTICIPANT_CHARACTERS \
 Code.Page0              EQU #1A00                                               ; размер блока кода
 ObjectDefaultSettings   EQU OBJECT_DEFAULT_SIZE * OBJECT_DEFAULT_SETTINGS_MAX   ; размер таблицы настроек объектов по умолчанию
 ChunkArrayCounters      EQU #0100                                               ; размер буфера чанков счётчиков
-ChunkArrayValues        EQU #0100                                               ; размер буфера чанков ID объектов
+ChunkArrayValues        EQU #0100                                               ; размер буфера чанков идентификаторов объектов
                 endmodule
 
                 module Adr
@@ -72,7 +72,7 @@ Code.Page0              EQU #E000                                               
 ObjectDefaultSettings   EQU Adr.Code.Page0 + Size.Code.Page0                    ; адрес таблицы настроек объектов по умолчанию
                                                                                 ; (помещён в центр, при распоковке затрутся StaticChunkArray)
 ChunkArrayCounters      EQU Adr.ObjectDefaultSettings + Size.ObjectDefaultSettings ; адрес буфера чанков счётчиков
-ChunkArrayValues        EQU Adr.ChunkArrayCounters + Size.ChunkArrayCounters    ; адрес буфера чанков ID объектов
+ChunkArrayValues        EQU Adr.ChunkArrayCounters + Size.ChunkArrayCounters    ; адрес буфера чанков идентификаторов объектов
                 endmodule
 
                 endif ; ~_CONST_MEMORY_MAP_PAGE_0_

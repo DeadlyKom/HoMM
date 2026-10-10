@@ -33,7 +33,7 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
                 LD E, FONT_ID_DEFAULT_8                                         ; ToDo: брать данные из конфигурации
                 CALL_IN_PAGE Page.Font, Font.Load
                 
-                ; загрузка ассета, с копированием блока ассета в буфер (находясь в странице)
+                ; загрузка ресурса, с копированием блока ресурса в буфер (находясь в странице)
                 LOAD_ASSET_BLOCK_IN_PAGE \
                     ASSETS_ID_PROGRESS_STAGES, \
                     0, \
@@ -42,7 +42,7 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
 
                 ; -----------------------------------------
                 ; Out:
-                ;   HL - адрес блока в ассете
+                ;   HL - адрес блока в ресурсе
                 ;   DE - адрес буфера
                 ; -----------------------------------------
 
@@ -56,7 +56,7 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
                                                                                 ; нулевой идентификатор всегда общий
                 ; расчёт адреса смещения до требуемого изображения
                 ADD A, A    ; x2
-                LD L, A                                                         ; начальный адрес загрузки ассета всегда выровнен
+                LD L, A                                                         ; начальный адрес загрузки ресурса всегда выровнен
                 INC L                                                           ; пропуск байта с количеством стадий
 
                 ; чтение смещения и расчёт адреса требуемого изображения
@@ -65,7 +65,7 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
                 LD B, (HL)
 
                 ; расчёт смещения
-                EX DE, HL                                                       ; адрес блока в ассете
+                EX DE, HL                                                       ; адрес блока в ресурсе
                 ADD HL, BC
                 LD (Draw.NotBoundSpriteAdr), HL                                 ; сохранение адреса спрайта
 
@@ -92,7 +92,7 @@ Initialize:     ifdef ENABLE_LOADING_PROCESS
                 CALL Func.ShadowScrcpyInPage                                    ; копирование основного экрана в теневой
                 SHOW_SHADOW_SCREEN                                              ; отобразить теневой экран
                 SET_RENDER_TO_SHADOW_SCREEN                                     ; установка работы с теневым экраном
-                RELEASE_ASSETS_IN_PAGE ASSETS_ID_PROGRESS_STAGES                ; освобождение ассета (находясь в странице)
+                RELEASE_ASSETS_IN_PAGE ASSETS_ID_PROGRESS_STAGES                ; освобождение ресурса (находясь в странице)
                 CALL EnterProgress.Reset                                        ; сброс состояния прогресса
 
                 else

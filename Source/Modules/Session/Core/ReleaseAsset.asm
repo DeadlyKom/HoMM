@@ -8,8 +8,8 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-ReleaseAsset:   SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
-                JP_RELEASE_ASSET ASSETS_ID_SESSION                              ; освобождение ассета
+ReleaseAsset:   SET_PAGE_ASSETS                                                 ; включить страницу расположения менеджера ресурсов
+                JP_RELEASE_ASSET ASSETS_ID_SESSION                              ; освобождение ресурса
 
                 display " - Utilities release asset:\t\t\t\t", /A, ReleaseAsset, "\t= busy [ ", /D, $-ReleaseAsset, " byte(s)  ]"
 

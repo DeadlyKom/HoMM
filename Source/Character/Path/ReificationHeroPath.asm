@@ -136,7 +136,7 @@ ReificationPath:; расчёт адреса хранения позиции
                 RET C                                                           ; выход, если была ошибка
                 ; -----------------------------------------
                 ; Note:
-                ;   для ассета ASSETS_ID_UI_ARROW_PATH_PACK,
+                ;   для ресурса ASSETS_ID_UI_ARROW_PATH_PACK,
                 ;   поле FObjectUI.Super.Sprite имеет слудующие значения:
                 ;
                 ;      7    6    5    4    3    2    1    0

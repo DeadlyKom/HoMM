@@ -12,11 +12,11 @@
 ; -----------------------------------------
 Objects:        EX DE, HL                                                       ; меняем местами
 
-                ; загрузка ассета ID дефолтных настроек объектов
+                ; загрузка ресурса дефолтных настроек объектов по идентификатору
                 LD E, (HL)
                 INC HL
                 PUSH HL
-                SET_PAGE_ASSETS                                                 ; включить страницу расположения ассет менеджера
+                SET_PAGE_ASSETS                                                 ; включить страницу расположения менеджера ресурсов
                 SET_LOAD_ASSETS_REG E, Page.ObjectDefaultSettings, Adr.ObjectDefaultSettings ; принудительная установка места загрузки ресурса
                 LOAD_ASSETS_REG E                                               ; загрузка ресурса
                 CALL Session.SharedCode.SetPageLoadedMap                        ; установка страницы загруженной карты

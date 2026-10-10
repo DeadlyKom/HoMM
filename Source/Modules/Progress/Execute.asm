@@ -40,7 +40,7 @@ PROGRESS_PERCENT_FIXED macro Percent?
 ; -----------------------------------------
 Progress:       PUSH BC                                                         ; сохранение параметра функции
                 PUSH AF                                                         ; сохранение идентификатора запускаемой функции
-                JP_EXE_ASSET_FUNCTION_TWO_PARAMS ASSETS_ID_PROGRESS             ; загрузка ресурса и запуск функции ассета
+                JP_EXE_ASSET_FUNCTION_TWO_PARAMS ASSETS_ID_PROGRESS             ; загрузка ресурса и запуск функции ресурса
 .Page           DB #00                                                          ; страница загруженного модуля Progress
 .Address        DW #0000                                                        ; адрес диспетчера загруженного модуля Progress
 .CurrentPercent DW #0000                                                        ; текущее значение прогресса в формате fixed-point 8.8
