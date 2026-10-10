@@ -111,8 +111,9 @@ Draw:           ; -----------------------------------------
                 CHECK_VIEW_FLAG UPDATE_TILEMAP_BUF_BIT
                 CALL NZ, World.SharedCode.Tilemap.Update.TileBuffer
                 ; -----------------------------------------
-                CALL Fog.Make
-                CALL Fog.Tick
+                ; обновление анимации невидимых гексагонов
+                CALL Buffer.Fog.Make
+                CALL Buffer.Fog.Tick
                 ; -----------------------------------------
 
                 CALL PipelineHexagons
@@ -131,156 +132,6 @@ Draw:           ; -----------------------------------------
 
                 RES_ALL_MAIN_FLAGS                                              ; сброс всех флагов
                 RET
-Fog.Make:       LD HL, MakeCounter
-                DEC (HL)
-                RET NZ
-
-                LD A, R
-                AND %00000111
-                ADD A, #0A
-                LD (HL), A
-                
-                LD A, (BufferNum)
-                OR A
-                RET Z
-                EX AF, AF'
-
-                EXX
-                ; A = rand() % 40
-                CALL Math.Rand8
-                ; -----------------------------------------
-                ; деление D на E
-                ; In:
-                ;   D - делимое
-                ;   E - делитель
-                ; Out:
-                ;   D - результат деления (D / E)
-                ;   A - остаток (D % E)
-                ; Corrupt:
-                ;   D, AF
-                ; -----------------------------------------
-                LD D, A
-                LD E, 40-5
-                CALL Math.Div8x8                                                ; mod
-                EXX
-                ; LD A, 0
-                LD E, A
-
-                LD D, HIGH Adr.RenderBuffer
-                LD A, (DE)
-                BIT MAP_META_FOG_PLAYER_1_BIT, A
-                RET NZ
-
-                LD BC, 10
-                LD HL, Buffer
-
-                ; поиск одинакового индекса
-.IdxLoop        CPI
-                RET Z               ; есть такой индекс
-                JP PE, .IdxLoop
-
-                ; поиск свободного индекса
-                EX AF, AF'
-                LD C, A
-                LD A, #FF
-                DEC HL
-
-.FreeLoop       CPD
-                JR Z, .Make         ; есть свободный индекс
-                JP PE, .FreeLoop
-                RET
-
-.Make           ; сохраним индекс
-                INC HL
-                ; LD D, HIGH Adr.RenderBuffer
-                ; -----------------------------------------
-                ; обновление вокруг указанного гексагона
-                ; In:
-                ;   DE - адрес обновляемого гексогонального тайла
-                ; Out:
-                ; Corrupt:
-                ;   IX, HL', D', BC', AF, AF'
-                ; Note:
-                ;   ℹ️ код расположен в странице 1
-                ; -----------------------------------------
-                CALL BufferUtilities.UpdateHextile
-                RET C
-
-                LD (HL), E
-
-                LD A, %10001111
-                LD (DE), A
-
-                LD A, (BufferNum)
-                DEC A
-                LD (BufferNum), A
-                RET
-
-Fog.Tick:       LD HL, TickCounter
-                DEC (HL)
-                RET NZ
-                LD (HL), #04
-
-                LD A, (BufferNum)
-                LD B, A
-                LD A, 10
-                SUB B
-                RET Z
-
-                LD B, A
-                LD HL, Buffer-1
-                LD D, HIGH Adr.RenderBuffer
-
-.Loop           INC HL
-                LD A, (HL)
-                CP #FF
-                JR Z, .Loop
-
-                LD E, A
-
-                LD A, (DE)
-                AND %00000111
-                DEC A
-                JP P, .SetFog
-
-                LD (HL), #FF
-                LD A, (BufferNum)
-                INC A
-                LD (BufferNum), A
-
-                LD A, %10000000
-                JR .Set
-
-.SetFog         OR %10001000
-.Set            LD (DE), A
-
-                ; -----------------------------------------
-                ; обновление вокруг указанного гексагона
-                ; In:
-                ;   A - индекс в рендер буфере (0-39)
-                ; Out:
-                ; Corrupt:
-                ;   IX, HL', D', BC', AF, AF'
-                ; Note:
-                ;   ℹ️ код расположен в странице 1
-                ; -----------------------------------------
-                CALL BufferUtilities.UpdateHextile
-                DJNZ .Loop
-                RET
-Reset:          LD HL, Buffer
-                LD A, 10
-                LD (BufferNum), A
-                LD B, A
-.Loop           LD (HL), #FF
-                INC HL
-                DJNZ .Loop
-                RET
-
-Buffer          DS 10, #FF
-BufferNum       DB 10
-MakeCounter     DB #03
-TickCounter     DB #03
-
                 display " - Main draw:\t\t\t\t\t\t", /A, Draw, "\t= busy [ ", /D, $-Draw, " byte(s)  ]"
 
                 endif ; ~_WORLD_RENDER_DRAW_

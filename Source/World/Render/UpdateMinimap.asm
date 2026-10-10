@@ -11,7 +11,7 @@
 ; -----------------------------------------
 Update:
 .Minimap        SET_PAGE_MAP                                                    ; включить страницу работы с картой
-                CALL Reset                                                      ; сброс буфера анимаций тайлов
+                CALL Buffer.Fog.Reset                                           ; сброс буфера анимаций тайлов
                 CALL Minimap.GenFog                                             ; генерация тумана для миникарты
                 CALL Minimap.Compilation                                        ; компиляция миникарты
                 CALL Minimap.Memcpy                                             ; копирование миникарты

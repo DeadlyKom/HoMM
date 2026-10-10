@@ -4,6 +4,9 @@
 Buffer:
 .Render                         EQU Page1.Buffer.RenderBuffer                               ; обновление Render-буфера
 .Memcpy.Tilemap                 EQU Page1.Buffer.Memcpy.TilemapBuffer                       ; копирование блока тайлов в Tile-буфер
+.Fog.Make                       EQU Page1.Buffer.Fog.Make                                   ; запуск анимации невидимого гексагона
+.Fog.Tick                       EQU Page1.Buffer.Fog.Tick                                   ; обновление анимаций невидимых гексагонов
+.Fog.Reset                      EQU Page1.Buffer.Fog.Reset                                  ; сброс буфера анимаций невидимых гексагонов
 
 BufferUtilities:
 .GetFogBit                      EQU Page1.Buffer.Utilities.GetFogBit                        ; получение номера бита разведки группы

@@ -7,6 +7,7 @@
 ;   - работа с массивоми Render-буфера и Tilemap-буфером
 ;   - определения координат в буфере
                 module Buffer
+                include "Fog.asm"
                 include "RenderBuffer.asm"
                 include "UpdateHextile.asm"
                 include "Reconnaissance.asm"
