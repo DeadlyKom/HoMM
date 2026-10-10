@@ -3,6 +3,7 @@
                 define _BUFFERS_UTILITIES_INCLUDE_
 
                 module Utilities
+                include "GetFogBit.asm"
                 include "GetAdrArrayByCoord.asm"
                 include "GetHextileIDByCoord.asm"
                 include "GetRenderBufferByIndex.asm"

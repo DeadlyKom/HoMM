@@ -34,19 +34,8 @@ Draw:           ; -----------------------------------------
                 CALL ScreenBlock.Clear                                          ; очистка screen block'ов
                 CALL Event.Initialize                                           ; инициализация работы с событиями
 
-                ; первичная инициализация локации
-                LD HL, Adr.Hextile
-                LD (GameSession.WorldInfo + FWorldInfo.Tilemap), HL
-
-                ; первичная рекогносцировка
-                SET_PAGE_OBJECT                                                 ; включить страницу работы с объектами
-                LD A, PLAYER_GROUP_0
-                LD DE, #0302
-                CALL Tick.Utils.Reconnaissance.Request.Group                    ; создать событие разведки для группы владельца персонажа
-
-                ; выполнить первичную рекогносцировку до формирования буферов,
-                ; чтобы первый Render-буфер сразу содержал видимые гексагоны
-                CALL Event.Handler.Before
+                ; обновление миникарты с учётом разведки и положения камеры
+                CALL World.SharedCode.Render.Update.Minimap
 
                 ; принудительное обновление Tilemap- и Render-буферов
                 SET_PAGE_MAP                                                    ; включить страницу работы с картой

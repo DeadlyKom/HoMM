@@ -2,34 +2,39 @@
                 ifndef _BUFFERS_RECONNAISSANCE_
                 define _BUFFERS_RECONNAISSANCE_
 ; -----------------------------------------
-; рекогносцировка
+; рекогносцировка по событию
 ; In:
-;   IY - указывает на структуру FEventReconnaissance
+;   IY - адрес структуры FEventReconnaissance
 ; Out:
 ; Corrupt:
 ; Note:
 ;   ℹ️ код расположен в странице 1
 ; -----------------------------------------
 Reconnaissance.Event
-                ; Note: по CharacterID, полученный данные о персонаже FCharacter
-                ;       позволяю получить данные отб учаснике (принадлежности) к FParticipant
-                ;       и получить фракцию FParticipantFaction, тем самым получив бит отвечающий за
-                ;       разведку данной фракции
-                LD C, (IY + FEventReconnaissance.FogBit)                        ; бит видимость участника группы
-                
-                ; ToDo: используя даннные о герое FCharacter, получить данные о дальности виденья
-                ;       данным классом + скилами разведки у героя FSecondarySkill,
-                ;       a пока используем константные
-                LD A, 1
+                ; получение номера бита разведки группы
+                LD A, (IY + FEventReconnaissance.Group)
+                ; -----------------------------------------
+                ; получение номера бита разведки группы
+                ; In:
+                ;   A - номер группы
+                ; Out:
+                ;   C - номер бита разведки
+                ; Corrupt:
+                ;   HL, AF
+                ; -----------------------------------------
+                CALL Utilities.GetFogBit
 
-                ; чтение (новой) позиции игрока
+                ; чтение радиуса обзора из события
+                LD A, (IY + FEventReconnaissance.Radius)
+
+                ; чтение координат рекогносцировки
                 LD DE, (IY + FEventReconnaissance.Position)
                 CALL Reconnaissance                                             ; рекогносцировка
-                SET_VIEW_FLAG_A UPDATE_RENDER_BUF_BIT                           ; установка флага обновления Render буфера
+                SET_VIEW_FLAG_A UPDATE_RENDER_BUF_BIT                           ; установка флага обновления Render-буфера
 
-                ; ToDo: вызывает принудительно FORCED_FRAME_UPDATE_BIT 
+                ; ToDo: вызывает принудительно FORCED_FRAME_UPDATE_BIT
                 ;       и вызывает фриз!
-                JP World.SharedCode.Render.Update.Minimap                       ; обновление миникарты (теневого экрана)
+                JP World.SharedCode.Render.Update.Minimap                       ; обновление миникарты теневого экрана
 ; -----------------------------------------
 ; рекогносцировка
 ; In:

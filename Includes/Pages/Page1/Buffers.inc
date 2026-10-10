@@ -6,6 +6,7 @@ Buffer:
 .Memcpy.Tilemap                 EQU Page1.Buffer.Memcpy.TilemapBuffer                       ; копирование блока тайлов в Tile-буфер
 
 BufferUtilities:
+.GetFogBit                      EQU Page1.Buffer.Utilities.GetFogBit                        ; получение номера бита разведки группы
 .GetRender                      EQU Page1.Buffer.Utilities.GetRenderBuffer                  ; определение адреса Render-буфера по индексу гексагона
 .GetIndexRender                 EQU Page1.Buffer.Utilities.GetIndexRender                   ; определение индекса Render-буфера по координатам гексагона
 .GetIndexRender.Wrap            EQU Page1.Buffer.Utilities.GetIndexRender.Wrap              ; определение индекса Render-буфера по координатам гексагона    (обёртка)

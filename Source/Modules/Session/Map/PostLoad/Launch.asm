@@ -27,12 +27,15 @@
 ;                                                       ↓
 ;                                                  Cartography
 ;                                                       ↓
+;                                                  Characters
+;                                                       ↓
 ;                                                   завершение
 ; -----------------------------------------
 Launch:         SET_PAGE_MAP                                                    ; включить страницу работы с картой
                 CALL Session.SharedCode.Director.Initialize                     ; инициализация директора управления популяцией ИИ
                 CALL Session.SharedCode.Director.Initial.Spawn                  ; запуск начального заселения
                 CALL Cartography.Launch                                         ; запуск картографии
+                CALL Characters                                                 ; создание и инициализация персонажей
                 SET_MODULE_PAGE_Session                                         ; включить страницу модуля "Session"
                 RET
 

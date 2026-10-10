@@ -15,30 +15,26 @@
 ; -----------------------------------------
 Request:        ; ToDo: учесть модификатор разведки гексагонального тайла
                 ;       из Adr.SurfProperty и дополнительные корректировки
-                ;       от навыков персонажа; их состав и порядок пока неизвестны
+                ;       от навыков персонажа, их состав и порядок пока неизвестны
 
-                ; получить ParticipantID владельца объекта
+                ; получение идентификатора владельца персонажа
                 LD A, (IX + FObjectCharacter.CharacterID)
-                CALL Character.Utilities.GetAdr.HL                              ; получить адрес персонажа
+                CALL Character.Utilities.GetAdr.HL                              ; получение адреса персонажа
                 INC L                                                           ; пропуск FCharacter.Class
                 INC L                                                           ; пропуск FCharacter.RepresentID
                 LD A, (HL)                                                      ; FCharacter.ParticipantID
 
-                ; получить группу владельца
-                CALL Participant.Utilities.GetAdr.HL                            ; получить адрес участника
-
+                ; получение группы владельца
+                CALL Participant.Utilities.GetAdr.HL                            ; получение адреса участника
                 LD A, (HL)                                                      ; FParticipant.Faction.Flags
                 AND PLAYER_GROUP_MASK
+.Group          EX AF, AF'                                                      ; сохранение группы владельца персонажа
 
-.Group          ; расчёт адреса группы в таблицы
-                ADD A, LOW .FogBitTable
-                LD L, A
-                ADC A, HIGH .FogBitTable
-                SUB L
-                LD H, A
-                LD A, (HL)                                                      ; чтение номера бита из таблицы
+                ; определение радиуса рекогносцировки
+                CALL Character.Utilities.GetViewRadius                          ; получение радиуса обзора персонажа
+                LD (Adr.EventBuffer + FEventReconnaissance.Radius), A           ; сохранение радиуса обзора в событии
 
-                ; сформировать событие
+                ; создание события рекогносцировки для группы
                 LD HL, Adr.EventBuffer
                 LD (HL), EVENT_BEFORE_RENDER | EVENT_LIFETIME_CONDITION         ; FEventReconnaissance.Super.Flags
                 INC L
@@ -49,16 +45,12 @@ Request:        ; ToDo: учесть модификатор разведки г�
                 INC L
                 LD (HL), HIGH BufferUtilities.Reconnaissance.Event              ; FEventReconnaissance.Super.Function + 1
                 INC L
-                LD (HL), A                                                      ; FEventReconnaissance.FogBit
+                EX AF, AF'                                                      ; восстановление группы владельца персонажа
+                LD (HL), A                                                      ; FEventReconnaissance.Group
                 INC L
                 LD (HL), E                                                      ; FEventReconnaissance.Position.X
                 INC L
                 LD (HL), D                                                      ; FEventReconnaissance.Position.Y
                 JP Event.Add
-
-.FogBitTable    DB MAP_META_FOG_PLAYER_1_BIT
-                DB MAP_META_FOG_PLAYER_2_BIT
-                DB MAP_META_FOG_PLAYER_3_BIT
-                DB MAP_META_FOG_PLAYER_4_BIT
 
                 endif ; ~_TICK_UTILS_RECONNAISSANCE_

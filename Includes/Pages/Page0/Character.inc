@@ -18,5 +18,6 @@ Character.Utilities:
 .GetAdr                 EQU Page0.Character.Utilities.Character.Addresses       ; получить адреса персонажа
 .GetPosHexagon.Wrap     EQU Page0.Character.Utilities.Character.Position.Wrap   ; получить позицию персонажа в гексагонах                       (обёртка)
 .GetPosHexagon          EQU Page0.Character.Utilities.Character.Position        ; получить позицию персонажа в гексагонах
+.GetViewRadius          EQU Page0.Character.Utilities.GetViewRadius             ; получение радиуса обзора персонажа
 ; .MemcpyObject           EQU Page0.Character.Utilities.Character.MemcpyObject    ; копировать объект "персонаж"
                 endif ; ~_PAGE_0_CHARACTER_
