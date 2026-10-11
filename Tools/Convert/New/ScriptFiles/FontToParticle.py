@@ -3,10 +3,8 @@
 import json
 from pathlib import Path
 
-
 BASE_DIR = Path(__file__).resolve().parent
 EXPORT_PATH = BASE_DIR / "Export.json"
-
 
 def filename_from_sprite(name: str) -> str:
     """Добавляет расширение к исходному имени спрайта."""
