@@ -1,0 +1,376 @@
+[
+    {
+        "SprName": "body_0",
+        "SprWidth": 8,
+        "SprHeight": 40,
+        "PoxImgX": 48,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/silhouette.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_0.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_0.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "body_1",
+        "SprWidth": 8,
+        "SprHeight": 40,
+        "PoxImgX": 56,
+        "PoxImgY": 8,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/silhouette.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_1.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_1.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "body_2",
+        "SprWidth": 8,
+        "SprHeight": 40,
+        "PoxImgX": 64,
+        "PoxImgY": 8,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/silhouette.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_2.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_2.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "body_3",
+        "SprWidth": 8,
+        "SprHeight": 32,
+        "PoxImgX": 72,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/silhouette.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_3.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_3.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "body_4",
+        "SprWidth": 8,
+        "SprHeight": 88,
+        "PoxImgX": 80,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/silhouette.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_4.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_4.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "body_5",
+        "SprWidth": 8,
+        "SprHeight": 40,
+        "PoxImgX": 88,
+        "PoxImgY": 56,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/silhouette.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_5.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_5.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "body_6",
+        "SprWidth": 8,
+        "SprHeight": 48,
+        "PoxImgX": 88,
+        "PoxImgY": 136,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/silhouette.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_6.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_6.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "body_7",
+        "SprWidth": 8,
+        "SprHeight": 40,
+        "PoxImgX": 80,
+        "PoxImgY": 144,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/silhouette.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_7.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_7.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "body_8",
+        "SprWidth": 8,
+        "SprHeight": 32,
+        "PoxImgX": 72,
+        "PoxImgY": 120,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/silhouette.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_8.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_8.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "body_9",
+        "SprWidth": 8,
+        "SprHeight": 24,
+        "PoxImgX": 64,
+        "PoxImgY": 104,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/silhouette.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_9.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_9.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "body_10",
+        "SprWidth": 8,
+        "SprHeight": 56,
+        "PoxImgX": 56,
+        "PoxImgY": 96,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/silhouette.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_10.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_10.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "body_11",
+        "SprWidth": 8,
+        "SprHeight": 48,
+        "PoxImgX": 48,
+        "PoxImgY": 120,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/silhouette.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_11.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_11.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "body_12",
+        "SprWidth": 24,
+        "SprHeight": 8,
+        "PoxImgX": 32,
+        "PoxImgY": 168,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/silhouette.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_12.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_12.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "body_13",
+        "SprWidth": 8,
+        "SprHeight": 120,
+        "PoxImgX": 40,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/silhouette.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_13.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_13.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "body_14",
+        "SprWidth": 8,
+        "SprHeight": 24,
+        "PoxImgX": 48,
+        "PoxImgY": 72,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/silhouette.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_14.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_14.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "body_15",
+        "SprWidth": 8,
+        "SprHeight": 24,
+        "PoxImgX": 32,
+        "PoxImgY": 72,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/silhouette.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_15.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_15.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "body_16",
+        "SprWidth": 8,
+        "SprHeight": 16,
+        "PoxImgX": 24,
+        "PoxImgY": 80,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/silhouette.png",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_16.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Character/female/silhouette/export/body_16.attr",
+        "MaskData": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 0
+                    }
+                ]
+            }
+        ]
+    }
+]
