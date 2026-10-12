@@ -22,7 +22,6 @@ Adr             DW #0000                                                        
 
                 ends
 
-
                 struct FSpriteInfo
 ; -----------------------------------------
 ;      7    6    5    4    3    2    1    0
@@ -46,7 +45,6 @@ SOx             DB #00                                                          
 SOy             DB #00                                                          ; смещение спрайта по вертикали     (в пикселях)
 
                 ends
-
 
                 struct FSprite
 Info            FSpriteInfo                                                     ; информация о спрайте
