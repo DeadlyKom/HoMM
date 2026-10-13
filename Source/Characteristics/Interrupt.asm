@@ -20,7 +20,7 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 CALL C, UI_Cursor.Draw                                          ; отображение курсора
                 
 .Input          ; ************ Scan Input ************
-                SET_MODULE_PAGE_Characteristics                                 ; включить страницу модуля "Characteristics"
+                SET_MODULE_PAGE_Characteristics                                 ; включить страницу модуля "характеристик"
                 CHECK_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                         ; проверка разрешения сканирования ввода
                 CALL Z, Characteristics.Input.Scan
 

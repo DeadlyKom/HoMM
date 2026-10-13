@@ -13,6 +13,6 @@ InitSprites:    ; инициализация спрайтов
                 MEMCPY Characteristics.Adr.Deploy.Sprite, Adr.CodeToScr, \
                         Characteristics.Size.Deploy.Sprite                      ; копирование блока
                 CALL Characteristics.Sprite.PaperDoll.Load                      ; загрузка и инициализация спрайтов "образа персонажа"
-                JP_SET_MODULE_PAGE_Characteristics                              ; включить страницу модуля "Characteristics"
+                JP_SET_MODULE_PAGE_Characteristics                              ; включить страницу модуля "характеристик"
 
                 endif ; ~_MODULE_CHARACTERISTICS_INIT_SPRITES_

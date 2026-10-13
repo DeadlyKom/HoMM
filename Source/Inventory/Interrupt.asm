@@ -21,7 +21,7 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 CALL C, UI_Cursor.Draw                                          ; вызов отображения курсора, если установлен флаг его отображения
 
 .Input          ; ************ Scan Input ************
-                SET_MODULE_PAGE_Inventory                                       ; включить страницу модуля "Inventory"
+                SET_MODULE_PAGE_Inventory                                       ; включить страницу модуля "инвентаря"
                 CHECK_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                         ; проверка разрешения сканирования ввода
                 CALL Z, Inventory.Input.Scan                                    ; вызов обработки ввода, если сканирование разрешено
 

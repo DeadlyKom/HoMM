@@ -3,8 +3,6 @@
                 define _GRAPHICS_UI_SLOTS_PACK_
 
                 module Slots
-                ORG #0000
-Begin:          EQU $
 Slot_1x1:       DB .Num
 .Parts          SPRITE 18, 17,      -1,    -1, OR_XOR, 0, Slot._1x1
 .Num            EQU ($-.Parts) / FSprite
@@ -50,7 +48,7 @@ Slot_2x3:       DB .Num
                 SPRITE  8,  4,   -1+16,  4+40, OR_XOR, 0, Slot.Bottom
                 SPRITE  8,  8,   -1+24,  0+40, OR_XOR, 0, Slot.RightBottom
 .Num            EQU ($-.Parts) / FSprite
-Slot:
+Slot:           ; спрайты частей слотов
 ._1x1           incbin "slot_1x1_mask.bin"
 .Top            incbin "slot_top_mask.bin"
 .Bottom         incbin "slot_bottom_mask.bin"
@@ -64,9 +62,9 @@ Slot:
 .RightBottom    incbin "slot_right_bottom_mask.bin"
 .RightTop       incbin "slot_right_top_mask.bin"
 .RightTopJoin   incbin "slot_right_top_join_mask.bin"
-End:            EQU $
+Inventory:      ; спрайт сетки инвенторя
+.Grid           incbin "inventory_grid.bin"
 
-                SAVE_PACK "Builder/Assets/Graphics/Compressed/UI/Slots.pack"
                 endmodule
 
                 endif ; ~ _GRAPHICS_UI_SLOTS_PACK_

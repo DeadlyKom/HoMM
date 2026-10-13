@@ -67,7 +67,7 @@ JP_SET_MODULE_PAGE_Session macro
                 JP_SET_PAGE_A
                 endm
 ; -----------------------------------------
-; включить страницу модуля "Characteristics"
+; включить страницу модуля "характеристик"
 ; In:
 ; Out:
 ; Corrupt:
@@ -78,7 +78,7 @@ SET_MODULE_PAGE_Characteristics macro
                 SET_PAGE_A
                 endm
 ; -----------------------------------------
-; включить страницу модуля "Characteristics"
+; включить страницу модуля "характеристик"
 ; In:
 ; Out:
 ; Corrupt:
@@ -89,7 +89,7 @@ JP_SET_MODULE_PAGE_Characteristics macro
                 JP_SET_PAGE_A
                 endm
 ; -----------------------------------------
-; включить страницу модуля "Inventory"
+; включить страницу модуля "инвентаря"
 ; In:
 ; Out:
 ; Corrupt:
@@ -100,7 +100,7 @@ SET_MODULE_PAGE_Inventory macro
                 SET_PAGE_A
                 endm
 ; -----------------------------------------
-; включить страницу модуля "Inventory"
+; включить страницу модуля "инвентаря"
 ; In:
 ; Out:
 ; Corrupt:

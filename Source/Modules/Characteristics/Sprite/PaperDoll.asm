@@ -38,7 +38,7 @@ Load:           ; определение гендера выбранного п�
                 EX AF, AF'                                                      ; восстановление идентификатора ресурса
                 LOAD_ASSETS_A                                                   ; загрузка ресурса спрайтов
                 
-                SET_MODULE_PAGE_Characteristics                                 ; включить страницу модуля "Characteristics"
+                SET_MODULE_PAGE_Characteristics                                 ; включить страницу модуля "характеристик"
 
                 ; сохранение страницы и адреса спрайтов "образа персонажа"
                 SAVE_ASSETS_PAGE Characteristics.Display.PaperDoll.Page         ; сохранение страницы загруженного ресурса

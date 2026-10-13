@@ -11,7 +11,8 @@
 
                 ; блок кода, копируемый при развёртывании модуля
 Adr.Deploy      include "Source/Inventory/Include.inc"
-                ; определение размера копируемого блока
 Size.Deploy     EQU $-Adr.Deploy
+Adr.Deploy.Sprite   include "Sprite/Include.inc"
+Size.Deploy.Sprite  EQU $-Adr.Deploy.Sprite
 
                 endif ; ~_MODULE_INVENTORY_INCLUDE_
