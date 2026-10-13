@@ -3,11 +3,10 @@
                 define _GRAPHICS_HERO_PACK_INCLUDE_
 
                 module Hero
-
                 ORG #0000
 Begin:          EQU $
                 include "Pack.inc"
-Size            EQU $
+Size            EQU $-Begin
                 COMPRESSED_ASSET \
                 "Builder/Assets/Graphics/Original/Hero/Hero.pack", \
                 "Builder/Assets/Graphics/Compressed/Hero.pack.ar"
