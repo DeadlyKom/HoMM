@@ -19,4 +19,10 @@ UI_MODE_MAX                 EQU #0A                                             
 ; флаги
 UI_REQUEST_PENDING_BIT      EQU 0x00                                            ; флаг, запрос на смену UI режима
 UI_TRANSITION_ACTIVE_BIT    EQU 0x01                                            ; флаг, активной фазы смены UI режима
+UI_UPDATE_DISABLE_BIT       EQU 0x02                                            ; флаг, блокировка обновления UI
+                                                                                ; 0 - разрешить
+                                                                                ; 1 - запретить
+UI_UPDATE_ENABLED           EQU 0 << UI_UPDATE_DISABLE_BIT
+UI_UPDATE_DISABLE           EQU 1 << UI_UPDATE_DISABLE_BIT
+
                 endif ; ~_CONST_UI_RUNTIME_
