@@ -12,12 +12,11 @@
 ; -----------------------------------------
 Initialize:     ; инициализация "инвентаря"
                 SET_UI_MODE UI_MODE_INVENTORY                                   ; установка UI режима "инвентарь"
-                SET_UI_LAYER #0000, #00                                         ; ToDo: активные UI слои инвентаря пока отсутствуют
+                SET_UI_LAYER Inventory.UI.Layers.Inventory, \
+                            Inventory.UI.Layers.Inventory.Num                   ; установка активного UI слои инвентаря
                 SET_MAIN_LOOP Inventory.SharedCode.Loop                         ; установка главного цикла
                 SET_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE             ; установка флагов
-
                 SET_INVENTORY_RENDER Inventory.SharedCode.Render.Draw           ; инициализация главного рендера "инвентаря"
-
                 SET_USER_HANDLER Inventory.SharedCode.Interrupt                 ; установка обработчика прерываний
                 RES_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                           ; разрешить сканирование ввода
                 RES_MUSIC_FLAG MUSIC_ENABLE_BIT                                 ; запретить проигрывать музыку

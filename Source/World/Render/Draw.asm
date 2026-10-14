@@ -57,49 +57,7 @@ Draw:           ; -----------------------------------------
                 ; проверка пересечения курсором UI элементов
                 SET_MODULE_PAGE_World                                           ; включить страницу модуля "World"
                 CALL UI.Update
-; -----------------------------------------
-; курсор
-;                 LD HL, (GameSession + FGameSession.WorldInfo.Cursor)
-;                 PUSH HL
-;                 CALL World.Hexagon.GetPosByMouse                                ; определение позиции гексагона под курсором мыши
-;                 POP HL
-;                 OR A
-;                 SBC HL, BC
-;                 JR Z, .L1
-;                 ADD HL, BC
-;                 PUSH BC
-;                 LD B, H
-;                 LD C, L
-;                 LD A, %11000000
-;                 CALL .L2
-;                 POP BC
-;                 LD A, %10000000
-;                 CALL .L2
-;                 JR .L1
-; .L2             PUSH AF
-;                 PUSH BC
-;                 SET_PAGE_MAP                                                  ; включить страницу работы с картой
-;                 POP BC
-;                 CALL BufferUtilities.GetIndexRender
-;                 LD E, A
-;                 LD D, HIGH Adr.RenderBuffer
-;                 POP AF
-;                 LD (DE), A
-;                 ; -----------------------------------------
-;                 ; обновление вокруг указанного гексагона
-;                 ; In:
-;                 ;   A - индекс в рендер буфере (0-39)
-;                 ; Out:
-;                 ; Corrupt:
-;                 ;   IX, HL', D', BC', AF, AF'
-;                 ; Note:
-;   ℹ️ код расположен в странице 1
-;                 ; -----------------------------------------
-;                 CALL BufferUtilities.UpdateHextile
-;                 RET
-; .L1
-; -----------------------------------------
-                ; -----------------------------------------
+                ; -----------------------------------------Ц
                 ; обновление позиции карты
                 CHECK_INPUT_TIMER_FLAG SCROLL_MAP_BIT
                 CALL NZ, World.Tilemap.UpdateMovement

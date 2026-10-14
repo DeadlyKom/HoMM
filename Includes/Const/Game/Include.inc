@@ -9,5 +9,6 @@
                 include "Game_Config.inc"
                 include "Game_HardInput.inc"
                 include "Game_Screen_World.inc"
+                include "Game_Screen_Inventory.inc"
 
                 endif ; ~_CONST_GAME_INCLUDE_

@@ -3,6 +3,7 @@
                 define _MODULE_INVENTORY_UI_INCLUDE_
 
                 module UI
+                include "Layers.inc"
                 include "Handler/Include.inc"
                 include "Initialize/Include.inc"
                 include "Transition/Include.inc"
