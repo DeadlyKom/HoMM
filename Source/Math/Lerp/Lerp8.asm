@@ -1,6 +1,6 @@
 
-                ifndef _MATH_LERP_
-                define _MATH_LERP_
+                ifndef _MATH_LERP_8_
+                define _MATH_LERP_8_
 
                 module Math
 ; -----------------------------------------
@@ -75,6 +75,7 @@ Lerp8:          LD C, A                                                         
 .Add            ADD A, C                                                       ; Result = A + Value
                 RET
 
+                display " - Lerp 8:\t\t\t\t\t\t", /A, Lerp8, "\t= busy [ ", /D, $-Lerp8, " byte(s)  ]"
                 endmodule
 
                 endif ; ~_MATH_LERP_

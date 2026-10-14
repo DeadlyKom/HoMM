@@ -3,6 +3,11 @@
                 define _KERNEL_MATH_
 Math
 .Mul16x8_16     EQU Kernel.Math.Mul16x8_16
+.Mul16x8_24     EQU Kernel.Math.Mul16x8_24
+
+.Lerp8          EQU Kernel.Math.Lerp8                                           ; линейная интерполяция 8-битных беззнаковых значений
+.Lerp16         EQU Kernel.Math.Lerp16                                          ; линейная интерполяция 16-битных беззнаковых значений
+.EaseOut        EQU Kernel.Math.EaseOut                                         ; квадратичное сглаживание с плавным торможением
 
 .Div8x8         EQU Kernel.Math.Div8x8
 .Div16x8_16     EQU Kernel.Math.Div16x8_16

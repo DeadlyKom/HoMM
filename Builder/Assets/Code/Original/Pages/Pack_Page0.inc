@@ -17,8 +17,6 @@ Begin:          EQU $
                 include "Source/Character/Include.inc"
                 include "Source/ChunkArray/Include.inc"
                 include "Source/Participant/Include.inc"
-                include "Source/Math/Lerp.asm"
-                include "Source/Math/Easing/EaseOut.asm"
                 include "Builder/Assets/Metadata/Original/Representation/Characters.inc"
 Size:           EQU $-Begin                                                     ; размер кода
                 if (Size.Code.Page0 - Size) < 0
