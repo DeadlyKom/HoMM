@@ -12,7 +12,12 @@ CONFIG_LANGUAGE_MASK    EQU %00000100                                           
 
 ; флаги игровых настроек
 O_AUTOSAVE_BIT          EQU 0x03                                                ; бит вкл/выкл автосейва
-
+O_CENTER_INSTANT_BIT    EQU 0x07                                                ; флаг, мгновенное центрирование камеры
+                                                                                ; 0 - плавно
+                                                                                ; 1 - мгновенно
+O_AUTOSAVE              EQU 1 << O_AUTOSAVE_BIT
+O_CENTER_SMOOTH         EQU 0 << O_CENTER_INSTANT_BIT
+O_CENTER_INSTANT        EQU 1 << O_CENTER_INSTANT_BIT
 
 ; минимальные значения WORLD_TICKS_PER_HOUR в зависимости от PlaybackSpeed,
 ; при которых шаг фазы суток не превышает один пиксель

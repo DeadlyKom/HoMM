@@ -107,8 +107,6 @@ Layer_GameUI:   ; очистка
 ;   ℹ️ код расположен в модуле "мира"
 ; -----------------------------------------
                 ifdef _DEBUG
-.Center         LD BC, World.SharedCode.Render.IconDebug.Text.Center
-                JR .Draw
 .SpellsBook     LD BC, World.SharedCode.Render.IconDebug.Text.Spells
                 JR .Draw
 .Quest          LD BC, World.SharedCode.Render.IconDebug.Text.Quest
@@ -138,7 +136,6 @@ Layer_GameUI:   ; очистка
                 LD (GameState.Render), A
                 RET
                 else
-.Center         EQU Func.RET
 .SpellsBook     EQU Func.RET
 .Quest          EQU Func.RET
 .Map            EQU Func.RET

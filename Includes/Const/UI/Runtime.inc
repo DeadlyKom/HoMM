@@ -22,6 +22,9 @@ UI_TRANSITION_ACTIVE_BIT    EQU 0x01                                            
 UI_UPDATE_DISABLE_BIT       EQU 0x02                                            ; флаг, блокировка обновления UI
                                                                                 ; 0 - разрешить
                                                                                 ; 1 - запретить
+
+UI_REQUEST_PENDING          EQU 1 << UI_REQUEST_PENDING_BIT
+UI_TRANSITION_ACTIVE        EQU 1 << UI_TRANSITION_ACTIVE_BIT
 UI_UPDATE_ENABLED           EQU 0 << UI_UPDATE_DISABLE_BIT
 UI_UPDATE_DISABLE           EQU 1 << UI_UPDATE_DISABLE_BIT
 

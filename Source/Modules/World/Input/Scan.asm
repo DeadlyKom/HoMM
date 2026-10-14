@@ -51,9 +51,7 @@ Scan:           ; проверка HardWare ограничения мыши
                 CALL Z, UI.Runtime.Request
 
                 ; проверка клавиши "выбор"
-                LD A, (GameConfig.KeySelect)
-                CALL Input.CheckKeyState
-                CALL Z, Input.Select                                            ; переход, если клавиша нажата
+                CALL Input.Select                                               ; обработать нажатие и отпускание
 
                 ; проверка клавиши "выход"
                 ; LD A, (GameConfig.KeyESC)

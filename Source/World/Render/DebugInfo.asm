@@ -255,7 +255,6 @@ DebugInfo:      ifdef DEBUG_INFO_COORDINATES
 IconDebug:
 .Text           ; имена иконок длиной пять символов
 .Text.Empty     DB "     ", #00
-.Text.Center    DB "CENTR", #00
 .Text.Character DB "HERO ", #00
 .Text.Spells    DB "SPELL", #00
 .Text.Quest     DB "QUEST", #00

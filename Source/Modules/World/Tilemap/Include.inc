@@ -6,6 +6,7 @@
                 include "ResetMapScroll.asm"
                 include "UpdateMovement.asm"
                 include "Center.asm"
+                include "CenterSmooth.asm"
                 endmodule
 
                 endif ; ~_MODULE_WORLD_TILEMAP_INCLUDE_
