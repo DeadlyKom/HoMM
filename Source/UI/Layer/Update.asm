@@ -17,13 +17,28 @@ Update:         ; проверка блокировки обновления UI
                 LD A, (GameState.UIRuntime + FUIRuntime.LayersNum)
                 OR A
                 RET Z                                                           ; выход, если активные слои отсутствуют
-                
+
+                EX AF, AF'                                                      ; сохранение количество слоёв
+
+                ; проверка клавиши "выбор" один раз перед обходом элементов
+                LD A, (GameConfig.KeySelect)
+                CALL Input.CheckKeyState
+
+                ; подготовка кода команды сброса или установки состояния нажатия
+                LD A, #B6                                                       ; RES UI_STATE_PRESSED_BIT,(IY + FUIElement.FLags)
+                JR NZ, $+4                                                      ; переход, если клавиша отпущена
+                LD A, #F6                                                       ; SET UI_STATE_PRESSED_BIT,(IY + FUIElement.FLags)
+                LD (Update.Pressed), A
+
+                EX AF, AF'                                                      ; восстаовление количество слоёв
+
                 ; инициализация
                 LD B, A
                 LD HL, (GameState.UIRuntime + FUIRuntime.LayerAdr)
                 RES_FLAG_MODIFY Update.Flag                                     ; сброс флага найденного перекрытия
 
-.LayerLoop      ; основной цикл обхода слои
+
+.LayerLoop      ; основной цикл обхода слои (FUILayer)
                 BIT LAYER_UI_VISIBLE_BIT, (HL)
                 JR Z, .NextLayer
 
@@ -34,48 +49,61 @@ Update:         ; проверка блокировки обновления UI
                 ; чтение количество элементов в массиве
                 LD B, (HL)
                 INC HL
+
                 ; чтение адреса массива элементов UI
                 LD A, (HL)
+                LD IYL, A
                 INC HL
-                LD H, (HL)
-                LD L, A
+                LD A, (HL)
+                LD IYH, A
 
-.UILoop         ; цикл обхода элементов UI
-                BIT UI_VISIBLE_BIT, (HL)
-                JR Z, .NextUI
-                BIT UI_ENABLED_BIT, (HL)
-                JR Z, .NextUI
+.UILoop         ; цикл обхода элементов UI (FUIElement)
+                LD A, (IY + FUIElement.FLags)
 
-                PUSH HL
+                ; проверка видимости элемента
+                BIT UI_VISIBLE_BIT, A
+                JR Z, .NextUI                                                   ; переход, если элемент скрыт
+
+                ; проверка доступности элемента
+                BIT UI_ENABLED_BIT, A
+                JR Z, .NextUI                                                   ; переход, если элемент недоступен
+
+                ; обновление состояния нажатия для видимого доступного элемента
+.Pressed        EQU $+3
+                RES UI_STATE_PRESSED_BIT, (IY + FUIElement.FLags)
+
+                ; сохранение адреса элемента и счётчика обхода на время вызова обработчика
+                PUSH IY
                 PUSH BC
-                INC HL
 
                 ; чтение адреса обработчика
-                LD A, (HL)
+                LD A, (IY + FUIElement.OnUpdate + 0)
                 LD IXL, A
-                INC HL
-                LD A, (HL)
+                LD A, (IY + FUIElement.OnUpdate + 1)
                 LD IXH, A
-                INC HL
 
-                ; чтение положение элемента на экране
-                LD E, (HL)
-                INC HL
-                LD D, (HL)
-                INC HL
+                ; проверка пересечения курсором области UI
+                LD DE, (IY + FUIElement.Location)                               ; чтение положения элемента на экране
+                LD BC, (IY + FUIElement.Size)                                   ; чтение размера элемента
+                CALL IsInRect
+                JR NC, .InSide                                                  ; переход, если курсор находится в области элемента
 
-                ; чтение размера элемента
-                LD C, (HL)
-                INC HL
-                LD B, (HL)
+                ; проверка предыдущего состояния наведения элемента
+                BIT UI_STATE_HOVER_BIT, (IY + FUIElement.FLags)
+                JR Z, .Restore                                                  ; переход, если элемент уже был вне наведения
 
-                CALL HandlerIfInRect
+                ; сброс состояния наведения при уходе курсора
+                RES UI_STATE_HOVER_BIT, (IY + FUIElement.FLags)
 
+                ; вызов обработчика выхода курсора
+                CALL .MouseLeave
+
+.Restore        ; восстановление адреса элемента и счётчика обхода
                 POP BC
-                POP HL
+                POP IY
 
 .NextUI         LD DE, FUIElement
-                ADD HL, DE
+                ADD IY, DE
                 DJNZ .UILoop
 
                 POP BC
@@ -98,17 +126,86 @@ Update:         ; проверка блокировки обновления UI
                 ; обновим счётчик таймера
                 LD (HL), UI_TOOLTIP_HOVER_DELAY
 
+                ; восстановление адреса элемента для обработчика подсказки
+.PrevUI         EQU $+2
+                LD IY, #0000
+
                 ; вызов обработчика
                 OR A                                                            ; сброс флага, для обработчика, сигнализирующий обнуление таймера подсказки
 .Prev           EQU $+1
                 JP #0000
+
+.InSide         ; проверка предыдущего состояния наведения элемента
+                BIT UI_STATE_HOVER_BIT, (IY + FUIElement.FLags)
+                CALL Z, .MouseEnter                                             ; вызов обработчика входа, если курсор ранее находился вне элемента
+
+                ; инициализация пересечения области UI
+                SET_FLAG_MODIFY Update.Flag                                     ; установка флага найденного перекрытия
+                LD (Update.PrevUI), IY                                          ; сохранение адреса элемента для обработчика подсказки
+
+                ; сравнение адресов обработчика, если они отличаются вызвать сброс таймера
+                LD BC, (Update.Prev)
+                LD (Update.Prev), IX
+                PUSH IX
+                POP HL
+                SBC HL, BC
+                CALL NZ, ResetTimer                                             ; сброс таймера, если адрес обработчика изменился
+
+                ; вызов обработчика при наведении курсора
+                SCF                                                             ; флаг, вызов обработчика по наведению
+                CALL Func.JP_IX
+                JR .Restore
+
+.MouseEnter     ; установка состояния наведения до вызова обработчика входа
+                SET UI_STATE_HOVER_BIT, (IY + FUIElement.FLags)
+
+                ; чтение адреса обработчика входа курсора
+                LD HL, (IY + FUIElement.OnMouseEnter)
+
+                ; проверка наличия обработчика входа курсора
+                LD A, H
+                OR L
+                RET Z                                                           ; выход, если обработчик входа не задан
+
+                ; сохранение данных для последующего вызова обработчика обновления
+                PUSH DE
+                PUSH IX
+                PUSH IY
+                CALL Func.JP_HL
+
+                ; восстановление данных для обработчика обновления
+                POP IY
+                POP IX
+                POP DE
+                OR A                                                            ; сброс флага переполнения для последующего сравнения адресов обработчиков
+                RET
+
+.MouseLeave     ; чтение адреса обработчика выхода курсора
+                LD HL, (IY + FUIElement.OnMouseLeave)
+
+                ; проверка наличия обработчика выхода курсора
+                LD A, H
+                OR L
+                RET Z                                                           ; выход, если обработчик выхода не задан
+
+                JP (HL)                                                         ; вызов обработчика выхода с возвратом к восстановлению регистров обхода
+
 ResetTimer      LD HL, TooltipTimer
                 LD (HL), UI_TOOLTIP_HOVER_DELAY
                 RET
-
-                ; DE - позиция элемента (D - y, E - x)
-                ; BC - размер элемента (B - y, C - x)
-HandlerIfInRect:; инициализация
+; -----------------------------------------
+; проверка попадания курсора в область UI
+; In:
+;   DE - позиция элемента (D - y, E - x)
+;   BC - размер элемента (B - y, C - x)
+; Out:
+;   флаг, переполнения сброшен внутри области и установлен вне области
+; Corrupt:
+;   HL, AF
+; Note:
+;   ℹ️ код расположен в Kernel
+; -----------------------------------------
+IsInRect:       ; инициализация
                 LD HL, Mouse.Position                                           ; ось X
                 
                 ; проверка по горизонтали
@@ -132,22 +229,7 @@ HandlerIfInRect:; инициализация
                 ADD A, B
                 DEC A                                                           ; последний допустимый Y элемента
                 CP (HL)
-                RET C                                                           ; выход, если курсор находится ниже прямоугольника
-
-                ; установка флага найденного перекрытия
-                SET_FLAG_MODIFY Update.Flag
-
-                ; 
-                LD BC, (Update.Prev)
-                LD (Update.Prev), IX
-                PUSH IX
-                POP HL
-                SBC HL, BC
-                CALL NZ, ResetTimer
-
-                ; курсор находится в прямоугольнике
-                SCF                                                             ; установка флага, для обработчика, сигнализирующий вызов по перекрытию
-                JP (IX)                                                         ; переход в обработчик, если в области элемента
+                RET
 
                 display " - Update UI elements:\t\t\t\t", /A, Update, "\t= busy [ ", /D, $-Update, " byte(s)  ]"
 

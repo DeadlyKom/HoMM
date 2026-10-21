@@ -10,7 +10,7 @@
 ; -----------------------------------------
 Inventory:      ; точка запуска модуля "инвентаря"
                 SET_PAGE_ASSETS                                                 ; включить страницу расположения менеджера ресурсов
-                LOAD_EXE_ASSETS ASSETS_ID_INVENTORY                             ; загрузка ресурса и запуск
+                LOAD_OR_RESUME_ASSETS ASSETS_ID_INVENTORY, Inventory.Restore    ; загрузка или возобновление инвентаря
 .Page           DB #00                                                          ; страница расположения загруженного FAssets
 
                 endif ; ~_MODULE_INVENTORY_EXECUTE_

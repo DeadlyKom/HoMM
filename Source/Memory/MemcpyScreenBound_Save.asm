@@ -1,0 +1,226 @@
+
+                ifndef _MEMORY_COPY_SCREEN_SAVE_BOUND_
+                define _MEMORY_COPY_SCREEN_SAVE_BOUND_
+
+                module Memcpy
+                module Save
+Begin:          EQU $
+; -----------------------------------------
+; сохранение экранной области в буфер
+; In:
+;   HL - адрес буфера
+;   DE - позиция в знакоместах (D - y, E - x)
+;   BC - размер в знакоместах (B - y, C - x)
+; Out:
+; Corrupt:
+;   HL, DE, BC, AF, HL', BC', IX, IY
+; Note:
+;   - допустимая ширина: 2, 4, 6 знакомест
+;   - область должна целиком помещаться на экране
+; -----------------------------------------
+Bound:          ; инициализация стека
+                LD (.ContainerSP), SP
+                LD SP, HL
+
+                ; запись размера области в шапку
+                LD (HL), C
+                INC HL
+                LD (HL), B
+                INC HL
+
+                ; сохранение адреса поля для фактического указателя стека
+                LD (.BufferPtr), HL
+
+                ; преобразование позиции в экранный адрес
+                CALL Convert.CharToScreen
+
+                ; расчёт смещения в таблице
+                LD A, C
+                ADD A, A    ; x2
+                ADD A, C    ; x3
+                SUB #06     ; ширина * 3 - 6
+                ADD A, LOW .Table
+                LD L, A
+                ADC A, HIGH .Table
+                SUB L
+                LD H, A
+
+                ; чтение адреса прямого чтения
+                LD A, (HL)
+                LD IXL, A
+                INC HL
+                LD A, (HL)
+                LD IXH, A
+                INC HL
+
+                ; чтение адреса обратного чтения
+                LD A, (HL)
+                LD IYL, A
+                INC HL
+                LD A, (HL)
+                LD IYH, A
+                INC HL
+
+                ; чтение адреса атрибутного чтения
+                LD A, (HL)
+                INC HL
+                LD H, (HL)
+                LD L, A
+                LD (Backward.ReadAttr), HL
+
+                ; инициализация счётчиков сохранения
+                LD C, B
+                LD B, #04
+
+                ; подготовка адреса чтения
+                EX DE, HL
+                PUSH HL
+                EXX
+                POP HL
+                JP (IX) ; чтение
+
+.Exit           ; сохранение экранного адреса начала восстановления
+                EXX
+                PUSH HL
+                EXX
+
+                ; запись фактического указателя стека в шапку
+.BufferPtr      EQU $+2
+                LD (#0000), SP
+
+                ; восстановление стека вызывающего кода
+.ContainerSP    EQU $+1
+                LD SP, #0000
+                RET
+
+.Table          ; адреса прямого, обратного и атрибутного чтения
+                DW Forward.x2, Backward.x2, Attribute.x2
+                DW Forward.x4, Backward.x4, Attribute.x4
+                DW Forward.x6, Backward.x6, Attribute.x6
+READ_TWO_BYTES_FORWARD macro
+                LD C, (HL)
+                INC L
+                LD B, (HL)
+                INC L
+                PUSH BC
+                endm
+READ_TWO_BYTES_FORWARD_ macro
+                LD C, (HL)
+                INC L
+                LD B, (HL)
+                PUSH BC
+                endm
+READ_TWO_BYTES_BACKWARD macro
+                LD C, (HL)
+                DEC L
+                LD B, (HL)
+                DEC L
+                PUSH BC
+                endm
+READ_TWO_BYTES_BACKWARD_ macro
+                LD C, (HL)
+                DEC L
+                LD B, (HL)
+                PUSH BC
+                endm
+; -----------------------------------------
+; чтение строки пикселей слева направо
+; In:
+;   HL  - текущий экранный адрес чтения
+;   HL' - адрес левого пикселя строки 0 текущего ряда
+;   B'  - счётчик пар пиксельных строк (4 в знакоместе)
+;   C'  - количество оставшихся рядов знакомест
+;   IX  - адрес чтения строки пикселей слева направо
+;   IY  - адрес чтения строки пикселей справа налево
+;   SP  - указатель стека буфера для записи
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+Forward:        ; чтение строки пикселей слева направо
+.x6             READ_TWO_BYTES_FORWARD
+.x4             READ_TWO_BYTES_FORWARD
+.x2             READ_TWO_BYTES_FORWARD_
+                
+                ; переход к следующей пиксельной строке
+                INC H
+                JP (IY)
+; -----------------------------------------
+; чтение строки пикселей справа налево
+; In:
+;   HL  - текущий экранный адрес чтения
+;   HL' - адрес левого пикселя строки 0 текущего ряда
+;   B'  - счётчик пар пиксельных строк (4 в знакоместе)
+;   C'  - количество оставшихся рядов знакомест
+;   IX  - адрес чтения строки пикселей слева направо
+;   IY  - адрес чтения строки пикселей справа налево
+;   SP  - указатель стека буфера для записи
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+Backward:       ; чтение строки пикселей справа налево
+.x6             READ_TWO_BYTES_BACKWARD
+.x4             READ_TWO_BYTES_BACKWARD
+.x2             READ_TWO_BYTES_BACKWARD_
+
+                ; цикл пар пиксельных строк
+                EXX
+                DJNZ .NextPairRows
+                LD B, #04
+                EXX
+
+                HL_TO_ATTR_HL
+.ReadAttr       EQU $+1 ; адрес чтения атрибутов
+                JP #0000
+
+.NextPairRows   ; переход к следующей паре пиксельных строк
+                EXX
+                INC H
+                JP (IX)
+; -----------------------------------------
+; чтение строки атрибутов слева направо
+; In:
+;   HL  - текущий экранный адрес чтения
+;   HL' - адрес левого пикселя строки 0 текущего ряда
+;   B'  - счётчик пар пиксельных строк (4 в знакоместе)
+;   C'  - количество оставшихся рядов знакомест
+;   IX  - адрес чтения строки пикселей слева направо
+;   IY  - адрес чтения строки пикселей справа налево
+;   SP  - указатель стека буфера для записи
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+Attribute:      ; чтение строки атрибутов слева направо
+.x6             READ_TWO_BYTES_FORWARD
+.x4             READ_TWO_BYTES_FORWARD
+.x2             READ_TWO_BYTES_FORWARD_
+                
+                ; проверка количества оставшихся рядов знакомест
+                EXX
+                
+                DEC C
+                JP Z, Bound.Exit                                                ; переход, если сохранены все ряды знакомест
+
+                ; расчёт адреса левого пикселя строки 0 следующего ряда
+                LD A, L
+                ADD A, #20
+                LD L, A
+                JR NC, $+6                                                      ; переход, если сложение не вызвало переноса из младшего байта адреса
+
+                LD A, H
+                ADD A, 08
+                LD H, A
+
+                ; переход к началу следующей строки
+                PUSH HL
+                EXX
+                POP HL
+                JP (IX)
+
+                display " - Memcpy screen save bound:\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
+                endmodule
+                endmodule
+
+                endif ; ~_MEMORY_COPY_SCREEN_SAVE_BOUND_

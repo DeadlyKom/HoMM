@@ -3,6 +3,7 @@
                 define _MODULE_INVENTORY_GRAPHICS_INCLUDE_
 
                 module Display
+                include "Display_Slots.asm"
                 include "Display_PaperDoll.asm"
                 include "Display_Inventory.asm"
                 include "DrawNotClippingComposite.asm"

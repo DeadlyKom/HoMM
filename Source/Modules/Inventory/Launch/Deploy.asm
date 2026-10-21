@@ -16,6 +16,11 @@ Deploy:         RES_USER_HANDLER                                                
                 ; копирование блока SharedCode в общую область памяти
                 MEMCPY Inventory.Adr.Deploy, Adr.Inventory, \
                             Inventory.Size.Deploy
+                ; копирование блока SharedScreen в общую экраную область памяти
+                MEMCPY_PAGE Inventory.Adr.Deploy.SharedScreen, \
+                            Adr.SharedScreen, \
+                            Page.SharedScreen, \
+                            Inventory.Size.Deploy.SharedScreen
                 RET
 
                 endif ; ~_MODULE_INVENTORY_LAUNCH_DEPLOY_

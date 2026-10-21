@@ -34,6 +34,7 @@
 
                 include "UI/Include.inc"
                 include "Character/Include.inc"
+                include "Inventory/Include.inc"
                 include "VFX/Include.inc"
                 include "Event/Include.inc"
                 include "Player/Include.inc"

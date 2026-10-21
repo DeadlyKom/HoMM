@@ -25,7 +25,20 @@ MAKE_UI_LAYER   macro ArrayAdr?, ArraySize?, Flags?
 MAKE_UI_ELEMENT macro LocationX?, LocationY?, SizeX?, SizeY?, HandlerAdr?, Flags?
                 FUIElement {
                     Flags?,
+                    #0000,
                     HandlerAdr?,
+                    #0000,
+                    {LocationX?, LocationY?},
+                    {SizeX?, SizeY?}
+                }
+                endm
+MAKE_UI_ELEMENT_EX macro LocationX?, LocationY?, SizeX?, SizeY?, OnMouseEnterAdr?, OnUpdateAdr?, OnMouseLeaveAdr?, Flags?
+                ; создание элемента с обработчиками входа, обновления и выхода
+                FUIElement {
+                    Flags?,
+                    OnMouseEnterAdr?,
+                    OnUpdateAdr?,
+                    OnMouseLeaveAdr?,
                     {LocationX?, LocationY?},
                     {SizeX?, SizeY?}
                 }

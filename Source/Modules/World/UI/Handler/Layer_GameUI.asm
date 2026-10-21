@@ -2,8 +2,10 @@
                 ifndef _MODULE_WORLD_UI_HANDLER_LAYER_GAME_UI_
                 define _MODULE_WORLD_UI_HANDLER_LAYER_GAME_UI_
 ; -----------------------------------------
-; обработчик UI слоя "иконок"
+; обработчик OnUpdate UI слоя "иконок"
 ; In:
+;   IY - адрес структуры элемента (FUIElement)
+;   флаг, переполнения установлен при наведении и сброшен по таймеру подсказки
 ; Out:
 ; Corrupt:
 ; Note:

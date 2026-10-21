@@ -30,8 +30,7 @@ Inventory:      LD A, UI_MODE_INVENTORY
 ; Corrupt:
 ;   HL, DE, BC, AF, HL', DE', BC', AF', IX, IY
 ; Note:
-;   вызывается из игрового слоя UI мира
-;   защёлку нажатия сбрасывает Input.Select
+;   ℹ️ код расположен в модуле "мира"
 ; -----------------------------------------
 Center:         ; проверка нажатия клавиши "выбор"
                 LD HL, GameState.Input.Value

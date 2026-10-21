@@ -136,9 +136,8 @@ DOWN_HL         macro
 ;   отображение производится снизу вверх
 ; -----------------------------------------
 HL_TO_ATTR_HL   macro
-                LD E, L
-                LD D, H
-                LD L, H
+                EX DE, HL
+                LD L, D
                 LD H, HIGH Adr.ScrAttrAdrTable
                 LD H, (HL)
                 LD L, E

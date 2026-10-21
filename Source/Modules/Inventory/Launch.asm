@@ -16,6 +16,7 @@ Launch:         SAVE_ASSETS_PAGE Kernel.Modules.Inventory.Page                  
                 PUSH AF
 
                 CALL Launch.Deploy                                              ; развёртывание общего кода инвентаря
+                CALL Launch.ClearState                                          ; очистка состояний
                 CALL Launch.InitSprites                                         ; загрузка и инициализация спрайтов
                 CALL Launch.Window                                              ; отображение окна "инвентаря"
                 CALL Launch.Initialize                                          ; инициализация "инвентаря"
