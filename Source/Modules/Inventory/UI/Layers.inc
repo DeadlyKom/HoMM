@@ -33,7 +33,7 @@ Inventory:      ; слой инвентаря
                 Inventory.UI.Handler.Layer_SlotAmlt.OnMouseLeave, \
                 UI_VISIBLE | UI_ENABLED
 
-                ; область слота экипировки инвентаря "наплечник"
+                ; область слота экипировки инвентаря "наплечник/плащ"
                 MAKE_UI_ELEMENT_EX \
                 SCR_EQUIP_SHOULDER_PAD_POS_X << 3, SCR_EQUIP_SHOULDER_PAD_POS_Y << 3, \
                 SCR_EQUIP_SHOULDER_PAD_SIZE_X << 3, SCR_EQUIP_SHOULDER_PAD_SIZE_Y << 3, \

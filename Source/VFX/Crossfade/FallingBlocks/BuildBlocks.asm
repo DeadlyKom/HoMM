@@ -81,11 +81,10 @@ BuildBlocks:    ; подготовка адресов базового экра�
                 FB_COPY_ROW
 
 .Attributes     ; копирование атрибутов нижней половины
-                FB_TO_ATTR                                                      ; преобразование пиксельного адреса в атрибутный
+                HL_TO_ATTR_HL                                                   ; преобразование пиксельного адреса в атрибутный
 
                 ; копирование левого и правого атрибутов половины блока
-                LDI
-                LDI
+                MEMCPY_BYTES_ 2
                 RET
 
                 endif ; ~_VFX_CROSSFADE_FALLING_BLOCKS_BUILD_BLOCKS_

@@ -23,6 +23,7 @@
                 include "Functions.inc"
                 include "GraphicHex.inc"
                 include "SpriteBlock.inc"
+                include "ScreenUtilities.inc"
 
                 include "Game/Include.inc"
                 include "Pages/Include.inc"

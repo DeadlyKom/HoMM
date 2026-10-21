@@ -17,23 +17,6 @@ MEMCPY_MM_BYTES_ macro NumByte?
                 LD E, A
                 endm
 ; -----------------------------------------
-; 
-; In:
-; Out:
-; Corrupt:
-; Note:
-; -----------------------------------------
-DOWN_MM_DE      macro
-                INC D
-                LD A, E
-                SUB #E0
-                LD E, A
-                SBC A, A
-                AND #F8
-                ADD A, D
-                LD D, A
-                endm
-; -----------------------------------------
 ; копирование миникарты
 ; In:
 ; Out:
@@ -56,7 +39,7 @@ Memcpy:         ; инициализация
 .l7             MEMCPY_MM_BYTES_ SCR_MINIMAP_SIZE_X
 
                 ; переход на знакоместо ниже
-                DOWN_MM_DE
+                PIXEL_DOWN_DE
 
                 DEC IXL
                 JP NZ, .Loop_06

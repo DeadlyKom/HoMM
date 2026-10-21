@@ -14,6 +14,7 @@
                 include "MemoryMap_Page_6.inc"
                 include "MemoryMap_Page_7.inc"
                 include "MemoryMap_Page_7 (main menu).inc"
+                include "MemoryMap_Page_7 (inventory).inc"
                 include "MemoryMap_Page_7 (falling blocks).inc"
                 include "MemoryMap_Modules.inc"
 

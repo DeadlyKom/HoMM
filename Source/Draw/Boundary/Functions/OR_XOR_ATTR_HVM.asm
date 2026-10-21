@@ -65,7 +65,7 @@ OR_XOR_ATTR_HVM:RESTORE_SCR_ADR
                 OR_XOR_LINE_HVM
                 OR_XOR_LINE_HVM
                 OR_XOR_LINE_HVM_
-                TO_ATTR_ADR
+                HL_TO_ATTR_HL_SAVE_SCREEN
                 PIXEL_UP_DE
                 SET_ATTR
                 JP (IY)

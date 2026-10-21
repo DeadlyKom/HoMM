@@ -3,8 +3,7 @@
                 define _MEMORY_COPY_SCREEN_SAVE_BOUND_
 
                 module Memcpy
-                module Save
-Begin:          EQU $
+                module Bound
 ; -----------------------------------------
 ; сохранение экранной области в буфер
 ; In:
@@ -18,7 +17,7 @@ Begin:          EQU $
 ;   - допустимая ширина: 2, 4, 6 знакомест
 ;   - область должна целиком помещаться на экране
 ; -----------------------------------------
-Bound:          ; инициализация стека
+Save:           ; инициализация стека
                 LD (.ContainerSP), SP
                 LD SP, HL
 
@@ -66,7 +65,7 @@ Bound:          ; инициализация стека
                 INC HL
                 LD H, (HL)
                 LD L, A
-                LD (Backward.ReadAttr), HL
+                LD (.Back.ReadAttr), HL
 
                 ; инициализация счётчиков сохранения
                 LD C, B
@@ -94,35 +93,9 @@ Bound:          ; инициализация стека
                 RET
 
 .Table          ; адреса прямого, обратного и атрибутного чтения
-                DW Forward.x2, Backward.x2, Attribute.x2
-                DW Forward.x4, Backward.x4, Attribute.x4
-                DW Forward.x6, Backward.x6, Attribute.x6
-READ_TWO_BYTES_FORWARD macro
-                LD C, (HL)
-                INC L
-                LD B, (HL)
-                INC L
-                PUSH BC
-                endm
-READ_TWO_BYTES_FORWARD_ macro
-                LD C, (HL)
-                INC L
-                LD B, (HL)
-                PUSH BC
-                endm
-READ_TWO_BYTES_BACKWARD macro
-                LD C, (HL)
-                DEC L
-                LD B, (HL)
-                DEC L
-                PUSH BC
-                endm
-READ_TWO_BYTES_BACKWARD_ macro
-                LD C, (HL)
-                DEC L
-                LD B, (HL)
-                PUSH BC
-                endm
+                DW .Forward.x2, .Back.x2, .Attribute.x2
+                DW .Forward.x4, .Back.x4, .Attribute.x4
+                DW .Forward.x6, .Back.x6, .Attribute.x6
 ; -----------------------------------------
 ; чтение строки пикселей слева направо
 ; In:
@@ -137,10 +110,10 @@ READ_TWO_BYTES_BACKWARD_ macro
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Forward:        ; чтение строки пикселей слева направо
-.x6             READ_TWO_BYTES_FORWARD
-.x4             READ_TWO_BYTES_FORWARD
-.x2             READ_TWO_BYTES_FORWARD_
+.Forward:       ; чтение строки пикселей слева направо
+.Forward.x6     READ_TWO_BYTES_FORWARD
+.Forward.x4     READ_TWO_BYTES_FORWARD
+.Forward.x2     READ_TWO_BYTES_FORWARD_
                 
                 ; переход к следующей пиксельной строке
                 INC H
@@ -159,22 +132,22 @@ Forward:        ; чтение строки пикселей слева напр
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Backward:       ; чтение строки пикселей справа налево
-.x6             READ_TWO_BYTES_BACKWARD
-.x4             READ_TWO_BYTES_BACKWARD
-.x2             READ_TWO_BYTES_BACKWARD_
+.Back:          ; чтение строки пикселей справа налево
+.Back.x6        READ_TWO_BYTES_BACKWARD
+.Back.x4        READ_TWO_BYTES_BACKWARD
+.Back.x2        READ_TWO_BYTES_BACKWARD_
 
                 ; цикл пар пиксельных строк
                 EXX
-                DJNZ .NextPairRows
+                DJNZ .Back.NextPair
                 LD B, #04
                 EXX
 
                 HL_TO_ATTR_HL
-.ReadAttr       EQU $+1 ; адрес чтения атрибутов
+.Back.ReadAttr  EQU $+1                                                         ; адрес чтения атрибутов
                 JP #0000
 
-.NextPairRows   ; переход к следующей паре пиксельных строк
+.Back.NextPair  ; переход к следующей паре пиксельных строк
                 EXX
                 INC H
                 JP (IX)
@@ -192,16 +165,16 @@ Backward:       ; чтение строки пикселей справа нал
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Attribute:      ; чтение строки атрибутов слева направо
-.x6             READ_TWO_BYTES_FORWARD
-.x4             READ_TWO_BYTES_FORWARD
-.x2             READ_TWO_BYTES_FORWARD_
+.Attribute:     ; чтение строки атрибутов слева направо
+.Attribute.x6   READ_TWO_BYTES_FORWARD
+.Attribute.x4   READ_TWO_BYTES_FORWARD
+.Attribute.x2   READ_TWO_BYTES_FORWARD_
                 
                 ; проверка количества оставшихся рядов знакомест
                 EXX
                 
                 DEC C
-                JP Z, Bound.Exit                                                ; переход, если сохранены все ряды знакомест
+                JP Z, .Exit                                                     ; переход, если сохранены все ряды знакомест
 
                 ; расчёт адреса левого пикселя строки 0 следующего ряда
                 LD A, L
@@ -219,7 +192,7 @@ Attribute:      ; чтение строки атрибутов слева нап
                 POP HL
                 JP (IX)
 
-                display " - Memcpy screen save bound:\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
+                display " - Memcpy screen save bound:\t\t\t\t", /A, Save, "\t= busy [ ", /D, $ - Save, " byte(s)  ]"
                 endmodule
                 endmodule
 

@@ -57,7 +57,7 @@ LD_ATTR:        RESTORE_SCR_ADR
                 LD_2_LINES
                 LD_2_LINES
                 LD_2_LINES_
-                TO_ATTR_ADR
+                HL_TO_ATTR_HL_SAVE_SCREEN
                 PIXEL_DOWN_DE
                 SET_ATTR
                 JP (IY)

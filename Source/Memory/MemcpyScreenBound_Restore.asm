@@ -3,8 +3,7 @@
                 define _MEMORY_COPY_SCREEN_RESTORE_BOUND_
 
                 module Memcpy
-                module Restore
-Begin:          EQU $
+                module Bound
 ; -----------------------------------------
 ; восстановление экранной области из буфера
 ; In:
@@ -16,7 +15,7 @@ Begin:          EQU $
 ;   - допустимая ширина: 2, 4, 6 знакомест
 ;   - область должна целиком помещаться на экране
 ; -----------------------------------------
-Bound:          ; инициализация стека
+Restore:        ; инициализация стека
                 LD (.ContainerSP), SP
                 LD SP, HL
 
@@ -94,35 +93,9 @@ Bound:          ; инициализация стека
                 RET
 
 .Table          ; адреса прямой, обратной и атрибутной записи
-                DW Forward.x2, Backward.x2, Attribute.x2
-                DW Forward.x4, Backward.x4, Attribute.x4
-                DW Forward.x6, Backward.x6, Attribute.x6
-WRITE_TWO_BYTES_FORWARD macro
-                POP BC
-                LD (HL), B
-                INC L
-                LD (HL), C
-                INC L
-                endm
-WRITE_TWO_BYTES_FORWARD_ macro
-                POP BC
-                LD (HL), B
-                INC L
-                LD (HL), C
-                endm
-WRITE_TWO_BYTES_BACKWARD macro
-                POP BC
-                LD (HL), B
-                DEC L
-                LD (HL), C
-                DEC L
-                endm
-WRITE_TWO_BYTES_BACKWARD_ macro
-                POP BC
-                LD (HL), B
-                DEC L
-                LD (HL), C
-                endm
+                DW .Forward.x2, .Back.x2, .Attribute.x2
+                DW .Forward.x4, .Back.x4, .Attribute.x4
+                DW .Forward.x6, .Back.x6, .Attribute.x6
 ; -----------------------------------------
 ; запись строки пикселей слева направо
 ; In:
@@ -137,10 +110,10 @@ WRITE_TWO_BYTES_BACKWARD_ macro
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Forward:        ; запись строки пикселей слева направо
-.x6             WRITE_TWO_BYTES_FORWARD
-.x4             WRITE_TWO_BYTES_FORWARD
-.x2             WRITE_TWO_BYTES_FORWARD_
+.Forward:       ; запись строки пикселей слева направо
+.Forward.x6     WRITE_TWO_BYTES_FORWARD
+.Forward.x4     WRITE_TWO_BYTES_FORWARD
+.Forward.x2     WRITE_TWO_BYTES_FORWARD_
 
                 ; переход к предыдущей пиксельной строке
                 DEC H
@@ -159,19 +132,19 @@ Forward:        ; запись строки пикселей слева напр
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Backward:       ; запись строки пикселей справа налево
-.x6             WRITE_TWO_BYTES_BACKWARD
-.x4             WRITE_TWO_BYTES_BACKWARD
-.x2             WRITE_TWO_BYTES_BACKWARD_
+.Back:          ; запись строки пикселей справа налево
+.Back.x6        WRITE_TWO_BYTES_BACKWARD
+.Back.x4        WRITE_TWO_BYTES_BACKWARD
+.Back.x2        WRITE_TWO_BYTES_BACKWARD_
 
                 ; цикл пар пиксельных строк
                 EXX
-                DJNZ .NextPairRows
+                DJNZ .Back.NextPair
                 LD B, #04
 
                 ; проверка количества оставшихся рядов знакомест
                 DEC C
-                JP Z, Bound.Exit                                                ; переход, если восстановлены все ряды знакомест
+                JP Z, .Exit                                                     ; переход, если восстановлены все ряды знакомест
 
                 ; расчёт адреса правого атрибута предыдущего ряда
                 LD A, L
@@ -184,9 +157,9 @@ Backward:       ; запись строки пикселей справа нал
                 PUSH HL
                 EXX
                 POP HL
-                JP Bound.Attr
+                JP .Attr
 
-.NextPairRows   ; переход к предыдущей паре пиксельных строк
+.Back.NextPair  ; переход к предыдущей паре пиксельных строк
                 EXX
                 DEC H
                 JP (IX)
@@ -204,10 +177,10 @@ Backward:       ; запись строки пикселей справа нал
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Attribute:      ; запись строки атрибутов справа налево
-.x6             WRITE_TWO_BYTES_BACKWARD
-.x4             WRITE_TWO_BYTES_BACKWARD
-.x2             WRITE_TWO_BYTES_BACKWARD_
+.Attribute:     ; запись строки атрибутов справа налево
+.Attribute.x6   WRITE_TWO_BYTES_BACKWARD
+.Attribute.x4   WRITE_TWO_BYTES_BACKWARD
+.Attribute.x2   WRITE_TWO_BYTES_BACKWARD_
 
                 ; преобразование адреса (левого) атрибута в адрес пиксельной строки 7
                 LD A, H
@@ -221,7 +194,7 @@ Attribute:      ; запись строки атрибутов справа на
                 LD H, A
                 JP (IX)
 
-                display " - Memcpy screen restore bound:\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
+                display " - Memcpy screen restore bound:\t\t\t\t", /A, Restore, "\t= busy [ ", /D, $ - Restore, " byte(s)  ]"
                 endmodule
                 endmodule
 
