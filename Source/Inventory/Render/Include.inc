@@ -4,6 +4,7 @@
 
                 module Render
                 include "Draw.asm"
+                include "CopyScreen.asm"
                 endmodule
 
                 endif ; ~_INVENTORY_RENDER_INCLUDE_

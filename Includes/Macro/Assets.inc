@@ -371,6 +371,19 @@ JP_MARK_ASSETS_UNCLAIMED_IN_PAGE macro ID?
                 JP Func.MarkAsUnclaimedInPage
                 endm
 ; -----------------------------------------
+; проверка перед запуском ресурса
+; In:
+;   ID? - идентификатор ресурса
+; Out:
+;   A - идентификатор ресурса
+; Corrupt:
+;   BC, AF, IX
+; -----------------------------------------
+PRE_LAUNCH_CHECK macro ID?
+                LD A, ID?
+                CALL Func.PreLaunchCheck
+                endm
+; -----------------------------------------
 ; загрузка ресурса и запуск
 ; In:
 ;   ID? - идентификатор ресурса

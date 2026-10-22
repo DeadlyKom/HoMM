@@ -22,9 +22,9 @@ Layer_SlotHead: RET
 ; Note:
 ;   ℹ️ код расположен в модуле "инвентаря"
 ; -----------------------------------------
-.OnMouseEnter   ; сброс флага активного слота при входе курсора
+.OnMouseEnter   ; установка флага активного слота при входе курсора
                 LD HL, Inventory.States.Slots.Head
-                RES INVENTORY_ACTIVE_SLOT_BIT, (HL)
+                SET INVENTORY_ACTIVE_SLOT_BIT, (HL)
                 RET
 ; -----------------------------------------
 ; обработчик OnMouseLeave слота экипировки инвентаря "голова"

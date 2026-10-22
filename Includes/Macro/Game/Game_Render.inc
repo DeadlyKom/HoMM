@@ -59,6 +59,17 @@ SET_RENDER_FLAG macro FlagBit?
                 SET_FLAG (FlagBit?)
                 endm
 ; -----------------------------------------
+; выборочная установка Render флагов
+; In:
+; Out:
+; Corrupt:
+;   HL, AF
+; -----------------------------------------
+SET_RENDER_FLAGS macro Flags?
+                RENDER_FLAGS
+                SET_OR_FLAGS (Flags?)
+                endm
+; -----------------------------------------
 ; установка Render флага переключение экрана автоматически
 ; In:
 ; Out:

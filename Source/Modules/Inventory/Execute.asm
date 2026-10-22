@@ -9,7 +9,8 @@
 ; Note:
 ; -----------------------------------------
 Inventory:      ; точка запуска модуля "инвентаря"
-                SET_PAGE_ASSETS                                                 ; включить страницу расположения менеджера ресурсов
+                SET_PAGE_ASSETS                                                 ; включение страницы менеджера ресурсов
+                PRE_LAUNCH_CHECK ASSETS_ID_INVENTORY                            ; проверка перед запуском ресурса
                 LOAD_OR_RESUME_ASSETS ASSETS_ID_INVENTORY, Inventory.Restore    ; загрузка или возобновление инвентаря
 .Page           DB #00                                                          ; страница расположения загруженного FAssets
 

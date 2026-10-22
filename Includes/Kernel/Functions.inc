@@ -3,6 +3,7 @@
                 define _KERNEL_FUNCTIONS_
 Func
 .PopPage                EQU Kernel.Functions.PopPage                            ; восстановление страницы
+.PreLaunchCheck         EQU Kernel.Functions.PreLaunchCheck                     ; проверка перед запуском ресурса
 .ExeAssetCode           EQU Kernel.Functions.ExeAssetCode                       ; выполнить код ресурса (продвинутая компиляция кода)
 .LaunchAsset            EQU Kernel.Functions.LaunchAsset                        ; запуск загруженного модуля
 .RestoreAsset           EQU Kernel.Functions.RestoreAsset                       ; восстановление (перезагрузка) ранее загруженного ресурса из стека

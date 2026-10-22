@@ -8,6 +8,7 @@
 
                 include "Source/Memory/MemcpyScreenBound_Save.asm"
                 include "Source/Memory/MemcpyScreenBound_Restore.asm"
+                include "Source/Memory/MemcpyScreenAttributes_Fill.asm"
                 include "Source/Memory/MemcpyScreenAttributes_Save.asm"
                 include "Source/Memory/MemcpyScreenAttributes_Restore.asm"
 Size            EQU $-Adr.SharedScreen

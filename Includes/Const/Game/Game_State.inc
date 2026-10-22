@@ -25,8 +25,10 @@ SWAP_DISABLE_BIT    EQU 0x06                                                    
 FPS_DISABLE_BIT     EQU 0x07                                                    ; флаг, отключения отображения FPS
 
 SWAP_TARGET_MASK    EQU %00011000
+FRAME_READY         EQU 1 << FRAME_READY_BIT
 SWAP_PENDING        EQU 1 << SWAP_PENDING_BIT
 SWAPPED_PENDING     EQU 1 << SWAPPED_PENDING_BIT
+FPS_DISABLE         EQU 1 << FPS_DISABLE_BIT
 
 ; флаги работы с музыкой
 MUSIC_ENABLE_BIT    EQU 0x00                                                    ; флаг разрешения проигрывания музыки

@@ -12,6 +12,10 @@
 ; -----------------------------------------
 Loop:           ; главный цикл "инвентаря"
 .Render         ; ************ RENDER ************
+                ; проверка показа готового основного экрана
+                CHECK_RENDER_FLAG SWAPPED_PENDING_BIT
+                JP NZ, Render.CopyScreen                                        ; переход, если основной экран показан и ожидает переноса
+
                 ; проверка готовности кадра к показу
                 CHECK_RENDER_FLAG FRAME_READY_BIT
                 RET NZ                                                          ; выход, если готовый кадр ещё ожидает показа
@@ -33,6 +37,8 @@ Loop:           ; главный цикл "инвентаря"
                 JP Func.JumpTable
 
 .Restore        ; восстановление состояния мира
+                SET_PAGE_ASSETS                                                 ; включение страницы менеджера ресурсов
+                PRE_LAUNCH_CHECK ASSETS_ID_WORLD                                ; проверка перед запуском ресурса
                 JP_EXE_ASSETS_NOT_PARAM ASSETS_ID_WORLD, World.Restore
 
 .JumpTable      DW .NoMode                                                      ; UI_MODE_NONE

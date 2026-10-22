@@ -24,7 +24,7 @@ Layer_SlotAmlt: RET
 ; -----------------------------------------
 .OnMouseEnter   ; сброс флага активного слота при входе курсора
                 LD HL, Inventory.States.Slots.Amulet
-                RES INVENTORY_ACTIVE_SLOT_BIT, (HL)
+                SET INVENTORY_ACTIVE_SLOT_BIT, (HL)
                 RET
 ; -----------------------------------------
 ; обработчик OnMouseLeave слота экипировки инвентаря "амулет"

@@ -10,13 +10,22 @@
 ;   ℹ️ код расположен в "общей памяти"
 ; -----------------------------------------
 Interrupt:      SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
-                CALL Draw.Restore                                               ; восстановление фона под курсором (только для OR_XOR_SAVE)
+                ; проверка разрешения восстановления фона курсора
+                CALL Render.CursorCopyGate
+                CALL NC, Draw.Restore                                           ; вызов восстановления, если работа с буфером курсора разрешена
+
+                ; проверка готовности кадра к показу
+                CHECK_RENDER_FLAG FRAME_READY_BIT
+                JR Z, .RenderProcess                                            ; переход, если готовый кадр отсутствует
 
 .SwapScreens    ; ************ Swap Screens ************
                 CALL Render.Swap
 
 .RenderProcess  ; обновление курсора
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
+                ; проверка разрешения обновления курсора
+                CALL Render.CursorCopyGate
+                JR C, .Input                                                    ; переход, если выполняется перенос кадра
                 CALL UI_Cursor.Update                                           ; обновление курсора
                 CALL C, UI_Cursor.Draw                                          ; вызов отображения курсора, если установлен флаг его отображения
 

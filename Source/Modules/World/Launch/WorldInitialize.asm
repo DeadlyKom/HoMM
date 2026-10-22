@@ -16,9 +16,11 @@ Initialize:     ; инициализация "мира"
                                 World.SharedCode.UI.Layers.GameWorld.Num        ; установка активного UI слоя
                 SET_TICK_CONTROL_FLAGS GAME_SUSPEND                             ; "мир" запускается в режиме "остановки времени"
                 SET_TICK_REQUEST_FLAGS GAME_SUSPEND_REQUEST                     ; запрос соответствует фактическому состоянию
+                
                 SET_MAIN_LOOP World.SharedCode.Loop                             ; установка главного цикла
                 SET_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE             ; установка флагов
                 SET_MAIN_SWAP World.SharedCode.Render.PipelineHexagons.Swap     ; установить функцию долгого переключения экранов
+                
                 SET_WORLD_RENDER World.SharedCode.Render.Draw                   ; инициализаци главного рендера "мира"
                 SET_USER_HANDLER World.SharedCode.Interrupt                     ; установка обработчика прерываний
                 RES_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                           ; разрешить сканирование ввода

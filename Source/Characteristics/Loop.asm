@@ -32,6 +32,8 @@ Loop:           ; главный цикл "характеристик"
                 JP Func.JumpTable
 
 .Restore        ; восстановление состояния мира
+                SET_PAGE_ASSETS                                                 ; включение страницы менеджера ресурсов
+                PRE_LAUNCH_CHECK ASSETS_ID_WORLD                                ; проверка перед запуском ресурса
                 JP_EXE_ASSETS_NOT_PARAM ASSETS_ID_WORLD, World.Restore
 
 .JumpTable      DW .NoMode                                                      ; UI_MODE_NONE

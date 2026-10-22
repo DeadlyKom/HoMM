@@ -24,7 +24,7 @@ Layer_SlotRHnd: RET
 ; -----------------------------------------
 .OnMouseEnter   ; сброс флага активного слота при входе курсора
                 LD HL, Inventory.States.Slots.RightHand
-                RES INVENTORY_ACTIVE_SLOT_BIT, (HL)
+                SET INVENTORY_ACTIVE_SLOT_BIT, (HL)
                 RET
 ; -----------------------------------------
 ; обработчик OnMouseLeave слота экипировки инвентаря "правая рука"
