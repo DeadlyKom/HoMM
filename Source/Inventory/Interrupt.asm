@@ -14,10 +14,6 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 CALL Render.CursorCopyGate
                 CALL NC, Draw.Restore                                           ; вызов восстановления, если работа с буфером курсора разрешена
 
-                ; проверка готовности кадра к показу
-                CHECK_RENDER_FLAG FRAME_READY_BIT
-                JR Z, .RenderProcess                                            ; переход, если готовый кадр отсутствует
-
 .SwapScreens    ; ************ Swap Screens ************
                 CALL Render.Swap
 

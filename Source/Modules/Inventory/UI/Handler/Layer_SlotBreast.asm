@@ -25,6 +25,7 @@ Layer_SlotBrst: RET
 .OnMouseEnter   ; сброс флага активного слота при входе курсора
                 LD HL, Inventory.States.Slots.Breast
                 SET INVENTORY_ACTIVE_SLOT_BIT, (HL)
+                SET_MAIN_FLAG ML_UPDATE_BIT                                     ; запрос обновления экрана после изменения состояния слота
                 RET
 ; -----------------------------------------
 ; обработчик OnMouseLeave слота экипировки инвентаря "грудь"
@@ -39,6 +40,7 @@ Layer_SlotBrst: RET
 .OnMouseLeave   ; сброс флага активного слота при выходе курсора
                 LD HL, Inventory.States.Slots.Breast
                 RES INVENTORY_ACTIVE_SLOT_BIT, (HL)
+                SET_MAIN_FLAG ML_UPDATE_BIT                                     ; запрос обновления экрана после изменения состояния слота
                 RET
 
                 endif ; ~_MODULE_INVENTORY_UI_HANDLER_LAYER_SLOT_BREAST_

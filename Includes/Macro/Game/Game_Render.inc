@@ -88,7 +88,7 @@ SET_RENDER_AUTO macro
 SET_RENDER_BASE macro
                 RENDER_FLAGS
                 SET_FLAG SWAP_TARGET_BITS
-                RET_FLAG (SWAP_TARGET_BITS+1)
+                RES_FLAG (SWAP_TARGET_BITS+1)
                 endm
 ; -----------------------------------------
 ; установка Render флага переключение экрана на теневой

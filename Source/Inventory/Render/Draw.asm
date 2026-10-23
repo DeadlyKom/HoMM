@@ -42,20 +42,22 @@ Draw:           ; -----------------------------------------
                 ; проверка запроса обновления
                 CHECK_MAIN_FLAG ML_UPDATE_BIT
                 JR Z, .Tick                                                     ; переход, если обновление не запрошено
+   
+                RES_MAIN_FLAG ML_UPDATE_BIT                                     ; сброс обрабатываемого запроса обновления
+                SET_RENDER_FLAGS FRAME_READY | SWAP_PENDING                     ; установка флагов готовности кадра и переноса экранов
+                RET
 
 .Tick           ; -----------------------------------------
                 ; тик
                 ; -----------------------------------------
-                
+
                 SET_MODULE_PAGE_Inventory                                       ; включение страницы модуля инвентаря
                 CALL UI.Update                                                  ; обновление UI
                 CALL Inventory.Display.Slots                                    ; отображение слотов
 
-                ; установка флагов готовности кадра и переноса экранов
-                SET_RENDER_FLAGS FRAME_READY | SWAP_PENDING
 
-                ; сброс обработанных флагов главного цикла
-                RES_ALL_MAIN_FLAGS                                              ; сброс всех флагов
+                ; сброс обработанных флагов входа и перехода
+                RES_MAIN_FLAGS ML_ENTER | ML_TRANSITION
                 RET
                 display " - Main draw:\t\t\t\t\t\t", /A, Draw, "\t= busy [ ", /D, $-Draw, " byte(s)  ]"
 

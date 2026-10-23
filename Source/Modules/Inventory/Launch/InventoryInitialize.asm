@@ -17,11 +17,11 @@ Initialize:     ; инициализация "инвентаря"
 
                 SET_MAIN_LOOP Inventory.SharedCode.Loop                         ; установка главного цикла
                 SET_MAIN_SWAP Inventory.SharedCode.Render.CopyScreen.Swap       ; установка обработчика показа основного экрана
-                SET_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE             ; установка флагов
+                SET_MAIN_FLAGS ML_TRANSITION | ML_ENTER                         ; установка флагов
                 SET_INVENTORY_RENDER Inventory.SharedCode.Render.Draw           ; инициализация главного рендера "инвентаря"
 
                 ; инициализация флагов рендера инвентаря
-                RES_RENDER_FLAGS FRAME_READY | SWAPPED_PENDING | SWAP_PENDING | FPS_DISABLE
+                SET_RENDER_SHADOW                                               ; выбор теневого экрана для показа
 
                 ; показ подготовленного теневого экрана перед первым кадром
                 SHOW_SHADOW_SCREEN
@@ -29,7 +29,6 @@ Initialize:     ; инициализация "инвентаря"
                 
                 RES_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                           ; разрешить сканирование ввода
                 RES_MUSIC_FLAG MUSIC_ENABLE_BIT                                 ; запретить проигрывать музыку
-                SET_RENDER_SHADOW                                               ; установка Render флага переключения на теневой экран
                 RET
 
                 endif ; ~_MODULE_INVENTORY_LAUNCH_INVENTORY_INITIALIZE_

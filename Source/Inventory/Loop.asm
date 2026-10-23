@@ -20,6 +20,11 @@ Loop:           ; главный цикл "инвентаря"
                 CHECK_RENDER_FLAG FRAME_READY_BIT
                 RET NZ                                                          ; выход, если готовый кадр ещё ожидает показа
 
+                ; проверка запроса перехода UI режима
+                SET_MODULE_PAGE_Inventory                                       ; включение страницы модуля инвентаря
+                CALL UI.Runtime.Process
+                JP C, Inventory.SharedCode.UI.Transition.World                  ; переход, если начат переход UI режима
+
                 ; проверка запроса завершения текущего цикла
                 CHECK_MAIN_FLAG ML_EXIT_BIT
 .FuncDraw       EQU $+1

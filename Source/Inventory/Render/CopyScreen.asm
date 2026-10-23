@@ -32,23 +32,10 @@ CopyScreen:     ; блокировка работы с буфером курсо
                 SET 7, D
                 CALL Draw.RestoreByScrAdr
 
-.Finish         ; подготовка обработки UI после переноса кадра
-                SET_MODULE_PAGE_Inventory                                       ; включение страницы модуля инвентаря
-
-                ; проверка возможности начать обработку запроса смены UI режима
-                CALL UI.Runtime.Process
-                JP C, .StartUI                                                  ; переход, если начат переход UI режима
-
-                ; разрешение работы с курсором перед показом теневого экрана
-                RES_FLAG_MODIFY CursorCopyGate.Flag
-
-                ; завершение переноса перед показом теневого экрана
-                RES_RENDER_FLAGS SWAPPED_PENDING | SWAP_PENDING
+.Finish         ; подготовка флагов
+                RES_FLAG_MODIFY CursorCopyGate.Flag                             ; разрешение работы с курсором перед показом теневого экрана
+                RES_RENDER_FLAGS SWAPPED_PENDING | SWAP_PENDING                 ; завершение переноса перед показом теневого экрана
                 RET
-
-.StartUI        ; завершение переноса перед обработкой перехода UI режима
-                RES_RENDER_FLAGS SWAPPED_PENDING | SWAP_PENDING
-                JP Inventory.SharedCode.UI.Transition.World
 
 .Swap           ; подтверждение показа готового основного экрана
                 SET_RENDER_FLAG SWAPPED_PENDING_BIT

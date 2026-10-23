@@ -203,6 +203,8 @@ Slots:          ; инициализация обхода состояний с�
                 PUSH HL
                 POP IX
 
+                SET_MAIN_FLAG ML_UPDATE_BIT                                     ; запрос обновления экрана после заливки атрибутов
+
                 ; чтение адреса буфера конечных атрибутов
                 LD HL, (IX + FInventorySlotStates.AttributesAdr)
 
@@ -234,6 +236,9 @@ Slots:          ; инициализация обхода состояний с�
                 ; отображение рамки на основном экране
                 LD HL, (IX + FInventorySlotStates.SpriteAdr)                    ; чтение адреса составного спрайта рамки
                 CALL Inventory.Display.Draw.NotClipping.Composite
+
+                ; запрос обновления экрана после отображения рамки
+                SET_MAIN_FLAG ML_UPDATE_BIT
 
                 ; восстановление адреса состояния слота
                 POP HL
@@ -298,6 +303,9 @@ Slots:          ; инициализация обхода состояний с�
                 ; передача параметров восстановления в страницу буфера
                 EXX
                 CALL_IN_PAGE Page.SharedScreen, Inventory.SharedScreen.Memcpy.Bound.Restore.Wrap
+
+                ; запрос обновления экрана после восстановления фона
+                SET_MAIN_FLAG ML_UPDATE_BIT
 
                 ; проверка изменения тика после полного восстановления фона
                 POP DE
