@@ -26,6 +26,7 @@
                 include "UI/Include.inc"
                 include "Map/Include.inc"
                 include "Game/Include.inc"
+                include "Item/Include.inc"
                 include "Event/Include.inc"
                 include "Input/Include.inc"
                 include "Object/Include.inc"

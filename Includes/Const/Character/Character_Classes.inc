@@ -8,13 +8,15 @@ CHARACTER_GENDER_BIT    EQU 0x07                                                
 Character.Gender:
 .Male           EQU 0 << CHARACTER_GENDER_BIT                                   ; муржской
 .Female         EQU 1 << CHARACTER_GENDER_BIT                                   ; женский
+
 Character.Class:
 .Druid          EQU 0x00                                                        ; друид
-.Wizard         EQU 0x00                                                        ; волшебник
-.Warlock        EQU 0x00                                                        ; колдун
-.Witch          EQU 0x00                                                        ; ведьмак
-.DeathKnight    EQU 0x00                                                        ; рыцарь смерти
-.Overlord       EQU 0x00                                                        ; повелитель
-.Necromancer    EQU 0x00                                                        ; некромант
+.Wizard         EQU 0x01                                                        ; волшебник
+.Warlock        EQU 0x02                                                        ; колдун
+.Witch          EQU 0x03                                                        ; ведьмак
+.DeathKnight    EQU 0x04                                                        ; рыцарь смерти
+.Overlord       EQU 0x05                                                        ; повелитель
+.Necromancer    EQU 0x06                                                        ; некромант
+.Any            EQU 0x07                                                        ; любой
 
                 endif ; ~_CONST_CHARACTER_CLASSES_
