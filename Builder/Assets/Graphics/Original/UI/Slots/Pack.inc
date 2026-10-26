@@ -36,13 +36,13 @@ Slot_2x3:       DB .Num
                 SPRITE  8,  3,    0+16,     0, OR_XOR, 0, Slot.Top
                 SPRITE  8,  8,    0+24,     0, OR_XOR, 0, Slot.RightTop
                 SPRITE  4,  8,       0,   0+8, OR_XOR, 0, Slot.Left
-                SPRITE  4,  8,    4+24,   0+8, OR_XOR, 0, Slot.RightJoin
+                SPRITE  4,  8,    5+24,   0+8, OR_XOR, 0, Slot.Right
                 SPRITE  4,  8,       0,  0+16, OR_XOR, 0, Slot.Left
                 SPRITE  4,  8,    4+24,  0+16, OR_XOR, 0, Slot.RightJoin
                 SPRITE  5,  8,      -1,  0+24, OR_XOR, 0, Slot.LeftJoin
                 SPRITE  3,  8, -1+5+24,  0+24, OR_XOR, 0, Slot.Right
                 SPRITE  4,  8,      -1,  0+32, OR_XOR, 0, Slot.Left
-                SPRITE  4,  8, -1+4+24,  0+32, OR_XOR, 0, Slot.Right
+                SPRITE  4,  8, -1+5+24,  0+32, OR_XOR, 0, Slot.Right
                 SPRITE  8,  8,      -1,  0+40, OR_XOR, 0, Slot.LeftBottom
                 SPRITE  8,  4,    -1+8,  4+40, OR_XOR, 0, Slot.Bottom
                 SPRITE  8,  4,   -1+16,  4+40, OR_XOR, 0, Slot.Bottom

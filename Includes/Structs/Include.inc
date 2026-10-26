@@ -18,7 +18,6 @@
                 include "Size.inc"
                 include "Keys.inc"
                 include "Frame.inc"
-                include "Item_ID.inc"
                 include "WorldInfo.inc"
                 include "WorldTime.inc"
                 include "AIDirector.inc"
@@ -33,6 +32,7 @@
                 include "SaveSlot.inc"
 
                 include "UI/Include.inc"
+                include "Item/Include.inc"
                 include "Character/Include.inc"
                 include "Inventory/Include.inc"
                 include "VFX/Include.inc"
