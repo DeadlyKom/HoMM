@@ -2,6 +2,7 @@
                 ifndef _GRAPHICS_UI_ITEMS_HEADER_
                 define _GRAPHICS_UI_ITEMS_HEADER_
 ITEM_VISUAL_ID_COUNTER defl 0
+
                 ; амулеты
                 ITEM_VISUAL 1, 1, Jewelry.Amulet._01,       VISIAL_AMULET_01
                 ITEM_VISUAL 1, 1, Jewelry.Amulet._02,       VISIAL_AMULET_02

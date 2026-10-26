@@ -28,7 +28,6 @@ ITEM_PROPERTY_NONE  EQU 0xFF                                                    
                 REG_ITEM_PROPERTY_ID ITEM_PROPERTY_PATHFINDING                  ; поиск пути на карте приключений
                 REG_ITEM_PROPERTY_ID ITEM_PROPERTY_MAXMANA                      ; максимальная мана героя
                 REG_ITEM_PROPERTY_ID ITEM_PROPERTY_GOLDBONUS                    ; бонус к золоту за победу
-                REG_ITEM_PROPERTY_ID ITEM_PROPERTY_MAGICBONUS                   ; бонус поиска магических предметов
                 REG_ITEM_PROPERTY_ID ITEM_PROPERTY_ADDCLASSSKILLS               ; бонус умениям класса
                 REG_ITEM_PROPERTY_ID ITEM_PROPERTY_SINGLESKILL                  ; бонус отдельному умению
                 REG_ITEM_PROPERTY_ID ITEM_PROPERTY_ALLSKILLS                    ; бонус всем умениям
