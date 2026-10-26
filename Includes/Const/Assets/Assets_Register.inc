@@ -40,6 +40,7 @@ REG_ASSETS_ID_DEBUG macro Label?
                     REG_ASSETS_ID       ASSETS_ID_UI_PAPER_DOLL_FEMALE_PACK     ; графика: образ персонажа - женский
                     REG_ASSETS_ID       ASSETS_ID_HEX_FOG                       ; графика: гексагонная, туман
                     REG_ASSETS_ID       ASSETS_ID_HEX_GRASSLANDS                ; графика: гексагонная, природные ландшафты - луга
+                    REG_ASSETS_ID       ASSETS_ID_UI_ITEMS_PACK                 ; графика: предметов
                     REG_ASSETS_ID       ASSETS_ID_MAP_DEBUG                     ; карта "отладочная"
                     REG_ASSETS_ID       ASSETS_ID_MUSIC_01                      ; музыка №01
 

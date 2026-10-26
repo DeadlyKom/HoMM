@@ -1,0 +1,392 @@
+[
+    {
+        "SprName": "amulet_01",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 0,
+        "PoxImgY": 0,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/01.aseprite",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_01.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_01.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_01.mask",
+        "AsepriteIndex": 0,
+        "InkLayer": "",
+        "AttributeLayer": "",
+        "MaskLayer": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "amulet_02",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 16,
+        "PoxImgY": 0,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/01.aseprite",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_02.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_02.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_02.mask",
+        "AsepriteIndex": 0,
+        "InkLayer": "",
+        "AttributeLayer": "",
+        "MaskLayer": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "amulet_03",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 32,
+        "PoxImgY": 0,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/01.aseprite",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_03.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_03.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_03.mask",
+        "AsepriteIndex": 0,
+        "InkLayer": "",
+        "AttributeLayer": "",
+        "MaskLayer": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "amulet_04",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 0,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/01.aseprite",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_04.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_04.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_04.mask",
+        "AsepriteIndex": 0,
+        "InkLayer": "",
+        "AttributeLayer": "",
+        "MaskLayer": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "amulet_05",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 16,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/01.aseprite",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_05.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_05.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_05.mask",
+        "AsepriteIndex": 0,
+        "InkLayer": "",
+        "AttributeLayer": "",
+        "MaskLayer": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "amulet_06",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 32,
+        "PoxImgY": 16,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/01.aseprite",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_06.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_06.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_06.mask",
+        "AsepriteIndex": 0,
+        "InkLayer": "",
+        "AttributeLayer": "",
+        "MaskLayer": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "amulet_07",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 0,
+        "PoxImgY": 32,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/01.aseprite",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_07.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_07.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_07.mask",
+        "AsepriteIndex": 0,
+        "InkLayer": "",
+        "AttributeLayer": "",
+        "MaskLayer": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "amulet_08",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 16,
+        "PoxImgY": 32,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/01.aseprite",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_08.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_08.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_08.mask",
+        "AsepriteIndex": 0,
+        "InkLayer": "",
+        "AttributeLayer": "",
+        "MaskLayer": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "amulet_09",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 32,
+        "PoxImgY": 32,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/01.aseprite",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_09.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_09.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_09.mask",
+        "AsepriteIndex": 0,
+        "InkLayer": "",
+        "AttributeLayer": "",
+        "MaskLayer": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "amulet_10",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 48,
+        "PoxImgY": 32,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/01.aseprite",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_10.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_10.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_10.mask",
+        "AsepriteIndex": 0,
+        "InkLayer": "",
+        "AttributeLayer": "",
+        "MaskLayer": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "amulet_11",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 64,
+        "PoxImgY": 32,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/01.aseprite",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_11.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_11.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_11.mask",
+        "AsepriteIndex": 0,
+        "InkLayer": "",
+        "AttributeLayer": "",
+        "MaskLayer": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "amulet_12",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 0,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/01.aseprite",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_12.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_12.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_12.mask",
+        "AsepriteIndex": 0,
+        "InkLayer": "",
+        "AttributeLayer": "",
+        "MaskLayer": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "amulet_13",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 16,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/01.aseprite",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_13.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_13.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_13.mask",
+        "AsepriteIndex": 0,
+        "InkLayer": "",
+        "AttributeLayer": "",
+        "MaskLayer": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "amulet_14",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 32,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/01.aseprite",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_14.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_14.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_14.mask",
+        "AsepriteIndex": 0,
+        "InkLayer": "",
+        "AttributeLayer": "",
+        "MaskLayer": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SprName": "amulet_15",
+        "SprWidth": 16,
+        "SprHeight": 16,
+        "PoxImgX": 48,
+        "PoxImgY": 48,
+        "FileImg": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/01.aseprite",
+        "LayerIndex": 0,
+        "InkData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_15.ink",
+        "AttributeData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_15.attr",
+        "MaskData": "D:/Work/Repositories/HoMM/Tools/Convert/New/Saved/Export/UI/Items/Amulet/export/amulet_15.mask",
+        "AsepriteIndex": 0,
+        "InkLayer": "",
+        "AttributeLayer": "",
+        "MaskLayer": "",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "SpriteType",
+                        "Value": 1
+                    }
+                ]
+            }
+        ]
+    }
+]

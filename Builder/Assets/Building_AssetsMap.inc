@@ -165,6 +165,11 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     Graphics.Hexagon.NaturalLandscapes.Grasslands.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Hexagon NaturalLandscapes: 'Grasslands'\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_UI_ITEMS_PACK, \
+                                    Graphics.UI.Items.Size, \
+                                    Graphics.UI.Items.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Graphics: Items\t\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_MAP_DEBUG, \
                                     Metadata.Map.Debug.Size, \
                                     Metadata.Map.Debug.Size.Sector.ar, \

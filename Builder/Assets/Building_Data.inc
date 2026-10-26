@@ -56,6 +56,8 @@
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/Hex/Fog.pack.ar", Graphics.Hexagon.Fog.Size.Sector.ar
                 ; ASSETS_ID_HEX_GRASSLANDS
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/Hex/Grasslands.pack.ar", Graphics.Hexagon.NaturalLandscapes.Grasslands.Size.Sector.ar
+                ; ASSETS_ID_UI_ITEMS_PACK
+                ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/UI/Items.pack.ar", Graphics.UI.Items.Size.Sector.ar
                 ; ASSETS_ID_MAP_DEBUG
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Metadata/Compressed/Map/Debug.map.ar", Metadata.Map.Debug.Size.Sector.ar
                 ; ASSETS_ID_MUSIC_01

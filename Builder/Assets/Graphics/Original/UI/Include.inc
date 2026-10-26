@@ -6,6 +6,7 @@
                 include "Gameplay/Include.inc"
                 include "Progress/Include.inc"
                 include "MainMenu/Include.inc"
+                include "Items/Include.inc"                                     ; ASSETS_ID_UI_ITEMS_PACK
                 include "Characteristics/Include.inc"
                 include "Silhouette/Male/Include.inc"                           ; ASSETS_ID_UI_PAPER_DOLL_MALE_PACK
                 include "Silhouette/Female/Include.inc"                         ; ASSETS_ID_UI_PAPER_DOLL_FEMALE_PACK
