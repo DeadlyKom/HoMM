@@ -12,6 +12,6 @@ ASSETS_ARCHIVE          EQU 1 << ASSETS_ARCHIVE_BIT
 ASSETS_ORIGINAL         EQU 0 << ASSETS_ARCHIVE_BIT
 ASSETS_NOT_SWITCH       EQU 1 << ASSETS_NOT_SWITCH_BIT
 ASSETS_EMPTY_ELEMENT    EQU 0xFF
-ASSETS_MAX              EQU 32                                                  ; максимальное количество ресурсов
+ASSETS_MAX              EQU 128                                                 ; максимальное количество ресурсов
 
                 endif ; ~_CONST_ASSETS_FLAGS_

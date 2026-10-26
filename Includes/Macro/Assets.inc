@@ -548,7 +548,7 @@ MARK_RAM        macro Page?, Address?, Size?
                 ; -----------------------------------------
                 LD L, (((Page?) << 14) | ((Address?) & 0x3FFF)) >> 11
                 LD BC, (((~(((Address?) & #3FFF) >> 8)) & #07) << 8) | \
-                        ((((Size?) % TRDOS.SECTOR_SIZE > 0) & 0x01) + ((Size?) >> 8))
+                        (((Size?) + TRDOS.SECTOR_SIZE - 1) / TRDOS.SECTOR_SIZE)
                 CALL AssetsManager.Mark.Force                                   ; отметить область ОЗУ как занятая
                 endm
 ; -----------------------------------------

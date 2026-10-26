@@ -9,7 +9,7 @@
 Begin:          EQU $
                 include "Basic.asm"
 Size:           EQU $ - Begin
-Sector          EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)
+                SIZE_TO_SECTORS Size, Sector
                 
                 if PASS = 2
                 savetrd TRD_FILENAME, "boot.B", Begin, Size, 20

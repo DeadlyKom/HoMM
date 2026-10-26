@@ -4,7 +4,7 @@
 
                 module SharedScreen
                 DISP Adr.SharedScreen
-                display "'Inventory' code block 'shared screen':\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.SharedScreen, " byte(s) / free ", /D, Size.SharedScreen - Size, "]\t[7]\t ------------------------"
+                display "'Inventory' code block 'shared screen':\t\t-------------------- [ ", /D, Size, "/", /D, Size.SharedScreen, " byte(s) / free ", /D, Size.SharedScreen - Size, "]\t[7]\t ------------------------"
 
                 include "Source/Memory/MemcpyScreenBound_Save.asm"
                 include "Source/Memory/MemcpyScreenBound_Restore.asm"

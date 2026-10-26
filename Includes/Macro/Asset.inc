@@ -4,7 +4,7 @@ ASSETS_SIZE     macro Include?
                 ORG 0x0000
                 incbin Include?
 Size.ar         EQU $
-Size.Sector.ar  EQU ((Size.ar % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size.ar >> 8)
+                SIZE_TO_SECTORS Size.ar, Size.Sector.ar
                 endm
 ; ------------------------------------------------------------
 ; COMPRESS_FILE

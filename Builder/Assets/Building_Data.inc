@@ -52,16 +52,20 @@
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/UI/PaperDoll_Male.pack.ar", Graphics.UI.PaperDoll.Male.Size.Sector.ar
                 ; ASSETS_ID_UI_PAPER_DOLL_FEMALE_PACK
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/UI/PaperDoll_Female.pack.ar", Graphics.UI.PaperDoll.Female.Size.Sector.ar
+                ; ASSETS_ID_UI_ITEMS_PACK
+                ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/UI/Items.pack.ar", Graphics.UI.Items.Size.Sector.ar
                 ; ASSETS_ID_HEX_FOG
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/Hex/Fog.pack.ar", Graphics.Hexagon.Fog.Size.Sector.ar
                 ; ASSETS_ID_HEX_GRASSLANDS
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/Hex/Grasslands.pack.ar", Graphics.Hexagon.NaturalLandscapes.Grasslands.Size.Sector.ar
-                ; ASSETS_ID_UI_ITEMS_PACK
-                ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Graphics/Compressed/UI/Items.pack.ar", Graphics.UI.Items.Size.Sector.ar
                 ; ASSETS_ID_MAP_DEBUG
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Metadata/Compressed/Map/Debug.map.ar", Metadata.Map.Debug.Size.Sector.ar
                 ; ASSETS_ID_MUSIC_01
                 ADD_ASSETS 3, PAGE_4, 0x0000, "Builder/Assets/Sound/Compressed/Music_01.pack.ar", Sound.Music_01.Size.Sector.ar
+                ; ASSETS_ID_ITEMS_METADATA_PACK
+                ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Metadata/Compressed/Items.pack.ar", Metadata.Items.Size.Sector.ar
+                ; ASSETS_ID_ITEMS_TEXT_PACK
+                ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Text/Compressed/Items.pack.ar", Text.Items.Size.Sector.ar
 
                 endif
 

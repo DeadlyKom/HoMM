@@ -155,6 +155,11 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     Graphics.UI.PaperDoll.Female.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Graphics: Paper doll 'Female'\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_UI_ITEMS_PACK, \
+                                    Graphics.UI.Items.Size, \
+                                    Graphics.UI.Items.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Graphics: Items\t\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_HEX_FOG, \
                                     Graphics.Hexagon.Fog.Size, \
                                     Graphics.Hexagon.Fog.Size.Sector.ar, \
@@ -165,11 +170,6 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     Graphics.Hexagon.NaturalLandscapes.Grasslands.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Hexagon NaturalLandscapes: 'Grasslands'\t\t"
-                REG_BUILD_ASSETS_ID ASSETS_ID_UI_ITEMS_PACK, \
-                                    Graphics.UI.Items.Size, \
-                                    Graphics.UI.Items.Size.Sector.ar, \
-                                    ASSETS_ARCHIVE, \
-                                    "  - Graphics: Items\t\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_MAP_DEBUG, \
                                     Metadata.Map.Debug.Size, \
                                     Metadata.Map.Debug.Size.Sector.ar, \
@@ -180,9 +180,20 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     Sound.Music_01.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Music #01\t\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_ITEMS_METADATA_PACK, \
+                                    Metadata.Items.Size, \
+                                    Metadata.Items.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Metadata: Items\t\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_ITEMS_TEXT_PACK, \
+                                    Text.Items.Size, \
+                                    Text.Items.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Text: Items\t\t\t\t\t"
 Num             EQU $ / 3                                                       ; количество ресурсов в карте
-Size            EQU (((Num % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Num >> 8)) << 8  ; размер карты ресурсов (кратный 256)
-Sector          EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)       ; размер карты ресурсов (в секторах)
+                ; расчёт количества секторов для трёхбайтовых записей карты
+                SIZE_TO_SECTORS Num * 3, Sector
+Size            EQU Sector * TRDOS.SECTOR_SIZE                                  ; размер карты ресурсов (кратный 256)
 
                 if PASS = 2
                 savetrd TRD_FILENAME, "Resource.#", 0, Num * 3

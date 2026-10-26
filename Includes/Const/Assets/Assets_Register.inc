@@ -38,10 +38,12 @@ REG_ASSETS_ID_DEBUG macro Label?
                     REG_ASSETS_ID       ASSETS_ID_UI_GAMEPLAY_COMMON_PACK       ; графика: общий UI для Gameplay
                     REG_ASSETS_ID       ASSETS_ID_UI_PAPER_DOLL_MALE_PACK       ; графика: образ персонажа - муржской
                     REG_ASSETS_ID       ASSETS_ID_UI_PAPER_DOLL_FEMALE_PACK     ; графика: образ персонажа - женский
+                    REG_ASSETS_ID       ASSETS_ID_UI_ITEMS_PACK                 ; графика: предметов
                     REG_ASSETS_ID       ASSETS_ID_HEX_FOG                       ; графика: гексагонная, туман
                     REG_ASSETS_ID       ASSETS_ID_HEX_GRASSLANDS                ; графика: гексагонная, природные ландшафты - луга
-                    REG_ASSETS_ID       ASSETS_ID_UI_ITEMS_PACK                 ; графика: предметов
                     REG_ASSETS_ID       ASSETS_ID_MAP_DEBUG                     ; карта "отладочная"
                     REG_ASSETS_ID       ASSETS_ID_MUSIC_01                      ; музыка №01
+                    REG_ASSETS_ID       ASSETS_ID_ITEMS_METADATA_PACK           ; метаданные: предметов
+                    REG_ASSETS_ID       ASSETS_ID_ITEMS_TEXT_PACK               ; текст: предметов
 
                 endif ; ~_CONST_ASSETS_REGISTER_

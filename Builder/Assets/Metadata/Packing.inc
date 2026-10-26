@@ -5,6 +5,7 @@
                 module Metadata
                 include "Original/Map/Include.inc"
                 include "Original/Font/Include.inc"
+                include "Original/Items/Include.inc"                            ; ASSETS_ID_ITEMS_METADATA_PACK
                 include "Original/Default/Include.inc"
                 endmodule
 
