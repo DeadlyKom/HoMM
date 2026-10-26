@@ -5,6 +5,7 @@
                 module Items
                 ORG #0000
 Begin:          EQU $
+                include "Header.inc"
                 include "Belt/Pack.inc"
                 include "Boot/Pack.inc"
                 include "Head/Pack.inc"

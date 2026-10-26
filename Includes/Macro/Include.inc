@@ -4,6 +4,7 @@
 
                 include "UI.inc"
                 include "Font.inc"
+                include "Item.inc"
                 include "Debug.inc"
                 include "Flags.inc"
                 include "Mouse.inc"
