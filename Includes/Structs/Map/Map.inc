@@ -21,8 +21,8 @@ HextileProperty FMapDataBlockInfo                                               
 HextileTable    FMapDataBlockInfo                                               ; блок данных - таблицы сопоставления гексагонального тайла и графического пакета
 GraphicPack     FMapDataBlockInfo                                               ; блок данных - необходимых графических пакетов для текущей карты
 Objects         FMapDataBlockInfo                                               ; блок данных - об объектах
+Items           FMapDataBlockInfo                                               ; блок данных - начальные предметы карты
 Rules           FMapDataBlockInfo                                               ; блок данных - об правилах (ToDo)
-
                 ends
 
                 endif ; ~_STRUCT_MAP_

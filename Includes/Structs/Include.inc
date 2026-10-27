@@ -28,11 +28,11 @@
                 include "SpriteNotClipping.inc"
 
                 include "Font/Include.inc"
+                include "Item/Include.inc"
                 include "Map/Include.inc"
                 include "SaveSlot.inc"
 
                 include "UI/Include.inc"
-                include "Item/Include.inc"
                 include "Character/Include.inc"
                 include "Inventory/Include.inc"
                 include "VFX/Include.inc"

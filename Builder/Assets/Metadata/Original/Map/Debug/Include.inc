@@ -22,6 +22,7 @@ Begin:          EQU $
                 FMapDataBlockInfo { HextileTable.Size, HextileTable-$-2}        ; блок данных - таблицы сопоставления гексагональных тайлов и графического пакетов
                 FMapDataBlockInfo { GraphPackage.Size, GraphPackage-$-2}        ; блок данных - необходимого графического пакета для текущей карты
                 FMapDataBlockInfo { Objects.Size, Objects-$-2}                  ; блок данных - об объектах
+                FMapDataBlockInfo { Items.Size, Items-$-2 }                     ; блок данных - начальные предметы карты
                 FMapDataBlockInfo {}                                            ; блок данных - об правилах (ToDo)
 
                 ; массив индексов гексагональных тайлов (карта)
@@ -39,6 +40,10 @@ GraphPackage.Size EQU $-GraphPackage
                 ; список объектов на карте
 Objects         include "Block.Object.inc"
 Objects.Size    EQU $-Objects
+
+                ; список начальных предметов карты
+Items           include "Block.Items.inc"
+Items.Size      EQU $-Items
 Size            EQU $
                 COMPRESSED_ASSET \
                 "Builder/Assets/Metadata/Original/Map/Debug.map", \

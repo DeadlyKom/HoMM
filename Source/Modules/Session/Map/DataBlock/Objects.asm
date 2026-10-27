@@ -21,7 +21,8 @@ Objects:        EX DE, HL                                                       
                 LOAD_ASSETS_REG E                                               ; загрузка ресурса
                 CALL Session.SharedCode.SetPageLoadedMap                        ; установка страницы загруженной карты
                 POP HL
-                JP Session.SharedCode.Initialize.Objects                        ; инициализация объектов карты после загрузки
+                CALL Session.SharedCode.Initialize.Objects                      ; инициализация объектов карты после загрузки
+                JP Session.SharedCode.SetPageLoadedMap                          ; установка страницы загруженной карты
 
                 display " - Parsing FMapDataBlockInfo for 'objects':\t\t", /A, Objects, "\t= busy [ ", /D, $-Objects, " byte(s)  ]"
 

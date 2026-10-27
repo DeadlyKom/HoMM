@@ -3,6 +3,7 @@
                 define _STRUCT_MAP_INCLUDE_
 
                 include "Map.inc"
+                include "Item.inc"
                 include "Object.inc"
                 include "Surface.inc"
                 include "Metadata.inc"

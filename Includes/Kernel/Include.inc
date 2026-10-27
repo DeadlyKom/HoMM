@@ -4,6 +4,7 @@
 
                 include "UI.inc"
                 include "HEX.inc"
+                include "Item.inc"
                 include "Math.inc"
                 include "Draw.inc"
                 include "Event.inc"

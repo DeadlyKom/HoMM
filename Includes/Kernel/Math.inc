@@ -1,7 +1,7 @@
 
                 ifndef _KERNEL_MATH_
                 define _KERNEL_MATH_
-Math
+Math:
 .Mul16x8_16     EQU Kernel.Math.Mul16x8_16
 .Mul16x8_24     EQU Kernel.Math.Mul16x8_24
 

@@ -79,6 +79,7 @@ Load.Map:       ; сохранение идентификатора загруж
                 DW DataBlock.HextileTable
                 DW DataBlock.GraphicPack
                 DW DataBlock.Objects
+                DW DataBlock.Items
 .NumBlocks      EQU ($-.ProcessedBlocks) / 2
 
                 display " - Load map:\t\t\t\t\t\t", /A, Load.Map, "\t= busy [ ", /D, $-Load.Map, " byte(s)  ]"

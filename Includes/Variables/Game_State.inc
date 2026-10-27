@@ -18,6 +18,10 @@ GameState       EQU Adr.GameState                                               
 .Input.Timer    EQU GameState + FGameState.Input.Timer                          ; флаги таймера ввода
 .View           EQU GameState + FGameState.View                                 ; флаги вида
 .PlayerActions  EQU GameState + FGameState.PlayerActions                        ; действия игрока
+.Inventory      EQU GameState + FGameState.Inventory                            ; расположение блока предметов и их размещения
+.Inventory.Page EQU GameState + FGameState.Inventory.Page                       ; номер страницы блока предметов
+.Inventory.High EQU GameState + FGameState.Inventory.High                       ; старший байт адреса блока предметов
+.ItemsNum       EQU GameState + FGameState.ItemsNum                             ; количество предметов в массиве
 .AssetID        EQU GameState + FGameState.AssetID                              ; идентификатор последнего загруженного ресурса
 .Assets         EQU GameState + FGameState.Assets                               ; копия данных последнего загруженного ресурса
 .FontSize       EQU GameState + FGameState.FontSize                             ; размер выводимого символа

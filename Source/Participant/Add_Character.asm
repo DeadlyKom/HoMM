@@ -70,12 +70,21 @@ Add_Character:  ; проверка достижения максимальног
                 LD BC, FCharacterSkills
                 CALL Memcpy.FastLDIR                                            ; копирование FCharacter.Skills
                 EX DE, HL
-                ; обнуление FCharacter.CombatStates и FCharacter.Equipment
+                
+                ; обнуление боевых состояний персонажа
                 XOR A
-                LD B, FCombatStates + FCharacterEquipment
-.ClearLoop      LD (HL), A
+                LD B, FCombatStates
+.ClearCombat    LD (HL), A
                 INC L
-                DJNZ .ClearLoop
+                DJNZ .ClearCombat
+
+                ; инициализация пустых слотов экипировки
+                LD A, ITEM_ID_NONE
+                LD B, FCharacterEquipment
+.ClearEquipment LD (HL), A
+                INC L
+                DJNZ .ClearEquipment
+
                 ; -----------------------------------------
                 ; спавн объекта
                 ; In:

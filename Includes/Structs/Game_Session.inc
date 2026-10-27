@@ -12,7 +12,6 @@ WorldInfo       FWorldInfo                                                      
 PeriodTick      FTick                                                           ; период тиков                                                  [4 байта]
 WorldTime       FWorldTime                                                      ; календарное игровое время                                     [7 байт]
 WorldTimeCtrl   FWorldTimeControl                                               ; управление течением игрового времени                          [2 байта]
-
                 ends
 
                 endif ; ~_STRUCTS_GAME_SESSION_

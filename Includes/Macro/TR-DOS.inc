@@ -9,8 +9,8 @@
 ; Out:
 ;   Label? - количество секторов с округлением вверх
 ; -----------------------------------------
-SIZE_TO_SECTORS  macro Size?, Label?
-Label?          = ((Size?) + TRDOS.SECTOR_SIZE - 1) / TRDOS.SECTOR_SIZE
+SIZE_TO_SECTORS macro Size?, Label?
+                DIV_ROUND_UP Size?, TRDOS.SECTOR_SIZE, Label?
                 endm
 
 SET_TR_DOS_FLAG macro FlagBit?

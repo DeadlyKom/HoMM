@@ -5,6 +5,7 @@
                 module DataBlock
                 include "Hextile.asm"
                 include "Objects.asm"
+                include "Items.asm"
                 include "Metadata.asm"
                 include "SpawnPoint.asm"
                 include "GraphicPack.asm"

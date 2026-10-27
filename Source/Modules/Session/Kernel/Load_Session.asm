@@ -34,6 +34,9 @@ Load_Session:   ; копирование блока
                 LD BC, FWorldTime
                 CALL Memcpy.FastLDIR
 
+                ; подготовка области предметов
+                CALL SharedCode.Core.Init_Inventory
+
                 ; загрузка карты
                 LD A, (GameSession.SaveSlot + FSaveSlot.MapID)
                 CALL SharedCode.Load.Map

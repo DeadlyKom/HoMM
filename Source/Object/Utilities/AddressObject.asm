@@ -11,9 +11,9 @@
 ;   HL, AF
 ; Note:
 ; -----------------------------------------
-CALC_OBJECT_ADD macro RegH?
+CALC_OBJECT_ADR macro RegH?
 
-                if OBJECT_SIZE > 32
+                if OBJECT_SIZE != 32
                 error "address calculation error"
                 endif
                 
@@ -40,7 +40,7 @@ CALC_OBJECT_ADD macro RegH?
 ;   HL, AF
 ; Note:
 ; -----------------------------------------
-Adr.HL:         CALC_OBJECT_ADD H                                               ; расчёт адрес объекта
+Adr.HL:         CALC_OBJECT_ADR H                                               ; расчёт адрес объекта
                 LD L, A
                 RET
 ; -----------------------------------------
@@ -53,7 +53,7 @@ Adr.HL:         CALC_OBJECT_ADD H                                               
 ;   HL, AF, IX
 ; Note:
 ; -----------------------------------------
-Adr.IX:         CALC_OBJECT_ADD H                                               ; расчёт адрес объекта
+Adr.IX:         CALC_OBJECT_ADR H                                               ; расчёт адрес объекта
                 LD L, A
                 LD IXL, A
                 LD A, H
@@ -69,7 +69,7 @@ Adr.IX:         CALC_OBJECT_ADD H                                               
 ;   HL, AF, IY
 ; Note:
 ; -----------------------------------------
-Adr.IY:         CALC_OBJECT_ADD H                                               ; расчёт адрес объекта
+Adr.IY:         CALC_OBJECT_ADR H                                               ; расчёт адрес объекта
                 LD L, A
                 LD IYL, A
                 LD A, H
