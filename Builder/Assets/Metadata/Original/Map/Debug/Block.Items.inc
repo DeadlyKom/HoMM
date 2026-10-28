@@ -10,19 +10,19 @@
                 ; "Волчий клык", индекс базового предмета 0
                 FMapItem {
                     { #00, ITEM_QUALITY_NORMAL, #00, #00 },
-                    { ITEM_LOCATION_OCCUPIED, #00, { #00, #00 } }
+                    { #00, PLAYER_CHARACTER_ID_MAIN, { #00, #00 } }
                 }
 
                 ; "Кремень духа", индекс базового предмета 1
                 FMapItem {
                     { #01, ITEM_QUALITY_NORMAL, #00, #00 },
-                    { ITEM_LOCATION_OCCUPIED, #00, { #02, #00 } }
+                    { #00, PLAYER_CHARACTER_ID_MAIN, { #02, #00 } }
                 }
 
                 ; "Оберег ратоборца", индекс базового предмета 4
                 FMapItem {
                     { #04, ITEM_QUALITY_NORMAL, #00, #00 },
-                    { ITEM_LOCATION_OCCUPIED, #00, { #04, #00 } }
+                    { #00, PLAYER_CHARACTER_ID_MAIN, { #04, #00 } }
                 }
 
 Items.Num       EQU ($-Items-1) / FMapItem

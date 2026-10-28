@@ -6,10 +6,27 @@
 ; In:
 ; Out:
 ; Corrupt:
+;   HL, DE, BC, AF
 ; Note:
 ;   ℹ️ необходимо включить страницу модуля "инвентаря"
 ; -----------------------------------------
-ClearState:     ; очистка массива состояний слотов будет добавлена после его объявления
+ClearState:     ; очистка флагов и анимации слотов
+                LD HL, Inventory.States.Slots.Head
+                LD DE, FInventorySlotStates - FInventorySlotStates.Delay
+                LD B, Inventory.States.Slots.Num
+                XOR A
+
+.SlotsLoop      ; сброс состояния текущего слота
+                LD (HL), A
+                INC HL
+                LD (HL), A
+                INC HL
+                LD (HL), A
+
+                ; переход к состоянию следующего слота
+                ADD HL, DE
+                DJNZ .SlotsLoop
+
                 RET
 
                 endif                                                           ; ~_MODULE_INVENTORY_LAUNCH_CLEAR_STATE_

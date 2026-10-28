@@ -14,6 +14,11 @@
                 include "UI/Include.inc"
 Size            EQU $-Adr.Characteristics
 
+                ; проверка размещения общего кода
+                if Size > Size.SharedPoint
+                error "available size exceeded"
+                endif
+
                 ENT
                 endmodule
 

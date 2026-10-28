@@ -249,8 +249,7 @@ Slots:          ; инициализация обхода состояний с�
                 PUSH HL
                 POP IX
 
-                ; выбор основного экрана для чтения чистого фона
-                CALL Convert.SetBaseScreen
+                CALL Convert.SetBaseScreen                                      ; выбор основного экрана для сохранения фона
 
                 ; инициализация параметров копирования фона
                 LD HL, (IX + FInventorySlotStates.BackgroundAdr)                ; чтение адреса буфера фона

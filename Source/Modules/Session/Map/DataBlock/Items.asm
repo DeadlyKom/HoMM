@@ -44,10 +44,6 @@ Items:          ; проверка наличия предметов в блок
                 LDIR
                 endif
 
-                ; установка флага занятости подготовленной записи
-                LD HL, .BUFFER + FMapItem.Location + FItemLocation.State
-                SET ITEM_LOCATION_OCCUPIED_BIT, (HL)
-
                 ; добавление подготовленного предмета в общий массив
                 LD HL, .BUFFER
                 CALL Item.Add

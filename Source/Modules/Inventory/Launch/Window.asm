@@ -15,8 +15,11 @@ Window:         SHOW_SHADOW_SCREEN                                              
                 CLS SCR_ADR_BASE, 0xFF                                          ; очистка основного экрана
                 ATTR_IPB SCR_ADR_BASE, BLACK, WHITE, 0                          ; очистка атрибутов основного экрана
 
+                ; вывод изобращения
+                CALL Convert.SetBaseScreen                                      ; выбор основного экрана для вывода окна
                 CALL Inventory.Display.PaperDoll                                ; отображение "образа персонажа"
                 CALL Inventory.Display.Inventory                                ; отображение "инвентаря"
+                CALL Inventory.Display.Items                                    ; отображение "предметов"
                 
                 HALT
                 SHOW_BASE_SCREEN                                                ; отображение базового экрана

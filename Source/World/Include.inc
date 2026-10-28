@@ -15,6 +15,11 @@
                 include "Source/World/UI/Include.inc"
 Size            EQU $-Adr.World
 
+                ; проверка размещения общего кода
+                if Size > Size.SharedPoint
+                error "available size exceeded"
+                endif
+
                 ENT
                 endmodule
 

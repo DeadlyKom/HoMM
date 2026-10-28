@@ -17,6 +17,11 @@
                 include "Particle/Include.inc"                                  ; ToDo вынести код в 7 стр
 Size            EQU $-Adr.MainMenu
 
+                ; проверка размещения общего кода
+                if Size > Size.SharedPoint
+                error "available size exceeded"
+                endif
+
                 ENT
                 endmodule
 

@@ -16,6 +16,11 @@
                 include "Source/Director/Initial/Include.inc"
 Size            EQU $-Adr.Session
 
+                ; проверка размещения общего кода
+                if Size > Size.SharedPoint
+                error "available size exceeded"
+                endif
+
                 ENT
                 endmodule
 

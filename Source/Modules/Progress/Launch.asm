@@ -22,9 +22,7 @@ Launch:         ; первичная инициализация загружен
                 ; на вершине стека лежит идентификатор запрошенной функции
 
                 SAVE_ASSETS_PAGE Kernel.Modules.Progress.Page                   ; сохранение страницы загруженного ресурса
-
-                LD HL, (GameState.Assets + FAssets.Address.Adr)
-                LD (Kernel.Modules.Progress.Address), HL
+                SAVE_ASSETS_ADDRESS Kernel.Modules.Progress.Address             ; сохранение адреса загруженного ресурса
 
                 ; повторный вход в диспетчер уже инициализированного ресурса
                 ; HL содержит адрес диспетчера, а идентификатор функции сохранён в стеке

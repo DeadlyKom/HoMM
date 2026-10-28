@@ -9,20 +9,19 @@
 ;   HL, DE, BC, AF, AF', IX, IY
 ; Note:
 ;   ℹ️ адрес исполнения неизвестен
+;   основной экран должен быть выбран перед вызовом
 ; -----------------------------------------
 Inventory:      ; отображение сетки инвентаря
-                CALL Convert.SetBaseScreen
-
-                ; расчёт адреса спрайта внутри пакета графики
-                LD HL, Slots.Inventory.Grid
-
-                ; установка начальной позиции и количества строк
-                LD DE, #7878
-                LD B, 4
+                
+                ; инициализация
+                LD HL, Slots.Inventory.Grid                                     ; адреса спрайта внутри пакета графики
+                LD DE, ((SCR_INVENTORY_POS_Y << 3) << 8) |\
+                        (SCR_INVENTORY_POS_X << 3)                              ; позиция сетки в пикселях
+                LD B, SCR_INVENTORY_SIZE_Y                                      ; количество строк сетки
 
 .Row            ; установка начала строки и количества столбцов
-                LD E, 15 * 8
-                LD C, 8
+                LD E, SCR_INVENTORY_POS_X << 3                                  ; начало строки сетки в пикселях
+                LD C, SCR_INVENTORY_SIZE_X                                      ; количество столбцов сетки
 
 .Cell           ; отображение текущей ячейки сетки
                 PUSH HL
@@ -52,15 +51,15 @@ Inventory:      ; отображение сетки инвентаря
 
 .DrawCell       ; отображение спрайта ячейки с атрибутами
 
-                ; установка вывода без зеркалирования и ограничений
-                LD BC, #0000
-                LD (Kernel.Boundary.Functions.VHCounters), BC
+                ; подготовка функции вывода спрайта без указания блока спрайтов (FSpriteBlock)
+                LD BC, #0000                                                    ; значение счётчиков для полного вывода спрайта
+                LD (Kernel.Boundary.Functions.VHCounters), BC                   ; установка счётчиков полного вывода спрайта
 
                 ; установка обработчика данных LD_ATTR
-                LD IX, Kernel.Boundary.Functions.LD_ATTR
+                LD IX, Kernel.Boundary.Functions.LD_ATTR                        ; выбор обработчика LD_ATTR с атрибутами
 
                 ; передача адреса данных через стек обработчику
-                PUSH HL
-                JP Kernel.Boundary.Functions.Draw
+                PUSH HL                                                         ; адрес сырых данных для Boundary.Draw
+                JP Kernel.Boundary.Functions.Draw                               ; переход к выводу с сохранением цепочки возврата
                 
                 endif ; ~_MODULE_INVENTORY_GRAPHICS_DISPLAY_INVENTORY_

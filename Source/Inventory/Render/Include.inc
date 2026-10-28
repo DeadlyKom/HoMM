@@ -4,6 +4,7 @@
 
                 module Render
                 include "Draw.asm"
+                include "Item.asm"
                 include "CopyScreen.asm"
                 endmodule
 

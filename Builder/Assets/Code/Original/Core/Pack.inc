@@ -19,6 +19,12 @@ Begin:          EQU $
                 include "Source/TableGeneration/TG_ShiftTable.asm"
                 include "Source/TableGeneration/TG_MultiplySpriteTable.asm"
 Size:           EQU $-Begin                                                     ; размер кода
+
+                ; проверка размещения общего кода
+                if Size > Size.SharedPoint
+                error "available size exceeded"
+                endif
+
                 COMPRESSED_ASSET \
                 "Builder/Assets/Code/Original/Core/Core.pack", \
                 "Builder/Assets/Code/Compressed/Core.pack.ar"

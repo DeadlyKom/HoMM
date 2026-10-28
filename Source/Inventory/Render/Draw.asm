@@ -55,7 +55,6 @@ Draw:           ; -----------------------------------------
                 CALL UI.Update                                                  ; обновление UI
                 CALL Inventory.Display.Slots                                    ; отображение слотов
 
-
                 ; сброс обработанных флагов входа и перехода
                 RES_MAIN_FLAGS ML_ENTER | ML_TRANSITION
                 RET

@@ -536,6 +536,11 @@ SetPort_7FFD    PUSH AF
                 include "Source/Memory/Message_InsufficientRAM.asm"
 Determine.Size  EQU $-Begin
 
+                ; проверка размещения общего кода
+                if Determine.Size > Size.SharedPoint
+                error "available size exceeded"
+                endif
+
                 display "\t- Memory determine:\t\t\t\t\t\t= busy [ ", /D, Determine.Size, " byte(s) ]"
                 ENT
                 endmodule

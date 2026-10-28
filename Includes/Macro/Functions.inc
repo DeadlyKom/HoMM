@@ -12,6 +12,10 @@ CALL_IN_PAGE_A  macro Function?
                 LD HL, Function?
                 CALL Func.CallInPage                                            ; вызов функции с включением страницы (находясь в странице)
                 endm
+JP_IN_PAGE_A    macro Function?
+                LD HL, Function?
+                JP Func.CallInPage                                              ; вызов функции с включением страницы (находясь в странице)
+                endm
 CALL_IN_PAGE    macro Page?, Function?
                 LD A, Page?
                 CALL_IN_PAGE_A Function?

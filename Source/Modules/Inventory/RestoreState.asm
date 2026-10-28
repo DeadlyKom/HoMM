@@ -16,6 +16,7 @@ RestoreState:   ; сохранение предыдущего UI режима д
                 PUSH AF
 
                 CALL Launch.Deploy                                              ; восстановление общих блоков кода инвентаря
+                CALL Launch.ClearState                                          ; очистка состояний
                 CALL Launch.InitSprites                                         ; выбор и подготовка спрайтов текущего персонажа
                 CALL Launch.Window                                              ; отображение окна "инвентаря"
                 CALL Launch.Initialize                                          ; восстановление UI, главного цикла и обработчиков

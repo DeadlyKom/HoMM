@@ -15,7 +15,7 @@ ITEM_VISUAL_ID_COUNTER = ITEM_VISUAL_ID_COUNTER + 1
 ; In:
 ;   Width?  - ширина в ячейках
 ;   Height? - высота в ячейках
-;   Offset? - смещение до данных спрайта
+;   Offset? - смещение данных спрайта
 ;   Label?  - идентификатор метка визуализации предмета
 ; -----------------------------------------
 ITEM_VISUAL     macro Width?, Height?, Offset?, Label?
@@ -25,7 +25,7 @@ ITEM_VISUAL     macro Width?, Height?, Offset?, Label?
                         (Width?) << 1,
                         (Height?) << 1
                     },
-                    Offset?
+                    Offset?-$-1
                 }
                 endm
 ; -----------------------------------------

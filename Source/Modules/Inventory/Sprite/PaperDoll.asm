@@ -42,9 +42,7 @@ Load:           ; определение гендера выбранного п�
 
                 ; сохранение страницы и адреса спрайтов "образа персонажа"
                 SAVE_ASSETS_PAGE Inventory.Display.PaperDoll.Page               ; сохранение страницы загруженного ресурса
-
-                LD HL, (GameState.Assets + FAssets.Address.Adr)
-                LD (Inventory.Display.PaperDoll.Address), HL
+                SAVE_ASSETS_ADDRESS Inventory.Display.PaperDoll.Address         ; сохранение адреса загруженного ресурса
                 RET
 
                 display " - Sprite initialize 'Paper doll':\t\t\t", /A, Load, "\t= busy [ ", /D, $-Load, " byte(s)  ]"

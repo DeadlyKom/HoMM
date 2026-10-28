@@ -61,4 +61,10 @@ SCR_EQUIP_BOOT_POS_Y            EQU 18                                          
 SCR_EQUIP_BOOT_SIZE_X           EQU 4                                           ; размер видимой области слота экипировки инвентаря "обувь" по горизонтали
 SCR_EQUIP_BOOT_SIZE_Y           EQU 4                                           ; размер видимой области слота экипировки инвентаря "обувь" по вертикали
 
+; сетка инвентаря
+SCR_INVENTORY_POS_X             EQU 15                                          ; положение сетки инвентаря по горизонтали в знакоместах
+SCR_INVENTORY_POS_Y             EQU 15                                          ; положение сетки инвентаря по вертикали в знакоместах
+SCR_INVENTORY_SIZE_X            EQU 8                                           ; размер сетки инвентаря по горизонтали в ячейках
+SCR_INVENTORY_SIZE_Y            EQU 4                                           ; размер сетки инвентаря по вертикали в ячейках
+
                 endif ; ~_CONST_GAME_SCREEN_INVENTORY_

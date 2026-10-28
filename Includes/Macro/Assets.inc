@@ -81,6 +81,18 @@ SAVE_ASSETS_PAGE macro Destination?
                 LD (Destination?), A
                 endm
 ; -----------------------------------------
+; сохранение адреса загруженного ресурса
+; In:
+;   Destination? - адрес назначения
+; Out:
+; Corrupt:
+;   HL
+; -----------------------------------------
+SAVE_ASSETS_ADDRESS macro Destination?
+                LD HL, (GameState.Assets + FAssets.Address.Adr)
+                LD (Destination?), HL
+                endm
+; -----------------------------------------
 ; установка загрузки ресурса
 ; In:
 ;   ID?      - идентификатор ресурса
