@@ -44,7 +44,7 @@ Init_Inventory: ; проверка наличия выделенной обла�
                 OR A
                 RET
 
-.Size           EQU ITEM_MAX * (FItem + FItemLocation)                          ; размер массивов предметов и их размещения
+.Size           EQU ITEM_MAX * (ITEM_SIZE + ITEM_LOCATION_SIZE)                 ; размер массивов предметов и их размещения
                 DIV_ROUND_UP .Size, #0100, @.Blocks
 ; -----------------------------------------
 ; выделение области предметов

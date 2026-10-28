@@ -22,7 +22,7 @@ Location.HL:    ; проверка допустимого идентификат
                 endif
 
                 ; проверка размера структуры размещения предмета
-                if FItemLocation != 4
+                if ITEM_LOCATION_SIZE != 4
                 error "address calculation error"
                 endif
 
@@ -33,7 +33,7 @@ Location.HL:    ; проверка допустимого идентификат
                 ADD HL, HL  ; x4
 
                 ; расчёт смещения относительно начала области предметов
-                LD BC, ITEM_MAX * FItem
+                LD BC, ITEM_MAX * ITEM_SIZE
                 ADD HL, BC
 
                 ; расчёт адреса размещения предмета

@@ -22,7 +22,7 @@ Address.HL:     ; проверка допустимого идентификат
                 endif
 
                 ; проверка размера структуры экземпляра предмета
-                if FItem != 32
+                if ITEM_SIZE != 32
                 error "address calculation error"
                 endif
 

@@ -17,79 +17,54 @@ Items:          ; проверка наличия предметов в блок
                 OR A
                 RET Z                                                           ; выход, если блок предметов пуст
 
-                ifdef _DEBUG
                 ; проверка вместимости предметов в общий массив
+                ifdef _DEBUG
                 CP ITEM_MAX + 1
                 DEBUG_BREAK_POINT_NC                                            ; ошибка, количество предметов превышает вместимость массива
                 endif
 
                 ; сохранение количества загружаемых предметов
                 LD B, A
-                PUSH BC
 
                 ; получение адреса первой записи после количества
                 INC DE
                 SET_REGISTER IX, DE
 
-                ; получение адреса массива экземпляров предметов
-                LD A, (GameState.Inventory.High)
-                LD D, A
-                LD E, #00
-
-                ; расчёт адреса массива размещения предметов
-                LD HL, ITEM_MAX * FItem
-                ADD HL, DE
-                SET_REGISTER IY, HL
-
-                ; восстановление количества загружаемых предметов
-                POP BC
-
 .ItemLoop       PUSH BC
 
-                ; ToDo: вызывать методы создания и добавления предметов
-                ;       вместо копирования готовых экземпляров из блока карты
-                ; копирование экземпляра предмета в общий массив
+                ; копирование записи карты во временный буфер
                 SET_REGISTER HL, IX
-                LD BC, FItem
-                LD A, (GameState.Inventory.Page)
-                EX AF, AF'
-                LD A, (Session.SharedCode.SetPageLoadedMap.LoadedMapPage)
-                CALL Memcpy.BetweenPages
-                PUSH DE
+                LD DE, .BUFFER
+                ifdef _OPTIMIZE
+                rept ITEM_SIZE + ITEM_LOCATION_SIZE
+                LDI
+                endr
+                else
+                LD BC, ITEM_SIZE + ITEM_LOCATION_SIZE
+                LDIR
+                endif
 
-                ; расчёт адреса размещения в исходной записи
-                SET_REGISTER HL, IX
-                LD BC, FMapItem.Location
-                ADD HL, BC
+                ; установка флага занятости подготовленной записи
+                LD HL, .BUFFER + FMapItem.Location + FItemLocation.State
+                SET ITEM_LOCATION_OCCUPIED_BIT, (HL)
 
-                ; копирование размещения предмета в общий массив
-                SET_REGISTER DE, IY
-                LD BC, FItemLocation
-                LD A, (GameState.Inventory.Page)
-                EX AF, AF'
-                LD A, (Session.SharedCode.SetPageLoadedMap.LoadedMapPage)
-                CALL Memcpy.BetweenPages
+                ; добавление подготовленного предмета в общий массив
+                LD HL, .BUFFER
+                CALL Item.Add
+                DEBUG_BREAK_POINT_C                                             ; ошибка, нет места для добавления предмета
 
-                ; установка флага занятости записи предмета
-                SET ITEM_LOCATION_OCCUPIED_BIT, (IY + FItemLocation.State)
-
-                ; сохранение адреса следующей записи размещения
-                SET_REGISTER IY, DE
-
-                ; обновление количества загруженных предметов
-                LD HL, GameState.ItemsNum
-                INC (HL)
+                ; включение страницы карты для чтения следующей записи
+                CALL Session.SharedCode.SetPageLoadedMap
 
                 ; расчёт адреса следующей исходной записи
-                LD DE, FMapItem
+                LD DE, ITEM_SIZE + ITEM_LOCATION_SIZE
                 ADD IX, DE
-                POP DE
                 POP BC
                 DJNZ .ItemLoop
+                RET
 
-                JP Session.SharedCode.SetPageLoadedMap                          ; восстановление страницы загруженной карты
-
-                display " - Parsing FMapDataBlockInfo for 'items':\t\t\t", /A, Items, "\t= busy [ ", /D, $-Items, " byte(s) ]"
+.BUFFER         EQU Adr.ExtraBuffer                                             ; адрес временного буфера записи предмета
+                display " - Parsing FMapDataBlockInfo for 'items':\t\t", /A, Items, "\t= busy [ ", /D, $-Items, " byte(s) ]"
 
                 endif ; ~_MODULE_SESSION_MAP_DATA_BLOCK_ITEMS_
 
