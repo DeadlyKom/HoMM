@@ -4,8 +4,7 @@
 ; -----------------------------------------
 ;   секиры
 ; -----------------------------------------
-                module Weapon
-                endmodule
+                ITEM_NAME Weapon.NAME_AXE_01, "Секира ратника"
 
                 endif ; ~_TEXT_ITEMS_AXE_
 

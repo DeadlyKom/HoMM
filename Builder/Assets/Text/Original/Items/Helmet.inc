@@ -4,8 +4,7 @@
 ; -----------------------------------------
 ;   шлемы
 ; -----------------------------------------
-                module Armor
-                endmodule
+                ITEM_NAME Armor.NAME_HELMET_01, "Шелом стража"
 
                 endif ; ~_TEXT_ITEMS_HELMET_
 

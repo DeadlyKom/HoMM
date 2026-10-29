@@ -4,8 +4,7 @@
 ; -----------------------------------------
 ;   мечи
 ; -----------------------------------------
-                module Weapon
-                endmodule
+                ITEM_NAME Weapon.NAME_SWORD_01, "Меч дружинника"
 
                 endif ; ~_TEXT_ITEMS_SWORD_
 

@@ -4,8 +4,7 @@
 ; -----------------------------------------
 ;   обувь
 ; -----------------------------------------
-                module Equipment
-                endmodule
+                ITEM_NAME Equipment.NAME_BOOT_01, "Сапоги странника"
 
                 endif ; ~_TEXT_ITEMS_BOOT_
 

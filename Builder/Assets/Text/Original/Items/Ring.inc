@@ -4,8 +4,7 @@
 ; -----------------------------------------
 ;   кольца
 ; -----------------------------------------
-                module Jewelry
-                endmodule
+                ITEM_NAME Jewelry.NAME_RING_01, "Перстень ведуна"
 
                 endif ; ~_TEXT_ITEMS_RING_
 

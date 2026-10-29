@@ -4,8 +4,7 @@
 ; -----------------------------------------
 ;   щиты
 ; -----------------------------------------
-                module Armor
-                endmodule
+                ITEM_NAME Armor.NAME_SHIELD_01, "Щит ратника"
 
                 endif ; ~_TEXT_ITEMS_SHIELD_
 

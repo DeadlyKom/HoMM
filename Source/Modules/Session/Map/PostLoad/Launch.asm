@@ -36,6 +36,7 @@ Launch:         SET_PAGE_MAP                                                    
                 CALL Session.SharedCode.Director.Initial.Spawn                  ; запуск начального заселения
                 CALL Cartography.Launch                                         ; запуск картографии
                 CALL Characters                                                 ; создание и инициализация персонажей
+                CALL Equipment                                                  ; назначение начальной экипировки персонажам
                 SET_MODULE_PAGE_Session                                         ; включить страницу модуля "Session"
                 RET
 

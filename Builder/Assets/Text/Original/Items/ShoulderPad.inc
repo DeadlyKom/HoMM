@@ -4,8 +4,7 @@
 ; -----------------------------------------
 ;   наплечники
 ; -----------------------------------------
-                module Armor
-                endmodule
+                ITEM_NAME Armor.NAME_SHOULDER_PAD_01, "Наплечи дружинника"
 
                 endif ; ~_TEXT_ITEMS_SHOULDERPAD_
 

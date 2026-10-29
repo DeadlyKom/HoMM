@@ -36,6 +36,10 @@ Scan:           ; проверка доступности мыши
                 CALL Input.CheckKeyState
                 CALL Z, Input.Select                                            ; вызов обработчика выбора, если клавиша нажата
 
+                ; проверка клавиши показа всех слотов
+                LD A, (GameConfig.KeyAccel)
+                CALL Input.CheckKeyState
+                CALL Z, Input.Accelerate                                        ; вызов обработчика показа слотов, если клавиша нажата
                 RET
 
                 endif ; ~_MODULE_INVENTORY_INPUT_SCAN_

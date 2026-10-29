@@ -11,14 +11,30 @@
 ;   ℹ️ адрес исполнения неизвестен
 ; -----------------------------------------
 Slots:          ; инициализация обхода состояний слотов
+                LD IY, Inventory.UI.Inventory                                   ; адрес описаний слотов интерфейса
                 LD HL, Inventory.States.Slots.Head
                 LD B, Inventory.States.Slots.Num
                 LD C, #00                                                       ; индекс слота в FCharacterEquipment
 
-.Loop           ; цикл обхода слотов
+.Loop           ; определение активности слота по клавише и наведению
+                LD A, (GameState.Input.Value)
+                AND ACCELERATE_CURSOR
+                LD E, A
+                LD A, (IY + FUIElement.FLags)
+                AND UI_STATE_HOVER
+                OR E
+
+                ; обновление флага активности текущего слота
+                RES INVENTORY_ACTIVE_SLOT_BIT, (HL)
+                JR Z, $+4                                                       ; переход, если клавиша отпущена и курсор вне слота
+                SET INVENTORY_ACTIVE_SLOT_BIT, (HL)
+
+                ; сохранение параметров обхода слотов
                 PUSH HL
                 PUSH BC
+                PUSH IY
                 CALL .Process
+                POP IY
                 POP BC
                 POP HL
 
@@ -26,6 +42,10 @@ Slots:          ; инициализация обхода состояний с�
                 LD DE, FInventorySlotStates
                 ADD HL, DE
                 INC C
+
+                ; переход к следующему описанию слота интерфейса
+                LD DE, FUIElement
+                ADD IY, DE
 
                 DJNZ .Loop
                 RET
