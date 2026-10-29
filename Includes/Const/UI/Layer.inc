@@ -1,6 +1,9 @@
 
                 ifndef _CONST_UI_LAYER_
                 define _CONST_UI_LAYER_
+; -----------------------------------------
+;   флаги слоя и элементов UI
+; -----------------------------------------
 LAYER_UI_VISIBLE_BIT    EQU 0x00                                                ; флаг, слой видимый
 UI_STATE_HOVER_BIT      EQU 0x07                                                ; флаг, элемент под курсором
 UI_STATE_PRESSED_BIT    EQU 0x06                                                ; флаг, клавиша "выбор" нажата

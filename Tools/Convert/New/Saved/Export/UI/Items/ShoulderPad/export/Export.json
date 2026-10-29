@@ -22,6 +22,48 @@
                         "Value": 1
                     }
                 ]
+            },
+            {
+                "RegionRect": [
+                    24,
+                    8,
+                    32,
+                    16
+                ],
+                "Metadata": [
+                    {
+                        "Type": "SkipAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    0,
+                    0,
+                    16,
+                    8
+                ],
+                "Metadata": [
+                    {
+                        "Type": "SkipAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    0,
+                    24,
+                    8,
+                    32
+                ],
+                "Metadata": [
+                    {
+                        "Type": "SkipAttr",
+                        "Value": true
+                    }
+                ]
             }
         ]
     }

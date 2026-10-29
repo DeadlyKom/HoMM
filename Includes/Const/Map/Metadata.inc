@@ -1,7 +1,9 @@
 
                 ifndef _CONST_MAP_METADATA_
                 define _CONST_MAP_METADATA_
-; флаги работы с метаданными карты
+; -----------------------------------------
+;   флаги работы с метаданными карты
+; -----------------------------------------
 
 ; флаг сброшен — гексагон закрашен туманом целиком
 MAP_META_FOG_PLAYER_2_BIT   EQU 0x01                                            ; флаг, тумана второго игрока
@@ -17,6 +19,6 @@ MAP_META_FOG_OF_WAR_MASK    EQU MAP_META_FOG_PLAYER_1_MASK | \
                                 MAP_META_FOG_PLAYER_2_MASK | \
                                 MAP_META_FOG_PLAYER_3_MASK | \
                                 MAP_META_FOG_PLAYER_4_MASK                      ; маска бит тумана, соответствующие каждому игроку
-MAP_META_DEFAULT_VALUE      EQU %01000000                                       ; значение по умолчанию при инициализации карты
+MAP_META_DEFAULT_VALUE      EQU %00000000                                       ; значение по умолчанию при инициализации карты
 
                 endif ; ~_CONST_MAP_METADATA_

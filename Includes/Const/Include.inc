@@ -21,6 +21,7 @@
                 include "FallingBlocks.inc"
                 include "TickScheduler.inc"
                 include "SpriteClipping.inc"
+                include "SpriteBoundary.inc"
                 include "SpriteNotClipping.inc"
 
                 include "UI/Include.inc"

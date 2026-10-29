@@ -48,6 +48,20 @@
                         "Value": 1
                     }
                 ]
+            },
+            {
+                "RegionRect": [
+                    24,
+                    40,
+                    32,
+                    48
+                ],
+                "Metadata": [
+                    {
+                        "Type": "SkipAttr",
+                        "Value": true
+                    }
+                ]
             }
         ]
     }

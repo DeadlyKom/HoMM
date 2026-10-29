@@ -190,6 +190,9 @@ PORT_DATA       EQU #BFFD
 PORTS_HIGH      EQU (HIGH PORT_CTRL << 8) | HIGH PORT_DATA
 PORT_LOW        EQU #FD
 
+; -----------------------------------------
+;   управляющие флаги
+; -----------------------------------------
 TONE_A_BIT      EQU 0x0
 TONE_B_BIT      EQU 0x1
 TONE_C_BIT      EQU 0x2

@@ -20,11 +20,11 @@ Items:          ; проверка наличия предметов
                 ; инициализация 
                 LD B, A
 
-.Loop           ; отображение текущего экземпляра предмета
+.Loop           ; отображение текущего экземпляра предмета в сетке
                 PUSH BC                                                         ; сохранение счётчика и идентификатора
                 LD A, B
                 DEC A
-                CALL Inventory.SharedCode.Render.Item
+                CALL Inventory.SharedCode.Render.Item.Grid
                 POP BC
                 DJNZ .Loop
 

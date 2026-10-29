@@ -1,6 +1,9 @@
 
                 ifndef _INPUT_MOUSE_VIRTUAL_KEYS_
                 define _INPUT_MOUSE_VIRTUAL_KEYS_
+; -----------------------------------------
+;   виртуальные кнопки мыши
+; -----------------------------------------
 MOUSE_BIT       EQU #80
 SVK_LBUTTON     EQU %00000001
 SVK_RBUTTON     EQU %00000010
@@ -10,6 +13,9 @@ VK_RBUTTON      EQU SVK_RBUTTON | MOUSE_BIT
 VK_MBUTTON      EQU SVK_MBUTTON | MOUSE_BIT
 SVK_BUTTON_MASK EQU SVK_LBUTTON | SVK_RBUTTON | SVK_MBUTTON
 
+; -----------------------------------------
+;   флаги границ
+; -----------------------------------------
 LEFT_EDGE       EQU 0x01
 RIGHT_EDGE      EQU 0x02
 TOP_EDGE        EQU 0x04

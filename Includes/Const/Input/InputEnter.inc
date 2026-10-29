@@ -2,7 +2,9 @@
                 ifndef _CONST_INPUT_ENTER_
                 define _CONST_INPUT_ENTER_
 
-; флаги работы с вводом
+; -----------------------------------------
+;   флаги работы с вводом
+; -----------------------------------------
 INPUT_CAPS_SHIFT_BIT        EQU 0x00                                            ; флаг, зажат Caps Shift
 INPUT_SYMBOL_SHIFT_BIT      EQU 0x01                                            ; флаг, зажат Symbol Shift
 INPUT_SCAN_DISABLE_BIT      EQU 0x04                                            ; флаг, отключения сканирывания ввода

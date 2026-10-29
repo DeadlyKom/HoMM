@@ -3,6 +3,9 @@
                 define _AI_DIRECTOR_DISTANCE_MAP_INCLUDE_
 
                 module DistanceMap
+; -----------------------------------------
+;   поля расстояний до дороги и поселения
+; -----------------------------------------
 DISTANCE_FAR                EQU #0F                                             ; значение далёкого или недостижимого объекта
 DISTANCE_PACKED_FAR         EQU (DISTANCE_FAR << 4) | DISTANCE_FAR
 DISTANCE_ROAD               EQU #10                                             ; один шаг расстояния до дороги в старшем полубайте

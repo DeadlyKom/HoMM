@@ -12,7 +12,9 @@ OBJECT_UI_BEHAVIOR_DEFAULT  EQU 0x00                                            
 OBJECT_UI_BEHAVIOR_STANDARD EQU 0x01                                            ; поведение падающего штандарта
 OBJECT_UI_BEHAVIOR_MAX      EQU 0x02                                            ; максимальное доступное значение поведения UI
 
-; значения для поля FODS_UI.Flags
+; -----------------------------------------
+;   значения для поля FODS_UI.Flags
+; -----------------------------------------
 OBJECT_UI_HOVER_BIT         EQU 0x07                                            ; флаг, UI поддерживает hover-поведение на объект привязки
 OBJECT_UI_ATTR_ALIGN_BIT    EQU 0x00                                            ; флаг, инициализировать LAYER_OBJECT_ATTR_ALIGN
 

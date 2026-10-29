@@ -13,6 +13,7 @@
 Slots:          ; инициализация обхода состояний слотов
                 LD HL, Inventory.States.Slots.Head
                 LD B, Inventory.States.Slots.Num
+                LD C, #00                                                       ; индекс слота в FCharacterEquipment
 
 .Loop           ; цикл обхода слотов
                 PUSH HL
@@ -24,38 +25,39 @@ Slots:          ; инициализация обхода состояний с�
                 ; переход к следующему состоянию слота
                 LD DE, FInventorySlotStates
                 ADD HL, DE
+                INC C
 
                 DJNZ .Loop
                 RET
-
-.Process        ; обработчик текущего слота, HL - адрес состояния
-
-                ; проверка активности слота перед сохранением фона
+; -----------------------------------------
+; обработка состояния и анимации текущего слота
+; In:
+;   HL - адрес FInventorySlotStates
+;   C  - индекс слота в FCharacterEquipment
+; Out:
+; Corrupt:
+;   HL, DE, BC, AF, HL', DE', BC', AF', IX, IY
+; Note:
+;   ℹ️ необходимо включить страницу модуля "инвентаря"
+;   при изменении изображения или атрибутов устанавливает ML_UPDATE_BIT
+; -----------------------------------------
+.Process        ; проверка активности слота перед сохранением фона
                 BIT INVENTORY_ACTIVE_SLOT_BIT, (HL)
                 JR Z, .Direction                                                ; переход, если слот неактивен
 
-                ; пропуск поля
-                INC HL                                                          ; FInventorySlotStates.Flags
-
                 ; проверка текущей позиции анимации и оставшейся задержки
-                LD A, (HL)
-                INC HL                                                          ; FInventorySlotStates.Animation
+                INC HL                                                          ; пропуск FInventorySlotStates.Flags
+                LD A, (HL)                                                      ; чтение FInventorySlotStates.Animation
+                INC HL                                                          ; пропуск FInventorySlotStates.Animation
                 OR (HL)
 
                 ; возврат к флагам состояния слота
-                DEC HL                                                          ; FInventorySlotStates.Animation
-                DEC HL                                                          ; FInventorySlotStates.Flags
-                JR NZ, .Direction                                               ; переход, если анимация слота уже выполняется
-
-                ; проверка готовности буферов перед появлением рамки
-                BIT INVENTORY_READY_SLOT_BIT, (HL)
-                CALL Z, .SaveBackground                                         ; вызов сохранения, если буферы не готовы
-
-                ; отображение рамки перед первым шагом появления
-                CALL .DrawFrame
+                DEC HL                                                          ; переход к FInventorySlotStates.Animation
+                DEC HL                                                          ; переход к FInventorySlotStates.Flags
+                CALL Z, .Prepare                                                ; вызов, если анимация не началась - сохранение изображения
 
 .Direction      ; выбор направления анимации слота
-                
+
                 ; сохранение предыдущего направления анимации
                 LD A, (HL)
 
@@ -211,14 +213,54 @@ Slots:          ; инициализация обхода состояний с�
                 ; передача параметров заливки атрибутов в страницу буфера
                 EXX
                 JP_IN_PAGE Page.SharedScreen, Inventory.SharedScreen.Memcpy.Attributes.Fill.Wrap
+; -----------------------------------------
+; подготовка изображения и буферов слота
+; In:
+;   HL - адрес FInventorySlotStates
+;   C  - индекс слота в FCharacterEquipment
+; Out:
+;   HL - адрес FInventorySlotStates
+; Corrupt:
+;   DE, BC, AF, HL', DE', BC', AF', IX, IY
+; Note:
+;   ℹ️ необходимо включить страницу модуля "инвентаря"
+; -----------------------------------------
+.Prepare        ; сохранение индекса и адреса состояния слота
+                PUSH BC
 
-.DrawFrame      ; сохранение адреса состояния слота
-                PUSH HL
-                PUSH HL
-                POP IX
+                ; проверка готовности исходного фона
+                BIT INVENTORY_READY_SLOT_BIT, (HL)
+                JR NZ, .DrawContents                                            ; переход, если исходный фон уже сохранён
+
+                PUSH HL                                                         ; сохранение адреса состояния слота
+                CALL Convert.SetBaseScreen                                      ; выбор основного экрана для сохранения фона
+
+                ; инициализация параметров копирования фона
+                SET_REGISTER IX, HL
+                LD HL, (IX + FInventorySlotStates.BackgroundAdr)                ; чтение адреса буфера фона
+                LD DE, (IX + FInventorySlotStates.Location)                     ; чтение положения сохраняемой области
+                LD BC, (IX + FInventorySlotStates.Size)                         ; чтение размера сохраняемой области
+                EXX                                                             ; передача параметров сохранения через альтернативные регистры
+                ; -----------------------------------------
+                ; сохранение экранной области в буфер (обёртка)
+                ; In:
+                ;   HL' - адрес буфера
+                ;   DE' - позиция в знакоместах (D' - y, E' - x)
+                ;   BC' - размер в знакоместах (B' - y, C' - x)
+                ; Out:
+                ; Corrupt:
+                ;   HL, DE, BC, AF, HL', BC', IX, IY
+                ; -----------------------------------------
+                CALL_IN_PAGE Page.SharedScreen, Inventory.SharedScreen.Memcpy.Bound.Save.Wrap
+                POP HL                                                          ; восстановление адреса состояния слота
+
+.DrawContents   ; отображение рамки перед первым шагом появления
+                PUSH HL                                                         ; сохранение адреса состояния слота
 
                 ; чтение положения сохраняемой области
-                LD DE, (IX + FInventorySlotStates.Location)
+                SET_REGISTER IX, HL
+                LD HL, (IX + FInventorySlotStates.SpriteAdr)                    ; чтение адреса составного спрайта рамки
+                LD DE, (IX + FInventorySlotStates.Location)                     ; чтение положения рамки в знакоместах
 
                 ; расчёт положения рамки в пикселях
                 LD A, E
@@ -234,59 +276,73 @@ Slots:          ; инициализация обхода состояний с�
                 LD D, A
 
                 ; отображение рамки на основном экране
-                LD HL, (IX + FInventorySlotStates.SpriteAdr)                    ; чтение адреса составного спрайта рамки
+                ; -----------------------------------------
+                ; отображение составного спрайта OR & XOR без отсечения
+                ; In:
+                ;   HL - адрес блока спрайтов
+                ;   DE - координаты в пикселях (D - y, E - x)
+                ; Out:
+                ; Corrupt:
+                ;   HL, DE, BC, AF, HL', DE', BC', AF', IX, IY
+                ; -----------------------------------------
                 CALL Inventory.Display.Draw.NotClipping.Composite
+                SET_MAIN_FLAG ML_UPDATE_BIT                                     ; запрос обновления экрана после отображения рамки
+                POP HL                                                          ; восстановление адреса состояния слота
+                POP BC                                                          ; восстановление индекса слота после сохранения фона и вывода рамки
+                PUSH HL                                                         ; сохранение адреса состояния на время вывода предмета
 
-                ; запрос обновления экрана после отображения рамки
-                SET_MAIN_FLAG ML_UPDATE_BIT
+                ; чтение экранной позиции и индекса слота
+                SET_REGISTER IX, HL
+                LD DE, (IX + FInventorySlotStates.Location)
+                LD A, C
+                ; -----------------------------------------
+                ; отображение предмета в слоте экипировки
+                ; In:
+                ;   DE - экранная позиция слота в знакоместах
+                ;   A  - индекс слота в FCharacterEquipment
+                ; Out:
+                ; Corrupt:
+                ;   HL, DE, BC, AF, AF', IX, IY
+                ; -----------------------------------------
+                CALL Inventory.SharedCode.Render.Equipment
 
-                ; восстановление адреса состояния слота
-                POP HL
-                RET
-
-.SaveBackground ; сохранение адреса состояния слота
-                PUSH HL
-                PUSH HL
-                POP IX
-
-                CALL Convert.SetBaseScreen                                      ; выбор основного экрана для сохранения фона
-
-                ; инициализация параметров копирования фона
-                LD HL, (IX + FInventorySlotStates.BackgroundAdr)                ; чтение адреса буфера фона
-                LD DE, (IX + FInventorySlotStates.Location)                     ; чтение положения сохраняемой области
-                LD BC, (IX + FInventorySlotStates.Size)                         ; чтение размера сохраняемой области
-
-                ; передача параметров сохранения через альтернативные регистры
-                EXX
-                CALL_IN_PAGE Page.SharedScreen, Inventory.SharedScreen.Memcpy.Bound.Save.Wrap
-
-                ; восстановление адреса состояния для сохранения конечных атрибутов
+                ; восстановление адреса состояния после вывода предмета
                 POP IX
                 PUSH IX
 
-                ; чтение адреса буфера конечных атрибутов
-                LD L, (IX + FInventorySlotStates.AttributesAdr + 0)
-                LD H, (IX + FInventorySlotStates.AttributesAdr + 1)
-
-                ; чтение положения сохраняемой области
-                LD E, (IX + FInventorySlotStates.Location + 0)
-                LD D, (IX + FInventorySlotStates.Location + 1)
-
-                ; чтение размера сохраняемой области
-                LD C, (IX + FInventorySlotStates.Size + 0)
-                LD B, (IX + FInventorySlotStates.Size + 1)
-
-                ; передача параметров сохранения атрибутов через альтернативные регистры
-                EXX
+                ; инициализация параметров копирования атрибутов
+                LD HL, (IX + FInventorySlotStates.AttributesAdr)                ; чтение адреса буфера конечных атрибутов
+                LD DE, (IX + FInventorySlotStates.Location)                     ; чтение положения сохраняемой области
+                LD BC, (IX + FInventorySlotStates.Size)                         ; чтение размера сохраняемой области
+                EXX                                                             ; передача параметров сохранения через альтернативные регистры
+                ; -----------------------------------------
+                ; сохранение атрибутов экранной области в буфер (обёртка)
+                ; In:
+                ;   HL' - адрес буфера
+                ;   DE' - позиция в знакоместах (D' - y, E' - x)
+                ;   BC' - размер в знакоместах (B' - y, C' - x)
+                ; Out:
+                ; Corrupt:
+                ;   HL, DE, BC, AF, HL', BC', IX
+                ; -----------------------------------------
                 CALL_IN_PAGE Page.SharedScreen, Inventory.SharedScreen.Memcpy.Attributes.Save.Wrap
-
-                ; восстановление адреса состояния слота после возврата страницы
-                POP HL
-
-                ; установка готовности обоих сохранённых буферов
-                SET INVENTORY_READY_SLOT_BIT, (HL)
+                POP HL                                                          ; восстановление адреса состояния слота
+                SET INVENTORY_READY_SLOT_BIT, (HL)                              ; установка готовности обоих сохранённых буферов
                 RET
-
+; -----------------------------------------
+; восстановление исходного фона после исчезновения слота
+; In:
+;   HL - адрес FInventorySlotStates
+; Out:
+;   HL - адрес FInventorySlotStates
+; Corrupt:
+;   DE, BC, AF, HL', DE', BC', AF', IX, IY
+; Note:
+;   ℹ️ необходимо включить страницу модуля "инвентаря"
+;   восстанавливает пиксели и атрибуты из буфера BackgroundAdr
+;   устанавливает ML_UPDATE_BIT после восстановления фона
+;   сбрасывает INVENTORY_READY_SLOT_BIT, если за время восстановления изменился тик
+; -----------------------------------------
 .RestoreBack    ; сохранение адреса состояния слота
                 PUSH HL
 

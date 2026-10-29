@@ -5,7 +5,9 @@ EVENT_SIZE                          EQU 16                                      
 EVENT_MAX                           EQU 16                                      ; максимальное количество событий
 EVENT_EMPTY_ELEMENT                 EQU #FF                                     ; свободный элемент массива (значение заполнения массива)
 
-; флаги FEvent.Flags 
+; -----------------------------------------
+;   флаги FEvent.Flags
+; -----------------------------------------
 EVENT_EXECUTE_PHASE_BEFORE_RENDER   EQU 0x00                                    ; фаза выполнения события, перед орисовкой
 EVENT_EXECUTE_PHASE_AFTER_RENDER    EQU 0x01                                    ; фаза выполнения события, после отрисовки
 EVENT_LIFETIME_ONCE                 EQU 0x00                                    ; время жизни события - выполняется один раз

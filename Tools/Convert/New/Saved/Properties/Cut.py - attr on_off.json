@@ -1,0 +1,10 @@
+{
+    "Name": "SkipAttr - attr on/off",
+    "Properties": [
+        {
+            "Name": "SkipAttr",
+            "Type": "bool",
+            "Value": true
+        }
+    ]
+}

@@ -1,7 +1,9 @@
 
                 ifndef _CONST_LAYER_OBJECT_
                 define _CONST_LAYER_OBJECT_
-; значения для поля FLayerObject.Flags
+; -----------------------------------------
+;   значения для поля FLayerObject.Flags
+; -----------------------------------------
 LAYER_OBJECT_ATTR_ALIGN_BIT         EQU 0x00                                    ; флаг, выравнивать положение объекта по знакоместу
 LAYER_OBJECT_AXIS_Y_OFFSET_BIT      EQU 0x01                                    ; операция со смещением AxisOffset.Y
                                                                                 ;   0 - прибавить к экранной позиции

@@ -1,4 +1,4 @@
-# Version: 4
+# Version: 5
 
 # Назначение:
 #   подготовка спрайтов по знакоместам для вывода модулем Boundary
@@ -66,6 +66,7 @@
 #   Байт управления:
 #     - бит 0 — в текущем столбце есть следующее знакоместо
 #     - бит 1 — последнее знакоместо всего спрайта
+#     - бит 2 — пропустить запись атрибута знакоместа
 #     - остальные биты равны 0
 #
 #   контейнер для методов вывода задаётся отдельно в коде:
@@ -78,6 +79,13 @@
 #   SpriteType — обязательное свойство всего спрайта:
 #     - 0 — Load, в настройках вывода нужен режим LD_ATTR
 #     - 1 — OR_XOR, в настройках вывода нужен режим OR_XOR_ATTR
+#
+#   SkipAttr — пропуск записи атрибута:
+#     - false или отсутствие свойства — записать атрибут спрайта
+#     - true — сохранить атрибут экрана
+#     - задаётся для всего спрайта или отдельной области
+#     - попадание в область определяется по верхнему левому пикселю знакоместа
+#     - при нескольких подходящих значениях используется последнее
 #
 # Подготовка данных:
 #   - читаются InkData и AttributeData
@@ -95,6 +103,11 @@ from typing import List, Dict, Any, Optional
 class ESpriteType(Enum):
     Load = 0
     OR_XOR = 1
+
+SPRITE_BOUNDARY_NEXT_VERTICAL = 1 << 0
+SPRITE_BOUNDARY_LAST = 1 << 1
+SPRITE_BOUNDARY_SKIP_ATTR = 1 << 2
+
 
 def reverse_byte(b: int) -> int:
     b = ((b & 0xF0) >> 4) | ((b & 0x0F) << 4)
@@ -117,6 +130,48 @@ def get_metadata_sprite(sprite: Dict[str, Any], name: str) -> List[Dict[str, Any
                 result.append(meta)
 
     return result
+
+def get_metadata(sprite: Dict[str, Any], x: int, y: int,
+                 name: str) -> List[Dict[str, Any]]:
+    """
+    Возвращает метаданные для точки спрайта.
+    Метаданные без RegionRect распространяются на весь спрайт.
+    """
+    result = []
+
+    for region in sprite.get("Regions", []):
+        if "RegionRect" in region:
+            x1, y1, x2, y2 = region["RegionRect"]
+            if not (x1 <= x < x2 and y1 <= y < y2):
+                continue
+
+        for metadata in region.get("Metadata", []):
+            if metadata.get("Type") == name:
+                result.append(metadata)
+
+    return result
+
+
+def get_cell_flags(sprite: Dict[str, Any], bx: int, by: int,
+                   boundary_width: int, boundary_height: int) -> int:
+    """
+    Формирует байт управления знакоместом.
+    SkipAttr пропускает запись атрибута экрана.
+    """
+    flags = 0
+
+    if by < boundary_height - 1:
+        flags |= SPRITE_BOUNDARY_NEXT_VERTICAL
+
+    if bx == boundary_width - 1 and by == boundary_height - 1:
+        flags |= SPRITE_BOUNDARY_LAST
+
+    metadata = get_metadata(sprite, bx * 8, by * 8, "SkipAttr")
+    if metadata and bool(metadata[-1].get("Value", False)):
+        flags |= SPRITE_BOUNDARY_SKIP_ATTR
+
+    return flags
+
 
 def sprite_type_from_metadata(sprite: dict) -> Optional[ESpriteType]:
     """
@@ -186,14 +241,8 @@ def Load(sprite: Dict[str, Any],
             attribute = attribute_data[get_index(boundary_width, bx, by)]
             sprite_data.append(attribute)
 
-            # ---------- ФЛАГИ ----------
-            flags = 0
-            # бит 0: есть ещё знакоместа по вертикали в этой колонке?
-            if by < boundary_height - 1:
-                flags |= 0b00000001         # продолжаем вертикально
-            # бит 1: конец спрайта (последнее знакоместо)
-            if (bx == boundary_width - 1) and (by == boundary_height - 1):
-                flags |= 0b00000010         # спрайт исчерпан
+            # байт управления знакоместом
+            flags = get_cell_flags(sprite, bx, by, boundary_width, boundary_height)
             sprite_data.append(flags)
 
     return True
@@ -227,14 +276,8 @@ def OR_XOR(sprite: Dict[str, Any],
             attribute = attribute_data[get_index(boundary_width, bx, by)]
             sprite_data.append(attribute)
 
-            # ---------- ФЛАГИ ----------
-            flags = 0
-            # бит 0: есть ещё знакоместа по вертикали в этой колонке?
-            if by < boundary_height - 1:
-                flags |= 0b00000001         # продолжаем вертикально
-            # бит 1: конец спрайта (последнее знакоместо)
-            if (bx == boundary_width - 1) and (by == boundary_height - 1):
-                flags |= 0b00000010         # спрайт исчерпан
+            # байт управления знакоместом
+            flags = get_cell_flags(sprite, bx, by, boundary_width, boundary_height)
             sprite_data.append(flags)
 
     return True

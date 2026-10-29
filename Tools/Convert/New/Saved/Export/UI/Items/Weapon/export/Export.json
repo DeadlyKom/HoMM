@@ -22,6 +22,76 @@
                         "Value": 1
                     }
                 ]
+            },
+            {
+                "RegionRect": [
+                    8,
+                    0,
+                    32,
+                    8
+                ],
+                "Metadata": [
+                    {
+                        "Type": "SkipAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    16,
+                    8,
+                    32,
+                    16
+                ],
+                "Metadata": [
+                    {
+                        "Type": "SkipAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    24,
+                    16,
+                    32,
+                    24
+                ],
+                "Metadata": [
+                    {
+                        "Type": "SkipAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    0,
+                    32,
+                    8,
+                    48
+                ],
+                "Metadata": [
+                    {
+                        "Type": "SkipAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    8,
+                    40,
+                    16,
+                    48
+                ],
+                "Metadata": [
+                    {
+                        "Type": "SkipAttr",
+                        "Value": true
+                    }
+                ]
             }
         ]
     },
@@ -48,6 +118,20 @@
                         "Value": 1
                     }
                 ]
+            },
+            {
+                "RegionRect": [
+                    0,
+                    32,
+                    16,
+                    48
+                ],
+                "Metadata": [
+                    {
+                        "Type": "SkipAttr",
+                        "Value": true
+                    }
+                ]
             }
         ]
     },
@@ -72,6 +156,48 @@
                     {
                         "Type": "SpriteType",
                         "Value": 1
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    24,
+                    0,
+                    32,
+                    32
+                ],
+                "Metadata": [
+                    {
+                        "Type": "SkipAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    0,
+                    32,
+                    16,
+                    48
+                ],
+                "Metadata": [
+                    {
+                        "Type": "SkipAttr",
+                        "Value": true
+                    }
+                ]
+            },
+            {
+                "RegionRect": [
+                    16,
+                    40,
+                    24,
+                    48
+                ],
+                "Metadata": [
+                    {
+                        "Type": "SkipAttr",
+                        "Value": true
                     }
                 ]
             }

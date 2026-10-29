@@ -1,7 +1,9 @@
 
                 ifndef _CONST_CHARACTER_CLASSES_
                 define _CONST_CHARACTER_CLASSES_
-; флаги структуры FCharacterSettings.Class и FCharacter.Class
+; -----------------------------------------
+;   флаги структуры FCharacterSettings.Class и FCharacter.Class
+; -----------------------------------------
 CHARACTER_GENDER_BIT    EQU 0x07                                                ; флаг, гендера персонажа, где
                                                                                 ;   0 - муржской
                                                                                 ;   1 - женский

@@ -23,6 +23,12 @@ Characters:     ; создание тестовых участников и пе
                 LD IX, .TmpParticipant                                          ; адрес расположения массива FParticipantSettings
                 CALL Participant.Append                                         ; добавить участников
 
+                ; назначение тестовой экипировки главному персонажу
+                LD A, PLAYER_CHARACTER_ID_MAIN
+                CALL Character.Utilities.GetAdr.IX
+                LD (IX + FCharacter.Equipment.Amulet.ID), #00
+                LD (IX + FCharacter.Equipment.Breast.ID), #03
+
                 ; -----------------------------------------
                 ; ToDo: отладочная установка активного игрока
                 LD A, PLAYER_CHARACTER_ID_MAIN

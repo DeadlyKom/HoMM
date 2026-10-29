@@ -9,7 +9,9 @@ STATE_TREE_ACTIVE_STACK_MAX                 EQU 8                               
 STATE_TREE_EMPTY_ELEMENT                    EQU 0xFF                            ; свободный элемент массива (значение заполнения массива)
 CONTEXT_NONE                                EQU 0xFF                            ; отсутствие AI-контекста
 
-; флаги
+; -----------------------------------------
+;   флаги
+; -----------------------------------------
 STATE_TREE_CONTEXT_INITIALIZED_BIT          EQU 0x00                            ; флаг инициализации контекста StateTree
 STATE_TREE_CONTEXT_BLOCKED_BIT              EQU 0x01                            ; флаг временной блокировки выполнения StateTree
 

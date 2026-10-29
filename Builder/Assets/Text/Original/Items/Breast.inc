@@ -4,8 +4,7 @@
 ; -----------------------------------------
 ;   броня
 ; -----------------------------------------
-                module Armor
-                endmodule
+                ITEM_NAME Armor.NAME_BREAST_01, "Броня"
 
                 endif ; ~_TEXT_ITEMS_BREAST_
 

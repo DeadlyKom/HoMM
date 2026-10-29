@@ -2,6 +2,9 @@
                 ifndef _CONFIG_ZX_SPECTRUM_PORT_7FFD_
                 define _CONFIG_ZX_SPECTRUM_PORT_7FFD_
 PORT_7FFD       EQU #7FFD
+; -----------------------------------------
+;   флаги порта #7FFD
+; -----------------------------------------
 SCREEN_BIT      EQU 0x03
 ROM_BIT         EQU 0x04
 LOCK_48K_BIT    EQU 0x05

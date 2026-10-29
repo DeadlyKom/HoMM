@@ -1,6 +1,9 @@
 
                     ifndef _INPUT_KEMPSTON_VIRTUAL_KEYS_
                     define _INPUT_KEMPSTON_VIRTUAL_KEYS_
+; -----------------------------------------
+;   признак виртуальных клавиш Kempston
+; -----------------------------------------
 VK_KEMPSTON_BIT     EQU 0x06
 VK_KEMPSTON_LEFT    EQU 0x41
 VK_KEMPSTON_RIGHT   EQU 0x40
