@@ -2,48 +2,122 @@
                 ifndef _INVENTORY_RENDER_ITEMS_
                 define _INVENTORY_RENDER_ITEMS_
 ; -----------------------------------------
-; отображение предмета по заголовку визуала
+; отображение предмета в сетке выбранного персонажа
 ; In:
-;   HL - адрес FItemVisual
-;   DE - положение на экране в знакоместах (D - y, E - x)
+;   A  - идентификатор экземпляра предмета
 ; Out:
 ; Corrupt:
 ;   HL, DE, BC, AF, AF', IX, IY
 ; Note:
 ;   ℹ️ код расположен в "общей памяти"
 ;   основной экран должен быть выбран перед вызовом
-;   номер страницы графики заполняется загрузчиком
-;   восстановление страницы подготавливается вызывающим кодом
-;
-;   ⚠️ ВАЖНО ⚠️
-;   меняет страницу памяти
+;   ресурсы графики и базовых описаний предметов должны быть загружены
 ; -----------------------------------------
-Item:           ; включение страницы графики предметов
-.Page           EQU $+1                                                         ; операнд с номером страницы графики
-                LD A, #00                                                       ; страница загруженного графического ресурса
-                SET_PAGE_A                                                      ; включение страницы графики предметов
+Item:           ; сохранение идентификатора экземпляра
+                LD E, A
 
-                ; расчёт адреса спрайта
+                ; подготовка восстановления страницы при выходе
+                PUSH_PAGE
+                LD HL, Func.PopPage
+                PUSH HL
+
+                ; получение адреса размещения экземпляра
+                LD A, E
+                CALL Kernel.Item.Utilities.Location.HL
+                SET_PAGE_A                                                      ; включение страницы массива предметов
+
+                ; проверка размещения предмета в сетке
+                BIT ITEM_LOCATION_EQUIPPED_BIT, (HL)
+                RET NZ                                                          ; выход, если предмет экипирован
+
+                INC HL                                                          ; FItemLocation.State
+
+                ; проверка принадлежности выбранному персонажу
+                LD A, (GameState.PlayerActions + FPlayerActions.SelectedHeroID)
+                CP (HL)
+                RET NZ                                                          ; выход, если предмет не принадлежит выбранному персонажу
+
+                ; чтение индекса базового описания с сохранением адреса размещения
+                PUSH HL
+                LD A, E
+                CALL Kernel.Item.Utilities.Address.HL
+                LD A, (HL)                                                      ; FItem.BaseItem
+                EX AF, AF'
+                POP HL
+
+                ; чтение позиции предмета в сетке
+                INC HL                                                          ; FItemLocation.Container
+                LD E, (HL)
+                INC HL
+                LD D, (HL)
+
+                ; включение страницы базовых описаний
+.Metadata.Page  EQU $+1                                                         ; операнд с номером страницы метаданных
+                LD A, #00
+                SET_PAGE_A
+
+                ; получение адреса базовых описаний
+.Metadata.Adr   EQU $+1                                                         ; операнд с адресом ресурса метаданных
+                LD HL, #0000
+                EX AF, AF'                                                      ; восстановление индекса базового предмета
+
+                ; получение базового описания с сохранением позиции предмета
+                PUSH DE
+                CALL Kernel.Item.Utilities.BaseAddress.HL
+
+                ; чтение индекса визуала базового предмета
+                INC HL                                                          ; FBaseItem.Name
+                LD L, (HL)
+                LD H, #00
+                POP DE
+
+                ; расчёт горизонтальной позиции на экране в знакоместах
+                LD A, E
+                ADD A, A                                                        ; x2
+                ADD A, SCR_INVENTORY_POS_X
+                LD E, A
+
+                ; расчёт вертикальной позиции на экране в знакоместах
+                LD A, D
+                ADD A, A                                                        ; x2
+                ADD A, SCR_INVENTORY_POS_Y
+                LD D, A
+
+                ; расчёт смещения заголовка FItemVisual по индексу
+                ADD HL, HL                                                      ; x2
+                ADD HL, HL                                                      ; x4
+
+                ; расчёт адреса заголовка внутри графического ресурса
+.Address        EQU $+1                                                         ; операнд с адресом графического ресурса
+                LD BC, #0000
+                ADD HL, BC
+
+                ; включение страницы графики предметов
+.Page           EQU $+1                                                         ; операнд с номером страницы графики
+                LD A, #00
+                SET_PAGE_A
+
+                ; расчёт адреса данных спрайта
                 INC HL                                                          ; FItemVisual.Size.Width
                 INC HL                                                          ; FItemVisual.Size.Height
                 LD C, (HL)
-                INC HL 
+                INC HL
                 LD B, (HL)
                 ADD HL, BC
 
                 ; расчёт горизонтальной позиции в пикселях
-                LD A, E                                                         ; столбец вывода в знакоместах
-                ADD A, A    ; x2
-                ADD A, A    ; x4
-                ADD A, A    ; x8
-                LD E, A                                                         ; координата X в пикселях
+                LD A, E
+                ADD A, A                                                        ; x2
+                ADD A, A                                                        ; x4
+                ADD A, A                                                        ; x8
+                LD E, A
 
                 ; расчёт вертикальной позиции в пикселях
-                LD A, D                                                         ; строка вывода в знакоместах
-                ADD A, A    ; x2
-                ADD A, A    ; x4
-                ADD A, A    ; x8
-                LD D, A                                                         ; координата Y в пикселях
+                LD A, D
+                ADD A, A                                                        ; x2
+                ADD A, A                                                        ; x4
+                ADD A, A                                                        ; x8
+                LD D, A
 
                 ; подготовка функции вывода спрайта без указания блока спрайтов (FSpriteBlock)
                 LD BC, #0000                                                    ; значение счётчиков и флагов для полного вывода
@@ -51,9 +125,9 @@ Item:           ; включение страницы графики предм�
                 LD IX, Kernel.Boundary.Functions.OR_XOR_ATTR                    ; выбор обработчика OR/XOR с атрибутами
 
                 ; передача адреса данных через стек обработчику
-                PUSH HL                                                         ; адрес сырых данных для Boundary.Draw
-                JP Kernel.Boundary.Functions.Draw                               ; переход к выводу с сохранением цепочки возврата
+                PUSH HL
+                JP Kernel.Boundary.Functions.Draw
 
                 display " - Display inventory item:\t\t\t\t", /A, Item, "\t= busy [ ", /D, $-Item, " byte(s) ]"
 
-                endif ; ~_INVENTORY_RENDER_ITEMS_
+                endif                                                           ; ~_INVENTORY_RENDER_ITEMS_

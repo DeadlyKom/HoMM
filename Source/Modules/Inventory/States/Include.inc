@@ -4,6 +4,7 @@
 
                 module States
                 include "Slots.inc"
+                include "Resource.inc"
                 endmodule
 
                 endif ; ~_MODULE_INVENTORY_STATES_INCLUDE_

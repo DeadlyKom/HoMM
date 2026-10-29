@@ -4,6 +4,7 @@
 
                 module Utilities
                 include "ItemAddress.asm"
+                include "BaseItemAddress.asm"
                 include "ItemLocationAddress.asm"
                 endmodule
 

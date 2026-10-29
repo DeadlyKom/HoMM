@@ -1,6 +1,6 @@
 
-                ifndef _WORLD_RENDER_DRAW_CURSOR_
-                define _WORLD_RENDER_DRAW_CURSOR_
+                ifndef _CURSOR_DRAW_
+                define _CURSOR_DRAW_
 ; -----------------------------------------
 ; отображение курсора
 ; In:
@@ -128,6 +128,5 @@ Cursor.Draw:    ; вывод курсора
                 LD A, #00
                 LD (GameState.Screen), A
                 RET
-Cursor.CurrentState FCursorState
 
-                endif ; ~_WORLD_RENDER_DRAW_CURSOR_
+                endif ; ~_CURSOR_DRAW_

@@ -8,7 +8,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Initialize      LD IX, UI_Cursor.CurrentState
+Initialize      LD IX, GameState.Cursor
                 LD A, CURSOR_STATE_IDLE
 
 .SetState       ; копирование дефолтных настроек устанавливаемого состояния
@@ -23,7 +23,7 @@ Initialize      LD IX, UI_Cursor.CurrentState
                 SUB L
                 LD H, A
 
-                LD DE, UI_Cursor.CurrentState + FCursorState.SpriteIndex
+                LD DE, GameState.Cursor + FCursorState.SpriteIndex
                 LDI
                 LDI
                 LDI

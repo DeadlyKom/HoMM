@@ -8,7 +8,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Update:         LD IX, UI_Cursor.CurrentState
+Update:         LD IX, GameState.Cursor
 
                 ; проверка нажатия клавиши "выбор"
                 LD A, (GameState.Input.Value)

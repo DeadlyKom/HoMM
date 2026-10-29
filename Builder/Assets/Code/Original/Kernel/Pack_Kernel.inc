@@ -56,6 +56,9 @@ Begin:          EQU $
                 include "Source/Draw/Sprite/Include.inc"
                 include "Source/Draw/Boundary/Include.inc"
 
+                ; курсор
+                include "Source/Cursor/Draw.asm"
+
                 ; работа с информацией о спрайтов в буфере Adr.SpriteInfoBuffer
                 include "Source/Sprite/Include.inc"
 
