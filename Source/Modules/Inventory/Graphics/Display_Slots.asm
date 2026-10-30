@@ -11,7 +11,7 @@
 ;   ℹ️ адрес исполнения неизвестен
 ; -----------------------------------------
 Slots:          ; инициализация обхода состояний слотов
-                LD IY, Inventory.UI.Inventory                                   ; адрес описаний слотов интерфейса
+                LD IY, Inventory.UI.Equipment                                   ; адрес элементов слоя экипировки
                 LD HL, Inventory.States.Slots.Head
                 LD B, Inventory.States.Slots.Num
                 LD C, #00                                                       ; индекс слота в FCharacterEquipment

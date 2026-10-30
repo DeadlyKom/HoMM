@@ -2,7 +2,7 @@
                 ifndef _MODULE_WORLD_LAUNCH_
                 define _MODULE_WORLD_LAUNCH_
 ; -----------------------------------------
-; запуск "мира"
+; запуск "мира" (холодный запуск)
 ; In:
 ; Out:
 ; Corrupt:

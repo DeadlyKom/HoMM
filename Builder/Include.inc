@@ -47,6 +47,7 @@
                 ; define ENABLE_UI_PROGRESS_DURATION                              ; разрешить дополнительную интерполяцию Progress по Duration
                 
                 ; отладочное отображение
+                define DEBUG_INFO_INVENTORY_ITEM                                ; идентификатор предмета под курсором в инвентаре
                 ; define DEBUG_INFO_WORLD_TIME                                    ; игровой календарь
                 ; define DEBUG_INFO_COORDINATES                                   ; позиция карты и гексагона под курсором
                 ; define DEBUG_INFO_SCREEN_BLOCKS                                 ; содержимое ScreenBlock

@@ -2,7 +2,7 @@
                 ifndef _MODULE_INVENTORY_RESTORE_STATE_
                 define _MODULE_INVENTORY_RESTORE_STATE_
 ; -----------------------------------------
-; возобновление работы модуля инвентаря
+; возобновление работы модуля инвентаря (горячий запуск)
 ; In:
 ; Out:
 ; Corrupt:

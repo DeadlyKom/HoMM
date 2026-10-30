@@ -8,10 +8,11 @@
                 display "Shared code 'Inventory':\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.SharedPoint, " byte(s) / free ", /D, Size.SharedPoint - Size, "]\t[", /D, Page.Inventory, "]\t ------------------------"
 
                 include "Loop.asm"
-                include "Interrupt.asm"
                 include "Release.asm"
-                include "Render/Include.inc"
+                include "Interrupt.asm"
                 include "UI/Include.inc"
+                include "Render/Include.inc"
+                include "Utilities/Include.inc"
 Size            EQU $-Adr.Inventory
 
                 ; проверка размещения общего кода инвентаря

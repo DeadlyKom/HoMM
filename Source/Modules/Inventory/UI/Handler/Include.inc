@@ -3,6 +3,7 @@
                 define _MODULE_INVENTORY_UI_HANDLER_INCLUDE_
 
                 module Handler
+                include "Layer_Grid.asm"
                 include "Layer_SlotBelt.asm"
                 include "Layer_SlotBoot.asm"
                 include "Layer_SlotHead.asm"

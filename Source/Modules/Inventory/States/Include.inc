@@ -3,6 +3,7 @@
                 define _MODULE_INVENTORY_STATES_INCLUDE_
 
                 module States
+                include "Item.inc"
                 include "Slots.inc"
                 include "Resource.inc"
                 endmodule

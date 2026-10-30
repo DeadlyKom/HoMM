@@ -27,6 +27,10 @@ ClearState:     ; очистка флагов и анимации слотов
                 ADD HL, DE
                 DJNZ .SlotsLoop
 
+                ; сброс идентификатора предмета под курсором
+                LD A, ITEM_ID_NONE
+                LD (Inventory.States.HoveredItem.ID), A
+
                 RET
 
                 endif                                                           ; ~_MODULE_INVENTORY_LAUNCH_CLEAR_STATE_

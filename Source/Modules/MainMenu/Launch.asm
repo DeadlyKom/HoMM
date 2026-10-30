@@ -2,7 +2,7 @@
                 ifndef _MODULE_MAIN_MENU_LAUNCH_
                 define _MODULE_MAIN_MENU_LAUNCH_
 ; -----------------------------------------
-; запуск "главного меню"
+; запуск "главного меню" (холодный запуск)
 ; In:
 ; Out:
 ; Corrupt:

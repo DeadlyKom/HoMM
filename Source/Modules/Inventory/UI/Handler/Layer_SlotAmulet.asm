@@ -8,10 +8,14 @@
 ;   флаг, переполнения установлен при наведении и сброшен по таймеру подсказки
 ; Out:
 ; Corrupt:
+;   HL, DE, BC, AF, AF'
 ; Note:
 ;   ℹ️ код расположен в модуле "инвентаря"
 ; -----------------------------------------
-Layer_SlotAmlt: RET
+Layer_SlotAmlt: ; определение предмета в слоте экипировки
+                LD E, FCharacter.Equipment.Amulet.ID
+                CALL_IN_PAGE Page.Object, Inventory.SharedCode.Utilities.GetItemBySlot
+                JP Inventory.UI.Utilities.SetHoverItem                          ; обновление состояния предмета под курсором
 ; -----------------------------------------
 ; обработчик OnMouseEnter слота экипировки инвентаря "амулет"
 ; In:
@@ -33,7 +37,7 @@ Layer_SlotAmlt: RET
 ;   IY - адрес структуры элемента (FUIElement)
 ; Out:
 ; Corrupt:
-;   HL
+;   HL, AF
 ; Note:
 ;   ℹ️ код расположен в модуле "инвентаря"
 ; -----------------------------------------
@@ -41,6 +45,6 @@ Layer_SlotAmlt: RET
                 LD HL, Inventory.States.Slots.Amulet
                 RES INVENTORY_ACTIVE_SLOT_BIT, (HL)
                 SET_MAIN_FLAG ML_UPDATE_BIT                                     ; запрос обновления экрана после изменения состояния слота
-                RET
+                JP Inventory.UI.Utilities.ResetHoverItem                        ; сброс идентификатора предмета под курсором
 
                 endif ; ~_MODULE_INVENTORY_UI_HANDLER_LAYER_SLOT_AMULET_

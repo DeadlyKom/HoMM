@@ -2,7 +2,7 @@
                 ifndef _MODULE_WORLD_RESTORE_STATE_
                 define _MODULE_WORLD_RESTORE_STATE_
 ; -----------------------------------------
-; восстановление состояния модуля мира
+; восстановление состояния модуля мира (горячий запуск)
 ; In:
 ; Out:
 ; Corrupt:

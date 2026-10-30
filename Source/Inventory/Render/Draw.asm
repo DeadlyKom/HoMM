@@ -55,6 +55,10 @@ Draw:           ; -----------------------------------------
                 CALL UI.Update                                                  ; обновление UI
                 CALL Inventory.Display.Slots                                    ; отображение слотов
 
+                ifdef _DEBUG
+                CALL Inventory.Display.DebugInfo                                ; отображение отладочной информации об инвентаре
+                endif
+
                 ; сброс обработанных флагов входа и перехода
                 RES_MAIN_FLAGS ML_ENTER | ML_TRANSITION
                 RET

@@ -2,7 +2,7 @@
                 ifndef _MODULE_INVENTORY_LAUNCH_
                 define _MODULE_INVENTORY_LAUNCH_
 ; -----------------------------------------
-; запуск "инвентаря"
+; запуск "инвентаря" (холодный запуск)
 ; In:
 ; Out:
 ; Corrupt:

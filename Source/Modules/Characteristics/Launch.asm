@@ -2,7 +2,7 @@
                 ifndef _MODULE_CHARACTERISTICS_LAUNCH_
                 define _MODULE_CHARACTERISTICS_LAUNCH_
 ; -----------------------------------------
-; запуск "характеристик"
+; запуск "характеристик" (холодный запуск)
 ; In:
 ; Out:
 ; Corrupt:

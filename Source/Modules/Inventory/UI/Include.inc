@@ -5,6 +5,7 @@
                 module UI
                 include "Layers.inc"
                 include "Handler/Include.inc"
+                include "Utilities/Include.inc"
                 include "Initialize/Include.inc"
                 include "Transition/Include.inc"
                 endmodule

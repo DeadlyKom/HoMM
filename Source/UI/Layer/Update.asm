@@ -37,7 +37,6 @@ Update:         ; проверка блокировки обновления UI
                 LD HL, (GameState.UIRuntime + FUIRuntime.LayerAdr)
                 RES_FLAG_MODIFY Update.Flag                                     ; сброс флага найденного перекрытия
 
-
 .LayerLoop      ; основной цикл обхода слои (FUILayer)
                 BIT LAYER_UI_VISIBLE_BIT, (HL)
                 JR Z, .NextLayer
@@ -156,7 +155,37 @@ Update:         ; проверка блокировки обновления UI
                 CALL Func.JP_IX
                 JR .Restore
 
-.MouseEnter     ; установка состояния наведения до вызова обработчика входа
+.MouseEnter     ; -----------------------------------------
+                ; выход из прежнего элемента перед входом в новый
+                ; -----------------------------------------
+                ; сохранение нового элемента до выхода из прежнего
+                PUSH DE
+                PUSH IX
+                PUSH IY
+
+                ; проверка наличия прежнего элемента под курсором
+                LD HL, (Update.PrevUI)                                          ; чтение адреса прежнего элемента
+                LD A, H
+                OR L
+                JR Z, .Enter                                                    ; переход, если прежний элемент отсутствует
+
+                ; проверка состояния наведения прежнего элемента
+                PUSH HL
+                POP IY
+                BIT UI_STATE_HOVER_BIT, (IY + FUIElement.FLags)
+                JR Z, .Enter                                                    ; переход, если выход из прежнего элемента уже выполнен
+
+                ; выход из прежнего элемента до входа в новый
+                RES UI_STATE_HOVER_BIT, (IY + FUIElement.FLags)
+                CALL .MouseLeave
+
+.Enter          ; восстановление нового элемента после выхода из прежнего
+                POP IY
+                POP IX
+                POP DE
+                ; -----------------------------------------
+
+                ; установка состояния наведения до вызова обработчика входа
                 SET UI_STATE_HOVER_BIT, (IY + FUIElement.FLags)
 
                 ; чтение адреса обработчика входа курсора

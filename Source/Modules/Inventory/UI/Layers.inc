@@ -1,10 +1,13 @@
 
                 ifndef _MODULE_INVENTORY_UI_LAYERS_
                 define _MODULE_INVENTORY_UI_LAYERS_
-Layers:         ; слои игрового окна
-.Inventory      MAKE_UI_LAYER Inventory, Inventory.ElementNum, LAYER_UI_VISIBLE
+Layers:         ; слои интерфейса инвентаря
+.Inventory      EQU $                                                           ; группа слоёв инвентаря
+.Equipment      MAKE_UI_LAYER Equipment, Equipment.ElementNum, LAYER_UI_VISIBLE
+.Grid           MAKE_UI_LAYER Grid, Grid.ElementNum, LAYER_UI_VISIBLE
 .Inventory.Num  EQU ($-Layers.Inventory) / FUILayer
-Inventory:      ; слой инвентаря
+
+Equipment:      ; элементы слоя экипировки
                 
                 ; область слота экипировки инвентаря "голова"
                 MAKE_UI_ELEMENT_EX \
@@ -96,7 +99,20 @@ Inventory:      ; слой инвентаря
                 Inventory.UI.Handler.Layer_SlotBoot.OnMouseLeave, \
                 UI_VISIBLE | UI_ENABLED
 
-.ElementNum     EQU ($-Inventory) / FUIElement
+.ElementNum     EQU ($-Equipment) / FUIElement
+
+Grid:           ; элементы слоя сетки инвентаря
+
+                ; область поиска предмета под курсором в сетке инвентаря
+                MAKE_UI_ELEMENT_EX \
+                SCR_INVENTORY_POS_X << 3, SCR_INVENTORY_POS_Y << 3, \
+                SCR_INVENTORY_SIZE_X << 4, SCR_INVENTORY_SIZE_Y << 4, \
+                Inventory.UI.Handler.Layer_Grid.OnMouseEnter, \
+                Inventory.UI.Handler.Layer_Grid, \
+                Inventory.UI.Handler.Layer_Grid.OnMouseLeave, \
+                UI_VISIBLE | UI_ENABLED
+
+.ElementNum     EQU ($-Grid) / FUIElement
 
                 display " - UI layers 'Inventory':\t\t\t\t\t\t= busy [ ", /D, $-Layers, " byte(s) ]"
     
