@@ -11,7 +11,6 @@ Begin           EQU $
                 include "AssetUtils.asm"
                 include "CopyScreen.asm"
                 include "ClearScreen.asm"
-                include "JumpPopPage.asm"
 
                 display " - Functions:\t\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
                 endmodule

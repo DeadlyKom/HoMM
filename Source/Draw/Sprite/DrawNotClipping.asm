@@ -96,7 +96,7 @@ DrawNotClipping.OR_XOR
 
                 ; сохранение текущей страницы и адреса возврата
                 PUSH_PAGE
-                LD HL, Func.PopPage
+                LD HL, SetPageInStack
                 PUSH HL
 
                 ; подключение страницы raw-данных спрайта

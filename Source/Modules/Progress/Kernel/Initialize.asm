@@ -145,10 +145,10 @@ DrawHint        ; A = rand() % Hint.Num
 
 .Loop           PUSH BC
 
-                ; копирование строки в буфер
-                CALL String.Length
-                LD DE, Adr.TilemapBuffer
-                CALL Memcpy.FastLDIR
+                ; подготовка
+                PUSH HL                                                         ; сохранение адреса строки
+                CALL String.Length                                              ; определение длины строки
+                ADD HL, BC                                                      ; расчёт адреса координат после завершающего нуля строки
 
                 ; чтение позиции строки
                 LD E, (HL)
@@ -156,9 +156,9 @@ DrawHint        ; A = rand() % Hint.Num
                 LD D, (HL)
                 INC HL
 
-                ; отображение строки
-                PUSH HL
-                CALL_IN_PAGE Page.Font, Font.DrawString
+                ; сохранение продолжения подсказки и передача адреса строки в HL
+                EX (SP), HL
+                CALL String.DrawString.AutoPage
                 POP HL
 
                 POP BC

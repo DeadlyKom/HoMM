@@ -448,7 +448,7 @@ EXE_ASSETS_NOT_PARAM macro AssetID?, Func?
                 LD HL, .Continue+3
                 PUSH HL
                 PUSH_PAGE                                                       ; сохранение номера страницы в стеке
-                LD HL, Func.PopPage
+                LD HL, SetPageInStack
                 PUSH HL
                 LD A, Func?
                 PUSH AF
@@ -457,7 +457,7 @@ EXE_ASSETS_NOT_PARAM macro AssetID?, Func?
                 endm
 JP_EXE_ASSETS_NOT_PARAM macro AssetID?, Func?
                 PUSH_PAGE                                                       ; сохранение номера страницы в стеке
-                LD HL, Func.PopPage
+                LD HL, SetPageInStack
                 PUSH HL
                 LD A, Func?
                 PUSH AF
@@ -477,7 +477,7 @@ EXE_ASSET_FUNCTION_ONE_PARAM macro AssetID?
                 EX (SP), HL
                 PUSH_PAGE                                                       ; сохранение номера страницы в стеке
                 PUSH HL
-                LD HL, Func.PopPage
+                LD HL, SetPageInStack
                 EX (SP), HL
                 PUSH HL
                 LD A, AssetID?
@@ -488,7 +488,7 @@ JP_EXE_ASSET_FUNCTION_ONE_PARAM macro AssetID?
                 LD H, A
                 EX (SP), HL
                 PUSH HL
-                LD HL, Func.PopPage
+                LD HL, SetPageInStack
                 EX (SP), HL
                 PUSH HL
                 LD A, AssetID?
@@ -513,7 +513,7 @@ EXE_ASSETS_FUNCTION_TWO_PARAMS macro AssetID?, Func?
                 LD HL, .Continue+3
                 PUSH HL                                                         ; адрес продолжения после возврата из ресурса
                 PUSH_PAGE                                                       ; сохранение номера страницы в стеке
-                LD HL, Func.PopPage
+                LD HL, SetPageInStack
                 PUSH HL                                                         ; адрес восстановления страницы
                 PUSH BC                                                         ; второй параметр функции
                 PUSH DE                                                         ; FunctionID для диспетчера ресурса
@@ -533,7 +533,7 @@ JP_EXE_ASSET_FUNCTION_TWO_PARAMS macro AssetID?
                 POP DE                                                          ; первый параметр (FunctionID)
                 POP HL                                                          ; второй параметр
                 PUSH_PAGE                                                       ; сохранение номера страницы исходника
-                LD BC, Func.PopPage
+                LD BC, SetPageInStack
                 PUSH BC                                                         ; адрес восстановления страницы
                 PUSH HL                                                         ; второй параметр функции
                 PUSH DE                                                         ; FunctionID для диспетчера ресурса

@@ -5,7 +5,9 @@
                 module Utilities
                 module String
 
+                include "Copy.asm"
                 include "GetLength.asm"
+                include "DrawString.asm"
 
                 endmodule
                 endmodule

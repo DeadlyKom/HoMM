@@ -80,7 +80,7 @@ GetItemByCursor ; расчёт горизонтальной позиции ку�
                 ; получение размещения очередного экземпляра
                 DEC IYL
                 LD A, IYL
-                CALL Kernel.Item.Utilities.Location.HL
+                CALL Item.Utilities.GetLocAdr.HL                                ; получить адрес размещения предмета
                 SET_PAGE_A
 
                 ; проверка размещения предмета в сетке
@@ -121,7 +121,7 @@ GetItemByCursor ; расчёт горизонтальной позиции ку�
 
                 ; получение индекса базового описания экземпляра
                 LD A, IYL
-                CALL Kernel.Item.Utilities.Address.HL
+                CALL Item.Utilities.GetAdr.HL                                   ; получить адрес экземпляра предмета
                 LD E, (HL)                                                      ; чтение индекса базового предмета из FItem.BaseItem
 
                 ; получение базового описания из загруженного ресурса
@@ -129,7 +129,7 @@ GetItemByCursor ; расчёт горизонтальной позиции ку�
                 SET_PAGE_A
                 LD HL, (Inventory.SharedCode.Render.Item.Metadata.Adr)
                 LD A, E
-                CALL Kernel.Item.Utilities.BaseAddress.HL
+                CALL Item.Utilities.GetBaseAdr.HL                               ; получить адрес базового описания предмета
 
                 ; расчёт адреса поля с индексом визуала предмета
                 LD DE, FBaseItem.Visual                                         ; смещение поля FBaseItem.Visual

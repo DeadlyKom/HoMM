@@ -2,6 +2,8 @@
                 ifndef _KERNEL_STRING_
                 define _KERNEL_STRING_
 String:
-.Length         EQU Kernel.Utilities.String.GetLength                           ; длина строки
+.Copy                   EQU Kernel.Utilities.String.Copy                        ; копирование строки
+.Length                 EQU Kernel.Utilities.String.GetLength                   ; длина строки
+.DrawString.AutoPage    EQU Kernel.Utilities.String.DrawString.Page             ; отображение строки с автоматическим копированием из страницы
 
                 endif ; ~_KERNEL_STRING_

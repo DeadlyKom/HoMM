@@ -81,7 +81,7 @@ Item:           ; сохранение идентификатора экземп
 
 .Position       ; чтение индекса базового описания экземпляра
                 EX AF, AF'
-                CALL Kernel.Item.Utilities.Address.HL
+                CALL Item.Utilities.GetAdr.HL                                   ; получить адрес экземпляра предмета
                 LD A, (HL)                                                      ; FItem.BaseItem
                 EX AF, AF'
 
@@ -97,7 +97,7 @@ Item:           ; сохранение идентификатора экземп
 
                 ; получение базового описания с сохранением экранной позиции
                 PUSH DE
-                CALL Kernel.Item.Utilities.BaseAddress.HL
+                CALL Item.Utilities.GetBaseAdr.HL                               ; получить адрес базового описания предмета
 
                 ; чтение индекса визуала базового предмета
                 INC HL                                                          ; FBaseItem.Name
@@ -166,7 +166,7 @@ Item:           ; сохранение идентификатора экземп
 ;   при выходе включена страница массива предметов
 ; -----------------------------------------
 .Location       ; получение адреса размещения экземпляра
-                CALL Kernel.Item.Utilities.Location.HL
+                CALL Item.Utilities.GetLocAdr.HL                                ; получить адрес размещения предмета
                 SET_PAGE_A
 
                 ; чтение состояния размещения предмета

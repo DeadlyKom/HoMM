@@ -34,7 +34,18 @@ Load:           ; -----------------------------------------
                 ; сохранение страницы и адреса метаданных предметов
                 SET_MODULE_PAGE_Inventory                                       ; включение страницы модуля "инвентаря"
                 SAVE_ASSETS_PAGE Inventory.SharedCode.Render.Item.Metadata.Page ; сохранение страницы загруженного ресурса
-                SAVE_ASSETS_ADDRESS  Inventory.SharedCode.Render.Item.Metadata.Adr ; сохранение адреса загруженного ресурса
+                SAVE_ASSETS_ADDRESS Inventory.SharedCode.Render.Item.Metadata.Adr ; сохранение адреса загруженного ресурса
+
+                ; -----------------------------------------
+                ; загрузка ресурса текстов предметов
+                SET_PAGE_ASSETS                                                 ; включение страницы менеджера ресурсов
+                LOAD_ASSETS ASSETS_ID_ITEMS_TEXT_PACK
+
+                ; сохранение страницы и адреса текстов предметов в состояниях модуля
+                SET_MODULE_PAGE_Inventory                                       ; включение страницы модуля "инвентаря"
+                SAVE_ASSETS_PAGE Inventory.States.Resource.Description.Item.Page ; сохранение страницы загруженного ресурса
+                SAVE_ASSETS_ADDRESS Inventory.States.Resource.Description.Item.Adr ; сохранение адреса загруженного ресурса
+                ; -----------------------------------------
                 RET
 
                 display " - Load item resources:\t\t\t\t\t", /A, Load, "\t= busy [ ", /D, $-Load, " byte(s) ]"

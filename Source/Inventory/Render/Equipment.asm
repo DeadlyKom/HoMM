@@ -17,7 +17,7 @@ Equipment:      ; сохранение индекса слота
 
                 ; подготовка восстановления страницы при выходе
                 PUSH_PAGE
-                LD HL, Func.PopPage
+                LD HL, SetPageInStack
                 PUSH HL
 
                 ; сохранение экранной позиции и индекса слота

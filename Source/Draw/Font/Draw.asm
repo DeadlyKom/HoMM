@@ -70,7 +70,7 @@ Draw:           PUSH HL                                                         
                 ; DrawOR_XOR переключит страницу после копирования,
                 ; поэтому заранее подготовить восстановление страницы шрифта
                 PUSH_PAGE
-                LD HL, Func.PopPage
+                LD HL, SetPageInStack
                 PUSH HL
 
                 ; адрес таблицы расчёта размера спрайта

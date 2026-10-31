@@ -2,15 +2,64 @@
                 ifndef _MODULE_INVENTORY_GRAPHICS_DESCRIPTION_PREPARE_
                 define _MODULE_INVENTORY_GRAPHICS_DESCRIPTION_PREPARE_
 ; -----------------------------------------
-; подготовка размера и положения подложки описания
+; подготовка данных предмета, размера и положения подложки описания
 ; In:
 ; Out:
 ; Corrupt:
-;   HL, DE, BC, AF
+;   HL, DE, BC, AF, AF'
 ; Note:
 ;   ℹ️ необходимо включить страницу модуля "инвентаря"
 ; -----------------------------------------
-.Prepare        ; выбор ширины области от 10 до 24 знакомест
+.Prepare        ; -----------------------------------------
+                ; получение копии экземпляра предмета под курсором
+                LD A, (Inventory.States.HoveredItem.ID)
+                LD DE, .Prepare.Buffer
+                CALL Inventory.SharedCode.Utilities.GetItem
+
+                ; получение базового описания со свойствами в тот же буфер
+                LD A, (HL)                                                      ; чтение индекса базового описания из FItem.BaseItem
+                LD DE, .Prepare.Buffer
+                CALL Inventory.SharedCode.Utilities.GetBaseItem
+
+                ; -----------------------------------------
+                ; сохранение индекса названия из копии базового описания
+                LD A, (HL)                                                      ; чтение индекса названия из FBaseItem.Name
+                PUSH AF
+
+                ; проверка вместимости ресурса названий во временный буфер
+                if Text.Items.Size > Size.TilemapBuffer
+                error "item names exceed description buffer"
+                endif
+
+                ; копирование ресурса названий в буфер для обработки в модуле
+                LD HL, (Inventory.States.Resource.Description.Item.Adr)
+                LD A, (Inventory.States.Resource.Description.Item.Page)
+                LD DE, .Prepare.Buffer
+                LD BC, Text.Items.Size
+                CALL Func.CopyFromPage
+                LD HL, .Prepare.Buffer
+                POP AF
+
+                ; проверка индекса первого названия в ресурсе
+                OR A
+                JR Z, .NameReady                                                ; переход, если требуется первое название
+
+                ; подготовка количества строк перед выбранным названием
+                LD B, A
+
+.NameNext       ; расчёт адреса следующего названия с учётом завершающего нуля
+                PUSH BC
+                CALL String.Length
+                ADD HL, BC
+                POP BC
+                DJNZ .NameNext
+
+.NameReady      ; размещение выбранного названия в начале буфера
+                LD DE, .Prepare.Buffer
+                CALL String.Copy
+                ; -----------------------------------------
+
+                ; выбор ширины области от 10 до 24 знакомест
                 LD B, 15
                 CALL .Sample
                 ADD A, 10
@@ -43,6 +92,8 @@
                 LD (Inventory.States.HoveredItem.Location), DE
                 LD (Inventory.States.HoveredItem.Size), BC
                 RET
+
+.Prepare.Buffer EQU Adr.TilemapBuffer                                           ; адрес временного буфера данных предмета
 ; -----------------------------------------
 ; получение меняющегося значения в заданном диапазоне для визуальной пробы
 ; In:
