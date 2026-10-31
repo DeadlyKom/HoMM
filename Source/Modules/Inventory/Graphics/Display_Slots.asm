@@ -16,13 +16,16 @@ Slots:          ; инициализация обхода состояний с�
                 LD B, Inventory.States.Slots.Num
                 LD C, #00                                                       ; индекс слота в FCharacterEquipment
 
-.Loop           ; определение активности слота по клавише и наведению
+                ; фиксация состояния клавиши показа всех слотов на текущий обход
                 LD A, (GameState.Input.Value)
                 AND ACCELERATE_CURSOR
-                LD E, A
+                LD (.ShowFlag), A
+
+.Loop           ; определение активности слота по клавише и наведению
                 LD A, (IY + FUIElement.FLags)
                 AND UI_STATE_HOVER
-                OR E
+.ShowFlag       EQU $+1
+                OR #00
 
                 ; обновление флага активности текущего слота
                 RES INVENTORY_ACTIVE_SLOT_BIT, (HL)
@@ -253,6 +256,13 @@ Slots:          ; инициализация обхода состояний с�
                 JR NZ, .DrawContents                                            ; переход, если исходный фон уже сохранён
 
                 PUSH HL                                                         ; сохранение адреса состояния слота
+
+                ; проверка запроса перерисовки, поступившего перед сохранением фона
+                LD HL, Inventory.States.HoveredItem.Flags
+                CHECK_FLAG INVENTORY_REDRAW_BIT
+                CALL NZ, Inventory.Display.Window.Redraw                        ; вызов, если перед сохранением фона требуется перерисовка окна
+                POP HL                                                          ; восстановление адреса состояния слота
+                PUSH HL                                                         ; сохранение адреса состояния на время копирования фона
                 CALL Convert.SetBaseScreen                                      ; выбор основного экрана для сохранения фона
 
                 ; инициализация параметров копирования фона

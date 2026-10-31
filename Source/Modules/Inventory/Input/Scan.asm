@@ -15,9 +15,9 @@ Scan:           ; проверка доступности мыши
                 CALL Mouse.UpdateCursor                                         ; обновить положение курсора
 
 .KeyCheck       ; --------------------------------------------------------------
-                ; очистка системных клавиш
+                ; сброс состояния клавиш меню, выхода и выбора
                 LD A, (GameState.Input.Value)
-                AND ~KEY_MASK
+                AND ~(MENU_KEY | ESC_KEY | SELECT_KEY)
                 LD (GameState.Input.Value), A
                 ; --------------------------------------------------------------
 
@@ -36,10 +36,8 @@ Scan:           ; проверка доступности мыши
                 CALL Input.CheckKeyState
                 CALL Z, Input.Select                                            ; вызов обработчика выбора, если клавиша нажата
 
-                ; проверка клавиши показа всех слотов
-                LD A, (GameConfig.KeyAccel)
-                CALL Input.CheckKeyState
-                CALL Z, Input.Accelerate                                        ; вызов обработчика показа слотов, если клавиша нажата
+                ; обработка клавиши "ускорение" для показа всех слотов
+                CALL Input.Accelerate
                 RET
 
                 endif ; ~_MODULE_INVENTORY_INPUT_SCAN_

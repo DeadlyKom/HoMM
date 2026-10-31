@@ -13,6 +13,9 @@ MOVEMENT_RIGHT_BIT      EQU 0x02                                                
 MOVEMENT_UP_BIT         EQU 0x01                                                ; флаг, нажатия клавиши вверх
 MOVEMENT_DOWN_BIT       EQU 0x00                                                ; флаг, нажатия клавиши вниз
 
+MENU_KEY                EQU 1 << MENU_KEY_BIT
+ESC_KEY                 EQU 1 << ESC_KEY_BIT
+SELECT_KEY              EQU 1 << SELECT_KEY_BIT
 ACCELERATE_CURSOR       EQU 1 << ACCELERATE_CURSOR_BIT
 KEY_MASK                EQU 1 << MENU_KEY_BIT      | 1 << ESC_KEY_BIT | \
                             1 << SELECT_KEY_BIT    | 1 << ACCELERATE_CURSOR_BIT
