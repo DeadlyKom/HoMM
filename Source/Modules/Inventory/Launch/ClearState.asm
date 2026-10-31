@@ -27,6 +27,8 @@ ClearState:     ; очистка флагов и анимации слотов
                 ADD HL, DE
                 DJNZ .SlotsLoop
 
+                LD (Inventory.States.HoveredItem.Flags), A                      ; сброс запросов перерисовки фона и рисования описания
+
                 ; сброс идентификатора предмета под курсором
                 LD A, ITEM_ID_NONE
                 LD (Inventory.States.HoveredItem.ID), A

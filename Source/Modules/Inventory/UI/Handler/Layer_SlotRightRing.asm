@@ -29,7 +29,6 @@ Layer_SlotRRng: ; определение предмета в слоте экип
 .OnMouseEnter   ; сброс флага активного слота при входе курсора
                 LD HL, Inventory.States.Slots.RightRing
                 SET INVENTORY_ACTIVE_SLOT_BIT, (HL)
-                SET_MAIN_FLAG ML_UPDATE_BIT                                     ; запрос обновления экрана после изменения состояния слота
                 RET
 ; -----------------------------------------
 ; обработчик OnMouseLeave слота экипировки инвентаря "правое кольцо"
@@ -44,7 +43,6 @@ Layer_SlotRRng: ; определение предмета в слоте экип
 .OnMouseLeave   ; сброс флага активного слота при выходе курсора
                 LD HL, Inventory.States.Slots.RightRing
                 RES INVENTORY_ACTIVE_SLOT_BIT, (HL)
-                SET_MAIN_FLAG ML_UPDATE_BIT                                     ; запрос обновления экрана после изменения состояния слота
                 JP Inventory.UI.Utilities.ResetHoverItem                        ; сброс идентификатора предмета под курсором
 
                 endif ; ~_MODULE_INVENTORY_UI_HANDLER_LAYER_SLOT_RIGHT_RING_

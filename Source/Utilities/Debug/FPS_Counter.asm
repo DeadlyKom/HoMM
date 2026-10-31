@@ -51,24 +51,40 @@ Frame:
                 LD (.FramesCounter), A
                 RET
 ; -----------------------------------------
-; отображение FPS
+; отображение FPS с восстановлением состояния консоли
 ; In:
 ; Out:
 ; Corrupt:
+;   HL, DE, BC, AF
 ; Note:
+;   цвет и адрес вывода консоли восстанавливаются перед выходом
 ; -----------------------------------------
-Render:         ; установка атрибут
+Render:         ; сохранение адреса вывода консоли
+                LD HL, (Kernel.Console.DrawChar.ScreenAdr)
+                PUSH HL
+
+                ; сохранение цвета вывода консоли
+                LD A, (Kernel.Console.OneScreen.Attribute)
+                PUSH AF
+
+                ; установка цвета и позиции вывода FPS
                 LD A, COLOR_FPS
                 CALL Console.SetAttribute
-                
-                ; установка позиции вывода
                 LD HL, CURSOR_FPS
                 CALL Console.SetScreenAdr
 
                 ; отображение FPS
 .FPS            EQU $+1
                 LD A, #00
-                JP Console.DrawByte
+                CALL Console.DrawByte
+
+                ; восстановление цвета вывода консоли
+                POP AF
+                CALL Console.SetAttribute
+
+                ; восстановление адреса вывода консоли
+                POP HL
+                JP Console.SetScreenAdr
 
                 display " - FPS_Counter: \t\t[DEBUG]\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
                 endmodule

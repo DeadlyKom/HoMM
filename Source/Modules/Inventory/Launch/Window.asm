@@ -10,18 +10,8 @@
 ;   ℹ️ необходимо включить страницу модуля "инвентаря"
 ; -----------------------------------------
 Window:         SHOW_SHADOW_SCREEN                                              ; отображение теневого экрана
-
-                ; подготовка основного экрана
-                CLS SCR_ADR_BASE, 0xFF                                          ; очистка основного экрана
-                ATTR_IPB SCR_ADR_BASE, BLACK, WHITE, 0                          ; очистка атрибутов основного экрана
-
-                ; вывод изобращения
-                CALL Convert.SetBaseScreen                                      ; выбор основного экрана для вывода окна
-                CALL Inventory.Display.PaperDoll                                ; отображение "образа персонажа"
-                CALL Inventory.Display.Inventory                                ; отображение "инвентаря"
-                CALL Inventory.Display.Items                                    ; отображение "предметов"
-                
-                HALT
+                CALL Inventory.Display.Window                                   ; отображение содержимого окна
+                HALT                                                            ; синхронизация
                 SHOW_BASE_SCREEN                                                ; отображение базового экрана
                 JP Func.ShadowScrcpyInPage                                      ; копирование в теневой экран (находясь в странице)
 

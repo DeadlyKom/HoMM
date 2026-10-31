@@ -53,7 +53,13 @@ Draw:           ; -----------------------------------------
 
                 SET_MODULE_PAGE_Inventory                                       ; включение страницы модуля инвентаря
                 CALL UI.Update                                                  ; обновление UI
-                CALL Inventory.Display.Slots                                    ; отображение слотов
+
+                ; проверка запроса перерисовки фона
+                LD HL, Inventory.States.HoveredItem.Flags
+                CHECK_FLAG INVENTORY_REDRAW_BIT
+                CALL NZ, Inventory.Display.Window.Redraw                        ; вызов, если запрошена перерисовка фона
+                CALL Inventory.Display.Slots                                    ; обработка анимации и отображение слотов
+                CALL Inventory.Display.Description                              ; обработка запроса и перерисовка описания
 
                 ifdef _DEBUG
                 CALL Inventory.Display.DebugInfo                                ; отображение отладочной информации об инвентаре
