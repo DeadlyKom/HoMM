@@ -23,6 +23,8 @@ ITEM_BREAST     macro Label?, NameID?, VisualID?, Flags?
                 ; "Броня"
                 ITEM_BREAST BREAST_01, NAME_BREAST_01, VISIAL_BREAST_01, ITEM_FLAG_NONE
                 ITEM_PROPERTY ITEM_PROPERTY_DEFESE, 3
+                ITEM_PROPERTY ITEM_PROPERTY_ATTACK, 1                           ; навык атаки героя
+                ITEM_PROPERTY ITEM_PROPERTY_KNOWLEDGE, 1                        ; навык знаний героя
                 ITEM_END BREAST_01
                 endmodule
 

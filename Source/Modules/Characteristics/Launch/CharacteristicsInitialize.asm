@@ -20,7 +20,7 @@ Initialize:     ; инициализация "характеристик"
 
                 SET_USER_HANDLER Characteristics.SharedCode.Interrupt           ; установка обработчика прерываний
                 RES_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                           ; разрешить сканирование ввода
-                RES_MUSIC_FLAG MUSIC_ENABLE_BIT                                 ; запретить проигрывать музыку
+                SET_MUSIC_FLAG MUSIC_ENABLE_BIT                                 ; продолжение проигрывания общей музыки игрового процесса
                 SET_RENDER_SHADOW                                               ; установка Render флага переключение экрана на теневой
                 RES_RENDER_FLAG FPS_DISABLE_BIT                                 ; разрешить отображение FPS
                 RET

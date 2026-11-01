@@ -42,7 +42,8 @@ REG_ASSETS_ID_DEBUG macro Label?
                     REG_ASSETS_ID       ASSETS_ID_HEX_FOG                       ; графика: гексагонная, туман
                     REG_ASSETS_ID       ASSETS_ID_HEX_GRASSLANDS                ; графика: гексагонная, природные ландшафты - луга
                     REG_ASSETS_ID       ASSETS_ID_MAP_DEBUG                     ; карта "отладочная"
-                    REG_ASSETS_ID       ASSETS_ID_MUSIC_01                      ; музыка №01
+                    REG_ASSETS_ID       ASSETS_ID_MUSIC_01                      ; музыка "главного меню"
+                    REG_ASSETS_ID       ASSETS_ID_MUSIC_02                      ; музыка "игрового процесса"
                     REG_ASSETS_ID       ASSETS_ID_ITEMS_METADATA_PACK           ; метаданные: предметов
                     REG_ASSETS_ID       ASSETS_ID_ITEMS_TEXT_PACK               ; текст: предметов
 

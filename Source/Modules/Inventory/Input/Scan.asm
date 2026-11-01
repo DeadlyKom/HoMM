@@ -38,6 +38,11 @@ Scan:           ; проверка доступности мыши
 
                 ; обработка клавиши "ускорение" для показа всех слотов
                 CALL Input.Accelerate
+
+                ; обработка отладочного переключения типа подложки клавишей T
+                ifdef _DEBUG
+                CALL Input.Underlay
+                endif
                 RET
 
                 endif ; ~_MODULE_INVENTORY_INPUT_SCAN_

@@ -62,6 +62,8 @@
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Metadata/Compressed/Map/Debug.map.ar", Metadata.Map.Debug.Size.Sector.ar
                 ; ASSETS_ID_MUSIC_01
                 ADD_ASSETS 3, PAGE_4, 0x0000, "Builder/Assets/Sound/Compressed/Music_01.pack.ar", Sound.Music_01.Size.Sector.ar
+                ; ASSETS_ID_MUSIC_02
+                ADD_ASSETS 3, PAGE_4, 0x0000, "Builder/Assets/Sound/Compressed/Music_02.pack.ar", Sound.Music_02.Size.Sector.ar
                 ; ASSETS_ID_ITEMS_METADATA_PACK
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Metadata/Compressed/Items.pack.ar", Metadata.Items.Size.Sector.ar
                 ; ASSETS_ID_ITEMS_TEXT_PACK

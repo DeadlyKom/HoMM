@@ -24,6 +24,8 @@ ITEM_SHIELD     macro Label?, NameID?, VisualID?, Flags?
                 ITEM_SHIELD SHIELD_01, NAME_SHIELD_01, VISIAL_SHIELD_01, ITEM_FLAG_NONE
                 ITEM_PROPERTY ITEM_PROPERTY_DEFESE, 2                           ; навык защиты героя
                 ITEM_PROPERTY ITEM_PROPERTY_DAMAGERESIST, 3                     ; уменьшение входящего физического урона существам в процентах
+                ITEM_PROPERTY ITEM_PROPERTY_ARMOR_PERCENT, 10                   ; увеличение защиты существ в процентах
+                ITEM_PROPERTY ITEM_PROPERTY_MAGICRESIST, 5                      ; сопротивление магии в процентах
                 ITEM_END SHIELD_01
                 endmodule
 

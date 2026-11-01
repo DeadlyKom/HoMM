@@ -4,6 +4,7 @@
 
                 module Launch
                 include "Deploy.asm"
+                include "InitMusic.asm"
                 include "InitSprites.asm"
                 include "CreateTables.asm"
                 include "WaitProgress.asm"

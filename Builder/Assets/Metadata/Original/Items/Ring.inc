@@ -24,7 +24,17 @@ ITEM_RING       macro Label?, NameID?, VisualID?, Flags?
                 ITEM_RING RING_01, NAME_RING_01, VISIAL_RING_01, ITEM_FLAG_NONE
                 ITEM_PROPERTY ITEM_PROPERTY_POWER, 1                            ; сила заклинаний героя
                 ITEM_PROPERTY ITEM_PROPERTY_MAXMANA, 5                          ; прибавка максимального запаса маны героя
+                ITEM_PROPERTY ITEM_PROPERTY_KNOWLEDGE, 1                        ; навык знаний героя
+                ITEM_PROPERTY ITEM_PROPERTY_MAGICRESIST, 5                      ; сопротивление магии в процентах
                 ITEM_END RING_01
+
+                ; "Перстень прозрения"
+                ITEM_RING RING_02, NAME_RING_02, VISIAL_RING_01, ITEM_FLAG_NONE
+                ITEM_PROPERTY ITEM_PROPERTY_POWER, 1                            ; сила заклинаний героя
+                ITEM_PROPERTY ITEM_PROPERTY_MAXMANA, 5                          ; максимальный запас маны героя
+                ITEM_PROPERTY ITEM_PROPERTY_KNOWLEDGE, 1                        ; навык знаний героя
+                ITEM_PROPERTY ITEM_PROPERTY_MAGICRESIST, 5                      ; сопротивление магии в процентах
+                ITEM_END RING_02
                 endmodule
 
                 endif ; ~_METADATA_ITEMS_RING_

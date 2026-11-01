@@ -15,6 +15,7 @@ Launch:         SAVE_ASSETS_PAGE Kernel.Modules.World.Page                      
                 CALL Launch.Deploy                                              ; развёртывание кода "мира"
                 CALL Launch.CreateTables                                        ; формирование таблиц "мира"
                 CALL Launch.InitSprites                                         ; загрузка и инициализация спрайтов
+                CALL Launch.InitMusic                                           ; загрузка и инициализация общей музыки игрового процесса
                 CALL Launch.WaitProgress                                        ; ожидание завершения загрузки "мира"
                 CALL World.Tilemap.Center.Instant                               ; первичное центрирование камеры на активном персонаже
                 CALL Launch.GameplayWindow                                      ; отображение игрового окна

@@ -28,7 +28,7 @@ Initialize:     ; инициализация "инвентаря"
                 SET_USER_HANDLER Inventory.SharedCode.Interrupt                 ; установка обработчика прерываний
                 
                 RES_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                           ; разрешить сканирование ввода
-                RES_MUSIC_FLAG MUSIC_ENABLE_BIT                                 ; запретить проигрывать музыку
+                SET_MUSIC_FLAG MUSIC_ENABLE_BIT                                 ; продолжение проигрывания общей музыки игрового процесса
                 RET
 
                 endif ; ~_MODULE_INVENTORY_LAUNCH_INVENTORY_INITIALIZE_

@@ -23,6 +23,7 @@ ITEM_MASK       macro Label?, NameID?, VisualID?, Flags?
                 ; "Маска"
                 ITEM_MASK MASK_01, NAME_MASK_01, VISIAL_MASK_01, ITEM_FLAG_NONE
                 ITEM_PROPERTY ITEM_PROPERTY_DEFESE, 1                           ; навык защиты героя
+                ITEM_PROPERTY ITEM_PROPERTY_POWER, 1                            ; сила заклинаний героя
                 ITEM_END MASK_01
                 endmodule
 

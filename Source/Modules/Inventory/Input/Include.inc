@@ -8,6 +8,9 @@
                 include "Input_Select.asm"
                 include "Input_Previous.asm"
                 include "Input_Accelerate.asm"
+                ifdef _DEBUG
+                include "Input_Underlay.asm"
+                endif
                 endmodule
 
                 endif ; ~_MODULE_INVENTORY_INPUT_INCLUDE_

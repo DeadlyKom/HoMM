@@ -23,6 +23,8 @@ ITEM_SHOULDER   macro Label?, NameID?, VisualID?, Flags?
                 ; "Наплечи дружинника"
                 ITEM_SHOULDER SHOULDER_PAD_01, NAME_SHOULDER_PAD_01, VISIAL_SHOULDER_PAD_01, ITEM_FLAG_NONE
                 ITEM_PROPERTY ITEM_PROPERTY_ARMOR_PERCENT, 5                    ; увеличение показателя защиты существ в процентах
+                ITEM_PROPERTY ITEM_PROPERTY_DEFESE, 1                           ; навык защиты героя
+                ITEM_PROPERTY ITEM_PROPERTY_KNOWLEDGE, 1                        ; навык знаний героя
                 ITEM_END SHOULDER_PAD_01
                 endmodule
 

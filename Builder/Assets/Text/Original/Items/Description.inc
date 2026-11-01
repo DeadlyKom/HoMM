@@ -18,6 +18,7 @@ DESCRIPTION_TEXT macro Label?, Text?
                 DESCRIPTION_TEXT CloseQuote, "»"
                 DESCRIPTION_TEXT SignPlus, "+"
                 DESCRIPTION_TEXT SignMinus, "-"
+                DESCRIPTION_TEXT Superior, "Высшего качества "
 
                 endif                                                           ; ~_TEXT_ITEMS_DESCRIPTION_
 

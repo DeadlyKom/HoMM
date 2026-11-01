@@ -15,6 +15,7 @@ RING_NAME       macro Label?, Text?
                 endm
 
                 RING_NAME NAME_RING_01, "Перстень ведуна"
+                RING_NAME NAME_RING_02, "Перстень прозрения"
 
                 endif ; ~_TEXT_ITEMS_RING_
 

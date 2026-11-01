@@ -24,6 +24,8 @@ ITEM_SWORD      macro Label?, NameID?, VisualID?, Flags?
                 ITEM_SWORD SWORD_01, NAME_SWORD_01, VISIAL_SWORD_01, ITEM_FLAG_NONE
                 ITEM_PROPERTY ITEM_PROPERTY_ATTACK, 2                           ; навык атаки героя
                 ITEM_PROPERTY ITEM_PROPERTY_TOHIT, 10                           ; прибавка рейтинга атаки существ
+                ITEM_PROPERTY ITEM_PROPERTY_DAMAGE_PERCENT, 10                  ; увеличение урона существ в процентах
+                ITEM_PROPERTY ITEM_PROPERTY_FASTERATTACKRATE, 5                 ; скорость атаки существ в процентах
                 ITEM_END SWORD_01
                 endmodule
 

@@ -23,6 +23,7 @@ ITEM_BOOT       macro Label?, NameID?, VisualID?, Flags?
                 ; "Сапоги странника"
                 ITEM_BOOT BOOT_01, NAME_BOOT_01, VISIAL_BOOT_01, ITEM_FLAG_NONE
                 ITEM_PROPERTY ITEM_PROPERTY_PATHFINDING, 1                      ; бонус поиска пути на карте приключений
+                ITEM_PROPERTY ITEM_PROPERTY_FASTERMOVEVELOCITY, 5               ; скорость передвижения в процентах
                 ITEM_END BOOT_01
                 endmodule
 

@@ -23,6 +23,8 @@ ITEM_BELT       macro Label?, NameID?, VisualID?, Flags?
                 ; "Кушак крепости"
                 ITEM_BELT BELT_01, NAME_BELT_01, VISIAL_BELT_01, ITEM_FLAG_NONE
                 ITEM_PROPERTY ITEM_PROPERTY_MAXHP, 2                            ; прибавка максимального здоровья каждому существу
+                ITEM_PROPERTY ITEM_PROPERTY_DEFESE, 1                           ; навык защиты героя
+                ITEM_PROPERTY ITEM_PROPERTY_DAMAGERESIST, 5                     ; снижение физического урона в процентах
                 ITEM_END BELT_01
                 endmodule
 
