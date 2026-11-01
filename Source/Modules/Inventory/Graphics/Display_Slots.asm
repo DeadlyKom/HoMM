@@ -2,15 +2,30 @@
                 ifndef _MODULE_INVENTORY_GRAPHICS_DISPLAY_SLOTS_
                 define _MODULE_INVENTORY_GRAPHICS_DISPLAY_SLOTS_
 ; -----------------------------------------
-; отображение слотов
+; обработка анимации и отображение слотов по прошедшим кадрам
 ; In:
 ; Out:
 ; Corrupt:
 ;   HL, DE, BC, AF, HL', DE', BC', AF', IX, IY
 ; Note:
 ;   ℹ️ адрес исполнения неизвестен
+;   интервал между вызовами определяется по TickCounterRef для всех слотов
+;   за один вызов выполняется не более одного перехода между фазами
 ; -----------------------------------------
-Slots:          ; инициализация обхода состояний слотов
+Slots:          ; расчёт числа кадров после предыдущей обработки слотов
+                LD HL, (TickCounterRef)
+.LastTick       EQU $+1                                                         ; номер кадра предыдущей обработки слотов
+                LD DE, #0000
+                LD (.LastTick), HL
+                OR A
+                SBC HL, DE
+
+                ; ограничение интервала снизу одним кадром
+                JR NZ, $+3                                                      ; переход, если между вызовами прошёл хотя бы один кадр
+                INC HL
+                LD (.Frames), HL
+
+                ; инициализация обхода состояний слотов
                 LD IY, Inventory.UI.Equipment                                   ; адрес элементов слоя экипировки
                 LD HL, Inventory.States.Slots.Head
                 LD B, Inventory.States.Slots.Num
@@ -95,9 +110,10 @@ Slots:          ; инициализация обхода состояний с�
                 AND INVENTORY_FADE_OUT_SLOT
                 JR Z, .Delay                                                    ; переход, если направление анимации не изменилось
 
-                ; проверка начала исчезновения слота
+                ; проверка направления после изменения активности слота
                 BIT INVENTORY_FADE_OUT_SLOT_BIT, (HL)
-                JR Z, .Delay                                                    ; переход, если выбрано направление появления
+                LD DE, #0000                                                    ; исключение прошедших кадров при возобновлении появления
+                JR Z, .TimeFlags                                                ; переход, если выбрано направление появления
 
                 ; переход к позиции анимации слота
                 INC HL                                                          ; переход к FInventorySlotStates.Animation
@@ -116,7 +132,7 @@ Slots:          ; инициализация обхода состояний с�
                 LD A, .FadeInEnd - .FadeInTable - 2
                 SUB C
                 LD E, A
-                LD D, 0
+                LD D, #00
                 LD HL, .FadeOutTable
                 ADD HL, DE
 
@@ -126,29 +142,42 @@ Slots:          ; инициализация обхода состояний с�
                 LD (HL), A
                 RET
 
-.Delay          ; сохранение флагов для выбора направления следующего кадра
+.Delay          ; чтение числа кадров между текущим и предыдущим обходами слотов
+.Frames         EQU $+1                                                         ; общий интервал в кадрах для обработки каждого слота
+                LD DE, #0000
+
+.TimeFlags      ; сохранение флагов для выбора направления следующей фазы
                 LD C, (HL)
 
-                ; переход к оставшейся задержке текущего кадра
+                ; переход к оставшейся задержке текущей фазы
                 INC HL                                                          ; переход к FInventorySlotStates.Animation
                 INC HL                                                          ; переход к FInventorySlotStates.Delay
 
-                ; проверка завершения задержки текущего кадра
+                ; проверка завершения задержки текущей фазы
                 LD A, (HL)
                 OR A
-                JR Z, .NextFrame                                                ; переход, если задержка текущего кадра завершена
+                JR Z, .NextFrame                                                ; переход, если задержка текущей фазы завершена
 
-                ; уменьшение оставшейся задержки текущего кадра
-                DEC (HL)
-                RET NZ                                                          ; выход, если задержка текущего кадра ещё не завершена
+                ; проверка превышения байтовой задержки прошедшим интервалом
+                LD A, D
+                OR A
+                JR NZ, .ClearDelay                                              ; переход, если прошло не менее 256 кадров
 
-                ; возврат к позиции анимации
-                DEC HL                                                          ; переход к FInventorySlotStates.Animation
+                ; вычитание прошедших кадров из задержки текущей фазы
+                LD A, (HL)
+                SUB E
+                JR NC, .SaveDelay                                               ; переход, если результат вычитания неотрицательный
+
+.ClearDelay     XOR A                                                           ; ограничение оставшейся задержки нулём
+.SaveDelay      ; обновление оставшейся задержки текущей фазы
+                LD (HL), A
+                RET NZ                                                          ; выход, если задержка текущей фазы ещё не завершена
 
                 ; проверка завершения задержки скрытого состояния
+                DEC HL                                                          ; переход к FInventorySlotStates.Animation
                 LD A, (HL)
                 OR A
-                RET NZ                                                          ; выход, если текущее состояние ещё не скрыто
+                JR NZ, .FrameStep                                               ; переход, если требуется следующая видимая фаза
 
                 ; проверка возобновления появления во время последней задержки
                 BIT INVENTORY_FADE_OUT_SLOT_BIT, C
@@ -161,7 +190,7 @@ Slots:          ; инициализация обхода состояний с�
 .NextFrame      ; возврат к позиции анимации
                 DEC HL                                                          ; переход к FInventorySlotStates.Animation
 
-                ; проверка направления анимации
+.FrameStep      ; проверка направления следующего перехода анимации
                 BIT INVENTORY_FADE_OUT_SLOT_BIT, C
 
                 ; чтение текущей позиции анимации
@@ -498,7 +527,7 @@ MAKE_SLOT_FRAME macro Delay?, Ink?, Paper?, Bright?, Flash?
                 ZX_COLOR_IPBF Ink?, Paper?, Bright?, Flash?
                 endm
 
-.FadeInTable    MAKE_SLOT_FRAME  1, BLACK, BLACK, 0, 0                          ; чёрный
+.FadeInTable    ; MAKE_SLOT_FRAME  1, BLACK, BLACK, 0, 0                          ; чёрный
                 MAKE_SLOT_FRAME  1, BLACK, BLUE,  0, 0                          ; синий
                 MAKE_SLOT_FRAME  1, BLACK, BLUE,  1, 0                          ; ярко-синий
                 MAKE_SLOT_FRAME  1, WHITE, WHITE, 0, 1                          ; маска исходных атрибутов без BRIGHT
@@ -509,6 +538,6 @@ MAKE_SLOT_FRAME macro Delay?, Ink?, Paper?, Bright?, Flash?
                 MAKE_SLOT_FRAME  2, WHITE, WHITE, 0, 1                          ; маска исходных атрибутов без BRIGHT
                 MAKE_SLOT_FRAME  2, BLACK, BLUE,  1, 0                          ; ярко-синий
                 MAKE_SLOT_FRAME  2, BLACK, BLUE,  0, 0                          ; синий
-                MAKE_SLOT_FRAME  2, BLACK, BLACK, 0, 0                          ; чёрный
+                ; MAKE_SLOT_FRAME  2, BLACK, BLACK, 0, 0                          ; чёрный
                 
                 endif ; ~_MODULE_INVENTORY_GRAPHICS_DISPLAY_SLOTS_

@@ -16,6 +16,13 @@
                 LD DE, (Inventory.States.HoveredItem.Location)
                 LD BC, (Inventory.States.HoveredItem.Size)
 
+                ; расчёт смещения входа в развёрнутый цикл, по четыре байта кода на знакоместо
+                LD A, #20
+                SUB C
+                ADD A, A    ; x2
+                ADD A, A    ; x4
+                LD (.MiddleEntry), A
+
                 ; расчёт адреса левого верхнего знакоместа основного экрана
                 CALL Convert.SetBaseScreen
                 CALL Convert.CharToScreen
@@ -72,17 +79,19 @@
                 LD (HL), A
                 INC L
 
-                ; расчёт количества байтов между левым и правым краями
-                LD B, C
-                DEC B
-                DEC B
+                ; вход в развёрнутый цикл согласно количеству внутренних знакомест
+.MiddleEntry    EQU $+1
+                JR .MiddleBytes
 
-.Byte           ; наложение узора подложки на внутренний байт строки
+                ; -----------------------------------------
+.MiddleBytes    ; наложение узора подложки на внутренние байты строки
+                rept 30
                 LD A, (HL)
                 OR E
                 LD (HL), A
                 INC L
-                DJNZ .Byte
+                endr
+                ; -----------------------------------------
 
                 ; формирование правого края 1101 с сохранением четырёх внутренних пикселей
                 LD A, (HL)
@@ -101,7 +110,7 @@
 
                 ; смена узора AA55 или сохранение сплошной заливки FF
                 RLC E
-                JR .Row
+                JP .Row
 
 .Bottom         ; переход к первой внутренней строке нижнего края
                 CALL .NextRow

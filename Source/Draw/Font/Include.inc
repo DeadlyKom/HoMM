@@ -4,9 +4,9 @@
 
                 module Font
                 include "GetWidth.asm"
-                include "DrawGlyph.asm"
+                include "DrawColorGlyph.asm"                                    ; (0)
+                include "DrawGlyph.asm"                                         ; (1)
                 include "DrawString.asm"
-                include "DrawColorGlyph.asm"
                 endmodule
 
                 endif ; ~ _DRAW_FONT_INCLUDE_
