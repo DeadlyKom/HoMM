@@ -4,6 +4,7 @@
 
                 include "Item.inc"
                 include "Slots.inc"
+                include "Description.inc"
                 include "SlotBuffers.inc"
 
                 endif ; ~_CONST_INVENTORY_INCLUDE_

@@ -6,6 +6,7 @@
                 include "Item.inc"
                 include "Slots.inc"
                 include "Resource.inc"
+                include "Description.inc"
                 endmodule
 
                 endif ; ~_MODULE_INVENTORY_STATES_INCLUDE_

@@ -220,10 +220,12 @@ ATTR_IPB_LDIR   macro ScreenAddress?, Inc?, Paper?, Bright?
                 LDIR
                 endm
 ; -----------------------------------------
-; значением чернил (Inc), 
-; бумаги (Paper), 
-; яркости (Bright) и
-; мерцание (Flash)
+; In:
+;   Label?  - метка константы
+;   Inc?    - цвет чернил
+;   Paper?  - цвет бумаги
+;   Bright? - яркость, 0 или 1
+;   Flash?  - мерцание, 0 или 1
 ; -----------------------------------------
 ZX_COLOR_IPBF   macro Inc?, Paper?, Bright?, Flash?
                 DB (((Flash?) << 7) | ((Bright?) << 6) | ((Paper?) << 3) | (Inc?))
@@ -233,6 +235,9 @@ ZX_COLOR_IPB    macro Inc?, Paper?, Bright?
                 endm
 ZX_COLOR_IP     macro Inc?, Paper?
                 DB ((0 << 7) | (0 << 6) | ((Paper?) << 3) | (Inc?))
+                endm
+ZX_COLOR_IPBF_EQU macro Label?, Inc?, Paper?, Bright?, Flash?
+Label?          EQU (((Flash?) << 7) | ((Bright?) << 6) | ((Paper?) << 3) | (Inc?))
                 endm
 
                 endif ; ~_MACRO_SCREEN_

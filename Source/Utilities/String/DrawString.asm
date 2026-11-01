@@ -1,6 +1,7 @@
 
                 ifndef _UTILITIES_STRING_DRAW_STRING_
                 define _UTILITIES_STRING_DRAW_STRING_
+DrawString.Page.Buffer  EQU Adr.TilemapBuffer                                   ; адрес временного буфера строки
 ; -----------------------------------------
 ; отображение строки на экране
 ; In:
@@ -43,8 +44,46 @@ DrawString.Page ; подготовка восстановления страни
 .Draw           ; включение страницы шрифта с сохранением адреса строки и координат
                 LD A, Page.Font
                 SET_PAGE_A
-                JP Font.DrawString
+                JP Font.Draw.String
+; -----------------------------------------
+; отображение цветной строки с копированием из переключаемой страницы
+; In:
+;   HL - адрес строки
+;   DE - координаты в пикселях (D - y, E - x)
+;        позиция базовой линии шрифта
+;   A  - атрибут цвета строки
+; Out:
+; Corrupt:
+;   HL, DE, BC, AF, HL', DE', BC', AF', IX, IY
+; Note:
+;   ℹ️ код расположен в "общей памяти"
+; -----------------------------------------
+DrawColorString.Page ; сохранение атрибута цвета строки
+                EX AF, AF'
 
-.Buffer         EQU Adr.TilemapBuffer                                           ; адрес временного буфера строки
+                ; подготовка восстановления страницы при выходе
+                PUSH_PAGE
+                LD BC, SetPageInStack
+                PUSH BC
+
+                ; проверка расположения строки в переключаемой странице
+                LD A, H
+                CPL
+                AND %11000000
+                JR NZ, .Draw                                                    ; переход, если адрес строки ниже #C000
+
+                ; копирование строки с завершающим нулём в общий буфер
+                PUSH DE
+                LD DE, DrawString.Page.Buffer
+                PUSH DE
+                CALL String.Copy
+                POP HL
+                POP DE
+
+.Draw           ; включение страницы шрифта и восстановление атрибута строки
+                LD A, Page.Font
+                SET_PAGE_A
+                EX AF, AF'
+                JP Font.Draw.Color.String
 
                 endif ; ~_UTILITIES_STRING_DRAW_STRING_

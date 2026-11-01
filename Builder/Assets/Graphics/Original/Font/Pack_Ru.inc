@@ -14,13 +14,13 @@ Begin:          EQU $
                 FONT_OFFSET Font.empty                                          ; -- нет символа "
                 FONT_OFFSET Font.empty                                          ; -- нет символа #
                 FONT_OFFSET Font.empty                                          ; -- нет символа $
-                FONT_OFFSET Font.empty                                          ; -- нет символа %
+                FONT_OFFSET Font.percent                                        ; -- %
                 FONT_OFFSET Font.empty                                          ; -- нет символа &
                 FONT_OFFSET Font.empty                                          ; -- нет символа '
                 FONT_OFFSET Font.empty                                          ; -- нет символа (
                 FONT_OFFSET Font.empty                                          ; -- нет символа )
                 FONT_OFFSET Font.empty                                          ; -- нет символа *
-                FONT_OFFSET Font.empty                                          ; -- нет символа +
+                FONT_OFFSET Font.plus                                           ; -- +
                 FONT_OFFSET Font.comma                                          ; -- ,
                 FONT_OFFSET Font.minus                                          ; -- -
                 FONT_OFFSET Font.dot                                            ; -- .
@@ -185,16 +185,22 @@ Begin:          EQU $
                 FONT_OFFSET Font.ru_low_34                                      ; -- ї
                 FONT_OFFSET Font.ru_low_35                                      ; -- ѥ
                 FONT_OFFSET Font.ru_low_36                                      ; -- ѧ
+                FONT_OFFSET Font.open_quote                                     ; -- открывающая кавычка
+                FONT_OFFSET Font.close_quote                                    ; -- закрывающая кавычка
 Font:
 .empty          FONT_NOT_SPRITE 1                                               ; нет символа
 .space          FONT_NOT_SPRITE 4                                               ; пробел
 .exclamation    FONT 10,  4, 0, 0, 0, 0,  8, "Sym/font_sym_0.bin"               ; !
+.percent        FONT 10,  9, 0, 0, 0, 0,  8, "Sym/font_sym_8.bin"               ; %
 .question       FONT 10,  7, 0, 0, 0, 0,  8, "Sym/font_sym_1.bin"               ; ?
 .colon          FONT  6,  3, 0, 0, 0, 0,  5, "Sym/font_sym_2.bin"               ; :
 .semicolon      FONT  7,  3, 0, 0, 0, 0,  5, "Sym/font_sym_3.bin"               ; ;
+.plus           FONT  5,  5, 0, 0, 0, 0,  5, "Sym/font_sym_7.bin"               ; +
 .comma          FONT  4,  4, 0, 0, 0, 0,  1, "Sym/font_sym_4.bin"               ; ,
 .dot            FONT  3,  3, 0, 0, 0, 0,  1, "Sym/font_sym_5.bin"               ; .
-.minus          FONT  3,  4, 0, 0, 0, 0,  3, "Sym/font_sym_6.bin"               ; -
+.minus          FONT  3,  4, 0, 0, 0, 0,  5, "Sym/font_sym_6.bin"               ; -
+.open_quote     FONT  9,  7, 0, 0, 0, 0,  7, "Sym/font_sym_9.bin"               ; открывающая кавычка
+.close_quote    FONT  9,  7, 0, 0, 0, 0,  7, "Sym/font_sym_10.bin"              ; закрывающая кавычка
 
 .zero           FONT 10,  8, 0, 0, 0, 0,  8, "Num/font_num_0.bin"               ; 0
 .one            FONT 10,  6, 0, 0, 0, 0,  8, "Num/font_num_1.bin"               ; 1

@@ -2,8 +2,8 @@
                 ifndef _INCLUDES_
                 define _INCLUDES_
 
-                include "Const/Include.inc"
                 include "Macro/Include.inc"
+                include "Const/Include.inc"
                 include "Pages/Include.inc"
                 include "Config/Include.inc"
 

@@ -158,7 +158,7 @@ DrawHint        ; A = rand() % Hint.Num
 
                 ; сохранение продолжения подсказки и передача адреса строки в HL
                 EX (SP), HL
-                CALL String.DrawString.AutoPage
+                CALL String.Draw.AutoPage
                 POP HL
 
                 POP BC
