@@ -32,14 +32,15 @@ ITEM_VISUAL     macro Width?, Height?, Offset?, Label?
 ; формирование базового описания предмета без диапазона выборки
 ; In:
 ;   Label?    - метка предмета и его массива свойств
-;   NameID?   - индекс текста названия
+;   NameID?   - уникальный идентификатор названия (строка и список)
 ;   VisualID? - индекс визуала предмета
 ;   Type?     - тип предмета ITEM_TYPE_
 ;   Flags?    - флаги базового предмета ITEM_FLAG_
 ; -----------------------------------------
 ITEM_BASE       macro Label?, NameID?, VisualID?, Type?, Flags?
 Label?          FBaseItem {
-                    NameID?,
+                    (NameID?) & #FF,
+                    ((NameID?) >> 8) & #FF,
                     VisualID?,
                     Type?,
                     Flags?,
@@ -53,7 +54,7 @@ Label? _ .Props EQU $
 ; формирование базового описания предмета с диапазоном выборки
 ; In:
 ;   Label?    - метка предмета и его массива свойств
-;   NameID?   - индекс текста названия
+;   NameID?   - уникальный идентификатор названия (строка и список)
 ;   VisualID? - индекс визуала предмета
 ;   Type?     - тип предмета ITEM_TYPE_
 ;   Flags?    - флаги базового предмета ITEM_FLAG_
@@ -62,7 +63,8 @@ Label? _ .Props EQU $
 ; -----------------------------------------
 ITEM_BASE_MIN_MAX macro Label?, NameID?, VisualID?, Type?, Flags?, Min?, Max?
 Label?          FBaseItem {
-                    NameID?,
+                    (NameID?) & #FF,
+                    ((NameID?) >> 8) & #FF,
                     VisualID?,
                     Type?,
                     Flags?,
@@ -97,11 +99,12 @@ Label? _ .PropNum EQU ($ - Label? _ .Props) / FItemProperty
 ; -----------------------------------------
 ; формирование текста названия предмета
 ; In:
-;   Label? - метка индекса названия
+;   Label? - метка двухбайтовой ссылки на название
 ;   Text?  - текст названия
 ; -----------------------------------------
 ITEM_NAME       macro Label?, Text?
-Label?          EQU ITEM_NAME_ID_COUNTER
+                assert ITEM_NAME_ID_COUNTER < 256, "too many strings in item text list"
+Label?          EQU (ITEM_TEXT_LIST_ID << 8) | ITEM_NAME_ID_COUNTER
 ITEM_NAME_ID_COUNTER = ITEM_NAME_ID_COUNTER + 1
                 define __ITEM_NAME_TEXT__ Text?
                 lua allpass

@@ -5,7 +5,6 @@
                 module Items
                 ORG #0000
 Begin:          EQU $
-ITEM_NAME_ID_COUNTER defl 0
                 include "Pack.inc"
 Size            EQU $-Begin
                 COMPRESSED_ASSET \

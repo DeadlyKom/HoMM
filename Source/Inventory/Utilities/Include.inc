@@ -3,6 +3,7 @@
                 define _INVENTORY_UTILITIES_INCLUDE_
 
                 module Utilities
+                include "GetText.asm"
                 include "GetItem.asm"
                 include "GetBaseItem.asm"
                 include "GetItemBySlot.asm"

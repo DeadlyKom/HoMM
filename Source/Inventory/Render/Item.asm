@@ -100,7 +100,8 @@ Item:           ; сохранение идентификатора экземп
                 CALL Item.Utilities.GetBaseAdr.HL                               ; получить адрес базового описания предмета
 
                 ; чтение индекса визуала базового предмета
-                INC HL                                                          ; FBaseItem.Name
+                INC HL                                                          ; переход к полю FBaseItem.ListName
+                INC HL                                                          ; переход к полю FBaseItem.Visual
                 LD L, (HL)
                 LD H, #00
                 POP DE
