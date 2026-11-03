@@ -23,7 +23,7 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 CALL Render.CursorCopyGate
                 JR C, .Input                                                    ; переход, если выполняется перенос кадра
                 CALL UI_Cursor.Update                                           ; обновление курсора
-                CALL C, UI_Cursor.Draw                                          ; вызов отображения курсора, если установлен флаг его отображения
+                CALL NC, UI_Cursor.Draw                                         ; вызов, если отображение курсора разрешено
 
 .Input          ; ************ Scan Input ************
                 SET_MODULE_PAGE_Inventory                                       ; включить страницу модуля "инвентаря"

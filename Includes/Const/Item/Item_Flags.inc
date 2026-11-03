@@ -12,18 +12,20 @@ ITEM_FLAG_NONE              EQU 0x00
 ; -----------------------------------------
 ;   флаги экземпляра предмета
 ; -----------------------------------------
-ITEM_FLAG_SUPERIOR_BIT EQU 0x00                                                 ; флаг, предмета высшего качества
+ITEM_FLAG_SUPERIOR_BIT      EQU 0x00                                            ; флаг, предмета высшего качества
 
-ITEM_FLAG_SUPERIOR     EQU 1 << ITEM_FLAG_SUPERIOR_BIT
+ITEM_FLAG_SUPERIOR          EQU 1 << ITEM_FLAG_SUPERIOR_BIT
 
 ; -----------------------------------------
 ;   состояние размещения предмета
 ; -----------------------------------------
 ITEM_LOCATION_EQUIPPED_BIT      EQU 0x00                                        ; флаг, экипировки предмета
 ITEM_ITEM_POSITION_CUSTOM_BIT   EQU 0x01                                        ; флаг, пользовательская позиция элемента
+ITEM_LOCATION_DRAGGED_BIT       EQU 0x02                                        ; флаг, перетаскивания предмета
 
 ITEM_LOCATION_EQUIPPED          EQU 1 << ITEM_LOCATION_EQUIPPED_BIT
 ITEM_ITEM_POSITION_CUSTOM       EQU 1 << ITEM_ITEM_POSITION_CUSTOM_BIT
+ITEM_LOCATION_DRAGGED           EQU 1 << ITEM_LOCATION_DRAGGED_BIT
 
                 endif ; ~_CONST_ITEM_FLAGS_
 

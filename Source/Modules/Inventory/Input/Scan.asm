@@ -31,10 +31,8 @@ Scan:           ; проверка доступности мыши
                 CALL Input.CheckKeyState
                 CALL Z, Input.Previous                                          ; вызов обработчика "переход к предыдущему", если клавиша нажата
 
-                ; проверка клавиши "выбор"
-                LD A, (GameConfig.KeySelect)
-                CALL Input.CheckKeyState
-                CALL Z, Input.Select                                            ; вызов обработчика выбора, если клавиша нажата
+                ; обработка клавиши "выбор"
+                CALL Input.Select
 
                 ; обработка клавиши "ускорение" для показа всех слотов
                 CALL Input.Accelerate

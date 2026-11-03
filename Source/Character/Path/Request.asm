@@ -47,22 +47,22 @@ Request:        ; проверить границы начальной и кон
                 LD H, A
                 LD A, D
                 CP H
-                JP NC, .NotFound
+                JP NC, .NotFound                                                ; переход, если начальная строка находится за границей карты
                 LD A, (GameSession.MapSize.Width)
                 LD H, A
                 LD A, E
                 CP H
-                JP NC, .NotFound
+                JP NC, .NotFound                                                ; переход, если начальный столбец находится за границей карты
                 LD A, (GameSession.MapSize.Height)
                 LD H, A
                 LD A, B
                 CP H
-                JP NC, .NotFound
+                JP NC, .NotFound                                                ; переход, если строка цели находится за границей карты
                 LD A, (GameSession.MapSize.Width)
                 LD H, A
                 LD A, C
                 CP H
-                JP NC, .NotFound
+                JP NC, .NotFound                                                ; переход, если столбец цели находится за границей карты
 
                 LD A, B
                 LD (.TargetY), A
@@ -100,7 +100,7 @@ Request:        ; проверить границы начальной и кон
                 LD H, A
                 LD A, (.TargetR)
                 OR H
-                JP Z, .NotFound
+                JP Z, .NotFound                                                 ; переход, если начальный гексагон совпадает с целью
 
                 ; классифицировать запрос по cube distance до настоящей цели
                 LD BC, #0000                                                    ; старт в относительных axial-координатах
@@ -108,7 +108,7 @@ Request:        ; проверить границы начальной и кон
                 LD (.StartDistance), A
                 LD (.BestDistance), A
                 CP #01
-                JP Z, .DirectPath                                               ; соседний гекс не требует BFS
+                JP Z, .DirectPath                                               ; переход, если цель находится в соседнем гексагоне
 
                 XOR A
                 LD (.BestQ), A
@@ -116,7 +116,7 @@ Request:        ; проверить границы начальной и кон
                 LD (.FarTarget), A                                              ; точная цель находится внутри bounded-области
                 LD A, (.StartDistance)
                 CP PATHFINDING_MAX_DISTANCE + 1
-                JR C, .InitSearch
+                JR C, .InitSearch                                               ; переход, если цель находится в пределах радиуса поиска
 
                 LD A, #01
                 LD (.FarTarget), A                                              ; построить только локальный префикс к дальней цели
@@ -149,7 +149,7 @@ Request:        ; проверить границы начальной и кон
                 LD DE, (.TailPtr)
                 OR A
                 SBC HL, DE
-                JR Z, .SearchExhausted
+                JR Z, .SearchExhausted                                          ; переход, если очередь проверки гексагонов пуста
 
                 ; извлечь следующий элемент FIFO
                 LD HL, (.HeadPtr)
@@ -162,7 +162,7 @@ Request:        ; проверить границы начальной и кон
                 LD (.HeadPtr), HL
 
                 CP PATHFINDING_MAX_DISTANCE
-                JR NC, .SearchLoop                                              ; последний слой не расширяется
+                JR NC, .SearchLoop                                              ; переход, если достигнута предельная глубина и соседи не проверяются
                 LD (.CurrentDepth), A
 
                 ; fixed axial directions; при равной длине BFS сохраняет первого родителя,
@@ -173,7 +173,7 @@ Request:        ; проверить границы начальной и кон
                 LD A, 3
                 CALL .TryNeighbor
                 POP BC
-                JR C, .Found
+                JR C, .Found                                                    ; переход, если найдена цель или оптимальная граница приближения
 
                 PUSH BC
                 INC C
@@ -181,21 +181,21 @@ Request:        ; проверить границы начальной и кон
                 LD A, 4
                 CALL .TryNeighbor
                 POP BC
-                JR C, .Found
+                JR C, .Found                                                    ; переход, если найдена цель или оптимальная граница приближения
 
                 PUSH BC
                 DEC B                                                           ;  0, -1
                 LD A, 5
                 CALL .TryNeighbor
                 POP BC
-                JR C, .Found
+                JR C, .Found                                                    ; переход, если найдена цель или оптимальная граница приближения
 
                 PUSH BC
                 DEC C                                                           ; -1,  0
                 XOR A
                 CALL .TryNeighbor
                 POP BC
-                JR C, .Found
+                JR C, .Found                                                    ; переход, если найдена цель или оптимальная граница приближения
 
                 PUSH BC
                 DEC C
@@ -203,14 +203,14 @@ Request:        ; проверить границы начальной и кон
                 LD A, 1
                 CALL .TryNeighbor
                 POP BC
-                JR C, .Found
+                JR C, .Found                                                    ; переход, если найдена цель или оптимальная граница приближения
 
                 PUSH BC
                 INC B                                                           ;  0, +1
                 LD A, 2
                 CALL .TryNeighbor
                 POP BC
-                JR C, .Found
+                JR C, .Found                                                    ; переход, если найдена цель или оптимальная граница приближения
 
                 JR .SearchLoop
 
@@ -220,13 +220,13 @@ Request:        ; проверить границы начальной и кон
 .SearchExhausted
                 LD A, (.FarTarget)
                 OR A
-                JR Z, .NotFound                                                ; точная цель внутри радиуса не достигнута
+                JR Z, .NotFound                                                 ; переход, если поиск завершён без достижения цели внутри радиуса
 
                 LD A, (.BestDistance)
                 LD H, A
                 LD A, (.StartDistance)
                 CP H
-                JR Z, .NotFound                                                ; за восемь шагов приблизиться к цели невозможно
+                JR Z, .NotFound                                                 ; переход, если достижимые кандидаты не приближают к дальней цели
 
                 ; ToDo(long-route), варианты расширения:
                 ;   1. Построить глобальный путь до TargetX/TargetY, а в HeroPath скопировать
@@ -251,7 +251,7 @@ Request:        ; проверить границы начальной и кон
                 LD E, A
                 CALL .CanTraverse
                 OR A
-                JR Z, .NotFound
+                JR Z, .NotFound                                                 ; переход, если соседний целевой гексагон непроходим
 
                 CALL Page1.Buffer.Utilities.GetHextileIDByCoord
                 LD HL, Adr.SortBuffer
@@ -273,7 +273,7 @@ Request:        ; проверить границы начальной и кон
 ;   BC - относительные axial координаты соседа (B - r, C - q)
 ;   A  - направление от соседа к родителю (0..5)
 ; Out:
-;   Carry установлен, если добавленная клетка является целью
+;   флаг переполнения установлен, если добавленная клетка является целью
 ; Corrupt:
 ;   HL, DE, AF
 ; -----------------------------------------
@@ -281,7 +281,7 @@ Request:        ; проверить границы начальной и кон
                 CALL .GetParentAdr
                 LD A, (HL)
                 CP PATHFINDING_CELL_UNVISITED
-                JR NZ, .RejectNeighbor
+                JR NZ, .ContinueSearch                                          ; переход, если соседний гексагон уже посещён
                 PUSH HL                                                         ; адрес parent-dir отмечается только после разрешённого ребра
 
                 ; relative axial -> absolute odd-r; одновременно проверить границы
@@ -292,7 +292,7 @@ Request:        ; проверить границы начальной и кон
                 LD H, A
                 LD A, D
                 CP H
-                JR NC, .RejectNeighborPop
+                JR NC, .RestoreParent                                           ; переход, если соседний гексагон находится за нижней границей карты
                 SRL A
                 LD E, A                                                         ; floor(y / 2)
                 LD A, (.StartQ)
@@ -303,11 +303,11 @@ Request:        ; проверить границы начальной и кон
                 LD H, A
                 LD A, E
                 CP H
-                JR NC, .RejectNeighborPop
+                JR NC, .RestoreParent                                           ; переход, если соседний гексагон находится за правой границей карты
 
                 CALL .CanTraverse
                 OR A
-                JR Z, .RejectNeighborPop
+                JR Z, .RestoreParent                                            ; переход, если переход в соседний гексагон запрещён
 
                 ; только успешно пройденная грань делает клетку посещённой;
                 ; это оставляет CanTraverse расширяемым до directional edge-check
@@ -330,34 +330,33 @@ Request:        ; проверить границы начальной и кон
 
                 ; для дальней цели рассматриваются только полные префиксы из 8 шагов
                 CP PATHFINDING_MAX_DISTANCE
-                JR NZ, .CheckExactTarget
+                JR NZ, .CheckExactTarget                                        ; переход, если глубина недостаточна для оценки дальнего приближения
                 LD A, (.FarTarget)
                 OR A
-                JR Z, .CheckExactTarget
+                JR Z, .CheckExactTarget                                         ; переход, если требуется достижение точной цели внутри радиуса
                 CALL .ConsiderFarTarget
-                RET C                                                           ; достигнута теоретически лучшая граница области
+                RET C                                                           ; выход, если достигнута теоретически лучшая граница области
 
                 ; ранний выход при первом достижении цели
 .CheckExactTarget
                 LD A, (.TargetQ)
                 CP C
-                JR NZ, .RejectNeighbor
+                JR NZ, .ContinueSearch                                          ; переход, если горизонтальная координата гексагона не совпадает с целью
                 LD A, (.TargetR)
                 CP B
-                JR NZ, .RejectNeighbor
+                JR NZ, .ContinueSearch                                          ; переход, если вертикальная координата гексагона не совпадает с целью
                 SCF
                 RET
 
-.RejectNeighborPop
-                POP HL
-.RejectNeighbor OR A                                                            ; Carry = 0
+.RestoreParent  POP HL                                                          ; восстановление адреса записи направления к родителю
+.ContinueSearch OR A                                                            ; сброс флага переполнения, поиск цели продолжается
                 RET
 ; -----------------------------------------
 ; оценить достижимый гекс восьмого слоя как конец дальнего префикса
 ; In:
 ;   BC - относительные axial координаты кандидата (B - r, C - q)
 ; Out:
-;   Carry установлен, если найден теоретический оптимум h(start,target)-8
+;   флаг переполнения установлен, если найден теоретический оптимум h(start,target)-8
 ; Corrupt:
 ;   HL, DE, AF
 ; -----------------------------------------
@@ -366,8 +365,8 @@ Request:        ; проверить границы начальной и кон
                 LD H, A                                                         ; H - расстояние кандидата до настоящей цели
                 LD A, (.BestDistance)
                 CP H
-                JR C, .CandidateRejected                                        ; лучший кандидат уже ближе
-                JR Z, .CandidateRejected                                        ; равенство сохраняет первый BFS-вариант
+                JR C, .ContinueSearch                                           ; переход, если ранее найденный кандидат ближе к цели
+                JR Z, .ContinueSearch                                           ; переход, если ранее найденный кандидат находится на таком же расстоянии
 
                 LD A, H
                 LD (.BestDistance), A
@@ -379,7 +378,7 @@ Request:        ; проверить границы начальной и кон
                 LD A, (.StartDistance)
                 SUB PATHFINDING_MAX_DISTANCE
                 CP H
-                JR NZ, .CandidateRejected
+                JR NZ, .ContinueSearch                                          ; переход, если кандидат не достигает теоретически минимального расстояния
 
                 ; ближе чем h-8 за восемь соседних переходов оказаться невозможно
                 LD A, C
@@ -387,10 +386,6 @@ Request:        ; проверить границы начальной и кон
                 LD A, B
                 LD (.TargetR), A
                 SCF
-                RET
-
-.CandidateRejected
-                OR A                                                            ; Carry = 0
                 RET
 ; -----------------------------------------
 ; cube distance от относительной клетки до настоящей цели
@@ -405,26 +400,26 @@ Request:        ; проверить границы начальной и кон
                 LD A, (.TargetQ)
                 SUB C
                 LD D, A                                                         ; signed dq
-                JP P, $+5
+                JP P, $+5                                                       ; переход, если разность координат q неотрицательна и смена знака не требуется
                 NEG
                 LD L, A                                                         ; max = abs(dq)
 
                 LD A, (.TargetR)
                 SUB B
                 LD E, A                                                         ; signed dr
-                JP P, $+5
+                JP P, $+5                                                       ; переход, если разность координат r неотрицательна и смена знака не требуется
                 NEG
                 CP L
-                JR C, .DistanceCheckSum
+                JR C, .DistanceCheckSum                                         ; переход, если модуль разности r меньше уже выбранного максимума
                 LD L, A                                                         ; max(abs(dq), abs(dr))
 
 .DistanceCheckSum
                 LD A, D
                 ADD A, E
-                JP P, $+5
+                JP P, $+5                                                       ; переход, если сумма разностей координат неотрицательна
                 NEG                                                             ; abs(dq + dr)
                 CP L
-                RET NC
+                RET NC                                                          ; выход, если модуль суммы разностей не меньше ранее выбранного максимума
                 LD A, L
                 RET
 ; -----------------------------------------
@@ -469,7 +464,7 @@ Request:        ; проверить границы начальной и кон
                 ADD A, PATHFINDING_MAX_DISTANCE
                 ADD A, L
                 LD L, A
-                JR NC, $+3
+                JR NC, $+3                                                      ; переход, если сложение смещения не требует увеличения старшего байта
                 INC H
                 LD DE, Adr.PathfindParents
                 ADD HL, DE
@@ -492,7 +487,7 @@ Request:        ; проверить границы начальной и кон
 
 .PathLoop       LD A, B
                 OR C
-                JR Z, .PathComplete
+                JR Z, .PathComplete                                             ; переход, если восстановление пути дошло до начального гексагона
 
                 ; relative axial -> absolute odd-r
                 LD A, (.StartR)

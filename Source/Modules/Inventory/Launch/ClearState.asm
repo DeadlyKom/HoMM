@@ -29,9 +29,9 @@ ClearState:     ; очистка флагов и анимации слотов
 
                 LD (Inventory.States.HoveredItem.Flags), A                      ; сброс запросов перерисовки фона и рисования описания
 
-                ; сброс идентификатора предмета под курсором
                 LD A, ITEM_ID_NONE
-                LD (Inventory.States.HoveredItem.ID), A
+                LD (Inventory.States.HoveredItem.ID), A                         ; сброс идентификатора предмета под курсором
+                LD (Inventory.States.DraggedItem.ID), A                         ; сброс идентификатора перетаскиваемого предмета
 
                 RET
 

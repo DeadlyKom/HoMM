@@ -60,7 +60,7 @@ BinaryToDecimal:
                 PUSH BC
 .NextBit        LD HL, .End - 1                                                 ; младший байт BCD-значения
                 LD B, E                                                         ; текущий размер BCD в байтах
-                RL D                                                            ; следующий бит исходного числа -> Carry
+                RL D                                                            ; следующий бит исходного числа -> флаг переполнения
 .DoubleBCD      LD A, (HL)
                 ADC A, A
                 DAA

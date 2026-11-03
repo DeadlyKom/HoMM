@@ -5,6 +5,7 @@
 ; обновление курсора
 ; In:
 ; Out:
+;   флаг переполнения установлен, если курсор скрыт, иначе сброшен
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
@@ -26,9 +27,11 @@ Update:         LD IX, GameState.Cursor
                 OR A
                 JR Z, .SetState_Idle                                            ; переход, если курсор переместился
 
-.StateTick      ; уменьшение счётчика
-                DEC (IX + FCursorState.Counter)
-                SCF                                                             ; установик флаг отображения курсора
+.StateTick      ; проверка запрета отображения курсора
+                LD A, (GameState.Render)
+                ADD A, A    ; x2
+
+                DEC (IX + FCursorState.Counter)                                 ; уменьшение счётчика бездействия
                 RET NZ                                                          ; выход, если счётчик бездействия курсора не обнулён
 
                 ; счётчик времени достик нуля,
@@ -48,7 +51,10 @@ Update:         LD IX, GameState.Cursor
 
 .SetState_Idle  LD A, CURSOR_STATE_IDLE
 .SetState_A     CALL Initialize.SetState
-                SCF                                                             ; установик флаг отображения курсора
+
+                ; проверка запрета отображения курсора
+                LD A, (GameState.Render)
+                ADD A, A    ; x2
                 RET
 
 .SetAnimIndex   ; сохранение индекса анимации
@@ -56,7 +62,10 @@ Update:         LD IX, GameState.Cursor
 
 .SetSubcounter  ; установка промежуточного счётчика
                 LD (IX + FCursorState.Counter), DURATION.DELAY_CURSOR
-                SCF                                                             ; установик флаг отображения курсора
+
+                ; проверка запрета отображения курсора
+                LD A, (GameState.Render)
+                ADD A, A    ; x2
                 RET
 
                 endif ; ~_CURSOR_UPDATE_

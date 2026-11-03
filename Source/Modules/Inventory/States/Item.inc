@@ -17,4 +17,7 @@ HoveredItem:    FItemID                                                         
 .Location       FVector8                                                        ; положение области описания в знакоместах
 .Size           FSize                                                           ; размер области описания в знакоместах
 
+DraggedItem:    FItemID                                                         ; идентификатор перетаскиваемого предмета
+.GrabOffset     FVector8                                                        ; локальная точка захвата в пикселях
+
                 endif ; ~_MODULE_INVENTORY_STATES_ITEM_

@@ -17,7 +17,7 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
 .RenderProcess  ; процесс отрисовки не завершён
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 CALL UI_Cursor.Update                                           ; обновление курсора
-                CALL C, UI_Cursor.Draw                                          ; отображение курсора
+                CALL NC, UI_Cursor.Draw                                         ; вызов, если отображение курсора разрешено
                 
 .Input          ; ************ Scan Input ************
                 SET_MODULE_PAGE_Characteristics                                 ; включить страницу модуля "характеристик"

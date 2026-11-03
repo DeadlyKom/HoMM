@@ -19,7 +19,7 @@
 IsWorldTick:    ; проверка активной фазы "мирового тика"
                 LD A, (GameSession.WorldTimeCtrl + FWorldTimeControl.Flags)
                 AND WORLD_EPOCH_ACTIVE
-                LD A, #B7                                                       ; OR A - сбросить Carry
+                LD A, #B7                                                       ; OR A
                 RET Z
 
                 ; проверка cadence-прохода в пределах [0..7]
@@ -30,10 +30,10 @@ IsWorldTick:    ; проверка активной фазы "мирового �
                 JR Z, .WorldTick
                 CP #02                                                          ; 4
                 JR Z, .WorldTick
-                LD A, #B7                                                       ; OR A - сбросить Carry
+                LD A, #B7                                                       ; OR A
                 RET
 
-.WorldTick      LD A, #37                                                       ; SCF - установить Carry
+.WorldTick      LD A, #37                                                       ; SCF
                 RET
 
                 endif ; ~_WORLD_TIME_GET_TICK_FOR_CADENCE_

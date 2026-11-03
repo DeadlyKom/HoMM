@@ -21,18 +21,20 @@ ML_UPDATE           EQU 1 << ML_UPDATE_BIT
 FRAME_READY_BIT     EQU 0x00                                                    ; флаг, готовности кадра
 SWAP_PENDING_BIT    EQU 0x01                                                    ; флаг, ожидания переключения экрана, но он не выполнен
 SWAPPED_PENDING_BIT EQU 0x02                                                    ; флаг, переключение экрана выполнено, ожидаем окончание прерывания
-SWAP_TARGET_BITS    EQU 0x03                                                    ; дополнительные биты, переключения экранов (2 и 3 бит)
+FPS_DISABLE_BIT     EQU 0x03                                                    ; флаг, отключения отображения FPS
+SWAP_TARGET_BITS    EQU 0x04                                                    ; поле выбора целевого экрана, биты 4 и 5
                                                                                 ; 00 - переключение автоматическое
                                                                                 ; 01 - переключение только на базовый экран
                                                                                 ; 11 - переключение только на теневой экран
-SWAP_DISABLE_BIT    EQU 0x06                                                    ; флаг, отключение смены экранов
-FPS_DISABLE_BIT     EQU 0x07                                                    ; флаг, отключения отображения FPS
+SWAP_DISABLE_BIT    EQU 0x06                                                    ; флаг, отключения смены экранов
+CURSOR_HIDDEN_BIT   EQU 0x07                                                    ; флаг, скрытия курсора
 
-SWAP_TARGET_MASK    EQU %00011000
+SWAP_TARGET_MASK    EQU %00110000
 FRAME_READY         EQU 1 << FRAME_READY_BIT
 SWAP_PENDING        EQU 1 << SWAP_PENDING_BIT
 SWAPPED_PENDING     EQU 1 << SWAPPED_PENDING_BIT
 FPS_DISABLE         EQU 1 << FPS_DISABLE_BIT
+CURSOR_HIDDEN       EQU 1 << CURSOR_HIDDEN_BIT
 
 ; -----------------------------------------
 ;   флаги работы с музыкой

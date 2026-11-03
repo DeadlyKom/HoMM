@@ -53,7 +53,7 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 CALL Render.CursorMemcpyGate                                    ; проверка разрешения работы с буфером курсора
                 JR C, .Input
                 CALL UI_Cursor.Update                                           ; обновление курсора
-                CALL C, UI_Cursor.Draw                                          ; отображение курсора
+                CALL NC, UI_Cursor.Draw                                         ; вызов, если отображение курсора разрешено
                 
 .Input          ; ************ Scan Input ************
                 SET_MODULE_PAGE_World                                           ; включить страницу модуля "World"

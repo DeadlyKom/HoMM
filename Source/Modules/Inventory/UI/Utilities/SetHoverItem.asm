@@ -25,10 +25,13 @@ SetHoverItem:   ; проверка отсутствия предмета под 
                 LD A, E
                 LD (Inventory.States.HoveredItem.ID), A
 
+                ; проверка активности перетаскивания
+                CHECK_INPUT_FLAG INPUT_DRAG_DROP_BIT
+                RET NZ                                                          ; выход, если перетаскивание активно
+
                 ; установка запросов перерисовки фона и рисования описания
                 LD HL, Inventory.States.HoveredItem.Flags
                 SET_OR_FLAGS INVENTORY_REDRAW | INVENTORY_DESCRIPTION
-                SET_MAIN_FLAG ML_UPDATE_BIT                                     ; запрос обновления экрана после изменения состояния слота
                 RET
 
                 endif ; ~_MODULE_INVENTORY_UI_UTILITIES_SET_HOVER_ITEM_
