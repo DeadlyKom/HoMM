@@ -11,9 +11,9 @@
                 ;   +-------+------------------------------------------+-------+
                 ;   | #DD00 |                                 свободно | #0200 | ; свободно
                 ;   +-------+------------------------------------------+-------+
-                ;   | #DF00 |                             BuffersSlots | #06CE | ; буферы слотов инвентаря и перетаскиваемого предмета
+                ;   | #DF00 |                             BuffersSlots | #0754 | ; буферы слотов инвентаря, перетаскиваемого предмета и подсветки сетки
                 ;   +-------+------------------------------------------+-------+
-                ;   | #E5CE |                                 свободно | #0A32 | ; свободно
+                ;   | #E654 |                                 свободно | #09AC | ; свободно
                 ;   +-------+------------------------------------------+-------+
                 ;   | #F000 |                             SharedScreen | #1000 | ; общая память для кода
                 ;   +-------+------------------------------------------+-------+
@@ -87,6 +87,11 @@ Background      EQU SlotBuffers.Boot.Background                                 
                 ; размер буфера перетаскиваемого предмета
                 module DraggedItem
 Background      EQU SlotBuffers.DraggedItem.Background                          ; размер буфера пикселей и атрибутов фона
+                endmodule
+
+                ; размер буфера подсветки сетки инвентаря
+                module GridHighlight
+Attributes      EQU SlotBuffers.GridHighlight.Attributes                        ; размер буфера исходных атрибутов сетки
                 endmodule
                 endmodule
                 endmodule
@@ -171,6 +176,12 @@ Background      EQU Adr.BuffersSlots.Boot.Attributes \
                 module DraggedItem
 Background      EQU Adr.BuffersSlots.Boot.Background \
                     + Size.BuffersSlots.Boot.Background                         ; адрес буфера пикселей и атрибутов фона
+                endmodule
+
+                ; адрес буфера подсветки сетки инвентаря
+                module GridHighlight
+Attributes      EQU Adr.BuffersSlots.DraggedItem.Background \
+                    + Size.BuffersSlots.DraggedItem.Background                  ; адрес буфера исходных атрибутов сетки
                 endmodule
 
                 endmodule

@@ -27,7 +27,7 @@ Save.Wrap       EXX
 ; Corrupt:
 ;   HL, DE, BC, AF, HL', BC', IX
 ; Note:
-;   - допустимая ширина: 2, 4, 6 знакомест
+;   - допустимая ширина: 2, 4, 6, 8, 10, 12, 14, 16 знакомест
 ;   - высота должна быть ненулевой, область целиком помещается на экране
 ; -----------------------------------------
 Save:           ; инициализация стека
@@ -69,6 +69,11 @@ Save:           ; инициализация стека
                 POP HL
                 JP (IX)
 
+.Row16          READ_TWO_BYTES_FORWARD
+.Row14          READ_TWO_BYTES_FORWARD
+.Row12          READ_TWO_BYTES_FORWARD
+.Row10          READ_TWO_BYTES_FORWARD
+.Row8           READ_TWO_BYTES_FORWARD
 .Row6           READ_TWO_BYTES_FORWARD
 .Row4           READ_TWO_BYTES_FORWARD
 .Row2           READ_TWO_BYTES_FORWARD_
@@ -108,8 +113,8 @@ Save:           ; инициализация стека
                 POP HL
                 JP (IX)
 
-.Table          ; адреса чтения строк шириной 2, 4, 6 знакомест
-                DW .Row2, .Row4, .Row6
+.Table          ; адреса чтения строк шириной 2–16 знакомест с шагом 2
+                DW .Row2, .Row4, .Row6, .Row8, .Row10, .Row12, .Row14, .Row16
 
                 display " - Memcpy screen save attributes:\t\t\t", /A, Save, "\t= busy [ ", /D, $ - Save, " byte(s)  ]"
                 endmodule

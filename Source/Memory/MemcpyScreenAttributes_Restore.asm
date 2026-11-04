@@ -5,6 +5,17 @@
                 module Memcpy
                 module Attributes
 ; -----------------------------------------
+; восстановление атрибутов экранной области из буфера (обёртка)
+; In:
+;   HL' - адрес шапки буфера
+; Out:
+; Corrupt:
+;   HL, DE, BC, AF, HL', DE', BC', IX, IY
+; Note:
+;   параметры передаются через EXX перед вызовом из другой страницы
+; -----------------------------------------
+Restore.Wrap    EXX
+; -----------------------------------------
 ; восстановление атрибутов экранной области из буфера
 ; In:
 ;   HL - адрес шапки буфера
@@ -12,7 +23,7 @@
 ; Corrupt:
 ;   HL, DE, BC, AF, IX, IY
 ; Note:
-;   - допустимая ширина: 2, 4, 6 знакомест
+;   - допустимая ширина: 2, 4, 6, 8, 10, 12, 14, 16 знакомест
 ;   - буфер сохранённых атрибутов остаётся неизменным
 ; -----------------------------------------
 Restore:        ; инициализация стека
@@ -67,6 +78,11 @@ Restore:        ; инициализация стека
                 LD D, #FF
                 JP (IX)
 
+.Row16          WRITE_TWO_BYTES_BACKWARD
+.Row14          WRITE_TWO_BYTES_BACKWARD
+.Row12          WRITE_TWO_BYTES_BACKWARD
+.Row10          WRITE_TWO_BYTES_BACKWARD
+.Row8           WRITE_TWO_BYTES_BACKWARD
 .Row6           WRITE_TWO_BYTES_BACKWARD
 .Row4           WRITE_TWO_BYTES_BACKWARD
 .Row2           WRITE_TWO_BYTES_BACKWARD_
@@ -84,8 +100,8 @@ Restore:        ; инициализация стека
                 LD SP, #0000
                 RET
 
-.Table          ; адреса записи строк шириной 2, 4, 6 знакомест
-                DW .Row2, .Row4, .Row6
+.Table          ; адреса записи строк шириной 2–16 знакомест с шагом 2
+                DW .Row2, .Row4, .Row6, .Row8, .Row10, .Row12, .Row14, .Row16
 
                 display " - Memcpy screen restore attributes:\t\t\t", /A, Restore, "\t= busy [ ", /D, $ - Restore, " byte(s)  ]"
                 endmodule

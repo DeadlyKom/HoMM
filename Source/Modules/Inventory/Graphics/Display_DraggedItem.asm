@@ -31,6 +31,8 @@ DraggedItem:    ; проверка активности перетаскиван
                 OR A
                 RET Z                                                           ; выход, если ширина предмета не задана
 
+                ; отображение подсветки перед сохранением фона и выводом предмета
+                CALL Inventory.Display.GridHighlight
                 LD DE, (Inventory.States.DraggedItem.Location)                  ; чтение подготовленного положения предмета
                 PUSH DE                                                         ; сохранение положения на время копирования фона
 
@@ -67,6 +69,7 @@ DraggedItem:    ; проверка активности перетаскиван
 
                 ; сброс готовности фона после завершения перетаскивания
                 RES_FLAG_MODIFY DraggedItem.Ready
+                RES_FLAG_MODIFY Inventory.Display.GridHighlight.Ready
                 RET
 
 .Active         ; проверка первого сохранения фона
@@ -82,11 +85,14 @@ DraggedItem:    ; проверка активности перетаскиван
                 CHECK_FLAG INVENTORY_REDRAW_BIT
                 JR Z, .Position                                                 ; переход, если окно не будет перерисовано целиком
 
-                ; сброс готовности фона, который заменит полная перерисовка
-                RES_FLAG_MODIFY DraggedItem.Ready
+                ; подготовка флагов перед полной перерисовкой
+                RES_FLAG_MODIFY DraggedItem.Ready                               ; сброс готовности сохранённого фона предмета
+                RES_FLAG_MODIFY Inventory.Display.GridHighlight.Ready           ; сброс готовности сохранённых атрибутов сетки
 
 .Position       ; расчёт положения предмета с учётом точки захвата
-                CALL Inventory.Utilities.DraggedItem.GetPosition                ; DE - положение предмета в знакоместах (D - y, E - x)
+                LD HL, (Mouse.Position)
+                LD (Inventory.Display.GridHighlight.Cursor), HL
+                CALL Inventory.Utilities.DraggedItem.GetPosition.ByCursor       ; DE - положение предмета в знакоместах (D - y, E - x)
 
 .PositionReady  ; проверка изменения положения в знакоместах
                 LD HL, (Inventory.States.DraggedItem.Location)
@@ -116,9 +122,13 @@ DraggedItem:    ; проверка активности перетаскиван
 
                 ; проверка наличия изображения предмета на экране
                 CHECK_FLAG_MODIFY DraggedItem.Ready
-                JR Z, .Return                                                   ; переход, если фон уже восстановлен или ещё не сохранён
+                JR NZ, .SaveRegs                                                ; переход, если предмет отображён поверх сохранённого фона
 
-                ; сохранение регистров обработки слота
+                ; проверка наличия подсветки без изображения предмета
+                CHECK_FLAG_MODIFY Inventory.Display.GridHighlight.Ready
+                JR Z, .Return                                                   ; переход, если фон предмета и атрибуты сетки уже восстановлены
+
+.SaveRegs       ; сохранение регистров обработки слота
                 PUSH DE
                 PUSH BC
                 EXX
@@ -131,11 +141,22 @@ DraggedItem:    ; проверка активности перетаскиван
                 PUSH IX
                 PUSH IY
 
+                ; проверка необходимости удалить изображение предмета
+                CHECK_FLAG_MODIFY DraggedItem.Ready
+                JR Z, .RestoreGrid                                              ; переход, если изображение предмета уже удалено
+
                 ; восстановление пикселей и атрибутов без переносимого предмета
                 LD HL, .Buffer
                 EXX
                 CALL_IN_PAGE Page.SharedScreen, Inventory.SharedScreen.Memcpy.Bound.Restore.Wrap
                 RES_FLAG_MODIFY DraggedItem.Ready
+
+.RestoreGrid    ; -----------------------------------------
+                ; восстановление атрибутов сетки и регистров вызывающего кода
+                ; -----------------------------------------
+
+                ; удаление подсветки после восстановления фона предмета
+                CALL Inventory.Display.GridHighlight.Restore
 
                 ; восстановление регистров обработки слота
                 POP IY
