@@ -272,7 +272,8 @@ DrawChar:       ; расчёт адреса символа
 ;   DE, AF
 ; Note:
 ; -----------------------------------------
-SetCursor:      CALL CharToScreen
+SetCursor:      ; преобразование позиции в экранный адрес
+                CALL CharToScreen
                 LD (DrawChar.ScreenAdr), DE
                 RET
 ; -----------------------------------------

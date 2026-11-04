@@ -7,6 +7,9 @@
 ;   A  - индекс слота в FCharacterEquipment
 ;   DE - экранная позиция слота в знакоместах
 ; Out:
+;   D  - тип отображённого предмета или ITEM_ID_NONE, если слот пуст
+;   IX - размер изображения в знакоместах (IXH - y, IXL - x)
+;   IY - позиция изображения в знакоместах (IYH - y, IYL - x)
 ; Corrupt:
 ;   HL, DE, BC, AF, AF', IX, IY
 ; Note:
@@ -42,7 +45,11 @@ Equipment:      ; сохранение индекса слота
 
                 ; проверка наличия предмета в слоте
                 CP ITEM_ID_NONE
-                RET Z                                                           ; выход, если слот экипировки пуст
+                JR Z, .NotDrawn                                                 ; переход, если слот экипировки пуст
                 JP Inventory.SharedCode.Render.Item                             ; отображение предмета по позиции слота
+
+.NotDrawn       ; возврат признака отсутствия отображённого предмета
+                LD D, ITEM_ID_NONE
+                RET
 
                 endif                                                           ; ~_INVENTORY_RENDER_EQUIPMENT_

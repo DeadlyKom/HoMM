@@ -11,6 +11,7 @@
                 include "Display_Description.asm"
                 include "Display_DraggedItem.asm"
                 include "Display_GridHighlight.asm"
+                include "Utilities/Include.inc"
 
                 ifdef _DEBUG
                 include "Display_DebugInfo.asm"
