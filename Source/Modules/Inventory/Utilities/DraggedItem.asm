@@ -100,30 +100,24 @@ PrepareGrab:    ; сохранение исходного состояния р�
                 ; определение исходного положения предмета в экипировке
                 ; -----------------------------------------
                 
-                ; определение слота, содержащего взятый предмет
-                LD A, (GameState.PlayerActions + FPlayerActions.SelectedHeroID)
-                LD D, A
-                LD A, (Inventory.States.DraggedItem.ID)
-                LD E, A
+                ; определение слота под курсором в момент нажатия
+                LD HL, (Inventory.States.DraggedItem.GrabOffset)
+                PUSH IX                                                         ; сохранение исходного состояния размещения в IXL
                 ; -----------------------------------------
                 ; In:
-                ;   D  - индекс персонажа
-                ;   E  - идентификатор предмета
+                ;   HL - координаты в пикселях (H - y, L - x)
                 ; Out:
-                ;   HL - адрес идентификатора в найденном слоте
-                ;   E  - индекс найденного слота или ITEM_ID_NONE
+                ;   E  - индекс слота или ITEM_ID_NONE
                 ;   флаг переполнения установлен, если слот найден
                 ; Corrupt:
-                ;   HL, DE, BC, AF, AF'
+                ;   DE, BC, AF, IX
                 ; -----------------------------------------
-                CALL_IN_PAGE Page.Object, Character.Utilities.Equipment.FindSlot; определение слота экипировки по идентификатору предмета
-
-                ; проверка наличия предмета в экипировке
+                CALL Inventory.UI.Utilities.GetSlotByPoint
+                POP IX
+                JR NC, .Rejected                                                ; переход, если курсор находится вне слотов экипировки
                 LD A, E
-                CP ITEM_ID_NONE
-                JR Z, .Rejected                                                 ; переход, если предмет отсутствует в экипировке
 
-.SlotLocation   ; расчёт адреса положения первого слота предмета
+.SlotLocation   ; расчёт адреса положения слота под курсором
                 LD HL, Inventory.States.Slots.Head + FInventorySlotStates.Location
                 LD DE, FInventorySlotStates
                 OR A
