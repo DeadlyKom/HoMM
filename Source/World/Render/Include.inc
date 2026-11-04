@@ -7,6 +7,7 @@
                 include "Object/Include.inc"
                 include "UpdateMinimap.asm"
                 include "PipelineHexagons.asm"
+                include "RainVisible.asm"
                 include "SetViewWorldBound.asm"
 
                 ifdef _DEBUG

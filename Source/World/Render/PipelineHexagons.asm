@@ -135,6 +135,9 @@ PipelineHexagons:
                 
                 SET_FLAG_MODIFY CursorMemcpyGate.Flag                           ; блокировка работы с буфером курсора
 
+                ; стирание прежней фазы дождя без восстановления при скролле
+                CALL World.SharedScreen.Effects.Rain.Erase
+
                 ; копирование блоков, если курсор находится в игровой зоне, он скопируется тоже
                 CALL ScreenBlock.Memcpy                                         ; копирование screen block'и в теневой экран
 
@@ -169,7 +172,10 @@ PipelineHexagons:
                 ; ToDo: см Interrupt.Memcpy описание ошибки
                 ; RESTORE_SCR_
 
-.SkipCurRestore ; подготовка обработки UI после копирования экранных блоков
+.SkipCurRestore ; обновление дождя непосредственно на теневом экране
+                CALL World.SharedScreen.Effects.Rain.Tick
+
+                ; подготовка обработки UI после копирования экранных блоков
                 SET_MODULE_PAGE_World                                           ; включить страницу модуля "World"
 
                 ; проверка запроса паузы игры

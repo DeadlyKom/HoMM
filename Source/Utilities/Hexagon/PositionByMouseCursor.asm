@@ -12,8 +12,48 @@
 ;   HL, DE, BC, AF, HL', BC', AF'
 ; Note:
 ; -----------------------------------------
-GetPosByMouse:  ; сброс флага, необходимости дополнительной проверки
-                RES_FLAG_MODIFY GetPosByMouse.Flag
+GetPosByMouse:  ; чтение пиксельных координат мыши
+                LD A, (Mouse.PositionY)
+                LD D, A
+                LD A, (Mouse.PositionX)
+                LD E, A
+                CALL GetPosByPixel
+
+                ; сохранение найденной позиции гексагона под курсором
+                ifdef _DEBUG
+                ifdef DEBUG_INFO_COORDINATES
+                ; проверка изменения гексагона под курсором
+                LD A, (GameSession + FGameSession.WorldInfo.Cursor.X)
+                CP C
+                JR NZ, .CursorChanged                                           ; переход, если изменилась координата X гексагона
+                ; проверка изменения строки гексагона при прежней координате X
+                LD A, (GameSession + FGameSession.WorldInfo.Cursor.Y)
+                CP B
+                RET Z                                                           ; выход, если позиция не изменилась
+.CursorChanged  SET_FLAG_MODIFY \
+                    World.SharedCode.Render.DebugInfo.Coordinates.Flag          ; установка флага, изменения координат мира
+                endif
+                endif
+                LD (GameSession + FGameSession.WorldInfo.Cursor), BC
+                RET
+
+; -----------------------------------------
+; определение гексагона по экранным пиксельным координатам
+; In:
+;   DE - экранная позиция, D - y, E - x в пикселях
+; Out:
+;   BC - координаты гексагона, B - y, C - x
+; Corrupt:
+;   HL, DE, AF, HL', BC', AF'
+; Note:
+;   учитывает положение и смещение карты
+;   не изменяет координаты мыши и гексагона под курсором
+;   признак спорной грани хранится в стеке отдельно для каждого вызова
+;   SP восстанавливается перед возвратом, дополнительное место в стеке 2 байта
+; -----------------------------------------
+GetPosByPixel:  ; создание локального признака спорной грани гексагона
+                LD A, #00
+                PUSH AF
                 
                 ; -----------------------------------------
                 ; расчёт вертикального положения мыши относительно центра гексагона (0,0)
@@ -27,7 +67,7 @@ GetPosByMouse:  ; сброс флага, необходимости дополн
                 EX AF, AF'
                 
                 ; расчёт положения курсора по вертикали относительно левого-верхнего "игрового мира"
-                LD A, (Mouse.PositionY)
+                LD A, D
                 LD L, A
                 LD H, #00
                 LD B, #FF
@@ -74,9 +114,11 @@ GetPosByMouse:  ; сброс флага, необходимости дополн
                 CP -((HEXTILE_BASE_SIZE_Y >> 2) << 3) + 1                       ; +1 т.к. отчёт от 8-16
                 JP P, .NotDisputed      ; не оспариваемая грань гексагонов
 
-                ; установка флаг необходимости дополнительной проверки
+                ; обновление локального признака спорной грани с сохранением дельты Y
                 EX AF, AF'
-                SET_FLAG_MODIFY GetPosByMouse.Flag
+                POP AF
+                LD A, #01
+                PUSH AF
                 EX AF, AF'
                 JR $+3          ; необходима проверка, пока не понятно требуется или нет смещение!
 .NotDisputed    INC B           ; +1 смещение по вертикали
@@ -97,7 +139,7 @@ GetPosByMouse:  ; сброс флага, необходимости дополн
                 EX AF, AF'
 
                 ; расчёт положения курсора по горизонтали относительно левого-верхнего "игрового мира"
-                LD A, (Mouse.PositionX)
+                LD A, E
                 ; проверка чётности строки, если чётная,
                 ; сместить на половину гексагона по горизонтали влево
                 BIT 0, B
@@ -163,10 +205,10 @@ GetPosByMouse:  ; сброс флага, необходимости дополн
                 LD E, A
                 DEC L           ; флаг левая сторона
 
-.Final          ; флаг необходимости дополнительной проверки
-.Flag           EQU $
-                NOP
-                JR NC, .SetPosition                                             ; переход, если не требуется дополнительная проверка
+.Final          ; проверка локального признака спорной грани и освобождение места в стеке
+                POP AF
+                OR A
+                JR Z, .SetPosition                                              ; переход, если не требуется дополнительная проверка
 
                 INC L
                 JR Z, .LeftSide
@@ -255,21 +297,7 @@ GetPosByMouse:  ; сброс флага, необходимости дополн
                 DEC C       ; -1 смещение по горизонтали
                 INC B       ; +1 смещение по вертикали
 
-.SetPosition    ; сохранение найденой позиции гексагона под курсором
-                ifdef _DEBUG
-                ifdef DEBUG_INFO_COORDINATES
-                LD A, (GameSession + FGameSession.WorldInfo.Cursor.X)
-                CP C
-                JR NZ, .CursorChanged
-                LD A, (GameSession + FGameSession.WorldInfo.Cursor.Y)
-                CP B
-                RET Z                                                           ; выход, если позиция не изменилась
-.CursorChanged  SET_FLAG_MODIFY \
-                    World.SharedCode.Render.DebugInfo.Coordinates.Flag          ; установка флага, изменения координат мира
-                endif
-                endif
-                LD (GameSession + FGameSession.WorldInfo.Cursor), BC
-                RET
+.SetPosition    RET
 
                 ; align 256
 .TgTable        lua allpass

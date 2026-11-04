@@ -44,6 +44,7 @@ REG_ASSETS_ID_DEBUG macro Label?
                     REG_ASSETS_ID       ASSETS_ID_MAP_DEBUG                     ; карта "отладочная"
                     REG_ASSETS_ID       ASSETS_ID_MUSIC_01                      ; музыка "главного меню"
                     REG_ASSETS_ID       ASSETS_ID_MUSIC_02                      ; музыка "игрового процесса"
+                    REG_ASSETS_ID       ASSETS_ID_MUSIC_03                      ; музыка "игрового процесса"
                     REG_ASSETS_ID       ASSETS_ID_ITEMS_METADATA_PACK           ; метаданные: предметов
                     REG_ASSETS_ID       ASSETS_ID_ITEMS_TEXT_PACK               ; текст: предметов
 

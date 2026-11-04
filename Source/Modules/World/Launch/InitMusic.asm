@@ -25,8 +25,8 @@ InitMusic:      ; запрет музыкальных тиков на время
 
 .Load           ; загрузка трека в существующий музыкальный слот
                 SET_PAGE_ASSETS
-                SET_LOAD_ASSETS ASSETS_ID_MUSIC_02, Page.Music, Adr.Music.Slots
-                LOAD_ASSETS ASSETS_ID_MUSIC_02
+                SET_LOAD_ASSETS ASSETS_ID_MUSIC_03, Page.Music, Adr.Music.Slots
+                LOAD_ASSETS ASSETS_ID_MUSIC_03
 
                 ; инициализация проигрывателя общим треком игрового процесса
                 SET_PAGE_MUSIC
