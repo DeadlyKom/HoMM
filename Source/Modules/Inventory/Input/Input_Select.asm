@@ -30,17 +30,15 @@ Input.Select    ; проверка состояния клавиши "выбор
                 ; блокировка повторной обработки до отпускания клавиши
                 SET_FLAG_MODIFY .PressGate
 
+                ; проверка запроса или выполнения перехода UI
+                CHECK_UI_FLAGS UI_REQUEST_PENDING | UI_TRANSITION_ACTIVE
+                RET NZ                                                          ; выход, если переход UI запрошен или уже выполняется
+
                 ; проверка уже взятого предмета
                 CHECK_INPUT_FLAG INPUT_DRAG_DROP_BIT
                 JR NZ, .Place                                                   ; переход, если предмет уже взят для перетаскивания
 
-                ; проверка наличия предмета под курсором
-                LD A, (Inventory.States.HoveredItem.ID)
-                CP ITEM_ID_NONE
-                RET Z                                                           ; выход, если предмет под курсором отсутствует
-
-                ; сохранение идентификатора и позиции курсора
-                LD (Inventory.States.DraggedItem.ID), A
+                ; сохранение позиции курсора для определения предмета в основном цикле
                 LD HL, (Mouse.Position)
                 LD (Inventory.States.DraggedItem.GrabOffset), HL
 

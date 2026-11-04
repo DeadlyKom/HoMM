@@ -16,6 +16,54 @@ TakeItem:       ; проверка запроса взятия предмета
                 ; сброс обрабатываемого запроса взятия
                 RES_FLAG_MODIFY .Request
 
+                ; определение слота по сохранённой позиции нажатия
+                LD HL, (Inventory.States.DraggedItem.GrabOffset)
+                ; -----------------------------------------
+                ; In:
+                ;   HL - координаты в пикселях (H - y, L - x)
+                ; Out:
+                ;   E  - индекс слота или ITEM_ID_NONE
+                ;   флаг переполнения установлен, если слот найден
+                ; Corrupt:
+                ;   DE, BC, AF, IX
+                ; -----------------------------------------
+                CALL Inventory.UI.Utilities.GetSlotByPoint
+                JR NC, .GridItem                                                ; переход, если курсор находился вне слотов экипировки
+
+                ; определение предмета в слоте под курсором
+                LD A, E
+                ADD A, FCharacter.Equipment
+                LD E, A
+                ; -----------------------------------------
+                ; In:
+                ;   E  - смещение поля слота относительно начала FCharacter
+                ; Out:
+                ;   HL - адрес идентификатора предмета в слоте экипировки
+                ;   E  - идентификатор предмета или ITEM_ID_NONE
+                ; Corrupt:
+                ;   HL, DE, BC, AF, AF'
+                ; -----------------------------------------
+                CALL_IN_PAGE Page.Object, Inventory.SharedCode.Utilities.GetItemBySlot
+                JR .Found
+
+.GridItem       ; определение предмета в сетке по сохранённой позиции нажатия
+                LD DE, (Inventory.States.DraggedItem.GrabOffset)
+                LD A, (GameState.Inventory.Page)
+                ; -----------------------------------------
+                ; In:
+                ;   DE - позиция курсора в пикселях (D - y, E - x)
+                ; Out:
+                ;   E  - идентификатор экземпляра предмета или ITEM_ID_NONE
+                ;   флаг переполнения установлен, если предмет найден
+                ; Corrupt:
+                ;   HL, DE, BC, AF, AF', IX, IY
+                ; -----------------------------------------
+                CALL_IN_PAGE_A Inventory.SharedCode.Utilities.GetItemByCursor.AtPosition
+
+.Found          ; сохранение идентификатора предмета под позицией нажатия
+                LD A, E
+                LD (Inventory.States.DraggedItem.ID), A
+
                 ; проверка допустимого идентификатора экземпляра
                 LD A, (GameState.ItemsNum)
                 LD B, A
