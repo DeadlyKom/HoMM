@@ -28,6 +28,7 @@
                 include "Map/Include.inc"
                 include "Game/Include.inc"
                 include "Rain.inc"
+                include "Lightning.inc"
                 include "Item/Include.inc"
                 include "Event/Include.inc"
                 include "Input/Include.inc"

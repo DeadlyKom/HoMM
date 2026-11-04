@@ -172,7 +172,10 @@ PipelineHexagons:
                 ; ToDo: см Interrupt.Memcpy описание ошибки
                 ; RESTORE_SCR_
 
-.SkipCurRestore ; обновление дождя непосредственно на теневом экране
+.SkipCurRestore ; обновление атрибутной вспышки после переноса игрового кадра
+                CALL World.SharedScreen.Effects.Lightning.Tick
+
+                ; обновление дождя непосредственно на теневом экране
                 CALL World.SharedScreen.Effects.Rain.Tick
 
                 ; подготовка обработки UI после копирования экранных блоков
