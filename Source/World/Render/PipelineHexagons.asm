@@ -138,6 +138,9 @@ PipelineHexagons:
                 ; стирание прежней фазы дождя без восстановления при скролле
                 CALL World.SharedScreen.Effects.Rain.Erase
 
+                ; стирание прежнего разряда до обновления пикселей мира
+                CALL World.SharedScreen.Effects.Bolt.Erase
+
                 ; копирование блоков, если курсор находится в игровой зоне, он скопируется тоже
                 CALL ScreenBlock.Memcpy                                         ; копирование screen block'и в теневой экран
 

@@ -3,6 +3,7 @@
 
                 module Effects
                 include "Source/Modules/World/SharedScreen/Effects/Rain.asm"
+                include "Source/Modules/World/SharedScreen/Effects/LightningBolt.asm"
                 include "Source/Modules/World/SharedScreen/Effects/Lightning.asm"
                 endmodule
 
