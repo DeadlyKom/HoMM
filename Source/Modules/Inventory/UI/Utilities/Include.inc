@@ -5,6 +5,7 @@
                 module Utilities
                 include "PutItem.asm"
                 include "TakeItem.asm"
+                include "EquipItem.asm"
                 include "SetHoverItem.asm"
                 include "ResetHoverItem.asm"
                 endmodule
