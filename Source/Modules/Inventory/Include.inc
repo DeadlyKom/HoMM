@@ -7,9 +7,11 @@
                 include "UI/Include.inc"
                 include "RestoreState.asm"
                 include "Input/Include.inc"
+                include "States/Include.inc"                                    ; состояния
                 include "Launch/Include.inc"
                 include "Graphics/Include.inc"
-                include "States/Include.inc"                                    ; состояния
+                include "Utilities/Include.inc"
+                include "DragAndDrop/Include.inc"
 
                 ; блок кода, копируемый при развёртывании модуля
 Adr.Deploy      include "Source/Inventory/Include.inc"

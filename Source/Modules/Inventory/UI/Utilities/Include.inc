@@ -3,10 +3,9 @@
                 define _MODULE_INVENTORY_UI_UTILITIES_INCLUDE_
 
                 module Utilities
-                include "PutItem.asm"
-                include "TakeItem.asm"
-                include "EquipItem.asm"
+                include "RefreshHover.asm"
                 include "SetHoverItem.asm"
+                include "GetSlotByPoint.asm"
                 include "ResetHoverItem.asm"
                 endmodule
 

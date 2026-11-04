@@ -8,7 +8,7 @@
 ; Corrupt:
 ;   HL, BC, AF
 ; Note:
-;   ℹ️ необходимо включить страницу модуля "инвентаря"
+;   ℹ️ код расположен в модуле "инвентаря"
 ; -----------------------------------------
 Input.Select    ; проверка состояния клавиши "выбор"
                 LD A, (GameConfig.KeySelect)
@@ -39,22 +39,22 @@ Input.Select    ; проверка состояния клавиши "выбор
                 CP ITEM_ID_NONE
                 RET Z                                                           ; выход, если предмет под курсором отсутствует
 
-                ; сохранение идентификатора и позиции нажатия
+                ; сохранение идентификатора и позиции курсора
                 LD (Inventory.States.DraggedItem.ID), A
                 LD HL, (Mouse.Position)
                 LD (Inventory.States.DraggedItem.GrabOffset), HL
 
                 ; запрос взятия предмета в основном цикле
                 SET_INPUT_FLAG INPUT_DRAG_DROP_BIT
-                SET_FLAG_MODIFY Inventory.UI.Utilities.TakeItem.Request
+                SET_FLAG_MODIFY Inventory.DragAndDrop.TakeItem.Request
                 RET
 
-.Place          ; сохранение позиции нажатия для размещения предмета
+.Place          ; сохранение позиции курсора для размещения предмета
                 LD HL, (Mouse.Position)
-                LD (Inventory.UI.Utilities.PutItem.Cursor), HL
+                LD (Inventory.DragAndDrop.Cursor), HL
 
                 ; запрос размещения предмета в основном цикле
-                SET_FLAG_MODIFY Inventory.UI.Utilities.PutItem.Request
+                SET_FLAG_MODIFY Inventory.DragAndDrop.PutItem.Request
                 RET
 
                 endif ; ~_MODULE_INVENTORY_INPUT_SELECT_

@@ -34,7 +34,7 @@ Draw:           ; -----------------------------------------
                 LD (HL), #00                                                    ; 0 байт хранит данные о размере заполнения
                 INC H
                 LD (HL), #00                                                    ; 0 байт хранит данные о размере заполнения
-                RES_FLAG_MODIFY CursorCopyGate.Flag                              ; разрешение работы с буфером курсора
+                RES_FLAG_MODIFY CursorCopyGate.Flag                             ; разрешение работы с буфером курсора
 
 .Update         ; -----------------------------------------
                 ; обновление
@@ -53,8 +53,8 @@ Draw:           ; -----------------------------------------
 
                 SET_MODULE_PAGE_Inventory                                       ; включение страницы модуля инвентаря
                 CALL UI.Update                                                  ; обновление UI
-                CALL Inventory.UI.Utilities.TakeItem                            ; обработка запроса взятия предмета
-                CALL Inventory.UI.Utilities.PutItem                             ; обработка запроса размещения предмета
+                CALL Inventory.DragAndDrop.TakeItem                             ; обработка запроса взятия предмета
+                CALL Inventory.DragAndDrop.PutItem                              ; обработка запроса размещения предмета
                 CALL Inventory.Display.DraggedItem.Prepare                      ; подготовка положения и фона перетаскиваемого предмета
 
                 ; проверка запроса перерисовки фона
