@@ -54,6 +54,7 @@ Draw:           ; -----------------------------------------
                 SET_MODULE_PAGE_Inventory                                       ; включение страницы модуля инвентаря
                 CALL UI.Update                                                  ; обновление UI
                 CALL Inventory.UI.Utilities.TakeItem                            ; обработка запроса взятия предмета
+                CALL Inventory.UI.Utilities.PutItem                             ; обработка запроса размещения предмета
                 CALL Inventory.Display.DraggedItem.Prepare                      ; подготовка положения и фона перетаскиваемого предмета
 
                 ; проверка запроса перерисовки фона

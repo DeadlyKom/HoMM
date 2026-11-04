@@ -32,7 +32,7 @@ Input.Select    ; проверка состояния клавиши "выбор
 
                 ; проверка уже взятого предмета
                 CHECK_INPUT_FLAG INPUT_DRAG_DROP_BIT
-                RET NZ                                                          ; выход, если перетаскивание активно
+                JR NZ, .Place                                                   ; переход, если предмет уже взят для перетаскивания
 
                 ; проверка наличия предмета под курсором
                 LD A, (Inventory.States.HoveredItem.ID)
@@ -47,6 +47,14 @@ Input.Select    ; проверка состояния клавиши "выбор
                 ; запрос взятия предмета в основном цикле
                 SET_INPUT_FLAG INPUT_DRAG_DROP_BIT
                 SET_FLAG_MODIFY Inventory.UI.Utilities.TakeItem.Request
+                RET
+
+.Place          ; сохранение позиции нажатия для размещения предмета
+                LD HL, (Mouse.Position)
+                LD (Inventory.UI.Utilities.PutItem.Cursor), HL
+
+                ; запрос размещения предмета в основном цикле
+                SET_FLAG_MODIFY Inventory.UI.Utilities.PutItem.Request
                 RET
 
                 endif ; ~_MODULE_INVENTORY_INPUT_SELECT_

@@ -162,7 +162,17 @@ DrawOR_XOR_Save ; сохранение в буфер адрес экарана
                 LD HL, Adr.ExtraBuffer
                 LD (.SpriteAddress), HL
                 EX DE, HL
+                
+                ; сохранение изменяемого смещения FastLDIR на время вывода курсора
+                LD A, (Memcpy.FastLDIR.Jump)
+                PUSH AF
+
                 CALL Memcpy.FastLDIR
+
+                ; восстановление смещения незавершённого копирования основного цикла
+                POP AF
+                LD (Memcpy.FastLDIR.Jump), A
+
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 POP BC
 

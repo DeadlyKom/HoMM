@@ -10,6 +10,12 @@ SET_UI_MODE     macro Mode?
                 LD (GameState.UIRuntime + FUIRuntime.Flags), A                  ; сброс флагов
                 endm
 SET_UI_LAYER    macro LayerAdr?, LayersNum?
+                ; сброс ссылок на элемент и обработчик прежнего набора слоёв
+                LD HL, #0000
+                LD (Kernel.UI.Update.PrevUI), HL
+                LD (Kernel.UI.Update.Prev), HL
+
+                ; установка нового набора слоёв
                 LD A, LayersNum?
                 LD (GameState.UIRuntime + FUIRuntime.LayersNum), A
                 LD HL, LayerAdr?
