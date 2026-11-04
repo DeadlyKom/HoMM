@@ -22,9 +22,9 @@ ITEM_HELMET     macro Label?, NameID?, VisualID?, Flags?
 
                 ; "Шелом стража"
                 ITEM_HELMET HELMET_01, NAME_HELMET_01, VISIAL_HELMET_01, ITEM_FLAG_NONE
-                ITEM_PROPERTY ITEM_PROPERTY_DEFESE, 1                           ; навык защиты героя
-                ITEM_PROPERTY ITEM_PROPERTY_POWER, 1                            ; сила заклинаний героя
-                ITEM_PROPERTY ITEM_PROPERTY_KNOWLEDGE, 1                        ; навык знаний героя
+                ITEM_PROPERTY ITEM_PROPERTY_ATTACK, 1                           ; навык атаки героя
+                ITEM_PROPERTY ITEM_PROPERTY_DEFESE, 3                           ; навык защиты героя
+                ITEM_PROPERTY ITEM_PROPERTY_MAGICRESIST, 5                      ; сопротивление магии в процентах
                 ITEM_END HELMET_01
                 endmodule
 
