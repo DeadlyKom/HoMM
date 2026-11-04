@@ -19,5 +19,8 @@ Character.Utilities:
 .GetPosHexagon.Wrap     EQU Page0.Character.Utilities.Character.Position.Wrap   ; получить позицию персонажа в гексагонах                       (обёртка)
 .GetPosHexagon          EQU Page0.Character.Utilities.Character.Position        ; получить позицию персонажа в гексагонах
 .GetViewRadius          EQU Page0.Character.Utilities.GetViewRadius             ; получение радиуса обзора персонажа
+.Equipment.FindSlot     EQU Page0.Character.Utilities.Equipment.FindSlot        ; определение слота по идентификатору предмета
+.Equipment.Equip        EQU Page0.Character.Utilities.Equipment.Equip           ; установка предмета в слот с возвратом прежнего предмета
+.Equipment.Unequip      EQU Page0.Character.Utilities.Equipment.Unequip         ; снятие предмета из слота экипировки
 ; .MemcpyObject           EQU Page0.Character.Utilities.Character.MemcpyObject    ; копировать объект "персонаж"
                 endif ; ~_PAGE_0_CHARACTER_

@@ -9,6 +9,7 @@
                 include "Display_PaperDoll.asm"
                 include "Display_Inventory.asm"
                 include "Display_Description.asm"
+                include "Display_DraggedItem.asm"
 
                 ifdef _DEBUG
                 include "Display_DebugInfo.asm"

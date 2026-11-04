@@ -67,4 +67,8 @@ SCR_INVENTORY_POS_Y             EQU 15                                          
 SCR_INVENTORY_SIZE_X            EQU 8                                           ; размер сетки инвентаря по горизонтали в ячейках
 SCR_INVENTORY_SIZE_Y            EQU 4                                           ; размер сетки инвентаря по вертикали в ячейках
 
+; максимальный размер предмета
+SCR_ITEM_MAX_SIZE_X            EQU 4                                            ; максимальная ширина предмета в знакоместах
+SCR_ITEM_MAX_SIZE_Y            EQU 6                                            ; максимальная высота предмета в знакоместах
+
                 endif ; ~_CONST_GAME_SCREEN_INVENTORY_

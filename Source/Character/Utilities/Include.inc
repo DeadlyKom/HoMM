@@ -3,6 +3,7 @@
                 define _CHARACTER_UTILITIES_INCLUDE_
 
                 module Utilities
+                include "Equipment.asm"
                 include "GetViewRadius.asm"
                 include "CharacterAddress.asm"
                 include "CharacterPosition.asm"

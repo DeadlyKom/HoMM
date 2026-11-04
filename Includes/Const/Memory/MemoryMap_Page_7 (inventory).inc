@@ -11,9 +11,9 @@
                 ;   +-------+------------------------------------------+-------+
                 ;   | #DD00 |                                 свободно | #0200 | ; свободно
                 ;   +-------+------------------------------------------+-------+
-                ;   | #DF00 |                             BuffersSlots | #05F0 | ; буферы слотов инвентаря
+                ;   | #DF00 |                             BuffersSlots | #06CE | ; буферы слотов инвентаря и перетаскиваемого предмета
                 ;   +-------+------------------------------------------+-------+
-                ;   | #E4F0 |                                 свободно | #0B10 | ; свободно
+                ;   | #E5CE |                                 свободно | #0A32 | ; свободно
                 ;   +-------+------------------------------------------+-------+
                 ;   | #F000 |                             SharedScreen | #1000 | ; общая память для кода
                 ;   +-------+------------------------------------------+-------+
@@ -82,6 +82,11 @@ Background      EQU SlotBuffers.RightRing.Background                            
                 module Boot
 Attributes      EQU SlotBuffers.Boot.Attributes                                 ; размер буфера конечных атрибутов
 Background      EQU SlotBuffers.Boot.Background                                 ; размер буфера пикселей и атрибутов фона
+                endmodule
+
+                ; размер буфера перетаскиваемого предмета
+                module DraggedItem
+Background      EQU SlotBuffers.DraggedItem.Background                          ; размер буфера пикселей и атрибутов фона
                 endmodule
                 endmodule
                 endmodule
@@ -160,6 +165,12 @@ Attributes      EQU Adr.BuffersSlots.RightRing.Background \
                     + Size.BuffersSlots.RightRing.Background                    ; адрес буфера конечных атрибутов
 Background      EQU Adr.BuffersSlots.Boot.Attributes \
                     + Size.BuffersSlots.Boot.Attributes                         ; адрес буфера пикселей и атрибутов фона
+                endmodule
+
+                ; адрес буфера перетаскиваемого предмета
+                module DraggedItem
+Background      EQU Adr.BuffersSlots.Boot.Background \
+                    + Size.BuffersSlots.Boot.Background                         ; адрес буфера пикселей и атрибутов фона
                 endmodule
 
                 endmodule

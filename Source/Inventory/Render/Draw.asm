@@ -53,13 +53,19 @@ Draw:           ; -----------------------------------------
 
                 SET_MODULE_PAGE_Inventory                                       ; включение страницы модуля инвентаря
                 CALL UI.Update                                                  ; обновление UI
+                CALL Inventory.UI.Utilities.TakeItem                            ; обработка запроса взятия предмета
+                CALL Inventory.Display.DraggedItem.Prepare                      ; подготовка положения и фона перетаскиваемого предмета
 
                 ; проверка запроса перерисовки фона
                 LD HL, Inventory.States.HoveredItem.Flags
                 CHECK_FLAG INVENTORY_REDRAW_BIT
                 CALL NZ, Inventory.Display.Window.Redraw                        ; вызов, если запрошена перерисовка фона
                 CALL Inventory.Display.Slots                                    ; обработка анимации и отображение слотов
-                CALL Inventory.Display.Description                              ; обработка запроса и перерисовка описания
+                
+                ; проверка активности перетаскивания
+                CHECK_INPUT_FLAG INPUT_DRAG_DROP_BIT
+                CALL Z, Inventory.Display.Description                           ; вызов, если перетаскивание неактивно
+                CALL NZ, Inventory.Display.DraggedItem                          ; вызов, если перетаскивание активно
 
                 ifdef _DEBUG
                 CALL Inventory.Display.DebugInfo                                ; отображение отладочной информации об инвентаре

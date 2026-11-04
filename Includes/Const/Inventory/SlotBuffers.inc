@@ -85,6 +85,13 @@ Attributes      EQU Width * Height + SlotBuffers.ServiceSize                    
 Background      EQU Width * Height * SlotBuffers.CellSize \
                      + SlotBuffers.ServiceSize                                  ; расчёт размера буфера пикселей и атрибутов фона
                 endmodule
+
+                module DraggedItem                                              ; перетаскиваемый предмет
+Width           EQU SCR_ITEM_MAX_SIZE_X                                         ; максимальная ширина предмета в знакоместах
+Height          EQU SCR_ITEM_MAX_SIZE_Y                                         ; максимальная высота предмета в знакоместах
+Background      EQU Width * Height * SlotBuffers.CellSize \
+                     + SlotBuffers.ServiceSize                                  ; расчёт размера буфера пикселей и атрибутов фона
+                endmodule
                 endmodule
 
                 endif ; ~_CONST_INVENTORY_SLOT_BUFFERS_

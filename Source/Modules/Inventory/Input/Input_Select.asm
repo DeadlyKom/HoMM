@@ -29,6 +29,24 @@ Input.Select    ; проверка состояния клавиши "выбор
 
                 ; блокировка повторной обработки до отпускания клавиши
                 SET_FLAG_MODIFY .PressGate
+
+                ; проверка уже взятого предмета
+                CHECK_INPUT_FLAG INPUT_DRAG_DROP_BIT
+                RET NZ                                                          ; выход, если перетаскивание активно
+
+                ; проверка наличия предмета под курсором
+                LD A, (Inventory.States.HoveredItem.ID)
+                CP ITEM_ID_NONE
+                RET Z                                                           ; выход, если предмет под курсором отсутствует
+
+                ; сохранение идентификатора и позиции нажатия
+                LD (Inventory.States.DraggedItem.ID), A
+                LD HL, (Mouse.Position)
+                LD (Inventory.States.DraggedItem.GrabOffset), HL
+
+                ; запрос взятия предмета в основном цикле
+                SET_INPUT_FLAG INPUT_DRAG_DROP_BIT
+                SET_FLAG_MODIFY Inventory.UI.Utilities.TakeItem.Request
                 RET
 
                 endif ; ~_MODULE_INVENTORY_INPUT_SELECT_
