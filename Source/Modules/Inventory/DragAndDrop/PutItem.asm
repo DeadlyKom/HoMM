@@ -99,7 +99,7 @@ PutItem:        ; проверка запроса размещения пред�
                 LD (.Position + FVector8.Y), A
                 ; -----------------------------------------
 
-                ; проверка занятости области по размерам переносимого предмета
+                ; проверка размещения в сетке или обмена с одним предметом
                 LD BC, (Inventory.States.DraggedItem.Size)
                 LD DE, (.Position)
                 ; -----------------------------------------
@@ -107,14 +107,43 @@ PutItem:        ; проверка запроса размещения пред�
                 ;   DE - позиция области в ячейках сетки (D - y, E - x)
                 ;   BC - размер области в знакоместах (B - y, C - x)
                 ; Out:
-                ;   флаг переполнения установлен, если область свободна
+                ;   E  - идентификатор заменяемого предмета или ITEM_ID_NONE
+                ;   флаг переполнения установлен, если размещение или обмен разрешены
                 ; Corrupt:
                 ;   HL, DE, BC, AF, AF', IY
                 ; -----------------------------------------
-                CALL Inventory.Utilities.Grid.CheckFree
-                RET NC                                                          ; выход, если область занята другим предметом
+                CALL Inventory.Utilities.Grid.CheckFree.Swap
+                RET NC                                                          ; выход, если область пересекает несколько предметов
+                LD IXL, E
 
-                ; удаление переносимого изображения перед завершением перетаскивания
+                ; проверка наличия предмета для обмена
+                LD A, IXL
+                CP ITEM_ID_NONE
+                JR Z, .Place                                                    ; переход, если область сетки свободна
+
+                ; подготовка размера предмета, который останется в руках
+                
+                ; -----------------------------------------
+                ; In:
+                ;   A  - идентификатор экземпляра предмета
+                ; Out:
+                ;   BC - размер в знакоместах (B - y, C - x)
+                ; Corrupt:
+                ;   HL, DE, BC, AF, AF'
+                ; -----------------------------------------
+                CALL Inventory.Utilities.Item.ReadSize
+                ; -----------------------------------------
+                ; In:
+                ;   BC - размер в знакоместах (B - y, C - x)
+                ; Out:
+                ;   флаг переполнения установлен, если размер сохранён
+                ; Corrupt:
+                ;   AF
+                ; -----------------------------------------
+                CALL Inventory.Utilities.DraggedItem.SetSize
+                RET NC                                                          ; выход, если заменяемый предмет не поддерживается переносом
+
+.Place          ; удаление переносимого изображения перед размещением в сетке
                 CALL Inventory.Display.DraggedItem.Restore
 
                 ; формирование обычного размещения в сетке выбранного персонажа
@@ -142,7 +171,33 @@ PutItem:        ; проверка запроса размещения пред�
                 LD A, (Inventory.States.DraggedItem.ID)
                 CALL .Sound
 
-                JP Complete
+                ; проверка завершения перетаскивания без обмена
+                LD A, IXL
+                CP ITEM_ID_NONE
+                JP Z, Complete                                                  ; переход, если область сетки была свободна
+
+                ; формирование размещения заменяемого предмета в руках
+                LD HL, ITEM_LOCATION_DRAGGED
+                LD (Inventory.Utilities.Buffer + FItemLocation.State), HL
+                LD HL, #0000
+                LD (Inventory.Utilities.Buffer + FItemLocation.Position), HL
+                LD A, IXL
+                ; -----------------------------------------
+                ; In:
+                ;   A  - идентификатор экземпляра предмета
+                ;   Inventory.Utilities.Buffer - подготовленная запись FItemLocation
+                ; Out:
+                ; Corrupt:
+                ;   HL, DE, BC, AF, AF'
+                ; -----------------------------------------
+                CALL Inventory.Utilities.Item.WritePlacement
+
+                ; продолжение перетаскивания заменённого предмета с прежней точкой захвата
+                LD A, IXL
+                LD (Inventory.States.DraggedItem.ID), A
+                LD HL, Inventory.States.HoveredItem.Flags
+                SET INVENTORY_REDRAW_BIT, (HL)
+                RET
 ; -----------------------------------------
 ; звуковое событие размещения предмета
 ; In:
