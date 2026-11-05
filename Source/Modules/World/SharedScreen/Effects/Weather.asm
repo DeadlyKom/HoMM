@@ -1,6 +1,25 @@
                 ifndef _WORLD_SCREEN_EFFECTS_WEATHER_
                 define _WORLD_SCREEN_EFFECTS_WEATHER_
                 module Weather
+                if WEATHER_TORNADO_ON
+                ; сброс состояния при входе в мир
+Reset:          JP World.SharedScreen.Effects.Tornado.Reset
+
+                ; снятие прежней накладки до рисования карты
+Prepare:        JP World.SharedScreen.Effects.Tornado.EraseBase
+
+                ; одинаковый рисунок в обоих экранах перед показом карты
+Overlay:        JP World.SharedScreen.Effects.Tornado.DrawBase
+
+                ; сохранение одинакового рисунка на время переноса блоков
+Erase:          RET
+
+                ; обновление только скрытого экрана после восстановления курсора
+Tick:           CALL World.SharedScreen.Effects.Tornado.Erase
+                JP World.SharedScreen.Effects.Tornado.Tick
+                else
+                if WEATHER_SNOW_ON
+Reset:          JP World.SharedScreen.Effects.Snow.Reset
 ; -----------------------------------------
 ; снятие временной снежной накладки до штатной отрисовки карты
 ; In:
@@ -74,5 +93,18 @@ Tick:           ; проверка необходимости снять пре�
                 JP World.SharedScreen.Effects.Snow.Tick
 
 ActiveMode      DB WEATHER_SNOW                                                 ; режим последнего показанного рисунка
+                else
+Reset:          RET
+Prepare:        RET
+Overlay:        RET
+                if WEATHER_RAIN_ON
+Erase:          JP World.SharedScreen.Effects.Rain.Erase
+Tick:           JP World.SharedScreen.Effects.Rain.Tick
+                else
+Erase:          RET
+Tick:           RET
+                endif
+                endif
+                endif
                 endmodule
                 endif                                                           ; ~_WORLD_SCREEN_EFFECTS_WEATHER_

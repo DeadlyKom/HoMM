@@ -1,6 +1,9 @@
                 ifndef _CONST_WEATHER_
                 define _CONST_WEATHER_
 WEATHER_RAIN    EQU 0                                                           ; режим дождя
+WEATHER_TORNADO EQU 2                                                           ; режим единственного пылевого смерча
+WEATHER_TORNADO_ON EQU 1                                                        ; включение смерча вместо остальных погодных эффектов
+WEATHER_SNOW_ON EQU 0                                                           ; временное исключение кода снега
 WEATHER_SNOW    EQU 1                                                           ; режим снега с локальным закручиванием
 WEATHER_RAIN_ON EQU 0                                                           ; временное исключение дождя из пакета мира, 1 включает обратно
 WEATHER_STORM_ON EQU 0                                                          ; временное исключение молний и вспышек, 1 включает обратно
@@ -11,6 +14,8 @@ SNOW_VORT_CORE  EQU 24                                                          
 SNOW_FALL_BASE  EQU 8                                                           ; базовая скорость падения, доли пикселя с делителем 16
 SNOW_FALL_FRAC  EQU 128                                                          ; оседание центра вихря, доли пикселя с делителем 256
 SNOW_WIND_SHIFT EQU 4                                                           ; масштаб общего ветра в дробных единицах положения центра
+                ; проверка взаимного исключения смерча и прежних погодных эффектов
+                assert WEATHER_TORNADO_ON == 0 || WEATHER_RAIN_ON + WEATHER_SNOW_ON + WEATHER_STORM_ON == 0
                 ; проверка диапазонов движения и дробных координат
                 assert SNOW_COUNT >= 1 && SNOW_COUNT <= 255
                 assert SNOW_PERIOD >= 1 && SNOW_PERIOD <= 255

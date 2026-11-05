@@ -6,7 +6,7 @@
 ; In:
 ; Out:
 ; Corrupt:
-;   HL, DE, BC, AF, AF'
+;   HL, DE, BC, AF, AF', IX
 ; Note:
 ;   ℹ️ необходимо включить страницу модуля "мира"
 ; -----------------------------------------
@@ -22,8 +22,8 @@ Initialize:     ; инициализация "мира"
                 SET_MAIN_SWAP World.SharedCode.Render.PipelineHexagons.Swap     ; установить функцию долгого переключения экранов
                 
                 SET_WORLD_RENDER World.SharedCode.Render.Draw                   ; инициализаци главного рендера "мира"
-                ; сброс состояния снега до включения обработчика нового экрана
-                CALL_IN_PAGE Page.SharedScreen, World.SharedScreen.Effects.Snow.Reset
+                ; сброс погодного эффекта до включения обработчика нового экрана
+                CALL_IN_PAGE Page.SharedScreen, World.SharedScreen.Effects.Weather.Reset
                 SET_USER_HANDLER World.SharedCode.Interrupt                     ; установка обработчика прерываний
                 RES_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                           ; разрешить сканирование ввода
                 ; SET_RENDER_FLAG SWAP_DISABLE_BIT                                ; запретить смену экранов

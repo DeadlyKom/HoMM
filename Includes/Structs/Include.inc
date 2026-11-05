@@ -21,6 +21,7 @@
                 include "WorldInfo.inc"
                 include "Rain.inc"
                 include "Snow.inc"
+                include "Tornado.inc"
                 include "WorldTime.inc"
                 include "AIDirector.inc"
                 include "Pathfinding.inc"

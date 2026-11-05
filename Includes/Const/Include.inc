@@ -29,6 +29,7 @@
                 include "Game/Include.inc"
                 include "Rain.inc"
                 include "Weather.inc"
+                include "Tornado.inc"
                 include "Lightning.inc"
                 include "Item/Include.inc"
                 include "Event/Include.inc"
