@@ -5,7 +5,7 @@
                 module Music_02
                 ORG #0000
 Begin:          EQU $
-                inchob "30__.$m"                                                ; пропуск 17 байт заголовка HOBETA
+                incbin "30__.pt3"
 Size            EQU $-Begin
                 assert Size <= Size.Music.Slots, "music exceeds slot capacity"
                 COMPRESSED_ASSET \
