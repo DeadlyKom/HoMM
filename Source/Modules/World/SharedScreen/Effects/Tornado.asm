@@ -87,8 +87,7 @@ DrawBase:       ; проверка наличия теневого рисунк�
                 BIT 7, (IX + FTornadoParticle.Shown)
                 JR Z, .Next                                                     ; переход, если частица в теневом экране отсутствует
 
-                LD E, (IX + FTornadoParticle.Position.X)
-                LD D, (IX + FTornadoParticle.Position.Y)
+                CALL Project
                 LD (IX + FTornadoParticle.BasePosition.X), E
                 LD (IX + FTornadoParticle.BasePosition.Y), D
                 CALL World.SharedScreen.Effects.ParticleDraw.ShapeAt.Base
@@ -122,7 +121,8 @@ Erase:          ; проверка наличия прежнего тенево�
                 BIT 7, (IX + FTornadoParticle.Shown)
                 JR Z, .Next                                                     ; переход, если частица ранее не рисовалась
 
-                CALL World.SharedScreen.Effects.ParticleDraw.Shape
+                CALL Project
+                CALL World.SharedScreen.Effects.ParticleDraw.ShapeAt
                 RES 7, (IX + FTornadoParticle.Shown)
 .Next           LD DE, FTornadoParticle
                 ADD IX, DE
@@ -204,6 +204,11 @@ Initialize:     ; сброс времени и плотности для нов�
                 LD A, 1
                 LD (Ready), A
                 LD (Phase), A
+                ; привязка локальных координат смерча к текущему положению карты
+                CALL CameraPixels
+                LD (AnchorX), DE
+                LD (AnchorY), HL
+
                 ; начальные фазы гармоник центра из прототипа при travelTime = 1.7
                 LD HL, 14853
                 LD (CenterPhaseX), HL
@@ -730,6 +735,82 @@ Lookup:         LD E, A
                 LD A, (HL)
                 RET
 ; -----------------------------------------
+; расчёт экранной позиции из координат относительно точки запуска
+; In:
+;   IX - запись частицы
+; Out:
+;   DE - экранные координаты
+;   AF - флаг, C установлен вне диапазона 0..255
+; Corrupt:
+;   HL, BC
+; Note:
+;   ScreenDX и ScreenDY относятся к текущему рисунку теневого экрана
+; -----------------------------------------
+Project:        ; проверка горизонтальной координаты до сужения до байта
+                LD E, (IX + FTornadoParticle.Position.X)
+                LD D, 0
+                LD HL, (ScreenDX)
+                ADD HL, DE
+                LD A, H
+                OR A
+                JR NZ, .Outside                                                 ; переход, если координата X вне диапазона 0..255
+
+                LD C, L
+
+                ; проверка вертикальной координаты до сужения до байта
+                LD E, (IX + FTornadoParticle.Position.Y)
+                LD HL, (ScreenDY)
+                ADD HL, DE
+                LD A, H
+                OR A
+                JR NZ, .Outside                                                 ; переход, если координата Y вне диапазона 0..255
+
+                LD E, C
+                LD D, L
+                RET
+
+.Outside        SCF
+                RET
+
+; -----------------------------------------
+; перевод позиции камеры из гексов и знакомест в пиксели
+; In:
+; Out:
+;   HL - координата Y
+;   DE - координата X
+; Corrupt:
+;   BC, AF
+; -----------------------------------------
+CameraPixels:   ; горизонтальная координата камеры, шаг 6 знакомест
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.X)
+                LD C, A
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.X)
+                LD B, HEXTILE_SIZE_X
+                CALL .Axis
+                PUSH HL
+
+                ; вертикальная координата камеры, шаг 4 знакоместа
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapOffset.Y)
+                LD C, A
+                LD A, (GameSession.WorldInfo + FWorldInfo.MapPosition.Y)
+                LD B, HEXTILE_BASE_SIZE_Y
+                CALL .Axis
+                POP DE
+                RET
+
+.Axis           ; расчёт пиксельной координаты по номеру гекса и смещению
+                LD E, A
+                LD D, 0
+                LD L, C
+                LD H, D
+.Loop           ADD HL, DE
+                DJNZ .Loop
+                ADD HL, HL
+                ADD HL, HL
+                ADD HL, HL
+                RET
+
+; -----------------------------------------
 ; XOR текущего набора частиц в теневом экране
 ; In:
 ; Out:
@@ -742,6 +823,19 @@ Draw:           ; проверка ненулевой плотности эфф�
                 LD A, (Density)
                 OR A
                 RET Z                                                           ; выход, если эффект ещё не появился или уже рассеялся
+
+                ; сохранение проекции для будущего стирания и основной накладки
+                CALL CameraPixels
+                PUSH HL
+                LD HL, (AnchorX)
+                OR A
+                SBC HL, DE
+                LD (ScreenDX), HL
+                POP DE
+                LD HL, (AnchorY)
+                OR A
+                SBC HL, DE
+                LD (ScreenDY), HL
 
                 LD A, 1
                 LD (ShadowShown), A
@@ -786,8 +880,9 @@ Draw:           ; проверка ненулевой плотности эфф�
                 JR C, .Next                                                     ; переход, если частица растворилась у вершины
 
 .Plot           ; отсечение позиции до быстрого расчёта адреса
-                LD E, (IX + FTornadoParticle.Position.X)
-                LD D, (IX + FTornadoParticle.Position.Y)
+                CALL Project
+                JR C, .Next                                                     ; переход, если координата не помещается в байт
+
                 CALL World.SharedScreen.Effects.ParticleDraw.InView
                 JR C, .Next                                                     ; переход, если частица за пределами игрового окна
 
@@ -828,6 +923,10 @@ CenterPhaseY    DW 0                                                            
 Center          FVector8                                                        ; координаты основания смерча
 Spread          DB 0                                                            ; разлёт в фазе рассеивания
 RadiusValue     DB 0                                                            ; текущий радиус витка в пикселях
+AnchorX         DW 0                                                            ; горизонтальная позиция камеры при запуске
+AnchorY         DW 0                                                            ; вертикальная позиция камеры при запуске
+ScreenDX        DW 0                                                            ; горизонтальный сдвиг текущего теневого рисунка
+ScreenDY        DW 0                                                            ; вертикальный сдвиг текущего теневого рисунка
 Particles       FTornadoParticle                                                ; головки со шлейфами, затем самостоятельные точки
                 dup TORNADO_PARTICLES - 1
                 FTornadoParticle

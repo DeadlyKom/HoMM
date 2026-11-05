@@ -1,14 +1,14 @@
                 ifndef _CONST_TORNADO_
                 define _CONST_TORNADO_
-TORNADO_CORE_COUNT EQU 12                                                       ; число головок 2 на 2 у единственного смерча
-TORNADO_TAIL_COUNT EQU 5                                                        ; число прежних позиций 1 на 1 за каждой головкой
-TORNADO_SMALL_COUNT EQU 48                                                      ; число самостоятельных мелких частиц силуэта
+TORNADO_CORE_COUNT EQU 8                                                       ; число головок 2 на 2 у единственного смерча
+TORNADO_TAIL_COUNT EQU 1                                                        ; число прежних позиций 1 на 1 за каждой головкой
+TORNADO_SMALL_COUNT EQU 32                                                      ; число самостоятельных мелких частиц силуэта
 TORNADO_SPIN_PERCENT EQU 150                                                    ; скорость вращения относительно базовой
 TORNADO_MOVE_PERCENT EQU 45                                                     ; скорость перемещения центра относительно базовой
 TORNADO_LIFE_SECONDS EQU 30                                                     ; время жизни одного запуска, без автоматического повтора
 TORNADO_IRQ_HZ  EQU 50                                                          ; частота счётчика прерываний для пересчёта секунд
 TORNADO_PERIOD  EQU 2                                                           ; минимальный интервал шага частиц в прерываниях
-TORNADO_RISE_STEP EQU 1                                                         ; прирост фазы подъёма головки за шаг, полный цикл равен 256
+TORNADO_RISE_STEP EQU 2                                                         ; прирост фазы подъёма головки за шаг, полный цикл равен 256
 TORNADO_FORM_TICKS EQU 96                                                       ; нарастание плотности за время появления
 TORNADO_HEIGHT  EQU 48                                                          ; полная высота подъёма в пикселях
 TORNADO_X       EQU RAIN_MIN_X + RAIN_RANGE_X / 2                               ; середина горизонтального пути центра

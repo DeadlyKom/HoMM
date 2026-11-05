@@ -1,7 +1,7 @@
                 ifndef _STRUCT_TORNADO_
                 define _STRUCT_TORNADO_
                 struct FTornadoParticle
-Position        FVector8                                                        ; текущая экранная позиция
+Position        FVector8                                                        ; позиция относительно камеры на момент запуска
 BasePosition    FVector8                                                        ; снимок временной накладки основного экрана
 Phase           DB 0                                                            ; фаза обращения, полный оборот равен 256
 Height          DB 0                                                            ; высота подъёма в долях 1/4 пикселя
