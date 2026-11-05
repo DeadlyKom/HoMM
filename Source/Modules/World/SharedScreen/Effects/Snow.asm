@@ -2,455 +2,114 @@
                 define _WORLD_SCREEN_EFFECTS_SNOW_
                 module Snow
 ; -----------------------------------------
-; подготовка снега по общей маске обновляемых экранных блоков
+; сброс состояния снега перед первым кадром нового или восстановленного мира
 ; In:
 ; Out:
 ; Corrupt:
-;   HL, DE, BC, AF, HL', DE', BC', AF', IX
-; Note:
-;   включена страница 7, IY сохраняется, маска хранится в регистрах и стеке
-;   список гексов обходится один раз, флаги RenderBuffer не изменяются
+;   AF
 ; -----------------------------------------
-Prepare:        ; проверка наличия ранее созданного снега
-                LD A, (Ready)
+Reset:          XOR A
+                LD (Ready), A
+                LD (BaseShown), A
+                RET
+; -----------------------------------------
+; снятие временной накладки с основного экрана перед рисованием карты
+; In:
+; Out:
+; Corrupt:
+;   HL, DE, BC, AF, IX
+; Note:
+;   основной экран скрыт, теневой снег и сохранённый фон курсора не меняются
+; -----------------------------------------
+EraseBase:      ; проверка наличия временной накладки в основном экране
+                LD A, (BaseShown)
                 OR A
-                RET Z                                                           ; выход, если снежинки ещё не созданы
-
-                PUSH IY
-                CALL DirtyMask
-
-                ; проверка наличия обновляемых блоков перед обходом снежинок
-                LD A, D
-                OR E
-                JR Z, .Done                                                     ; переход, если обновляемые блоки отсутствуют
+                RET Z                                                           ; выход, если временная накладка отсутствует
 
                 LD IX, Flakes
                 LD B, SNOW_COUNT
 .Loop           PUSH BC
 
-                ; проверка наличия рисунка перед проверкой его блоков
-                BIT 7, (IX + FSnowFlake.Shown)
-                JR Z, .Next                                                     ; переход, если снежинка уже отсутствует на экранах
-
-                CALL TouchesMask
-                JR NC, .Next                                                    ; переход, если блоки снежинки не будут обновлены
-
-                ; снятие формы с обновлением сохранённого фона курсора
-                PUSH DE
-                CALL World.SharedCode.Render.PipelineHexagons.RemoveSnow
-                POP DE
-                RES 7, (IX + FSnowFlake.Shown)
-.Next           LD BC, FSnowFlake
-                ADD IX, BC
+                ; чтение снимка, теневые позиции могли измениться после копирования
+                LD E, (IX + FSnowFlake.BasePosition.X)
+                LD D, (IX + FSnowFlake.BasePosition.Y)
+                CALL ShapeAt.Base
+                LD DE, FSnowFlake
+                ADD IX, DE
                 POP BC
                 DJNZ .Loop
-.Done           POP IY
+
+                XOR A
+                LD (BaseShown), A
                 RET
 ; -----------------------------------------
-; однократный сбор маски блоков по обновляемым гексам списка отображения
+; нанесение текущего теневого снега на готовую карту основного экрана
 ; In:
 ; Out:
-;   DE - маска 16 блоков, бит равен номеру строки блока * 4 + номеру столбца
 ; Corrupt:
-;   HL, DE, BC, AF, HL', DE', BC', AF', IY
+;   HL, DE, BC, AF, IX
 ; Note:
-;   высота гекса берётся с запасом 8 знакомест, маска накапливается в HL'
+;   вызов до FRAME_READY, снимок сохраняется до следующего EraseBase
 ; -----------------------------------------
-DirtyMask:      ; начальное пустое значение маски в альтернативных регистрах
-                LD HL, 0
-                EXX
-
-                ; проверка наличия строк списка отображения
-                LD A, (GameState.DisplayListLen)
+DrawBase:       ; проверка наличия начального рисунка в теневом экране
+                LD A, (Ready)
                 OR A
-                JR Z, .Finish                                                   ; переход, если список отображения пуст
+                RET Z                                                           ; выход, если теневой снег ещё не создан
 
-                LD B, A
-                LD IY, (GameState.DisplayList)
-.Row            PUSH BC
+                ; проверка отсутствия уже нанесённой накладки
+                LD A, (BaseShown)
+                OR A
+                RET NZ                                                          ; выход, если повторный XOR стёр бы готовую накладку
 
-                ; чтение очередной строки штатного списка отображения
-                LD DE, -Size.DisplayList.ElementSize
-                ADD IY, DE
+                LD IX, Flakes
+                LD B, SNOW_COUNT
+.Loop           PUSH BC
 
-                ; расчёт исходной нижней строки гекса с учётом отсечения снизу
-                LD A, (IY + 4)
-                ADD A, A
-                ADD A, A
-                ADD A, A
-                ADD A, (IY + 3)
-                LD D, A
-
-                ; расчёт левой границы и числа столбцов с учётом отсечения слева
-                LD A, (IY + 0)
-                AND #7F
-                LD C, A
-                ADD A, A
-                ADD A, A
-                ADD A, A
-                NEG
-                ADD A, RAIN_MIN_X
-                LD E, A
-                LD A, C
-                ADD A, SCR_WORLD_SIZE_X
-                LD B, A
-                LD L, (IY + 1)
-                LD H, HIGH Adr.RenderBuffer
-.Hex            ; проверка необходимости рисования текущего гекса
-                BIT RENDER_FLAG_HEX_UPDATE_BIT, (HL)
-                JR Z, .NextHex                                                  ; переход, если гекс не будет перерисован
-
-                PUSH BC
-                PUSH DE
-                PUSH HL
-                CALL HexMask
-
-                ; объединение маски гекса с общей маской обновляемых блоков
-                PUSH HL
-                EXX
-                POP DE
-                LD A, H
-                OR D
-                LD H, A
-                LD A, L
-                OR E
-                LD L, A
-                EXX
-                POP HL
-                POP DE
+                ; сохранение координат для последующего снятия с основного экрана
+                LD E, (IX + FSnowFlake.Position.X)
+                LD D, (IX + FSnowFlake.Position.Y)
+                LD (IX + FSnowFlake.BasePosition.X), E
+                LD (IX + FSnowFlake.BasePosition.Y), D
+                CALL ShapeAt.Base
+                LD DE, FSnowFlake
+                ADD IX, DE
                 POP BC
-.NextHex        ; переход к следующему гексу текущей строки
-                INC L
-                LD A, E
-                ADD A, HEXTILE_SIZE_X * 8
-                LD E, A
-                LD A, B
-                SUB HEXTILE_SIZE_X
-                LD B, A
-                JR C, .NextRow                                                  ; переход, если последняя видимая часть гекса обработана
+                DJNZ .Loop
 
-                JR Z, .NextRow                                                  ; переход, если строка закончилась на границе гекса
-
-                JR .Hex
-
-.NextRow        POP BC
-                DJNZ .Row
-.Finish         EXX
-                EX DE, HL
+                LD A, 1
+                LD (BaseShown), A
                 RET
 ; -----------------------------------------
-; маска блоков, пересекаемых прямоугольником гекса с максимальной высотой
+; снятие прежнего теневого снега после копирования и восстановления курсора
 ; In:
-;   DE - нижняя строка D и левая граница E в пикселях, отрицательный X упакован
 ; Out:
-;   HL - маска блоков гекса внутри игрового окна
 ; Corrupt:
-;   HL, DE, BC, AF
+;   HL, DE, BC, AF, IX
+; Note:
+;   вызов при закрытом CursorMemcpyGate, копирование и восстановление курсора завершены
 ; -----------------------------------------
-HexMask:        ; проверка нахождения нижней строки ниже верхнего края окна
-                LD HL, 0
-                LD A, D
-                CP RAIN_MIN_Y
-                RET C                                                           ; выход, если весь гекс находится выше игрового окна
-
-                ; проверка выхода верхней строки гекса ниже игрового окна
-                CP RAIN_MIN_Y + RAIN_RANGE_Y + 8 * 8 - 1
-                RET NC                                                          ; выход, если весь гекс находится ниже игрового окна
-
-                ; расчёт первого столбца блоков с отсечением отрицательной границы
-                LD A, E
-                CP RAIN_MIN_X + RAIN_RANGE_X
-                JR C, .Left                                                     ; переход, если левая граница находится внутри окна
-
-                LD A, RAIN_MIN_X
-.Left           SUB RAIN_MIN_X
-                CALL BlockIndex
-                LD B, A
-
-                ; расчёт последнего столбца блоков с отсечением справа
-                LD A, E
-                ADD A, HEXTILE_SIZE_X * 8 - 1
-                CP RAIN_MIN_X + RAIN_RANGE_X
-                JR C, .Right                                                    ; переход, если правая граница находится внутри окна
-
-                LD A, RAIN_MIN_X + RAIN_RANGE_X - 1
-.Right          SUB RAIN_MIN_X
-                CALL BlockIndex
-                LD C, A
-
-                ; расчёт первой строки блоков с отсечением сверху
-                LD A, D
-                SUB 8 * 8 - 1
-                JR C, .ClampTop                                                 ; переход, если верхняя граница гекса отрицательная
-
-                CP RAIN_MIN_Y
-                JR NC, .Top                                                     ; переход, если верхняя граница не выходит выше окна
-
-.ClampTop       LD A, RAIN_MIN_Y
-.Top            SUB RAIN_MIN_Y
-                CALL BlockIndex
-                LD E, A
-
-                ; расчёт последней строки блоков с отсечением снизу
-                LD A, D
-                CP RAIN_MIN_Y + RAIN_RANGE_Y
-                JR C, .Bottom                                                   ; переход, если нижняя граница находится внутри окна
-
-                LD A, RAIN_MIN_Y + RAIN_RANGE_Y - 1
-.Bottom         SUB RAIN_MIN_Y
-                CALL BlockIndex
-                LD D, A
-                JP BlockMask
-; -----------------------------------------
-; пересечение кешированных блоков снежинки с общей маской обновления
-; In:
-;   DE - маска обновляемых блоков
-;   IX - запись FSnowFlake с кешем в Shown
-; Out:
-;   C - флаг, пересечение найдено
-; Corrupt:
-;   BC, AF
-; -----------------------------------------
-TouchesMask:    ; проверка быстрого случая обновления всего игрового окна
-                LD A, D
-                AND E
-                CP #FF
-                JR NZ, .Cached                                                  ; переход, если обновляется только часть блоков
-
-                SCF
-                RET
-
-.Cached         ; чтение готовых столбцов и номера первой строки блоков
-                LD A, (IX + FSnowFlake.Shown)
-                LD B, A
-                AND #0F
-                LD C, A
-
-                ; выбор пары строк блоков из старшего или младшего байта общей маски
-                BIT 5, B
-                LD A, E
-                JR Z, .RowByte                                                  ; переход, если первая строка блоков равна 0 или 1
-
-                LD A, D
-.RowByte        ; выбор младшей или старшей тетрады с четырьмя столбцами строки
-                BIT 4, B
-                JR Z, .CheckRow                                                 ; переход, если первая строка блоков чётная
-
-                RRCA
-                RRCA
-                RRCA
-                RRCA
-.CheckRow       ; проверка пересечения первой строки формы с обновляемыми блоками
-                AND C
-                JR NZ, .Found                                                   ; переход, если общие блоки найдены в первой строке формы
-
-                ; проверка наличия второй строки блоков у формы
-                BIT 6, B
-                RET Z                                                           ; выход, если второй строки нет, флаг переноса сброшен предыдущим AND
-
-                ; выбор второй строки без повторного расчёта координат
-                LD A, D
-                BIT 4, B
-                JR NZ, .CheckNext                                               ; переход, если после строки 1 проверяется строка 2
-
-                LD A, E
-                BIT 5, B
-                JR Z, .NextHigh                                                 ; переход, если после строки 0 проверяется строка 1
-
-                LD A, D
-.NextHigh       RRCA
-                RRCA
-                RRCA
-                RRCA
-.CheckNext      AND C
-                RET Z                                                           ; выход, если общие блоки отсутствуют, флаг переноса сброшен
-
-.Found          SCF
-                RET
-; -----------------------------------------
-; кеширование блоков формы только после изменения пиксельной позиции
-; In:
-;   IX - запись FSnowFlake
-; Out:
-;   Shown - кеш блоков с сохранённым флагом наличия рисунка
-; Corrupt:
-;   HL, DE, BC, AF
-; -----------------------------------------
-CacheBlocks:    ; расчёт границ формы с отсечением по игровому окну
-                ; расчёт первого столбца блоков с запасом по краю формы
-                LD A, (IX + FSnowFlake.Position.X)
-                SUB RAIN_MIN_X
+Erase:          ; проверка начального распределения снежинок
+                LD A, (Ready)
                 OR A
-                JR Z, .Left                                                     ; переход, если центр уже находится на левой границе
+                RET Z                                                           ; выход, если снежинки ещё не созданы
 
-                DEC A
-.Left           CALL BlockIndex
-                LD B, A
+                LD IX, Flakes
+                LD B, SNOW_COUNT
+.Loop           PUSH BC
 
-                ; расчёт последнего столбца блоков с отсечением справа
-                LD A, (IX + FSnowFlake.Position.X)
-                SUB RAIN_MIN_X
-                INC A
-                CP RAIN_RANGE_X
-                JR C, .Right                                                    ; переход, если край формы остаётся внутри окна
+                ; проверка наличия прежней формы в теневом экране
+                BIT 7, (IX + FSnowFlake.Shown)
+                JR Z, .Next                                                     ; переход, если форма ещё не нарисована
 
-                LD A, RAIN_RANGE_X - 1
-.Right          CALL BlockIndex
-                LD C, A
-
-                ; расчёт первой строки блоков с запасом по краю формы
-                LD A, (IX + FSnowFlake.Position.Y)
-                SUB RAIN_MIN_Y
-                OR A
-                JR Z, .Top                                                      ; переход, если центр уже находится на верхней границе
-
-                DEC A
-.Top            CALL BlockIndex
-                LD E, A
-
-                ; расчёт последней строки блоков с отсечением снизу
-                LD A, (IX + FSnowFlake.Position.Y)
-                SUB RAIN_MIN_Y
-                INC A
-                CP RAIN_RANGE_Y
-                JR C, .Bottom                                                   ; переход, если край формы остаётся внутри окна
-
-                LD A, RAIN_RANGE_Y - 1
-.Bottom         CALL BlockIndex
-                LD D, A
-                CALL ColumnMask
-
-                ; упаковка столбцов и номера первой строки в прежний байт состояния
-                LD A, E
-                RLCA
-                RLCA
-                RLCA
-                RLCA
-                OR L
-                LD L, A
-
-                ; проверка пересечения границы двух строк блоков
-                LD A, D
-                CP E
-                JR Z, .Store                                                    ; переход, если форма занимает одну строку блоков
-
-                SET 6, L
-.Store          ; сохранение кеша без изменения наличия прежнего рисунка
-                LD A, (IX + FSnowFlake.Shown)
-                AND #80
-                OR L
-                LD (IX + FSnowFlake.Shown), A
+                CALL Shape
+                RES 7, (IX + FSnowFlake.Shown)
+.Next           LD DE, FSnowFlake
+                ADD IX, DE
+                POP BC
+                DJNZ .Loop
                 RET
 ; -----------------------------------------
-; маска прямоугольника из одного или двух столбцов и не более трёх строк блоков
-; In:
-;   DE - последняя строка D и первая строка E, номера 0..3
-;   BC - первый столбец B и последний столбец C, номера 0..3
-; Out:
-;   HL - маска прямоугольника
-; Corrupt:
-;   HL, DE, BC, AF
-; -----------------------------------------
-BlockMask:      CALL ColumnMask
-.RowShift       ; расчёт смещения первой строки блоков внутри 16-битной маски
-                LD A, E
-                ADD A, A
-                ADD A, A
-                OR A
-                JR Z, .Rows                                                     ; переход, если первая строка блоков нулевая
-
-.ShiftRow       ADD HL, HL
-                DEC A
-                JR NZ, .ShiftRow                                                ; переход, если первая строка блоков ещё не достигнута
-
-.Rows           ; расчёт числа дополнительных строк прямоугольника
-                LD A, D
-                SUB E
-                LD B, A
-                LD D, H
-                LD E, L
-                OR A
-                RET Z                                                           ; выход, если прямоугольник занимает одну строку блоков
-
-.MoreRows       ; добавление следующей строки с теми же столбцами
-                dup 4
-                SLA E
-                RL D
-                edup
-                LD A, H
-                OR D
-                LD H, A
-                LD A, L
-                OR E
-                LD L, A
-                DJNZ .MoreRows
-                RET
-; -----------------------------------------
-; маска одного или двух соседних столбцов блоков
-; In:
-;   BC - первый столбец B и последний столбец C, номера 0..3
-; Out:
-;   HL - маска столбцов, значение 1..15
-; Corrupt:
-;   HL, BC, AF
-; -----------------------------------------
-ColumnMask:     ; расчёт бита первого столбца внутри одной строки блоков
-                LD HL, 1
-                LD A, B
-                OR A
-                JR Z, .Columns                                                  ; переход, если первый блок находится в нулевом столбце
-
-.ShiftColumn    ADD HL, HL
-                DEC A
-                JR NZ, .ShiftColumn                                             ; переход, если номер первого столбца ещё не достигнут
-
-.Columns        ; проверка пересечения границы двух соседних столбцов
-                LD A, C
-                CP B
-                JR Z, .Done                                                     ; переход, если прямоугольник занимает один столбец
-
-                LD B, H
-                LD C, L
-                ADD HL, HL
-                LD A, H
-                OR B
-                LD H, A
-                LD A, L
-                OR C
-                LD L, A
-.Done           RET
-; -----------------------------------------
-; номер блока по координате относительно начала игрового окна
-; In:
-;   A - координата 0..175 в пикселях
-; Out:
-;   A - номер блока 0..3
-; Corrupt:
-;   AF
-; -----------------------------------------
-BlockIndex:     ; проверка первой полосы блоков шириной 48 пикселей
-                CP HEXTILE_SIZE_X * 8
-                JR C, .Zero                                                     ; переход, если координата находится в первом блоке
-
-                ; проверка второй полосы блоков
-                CP HEXTILE_SIZE_X * 8 * 2
-                JR C, .One                                                      ; переход, если координата находится во втором блоке
-
-                ; проверка третьей полосы блоков
-                CP HEXTILE_SIZE_X * 8 * 3
-                LD A, 2
-                RET C                                                           ; выход, если координата находится в третьем блоке
-
-                INC A
-                RET
-
-.Zero           XOR A
-                RET
-
-.One            LD A, 1
-                RET
-; -----------------------------------------
-; движение по счётчику прерываний с немедленной заменой каждой снежинки
+; расчёт движения и вывод снега после копирования и восстановления курсора
 ; In:
 ; Out:
 ; Corrupt:
@@ -487,9 +146,6 @@ Tick:           PUSH IY
                 LD (LastTick), HL
                 CALL MoveCenters
                 CALL Update
-                POP IY
-                RET
-
 .Draw           CALL Draw
                 POP IY
                 RET
@@ -535,7 +191,6 @@ Initialize:     ; установка центров внутри игровог�
                 JR Z, .Type                                                     ; переход, если выбран несуществующий номер формы
 
                 LD (IX + FSnowFlake.Shape), A
-                CALL CacheBlocks
                 LD DE, FSnowFlake
                 ADD IX, DE
                 POP BC
@@ -625,11 +280,6 @@ Update:         LD IX, Flakes
                 LD B, SNOW_COUNT
 .Loop           PUSH BC
 
-                ; сохранение прежней позиции до расчёта движения этой снежинки
-                LD E, (IX + FSnowFlake.Position.X)
-                LD D, (IX + FSnowFlake.Position.Y)
-                PUSH DE
-
                 ; расчёт основного потока по общему ветру и форме снежинки
                 LD A, (World.SharedScreen.Effects.Rain.Wind)
                 ADD A, A
@@ -718,27 +368,6 @@ Update:         LD IX, Flakes
 .StoreY         LD (IX + FSnowFlake.Position.Y), A
                 LD (IX + FSnowFlake.Fraction.Y), L
 
-                ; проверка изменения целых координат перед пересчётом кеша блоков
-                POP DE
-                LD A, (IX + FSnowFlake.Position.X)
-                CP E
-                JR NZ, .Recache                                                 ; переход, если снежинка сдвинулась по горизонтали
-
-                LD A, (IX + FSnowFlake.Position.Y)
-                CP D
-                JR NZ, .Recache                                                 ; переход, если снежинка сдвинулась по вертикали
-
-                ; проверка наличия рисунка при неизменной пиксельной позиции
-                BIT 7, (IX + FSnowFlake.Shown)
-                JR NZ, .Next                                                    ; переход, если прежний рисунок уже отображается в той же позиции
-
-                JR .DrawNew
-
-.Recache        ; обновление кеша с сохранением координат прежней формы
-                PUSH DE
-                CALL CacheBlocks
-                POP DE
-.DrawNew        CALL World.SharedCode.Render.PipelineHexagons.ReplaceSnow
 .Next           LD DE, FSnowFlake
                 ADD IX, DE
                 POP BC
@@ -879,45 +508,178 @@ RandomX:        CALL World.SharedScreen.Effects.Rain.Random
                 ADD A, RAIN_MIN_X
                 RET
 ; -----------------------------------------
-; первый показ отсутствующих снежинок без повторного XOR уже показанных
+; вывод всех отсутствующих форм только в теневой экран
 ; In:
 ; Out:
 ; Corrupt:
-;   HL, DE, BC, AF, HL', DE', BC', AF', IX
+;   HL, DE, BC, AF, IX
+; Note:
+;   вызов после восстановления скопированного курсора при закрытом CursorMemcpyGate
 ; -----------------------------------------
 Draw:           LD IX, Flakes
                 LD B, SNOW_COUNT
 .Loop           PUSH BC
-                ; проверка необходимости первого показа или восстановления после обновления карты
+
+                ; проверка отсутствия формы перед повторным XOR
                 BIT 7, (IX + FSnowFlake.Shown)
-                CALL Z, World.SharedCode.Render.PipelineHexagons.ReplaceSnow     ; вызов, если снежинка ещё не нарисована
-                LD DE, FSnowFlake
+                JR NZ, .Next                                                    ; переход, если форма уже нарисована
+
+                CALL Shape
+                SET 7, (IX + FSnowFlake.Shown)
+.Next           LD DE, FSnowFlake
                 ADD IX, DE
                 POP BC
                 DJNZ .Loop
                 RET
 ; -----------------------------------------
-; XOR формы снежинки существующим рисованием точек дождя
+; XOR формы снежинки в теневом экране по сохранённой позиции
 ; In:
-;   IX - запись FSnowFlake
 ; Out:
 ; Corrupt:
 ;   HL, DE, BC, AF
+; Note:
+;   IX указывает на FSnowFlake, центр находится внутри игрового окна
 ; -----------------------------------------
 Shape:          ; чтение сохранённых экранных координат снежинки
                 LD E, (IX + FSnowFlake.Position.X)
                 LD D, (IX + FSnowFlake.Position.Y)
 
 ; -----------------------------------------
-; XOR формы по явно переданным координатам для стирания прежнего положения
+; XOR формы по явно переданным координатам в выбранном экране
 ; In:
 ;   DE - экранная позиция, D по Y, E по X
 ;   IX - запись FSnowFlake с выбранной формой
 ; Out:
 ; Corrupt:
 ;   HL, DE, BC, AF
+; Note:
+;   центр DE находится внутри игрового окна, края многопиксельных форм отсекаются
 ; -----------------------------------------
-ShapeAt:        ; выбор одной из трёх форм без полосок
+ShapeAt:        ; выбор быстрого вывода формы только в теневой экран
+                LD A, (IX + FSnowFlake.Shape)
+                OR A
+                JP Z, World.SharedScreen.Effects.Rain.PixelFast                  ; переход, если форма состоит из одной точки с центром внутри окна
+
+                LD B, A
+                JR .Bounds
+
+.Base           ; выбор вывода формы в основной экран
+                LD A, (IX + FSnowFlake.Shape)
+                OR A
+                JP Z, PixelBaseFast                                             ; переход, если форма состоит из одной точки внутри окна
+
+                OR #80
+                LD B, A
+.Bounds         ; проверка полного размещения формы с запасом по одному пикселю
+                LD A, E
+                SUB RAIN_MIN_X + 1
+                CP RAIN_RANGE_X - 2
+                JP NC, .Generic                                                 ; переход, если форма касается горизонтальной границы окна
+
+                LD A, D
+                SUB RAIN_MIN_Y + 1
+                CP RAIN_RANGE_Y - 2
+                JP NC, .Generic                                                 ; переход, если форма касается вертикальной границы окна
+
+                ; проверка пересечения правой границы пиксельного байта
+                LD A, E
+                AND 7
+                CP 7
+                JP Z, .Generic                                                  ; переход, если форма пересекает правую границу байта
+
+                OR A
+                JR NZ, .Address                                                 ; переход, если центр не находится на левой границе байта
+
+                ; проверка левого выступа плюсика на границе байта
+                LD A, B
+                AND #7F
+                DEC A
+                JP Z, .Generic                                                  ; переход, если левый выступ плюсика находится в соседнем байте
+
+.Address        CALL World.SharedScreen.Effects.Rain.PixelAddress
+                LD A, (HL)
+                LD C, A
+
+                ; проверка выбора основного экрана для временной накладки
+                BIT 7, B
+                JR Z, .Type                                                     ; переход, если адрес уже указывает на теневой экран
+
+                RES 7, D
+.Type           LD A, B
+                AND #7F
+                DEC A
+                JR NZ, .CubeFast                                                ; переход, если выбрана квадратная форма
+
+                ; объединение трёх средних пикселей плюсика в одну маску байта
+                PUSH BC
+                LD A, C
+                RLCA
+                LD B, A
+                LD A, C
+                RRCA
+                OR B
+                OR C
+                LD C, A
+                CALL .Pair
+                POP BC
+
+                ; вывод верхнего и нижнего пикселей с повторным использованием адреса
+                PUSH DE
+                CALL .Up
+                CALL .Pair
+                POP DE
+                CALL .Down
+                JP .Pair
+
+.CubeFast       ; объединение соседних пикселей в двух строках квадрата
+                LD A, C
+                RRCA
+                OR C
+                LD C, A
+                CALL .Pair
+                CALL .Down
+                JP .Pair
+
+.Pair           ; XOR объединённой маски в выбранном экране
+                LD A, (DE)
+                XOR C
+                LD (DE), A
+                RET
+
+.Up             ; расчёт адреса предыдущей пиксельной строки Spectrum
+                DEC D
+                LD A, D
+                AND 7
+                CP 7
+                RET NZ                                                          ; выход, если адрес остаётся в пределах восьми пиксельных строк
+
+                LD A, E
+                SUB #20
+                LD E, A
+                RET C                                                           ; выход, если переход пересёк границу трети экрана
+
+                LD A, D
+                ADD A, 8
+                LD D, A
+                RET
+
+.Down           ; расчёт адреса следующей пиксельной строки Spectrum
+                INC D
+                LD A, D
+                AND 7
+                RET NZ                                                          ; выход, если адрес остаётся в пределах восьми пиксельных строк
+
+                LD A, E
+                ADD A, #20
+                LD E, A
+                RET C                                                           ; выход, если переход пересёк границу трети экрана
+
+                LD A, D
+                SUB 8
+                LD D, A
+                RET
+
+.Generic        ; универсальный вывод с отсечением на границах окна и байта
                 LD A, (IX + FSnowFlake.Shape)
                 OR A
                 LD HL, .Dot
@@ -928,12 +690,75 @@ ShapeAt:        ; выбор одной из трёх форм без полос
                 JR Z, .Draw                                                     ; переход, если снежинка рисуется плюсиком
 
                 LD HL, .Cube
-.Draw           JP World.SharedScreen.Effects.Rain.DrawPattern
+.Draw           ; проверка выбранного экрана для шаблона на границе байта или окна
+                BIT 7, B
+                JP Z, World.SharedScreen.Effects.Rain.DrawPattern               ; переход, если шаблон рисуется в теневом экране
+
+                JP PatternBase
 
 .Dot            DB 1, 0, 0                                                      ; точка, число пикселей и пара X, Y
 .Plus           DB 5, 0, 0, -1, 0, 1, 0, 0, -1, 0, 1                            ; плюсик 3 на 3, число пикселей и пары X, Y
 .Cube           DB 4, 0, 0, 1, 0, 0, 1, 1, 1                                    ; квадрат 2 на 2, число пикселей и пары X, Y
 
+; -----------------------------------------
+; XOR шаблона в основном экране с отсечением каждого пикселя
+; In:
+; Out:
+; Corrupt:
+;   HL, DE, BC, AF
+; Note:
+;   HL указывает на число точек и пары смещений, DE содержит центр
+; -----------------------------------------
+PatternBase:    LD B, (HL)
+                INC HL
+.Loop           PUSH BC
+                PUSH DE
+
+                ; расчёт положения очередной точки относительно центра снежинки
+                LD A, (HL)
+                ADD A, E
+                LD E, A
+                INC HL
+                LD A, (HL)
+                ADD A, D
+                LD D, A
+                INC HL
+                PUSH HL
+                CALL PixelBase
+                POP HL
+                POP DE
+                POP BC
+                DJNZ .Loop
+                RET
+; -----------------------------------------
+; XOR одной точки основного экрана с отсечением по игровому окну
+; In:
+; Out:
+; Corrupt:
+;   HL, DE, BC, AF
+; Note:
+;   DE содержит экранные координаты, D по Y, E по X
+; -----------------------------------------
+PixelBase:      ; проверка размещения точки внутри игрового окна
+                CALL World.SharedScreen.Effects.Rain.InView
+                RET C                                                           ; выход, если точка находится за пределами игрового окна
+
+; -----------------------------------------
+; XOR точки основного экрана без отсечения по существующим таблицам
+; In:
+; Out:
+; Corrupt:
+;   HL, DE, AF
+; Note:
+;   DE содержит координаты внутри окна, D по Y, E по X
+; -----------------------------------------
+PixelBaseFast:  CALL World.SharedScreen.Effects.Rain.PixelAddress
+                RES 7, D
+                LD A, (DE)
+                XOR (HL)
+                LD (DE), A
+                RET
+BaseShown       DB 0                                                            ; флаг, временная накладка нанесена на основной экран
 Ready           DB 0                                                            ; признак начального распределения снежинок
 LastTick        DW 0                                                            ; время последнего шага движения в прерываниях
 Centers         FVector16 {{0, 0}, {0, 0}}                                      ; первый центр, дробные координаты X, Y
