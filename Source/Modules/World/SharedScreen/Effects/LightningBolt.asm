@@ -10,8 +10,9 @@
 ;   HL, DE, BC, AF
 ; Note:
 ;   включена страница 7, прежний разряд уже стёрт перед переносом кадра
+;   сначала выбирается точка удара по всему игровому окну, затем канал строится к ней сверху
 ; -----------------------------------------
-Create:         ; выбор начальной координаты разряда внутри боковых границ
+Create:         ; выбор горизонтальной координаты удара по всей ширине игрового окна
 .RandomX        CALL World.SharedScreen.Effects.Rain.Random
                 DEC A
                 CP BOLT_MAX_X - BOLT_MIN_X + 1
@@ -19,44 +20,107 @@ Create:         ; выбор начальной координаты разря�
 
                 ADD A, BOLT_MIN_X
                 LD E, A
-                LD D, SCR_WORLD_POS_Y << 3
-                LD HL, Points
+
+                ; выбор вертикальной координаты удара по всей высоте игрового окна
+.RandomY        CALL World.SharedScreen.Effects.Rain.Random
+                DEC A
+                CP BOLT_MAX_Y - BOLT_MIN_Y + 1
+                JR NC, .RandomY                                                 ; переход, если случайная координата выходит за допустимую высоту
+
+                ADD A, BOLT_MIN_Y
+                LD D, A
+
+                ; расчёт базовой высоты отрезков и числа дополнительных строк
+                SUB BOLT_MIN_Y
+                LD C, 0
+.Divide         CP BOLT_SEGMENTS
+                JR C, .SizeReady                                                ; переход, если остаток меньше числа отрезков
+
+                SUB BOLT_SEGMENTS
+                INC C
+                JR .Divide
+
+.SizeReady      LD (StepExtra), A
+                LD A, C
+                LD (StepBase), A
+
+                ; построение канала от выбранной точки удара к верхнему краю окна
+                LD HL, Points + (BOLT_POINTS - 1) * FVector8
                 LD B, BOLT_POINTS
 .Point          ; сохранение очередной вершины разряда
                 LD (HL), E
                 INC HL
                 LD (HL), D
-                INC HL
+                DEC HL
                 DEC B
                 JR Z, .Done                                                     ; переход, если все вершины разряда сохранены
 
-                ; расчёт случайного бокового излома относительно прежней вершины
-                CALL World.SharedScreen.Effects.Rain.Random
-                AND BOLT_JIT_MASK
-                SUB BOLT_JIT_BIAS
-                ADD A, E
+                ; расчёт высоты следующего отрезка с распределением остатка деления
+                LD A, (StepBase)
+                LD C, A
+                LD A, (StepExtra)
+                OR A
+                JR Z, .StepReady                                                ; переход, если дополнительные строки уже распределены
 
-                ; проверка левой границы вершин разряда
-                CP BOLT_MIN_X
-                JR NC, .CheckRight                                              ; переход, если вершина не вышла за левую границу
-
-                LD A, BOLT_MIN_X
-.CheckRight     ; проверка правой границы вершин разряда
-                CP BOLT_MAX_X + 1
-                JR C, .Next                                                     ; переход, если вершина не вышла за правую границу
-
-                LD A, BOLT_MAX_X
-.Next           LD E, A
-
-                ; расчёт высоты следующей вершины разряда
-                LD A, D
-                ADD A, BOLT_STEP_Y
+                DEC A
+                LD (StepExtra), A
+                INC C
+.StepReady      LD A, D
+                SUB C
                 LD D, A
+
+                ; выбор бокового излома не больше высоты отрезка
+                PUSH BC
+                CALL .PreviousX
+                POP BC
+
+                ; переход к месту предыдущей вершины в массиве
+                DEC HL
+                DEC HL
                 JR .Point
 
 .Done           XOR A
                 LD (Shown), A
                 JP CreateBranches
+
+.PreviousX      ; выбор случайного направления излома от точки удара вверх
+                CALL World.SharedScreen.Effects.Rain.Random
+                AND BOLT_JIT_MASK
+                SUB BOLT_JIT_BIAS
+                JP M, .Left                                                     ; переход, если предыдущая вершина смещается влево
+
+                ; ограничение правого излома высотой отрезка
+                CP C
+                JR C, .RightMag                                                 ; переход, если выбранное смещение меньше высоты отрезка
+
+                LD A, C
+.RightMag       ADD A, E
+
+                ; проверка правого края игрового окна
+                CP BOLT_MAX_X + 1
+                JR C, .SetX                                                     ; переход, если предыдущая вершина остаётся внутри правой границы
+
+                LD A, BOLT_MAX_X
+.SetX           LD E, A
+                RET
+
+.Left           ; ограничение левого излома высотой отрезка
+                NEG
+                CP C
+                JR C, .LeftMag                                                  ; переход, если выбранное смещение меньше высоты отрезка
+
+                LD A, C
+.LeftMag        LD B, A
+                LD A, E
+                SUB B
+                JR C, .ClampLeft                                                ; переход, если вычитание вышло за нулевую координату
+
+                ; проверка левого края игрового окна
+                CP BOLT_MIN_X
+                JR NC, .SetX                                                    ; переход, если предыдущая вершина остаётся внутри левой границы
+
+.ClampLeft      LD A, BOLT_MIN_X
+                JR .SetX
 
 ; -----------------------------------------
 ; создание двух верхних ветвей и возможной одной средней ветви
@@ -146,11 +210,31 @@ CreateBranches: ; выбор наличия средней ветви в доп�
                 ADD HL, BC
                 LD (HL), E
 
-                ; выбор и сохранение длины боковой ветви
+                ; расчёт доступной высоты ветви до следующей основной вершины
+                LD HL, BranchRoots
+                ADD HL, BC
+                LD A, (HL)
+                ADD A, A
+                LD E, A
+                LD D, 0
+                LD HL, Points + FVector8.Y
+                ADD HL, DE
+                LD E, (HL)
+                INC HL
+                INC HL
+                LD A, (HL)
+                SUB E
+                LD D, A
+
+                ; выбор длины ветви с ограничением доступной высотой
                 CALL World.SharedScreen.Effects.Rain.Random
                 AND BOLT_ARM_MASK
                 ADD A, BOLT_ARM_MIN
-                LD HL, BranchLength
+                CP D
+                JR C, .Length                                                   ; переход, если выбранная длина меньше доступной высоты
+
+                LD A, D
+.Length         LD HL, BranchLength
                 ADD HL, BC
                 LD (HL), A
                 POP BC
@@ -220,13 +304,20 @@ Render:         ; обход соседних пар вершин разряда
                 LD E, (IX + FVector8.X)
                 LD D, (IX + FVector8.Y)
 
+                ; проверка высоты отрезка, совпавшие вершины не рисуются повторно
+                LD A, (IX + FVector8 + FVector8.Y)
+                SUB D
+                LD B, A
+                OR A
+                JR Z, .NextSegment                                              ; переход, если высота отрезка равна нулю
+
                 ; расчёт знакового смещения конца отрезка по горизонтали
                 LD A, (IX + FVector8 + FVector8.X)
                 SUB E
                 CALL Segment
 
                 ; переход к следующей паре вершин
-                LD DE, FVector8
+.NextSegment    LD DE, FVector8
                 ADD IX, DE
                 POP BC
                 DJNZ .Segment
@@ -283,6 +374,12 @@ RenderBranches: ; обход созданных боковых ветвей
                 LD B, (HL)
                 POP AF
                 LD C, A
+
+                ; проверка наличия места для ветви у короткого разряда
+                LD A, B
+                OR A
+                JR Z, .Skip                                                     ; переход, если доступная высота ветви равна нулю
+
                 CALL BranchLine
 .Skip           POP BC
 
@@ -297,7 +394,7 @@ RenderBranches: ; обход созданных боковых ветвей
 ; XOR диагональной ветви с исключением пикселя основного разряда в корне
 ; In:
 ;   DE - корень ветви, D - y, E - x в пикселях
-;   BC - B длина ветви, C знаковый шаг по горизонтали, -1 или 1
+;   BC - B ненулевая длина ветви, C знаковый шаг по горизонтали, -1 или 1
 ; Out:
 ; Corrupt:
 ;   HL, DE, BC, AF
@@ -308,7 +405,7 @@ BranchLine:     ; расчёт первого пикселя рядом с ко�
                 LD E, A
 .Pixel          PUSH BC
                 PUSH DE
-                CALL Pixel
+                CALL BranchPixel
                 POP DE
                 POP BC
 
@@ -321,15 +418,34 @@ BranchLine:     ; расчёт первого пикселя рядом с ко�
                 RET
 
 ; -----------------------------------------
+; отсечение боковой ветви у горизонтальных границ игрового окна
+; In:
+;   DE - положение пикселя ветви, D - y, E - x в пикселях
+; Out:
+; Corrupt:
+;   HL, DE, AF
+; Note:
+;   высота ветви уже ограничена расстоянием до следующей основной вершины
+; -----------------------------------------
+BranchPixel:    ; проверка горизонтальных границ перед обращением к таблице пикселей
+                LD A, E
+                SUB BOLT_MIN_X
+                CP BOLT_MAX_X - BOLT_MIN_X + 1
+                RET NC                                                          ; выход, если ветвь пересекла горизонтальную границу игрового окна
+
+                JP Pixel
+
+; -----------------------------------------
 ; XOR отрезка с ведущей вертикальной осью и накоплением ошибки
 ; In:
 ;   DE - начало отрезка, D - y, E - x в пикселях
+;   B - высота отрезка в пикселях, ненулевая
 ;   A - знаковое горизонтальное смещение конца отрезка
 ; Out:
 ; Corrupt:
 ;   HL, DE, BC, AF
 ; Note:
-;   высота равна BOLT_STEP_Y, модуль горизонтального смещения не превышает высоту
+;   модуль горизонтального смещения не превышает высоту, IY сохраняется
 ;   конечная точка не рисуется во избежание двойного XOR на стыках
 ; -----------------------------------------
 Segment:        ; определение направления смещения отрезка
@@ -340,8 +456,11 @@ Segment:        ; определение направления смещения
                 LD C, -1
                 NEG
 .Magnitude      LD H, A
-                LD L, BOLT_STEP_Y / 2
-                LD B, BOLT_STEP_Y
+                LD A, B
+                SRL A
+                LD L, A
+                PUSH IY
+                LD IYL, B
 .Row            PUSH HL
                 PUSH DE
                 PUSH BC
@@ -354,10 +473,10 @@ Segment:        ; определение направления смещения
                 INC D
                 LD A, L
                 ADD A, H
-                CP BOLT_STEP_Y
+                CP IYL
                 JR C, .Error                                                    ; переход, если горизонтальное смещение пока не требуется
 
-                SUB BOLT_STEP_Y
+                SUB IYL
                 LD L, A
                 LD A, E
                 ADD A, C
@@ -366,6 +485,7 @@ Segment:        ; определение направления смещения
 
 .Error          LD L, A
 .Next           DJNZ .Row
+                POP IY
                 RET
 
 ; -----------------------------------------
@@ -398,6 +518,8 @@ Pixel:          ; получение экранного адреса и маск
 
                 ; состояние и вершины разряда находятся в существующей области кода страницы 7
 Shown           DB 0                                                            ; число нарисованных отрезков, 0 разряд отсутствует
+StepBase        DB 0                                                            ; базовая высота отрезков для выбранной точки удара
+StepExtra       DB 0                                                            ; число оставшихся дополнительных строк при создании разряда
 BranchCount     DB 0                                                            ; число ветвей, две верхние и возможная одна средняя
 BranchRoots     DB 0, 0, 0                                                      ; номера внутренних вершин, из которых выходят боковые ветви
 BranchDirs      DB 0, 0, 0                                                      ; знаковые горизонтальные шаги боковых ветвей

@@ -21,29 +21,29 @@ STORM_LEAD_TICK EQU 2                                                           
 BOLT_POINTS     EQU 7                                                           ; количество вершин случайного разряда
 BOLT_TOP_SEGS   EQU 3                                                           ; число отрезков верхней части до начала вспышки
 BOLT_MID_SEGS   EQU 5                                                           ; число отрезков после добавления средней части
-BOLT_STEP_Y     EQU 24                                                          ; расстояние между вершинами по вертикали в пикселях
+BOLT_SEGMENTS   EQU BOLT_POINTS - 1                                             ; число отрезков между случайной точкой удара и верхом окна
 BOLT_JIT_MASK   EQU 31                                                          ; маска случайного бокового излома
 BOLT_JIT_BIAS   EQU 15                                                          ; смещение случайного излома, диапазон от -15 до 16 пикселей
-BOLT_MARGIN     EQU 16                                                          ; боковой запас внутри игрового окна в пикселях
 BOLT_ARM_MIN    EQU 8                                                           ; минимальное число пикселей боковой ветви
 BOLT_ARM_MASK   EQU 7                                                           ; маска случайной прибавки к длине боковой ветви
-BOLT_MIN_X      EQU (SCR_WORLD_POS_X << 3) + BOLT_MARGIN                         ; минимальная координата вершины разряда
-BOLT_MAX_X      EQU ((SCR_WORLD_POS_X + SCR_WORLD_SIZE_X) << 3) - 1 - BOLT_MARGIN ; максимальная координата вершины разряда
+BOLT_MIN_X      EQU SCR_WORLD_POS_X << 3                                        ; левая граница случайной точки удара
+BOLT_MAX_X      EQU ((SCR_WORLD_POS_X + SCR_WORLD_SIZE_X) << 3) - 1             ; правая граница случайной точки удара
+BOLT_MIN_Y      EQU SCR_WORLD_POS_Y << 3                                        ; верхняя граница случайной точки удара
+BOLT_MAX_Y      EQU ((SCR_WORLD_POS_Y + SCR_WORLD_SIZE_Y) << 3) - 1             ; нижняя граница случайной точки удара
 
                 ; проверка границ разряда и допустимого наклона отрезков
                 assert BOLT_POINTS >= 2 && BOLT_POINTS <= 255
-                assert BOLT_STEP_Y >= 1 && BOLT_STEP_Y <= 127
-                assert (BOLT_POINTS - 1) * BOLT_STEP_Y < (SCR_WORLD_SIZE_Y << 3)
-                assert BOLT_JIT_BIAS <= BOLT_STEP_Y && BOLT_JIT_MASK - BOLT_JIT_BIAS <= BOLT_STEP_Y
-                assert BOLT_MIN_X >= BOLT_JIT_BIAS && BOLT_MAX_X + BOLT_JIT_MASK - BOLT_JIT_BIAS <= 255
+                assert (BOLT_MAX_Y - BOLT_MIN_Y + BOLT_SEGMENTS - 1) / BOLT_SEGMENTS <= 127
+                assert BOLT_JIT_BIAS >= 0 && BOLT_JIT_BIAS <= BOLT_JIT_MASK
+                assert BOLT_JIT_MASK - BOLT_JIT_BIAS + BOLT_MAX_X <= 255
                 assert BOLT_MIN_X < BOLT_MAX_X
+                assert BOLT_MIN_Y < BOLT_MAX_Y
                 ; проверка трёх шагов раскрытия и места для двух верхних ветвей
                 assert BOLT_TOP_SEGS >= 3 && BOLT_TOP_SEGS < BOLT_MID_SEGS
                 assert BOLT_MID_SEGS < BOLT_POINTS - 1
-                ; проверка запаса под боковые ветви по краям окна
+                ; проверка однобайтового диапазона запрашиваемой длины ветвей
                 assert BOLT_ARM_MIN >= 1
-                assert BOLT_ARM_MIN + BOLT_ARM_MASK <= BOLT_MARGIN
-                assert BOLT_ARM_MIN + BOLT_ARM_MASK <= BOLT_STEP_Y
+                assert BOLT_ARM_MIN + BOLT_ARM_MASK <= 255
 
                 ; проверка ненулевых длительностей и однобайтовых случайных интервалов
                 assert STORM_OFF_MIN >= 1 && STORM_OFF_MIN + STORM_OFF_MASK <= 65535
