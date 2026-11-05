@@ -37,7 +37,10 @@ Scan:           ; проверка HardWare ограничения мыши
                 CP SCREEN_CURSOR_Y - SCREEN_EDGE
                 CALL NC, Movement.Down.Force
 
-.KeyCheck       ; --------------------------------------------------------------
+.KeyCheck       ; переключение погоды по одиночному нажатию N
+                CALL World.SharedCode.Render.WeatherKey
+
+                ; --------------------------------------------------------------
                 ; очистка системных клавиш
                 LD A, (GameState.Input.Value)
                 AND ~KEY_MASK

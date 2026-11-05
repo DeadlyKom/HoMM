@@ -48,7 +48,7 @@ Load:           ; -----------------------------------------
                 ; -----------------------------------------
                 RET
 
-                display " - Load item resources:\t\t\t\t\t", /A, Load, "\t= busy [ ", /D, $-Load, " byte(s) ]"
+                display " - Load item resources:\t\t\t\t", /A, Load, "\t= busy [ ", /D, $-Load, " byte(s) ]"
                 endmodule
 
                 endif ; ~_MODULE_INVENTORY_SPRITE_ITEMS_

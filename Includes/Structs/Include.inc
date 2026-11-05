@@ -20,6 +20,7 @@
                 include "Frame.inc"
                 include "WorldInfo.inc"
                 include "Rain.inc"
+                include "Snow.inc"
                 include "WorldTime.inc"
                 include "AIDirector.inc"
                 include "Pathfinding.inc"
