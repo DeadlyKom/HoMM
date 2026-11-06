@@ -5,7 +5,7 @@
                 module Music_01
                 ORG #0000
 Begin:          EQU $
-                inchob "KSA - Spec17 07 (1996).$m"                              ; inchob пропускает 17 байт HOBETA header
+                incbin "KSA - Spec17 07 (1996).pt3"
                                                                                 ; ToDo: можно упрознить шапку высвободив 0х63 байта, но нужно дорабатывать проигрыватель
 Size            EQU $-Begin
                 COMPRESSED_ASSET \

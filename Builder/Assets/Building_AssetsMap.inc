@@ -185,6 +185,11 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     Sound.Music_02.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Music #02\t\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_MUSIC_03, \
+                                    Sound.Music_03.Size, \
+                                    Sound.Music_03.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Music #03\t\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_ITEMS_METADATA_PACK, \
                                     Metadata.Items.Size, \
                                     Metadata.Items.Size.Sector.ar, \
