@@ -20,7 +20,9 @@ Layer_GameView: ; выбор перехода мира по запрошенно
                 DW UI.Runtime.Complete                                          ; UI_MODE_SPELLBOOK
                 DW UI.Runtime.Complete                                          ; UI_MODE_MAP
                 DW UI.Runtime.Complete                                          ; UI_MODE_QUEST_LOG
-                DW Options                                                      ; UI_MODE_SETTINGS
+                DW .NoMode                                                      ; UI_MODE_GAME_MENU
+                DW Options                                                      ; UI_MODE_OPTIONS
+                DW .NoMode                                                      ; UI_MODE_SAVE
                 DW UI.Runtime.Complete                                          ; UI_MODE_WORLD
                 DW UI.Runtime.Resume                                            ; UI_MODE_BATTLE
 .NoMode         RET                                                             ; UI_MODE_NONE ни на что не влияет

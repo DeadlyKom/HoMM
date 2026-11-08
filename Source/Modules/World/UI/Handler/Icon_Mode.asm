@@ -32,7 +32,7 @@ Inventory:      LD A, UI_MODE_INVENTORY
 ; Note:
 ;   ℹ️ код расположен в модуле "мира"
 ; -----------------------------------------
-Options:        LD A, UI_MODE_SETTINGS
+Options:        LD A, UI_MODE_OPTIONS
                 JP RequestMode
 ; -----------------------------------------
 ; обработчик иконки центрирования

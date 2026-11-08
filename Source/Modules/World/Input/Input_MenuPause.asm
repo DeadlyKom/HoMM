@@ -24,7 +24,7 @@ Input.MenuPause:; проверка клавиши "меню/пауза"
                 SET_FLAG_MODIFY Input.MenuPause.Flag                            ; установка флага защёлки обработки первого нажатия
 
                 ; запрос открытия меню опций
-                LD A, UI_MODE_SETTINGS
+                LD A, UI_MODE_OPTIONS
                 JP UI.Runtime.Request                                           ; запрос смены UI режима
 
 .Released       RES_FLAG_MODIFY Input.MenuPause.Flag                            ; сброс флага защёлки после отпускания клавиши

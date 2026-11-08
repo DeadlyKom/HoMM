@@ -8,11 +8,13 @@ UI_MODE_INVENTORY           EQU #02                                             
 UI_MODE_SPELLBOOK           EQU #03                                             ; режим книги заклинания
 UI_MODE_MAP                 EQU #04                                             ; режим глобальная карта
 UI_MODE_QUEST_LOG           EQU #05                                             ; режим журнал заданий
-UI_MODE_SETTINGS            EQU #06                                             ; режим настройки
-UI_MODE_WORLD               EQU #07                                             ; режим "мир"
-UI_MODE_BATTLE              EQU #08                                             ; режим "бой"
+UI_MODE_GAME_MENU           EQU #06                                             ; режим игрового меню
+UI_MODE_OPTIONS             EQU #07                                             ; режим опций
+UI_MODE_SAVE                EQU #08                                             ; режим сохранения
+UI_MODE_WORLD               EQU #09                                             ; режим "мир"
+UI_MODE_BATTLE              EQU #0A                                             ; режим "бой"
 
-UI_MODE_MAX                 EQU #09                                             ; максимально доступный режим
+UI_MODE_MAX                 EQU #0B                                             ; максимально доступный режим
 
 ; -----------------------------------------
 ;   флаги

@@ -24,7 +24,9 @@ Layer_GameView: ; выбор обработчика завершения по з
                 DW UI.Runtime.Complete                                          ; UI_MODE_SPELLBOOK
                 DW UI.Runtime.Complete                                          ; UI_MODE_MAP
                 DW UI.Runtime.Complete                                          ; UI_MODE_QUEST_LOG
-                DW .Transition                                                  ; UI_MODE_SETTINGS
+                DW UI.Runtime.Complete                                          ; UI_MODE_GAME_MENU
+                DW .Transition                                                  ; UI_MODE_OPTIONS
+                DW UI.Runtime.Complete                                          ; UI_MODE_SAVE
                 DW UI.Runtime.Complete                                          ; UI_MODE_WORLD
                 DW UI.Runtime.Complete                                          ; UI_MODE_BATTLE
 

@@ -46,7 +46,9 @@ Loop:
                 DW .NoMode                                                      ; UI_MODE_SPELLBOOK
                 DW .NoMode                                                      ; UI_MODE_MAP
                 DW .NoMode                                                      ; UI_MODE_QUEST_LOG
-                DW ExecuteModule.Options                                        ; UI_MODE_SETTINGS
+                DW .NoMode                                                      ; UI_MODE_GAME_MENU
+                DW ExecuteModule.Options                                        ; UI_MODE_OPTIONS
+                DW .NoMode                                                      ; UI_MODE_SAVE
                 DW .NoMode                                                      ; UI_MODE_WORLD
                 DW .NoMode                                                      ; UI_MODE_BATTLE
 .NoMode         RET                                                             ; выход без запуска другого модуля

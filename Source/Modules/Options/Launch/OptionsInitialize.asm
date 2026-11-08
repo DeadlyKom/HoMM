@@ -11,7 +11,7 @@
 ;   ℹ️ необходимо включить страницу модуля "опций"
 ; -----------------------------------------
 Initialize:     ; инициализация "опций"
-                SET_UI_MODE UI_MODE_SETTINGS                                    ; установка UI режима "опции"
+                SET_UI_MODE UI_MODE_OPTIONS                                     ; установка UI режима "опции"
                 SET_UI_LAYER #0000, #00                                         ; ToDo: активные UI слои опций пока отсутствуют
 
                 SET_MAIN_LOOP Options.SharedCode.Loop                           ; установка главного цикла
