@@ -13,6 +13,12 @@
 - [26_AssetsManager_and_Asset_Execution.md](26_AssetsManager_and_Asset_Execution.md)
 - [27_AI_Population_Director.md](27_AI_Population_Director.md)
 
+## Границы покрытия модулей
+
+В runtime зарегистрированы `Core`, `Session`, `Progress`, `MainMenu`, `World`, `Inventory`, `Characteristics`, `Options`. Самостоятельные главы ниже подробно разбирают не каждый из них. Обзор остальных находится в [главе 04](04_Source_Runtime_and_Modules.md), актуальные UI-режимы, пауза и переходы — в [главе 06](06_Runtime_Flow_and_Control.md).
+
+`Options` уже является отдельным ресурсом и экранным модулем. `GameMenu`, пользовательский экран сохранения и модуль битв пока не реализованы; соответствующие UI-режимы оставлены как заглушки.
+
 ## Что такое “модуль” в контексте проекта
 
 В этом проекте модуль — это не просто папка с кодом.

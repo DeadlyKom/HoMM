@@ -33,7 +33,7 @@
 
 ### Shared/runtime слой
 
-Содержит постоянный для runtime код самого мира: loop, interrupt, render, tilemap и связанные механики.
+Содержит разворачиваемый код мира: loop, interrupt, render, tilemap и UI. Его рабочая область используется и другими экранными модулями, поэтому после их работы код мира восстанавливается из образа ресурса.
 
 ## Execute-Фаза
 
@@ -51,19 +51,20 @@
 
 ### Что делает Launch
 
-- сохраняет страницу asset'а мира;
-- скрывает основной экран атрибутами;
-- копирует deploy-блок мира;
-- копирует код shared-screen слоя на отдельную страницу;
-- генерирует и копирует служебные таблицы;
-- инициализирует спрайты персонажей и курсора;
-- отображает игровое окно;
-- устанавливает главный loop мира;
-- устанавливает render pipeline мира;
-- устанавливает interrupt handler;
-- разрешает input scan;
-- настраивает render flags и shadow-screen;
-- инициализирует позицию мыши.
+Последовательность в [Launch.asm](../../Source/Modules/World/Launch.asm):
+
+- сохраняет страницу ресурса мира;
+- готовит текстуру Bayer;
+- разворачивает `SharedCode` и `SharedScreen`;
+- создаёт и копирует служебные таблицы;
+- загружает и инициализирует общую игровую музыку;
+- инициализирует спрайты;
+- завершает показ прогресса загрузки;
+- мгновенно центрирует камеру на активном персонаже;
+- подготавливает игровое окно;
+- вызывает `Launch.Initialize`, который назначает UI, loop, render, swap и interrupt handler, разрешает ввод и задаёт начальные флаги.
+
+Инициализация устанавливает `GAME_SUSPEND` и соответствующий запрос, то есть мир начинает работу в режиме остановки времени. Полная пауза здесь не устанавливается.
 
 ### Почему это ключевой файл архитектуры
 
@@ -73,12 +74,18 @@
 ## `Source/Modules/World/Include.inc`
 
 Этот include-файл подключает:
+- `ProgressTimeline.inc`
 - `Kernel/Bind.inc`
 - `Launch.asm`
+- `SaveState.asm`
+- `RestoreState.asm`
 - `UI/Include.inc`
 - `Input/Include.inc`
+- `Launch/Include.inc`
 - `Tilemap/Include.inc`
 - `Graphics/Include.inc`
+- `Utilities/Include.inc`
+- `Source/Draw/Stencil/Include.inc`
 - генераторы таблиц
 - hexagon utilities
 - deploy-блоки `Sprite`, `World`, `SharedScreen`
@@ -95,7 +102,7 @@
 - `Interrupt.asm`
 - `Render/Include.inc`
 - `Tilemap/Include.inc`
-- `Source/World/UI/Layers.inc`
+- `Source/World/UI/Include.inc`, содержащий слои, обработчики и переходники UI
 
 Это skeleton runtime мира.
 
@@ -105,6 +112,8 @@
 - `Scan.asm`
 - `Input_Select.asm`
 - `Input_Movement.asm`
+- `Input_MenuPause.asm`
+- `Input_GameSuspend.asm`
 - `Input_Accelerate.asm`
 
 ### Смысл
@@ -119,18 +128,15 @@ World-input слой разделяет разные аспекты ввода:
 
 ## Подмодуль `UI`
 
-`Source/Modules/World/UI/Include.inc` подключает `Handler/Include.inc`, который в свою очередь включает:
-- `Minimap.asm`
-- `GameWindow.asm`
+`Source/Modules/World/UI/Include.inc` подключает разделы `Handler`, `Complete`, `Initialize`, `Transition`.
 
-### Смысл
+В `Handler` находятся `Icon_Mode.asm`, `Layer_GameUI.asm`, `Layer_Minimap.asm`, `Layer_GameView.asm`. Шестерёнка вызывает `World.UI.Handler.Options`; ENTER в `Input.MenuPause` запрашивает тот же `UI_MODE_OPTIONS`. Переход `ToOptions.asm` завершает UI мира. `World.Loop` сохраняет состояние и запускает `ExecuteModule.Options`.
 
-UI мира уже разделён по подсистемам интерфейса.
-Даже если он пока не полностью детально документирован, структура уже показывает дисциплину: minimap и game window выделены явно.
+В `Source/World/UI` размещены разворачиваемые слои и постоянные точки входа в процедуры ресурса мира. Старые `Layer_GamePause`, слой `GamePause`, сетка поверх мира и возврат из этого меню удалены. `UI_MODE_GAME_MENU` теперь является отдельной заглушкой; он не открывается по ENTER. Актуальная схема переходов и нумерация режимов приведены в [главе 06](06_Runtime_Flow_and_Control.md).
 
 ## Подмодуль `Tilemap`
 
-`Source/Modules/World/Tilemap/Include.inc` включает `UpdateMovement.asm`.
+`Source/Modules/World/Tilemap/Include.inc` включает `ResetMapScroll.asm`, `UpdateMovement.asm`, `Center.asm`, `CenterSmooth.asm`.
 
 ### Что это показывает
 
@@ -139,7 +145,12 @@ Tilemap-слой мира не является только статическ�
 ## Подмодуль `Graphics`
 
 `Source/Modules/World/Graphics/Include.inc` включает:
-- `Display_GameWindow.asm`
+- `Firmament.asm`
+- `Display_GameplayUI.asm`
+- `Display_DiamondChrono.asm`
+- `Display_GameplayFrame.asm`
+- `Display_DiamondTexture.asm`
+- `Display_GameplaySuspend.asm`
 - бинарные данные frame и ornament
 
 ### Почему это важно
@@ -151,7 +162,6 @@ World-graphics слой связывает код отображения игр�
 
 Render-слой shared runtime мира включает:
 - `Draw.asm`
-- `Source/Cursor/Draw.asm`
 - `Object/Include.inc`
 - `UpdateMinimap.asm`
 - `PipelineHexagons.asm`
@@ -173,6 +183,14 @@ Render мира — это не просто “нарисовать всё”.
 При этом важно не перепутать обзор модуля с полным разбором экранного цикла.
 В этой главе World рассматривается как runtime-модуль целиком.
 Подробная пошаговая схема кадра, двойной буферизации, dirty screen blocks, длинного swap и курсорного подпотока вынесена отдельно в [18_Rendering_Pipeline.md](18_Rendering_Pipeline.md).
+
+## Сохранение и восстановление мира
+
+Перед уходом в характеристики, инвентарь или опции `World.Loop` вызывает `SaveState`. Процедура сохраняет изменяемые индексы спрайтов персонажей и UI, а также идентификаторы курсора в соответствующие места образа ресурса мира.
+
+`RestoreState` отключает пользовательский обработчик, восстанавливает `SharedCode` и `SharedScreen`, инициализирует курсор сохранёнными идентификаторами, рисует окно и повторно вызывает `Launch.Initialize`. После переключения ресурсы характеристик, инвентаря и опций помечаются невостребованными. Это не немедленное освобождение всех ресурсов.
+
+Поскольку восстановление использует `Launch.Initialize`, его результатом является начальное состояние флагов мира, включая `GAME_SUSPEND`. Произвольное прежнее состояние игрового времени процедура сейчас не восстанавливает.
 
 ## Роль SharedScreen
 

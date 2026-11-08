@@ -120,14 +120,14 @@
 
 ## Подготовка экранной среды при запуске мира
 
-Render pipeline мира начинается не в `Draw`, а раньше — в `Source/Modules/World/Graphics/Display_GameWindow.asm`.
+Render pipeline мира начинается не в `Draw`, а раньше — в [Source/Modules/World/Launch/GameplayWindow.asm](../../Source/Modules/World/Launch/GameplayWindow.asm).
 
 Этот файл делает несколько важных шагов:
 - очищает базовый экран;
 - очищает атрибуты базового экрана;
-- рисует рамку игрового окна;
+- рисует рамку, UI и начальное состояние индикатора времени суток;
 - показывает базовый экран;
-- копирует его содержимое в теневой;
+- копирует его содержимое в теневой и сбрасывает обработанный запрос переноса ромба;
 - переводит консоль в режим рисования сразу в оба экрана;
 - показывает теневой экран.
 
@@ -151,7 +151,7 @@ Render pipeline мира начинается не в `Draw`, а раньше �
 - настраивает loop, swap, render entrypoint и interrupt handler;
 - включает нужный режим render flags.
 
-Ключевые строки:
+Ключевые строки назначения обработчиков находятся в [Launch/WorldInitialize.asm](../../Source/Modules/World/Launch/WorldInitialize.asm):
 - `SET_MAIN_LOOP World.SharedCode.Loop`
 - `SET_MAIN_SWAP World.SharedCode.Render.PipelineHexagons.Swap`
 - `SET_WORLD_RENDER World.SharedCode.Render.Draw`

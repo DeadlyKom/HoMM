@@ -31,8 +31,8 @@
 
 `Source/Modules/Session/Launch.asm`:
 - сохраняет страницу asset'а;
-- извлекает фактический адрес функции из `GameState.Assets`;
-- передаёт управление по адресу.
+- получает адрес диспетчера ресурса из `GameState.Assets`;
+- повторно входит в диспетчер, сохраняя исходный идентификатор запрошенной функции в стеке.
 
 ### Что это значит
 
@@ -42,9 +42,12 @@
 ## Shared слой `Session.inc`
 
 `Source/Modules/Session/Session.inc` собирает shared code block и включает:
+- `Interrupt.asm`
 - `Map/Include.inc`
 - `Core/Include.inc`
 - `SaveSlot/Include.inc`
+- `Source/Director/Include.inc`
+- `Source/Director/Initial/Include.inc`
 
 ### Смысл
 
@@ -58,6 +61,7 @@
 `Source/Modules/Session/Core/Include.inc` включает:
 - `ReleaseAsset.asm`
 - `Initialize_TR-DOS.asm`
+- `Initialize_Inventory.asm`
 
 ### Роль
 
