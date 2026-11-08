@@ -28,6 +28,6 @@ Layer_GameView: ; выбор обработчика завершения по з
                 DW .Transition                                                  ; UI_MODE_OPTIONS
                 DW UI.Runtime.Complete                                          ; UI_MODE_SAVE
                 DW UI.Runtime.Complete                                          ; UI_MODE_WORLD
-                DW UI.Runtime.Complete                                          ; UI_MODE_BATTLE
+                DW .Transition                                                  ; UI_MODE_BATTLE
 
                 endif ; ~_MODULE_WORLD_UI_COMPLETE_LAYER_GAME_VIEW_

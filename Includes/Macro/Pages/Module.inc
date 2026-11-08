@@ -132,5 +132,27 @@ JP_SET_MODULE_PAGE_Options macro
                 LD A, (Kernel.Modules.Options.Page)
                 JP_SET_PAGE_A
                 endm
+; -----------------------------------------
+; включить страницу модуля "битвы"
+; In:
+; Out:
+; Corrupt:
+;   BC, AF
+; -----------------------------------------
+SET_MODULE_PAGE_Battle macro
+                LD A, (Kernel.Modules.Battle.Page)
+                SET_PAGE_A
+                endm
+; -----------------------------------------
+; включить страницу модуля "битвы"
+; In:
+; Out:
+; Corrupt:
+;   BC, AF
+; -----------------------------------------
+JP_SET_MODULE_PAGE_Battle macro
+                LD A, (Kernel.Modules.Battle.Page)
+                JP_SET_PAGE_A
+                endm
 
                 endif ; ~_MACRO_PAGE_MODULE_

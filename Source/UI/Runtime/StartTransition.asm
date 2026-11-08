@@ -24,7 +24,7 @@ StartTransition:; чтение активируемого UI режима
                 DW World.SharedCode.UI.Transition.Layer_GameView                ; UI_MODE_OPTIONS
                 DW .NoMode                                                      ; UI_MODE_SAVE
                 DW World.SharedCode.UI.Transition.Layer_GameView                ; UI_MODE_WORLD
-                DW UI.Runtime.Resume                                            ; UI_MODE_BATTLE
+                DW World.SharedCode.UI.Transition.Layer_GameView                ; UI_MODE_BATTLE
 .NoMode         RET                                                             ; UI_MODE_NONE ни на что не влияет
 
                 endif ; ~_UI_RUNTIME_START_TRANSITION_

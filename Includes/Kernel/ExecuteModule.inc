@@ -7,6 +7,7 @@ ExecuteModule
 .MainMenu           EQU Kernel.Modules.MainMenu                                 ; запуск инициализации "главного меню"
 .Session            EQU Kernel.Modules.Session                                  ; запуск загрузки/инициализации сессии
 .World              EQU Kernel.Modules.World                                    ; запуск "мира"
+.Battle             EQU Kernel.Modules.Battle                                   ; запуск "битвы"
 .Characteristics    EQU Kernel.Modules.Characteristics                          ; запуск "характеристик"
 .Inventory          EQU Kernel.Modules.Inventory                                ; запуск "инвентаря"
 .Options            EQU Kernel.Modules.Options                                  ; запуск "опций"

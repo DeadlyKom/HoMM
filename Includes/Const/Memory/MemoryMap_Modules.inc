@@ -10,6 +10,7 @@ World           EQU PAGE_5
 Characteristics EQU PAGE_5
 Inventory       EQU PAGE_5
 Options         EQU PAGE_5
+Battle          EQU PAGE_5
                 endmodule
 
                 module Adr
@@ -20,6 +21,7 @@ World           EQU Adr.SharedPoint                                             
 Characteristics EQU Adr.SharedPoint                                             ; адрес расположения кода "характеристик"
 Inventory       EQU Adr.SharedPoint                                             ; адрес расположения кода "инвентаря"
 Options         EQU Adr.SharedPoint                                             ; адрес расположения кода "опций"
+Battle          EQU Adr.SharedPoint                                             ; адрес расположения кода "битвы"
                 endmodule
 
                 endif ; ~_CONST_MEMORY_MAP_MODULES_

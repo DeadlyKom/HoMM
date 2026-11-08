@@ -34,6 +34,6 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 endif
 
                 RET
-                display " - Main 'Options' interrupt:\t\t\t", /A, Interrupt, "\t= busy [ ", /D, $-Interrupt, " byte(s)  ]"
+                display " - Main 'Options' interrupt:\t\t\t\t", /A, Interrupt, "\t= busy [ ", /D, $-Interrupt, " byte(s)  ]"
 
                 endif ; ~_OPTIONS_MAIN_INTERRUPT_

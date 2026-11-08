@@ -60,7 +60,6 @@ Loop:           ; главный цикл "опций"
                 DW .Restore                                                     ; UI_MODE_WORLD
                 DW .NoMode                                                      ; UI_MODE_BATTLE
 .NoMode         RET                                                             ; выход без запуска другого модуля
-
                 display " - Main loop:\t\t\t\t\t\t", /A, Loop, "\t= busy [ ", /D, $-Loop, " byte(s)  ]"
 
                 endif ; ~_OPTIONS_MAIN_LOOP_

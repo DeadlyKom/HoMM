@@ -3,8 +3,8 @@
                 define _DRAW_HEX_WORLD_INCLUDE_
 
                 module Hex
-                include "HexagonDisplayListGeneration.asm"
                 include "Column.asm"
+                include "HexagonDisplayListGeneration.asm"
                 include "HexagonByDisplayList.asm"
                 endmodule
 

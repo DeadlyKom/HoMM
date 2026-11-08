@@ -59,11 +59,11 @@
 - общий системный уровень;
 - предметный runtime-уровень.
 
-Макросы экранных модулей находятся в `Game_MainMenu_Module.inc`, `Game_World_Module.inc`, `Game_Inventory_Module.inc`, `Game_Characteristics_Module.inc`, `Game_Options_Module.inc`. Они назначают render-функции через `SET_*_RENDER`. Суффиксу `_Module` в имени соответствует `_MODULE_` в защите включения.
+Макросы экранных модулей находятся в `Game_MainMenu_Module.inc`, `Game_World_Module.inc`, `Game_Inventory_Module.inc`, `Game_Characteristics_Module.inc`, `Game_Options_Module.inc`, `Game_Battle_Module.inc`. Они назначают render-функции через `SET_*_RENDER`. Суффиксу `_Module` в имени соответствует `_MODULE_` в защите включения.
 
 Существующий `Game_Options.inc` относится к полю конфигурации `GameConfig.Options` и содержит макросы `CONFIG_OPTIONS_*`. В отдельном `Game_Options_Module.inc` находится только `SET_OPTIONS_RENDER`.
 
-`SET_MAIN_SWAP` назначает специальную ветку общего переключения экранов. Мир устанавливает `PipelineHexagons.Swap`, инвентарь — `CopyScreen.Swap`, характеристики и опции — собственные простые обработчики. `SET_RENDER_SHADOW` через `SET_FLAGS` перезаписывает весь байт флагов рендера, а не только целевой экран. Поэтому при его вызове сбрасываются прежние запросы готовности и переноса кадра.
+`SET_MAIN_SWAP` назначает специальную ветку общего переключения экранов. Мир устанавливает `PipelineHexagons.Swap`, инвентарь — `CopyScreen.Swap`, характеристики, опции и битва — собственные простые обработчики. `SET_RENDER_SHADOW` через `SET_FLAGS` перезаписывает весь байт флагов рендера, а не только целевой экран. Поэтому при его вызове сбрасываются прежние запросы готовности и переноса кадра.
 
 ## Три основных слоя макро-системы
 

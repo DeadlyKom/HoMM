@@ -129,7 +129,12 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     Options.Size, \
                                     Options.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
-                                    "  - Options\t\t\t\t\t"
+                                    "  - Options\t\t\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_BATTLE, \
+                                    Battle.Size, \
+                                    Battle.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Battle\t\t\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_DEFAULT_SETTINGS, \
                                     Metadata.Default.Size, \
                                     Metadata.Default.Size.Sector.ar, \

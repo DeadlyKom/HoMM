@@ -50,7 +50,7 @@ Loop:
                 DW ExecuteModule.Options                                        ; UI_MODE_OPTIONS
                 DW .NoMode                                                      ; UI_MODE_SAVE
                 DW .NoMode                                                      ; UI_MODE_WORLD
-                DW .NoMode                                                      ; UI_MODE_BATTLE
+                DW ExecuteModule.Battle                                         ; UI_MODE_BATTLE
 .NoMode         RET                                                             ; выход без запуска другого модуля
 
 .MemcpyScreen   ; завершение обработки уже показанного кадра и подготовка экранов к следующей отрисовке

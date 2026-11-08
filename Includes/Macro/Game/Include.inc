@@ -18,6 +18,7 @@
                 include "Game_MainLoopCore.inc"
 
                 include "Game_World_Module.inc"
+                include "Game_Battle_Module.inc"
                 include "Game_Options_Module.inc"
                 include "Game_MainMenu_Module.inc"
                 include "Game_Inventory_Module.inc"

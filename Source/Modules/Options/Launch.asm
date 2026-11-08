@@ -17,6 +17,6 @@ Launch:         SAVE_ASSETS_PAGE Kernel.Modules.Options.Page                    
                 CALL Launch.Initialize                                          ; инициализация "опций"
 
                 RET
-                display " - Launch 'Options':\t\t\t\t\t\t= busy [ ", /D, $-Launch, " byte(s) ]"
+                display " - Launch 'Options':\t\t\t\t\t\t\t= busy [ ", /D, $-Launch, " byte(s) ]"
 
                 endif ; ~_MODULE_OPTIONS_LAUNCH_
