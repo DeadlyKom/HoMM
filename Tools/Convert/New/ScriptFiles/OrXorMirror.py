@@ -1,4 +1,4 @@
-# Version: 4.1
+# Version: 4.2
 
 # Назначение:
 #   подготовка спрайтов для вывода OR & XOR без атрибутов
@@ -43,7 +43,7 @@
 #     - второй байт — XOR-данные, (INK ^ MASK) AND MASK
 #
 #   - MASK в формуле — исходная маска до зеркалирования
-#   - XOR-данные хранятся без зеркалирования, 
+#   - XOR-данные хранятся без зеркалирования,
 #     зеркальная маска нужна для оптимизации вывода,
 #     во время вывода зеркалируется только один байт каждой пары:
 #     при OR_XOR — маска, при M_OR_XOR — XOR-данные
@@ -54,7 +54,13 @@
 #     SOx, SOy — смещения после обрезки в пикселях.
 #
 # Свойства:
-#   не используются
+#   InvertWithinMask — инверсия изображения внутри маски:
+#     - false или отсутствие свойства — прежние XOR-данные
+#     - true — XOR-данные дополнительно инвертируются исходной маской,
+#       итоговая формула — INK AND MASK
+#
+#   свойство задаётся для всего спрайта в Regions без RegionRect,
+#   при нескольких подходящих значениях используется последнее
 #
 # Подготовка данных:
 #   - границы спрайта определяются по маске
@@ -66,6 +72,22 @@ import os
 import re
 import json
 from typing import List, Dict, Any, Optional
+
+def get_metadata_sprite(sprite: Dict[str, Any], name: str) -> List[Dict[str, Any]]:
+    """
+    Возвращает метаданные всего спрайта с указанным именем.
+    В текущем формате они хранятся в Regions без RegionRect.
+    """
+    result = []
+    for region in sprite.get("Regions", []):
+        if "RegionRect" in region:
+            continue
+
+        for metadata in region.get("Metadata", []):
+            if metadata.get("Type") == name:
+                result.append(metadata)
+
+    return result
 
 def first_bit(byte: int, pixel_value: int):
     """
@@ -233,22 +255,29 @@ def OR_XOR(sprite: Dict[str, Any],
            ink_data: bytearray,
            mask_data: bytearray,
            sprite_data: bytearray):
-    
+
+    metadata = get_metadata_sprite(sprite, "InvertWithinMask")
+    invert_within_mask = bool(metadata[-1].get("Value")) if metadata else False
     boundary_width = ((sprite_width + 7) // 8)
 
     for by in range(0, sprite_height, 1):
         for bx in range(0, boundary_width, 1):
             ink = ink_data[get_index(width >> 3, bx, by)]
             mask = mask_data[get_index(width >> 3, bx, by)]
-            
+
             byte_or = mask
             byte_xor = (ink ^ byte_or) & mask
 
-            # спрайт с маской зеркальный (маска всегда хранится отзеркаленная, а спрайт нормальный)
+            # инверсия изображения внутри исходной маски
+            if invert_within_mask:
+                byte_xor ^= byte_or
+
+            # маска хранится зеркально, XOR-данные без зеркалирования
             mirror_byte_or = reverse_byte(byte_or)
             sprite_data.append(mirror_byte_or)
             sprite_data.append(byte_xor)
     return True
+
 
 def export_sprite(filename: str,
                   width: int, height: int,

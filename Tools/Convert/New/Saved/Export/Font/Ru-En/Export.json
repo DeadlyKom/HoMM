@@ -13,7 +13,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_1",
@@ -29,7 +39,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_2",
@@ -45,7 +65,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_3",
@@ -61,7 +91,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_4",
@@ -77,7 +117,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_5",
@@ -93,7 +143,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_6",
@@ -109,7 +169,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_7",
@@ -125,7 +195,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_8",
@@ -141,7 +221,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_9",
@@ -157,7 +247,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_10",
@@ -173,7 +273,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_11",
@@ -189,7 +299,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_12",
@@ -205,7 +325,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_13",
@@ -221,7 +351,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_14",
@@ -237,7 +377,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_15",
@@ -253,7 +403,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_16",
@@ -269,7 +429,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_17",
@@ -285,7 +455,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_18",
@@ -301,7 +481,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_19",
@@ -317,7 +507,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_20",
@@ -333,7 +533,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_21",
@@ -349,7 +559,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_22",
@@ -365,7 +585,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_23",
@@ -381,7 +611,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_24",
@@ -397,7 +637,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_25",
@@ -413,7 +663,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_26",
@@ -429,7 +689,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_27",
@@ -445,7 +715,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_28",
@@ -461,7 +741,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_29",
@@ -477,7 +767,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_30",
@@ -493,7 +793,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_31",
@@ -509,7 +819,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_32",
@@ -525,7 +845,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_0",
@@ -541,7 +871,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_1",
@@ -557,7 +897,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_2",
@@ -573,7 +923,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_3",
@@ -589,7 +949,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_4",
@@ -605,7 +975,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_5",
@@ -621,7 +1001,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_6",
@@ -637,7 +1027,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_7",
@@ -653,7 +1053,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_8",
@@ -669,7 +1079,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_9",
@@ -685,7 +1105,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_10",
@@ -701,7 +1131,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_11",
@@ -717,7 +1157,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_12",
@@ -733,7 +1183,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_13",
@@ -749,7 +1209,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_14",
@@ -765,7 +1235,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_15",
@@ -781,7 +1261,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_16",
@@ -797,7 +1287,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_17",
@@ -813,7 +1313,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_18",
@@ -829,7 +1339,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_19",
@@ -845,7 +1365,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_20",
@@ -861,7 +1391,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_21",
@@ -877,7 +1417,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_22",
@@ -893,7 +1443,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_23",
@@ -909,7 +1469,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_24",
@@ -925,7 +1495,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_25",
@@ -941,7 +1521,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_26",
@@ -957,7 +1547,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_27",
@@ -973,7 +1573,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_28",
@@ -989,7 +1599,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_29",
@@ -1005,7 +1625,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_30",
@@ -1021,7 +1651,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_31",
@@ -1037,7 +1677,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_32",
@@ -1053,7 +1703,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_33",
@@ -1069,7 +1729,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_34",
@@ -1085,7 +1755,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_35",
@@ -1101,7 +1781,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_low_36",
@@ -1117,7 +1807,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_sym_0",
@@ -1133,7 +1833,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_sym_1",
@@ -1149,7 +1859,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_sym_2",
@@ -1165,7 +1885,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_sym_3",
@@ -1181,7 +1911,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_sym_4",
@@ -1197,7 +1937,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_sym_5",
@@ -1213,7 +1963,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_sym_6",
@@ -1229,7 +1989,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_num_0",
@@ -1245,7 +2015,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_num_1",
@@ -1261,7 +2041,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_num_2",
@@ -1277,7 +2067,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_num_3",
@@ -1293,7 +2093,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_num_4",
@@ -1309,7 +2119,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_num_5",
@@ -1325,7 +2145,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_num_6",
@@ -1341,7 +2171,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_num_7",
@@ -1357,7 +2197,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_num_8",
@@ -1373,7 +2223,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_num_9",
@@ -1389,7 +2249,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_sym_7",
@@ -1405,7 +2275,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_sym_8",
@@ -1421,7 +2301,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_sym_9",
@@ -1437,7 +2327,17 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     },
     {
         "SprName": "font_sym_10",
@@ -1453,6 +2353,16 @@
         "AsepriteIndex": 0,
         "InkLayer": "font",
         "AttributeLayer": "",
-        "MaskLayer": "mask"
+        "MaskLayer": "mask",
+        "Regions": [
+            {
+                "Metadata": [
+                    {
+                        "Type": "InvertWithinMask",
+                        "Value": true
+                    }
+                ]
+            }
+        ]
     }
 ]

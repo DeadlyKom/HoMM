@@ -1,7 +1,93 @@
+# Version: 4.2
+
+# Назначение:
+#   подготовка спрайтов для вывода OR & XOR без атрибутов
+#
+# Позиция на экране:
+#   - выравнивание по знакоместам не требуется
+#
+# Атрибуты:
+#   не используются
+#
+# Методы вывода:
+#   Draw.SpriteClipping
+#   Draw.SpriteClipping.HL
+#   - поддерживают размеры от 1 до 32 пикселей по каждой оси
+#   - координаты задаются в формате 12.4
+#   - поддерживается отсечение слева, справа, сверху и снизу
+#     по границам настроенной видимой области
+#   - формат поддерживает прямой (OR_XOR) и зеркальный (M_OR_XOR) вывод
+#   - режим задаётся в настройках спрайта, в FSprite.Data.Page,
+#     через параметр Flags макроса SPRITE
+#     номер_страницы | OR_XOR или номер_страницы | M_OR_XOR
+#   - для зеркального вывода требуется Draw.SpriteClipping с входом
+#     через FSpritesRef и ширина спрайта, кратная 8 пикселям
+#
+#   Draw.SpriteNotClipping.OR_XOR
+#   - поддерживает размеры от 1 до 32 пикселей по каждой оси
+#   - координаты задаются в целых пикселях
+#   - режим OR_XOR устанавливается самим методом
+#   - не оддерживается отсечение, спрайт должен полностью помещаться в области экрана
+#
+# Ограничения:
+#   - размеры по каждой оси — от 1 до 32 пикселей
+#   - для зеркального вывода ширина — 8/16/24/32 пикселя
+#   - данные спрайта ограничены 256 байтами
+#
+# Формат данных:
+#   - файл .bin не содержит заголовка
+#   - данные хранятся построчно, сверху вниз, слева направо
+#
+#   каждые 8 пикселей представлены парой байтов:
+#     - первый байт — OR-маска с зеркальным порядком битов
+#     - второй байт — XOR-данные, (INK ^ MASK) AND MASK
+#
+#   - MASK в формуле — исходная маска до зеркалирования
+#   - XOR-данные хранятся без зеркалирования,
+#     зеркальная маска нужна для оптимизации вывода,
+#     во время вывода зеркалируется только один байт каждой пары:
+#     при OR_XOR — маска, при M_OR_XOR — XOR-данные
+#   - каждая строка занимает 2 * ((Width + 7) / 8) байтов
+#
+#   размеры и смещения хранятся отдельно в текстовом .sprinfo:
+#     Width, Height — ширина и высота в пикселях.
+#     SOx, SOy — смещения после обрезки в пикселях.
+#
+# Свойства:
+#   InvertWithinMask — инверсия изображения внутри маски:
+#     - false или отсутствие свойства — прежние XOR-данные
+#     - true — XOR-данные дополнительно инвертируются исходной маской,
+#       итоговая формула — INK AND MASK
+#
+#   свойство задаётся для всего спрайта в Regions без RegionRect,
+#   при нескольких подходящих значениях используется последнее
+#
+# Подготовка данных:
+#   - границы спрайта определяются по маске
+#   - пустые поля обрезаются, смещения сохраняются в .sprinfo
+#   - размер после обрезки не должен превышать 32x32 пикселя
+#   - результат сохраняется в файлы .bin и .sprinfo
+
 import os
 import re
 import json
 from typing import List, Dict, Any, Optional
+
+def get_metadata_sprite(sprite: Dict[str, Any], name: str) -> List[Dict[str, Any]]:
+    """
+    Возвращает метаданные всего спрайта с указанным именем.
+    В текущем формате они хранятся в Regions без RegionRect.
+    """
+    result = []
+    for region in sprite.get("Regions", []):
+        if "RegionRect" in region:
+            continue
+
+        for metadata in region.get("Metadata", []):
+            if metadata.get("Type") == name:
+                result.append(metadata)
+
+    return result
 
 def first_bit(byte: int, pixel_value: int):
     """
@@ -169,22 +255,29 @@ def OR_XOR(sprite: Dict[str, Any],
            ink_data: bytearray,
            mask_data: bytearray,
            sprite_data: bytearray):
-    
+
+    metadata = get_metadata_sprite(sprite, "InvertWithinMask")
+    invert_within_mask = bool(metadata[-1].get("Value")) if metadata else False
     boundary_width = ((sprite_width + 7) // 8)
 
     for by in range(0, sprite_height, 1):
         for bx in range(0, boundary_width, 1):
             ink = ink_data[get_index(width >> 3, bx, by)]
             mask = mask_data[get_index(width >> 3, bx, by)]
-            
+
             byte_or = mask
             byte_xor = (ink ^ byte_or) & mask
 
-            # спрайт с маской зеркальный (маска всегда хранится отзеркаленная, а спрайт нормальный)
+            # инверсия изображения внутри исходной маски
+            if invert_within_mask:
+                byte_xor ^= byte_or
+
+            # маска хранится зеркально, XOR-данные без зеркалирования
             mirror_byte_or = reverse_byte(byte_or)
             sprite_data.append(mirror_byte_or)
             sprite_data.append(byte_xor)
     return True
+
 
 def export_sprite(filename: str,
                   width: int, height: int,
@@ -239,11 +332,16 @@ def main():
             pixel_value=1
         )
     
-        shift_pixels = info["shift_pixels"]
-        width = info["width"]
-        height = info["height"]
-        min_y = info["min_y"]
-        max_y = info["max_y"]
+        width           = info["width"]             # ширина bounding box
+        height          = info["height"]            # высота bounding box
+        shift_pixels    = info["shift_pixels"]      # смещение по X (левый край)
+        min_y           = info["min_y"]             # смещение по Y (верхний край)
+        max_y           = info["max_y"]
+
+        if width > 32 or height > 32:
+            raise ValueError(
+                f"Sprite '{sprite_name}' size must not exceed 32x32, "
+                f"got {width}x{height}")
 
         ink_rows_ = shift_sprite_left(inc_rows, shift_pixels)
         mask_rows_ = shift_sprite_left(mask_rows, shift_pixels)
@@ -262,22 +360,16 @@ def main():
                 f.write(sprite_data)
 
             # выгрузка информации о спрайте
-            # width_pixels  = info["width"]           # ширина bounding box
-            # height_pixels = info["height"]          # высота bounding box
-            # shift_x       = info["shift_pixels"]    # смещение по X (левый край)
-            # shift_y       = info["min_y"]           # смещение по Y (верхний край)
-
-            # берем только 5 младших бит
-            # width_byte  = width_pixels  & 0b00011111
-            # height_byte = height_pixels & 0b00011111
+            shift_x       = shift_pixels            # смещение по X (левый край)
+            shift_y       = min_y                   # смещение по Y (верхний край)
 
             # см структуру FSpriteInfo
-            # file_info_name = os.path.join(BASE_DIR, filename_from_sprite(sprite_name, ".sprinfo"))
-            # with open(file_info_name, "w") as f:
-            #     f.write(f"Width: {width_byte}\n")
-            #     f.write(f"Height: {height_byte}\n")
-            #     f.write(f"SOx: {shift_x}\n")
-            #     f.write(f"SOy: {shift_y}\n")
+            file_info_name = os.path.join(BASE_DIR, filename_from_sprite(sprite_name, ".sprinfo"))
+            with open(file_info_name, "w") as f:
+                f.write(f"Width: {width}\n")
+                f.write(f"Height: {height}\n")
+                f.write(f"SOx: {shift_x}\n")
+                f.write(f"SOy: {shift_y}\n")
 
 if __name__ == "__main__":
     main()
