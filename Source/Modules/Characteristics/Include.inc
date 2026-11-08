@@ -5,6 +5,7 @@
                 include "Kernel/Bind.inc"                                       ; (0)
                 include "Launch.asm"
                 include "UI/Include.inc"
+                include "RestoreState.asm"
                 include "Input/Include.inc"
                 include "Launch/Include.inc"
                 include "Graphics/Include.inc"

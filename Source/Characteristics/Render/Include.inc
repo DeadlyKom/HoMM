@@ -4,6 +4,7 @@
 
                 module Render
                 include "Draw.asm"
+                include "Swap.asm"
                 endmodule
 
                 endif ; ~_CHARACTERISTICS_RENDER_INCLUDE_

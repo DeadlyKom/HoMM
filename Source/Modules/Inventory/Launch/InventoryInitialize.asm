@@ -20,11 +20,11 @@ Initialize:     ; инициализация "инвентаря"
                 SET_MAIN_FLAGS ML_TRANSITION | ML_ENTER                         ; установка флагов
                 SET_INVENTORY_RENDER Inventory.SharedCode.Render.Draw           ; инициализация главного рендера "инвентаря"
 
-                ; инициализация флагов рендера инвентаря
+                ; инициализация флагов рендера "инвентаря"
                 SET_RENDER_SHADOW                                               ; выбор теневого экрана для показа
 
                 ; показ подготовленного теневого экрана перед первым кадром
-                SHOW_SHADOW_SCREEN
+                SHOW_SHADOW_SCREEN                                              ; отобразить теневой экран
                 SET_USER_HANDLER Inventory.SharedCode.Interrupt                 ; установка обработчика прерываний
                 
                 RES_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                           ; разрешить сканирование ввода

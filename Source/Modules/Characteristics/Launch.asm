@@ -16,6 +16,7 @@ Launch:         SAVE_ASSETS_PAGE Kernel.Modules.Characteristics.Page            
                 PUSH AF
 
                 CALL Launch.Deploy                                              ; развёртывание общего кода характеристик
+                CALL Launch.ClearState                                          ; очистка временных состояний характеристик
                 CALL Launch.InitSprites                                         ; загрузка и инициализация спрайтов
                 CALL Launch.Window                                              ; отображение окна "характеристик"
                 CALL Launch.Initialize                                          ; инициализация "характеристик"
