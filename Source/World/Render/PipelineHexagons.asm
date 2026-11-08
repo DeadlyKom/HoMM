@@ -172,21 +172,7 @@ PipelineHexagons:
 .SkipCurRestore ; подготовка обработки UI после копирования экранных блоков
                 SET_MODULE_PAGE_World                                           ; включить страницу модуля "World"
 
-                ; проверка запроса паузы игры
-                CHECK_TICK_REQUEST_FLAG GAME_PAUSE_REQUEST_BIT
-                JR Z, .PreviousMode                                             ; переход, если запроc "паузы игры" сброшен
-
-                ; проверка текущего состояния "паузы игры"
-                CHECK_TICK_CONTROL_FLAG GAME_PAUSE_BIT
-                CALL Z, World.UI.Initialize.Layer_GamePause                     ; вызов, если "пауза игры" выключена
-                                                                                ; запустить режим "паузы игры"
-                JR .ProcessUI
-
-.PreviousMode   ; проверка текущего состояния "паузы игры"
-                CHECK_TICK_CONTROL_FLAG GAME_PAUSE_BIT
-                CALL NZ, World.UI.Initialize.PreviousMode                       ; вызов, если "пауза игры" включена
-                                                                                ; вернуть предыдущий режим
-.ProcessUI      ; проверка возможности начать обработку запроса смены UI режима
+                ; проверка возможности начать обработку запроса смены UI режима
                 CALL UI.Runtime.Process
                 JP C, .StartUI                                                  ; переход, если начат переход UI режима
 

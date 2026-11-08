@@ -126,7 +126,7 @@ Handler         DW #0000                                                        
                 FUIIcon { #40 | Icons.Index.SlotBR,  { #F1, #8C }, #80 | Icons.Index.None,       { #00, #00 }, #0000 }
                 FUIIcon { #00 | Icons.Index.Diamond, { #C7, #95 }, #00 | Icons.Index.Quest,      { #C8, #96 }, World.UI.Handler.Layer_GameUI.Quest }
                 FUIIcon { #00 | Icons.Index.Diamond, { #E1, #95 }, #00 | Icons.Index.Map,        { #E4, #94 }, World.UI.Handler.Layer_GameUI.Map }
-                FUIIcon { #00 | Icons.Index.Diamond, { #D4, #A2 }, #00 | Icons.Index.Options,    { #D4, #9F }, World.UI.Handler.Layer_GameUI.Options }
+                FUIIcon { #00 | Icons.Index.Diamond, { #D4, #A2 }, #00 | Icons.Index.Options,    { #D4, #9F }, World.UI.Handler.Options }
 .IconsList.Num  EQU ($-.IconsList) / FUIIcon 
 
                 display " - Display gameplay UI:\t\t\t\t\t\t= busy [ ", /D, $-GameplayUI, " byte(s) ]"

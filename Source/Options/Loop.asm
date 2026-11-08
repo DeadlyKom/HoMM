@@ -31,6 +31,10 @@ Loop:           ; главный цикл "опций"
 .Exit           ; завершение текущего цикла
                 RES_MAIN_FLAG ML_EXIT_BIT                                       ; завершение работы текущего цикла
 
+                ; завершение паузы перед восстановлением исходного модуля
+                RES_TICK_REQUEST_FLAG GAME_PAUSE_REQUEST_BIT                    ; сброс запроса паузы игры
+                RES_TICK_CONTROL_FLAG GAME_PAUSE_BIT                            ; выключение паузы игры
+
                 ; подготовка флагов для перехода между циклами
                 SET_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE
 
@@ -51,7 +55,6 @@ Loop:           ; главный цикл "опций"
                 DW .NoMode                                                      ; UI_MODE_MAP
                 DW .NoMode                                                      ; UI_MODE_QUEST_LOG
                 DW .NoMode                                                      ; UI_MODE_SETTINGS
-                DW .NoMode                                                      ; UI_MODE_GAME_PAUSE
                 DW .Restore                                                     ; UI_MODE_WORLD
                 DW .NoMode                                                      ; UI_MODE_BATTLE
 .NoMode         RET                                                             ; выход без запуска другого модуля

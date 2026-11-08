@@ -9,12 +9,10 @@ UI_MODE_SPELLBOOK           EQU #03                                             
 UI_MODE_MAP                 EQU #04                                             ; режим глобальная карта
 UI_MODE_QUEST_LOG           EQU #05                                             ; режим журнал заданий
 UI_MODE_SETTINGS            EQU #06                                             ; режим настройки
+UI_MODE_WORLD               EQU #07                                             ; режим "мир"
+UI_MODE_BATTLE              EQU #08                                             ; режим "бой"
 
-UI_MODE_GAME_PAUSE          EQU #07                                             ; режим "пауза игры"
-UI_MODE_WORLD               EQU #08                                             ; режим "мир"
-UI_MODE_BATTLE              EQU #09                                             ; режим "бой"
-
-UI_MODE_MAX                 EQU #0A                                             ; максимально доступный режим
+UI_MODE_MAX                 EQU #09                                             ; максимально доступный режим
 
 ; -----------------------------------------
 ;   флаги

@@ -20,8 +20,7 @@ StartTransition:; чтение активируемого UI режима
                 DW UI.Runtime.Complete                                          ; UI_MODE_SPELLBOOK
                 DW UI.Runtime.Complete                                          ; UI_MODE_MAP
                 DW UI.Runtime.Complete                                          ; UI_MODE_QUEST_LOG
-                DW UI.Runtime.Complete                                          ; UI_MODE_SETTINGS
-                DW World.SharedCode.UI.Transition.Layer_GamePause               ; UI_MODE_GAME_PAUSE
+                DW World.SharedCode.UI.Transition.Layer_GameView                ; UI_MODE_SETTINGS
                 DW World.SharedCode.UI.Transition.Layer_GameView                ; UI_MODE_WORLD
                 DW UI.Runtime.Resume                                            ; UI_MODE_BATTLE
 .NoMode         RET                                                             ; UI_MODE_NONE ни на что не влияет

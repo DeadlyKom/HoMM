@@ -24,6 +24,17 @@ Characteristics:LD A, UI_MODE_CHARACTERISTICS
 Inventory:      LD A, UI_MODE_INVENTORY
                 JP RequestMode
 ; -----------------------------------------
+; обработчик иконки опций
+; In:
+; Out:
+; Corrupt:
+;   HL, BC, AF
+; Note:
+;   ℹ️ код расположен в модуле "мира"
+; -----------------------------------------
+Options:        LD A, UI_MODE_SETTINGS
+                JP RequestMode
+; -----------------------------------------
 ; обработчик иконки центрирования
 ; In:
 ; Out:

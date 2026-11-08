@@ -7,7 +7,6 @@
                 include "Layer_GameUI.asm"
                 include "Layer_Minimap.asm"
                 include "Layer_GameView.asm"
-                include "Layer_GamePause.asm"
                 endmodule
 
                 endif ; ~_MODULE_WORLD_UI_HANDLER_INCLUDE_

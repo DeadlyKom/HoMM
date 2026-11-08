@@ -2,7 +2,7 @@
                 ifndef _MODULE_WORLD_INPUT_MENU_PAUSE_
                 define _MODULE_WORLD_INPUT_MENU_PAUSE_
 ; -----------------------------------------
-; переключить запрос паузы игры по первому нажатию клавиши меню
+; открыть меню опций по первому нажатию клавиши меню
 ; In:
 ; Out:
 ; Corrupt:
@@ -23,9 +23,9 @@ Input.MenuPause:; проверка клавиши "меню/пауза"
 
                 SET_FLAG_MODIFY Input.MenuPause.Flag                            ; установка флага защёлки обработки первого нажатия
 
-                ; смена запроса паузы игры
-                SWAP_TICK_REQUEST_FLAG GAME_PAUSE_REQUEST_BIT
-                RET
+                ; запрос открытия меню опций
+                LD A, UI_MODE_SETTINGS
+                JP UI.Runtime.Request                                           ; запрос смены UI режима
 
 .Released       RES_FLAG_MODIFY Input.MenuPause.Flag                            ; сброс флага защёлки после отпускания клавиши
                 RET
