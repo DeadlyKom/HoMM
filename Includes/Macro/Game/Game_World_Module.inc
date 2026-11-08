@@ -1,15 +1,15 @@
 
-                ifndef _MACRO_GAME_MAIN_MENU_
-                define _MACRO_GAME_MAIN_MENU_
+                ifndef _MACRO_GAME_WORLD_MODULE_
+                define _MACRO_GAME_WORLD_MODULE_
 ; -----------------------------------------
 ; инициализаци главного рендера "мира"
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-SET_MAIN_MENU_RENDER macro Func?
+SET_WORLD_RENDER macro Func?
                 LD BC, Func?
-                LD (MainMenu.Base.Loop.FuncDraw), BC
+                LD (World.SharedCode.Loop.FuncDraw), BC
                 endm
 
-                endif ; ~_MACRO_GAME_MAIN_MENU_
+                endif ; ~_MACRO_GAME_WORLD_MODULE_

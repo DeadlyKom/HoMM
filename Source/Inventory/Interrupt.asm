@@ -17,7 +17,7 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
 .SwapScreens    ; ************ Swap Screens ************
                 CALL Render.Swap
 
-.RenderProcess  ; обновление курсора
+.RenderProcess  ; процесс отрисовки не завершён
                 SET_PAGE_SCREEN_SHADOW                                          ; включение страницы теневого экрана
                 ; проверка разрешения обновления курсора
                 CALL Render.CursorCopyGate
@@ -38,7 +38,6 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 endif
 
                 RET
-
                 display " - Main 'Inventory' interrupt:\t\t\t", /A, Interrupt, "\t= busy [ ", /D, $-Interrupt, " byte(s)  ]"
 
                 endif ; ~_INVENTORY_MAIN_INTERRUPT_

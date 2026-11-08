@@ -1,6 +1,6 @@
 
-                ifndef _MACRO_GAME_INVENTORY_
-                define _MACRO_GAME_INVENTORY_
+                ifndef _MACRO_GAME_INVENTORY_MODULE_
+                define _MACRO_GAME_INVENTORY_MODULE_
 ; -----------------------------------------
 ; инициализация главного рендера "инвентаря"
 ; In:
@@ -13,4 +13,4 @@ SET_INVENTORY_RENDER macro Func?
                 LD (Inventory.SharedCode.Loop.FuncDraw), BC
                 endm
 
-                endif ; ~_MACRO_GAME_INVENTORY_
+                endif ; ~_MACRO_GAME_INVENTORY_MODULE_

@@ -32,6 +32,7 @@ REG_ASSETS_ID_DEBUG macro Label?
                     REG_ASSETS_ID       ASSETS_ID_WORLD                         ; мир
                     REG_ASSETS_ID       ASSETS_ID_CHARACTERISTICS               ; характеристики
                     REG_ASSETS_ID       ASSETS_ID_INVENTORY                     ; инвентарь
+                    REG_ASSETS_ID       ASSETS_ID_OPTIONS                       ; опции
                     REG_ASSETS_ID       ASSETS_ID_DEFAULT_SETTINGS              ; дефолтные настройки объектов
                     REG_ASSETS_ID       ASSETS_ID_CURSOR_PACK                   ; графика: курсора
                     REG_ASSETS_ID       ASSETS_ID_HERO_PACK                     ; графика: героев

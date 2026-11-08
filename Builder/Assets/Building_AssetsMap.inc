@@ -125,6 +125,11 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     Inventory.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Inventory\t\t\t\t\t"
+                REG_BUILD_ASSETS_ID ASSETS_ID_OPTIONS, \
+                                    Options.Size, \
+                                    Options.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Options\t\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_DEFAULT_SETTINGS, \
                                     Metadata.Default.Size, \
                                     Metadata.Default.Size.Sector.ar, \

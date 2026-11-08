@@ -40,6 +40,8 @@
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/Characteristics.pack.ar", Characteristics.Size.Sector.ar
                 ; ASSETS_ID_INVENTORY
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/Inventory.pack.ar", Inventory.Size.Sector.ar
+                ; ASSETS_ID_OPTIONS
+                ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/Options.pack.ar", Options.Size.Sector.ar
                 ; ASSETS_ID_DEFAULT_SETTINGS
                 ADD_ASSETS 3, Page.ObjectDefaultSettings, Adr.ObjectDefaultSettings, "Builder/Assets/Metadata/Compressed/Default/DefaultSettings.meta.ar", Metadata.Default.Size.Sector.ar
                 ; ASSETS_ID_CURSOR_PACK

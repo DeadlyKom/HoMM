@@ -1,6 +1,6 @@
 
-                ifndef _MACRO_GAME_CHARACTERISTICS_
-                define _MACRO_GAME_CHARACTERISTICS_
+                ifndef _MACRO_GAME_CHARACTERISTICS_MODULE_
+                define _MACRO_GAME_CHARACTERISTICS_MODULE_
 ; -----------------------------------------
 ; инициализация главного рендера "характеристик"
 ; In:
@@ -13,4 +13,4 @@ SET_CHARACTERISTICS_RENDER macro Func?
                 LD (Characteristics.SharedCode.Loop.FuncDraw), BC
                 endm
 
-                endif ; ~_MACRO_GAME_CHARACTERISTICS_
+                endif ; ~_MACRO_GAME_CHARACTERISTICS_MODULE_

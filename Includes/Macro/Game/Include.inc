@@ -11,15 +11,16 @@
                 include "Game_MainSwap.inc"
                 include "Game_Interupt.inc"
                 include "Game_MainLoop.inc"
-                include "Game_MainMenu.inc"
                 include "Game_HardInput.inc"
+                include "Game_WorldTime.inc"
                 include "Game_InputTimer.inc"
                 include "Game_TickRuntime.inc"
                 include "Game_MainLoopCore.inc"
 
-                include "Game_World.inc"
-                include "Game_Inventory.inc"
-                include "Game_WorldTime.inc"
-                include "Game_Characteristics.inc"
+                include "Game_World_Module.inc"
+                include "Game_Options_Module.inc"
+                include "Game_MainMenu_Module.inc"
+                include "Game_Inventory_Module.inc"
+                include "Game_Characteristics_Module.inc"
 
                 endif ; ~_MACRO_GAME_INCLUDE_

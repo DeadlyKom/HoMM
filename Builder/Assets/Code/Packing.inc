@@ -14,5 +14,6 @@
                 include "Original/World/Pack.inc"                               ; ASSETS_ID_WORLD
                 include "Original/Characteristics/Pack.inc"                     ; ASSETS_ID_CHARACTERISTICS
                 include "Original/Inventory/Pack.inc"                           ; ASSETS_ID_INVENTORY
+                include "Original/Options/Pack.inc"                             ; ASSETS_ID_OPTIONS
 
                 endif ; ~_ASSETS_PACKING_CODE_INCLUDE_

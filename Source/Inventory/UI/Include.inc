@@ -3,7 +3,6 @@
                 define _INVENTORY_UI_INCLUDE_
 
                 module UI
-                include "Layers.inc"
                 include "Transition.asm"
                 endmodule
 

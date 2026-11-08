@@ -9,5 +9,6 @@ ExecuteModule
 .World              EQU Kernel.Modules.World                                    ; запуск "мира"
 .Characteristics    EQU Kernel.Modules.Characteristics                          ; запуск "характеристик"
 .Inventory          EQU Kernel.Modules.Inventory                                ; запуск "инвентаря"
+.Options            EQU Kernel.Modules.Options                                  ; запуск "опций"
 
                 endif ; ~_KERNEL_EXECUTE_MODULE_
