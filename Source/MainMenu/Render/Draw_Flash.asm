@@ -24,7 +24,7 @@ Draw_Flash:     ;
                 CALL MainMenu.Base.Particle.Draw.Flush                          ; высвобождение частиц в массиве
                 RET
 
-.Flush          ; высвободить все опции
+.Flush          ; высвободить все "опции"
 .FlashLoop      CALL MainMenu.Base.Particle.ParticleSampling.Flush              ; высвобождение частиц из очереди точек
                 CALL MainMenu.Base.Particle.RefillPointQueue                    ; пополнение очереди точек
                 JR NC, .FlashLoop                                               ; переход, если остались буквы в тексте

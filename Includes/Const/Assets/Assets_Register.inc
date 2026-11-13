@@ -15,25 +15,25 @@ REG_ASSETS_ID_DEBUG macro Label?
                     endm
 
                     REG_ASSETS_ID       ASSETS_ID_KERNEL                        ; кернел
-                    REG_ASSETS_ID       ASSETS_ID_CORE                          ; модуль - ядро
+                    REG_ASSETS_ID       ASSETS_ID_CORE                          ; модуль - "ядро"
                     REG_ASSETS_ID       ASSETS_ID_PAGE_0                        ; код 0 страницы
                     REG_ASSETS_ID       ASSETS_ID_PAGE_1                        ; код 1 страницы
                     REG_ASSETS_ID       ASSETS_ID_PAGE_3                        ; код 3 страницы
                     REG_ASSETS_ID       ASSETS_ID_PAGE_4                        ; код 4 страницы
-                    REG_ASSETS_ID       ASSETS_ID_PROGRESS                      ; модуль - окно прогресса
+                    REG_ASSETS_ID       ASSETS_ID_PROGRESS                      ; модуль - "окно прогресса"
                     REG_ASSETS_ID       ASSETS_ID_PROGRESS_STAGES               ; графика стадий прогресса
-                    REG_ASSETS_ID       ASSETS_ID_MAIN_MENU                     ; модуль - главное меню
-                    REG_ASSETS_ID       ASSETS_ID_MAIN_MENU_GRAPH_PACK_0        ; главное меню - графический пакет #00
-                    REG_ASSETS_ID       ASSETS_ID_MAIN_MENU_GRAPH_PACK_1        ; главное меню - графический пакет #01
-                    REG_ASSETS_ID       ASSETS_ID_MAIN_MENU_GRAPH_PACK_2        ; главное меню - графический пакет #02
+                    REG_ASSETS_ID       ASSETS_ID_MAIN_MENU                     ; модуль - "главное меню"
+                    REG_ASSETS_ID       ASSETS_ID_MAIN_MENU_GRAPH_PACK_0        ; "главное меню" - графический пакет #00
+                    REG_ASSETS_ID       ASSETS_ID_MAIN_MENU_GRAPH_PACK_1        ; "главное меню" - графический пакет #01
+                    REG_ASSETS_ID       ASSETS_ID_MAIN_MENU_GRAPH_PACK_2        ; "главное меню" - графический пакет #02
                     REG_ASSETS_ID       ASSETS_ID_FONT_RU_8                     ; русский шрифт 8
                     REG_ASSETS_ID       ASSETS_ID_FONT_RU_8_PARTICLE            ; русский шрифт 8 (для частиц)
-                    REG_ASSETS_ID       ASSETS_ID_SESSION                       ; модуль - сессия
-                    REG_ASSETS_ID       ASSETS_ID_WORLD                         ; модуль - мир
-                    REG_ASSETS_ID       ASSETS_ID_CHARACTERISTICS               ; модуль - характеристики
-                    REG_ASSETS_ID       ASSETS_ID_INVENTORY                     ; модуль - инвентарь
-                    REG_ASSETS_ID       ASSETS_ID_OPTIONS                       ; модуль - опции
-                    REG_ASSETS_ID       ASSETS_ID_BATTLE                        ; модуль - битва
+                    REG_ASSETS_ID       ASSETS_ID_SESSION                       ; модуль - "сессия"
+                    REG_ASSETS_ID       ASSETS_ID_WORLD                         ; модуль - "мир"
+                    REG_ASSETS_ID       ASSETS_ID_CHARACTERISTICS               ; модуль - "характеристики"
+                    REG_ASSETS_ID       ASSETS_ID_INVENTORY                     ; модуль - "инвентарь"
+                    REG_ASSETS_ID       ASSETS_ID_OPTIONS                       ; модуль - "опции"
+                    REG_ASSETS_ID       ASSETS_ID_COMBAT                        ; модуль - "сражение"
                     REG_ASSETS_ID       ASSETS_ID_DEFAULT_SETTINGS              ; дефолтные настройки объектов
                     REG_ASSETS_ID       ASSETS_ID_CURSOR_PACK                   ; графика: курсора
                     REG_ASSETS_ID       ASSETS_ID_HERO_PACK                     ; графика: героев

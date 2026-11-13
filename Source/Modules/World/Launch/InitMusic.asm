@@ -32,7 +32,7 @@ InitMusic:      ; запрет музыкальных тиков на время
                 SET_PAGE_MUSIC
                 LD HL, Adr.Music.Slots
                 CALL Sound.Initialize
-                JP_SET_MODULE_PAGE_World                                        ; восстановление страницы модуля мира
+                JP_SET_MODULE_PAGE_World                                        ; восстановление страницы модуля "мира"
 
 .Size           EQU $-Adr.CodeToScr
                 ENT

@@ -19,8 +19,8 @@ Loop:           ; главный цикл "опций"
                 CALL UI.Runtime.Process
                 JR NC, .CheckExit                                               ; переход, если переход UI режима не начат
 
-                ; завершение перехода UI перед выходом из опций
-                SET_MAIN_FLAG ML_EXIT_BIT                                       ; запрос завершения главного цикла опций
+                ; завершение перехода UI перед выходом из "опций"
+                SET_MAIN_FLAG ML_EXIT_BIT                                       ; запрос завершения главного цикла "опций"
                 CALL UI.Runtime.Complete                                        ; завершение смены UI режима
 
 .CheckExit      ; проверка запроса завершения текущего цикла
@@ -43,7 +43,7 @@ Loop:           ; главный цикл "опций"
                 LD HL, .JumpTable
                 JP Func.JumpTable
 
-.Restore        ; восстановление состояния мира
+.Restore        ; восстановление состояния "мира"
                 SET_PAGE_ASSETS                                                 ; включение страницы менеджера ресурсов
                 PRE_LAUNCH_CHECK ASSETS_ID_WORLD                                ; проверка перед запуском ресурса
                 JP_EXE_ASSETS_NOT_PARAM ASSETS_ID_WORLD, World.Restore
@@ -58,7 +58,7 @@ Loop:           ; главный цикл "опций"
                 DW .NoMode                                                      ; UI_MODE_OPTIONS
                 DW .NoMode                                                      ; UI_MODE_SAVE
                 DW .Restore                                                     ; UI_MODE_WORLD
-                DW .NoMode                                                      ; UI_MODE_BATTLE
+                DW .NoMode                                                      ; UI_MODE_COMBAT
 .NoMode         RET                                                             ; выход без запуска другого модуля
                 display " - Main loop:\t\t\t\t\t\t", /A, Loop, "\t= busy [ ", /D, $-Loop, " byte(s)  ]"
 

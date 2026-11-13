@@ -56,7 +56,7 @@ Interrupt:      SET_PAGE_SCREEN_SHADOW                                          
                 CALL NC, UI_Cursor.Draw                                         ; вызов, если отображение курсора разрешено
                 
 .Input          ; ************ Scan Input ************
-                SET_MODULE_PAGE_World                                           ; включить страницу модуля "World"
+                SET_MODULE_PAGE_World                                           ; включить страницу модуля "мира"
                 CHECK_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                         ; проверка разрешения сканирования ввода
                 CALL Z, World.Input.Scan
 

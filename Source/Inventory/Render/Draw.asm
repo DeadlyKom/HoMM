@@ -51,7 +51,7 @@ Draw:           ; -----------------------------------------
                 ; тик
                 ; -----------------------------------------
 
-                SET_MODULE_PAGE_Inventory                                       ; включение страницы модуля инвентаря
+                SET_MODULE_PAGE_Inventory                                       ; включение страницы модуля "инвентаря"
                 CALL UI.Update                                                  ; обновление UI
                 CALL Inventory.DragAndDrop.TakeItem                             ; обработка запроса взятия предмета
                 CALL Inventory.DragAndDrop.PutItem                              ; обработка запроса размещения предмета
@@ -69,7 +69,7 @@ Draw:           ; -----------------------------------------
                 CALL NZ, Inventory.Display.DraggedItem                          ; вызов, если перетаскивание активно
 
                 ifdef _DEBUG
-                CALL Inventory.Display.DebugInfo                                ; отображение отладочной информации об инвентаре
+                CALL Inventory.Display.DebugInfo                                ; отображение отладочной информации об "инвентаре"
                 endif
 
                 ; сброс обработанных флагов входа и перехода

@@ -13,7 +13,7 @@
 Characteristics:LD A, UI_MODE_CHARACTERISTICS
                 JP RequestMode
 ; -----------------------------------------
-; обработчик иконки инвентаря
+; обработчик иконки "инвентаря"
 ; In:
 ; Out:
 ; Corrupt:
@@ -24,7 +24,7 @@ Characteristics:LD A, UI_MODE_CHARACTERISTICS
 Inventory:      LD A, UI_MODE_INVENTORY
                 JP RequestMode
 ; -----------------------------------------
-; обработчик иконки опций
+; обработчик иконки "опций"
 ; In:
 ; Out:
 ; Corrupt:

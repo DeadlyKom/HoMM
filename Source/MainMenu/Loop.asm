@@ -28,7 +28,7 @@ Loop:
                 LAUNCH_ASSET_FUNCTION_RESTORE Session.Load, ExecuteModule.Session
                
                 ;---------------------------------------------------------------
-                RES_USER_HANDLER                                                ; отключение обработчика перед освобождением главного меню
+                RES_USER_HANDLER                                                ; отключение обработчика перед освобождением "главного меню"
                 CALL Core.ReleaseAsset                                          ; заранее освобождение текущего ресурса
                 CALL Content.Font.Release                                       ; освобождение ресурса шрифта
                 CALL Content.Portal.Release                                     ; освобождение контент данных "главного меню"

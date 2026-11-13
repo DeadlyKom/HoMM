@@ -2,7 +2,7 @@
                 ifndef _MODULE_INVENTORY_GRAPHICS_DISPLAY_ITEMS_
                 define _MODULE_INVENTORY_GRAPHICS_DISPLAY_ITEMS_
 ; -----------------------------------------
-; отображение предметов в инвентаре
+; отображение предметов в "инвентаре"
 ; In:
 ; Out:
 ; Corrupt:

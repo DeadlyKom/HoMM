@@ -34,16 +34,16 @@ GnomeSort:      LD A, C
                 ; {
                 ;     if (a[i-1] <= a[i])
                 ;     {
-                ;         i=j;
-                ;         j++;
+                ;         i=j
+                ;         j++
                 ;     }
                 ;     else
                 ;     {
-                ;         ex a[i], a[i-1];
+                ;         ex a[i], a[i-1]
                 ;         if (--i == 0)
                 ;         {
-                ;             i=j;
-                ;             j++;
+                ;             i=j
+                ;             j++
                 ;         }
                 ;     }
                 ; }

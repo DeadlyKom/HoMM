@@ -15,7 +15,7 @@
                 include "Utilities/Include.inc"
 Size            EQU $-Adr.Inventory
 
-                ; проверка размещения общего кода инвентаря
+                ; проверка размещения общего кода "инвентаря"
                 if Size > Size.SharedPoint
                 error "available size exceeded"
                 endif

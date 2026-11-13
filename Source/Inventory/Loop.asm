@@ -21,7 +21,7 @@ Loop:           ; главный цикл "инвентаря"
                 RET NZ                                                          ; выход, если готовый кадр ещё ожидает показа
 
                 ; проверка запроса перехода UI режима
-                SET_MODULE_PAGE_Inventory                                       ; включение страницы модуля инвентаря
+                SET_MODULE_PAGE_Inventory                                       ; включение страницы модуля "инвентаря"
                 CALL UI.Runtime.Process
                 JP C, Inventory.SharedCode.UI.Transition.World                  ; переход, если начат переход UI режима
 
@@ -41,7 +41,7 @@ Loop:           ; главный цикл "инвентаря"
                 LD HL, .JumpTable
                 JP Func.JumpTable
 
-.Restore        ; восстановление состояния мира
+.Restore        ; восстановление состояния "мира"
                 SET_PAGE_ASSETS                                                 ; включение страницы менеджера ресурсов
                 PRE_LAUNCH_CHECK ASSETS_ID_WORLD                                ; проверка перед запуском ресурса
                 JP_EXE_ASSETS_NOT_PARAM ASSETS_ID_WORLD, World.Restore
@@ -56,7 +56,7 @@ Loop:           ; главный цикл "инвентаря"
                 DW .NoMode                                                      ; UI_MODE_OPTIONS
                 DW .NoMode                                                      ; UI_MODE_SAVE
                 DW .Restore                                                     ; UI_MODE_WORLD
-                DW .NoMode                                                      ; UI_MODE_BATTLE
+                DW .NoMode                                                      ; UI_MODE_COMBAT
 .NoMode         RET                                                             ; выход без запуска другого модуля
 
                 display " - Main loop:\t\t\t\t\t\t", /A, Loop, "\t= busy [ ", /D, $-Loop, " byte(s)  ]"

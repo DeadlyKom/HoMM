@@ -8,7 +8,7 @@
 Begin           EQU $
                 include "Core/Execute.asm"
                 include "World/Execute.asm"
-                include "Battle/Execute.asm"
+                include "Combat/Execute.asm"
                 include "Options/Execute.asm"
                 include "Session/Execute.asm"
                 include "Progress/Execute.asm"

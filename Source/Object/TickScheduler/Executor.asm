@@ -146,7 +146,7 @@ RunCadence:     LD (TickObjectChunk.CadenceRange), A                            
 
 ; барьер / проверка эпохи
 CheckEpochBarrier:
-                ; шаг 0 служит барьером после перехода 7 -> 0;
+                ; шаг 0 служит барьером после перехода 7 -> 0
                 ; рабочие проходы текущей эпохи начинаются с шага 1
                 LD A, #01
                 LD (TickScheduler.Variables + FTickScheduler.CadenceStep), A

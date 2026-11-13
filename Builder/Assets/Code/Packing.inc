@@ -12,7 +12,7 @@
                 include "Original/MainMenu/Pack.inc"                            ; ASSETS_ID_MAIN_MENU
                 include "Original/Session/Pack.inc"                             ; ASSETS_ID_SESSION
                 include "Original/World/Pack.inc"                               ; ASSETS_ID_WORLD
-                include "Original/Battle/Pack.inc"                              ; ASSETS_ID_BATTLE
+                include "Original/Combat/Pack.inc"                              ; ASSETS_ID_COMBAT
                 include "Original/Characteristics/Pack.inc"                     ; ASSETS_ID_CHARACTERISTICS
                 include "Original/Inventory/Pack.inc"                           ; ASSETS_ID_INVENTORY
                 include "Original/Options/Pack.inc"                             ; ASSETS_ID_OPTIONS

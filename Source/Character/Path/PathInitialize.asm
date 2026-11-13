@@ -26,7 +26,7 @@ PathInitialize.Wrap:
 ;   HL, DE, BC, AF
 ; Note:
 ;   каждому персонажу-человеку с CharacterID [0..3] соответствует собственный
-;   слот из восьми элементов FPath в Adr.HeroPath;
+;   слот из восьми элементов FPath в Adr.HeroPath
 ;   ℹ️ код расположен в странице 0
 ; -----------------------------------------
                 if HERO_PATH_SLOT_CAPACITY != 8

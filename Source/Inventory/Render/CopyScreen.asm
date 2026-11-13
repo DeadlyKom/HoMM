@@ -2,7 +2,7 @@
                 ifndef _INVENTORY_RENDER_COPY_SCREEN_
                 define _INVENTORY_RENDER_COPY_SCREEN_
 ; -----------------------------------------
-; перенос готового кадра инвентаря в теневой экран
+; перенос готового кадра "инвентаря" в теневой экран
 ; In:
 ; Out:
 ; Corrupt:

@@ -12,7 +12,7 @@
 ; -----------------------------------------
 Initialize:     ; инициализация "опций"
                 SET_UI_MODE UI_MODE_OPTIONS                                     ; установка UI режима "опции"
-                SET_UI_LAYER #0000, #00                                         ; ToDo: активные UI слои опций пока отсутствуют
+                SET_UI_LAYER #0000, #00                                         ; ToDo: активные UI слои "опций" пока отсутствуют
 
                 SET_MAIN_LOOP Options.SharedCode.Loop                           ; установка главного цикла
                 SET_MAIN_SWAP Options.SharedCode.Render.Swap                    ; установка обработчика переключения экранов
@@ -26,13 +26,13 @@ Initialize:     ; инициализация "опций"
                 SHOW_SHADOW_SCREEN                                              ; отобразить теневой экран
                 SET_USER_HANDLER Options.SharedCode.Interrupt                   ; установка обработчика прерываний
 
-                ; сброс перемещения карты перед работой с меню опций
+                ; сброс перемещения карты перед работой с меню "опций"
                 LD A, (GameState.Input.Value)
                 AND ~MOVEMENT_MASK
                 LD (GameState.Input.Value), A
                 
                 RES_INPUT_TIMER_FLAG SCROLL_MAP_BIT                             ; сброс запроса обновления скролла карты
-                SET_TICK_REQUEST_FLAG GAME_PAUSE_REQUEST_BIT                    ; запрос паузы игры на время работы опций
+                SET_TICK_REQUEST_FLAG GAME_PAUSE_REQUEST_BIT                    ; запрос паузы игры на время работы "опций"
                 SET_TICK_CONTROL_FLAG GAME_PAUSE_BIT                            ; включение паузы игры
                 RES_INPUT_FLAG INPUT_SCAN_DISABLE_BIT                           ; разрешить сканирование ввода
                 SET_MUSIC_FLAG MUSIC_ENABLE_BIT                                 ; продолжение проигрывания общей музыки игрового процесса

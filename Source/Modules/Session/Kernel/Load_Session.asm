@@ -27,7 +27,7 @@ Load_Session:   ; копирование блока
                 PUSH_USER_HANDLER                                               ; сохранить обработчик прерываний
                 SET_USER_HANDLER SharedCode.Interrupt                           ; установить обработчик на время загрузки
 
-                ; копирование календарного времени из слота в состояние сессии
+                ; копирование календарного времени из слота в состояние "сессии"
                 ; ToDo: необходимо пересмотреть инициализацию
                 LD HL, GameSession.SaveSlot + FSaveSlot.WorldTime
                 LD DE, GameSession.WorldTime

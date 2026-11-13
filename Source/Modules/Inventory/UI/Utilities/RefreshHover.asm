@@ -49,7 +49,7 @@ RefreshHover:   ; определение слота под текущей поз
                 ; Corrupt:
                 ;   HL, DE, BC, AF, AF', IX, IY
                 ; -----------------------------------------
-                CALL_IN_PAGE_A Inventory.SharedCode.Utilities.GetItemByCursor.Wrap; определение предмета под курсором в сетке инвентаря
+                CALL_IN_PAGE_A Inventory.SharedCode.Utilities.GetItemByCursor.Wrap; определение предмета под курсором в сетке "инвентаря"
                 JP SetHoverItem
 
                 endif ; ~_MODULE_INVENTORY_UI_UTILITIES_REFRESH_HOVER_

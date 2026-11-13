@@ -13,7 +13,7 @@ Init_TR_DOS:    ; инициализация
                 ASSETS_TRDOS                                                    ; перенос драйвера TR-DOS во временный буфер
 
                 ; восстановление страницы расположения ресурса
-                JP_SET_MODULE_PAGE_Session                                      ; включить страницу модуля "Session"
+                JP_SET_MODULE_PAGE_Session                                      ; включить страницу модуля "сессии"
 
                 display " - Initialize TR-DOS:\t\t\t\t\t", /A, Init_TR_DOS, "\t= busy [ ", /D, $-Init_TR_DOS, " byte(s)  ]"
 

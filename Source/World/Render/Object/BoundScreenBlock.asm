@@ -19,7 +19,7 @@ BoundScreenBlock:
 ; Corrupt:
 ;   HL, DE, BC, AF
 ; Note:
-;   игровая область разбита на блоки 6x6 знакомест;
+;   игровая область разбита на блоки 6x6 знакомест
 ;   Adr.ScreenBlock хранит их по столбцам: column * 4 + row
 ; -----------------------------------------
 .Intersects     CALL .Calculate
@@ -81,7 +81,7 @@ BoundScreenBlock:
 ; Corrupt:
 ;   HL, DE, BC, AF
 ; Note:
-;   игровая область разбита на блоки 6x6 знакомест;
+;   игровая область разбита на блоки 6x6 знакомест
 ;   Adr.ScreenBlock хранит их по столбцам: column * 4 + row
 ; -----------------------------------------
 .Mark           CALL .Calculate

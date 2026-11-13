@@ -100,7 +100,7 @@ PipelineHexagons:
                 CALL NZ, Object.Draw                                            ; отображение объектов в массиве SortBuffer
 
                 ; -----------------------------------------
-                SET_MODULE_PAGE_World                                           ; включить страницу модуля "World"
+                SET_MODULE_PAGE_World                                           ; включить страницу модуля "мира"
 
                 ; проверка завершения режима остановки времени
                 CHECK_TICK_CONTROL_FLAG GAME_SUSPEND_BIT
@@ -170,7 +170,7 @@ PipelineHexagons:
                 ; RESTORE_SCR_
 
 .SkipCurRestore ; подготовка обработки UI после копирования экранных блоков
-                SET_MODULE_PAGE_World                                           ; включить страницу модуля "World"
+                SET_MODULE_PAGE_World                                           ; включить страницу модуля "мира"
 
                 ; проверка возможности начать обработку запроса смены UI режима
                 CALL UI.Runtime.Process

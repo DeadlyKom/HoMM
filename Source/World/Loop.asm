@@ -30,7 +30,7 @@ Loop:
 
                 ; сохранение состояния общей и страничной памяти мира
                 SET_MODULE_PAGE_World                                           ; включение страницы модуля "мира"
-                CALL World.SaveState                                            ; сохранение состояния мира
+                CALL World.SaveState                                            ; сохранение состояния "мира"
 
                 ; подготовка флагов для перехода между циклами
                 SET_MAIN_FLAGS ML_TRANSITION | ML_ENTER | ML_UPDATE
@@ -50,7 +50,7 @@ Loop:
                 DW ExecuteModule.Options                                        ; UI_MODE_OPTIONS
                 DW .NoMode                                                      ; UI_MODE_SAVE
                 DW .NoMode                                                      ; UI_MODE_WORLD
-                DW ExecuteModule.Battle                                         ; UI_MODE_BATTLE
+                DW ExecuteModule.Combat                                         ; UI_MODE_COMBAT
 .NoMode         RET                                                             ; выход без запуска другого модуля
 
 .MemcpyScreen   ; завершение обработки уже показанного кадра и подготовка экранов к следующей отрисовке

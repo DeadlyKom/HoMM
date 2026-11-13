@@ -2,7 +2,7 @@
                 ifndef _MODULE_WORLD_INPUT_ACCELERATE_
                 define _MODULE_WORLD_INPUT_ACCELERATE_
 ; -----------------------------------------
-; событие ввода - 'ускорение'
+; событие ввода - "ускорение"
 ; In:
 ; Out:
 ; Corrupt:

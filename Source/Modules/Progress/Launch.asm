@@ -18,7 +18,7 @@
 ;       PROGRESS_PERCENT_FIXED 50.0
 ;       LAUNCH_ASSET_FUNCTION Progress.ToPercent, ExecuteModule.Progress
 ; -----------------------------------------
-Launch:         ; первичная инициализация загруженного ресурса Progress
+Launch:         ; первичная инициализация загруженного ресурса "окна прогресса"
                 ; на вершине стека лежит идентификатор запрошенной функции
 
                 SAVE_ASSETS_PAGE Kernel.Modules.Progress.Page                   ; сохранение страницы загруженного ресурса

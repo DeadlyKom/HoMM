@@ -2,7 +2,7 @@
                 ifndef _MODULE_INVENTORY_GRAPHICS_DISPLAY_WINDOW_
                 define _MODULE_INVENTORY_GRAPHICS_DISPLAY_WINDOW_
 ; -----------------------------------------
-; перерисовка окна инвентаря с запросом обновления экрана
+; перерисовка окна "инвентаря" с запросом обновления экрана
 ; In:
 ; Out:
 ; Corrupt:
@@ -16,7 +16,7 @@ Window.Redraw:  ; сброс обрабатываемого запроса пе�
                 RES_FLAG INVENTORY_REDRAW_BIT
                 SET_MAIN_FLAG ML_UPDATE_BIT                                     ; запрос показа перерисованного окна
 ; -----------------------------------------
-; отображение окна инвентаря на основном экране
+; отображение окна "инвентаря" на основном экране
 ; In:
 ; Out:
 ; Corrupt:
@@ -33,8 +33,8 @@ Window:         ; подготовка основного экрана
                 ; отображение содержимого окна
                 CALL Convert.SetBaseScreen                                      ; выбор основного экрана для вывода окна
                 CALL Inventory.Display.PaperDoll                                ; отображение образа персонажа
-                CALL Inventory.Display.Inventory                                ; отображение сетки инвентаря
-                CALL Inventory.Display.Items                                    ; отображение предметов в сетке инвентаря
+                CALL Inventory.Display.Inventory                                ; отображение сетки "инвентаря"
+                CALL Inventory.Display.Items                                    ; отображение предметов в сетке "инвентаря"
                 JP Inventory.Display.Slots.Redraw                               ; перерисовка текущего состояния слотов
 
                 endif ; ~_MODULE_INVENTORY_GRAPHICS_DISPLAY_WINDOW_

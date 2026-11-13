@@ -12,7 +12,7 @@
 ; -----------------------------------------
 Initialize:     ; инициализация "характеристик"
                 SET_UI_MODE UI_MODE_CHARACTERISTICS                             ; установка UI режима "характеристики"
-                SET_UI_LAYER #0000, #00                                         ; ToDo: активные UI слои характеристик пока отсутствуют
+                SET_UI_LAYER #0000, #00                                         ; ToDo: активные UI слои "характеристик" пока отсутствуют
                 
                 SET_MAIN_LOOP Characteristics.SharedCode.Loop                   ; установка главного цикла
                 SET_MAIN_SWAP Characteristics.SharedCode.Render.Swap            ; установка обработчика переключения экранов

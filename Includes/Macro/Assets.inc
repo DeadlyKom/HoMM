@@ -504,7 +504,7 @@ JP_EXE_ASSET_FUNCTION_ONE_PARAM macro AssetID?
 ; Corrupt:
 ;   HL, DE, BC, AF
 ; Note:
-;   после диспетчеризации SP+0 указывает на второй параметр;
+;   после диспетчеризации SP+0 указывает на второй параметр
 ;   вызываемая функция должна снять его со стека перед RET
 ; -----------------------------------------
 EXE_ASSETS_FUNCTION_TWO_PARAMS macro AssetID?, Func?

@@ -6,6 +6,6 @@ KERNEL_ID_COUNTER defl 0                                                        
 ; идентификаторы функций
                 ; ⚠️ ВАЖНО ⚠️ функция с идентификатором 0 автоматически вызывается после релокации ресурса
                 BIND_ID_KERNEL Options.Initialize, Launch                       ; функция запуска (0)
-                BIND_ID_KERNEL Options.Restore, RestoreState                    ; возобновление работы опций
+                BIND_ID_KERNEL Options.Restore, RestoreState                    ; возобновление работы "опций"
 
                 endif ; ~_MODULE_OPTIONS_KERNEL_BIND_

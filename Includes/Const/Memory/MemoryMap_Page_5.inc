@@ -33,7 +33,7 @@
                 ;   +-------+------------------------------------------+-------+
                 ;   | #7400 |                                MemoryMap | #0040 | ; массив хранения значений портов для переключения памяти
                 ;   +-------+------------------------------------------+-------+
-                ;   | #7440 |                              GameSession | #0080 | ; переменные состояния сессии
+                ;   | #7440 |                              GameSession | #0080 | ; переменные состояния "сессии"
                 ;   +-------+------------------------------------------+-------+
                 ;   | #74C0 |                               EntryPoint | #0040 |
                 ;   +-------+------------------------------------------+-------+
@@ -52,7 +52,7 @@ MemoryMap       EQU #0040                                                       
 HardConfig      EQU #0020                                                       ; размер переменных конфигурации железа
 GameConfig      EQU #0020                                                       ; размер переменных конфигурации игры
 GameState       EQU #0040                                                       ; размер переменных состояния игры
-GameSession     EQU #0080                                                       ; размер переменных состояния сессии
+GameSession     EQU #0080                                                       ; размер переменных состояния "сессии"
 EntryPoint      EQU #0040                                                       ; размер точки входа
 SharedPoint     EQU #0B00                                                       ; размер общей точки входа (место переноса кода из страниц)
                 endmodule
@@ -69,7 +69,7 @@ ShiftTable      EQU Adr.ScrAttrAdrTable + Size.ScrAttrAdrTable                  
 ByteMirrorTable EQU Adr.ShiftTable + Size.ShiftTable                            ; адрес таблицы зеркальных байт
 MultiplySprite  EQU Adr.ByteMirrorTable + Size.ByteMirrorTable                  ; адрес таблицы для расчёта полного размера данных спрайта
 MemoryMap       EQU Adr.MultiplySprite + Size.MultiplySprite                    ; адрес массива хранения значений портов для переключения памяти
-GameSession     EQU Adr.MemoryMap + Size.MemoryMap                              ; адрес переменных состояния сессии
+GameSession     EQU Adr.MemoryMap + Size.MemoryMap                              ; адрес переменных состояния "сессии"
 EntryPoint      EQU Adr.GameSession + Size.GameSession                          ; адрес точки входа
 SharedPoint     EQU Adr.EntryPoint + Size.EntryPoint                            ; адрес точки входа
 Port_7FFD       EQU PORT_7FFD                                                   ; адрес хранения номера странички

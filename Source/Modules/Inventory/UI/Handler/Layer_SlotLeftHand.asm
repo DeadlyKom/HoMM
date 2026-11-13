@@ -2,7 +2,7 @@
                 ifndef _MODULE_INVENTORY_UI_HANDLER_LAYER_SLOT_LEFT_HAND_
                 define _MODULE_INVENTORY_UI_HANDLER_LAYER_SLOT_LEFT_HAND_
 ; -----------------------------------------
-; обработчик OnUpdate UI слоя слота экипировки инвентаря "левая рука"
+; обработчик OnUpdate UI слоя слота экипировки "инвентаря" "левая рука"
 ; In:
 ;   IY - адрес структуры элемента (FUIElement)
 ;   флаг, переполнения установлен при наведении и сброшен по таймеру подсказки
@@ -17,7 +17,7 @@ Layer_SlotLHnd: ; определение предмета в слоте экип
                 CALL_IN_PAGE Page.Object, Inventory.SharedCode.Utilities.GetItemBySlot
                 JP Inventory.UI.Utilities.SetHoverItem                          ; обновление состояния предмета под курсором
 ; -----------------------------------------
-; обработчик OnMouseEnter слота экипировки инвентаря "левая рука"
+; обработчик OnMouseEnter слота экипировки "инвентаря" "левая рука"
 ; In:
 ;   IY - адрес структуры элемента (FUIElement)
 ; Out:
@@ -31,7 +31,7 @@ Layer_SlotLHnd: ; определение предмета в слоте экип
                 SET INVENTORY_ACTIVE_SLOT_BIT, (HL)
                 RET
 ; -----------------------------------------
-; обработчик OnMouseLeave слота экипировки инвентаря "левая рука"
+; обработчик OnMouseLeave слота экипировки "инвентаря" "левая рука"
 ; In:
 ;   IY - адрес структуры элемента (FUIElement)
 ; Out:

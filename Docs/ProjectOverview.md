@@ -26,7 +26,7 @@
 - [Модель данных](Architecture/05_Data_Model.md) — участники, персонажи, объекты и команды игрока
 - [Поток рантайма и управление](Architecture/06_Runtime_Flow_and_Control.md) — запуск, main loop и разделение human/AI path
 - [AI и StateTree](Architecture/07_AI_and_StateTree.md) — `StateTree`, `AIContext` и `Blackboard`
-- [Rendering pipeline](Architecture/18_Rendering_Pipeline.md) — двойная буферизация, dirty screen blocks и экранный цикл мира
+- [Rendering pipeline](Architecture/18_Rendering_Pipeline.md) — двойная буферизация, dirty screen blocks и экранный цикл «мира»
 - [TickScheduler и cadence-обновление объектов](Architecture/19_TickScheduler_and_Object_Cadence.md) — temporal-модель object-runtime, cadence-диапазоны и scheduler по чанкам
 - [Детальный разбор структур](Architecture/09_Structs_Deep_Dive_Index.md) — отдельные главы по ключевым структурам
 - [FAssets и runtime-зеркало ресурса](Architecture/15_FAssets_and_GameState_Assets.md) — `GameState.AssetID` и последний загруженный ресурс

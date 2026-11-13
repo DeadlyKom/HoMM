@@ -13,7 +13,7 @@
 Initialize:     ; инициализация "инвентаря"
                 SET_UI_MODE UI_MODE_INVENTORY                                   ; установка UI режима "инвентарь"
                 SET_UI_LAYER Inventory.UI.Layers.Inventory, \
-                            Inventory.UI.Layers.Inventory.Num                   ; установка активного UI слои инвентаря
+                            Inventory.UI.Layers.Inventory.Num                   ; установка активного UI слои "инвентаря"
 
                 SET_MAIN_LOOP Inventory.SharedCode.Loop                         ; установка главного цикла
                 SET_MAIN_SWAP Inventory.SharedCode.Render.CopyScreen.Swap       ; установка обработчика показа основного экрана

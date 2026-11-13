@@ -42,8 +42,8 @@
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/Inventory.pack.ar", Inventory.Size.Sector.ar
                 ; ASSETS_ID_OPTIONS
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/Options.pack.ar", Options.Size.Sector.ar
-                ; ASSETS_ID_BATTLE
-                ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/Battle.pack.ar", Battle.Size.Sector.ar
+                ; ASSETS_ID_COMBAT
+                ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/Combat.pack.ar", Combat.Size.Sector.ar
                 ; ASSETS_ID_DEFAULT_SETTINGS
                 ADD_ASSETS 3, Page.ObjectDefaultSettings, Adr.ObjectDefaultSettings, "Builder/Assets/Metadata/Compressed/Default/DefaultSettings.meta.ar", Metadata.Default.Size.Sector.ar
                 ; ASSETS_ID_CURSOR_PACK

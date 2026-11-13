@@ -4,7 +4,7 @@
 
                 module Transition
                 include "Layer_GameView.asm"
-                include "ToBattle.asm"
+                include "ToCombat.asm"
                 include "ToOptions.asm"
                 include "ToInventory.asm"
                 include "ToCharacteristics.asm"

@@ -11,17 +11,17 @@
 ; -----------------------------------------
 Launch:         SAVE_ASSETS_PAGE Kernel.Modules.Inventory.Page                  ; сохранение страницы загруженного ресурса
 
-                ; сохранение предыдущего UI режима до инициализации инвентаря
+                ; сохранение предыдущего UI режима до инициализации "инвентаря"
                 LD A, (GameState.UIRuntime + FUIRuntime.PreviousMode)
                 PUSH AF
 
-                CALL Launch.Deploy                                              ; развёртывание общего кода инвентаря
+                CALL Launch.Deploy                                              ; развёртывание общего кода "инвентаря"
                 CALL Launch.ClearState                                          ; очистка состояний
                 CALL Launch.InitSprites                                         ; загрузка и инициализация спрайтов
                 CALL Launch.Window                                              ; отображение окна "инвентаря"
                 CALL Launch.Initialize                                          ; инициализация "инвентаря"
 
-                ; проверка перехода из характеристик
+                ; проверка перехода из "характеристик"
                 POP AF
                 CP UI_MODE_CHARACTERISTICS
                 RET NZ                                                          ; выход, если переход выполнен не из характеристик

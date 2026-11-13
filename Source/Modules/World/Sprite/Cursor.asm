@@ -26,7 +26,7 @@ Load:           LD A, ASSETS_ID_CURSOR_PACK
                 LD (UI_Cursor.Click.SpriteID), A
                 CALL UI_Cursor.Initialize                                       ; инициализация состояния курсора
 
-                JP_SET_MODULE_PAGE_World                                        ; восстановить страницу модуля "World"
+                JP_SET_MODULE_PAGE_World                                        ; восстановить страницу модуля "мира"
 
 ; ⚠️ ВАЖНО ⚠️
 ;   количество хешей и размер массива Cursor.Indexes должны точно

@@ -2,7 +2,7 @@
                 ifndef _MODULE_INVENTORY_UI_HANDLER_LAYER_GRID_
                 define _MODULE_INVENTORY_UI_HANDLER_LAYER_GRID_
 ; -----------------------------------------
-; обработчик OnUpdate UI слоя сетки инвентаря
+; обработчик OnUpdate UI слоя сетки "инвентаря"
 ; In:
 ;   IY - адрес структуры элемента (FUIElement)
 ;   флаг, переполнения установлен при наведении и сброшен по таймеру подсказки
@@ -17,7 +17,7 @@ Layer_Grid:     ; определение предмета под курсоро�
                 CALL_IN_PAGE_A Inventory.SharedCode.Utilities.GetItemByCursor.Wrap
                 JP Inventory.UI.Utilities.SetHoverItem                          ; обновление состояния предмета под курсором
 ; -----------------------------------------
-; обработчик OnMouseEnter сетки инвентаря
+; обработчик OnMouseEnter сетки "инвентаря"
 ; In:
 ;   IY - адрес структуры элемента (FUIElement)
 ; Out:
@@ -27,7 +27,7 @@ Layer_Grid:     ; определение предмета под курсоро�
 ; -----------------------------------------
 .OnMouseEnter   RET
 ; -----------------------------------------
-; обработчик OnMouseLeave сетки инвентаря
+; обработчик OnMouseLeave сетки "инвентаря"
 ; In:
 ;   IY - адрес структуры элемента (FUIElement)
 ; Out:

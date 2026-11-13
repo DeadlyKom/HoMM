@@ -11,8 +11,8 @@
 ; -----------------------------------------
 Launch:         SAVE_ASSETS_PAGE Kernel.Modules.Options.Page                    ; сохранение страницы загруженного ресурса
 
-                CALL Launch.Deploy                                              ; развёртывание общего кода опций
-                CALL Launch.ClearState                                          ; очистка временных состояний опций
+                CALL Launch.Deploy                                              ; развёртывание общего кода "опций"
+                CALL Launch.ClearState                                          ; очистка временных состояний "опций"
                 CALL Launch.Window                                              ; отображение окна "опций"
                 CALL Launch.Initialize                                          ; инициализация "опций"
 

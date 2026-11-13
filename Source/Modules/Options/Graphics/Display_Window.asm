@@ -2,7 +2,7 @@
                 ifndef _MODULE_OPTIONS_GRAPHICS_DISPLAY_WINDOW_
                 define _MODULE_OPTIONS_GRAPHICS_DISPLAY_WINDOW_
 ; -----------------------------------------
-; отображение окна опций на основном экране
+; отображение окна "опций" на основном экране
 ; In:
 ; Out:
 ; Corrupt:

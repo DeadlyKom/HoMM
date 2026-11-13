@@ -64,7 +64,7 @@ Load.Map:       ; сохранение идентификатора загруж
 .MapAssetID     EQU $+1
                 LD A, #00
                 RELEASE_ASSET_A
-                JP_SET_MODULE_PAGE_Session                                      ; включить страницу модуля "Session"
+                JP_SET_MODULE_PAGE_Session                                      ; включить страницу модуля "сессии"
 
 .SetPageLoadedMap ; установка страницы загруженной карты
 .LoadedMapPage  EQU $+1                                                         ; номер страницы загруженной карты

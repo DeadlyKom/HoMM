@@ -93,9 +93,9 @@ Background      EQU Width * Height * SlotBuffers.CellSize \
                      + SlotBuffers.ServiceSize                                  ; расчёт размера буфера пикселей и атрибутов фона
                 endmodule
 
-                module GridHighlight                                            ; подсветка сетки инвентаря
-Width           EQU SCR_INVENTORY_SIZE_X << 1                                   ; ширина сетки инвентаря в знакоместах
-Height          EQU SCR_INVENTORY_SIZE_Y << 1                                   ; высота сетки инвентаря в знакоместах
+                module GridHighlight                                            ; подсветка сетки "инвентаря"
+Width           EQU SCR_INVENTORY_SIZE_X << 1                                   ; ширина сетки "инвентаря" в знакоместах
+Height          EQU SCR_INVENTORY_SIZE_Y << 1                                   ; высота сетки "инвентаря" в знакоместах
 Attributes      EQU Width * Height + SlotBuffers.ServiceSize                    ; расчёт размера буфера исходных атрибутов сетки
                 endmodule
                 endmodule

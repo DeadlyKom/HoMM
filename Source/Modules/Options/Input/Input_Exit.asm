@@ -2,7 +2,7 @@
                 ifndef _MODULE_OPTIONS_INPUT_EXIT_
                 define _MODULE_OPTIONS_INPUT_EXIT_
 ; -----------------------------------------
-; событие ввода - 'выход'
+; событие ввода - "выход"
 ; In:
 ; Out:
 ; Corrupt:

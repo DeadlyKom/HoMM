@@ -9,7 +9,7 @@
 ; Note:
 ; -----------------------------------------
 Initialize:     ; генерация таблицы
-                SET_MODULE_PAGE_MainMenu                                        ; включить страницу модуля "MainMenu"
+                SET_MODULE_PAGE_MainMenu                                        ; включить страницу модуля "главного меню"
                 LD HL, Adr.ExtraBuffer
                 CALL MainMenu.Tables.TG_Force.Default                           ; генерация таблица величины силы
                 MEMCPY_TO_PAGE Adr.ExtraBuffer, Adr.ForceTable, \

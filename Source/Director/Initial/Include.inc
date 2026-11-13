@@ -5,7 +5,7 @@
                 module Director
                 include "InitialSpawn.asm"
                 ; ToDo: добавить режимы запуска директора
-                ;   Periodic -> плановое восстановление популяции;
+                ;   Periodic -> плановое восстановление популяции
                 ;   External -> внеочередная попытка по событию
                 endmodule
 

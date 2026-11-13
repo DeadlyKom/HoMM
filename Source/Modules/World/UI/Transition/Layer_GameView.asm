@@ -2,7 +2,7 @@
                 ifndef _MODULE_WORLD_UI_TRANSITION_LAYER_GAME_VIEW_
                 define _MODULE_WORLD_UI_TRANSITION_LAYER_GAME_VIEW_
 ; -----------------------------------------
-; обработка перехода UI мира
+; обработка перехода UI "мира"
 ; In:
 ; Out:
 ; Corrupt:
@@ -24,7 +24,7 @@ Layer_GameView: ; выбор перехода мира по запрошенно
                 DW Options                                                      ; UI_MODE_OPTIONS
                 DW .NoMode                                                      ; UI_MODE_SAVE
                 DW UI.Runtime.Complete                                          ; UI_MODE_WORLD
-                DW Battle                                                       ; UI_MODE_BATTLE
+                DW Combat                                                       ; UI_MODE_COMBAT
 .NoMode         RET                                                             ; UI_MODE_NONE ни на что не влияет
 
                 endif ; ~_MODULE_WORLD_UI_TRANSITION_LAYER_GAME_VIEW_

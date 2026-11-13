@@ -2,7 +2,7 @@
                 ifndef _MODULE_INVENTORY_UI_HANDLER_LAYER_SLOT_SHOULDER_PAD_
                 define _MODULE_INVENTORY_UI_HANDLER_LAYER_SLOT_SHOULDER_PAD_
 ; -----------------------------------------
-; обработчик OnUpdate UI слоя слота экипировки инвентаря "наплечник/плащ"
+; обработчик OnUpdate UI слоя слота экипировки "инвентаря" "наплечник/плащ"
 ; In:
 ;   IY - адрес структуры элемента (FUIElement)
 ;   флаг, переполнения установлен при наведении и сброшен по таймеру подсказки
@@ -17,7 +17,7 @@ Layer_SlotShld: ; определение предмета в слоте экип
                 CALL_IN_PAGE Page.Object, Inventory.SharedCode.Utilities.GetItemBySlot
                 JP Inventory.UI.Utilities.SetHoverItem                          ; обновление состояния предмета под курсором
 ; -----------------------------------------
-; обработчик OnMouseEnter слота экипировки инвентаря "наплечник/плащ"
+; обработчик OnMouseEnter слота экипировки "инвентаря" "наплечник/плащ"
 ; In:
 ;   IY - адрес структуры элемента (FUIElement)
 ; Out:
@@ -31,7 +31,7 @@ Layer_SlotShld: ; определение предмета в слоте экип
                 SET INVENTORY_ACTIVE_SLOT_BIT, (HL)
                 RET
 ; -----------------------------------------
-; обработчик OnMouseLeave слота экипировки инвентаря "наплечник/плащ"
+; обработчик OnMouseLeave слота экипировки "инвентаря" "наплечник/плащ"
 ; In:
 ;   IY - адрес структуры элемента (FUIElement)
 ; Out:

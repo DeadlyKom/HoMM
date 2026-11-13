@@ -2,7 +2,7 @@
                 ifndef _MODULE_WORLD_INPUT_SELECT_
                 define _MODULE_WORLD_INPUT_SELECT_
 ; -----------------------------------------
-; событие ввода - 'выбор'
+; событие ввода - "выбор"
 ; In:
 ; Out:
 ; Corrupt:

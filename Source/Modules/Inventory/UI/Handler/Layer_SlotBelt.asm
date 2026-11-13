@@ -2,7 +2,7 @@
                 ifndef _MODULE_INVENTORY_UI_HANDLER_LAYER_SLOT_BELT_
                 define _MODULE_INVENTORY_UI_HANDLER_LAYER_SLOT_BELT_
 ; -----------------------------------------
-; обработчик OnUpdate UI слоя слота экипировки инвентаря "пояс"
+; обработчик OnUpdate UI слоя слота экипировки "инвентаря" "пояс"
 ; In:
 ;   IY - адрес структуры элемента (FUIElement)
 ;   флаг, переполнения установлен при наведении и сброшен по таймеру подсказки
@@ -17,7 +17,7 @@ Layer_SlotBelt: ; определение предмета в слоте экип
                 CALL_IN_PAGE Page.Object, Inventory.SharedCode.Utilities.GetItemBySlot
                 JP Inventory.UI.Utilities.SetHoverItem                          ; обновление состояния предмета под курсором
 ; -----------------------------------------
-; обработчик OnMouseEnter слота экипировки инвентаря "пояс"
+; обработчик OnMouseEnter слота экипировки "инвентаря" "пояс"
 ; In:
 ;   IY - адрес структуры элемента (FUIElement)
 ; Out:
@@ -31,7 +31,7 @@ Layer_SlotBelt: ; определение предмета в слоте экип
                 SET INVENTORY_ACTIVE_SLOT_BIT, (HL)
                 RET
 ; -----------------------------------------
-; обработчик OnMouseLeave слота экипировки инвентаря "пояс"
+; обработчик OnMouseLeave слота экипировки "инвентаря" "пояс"
 ; In:
 ;   IY - адрес структуры элемента (FUIElement)
 ; Out:

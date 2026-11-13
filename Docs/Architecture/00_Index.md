@@ -64,7 +64,7 @@
 2. [Макро-система и флаги](17_Macro_System_and_Flag_Orchestration.md)
 3. [Поток рантайма и управление](06_Runtime_Flow_and_Control.md)
 4. [EntryPoint](21_EntryPoint.md)
-5. [Модуль World](25_World_Module.md)
+5. [Модуль «мира» [World]](25_World_Module.md)
 
 Это путь для задач, где важно понять:
 - как устроены флаги;
@@ -74,7 +74,7 @@
 ### Если интересует rendering pipeline
 
 Иди так:
-1. [Модуль World](25_World_Module.md)
+1. [Модуль «мира» [World]](25_World_Module.md)
 2. [Rendering pipeline](18_Rendering_Pipeline.md)
 3. [Макро-система и флаги](17_Macro_System_and_Flag_Orchestration.md)
 4. [Поток рантайма и управление](06_Runtime_Flow_and_Control.md)
@@ -93,8 +93,8 @@
 2. [RemoveAtSwap: удаление с заменой последним элементом](28_RemoveAtSwap.md)
 3. [Поток рантайма и управление](06_Runtime_Flow_and_Control.md)
 4. [TickScheduler и cadence-обновление объектов](19_TickScheduler_and_Object_Cadence.md)
-5. [Модуль Session](24_Session_Module.md)
-6. [Модуль World](25_World_Module.md)
+5. [Модуль «сессии» [Session]](24_Session_Module.md)
+6. [Модуль «мира» [World]](25_World_Module.md)
 
 Этот маршрут нужен для задач, где важно понять:
 - как `FObject` связывается с chunk-моделью мира;
@@ -118,7 +118,7 @@
 3. [FObjectCharacterAI и FAIContext](14_FObjectCharacterAI_and_FAIContext.md)
 4. [AI Population Director](27_AI_Population_Director.md)
 5. [Поток рантайма и управление](06_Runtime_Flow_and_Control.md)
-6. [Модуль World](25_World_Module.md)
+6. [Модуль «мира» [World]](25_World_Module.md)
 
 ## Как устроена книга по слоям
 
@@ -160,10 +160,10 @@
 Если нужно разбирать runtime по крупным состояниям и подсистемам:
 - [Индекс модулей](20_Modules_Deep_Dive_Index.md)
 - [EntryPoint](21_EntryPoint.md)
-- [Модуль Core](22_Core_Module.md)
-- [Модуль MainMenu](23_MainMenu_Module.md)
-- [Модуль Session](24_Session_Module.md)
-- [Модуль World](25_World_Module.md)
+- [Модуль «ядра» [Core]](22_Core_Module.md)
+- [Модуль «главного меню» [MainMenu]](23_MainMenu_Module.md)
+- [Модуль «сессии» [Session]](24_Session_Module.md)
+- [Модуль «мира» [World]](25_World_Module.md)
 - [AssetsManager и исполнение assets](26_AssetsManager_and_Asset_Execution.md)
 - [AI Population Director](27_AI_Population_Director.md)
 
@@ -251,7 +251,7 @@ flowchart TD
 Если меняется:
 - сборка и упаковка — обновлять главы 02, 16 и 26;
 - макро-система или флаговые контракты — обновлять главы 03 и 17;
-- экранный цикл мира — обновлять главы 18 и 25;
+- экранный цикл «мира» — обновлять главы 18 и 25;
 - объектный tick, cadence или `TickScheduler` — обновлять главу 19;
 - хранение, удаление объектов или правила коррекции ссылок — обновлять главы 12 и 28;
 - модель данных — обновлять главы 05 и 09-15;

@@ -2,7 +2,7 @@
                 ifndef _MODULE_WORLD_SAVE_STATE_
                 define _MODULE_WORLD_SAVE_STATE_
 ; -----------------------------------------
-; сохранение состояния модуля мира
+; сохранение состояния модуля "мира"
 ; In:
 ; Out:
 ; Corrupt:
@@ -27,7 +27,7 @@ SaveState:      ; сохранение индексов спрайтов пер�
                 LD HL, UI_Cursor.Idle.SpriteID
                 LD DE, World.Adr.Deploy.SharedScreen + (UI_Cursor.Idle.SpriteID - Adr.SharedScreen)
                 LD BC, #01
-                CALL Memcpy.BetweenPages                                        ; копирование с возвратом в страницу модуля мира
+                CALL Memcpy.BetweenPages                                        ; копирование с возвратом в страницу модуля "мира"
 
                 ; сохранение идентификатора спрайта курсора Click в образ мира
                 LD A, (Kernel.Modules.World.Page)
@@ -36,6 +36,6 @@ SaveState:      ; сохранение индексов спрайтов пер�
                 LD HL, UI_Cursor.Click.SpriteID
                 LD DE, World.Adr.Deploy.SharedScreen + (UI_Cursor.Click.SpriteID - Adr.SharedScreen)
                 LD BC, #01
-                JP Memcpy.BetweenPages                                          ; копирование с возвратом в страницу модуля мира
+                JP Memcpy.BetweenPages                                          ; копирование с возвратом в страницу модуля "мира"
 
                 endif ; ~_MODULE_WORLD_SAVE_STATE_

@@ -2,7 +2,7 @@
                 ifndef _MODULE_INVENTORY_INPUT_SCAN_
                 define _MODULE_INVENTORY_INPUT_SCAN_
 ; -----------------------------------------
-; обработка ввода экрана инвентаря
+; обработка ввода экрана "инвентаря"
 ; In:
 ; Out:
 ; Corrupt:

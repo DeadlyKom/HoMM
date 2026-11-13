@@ -56,7 +56,7 @@ GraphicsPackages:
                 ADD A, B
                 EX AF, AF'
 
-                SET_MODULE_PAGE_Session                                         ; включить страницу модуля "Session"
+                SET_MODULE_PAGE_Session                                         ; включить страницу модуля "сессии"
 
                 ; инициализация буфера новыми значениями
                 ; позволит избавится от лишних обращений к менеджеру ресурсов

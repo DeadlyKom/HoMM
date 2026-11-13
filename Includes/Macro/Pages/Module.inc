@@ -1,7 +1,7 @@
                 ifndef _MACRO_PAGE_MODULE_
                 define _MACRO_PAGE_MODULE_
 ; -----------------------------------------
-; включить страницу модуля "MainMenu"
+; включить страницу модуля "главного меню"
 ; In:
 ; Out:
 ; Corrupt:
@@ -12,7 +12,7 @@ SET_MODULE_PAGE_MainMenu macro
                 SET_PAGE_A
                 endm
 ; -----------------------------------------
-; включить страницу модуля "Progress"
+; включить страницу модуля "окна прогресса"
 ; In:
 ; Out:
 ; Corrupt:
@@ -23,7 +23,7 @@ SET_MODULE_PAGE_Progress macro
                 SET_PAGE_A
                 endm
 ; -----------------------------------------
-; включить страницу модуля "World"
+; включить страницу модуля "мира"
 ; In:
 ; Out:
 ; Corrupt:
@@ -34,7 +34,7 @@ SET_MODULE_PAGE_World macro
                 SET_PAGE_A
                 endm
 ; -----------------------------------------
-; включить страницу модуля "World"
+; включить страницу модуля "мира"
 ; In:
 ; Out:
 ; Corrupt:
@@ -45,7 +45,7 @@ JP_SET_MODULE_PAGE_World macro
                 JP_SET_PAGE_A
                 endm
 ; -----------------------------------------
-; включить страницу модуля "Session"
+; включить страницу модуля "сессии"
 ; In:
 ; Out:
 ; Corrupt:
@@ -56,7 +56,7 @@ SET_MODULE_PAGE_Session macro
                 SET_PAGE_A
                 endm
 ; -----------------------------------------
-; включить страницу модуля "Session"
+; включить страницу модуля "сессии"
 ; In:
 ; Out:
 ; Corrupt:
@@ -133,25 +133,25 @@ JP_SET_MODULE_PAGE_Options macro
                 JP_SET_PAGE_A
                 endm
 ; -----------------------------------------
-; включить страницу модуля "битвы"
+; включить страницу модуля "сражения"
 ; In:
 ; Out:
 ; Corrupt:
 ;   BC, AF
 ; -----------------------------------------
-SET_MODULE_PAGE_Battle macro
-                LD A, (Kernel.Modules.Battle.Page)
+SET_MODULE_PAGE_Combat macro
+                LD A, (Kernel.Modules.Combat.Page)
                 SET_PAGE_A
                 endm
 ; -----------------------------------------
-; включить страницу модуля "битвы"
+; включить страницу модуля "сражения"
 ; In:
 ; Out:
 ; Corrupt:
 ;   BC, AF
 ; -----------------------------------------
-JP_SET_MODULE_PAGE_Battle macro
-                LD A, (Kernel.Modules.Battle.Page)
+JP_SET_MODULE_PAGE_Combat macro
+                LD A, (Kernel.Modules.Combat.Page)
                 JP_SET_PAGE_A
                 endm
 

@@ -38,7 +38,7 @@ Load:           PUSH HL                                                         
                 LD IX, .Parser
                 CALL Sprite.FillSpriteIndices
 
-                JP_SET_MODULE_PAGE_World                                        ; восстановить страницу модуля "World"
+                JP_SET_MODULE_PAGE_World                                        ; восстановить страницу модуля "мира"
 
                 ;   HL - адрес выходного массива индексов спрайтов (Adr.SpriteInfoBuffer)
                 ;   DE - смещение до структуры FSpritesRef (от начала ресурса)

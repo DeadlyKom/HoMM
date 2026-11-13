@@ -37,7 +37,7 @@ Launch:         SET_PAGE_MAP                                                    
                 CALL Cartography.Launch                                         ; запуск картографии
                 CALL Characters                                                 ; создание и инициализация персонажей
                 CALL Equipment                                                  ; назначение начальной экипировки персонажам
-                SET_MODULE_PAGE_Session                                         ; включить страницу модуля "Session"
+                SET_MODULE_PAGE_Session                                         ; включить страницу модуля "сессии"
                 RET
 
                 endif ; ~_MODULE_SESSION_MAP_POST_LOAD_LAUNCH_

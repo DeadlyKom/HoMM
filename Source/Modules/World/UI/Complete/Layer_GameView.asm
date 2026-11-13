@@ -15,7 +15,7 @@ Layer_GameView: ; выбор обработчика завершения по з
                 LD HL, .JumpTable
                 JP Func.JumpTable
 
-.Transition     SET_MAIN_FLAG ML_EXIT_BIT                                       ; запрос завершения главного цикла мира
+.Transition     SET_MAIN_FLAG ML_EXIT_BIT                                       ; запрос завершения главного цикла "мира"
                 JP UI.Runtime.Complete                                          ; завершение перехода UI
 
 .JumpTable      DW UI.Runtime.Complete                                          ; UI_MODE_NONE
@@ -28,6 +28,6 @@ Layer_GameView: ; выбор обработчика завершения по з
                 DW .Transition                                                  ; UI_MODE_OPTIONS
                 DW UI.Runtime.Complete                                          ; UI_MODE_SAVE
                 DW UI.Runtime.Complete                                          ; UI_MODE_WORLD
-                DW .Transition                                                  ; UI_MODE_BATTLE
+                DW .Transition                                                  ; UI_MODE_COMBAT
 
                 endif ; ~_MODULE_WORLD_UI_COMPLETE_LAYER_GAME_VIEW_

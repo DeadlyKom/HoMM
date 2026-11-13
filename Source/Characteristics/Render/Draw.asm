@@ -8,7 +8,6 @@
 ; Corrupt:
 ;   HL, DE, BC, AF, IX
 ; Note:
-;   отрисовка интерфейса характеристик пока отсутствует
 ; -----------------------------------------
 Draw:           ; -----------------------------------------
                 ; точка входа отображения
@@ -56,7 +55,7 @@ Draw:           ; -----------------------------------------
                 CALL UI.Runtime.Process
                 RET NC                                                          ; выход, если переход UI режима не начат
 
-                JP Characteristics.SharedCode.UI.Transition.World               ; запуск перехода UI характеристик в мир
+                JP Characteristics.SharedCode.UI.Transition.World               ; запуск перехода UI "характеристик" в мир
 
                 display " - Main draw:\t\t\t\t\t\t", /A, Draw, "\t= busy [ ", /D, $-Draw, " byte(s)  ]"
 

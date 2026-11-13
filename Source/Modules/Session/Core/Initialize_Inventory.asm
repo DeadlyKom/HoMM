@@ -39,7 +39,7 @@ Init_Inventory: ; проверка наличия выделенной обла�
                 XOR A
                 LD (GameState.ItemsNum), A
 
-                ; восстановление страницы модуля сессии
+                ; восстановление страницы модуля "сессии"
                 SET_MODULE_PAGE_Session
                 OR A
                 RET

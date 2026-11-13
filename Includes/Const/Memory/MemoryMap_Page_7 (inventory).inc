@@ -11,7 +11,7 @@
                 ;   +-------+------------------------------------------+-------+
                 ;   | #DD00 |                                 свободно | #0200 | ; свободно
                 ;   +-------+------------------------------------------+-------+
-                ;   | #DF00 |                             BuffersSlots | #0754 | ; буферы слотов инвентаря, перетаскиваемого предмета и подсветки сетки
+                ;   | #DF00 |                             BuffersSlots | #0754 | ; буферы слотов "инвентаря", перетаскиваемого предмета и подсветки сетки
                 ;   +-------+------------------------------------------+-------+
                 ;   | #E654 |                                 свободно | #09AC | ; свободно
                 ;   +-------+------------------------------------------+-------+
@@ -89,7 +89,7 @@ Background      EQU SlotBuffers.Boot.Background                                 
 Background      EQU SlotBuffers.DraggedItem.Background                          ; размер буфера пикселей и атрибутов фона
                 endmodule
 
-                ; размер буфера подсветки сетки инвентаря
+                ; размер буфера подсветки сетки "инвентаря"
                 module GridHighlight
 Attributes      EQU SlotBuffers.GridHighlight.Attributes                        ; размер буфера исходных атрибутов сетки
                 endmodule
@@ -178,7 +178,7 @@ Background      EQU Adr.BuffersSlots.Boot.Background \
                     + Size.BuffersSlots.Boot.Background                         ; адрес буфера пикселей и атрибутов фона
                 endmodule
 
-                ; адрес буфера подсветки сетки инвентаря
+                ; адрес буфера подсветки сетки "инвентаря"
                 module GridHighlight
 Attributes      EQU Adr.BuffersSlots.DraggedItem.Background \
                     + Size.BuffersSlots.DraggedItem.Background                  ; адрес буфера исходных атрибутов сетки

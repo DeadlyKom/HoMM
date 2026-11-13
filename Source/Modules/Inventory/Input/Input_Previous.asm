@@ -14,7 +14,7 @@ Input.Previous  ; проверка активности перетаскиван
                 CHECK_INPUT_FLAG INPUT_DRAG_DROP_BIT
                 RET NZ                                                          ; выход, если перетаскивание активно
 
-                ; запрос перехода в характеристики
+                ; запрос перехода в "характеристики"
                 LD A, UI_MODE_CHARACTERISTICS
                 JP UI.Runtime.Request
 

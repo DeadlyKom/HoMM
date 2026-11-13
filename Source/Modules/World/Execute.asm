@@ -13,7 +13,7 @@ World:          ; загрузка и запуск "мира"
                 SET_PAGE_ASSETS                                                 ; включить страницу расположения менеджера ресурсов
                 LOAD_EXE_ASSETS ASSETS_ID_WORLD                                 ; загрузка ресурса и запуск
 .Release        SET_PAGE_ASSETS                                                 ; включить страницу расположения менеджера ресурсов
-                JP_RELEASE_ASSET ASSETS_ID_WORLD                                ; освобождение ресурса мира
+                JP_RELEASE_ASSET ASSETS_ID_WORLD                                ; освобождение ресурса "мира"
 .Page           DB #00                                                          ; страница расположения загруженого FAssets'а
 .MemoryAddress  DW #00                                                          ; адрес аллоцируемой памяти
                 endif ; ~_MODULE_WORLD_EXECUTE_

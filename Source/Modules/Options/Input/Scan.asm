@@ -2,7 +2,7 @@
                 ifndef _MODULE_OPTIONS_INPUT_SCAN_
                 define _MODULE_OPTIONS_INPUT_SCAN_
 ; -----------------------------------------
-; обработка ввода экрана опций
+; обработка ввода экрана "опций"
 ; In:
 ; Out:
 ; Corrupt:

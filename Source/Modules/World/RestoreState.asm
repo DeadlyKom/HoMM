@@ -2,7 +2,7 @@
                 ifndef _MODULE_WORLD_RESTORE_STATE_
                 define _MODULE_WORLD_RESTORE_STATE_
 ; -----------------------------------------
-; восстановление состояния модуля мира (горячий запуск)
+; восстановление состояния модуля "мира" (горячий запуск)
 ; In:
 ; Out:
 ; Corrupt:
@@ -29,7 +29,7 @@ RestoreState:   RES_USER_HANDLER                                                
                 CALL Launch.Initialize                                          ; инициализация "мира"
 
                 ; пометка покинутых модулей как невостребованных после переключения на мир
-                MARK_ASSETS_UNCLAIMED_IN_PAGE ASSETS_ID_BATTLE                  ; пометка модуля "битвы" как невостребованного
+                MARK_ASSETS_UNCLAIMED_IN_PAGE ASSETS_ID_COMBAT                  ; пометка модуля "сражения" как невостребованного
                 MARK_ASSETS_UNCLAIMED_IN_PAGE ASSETS_ID_OPTIONS                 ; пометка модуля "опций" как невостребованного
                 MARK_ASSETS_UNCLAIMED_IN_PAGE ASSETS_ID_CHARACTERISTICS         ; пометка модуля "характеристик" как невостребованного
                 JP_MARK_ASSETS_UNCLAIMED_IN_PAGE ASSETS_ID_INVENTORY            ; пометка модуля "инвентаря" как невостребованного
