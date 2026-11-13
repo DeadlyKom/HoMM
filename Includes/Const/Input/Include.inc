@@ -2,6 +2,8 @@
                 ifndef _CONST_INPUT_INCLUDE_
                 define _CONST_INPUT_INCLUDE_
 
+                include "Source/Input/Const.inc"
+
                 ifdef ENABLE_MOUSE
                 include "Source/Input/Mouse/VirtualKeys.inc"
                 endif

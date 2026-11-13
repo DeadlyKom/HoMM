@@ -4,8 +4,8 @@
 
                 module Hex
                 include "Column.asm"
-                include "HexagonDisplayListGeneration.asm"
                 include "HexagonByDisplayList.asm"
+                include "HexagonDisplayListGeneration.asm"
                 endmodule
 
                 endif ; ~ _DRAW_HEX_WORLD_INCLUDE_

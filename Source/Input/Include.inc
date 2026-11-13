@@ -1,9 +1,10 @@
     
-                ifndef _MODULE_INPUT_INCLUDE_
-                define _MODULE_INPUT_INCLUDE_
+                ifndef _INPUT_INCLUDE_
+                define _INPUT_INCLUDE_
 
                 display " - Input: \t\t\t\t\t\t", /A, $, "\t= busy [ ", /D, Input.End - $, " byte(s)  ]"
 
+                include "Const.inc"
                 include "Keyboard/Include.inc"
 
                 ifdef ENABLE_MOUSE
@@ -23,4 +24,4 @@ Begin:          EQU $
 End:            EQU $
                 endmodule
 
-                endif ; ~_MODULE_INPUT_INCLUDE_
+                endif ; ~_INPUT_INCLUDE_

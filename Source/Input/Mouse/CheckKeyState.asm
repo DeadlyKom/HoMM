@@ -2,34 +2,37 @@
                     ifndef _INPUT_MOUSE_GET_KEY_STATE_
                     define _INPUT_MOUSE_GET_KEY_STATE_
 ; -----------------------------------------
-; In :
-;   A  - virtual code
-;   HL - return address
-; Out :
-;   if the mouse button is pressed, Z flag is reset
-; Corrupt :
+; чтение состояние клавиш мыши
+; In:
+;   A  - "виртуальная клавиша"
+;   HL - адрес возврата
+; Out:
+;   флаг Z установлен, если клавиша мыши нажата
+; Corrupt:
 ;   BC, AF
+; Note:
 ; -----------------------------------------
-CheckKeyState:      AND SVK_BUTTON_MASK
-                    LD BC, #FADF
-                    IN C, (C)
-                    AND C
-                    JP (HL)
-
+CheckKeyState:  AND SVK_BUTTON_MASK
+                LD BC, #FADF
+                IN C, (C)
+                AND C
+                JP (HL)
 ; -----------------------------------------
-; In :
-; Out :
-;   A - wheel counter
-; Corrupt :
+; чтение счётчика колёсика мыши
+; In:
+; Out:
+;   A - значение счётчика колёсика мыши
+; Corrupt:
 ;   BC, AF
+; Note:
 ; -----------------------------------------
-MouseWheelCounter:  LD BC, #FADF
-                    IN A, (C)
-                    AND #F0
-                    RRCA
-                    RRCA
-                    RRCA
-                    RRCA
-                    RET
+WheelCounter:   LD BC, #FADF
+                IN A, (C)
+                AND #F0
+                RRCA
+                RRCA
+                RRCA
+                RRCA
+                RET
 
-                    endif ; ~_INPUT_MOUSE_GET_KEY_STATE_
+                endif ; ~_INPUT_MOUSE_GET_KEY_STATE_

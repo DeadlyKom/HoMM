@@ -1,66 +1,69 @@
         
-                    ifndef _INPUT_KEYBOARD_INCLUDE_
-                    define _INPUT_KEYBOARD_INCLUDE_
+                ifndef _INPUT_KEYBOARD_INCLUDE_
+                define _INPUT_KEYBOARD_INCLUDE_
 
-                    module Keyboard
-Begin:              EQU $
+                module Keyboard
+Begin:          EQU $
 
-                    include "SpectrumVirtualKeys.inc"
-                    include "CheckKeyState.asm"
-                    include "PressedKey_All.asm"
-                    include "PressedKey_1_5.asm"
-VirtualKeysTable:   DB (SVK_CAPS_SHIFT << 3) | INSTRUCTION_BIT, HalfRow_CS_V
-                    DB (SVK_Z << 3) | INSTRUCTION_BIT, HalfRow_CS_V
-                    DB (SVK_X << 3) | INSTRUCTION_BIT, HalfRow_CS_V
-                    DB (SVK_C << 3) | INSTRUCTION_BIT, HalfRow_CS_V
-                    DB (SVK_V << 3) | INSTRUCTION_BIT, HalfRow_CS_V
+                include "SpectrumVirtualKeys.inc"
+                include "CheckKeyState.asm"
+                include "PressedKey_All.asm"
+                include "PressedKey_1_5.asm"
 
-                    DB (SVK_A << 3) | INSTRUCTION_BIT, HalfRow_A_G
-                    DB (SVK_S << 3) | INSTRUCTION_BIT, HalfRow_A_G
-                    DB (SVK_D << 3) | INSTRUCTION_BIT, HalfRow_A_G
-                    DB (SVK_F << 3) | INSTRUCTION_BIT, HalfRow_A_G
-                    DB (SVK_G << 3) | INSTRUCTION_BIT, HalfRow_A_G
+                ; формирование записи клавиши для проверки бита порта
+KEY_ENTRY       macro Key?, HalfRow?
+                DB ((Key?) << 3) | INSTRUCTION_BIT, HalfRow?
+                endm
+VirtKeysTable:  KEY_ENTRY SVK_CAPS_SHIFT, HalfRow_CS_V
+                KEY_ENTRY SVK_Z, HalfRow_CS_V
+                KEY_ENTRY SVK_X, HalfRow_CS_V
+                KEY_ENTRY SVK_C, HalfRow_CS_V
+                KEY_ENTRY SVK_V, HalfRow_CS_V
 
-                    DB (SVK_Q << 3) | INSTRUCTION_BIT, HalfRow_Q_T
-                    DB (SVK_W << 3) | INSTRUCTION_BIT, HalfRow_Q_T
-                    DB (SVK_E << 3) | INSTRUCTION_BIT, HalfRow_Q_T
-                    DB (SVK_R << 3) | INSTRUCTION_BIT, HalfRow_Q_T
-                    DB (SVK_T << 3) | INSTRUCTION_BIT, HalfRow_Q_T
+                KEY_ENTRY SVK_A, HalfRow_A_G
+                KEY_ENTRY SVK_S, HalfRow_A_G
+                KEY_ENTRY SVK_D, HalfRow_A_G
+                KEY_ENTRY SVK_F, HalfRow_A_G
+                KEY_ENTRY SVK_G, HalfRow_A_G
 
-                    DB (SVK_1 << 3) | INSTRUCTION_BIT, HalfRow_1_5
-                    DB (SVK_2 << 3) | INSTRUCTION_BIT, HalfRow_1_5
-                    DB (SVK_3 << 3) | INSTRUCTION_BIT, HalfRow_1_5
-                    DB (SVK_4 << 3) | INSTRUCTION_BIT, HalfRow_1_5
-                    DB (SVK_5 << 3) | INSTRUCTION_BIT, HalfRow_1_5
+                KEY_ENTRY SVK_Q, HalfRow_Q_T
+                KEY_ENTRY SVK_W, HalfRow_Q_T
+                KEY_ENTRY SVK_E, HalfRow_Q_T
+                KEY_ENTRY SVK_R, HalfRow_Q_T
+                KEY_ENTRY SVK_T, HalfRow_Q_T
 
-                    DB (SVK_0 << 3) | INSTRUCTION_BIT, HalfRow_6_0
-                    DB (SVK_9 << 3) | INSTRUCTION_BIT, HalfRow_6_0
-                    DB (SVK_8 << 3) | INSTRUCTION_BIT, HalfRow_6_0
-                    DB (SVK_7 << 3) | INSTRUCTION_BIT, HalfRow_6_0
-                    DB (SVK_6 << 3) | INSTRUCTION_BIT, HalfRow_6_0
+                KEY_ENTRY SVK_1, HalfRow_1_5
+                KEY_ENTRY SVK_2, HalfRow_1_5
+                KEY_ENTRY SVK_3, HalfRow_1_5
+                KEY_ENTRY SVK_4, HalfRow_1_5
+                KEY_ENTRY SVK_5, HalfRow_1_5
 
-                    DB (SVK_P << 3) | INSTRUCTION_BIT, HalfRow_Y_P
-                    DB (SVK_O << 3) | INSTRUCTION_BIT, HalfRow_Y_P
-                    DB (SVK_I << 3) | INSTRUCTION_BIT, HalfRow_Y_P
-                    DB (SVK_U << 3) | INSTRUCTION_BIT, HalfRow_Y_P
-                    DB (SVK_Y << 3) | INSTRUCTION_BIT, HalfRow_Y_P
+                KEY_ENTRY SVK_0, HalfRow_6_0
+                KEY_ENTRY SVK_9, HalfRow_6_0
+                KEY_ENTRY SVK_8, HalfRow_6_0
+                KEY_ENTRY SVK_7, HalfRow_6_0
+                KEY_ENTRY SVK_6, HalfRow_6_0
 
-                    DB (SVK_ENTER << 3) | INSTRUCTION_BIT, HalfRow_H_ENT
-                    DB (SVK_L << 3) | INSTRUCTION_BIT, HalfRow_H_ENT
-                    DB (SVK_K << 3) | INSTRUCTION_BIT, HalfRow_H_ENT
-                    DB (SVK_J << 3) | INSTRUCTION_BIT, HalfRow_H_ENT
-                    DB (SVK_H << 3) | INSTRUCTION_BIT, HalfRow_H_ENT
+                KEY_ENTRY SVK_P, HalfRow_Y_P
+                KEY_ENTRY SVK_O, HalfRow_Y_P
+                KEY_ENTRY SVK_I, HalfRow_Y_P
+                KEY_ENTRY SVK_U, HalfRow_Y_P
+                KEY_ENTRY SVK_Y, HalfRow_Y_P
 
-                    DB (SVK_SPACE << 3) | INSTRUCTION_BIT, HalfRow_B_SPC
-                    DB (SVK_SYMBOL_SHIFT << 3) | INSTRUCTION_BIT, HalfRow_B_SPC
-                    DB (SVK_M << 3) | INSTRUCTION_BIT, HalfRow_B_SPC
-                    DB (SVK_N << 3) | INSTRUCTION_BIT, HalfRow_B_SPC
-                    DB (SVK_B << 3) | INSTRUCTION_BIT, HalfRow_B_SPC
+                KEY_ENTRY SVK_ENTER, HalfRow_H_ENT
+                KEY_ENTRY SVK_L, HalfRow_H_ENT
+                KEY_ENTRY SVK_K, HalfRow_H_ENT
+                KEY_ENTRY SVK_J, HalfRow_H_ENT
+                KEY_ENTRY SVK_H, HalfRow_H_ENT
 
-                    DB #00                                                      ; ToDo: добавить обработку VK_EDIT
+                KEY_ENTRY SVK_SPACE, HalfRow_B_SPC
+                KEY_ENTRY SVK_SYMBOL_SHIFT, HalfRow_B_SPC
+                KEY_ENTRY SVK_M, HalfRow_B_SPC
+                KEY_ENTRY SVK_N, HalfRow_B_SPC
+                KEY_ENTRY SVK_B, HalfRow_B_SPC
 
-                    display "\t - Keybord:\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
+                display "\t - Keybord:\t\t\t\t\t", /A, Begin, "\t= busy [ ", /D, $ - Begin, " byte(s)  ]"
 
-                    endmodule
+                endmodule
 
-                    endif ; ~_INPUT_KEYBOARD_INCLUDE_
+                endif ; ~_INPUT_KEYBOARD_INCLUDE_

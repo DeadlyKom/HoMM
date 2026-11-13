@@ -5,16 +5,15 @@
 ; -----------------------------------------
 ; проверить состояние клавиш Kempston
 ; In :
-;   A  - virtual code
-;   HL - return address
+;   A  - "виртуальная клавиша"
+;   HL - адрес возврата
 ; Out :
-;   флаг Z сброшен, если кнопка нажата
+;   флаг Z установлен, если клавиша нажата
 ; Corrupt :
 ;   BC, AF
+; Note:
 ; -----------------------------------------
-CheckKeyState:      RLA
-                    RLA
-                    RLA
+CheckKeyState:      ; KEMPSTON_JOYSTICK_SHIFT = 3
                     AND %00111000
                     OR INSTRUCTION_BIT
                     LD (.BIT), A
