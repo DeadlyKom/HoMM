@@ -44,6 +44,11 @@ Scan:           ; проверка HardWare ограничения мыши
                 LD (GameState.Input.Value), A
                 ; --------------------------------------------------------------
                 
+                ifdef _DEBUG
+                ; проверка клавиши "запуска битвы" (отладочная)
+                CALL Input.Battle                                               ; обработать нажатие и отпускание B
+                endif
+
                 ; запрос открытия "книги заклинаний"
                 LD A, (GameConfig.KeySpellBook)
                 CALL Input.CheckKeyState
@@ -52,9 +57,6 @@ Scan:           ; проверка HardWare ограничения мыши
 
                 ; проверка клавиши "выбор"
                 CALL Input.Select                                               ; обработать нажатие и отпускание
-
-                ; проверка клавиши "выход"
-                ; LD A, (GameConfig.KeyESC)
 
                 ; проверка клавиши "меню/пауза"
                 CALL Input.MenuPause                                            ; обработать нажатие и отпускание
@@ -67,6 +69,7 @@ Scan:           ; проверка HardWare ограничения мыши
                 LD A, (GameConfig.KeyAccel)
                 CALL Input.CheckKeyState
                 CALL Z, Input.Accelerate
+                
                 ; --------------------------------------------------------------
                 ; опрос перемещения влево
                 LD A, (GameConfig.KeyLeft)
