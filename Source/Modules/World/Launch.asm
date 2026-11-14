@@ -19,7 +19,7 @@ Launch:         SAVE_ASSETS_PAGE Kernel.Modules.World.Page                      
                 CALL Launch.WaitProgress                                        ; ожидание завершения загрузки "мира"
                 CALL World.Tilemap.Center.Instant                               ; первичное центрирование камеры на активном персонаже
                 CALL Launch.GameplayWindow                                      ; отображение игрового окна
-                JP Launch.Initialize                                            ; инициализация "мира"
+                JP Launch.Initialize                                            ; холодная инициализация "мира"
 
                 display " - Launch 'World':\t\t\t\t\t\t\t= busy [ ", /D, $-Launch, " byte(s) ]"
 

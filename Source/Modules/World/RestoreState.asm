@@ -26,7 +26,7 @@ RestoreState:   RES_USER_HANDLER                                                
                 CALL_IN_PAGE Page.SharedScreen, UI_Cursor.Initialize
 
                 CALL Launch.GameplayWindow                                      ; отображение игрового окна
-                CALL Launch.Initialize                                          ; инициализация "мира"
+                CALL Launch.Initialize.Hot                                      ; горячая инициализация "мира"
 
                 ; пометка покинутых модулей как невостребованных после переключения на мир
                 MARK_ASSETS_UNCLAIMED_IN_PAGE ASSETS_ID_COMBAT                  ; пометка модуля "сражения" как невостребованного

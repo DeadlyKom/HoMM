@@ -11,13 +11,21 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-AddContour:     ; сохранение основных регистров
-                PUSH AF
+AddContour:     ; сохранение регистров
                 PUSH DE
                 PUSH BC
                 PUSH IX
                 PUSH IY
-                PUSH HL                                                         ; сохранение адреса спрайта
+                PUSH AF
+                EX AF, AF'
+                PUSH AF
+                EX AF, AF'
+                EXX
+                PUSH HL
+                PUSH DE
+                PUSH BC
+                EXX
+                PUSH HL                                                         ; адрес спрайта
           
                 ; чтение номера фазы
                 LD A, (GameState.View)
@@ -51,17 +59,9 @@ AddContour:     ; сохранение основных регистров
                 LD A, C
                 LD (.Width), A
 
-                ; сохранение альтернативного аккумулятора и флагов
-                EX AF, AF'
-                PUSH AF
-                EX AF, AF'
-
-                ; чтение размера спрайта по вертикали из B' и сохранение альтернативных регистров
+                ; чтение размера спрайта по вертикали из B'
                 EXX
                 LD A, B
-                PUSH HL
-                PUSH DE
-                PUSH BC
                 EXX
 
                 ; подготовка размера спрайта по вертикали для обоих проходов
@@ -124,6 +124,7 @@ AddContour:     ; сохранение основных регистров
                 LD IY, #0040
 .Horizontal     EQU $+1
 .Call           CALL #0000                                                      ; горизонтальное расширение маски спрайта
+
                 POP HL
                 PUSH HL
 
@@ -147,21 +148,20 @@ AddContour:     ; сохранение основных регистров
                 CALL Vertical                                                   ; вертикальное расширение и добавление контура к спрайту
 
                 ; восстановление регистров
+                POP HL
                 EXX
                 POP BC
                 POP DE
                 POP HL
                 EXX
-                EX AF, AF'
                 POP AF
                 EX AF, AF'
+                POP AF
 
-                POP HL
                 POP IY
                 POP IX
                 POP BC
                 POP DE
-                POP AF
                 RET
 
                 endif ; ~ _DRAW_SPRITE_CONTOUR_ADD_CONTOUR_
