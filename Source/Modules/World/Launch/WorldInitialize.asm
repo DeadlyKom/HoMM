@@ -11,6 +11,11 @@
 ;   ℹ️ необходимо включить страницу модуля "мира"
 ; -----------------------------------------
 Initialize:     ; инициализация "мира"
+
+.Cold           ; холодный запуск
+                SET_MOUSE_POSITION 128, 96                                      ; установить позицию мыши
+
+.Hot            ; восстановление рабочего окружения "мира"
                 SET_UI_MODE UI_MODE_WORLD                                       ; установить UI режим "мир"
                 SET_UI_LAYER World.SharedCode.UI.Layers.GameWorld, \
                                 World.SharedCode.UI.Layers.GameWorld.Num        ; установка активного UI слоя
@@ -28,7 +33,6 @@ Initialize:     ; инициализация "мира"
                 SET_MUSIC_FLAG MUSIC_ENABLE_BIT                                 ; разрешение проигрывания общей музыки игрового процесса
                 SET_RENDER_SHADOW                                               ; установка Render флага переключение экрана на теневой
                 RES_RENDER_FLAG FPS_DISABLE_BIT                                 ; разрешить отображение FPS
-                SET_MOUSE_POSITION 128, 96                                      ; установить позицию мыши
                 RET
 
                 endif ; ~_MODULE_WORLD_LAUNCH_WORLD_INITIALIZE_

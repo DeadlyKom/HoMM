@@ -5,7 +5,7 @@
                 module SharedCode
                 DISP Adr.Options
 
-                display "Shared code 'Options':\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.SharedPoint, " byte(s) / free ", /D, Size.SharedPoint - Size, "]\t[", /D, Page.Options, "]\t ------------------------"
+                display "Shared code 'Options':\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.SharedPoint, " byte(s) / free ", /D, Size.SharedPoint - Size, "]\t[", /D, Page.Options, "]\t ------------------------"
 
                 include "Loop.asm"
                 include "Release.asm"

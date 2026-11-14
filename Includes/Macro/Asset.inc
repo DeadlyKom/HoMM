@@ -1,20 +1,25 @@
                 ifndef _MACRO_ASSET_
                 define _MACRO_ASSET_
+; -----------------------------------------
+; определение размера сжатого ресурса
+; In:
+;   Include? - путь сжатого файла
+; Out:
+;   Size.ar        - размер файла в байтах
+;   Size.Sector.ar - размер файла в секторах
+; -----------------------------------------
 ASSETS_SIZE     macro Include?
                 ORG 0x0000
                 incbin Include?
 Size.ar         EQU $
                 SIZE_TO_SECTORS Size.ar, Size.Sector.ar
                 endm
-; ------------------------------------------------------------
-; COMPRESS_FILE
-;
-; SrcFile? - исходный файл
-; DstFile? - итоговый сжатый файл
-;
-; Вызов:
-; COMPRESS_FILE "source.bin", "packed.bin.ar"
-; ------------------------------------------------------------
+; -----------------------------------------
+; сжатие файла
+; In:
+;   SrcFile? - исходный файл
+;   DstFile? - итоговый сжатый файл
+; -----------------------------------------
 COMPRESS_FILE   macro SrcFile?, DstFile?
 
                 define __ASSET_SRC_FILE__ SrcFile?
@@ -112,20 +117,25 @@ COMPRESS_FILE   macro SrcFile?, DstFile?
                 undefine __ASSET_SRC_FILE__
                 undefine __ASSET_DST_FILE__
                 endm
-; ------------------------------------------------------------
-; COMPRESSED_ASSET
-; RawFile?     - временный несжатый файл
-; PackedFile?  - итоговый сжатый файл
-; ------------------------------------------------------------
+; -----------------------------------------
+; сохранение и сжатие ресурса
+; In:
+;   RawFile?       - временный несжатый файл
+;   PackedFile?    - итоговый сжатый файл
+;   Begin          - начало несжатых данных
+;   Size           - размер несжатых данных в байтах, если задан
+; Out:
+;   Size           - размер несжатых данных в байтах
+;   Size.ar        - размер сжатого файла в байтах
+;   Size.Sector.ar - размер сжатого файла в секторах
+; -----------------------------------------
 COMPRESSED_ASSET macro RawFile?, PackedFile?
 
                 if !(exist Size)
 Size            EQU $-Begin
                 endif
  
-                if Size >= BankSize
-                error "размер несжатого ресурса должен быть меньше 16 КБ"
-                endif
+                assert Size < BankSize, Uncompressed asset size must be less than 16 Kb
 
                 ifdef _COMPRESSED_ASSET
                 savebin RawFile?, Begin, Size
@@ -133,13 +143,18 @@ Size            EQU $-Begin
                 endif
                 ASSETS_SIZE PackedFile?
                 endm
-; ------------------------------------------------------------
-; COMPRESS_ASSET_CODE
+; -----------------------------------------
 ; упаковка перемещаемого кода с таблицей релокации
-; RawFile?     - путь несжатого пакета без суффикса прохода
-; PackedFile?  - путь итогового сжатого пакета
-; Begin и Size исходного кода задаются модулем при PASS = 0/1
-; ------------------------------------------------------------
+; In:
+;   RawFile?       - путь несжатого пакета без суффикса прохода
+;   PackedFile?    - путь итогового сжатого пакета
+;   Begin          - начало исходного кода при PASS = 0/1
+;   Size           - размер исходного кода в байтах при PASS = 0/1
+; Out:
+;   Size           - размер перемещаемого пакета в байтах при полной упаковке
+;   Size.ar        - размер сжатого файла в байтах
+;   Size.Sector.ar - размер сжатого файла в секторах
+; -----------------------------------------
 COMPRESS_ASSET_CODE macro RawFile?, PackedFile?
                 ; проверка режима полной пересборки
                 ifdef _REBUILD
@@ -191,15 +206,60 @@ Size.ar         EQU 0
 Size.Sector.ar  EQU 0
                 endif
                 endm
+; -----------------------------------------
+; упаковка перемещаемого кода с дополнительной памятью
+; In:
+;   ExtraSize?     - дополнительный объём памяти в байтах
+;   RawFile?       - путь несжатого пакета без суффикса прохода
+;   PackedFile?    - путь итогового сжатого пакета
+;   Begin          - начало исходного кода при PASS = 0/1
+;   Size           - размер исходного кода в байтах при PASS = 0/1
+; Out:
+;   Size           - размер перемещаемого пакета в байтах при полной упаковке
+;   Size.ar        - размер сжатого файла в байтах
+;   Size.Sector.ar - размер сжатого файла в секторах
+;   Size.Memory    - объём памяти пакета и дополнительных данных в байтах
+;   Size.Asset     - размер для регистрации ресурса в байтах
+; Note:
+;   пакет и дополнительная память округляются отдельно до 256 байт
+;   служебные 256 байт загрузчика входят в дополнительную память
+; -----------------------------------------
+COMPRESS_ASSET_CODE_MEMORY macro ExtraSize?, RawFile?, PackedFile?
+                COMPRESS_ASSET_CODE RawFile?, PackedFile?
+
+                ; расчёт памяти пакета и дополнительных данных
+                DIV_ROUND_UP Size, #0100, Size.Blocks
+                DIV_ROUND_UP ExtraSize?, #0100, Size.Extra.Blocks
+Size.Memory     EQU (Size.Blocks + Size.Extra.Blocks) * #0100
+
+                ; проверка наличия дополнительной памяти
+                if (ExtraSize?) > 0
+
+                ; учёт служебных 256 байт, добавляемых загрузчиком
+Size.Asset      EQU Size.Memory - #0100
+                else
+Size.Asset      EQU Size
+                endif
+
+                ; проверка размещения пакета и дополнительных данных в одной странице
+                assert Size.Memory <= BankSize, Package and additional data exceed 16 Kb
+                endm
+; -----------------------------------------
+; сохранение пакета данных
+; In:
+;   RawFile? - путь несжатого файла
+;   Begin    - начало данных
+;   Size     - размер данных в байтах, если задан
+; Out:
+;   Size - размер данных в байтах
+; -----------------------------------------
 SAVE_PACK       macro RawFile?
 
                 if !(exist Size)
 Size            EQU $-Begin
                 endif
 
-                if Size >= BankSize
-                error "размер несжатого ресурса должен быть меньше 16 КБ"
-                endif
+                assert Size < BankSize, Uncompressed asset size must be less than 16 Kb
 
                 savebin RawFile?, Begin, Size
 

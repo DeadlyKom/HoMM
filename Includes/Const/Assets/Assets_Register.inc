@@ -34,6 +34,7 @@ REG_ASSETS_ID_DEBUG macro Label?
                     REG_ASSETS_ID       ASSETS_ID_INVENTORY                     ; модуль - "инвентарь"
                     REG_ASSETS_ID       ASSETS_ID_OPTIONS                       ; модуль - "опции"
                     REG_ASSETS_ID       ASSETS_ID_COMBAT                        ; модуль - "сражение"
+                    REG_ASSETS_ID       ASSETS_ID_SUBMODULE_CONTOUR             ; сабмодуль - "обводка"
                     REG_ASSETS_ID       ASSETS_ID_DEFAULT_SETTINGS              ; дефолтные настройки объектов
                     REG_ASSETS_ID       ASSETS_ID_CURSOR_PACK                   ; графика: курсора
                     REG_ASSETS_ID       ASSETS_ID_HERO_PACK                     ; графика: героев
