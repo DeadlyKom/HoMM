@@ -10,6 +10,7 @@
                 include "Loop.asm"
                 include "Release.asm"
                 include "Interrupt.asm"
+                include "ContourTest.asm"
                 include "UI/Include.inc"
                 include "Render/Include.inc"
 Size            EQU $-Adr.Combat

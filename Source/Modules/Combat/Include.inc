@@ -9,6 +9,7 @@
                 include "Input/Include.inc"
                 include "Launch/Include.inc"
                 include "Graphics/Include.inc"
+                include "ContourTest.asm"
 
                 ; блок кода, копируемый при развёртывании модуля
 Adr.Deploy      include "Source/Combat/Include.inc"
