@@ -44,6 +44,8 @@
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/Options.pack.ar", Options.Size.Sector.ar
                 ; ASSETS_ID_COMBAT
                 ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/Combat.pack.ar", Combat.Size.Sector.ar
+                ; ASSETS_ID_SUBMODULE_CONTOUR
+                ADD_ASSETS 3, PAGE_N, 0x0000, "Builder/Assets/Code/Compressed/Submodules.Contour.pack.ar", Submodules.Contour.Size.Sector.ar
                 ; ASSETS_ID_DEFAULT_SETTINGS
                 ADD_ASSETS 3, Page.ObjectDefaultSettings, Adr.ObjectDefaultSettings, "Builder/Assets/Metadata/Compressed/Default/DefaultSettings.meta.ar", Metadata.Default.Size.Sector.ar
                 ; ASSETS_ID_CURSOR_PACK

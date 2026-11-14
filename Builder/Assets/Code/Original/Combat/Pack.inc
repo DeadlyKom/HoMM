@@ -7,7 +7,7 @@
                 ORG PASS * 0x100
                 module Combat
 
-                display "Module 'Combat':\t\t\t\t-------------------- [ ", /D, Size, " byte(s) ]\t\t\t[-]\t ------------------------"
+                display "Module 'Combat':\t\t\t\t\t-------------------- [ ", /D, Size, " byte(s) ]\t\t\t[-]\t ------------------------"
 
                 ; проверка прохода подготовки исходного кода
                 if PASS != 2

@@ -5,7 +5,7 @@
                 module SharedCode
                 DISP Adr.Combat
 
-                display "Shared code 'Combat':\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.SharedPoint, " byte(s) / free ", /D, Size.SharedPoint - Size, "]\t[", /D, Page.Combat, "]\t ------------------------"
+                display "Shared code 'Combat':\t\t\t\t\t-------------------- [ ", /D, Size, "/", /D, Size.SharedPoint, " byte(s) / free ", /D, Size.SharedPoint - Size, "]\t[", /D, Page.Combat, "]\t ------------------------"
 
                 include "Loop.asm"
                 include "Release.asm"

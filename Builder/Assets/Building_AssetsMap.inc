@@ -1,7 +1,15 @@
 
                 ifndef _BUILDING_ASSETS_MAP_
                 define _BUILDING_ASSETS_MAP_
-
+; -----------------------------------------
+; регистрация ресурса в карте ресурсов
+; In:
+;   Label?   - идентификатор ресурса
+;   Size?    - размер для регистрации ресурса в байтах
+;   SizeSec? - размер файла на диске в секторах
+;   FlagAr?  - флаг архивности ресурса
+;   Message? - название ресурса для вывода
+; -----------------------------------------
 REG_BUILD_ASSETS_ID macro Label?, Size?, SizeSec?, FlagAr?, Message?
                 ; -----------------------------------------
                 ;      7    6    5    4    3    2    1    0
@@ -26,7 +34,36 @@ REG_BUILD_ASSETS_ID macro Label?, Size?, SizeSec?, FlagAr?, Message?
                 DW (Size? & 0x3FFF) << 2
                 display /D, Label?, Message?, "[ original size: ", /D, Size?, " byte(s),\tdisk space: ", /D, SizeSec?, " sector(s) ]"
                 endm
+; -----------------------------------------
+; регистрация ресурса с дополнительной памятью
+; In:
+;   ExtraSize?    - дополнительный объём памяти в байтах
+;   Label?        - идентификатор ресурса
+;   Size?         - размер для регистрации ресурса в байтах
+;   OriginalSize? - размер пакета в байтах
+;   SizeSec?      - размер файла на диске в секторах
+;   FlagAr?       - флаг архивности ресурса
+;   Message?      - название ресурса для вывода
+; -----------------------------------------
+REG_BUILD_ASSETS_ID_MEMORY macro ExtraSize?, Label?, Size?, OriginalSize?, SizeSec?, FlagAr?, Message?
+                ; запись размера файла и флага архивности
+                DB (SizeSec? << 1) | (FlagAr? & 0x01)
 
+                ; запись размера для выделения памяти ресурсу
+                DW (Size? & 0x3FFF) << 2
+                display /D, Label?, Message?, "[ original size: ", /D, OriginalSize?, " byte(s),\tdisk space: ", /D, SizeSec?, " sector(s) ] + ", /D, ExtraSize?, " byte(s)"
+                endm
+; -----------------------------------------
+; регистрация ресурса в карте ресурсов для отладочной версии
+; In:
+;   Label?   - идентификатор ресурса
+;   Size?    - размер для регистрации ресурса в байтах
+;   SizeSec? - размер файла на диске в секторах
+;   FlagAr?  - флаг архивности ресурса
+;   Message? - название ресурса для вывода
+; Note:
+;   ресурс регистрируется при определённом _DEBUG
+; -----------------------------------------
 REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                 ifdef _DEBUG
                 REG_BUILD_ASSETS_ID Label?, Size?, SizeSec?, FlagAr?, Message?
@@ -135,6 +172,13 @@ REG_BUILD_ASSETS_ID_DEBUG macro Label?, Size?, SizeSec?, FlagAr?, Message?
                                     Combat.Size.Sector.ar, \
                                     ASSETS_ARCHIVE, \
                                     "  - Combat\t\t\t\t\t\t"
+                REG_BUILD_ASSETS_ID_MEMORY Submodules.Contour.Size.Work, \
+                                    ASSETS_ID_SUBMODULE_CONTOUR, \
+                                    Submodules.Contour.Size.Asset, \
+                                    Submodules.Contour.Size, \
+                                    Submodules.Contour.Size.Sector.ar, \
+                                    ASSETS_ARCHIVE, \
+                                    "  - Submodules Contour\t\t\t\t"
                 REG_BUILD_ASSETS_ID ASSETS_ID_DEFAULT_SETTINGS, \
                                     Metadata.Default.Size, \
                                     Metadata.Default.Size.Sector.ar, \

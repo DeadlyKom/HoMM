@@ -16,5 +16,6 @@
                 include "Original/Characteristics/Pack.inc"                     ; ASSETS_ID_CHARACTERISTICS
                 include "Original/Inventory/Pack.inc"                           ; ASSETS_ID_INVENTORY
                 include "Original/Options/Pack.inc"                             ; ASSETS_ID_OPTIONS
+                include "Original/Submodules/Include.inc"                       ; ASSETS_ID_SUBMODULE_
 
                 endif ; ~_ASSETS_PACKING_CODE_INCLUDE_

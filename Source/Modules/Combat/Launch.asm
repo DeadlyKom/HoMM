@@ -17,6 +17,6 @@ Launch:         SAVE_ASSETS_PAGE Kernel.Modules.Combat.Page                     
                 CALL Launch.Initialize                                          ; инициализация "сражения"
 
                 RET
-                display " - Launch 'Combat':\t\t\t\t\t\t= busy [ ", /D, $-Launch, " byte(s) ]"
+                display " - Launch 'Combat':\t\t\t\t\t\t\t= busy [ ", /D, $-Launch, " byte(s) ]"
 
                 endif ; ~_MODULE_COMBAT_LAUNCH_
