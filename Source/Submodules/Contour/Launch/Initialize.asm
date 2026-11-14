@@ -2,7 +2,7 @@
                 ifndef _SUBMODULES_CONTOUR_LAUNCH_INITIALIZE_
                 define _SUBMODULES_CONTOUR_LAUNCH_INITIALIZE_
 ; -----------------------------------------
-; инициализация сабмодуля "обводка"
+; инициализация сабмодуля "обводки"
 ; In:
 ; Out:
 ; Corrupt:
